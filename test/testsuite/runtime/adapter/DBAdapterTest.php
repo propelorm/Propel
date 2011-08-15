@@ -14,7 +14,7 @@ require_once dirname(__FILE__) . '/../../../tools/helpers/bookstore/BookstoreTes
  * Tests the DbOracle adapter
  *
  * @see        BookstoreDataPopulator
- * @author     Francois EZaninotto
+ * @author     Francois Zaninotto
  * @package    runtime.adapter
  */
 class DBAdapterTest extends BookstoreTestBase
@@ -111,4 +111,38 @@ class DBAdapterTest extends BookstoreTestBase
 		$this->assertEquals(array(), $fromClause, 'createSelectSqlPart() does not add the tables from an all-aliased list of select columns');
 	}
 
+	public function testCreateSelectSqlPartSelectArgs()
+	{
+		$db = Propel::getDB(BookPeer::DATABASE_NAME);
+		$c = new Criteria();
+		$c->addSelectColumn('COALESCE('.
+			AuthorPeer::LAST_NAME.', '.
+			BookPeer::ISBN.', '.
+			BookPeer::TITLE.
+			')');
+
+		$fromClause = array();
+		$selectSql = $db->createSelectSqlPart($c, $fromClause);
+
+		$this->assertEquals('SELECT COALESCE(author.LAST_NAME, book.ISBN, book.TITLE)', $selectSql);
+		$this->assertEquals(array('author', 'book'), $fromClause);
+	}
+
+	public function testCreateSelectSqlPartSelectArgsComplex()
+	{
+		$db = Propel::getDB(BookPeer::DATABASE_NAME);
+		$c = new Criteria();
+		$c->addAlias('book_author', AuthorPeer::TABLE_NAME);
+		$c->addSelectColumn('COALESCE('.
+			AuthorPeer::alias('book_author', AuthorPeer::LAST_NAME).', '.
+			BookPeer::ISBN.', '.
+			BookPeer::TITLE.
+			')');
+
+		$fromClause = array();
+		$selectSql = $db->createSelectSqlPart($c, $fromClause);
+
+		$this->assertEquals('SELECT COALESCE(book_author.LAST_NAME, book.ISBN, book.TITLE)', $selectSql);
+		$this->assertEquals(array('author book_author', 'book'), $fromClause);
+	}
 }

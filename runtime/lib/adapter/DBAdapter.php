@@ -438,14 +438,40 @@ abstract class DBAdapter
 							$tableName = substr($tableName, $lastSpace + 1);
 						} else {
 							$tableName = substr($columnName, $parenPos + 1, $dotPos - ($parenPos + 1));
+
+							if (strpos($tableName, ',')) {
+								// FUNC(table.column1, table.column2, alias.column3 ... )
+								foreach (explode(',', $tableName) as $funcArg) {
+									$funcArgDot = strpos($funcArg, '.');
+									if ($funcArgDot) {
+										$tableNameTemp = trim(substr($funcArg, 0, $funcArgDot));
+									} else {
+										$tableNameTemp = trim($funcArg);
+									}
+
+									$tableNameTemp2 = $criteria->getTableForAlias($tableNameTemp);
+									if ($tableNameTemp2 !== null) {
+										$fromClause[] = $tableNameTemp2 . ' ' . $tableNameTemp;
+									} else {
+										$fromClause[] = $tableNameTemp;
+									}
+
+									$fromClause = array_unique($fromClause);
+								}
+
+								$tableName = null;
+							}
 						}
 					}
-					// is it a table alias?
-					$tableName2 = $criteria->getTableForAlias($tableName);
-					if ($tableName2 !== null) {
-						$fromClause[] = $tableName2 . ' ' . $tableName;
-					} else {
-						$fromClause[] = $tableName;
+
+					if($tableName) {
+						// is it a table alias?
+						$tableName2 = $criteria->getTableForAlias($tableName);
+						if ($tableName2 !== null) {
+							$fromClause[] = $tableName2 . ' ' . $tableName;
+						} else {
+							$fromClause[] = $tableName;
+						}
 					}
 				} // if $dotPost !== false
 			}
