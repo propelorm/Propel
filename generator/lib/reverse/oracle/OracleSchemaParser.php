@@ -42,7 +42,7 @@ class OracleSchemaParser extends BaseSchemaParser
 		'BLOB'		=> PropelTypes::BLOB,
 		'CHAR'		=> PropelTypes::CHAR,
 		'CLOB'		=> PropelTypes::CLOB,
-		'DATE'		=> PropelTypes::TIMESTAMP,
+		'DATE'		=> PropelTypes::DATE,
 		'BIGINT'	=> PropelTypes::BIGINT,
 		'DECIMAL'	=> PropelTypes::DECIMAL,
 		'DOUBLE'	=> PropelTypes::DOUBLE,
