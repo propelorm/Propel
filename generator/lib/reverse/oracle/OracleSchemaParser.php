@@ -161,7 +161,20 @@ class OracleSchemaParser extends BaseSchemaParser
 			if ($default !== null) {
 				$column->getDomain()->setDefaultValue(new ColumnDefaultValue($default, ColumnDefaultValue::TYPE_VALUE));
 			}
-			$column->setAutoIncrement(false); // Not yet supported
+
+			$column->setAutoIncrement(false);
+			if ($column->getName() == 'ID') {
+				$stmt2 = $this->dbh->query("SELECT * FROM USER_SEQUENCES WHERE SEQUENCE_NAME = '" . $table->getName() . "_SEQ'");
+				$hasSeq = $stmt2->fetch(PDO::FETCH_ASSOC);
+
+				if ($hasSeq && $column->getName() == 'ID') {
+					$column->setAutoIncrement(true);
+					$idMethodParameter = new IdMethodParameter();
+					$idMethodParameter->setValue($table->getName() . '_SEQ');
+					$table->addIdMethodParameter($idMethodParameter);
+				}
+			}
+
 			$column->setNotNull(!$isNullable);
 			$table->addColumn($column);
 		}
