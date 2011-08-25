@@ -4,7 +4,7 @@ a {
 }
 
 a:hover, a:focus {
-  color:#00f010;
+  color:#edbc1c;
 }
 
 p, li {
@@ -120,12 +120,12 @@ h2.title a:focus {
 
 .navigation_bread_crumb li a:hover,
 .navigation_bread_crumb li a:focus {
-  color:#00f010;
+  color:#edbc1c;
 }
 
 /* BOTTOM */
 .bottom {
-  background-color:#00f010;
+  background-color:#edbc1c;
   font-size:12px;
   text-align:center;
   margin-top:10px;
@@ -178,7 +178,7 @@ h1.no_margin_bottom {
 }
 
 .topmenu {
-  float:left;
+  float:right;
   margin-top:10px;
 }
 
