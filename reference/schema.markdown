@@ -34,7 +34,7 @@ The hierarchical tree relationship for the elements is:
 
 You can find example schemas in the test fixtures that the Propel development team uses for unit testing. For instance, the bookstore schema describes the model of a Bookstore application.
 
->**Tip** <br />If you use an IDE supporting autocompletion in XML documents, you can take advantage of the XSD describing the `schema.xml` syntax to suggest elements and attributes as you type. To enable it, add a `xmlns:xsi` and a `xsi:noNamespaceSchemaLocation` attribute to the leading `<database>` tag:
+>**Tip**<br />If you use an IDE supporting autocompletion in XML documents, you can take advantage of the XSD describing the `schema.xml` syntax to suggest elements and attributes as you type. To enable it, add a `xmlns:xsi` and a `xsi:noNamespaceSchemaLocation` attribute to the leading `<database>` tag:
 
 {% highlight xml %}
 <database name="my_connection_name" defaultIdMethod="native"
@@ -192,7 +192,7 @@ According to the schema, `name` is the only required attribute.  Also, the `idMe
 * `lazyLoad` A lazy-loaded column is not fetched from the database by model queries. Only the generated getter method for such a column issues a query to the database. Useful for large column types (such as CLOB and BLOB).
 * `primaryString` A column defined as primary string serves as default value for a `__toString()` method in the generated Propel object.
 
-**Tip**: For performance reasons, it is often a good idea to set BLOB and CLOB columns as lazyLoaded. A resultset containing one of more very large columns takes time to transit between the database and the PHP server, so you want to make sure this only happen when you actually need it.
+>**Tip**<br />For performance reasons, it is often a good idea to set BLOB and CLOB columns as lazyLoaded. A resultset containing one of more very large columns takes time to transit between the database and the PHP server, so you want to make sure this only happen when you actually need it.
 
 ### "foreign-key" element ###
 
@@ -295,7 +295,7 @@ Here are the Propel column types with some example mappings to native database a
 |FLOAT      |Floating point number  |FLOAT                          |double
 |DOUBLE     |Floating point number  |DOUBLE                         |double
 
-**Tip**: `BIGINT` maps to a PHP string, and therefore allows for 64 bit integers even on 32 bit systems.
+>**Tip**<br />`BIGINT` maps to a PHP string, and therefore allows for 64 bit integers even on 32 bit systems.
 
 ### Binary Types ###
 
@@ -306,7 +306,7 @@ Here are the Propel column types with some example mappings to native database a
 |LONGVARBINARY  |Long variable-length binary data   |LONGBLOB                       |double
 |BLOB           |Binary LOB (locator object)        |LONGBLOB                       |stream or string
 
-**Tip**: `BLOB` columns map to PHP as streams, and allows the storage of large binary objects (like images).
+>**Tip**<br />`BLOB` columns map to PHP as streams, and allows the storage of large binary objects (like images).
 
 ### Temporal (Date/Time) Types ###
 

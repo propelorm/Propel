@@ -104,7 +104,7 @@ class Book extends BaseBook
 }
 {% endhighlight %}
 
->**Tip**:<br />See the [Namespaces PHP 5.3 Namespaces]() chepter for more information on namespace usage in Propel.
+>**Tip**<br />See the [Namespaces PHP 5.3 Namespaces]() chepter for more information on namespace usage in Propel.
 
 ## Generated Getter and Setter ##
 
@@ -150,9 +150,9 @@ To use a custom name for these methods, set the `phpName` attribute in the `<col
 <!-- getTitle(), setTitle() !-->
 {% endhighlight %}
 
->**Tip**:<br />Calling the setter on an autoincremented PK will throw an exception as soon as you try to save the object. You can allow PK inserts on such columns by setting the `allowPkInsert` attribute to `true` in the `<table>` tag of the XML schema.
+>**Tip**<br />Calling the setter on an autoincremented PK will throw an exception as soon as you try to save the object. You can allow PK inserts on such columns by setting the `allowPkInsert` attribute to `true` in the `<table>` tag of the XML schema.
 
-**Tip**: Calling a getter doesn't issue any database query, except for lazy-loaded columns.
+>**Tip**<br />Calling a getter doesn't issue any database query, except for lazy-loaded columns.
 
 ## Persistence Methods ##
 
@@ -242,7 +242,7 @@ echo $book->getAuthor()->getLastName(); // Tolstoi
 // and it even works on objects not yet persisted.
 {% endhighlight %}
 
->**Tip**:<br />By default, Propel uses the name of the Active Record class to generate the related object getter and setter. However, you can customize this name by setting the `phpName` attribute in the `<foreign-key>` tag:
+>**Tip**<br />By default, Propel uses the name of the Active Record class to generate the related object getter and setter. However, you can customize this name by setting the `phpName` attribute in the `<foreign-key>` tag:
 
 {% highlight xml %}
 <table name="book">
@@ -271,7 +271,7 @@ echo $author->countBooks(); // 1
 $author->clearBooks(); // removes the relationship
 {% endhighlight %}
 
->**Tip**:<br />As for one-to-many relationships, you can customize the phpName used to forge these method names, by setting the `refPhpName` attribute in the `<foreign-key>` tag:
+>**Tip**<br />As for one-to-many relationships, you can customize the phpName used to forge these method names, by setting the `refPhpName` attribute in the `<foreign-key>` tag:
 
 {% highlight xml %}
 <table name="book">
@@ -366,7 +366,7 @@ if ($fp !== null) {
 }
 {% endhighlight %}
 
->**Tip**:<br />CLOB (_Character_ Locator Objects) are treated as strings in Propel, so the getter and setter for a CLOB column have no special functionality.
+>**Tip**<br />CLOB (_Character_ Locator Objects) are treated as strings in Propel, so the getter and setter for a CLOB column have no special functionality.
 
 ### ENUM columns ###
 
@@ -423,7 +423,7 @@ class GeographicCoordinates
 }
 {% endhighlight %}
 
->**Tip**:<br />OBJECT columns are searchable, given an object as the search value. See the [ColumnFilterMethods Query reference]() for more details.
+>**Tip**<br />OBJECT columns are searchable, given an object as the search value. See the [ColumnFilterMethods Query reference]() for more details.
 
 ### ARRAY columns ###
 
@@ -449,7 +449,7 @@ $book->removeTag('russian');
 print_r($book->getTags()); // array('novel', 'romantic')
 {% endhighlight %}
 
->**Tip**:<br />ARRAY columns are searchable, given an array or a scalar as the search value. See the [ColumnFilterMethods Query reference]() for more details.
+>**Tip**<br />ARRAY columns are searchable, given an array or a scalar as the search value. See the [ColumnFilterMethods Query reference]() for more details.
 
 ## Generic Getters and Setters ##
 
@@ -513,7 +513,7 @@ print_r($book->toArray($keyType = BasePeer::TYPE_PHPNAME, $includeLazyLoadColumn
 // )
 {% endhighlight %}
 
->**Tip**:<br />If you never use these generic getters and setters, you can disable their generation to clean up the Active Record class by modifying the `build.properties` as follows:
+>**Tip**<br />If you never use these generic getters and setters, you can disable their generation to clean up the Active Record class by modifying the `build.properties` as follows:
 
 {% highlight ini %}
 propel.addGenericAccessors = false
@@ -621,7 +621,7 @@ echo $book->exportTo('XML');
 // This allows for custom parser formats
 {% endhighlight %}
 
->**Tip**:<br />Active Record objects use YAML as their default string representation. That means that echoing an Active Record object returns the result of `toYAML()`. You can customize the default string representation on a per table basis by setting the `defaultStringFormat` attribute in the `<table>` tag.
+>**Tip**<br />Active Record objects use YAML as their default string representation. That means that echoing an Active Record object returns the result of `toYAML()`. You can customize the default string representation on a per table basis by setting the `defaultStringFormat` attribute in the `<table>` tag.
 
 {% highlight xml %}
 <table name="book" defaultStringFormat="XML">
