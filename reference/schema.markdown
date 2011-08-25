@@ -272,49 +272,49 @@ Here are the Propel column types with some example mappings to native database a
 
 ### Text Types ###
 
-|Propel Type|Desc                               |Example Default DB Type (MySQL)|Default PHP Native Type|
-|-----------|-----------------------------------|-------------------------------|-----------------------|
-|CHAR       |Fixed-length character data        |CHAR                           |string                 |
-|VARCHAR    |Variable-length character data     |VARCHAR                        |string                 |
-|LONGVARCHAR|Long variable-length character data|TEXT                           |string                 |
-|CLOB       |Character LOB (locator object)     |LONGTEXT                       |string                 |
+|Propel Type|Desc                               |Example Default DB Type (MySQL)|Default PHP Native Type
+|-----------|-----------------------------------|-------------------------------|-----------------------
+|CHAR       |Fixed-length character data        |CHAR                           |string
+|VARCHAR    |Variable-length character data     |VARCHAR                        |string
+|LONGVARCHAR|Long variable-length character data|TEXT                           |string
+|CLOB       |Character LOB (locator object)     |LONGTEXT                       |string
 
 `LONGVARCHAR` and `CLOB` need no declared size, and allow for very large strings (up to 2^16 and 2^32 characters in MySQL for instance).
 
 ### Numeric Types ###
 
-|Propel Type|Desc                   |Example Default DB Type (MySQL)|Default PHP Native Type    |
-|-----------|-----------------------|-------------------------------|---------------------------|
-|NUMERIC    |Numeric data           |DECIMAL                        |string (PHP int is limited)|
-|DECIMAL    |Decimal data           |DECIMAL                        |string (PHP int is limited)|
-|TINYINT    |Tiny integer           |TINYINT                        |int                        |
-|SMALLINT   |Small integer          |SMALLINT                       |int                        |
-|INTEGER    |Integer                |INTEGER                        |int                        |
-|BIGINT     |Large integer          |BIGINT                         |string (PHP int is limited)|
-|REAL       |Real number            |REAL                           |double                     |
-|FLOAT      |Floating point number  |FLOAT                          |double                     |
-|DOUBLE     |Floating point number  |DOUBLE                         |double                     |
+|Propel Type|Desc                   |Example Default DB Type (MySQL)|Default PHP Native Type
+|-----------|-----------------------|-------------------------------|---------------------------
+|NUMERIC    |Numeric data           |DECIMAL                        |string (PHP int is limited)
+|DECIMAL    |Decimal data           |DECIMAL                        |string (PHP int is limited)
+|TINYINT    |Tiny integer           |TINYINT                        |int
+|SMALLINT   |Small integer          |SMALLINT                       |int
+|INTEGER    |Integer                |INTEGER                        |int
+|BIGINT     |Large integer          |BIGINT                         |string (PHP int is limited)
+|REAL       |Real number            |REAL                           |double
+|FLOAT      |Floating point number  |FLOAT                          |double
+|DOUBLE     |Floating point number  |DOUBLE                         |double
 
 **Tip**: `BIGINT` maps to a PHP string, and therefore allows for 64 bit integers even on 32 bit systems.
 
 ### Binary Types ###
 
-|Propel Type    |Desc                               |Example Default DB Type (MySQL)|Default PHP Native Type|
-|---------------|-----------------------------------|-------------------------------|-----------------------|
-|BINARY         |Fixed-length binary data           |BLOB                           |double                 |
-|VARBINARY      |Variable-length binary data        |MEDIUMBLOB                     |double                 |
-|LONGVARBINARY  |Long variable-length binary data   |LONGBLOB                       |double                 |
-|BLOB           |Binary LOB (locator object)        |LONGBLOB                       |stream or string       |
+|Propel Type    |Desc                               |Example Default DB Type (MySQL)|Default PHP Native Type
+|---------------|-----------------------------------|-------------------------------|-----------------------
+|BINARY         |Fixed-length binary data           |BLOB                           |double
+|VARBINARY      |Variable-length binary data        |MEDIUMBLOB                     |double
+|LONGVARBINARY  |Long variable-length binary data   |LONGBLOB                       |double
+|BLOB           |Binary LOB (locator object)        |LONGBLOB                       |stream or string
 
 **Tip**: `BLOB` columns map to PHP as streams, and allows the storage of large binary objects (like images).
 
 ### Temporal (Date/Time) Types ###
 
-|Propel Type|Desc                                   |Example Default DB Type (MySQL)|Default PHP Native Type|
-|-----------|---------------------------------------|-------------------------------|-----------------------|
-|DATE       |Date (e.g. YYYY-MM-DD)                 |DATE                           |DateTime object        |
-|TIME       |Time (e.g. HH:MM:SS)                   |TIME                           |DateTime object        |
-|TIMESTAMP  |Date + time (e.g. YYYY-MM-DD HH:MM:SS) |TIMESTAMP                      |DateTime object        |
+|Propel Type|Desc                                   |Example Default DB Type (MySQL)|Default PHP Native Type
+|-----------|---------------------------------------|-------------------------------|-----------------------
+|DATE       |Date (e.g. YYYY-MM-DD)                 |DATE                           |DateTime object
+|TIME       |Time (e.g. HH:MM:SS)                   |TIME                           |DateTime object
+|TIMESTAMP  |Date + time (e.g. YYYY-MM-DD HH:MM:SS) |TIMESTAMP                      |DateTime object
 
 ### Other Types ###
 
@@ -327,10 +327,10 @@ Here are the Propel column types with some example mappings to native database a
 
 The following Propel 1.2 types are still supported, but are no longer needed with Propel 1.3.
 
-|Propel Type    |Desc                                                   |Example Default DB Type (MySQL)|Default PHP Native Type|
-|---------------|-------------------------------------------------------|-------------------------------|-----------------------|
-|BU_DATE        |Pre-/post-epoch date (e.g. 1201-03-02)                 |DATE                           |DateTime object        |
-|BU_TIMESTAMP   |Pre-/post-epoch Date + time (e.g. 1201-03-02 12:33:00) |TIMESTAMP                      |DateTime object        |
+|Propel Type    |Desc                                                   |Example Default DB Type (MySQL)|Default PHP Native Type
+|---------------|-------------------------------------------------------|-------------------------------|-----------------------
+|BU_DATE        |Pre-/post-epoch date (e.g. 1201-03-02)                 |DATE                           |DateTime object
+|BU_TIMESTAMP   |Pre-/post-epoch Date + time (e.g. 1201-03-02 12:33:00) |TIMESTAMP                      |DateTime object
 
 ## Customizing Mappings ##
 
@@ -442,6 +442,7 @@ For overriding the mapping between Propel types and native SQL types, you can cr
 For example:
 
 {% highlight php %}
+<?php
 require_once 'propel/engine/platform/MysqlPlatform.php';
 
 class CustomMysqlPlatform extends MysqlPlatform
