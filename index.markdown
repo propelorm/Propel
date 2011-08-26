@@ -3,7 +3,7 @@ layout: default
 title: Propel documentation
 ---
 
-## Welcome to the Propel Website! ##
+# Welcome to the Propel Website! #
 
 ### What? ###
 
