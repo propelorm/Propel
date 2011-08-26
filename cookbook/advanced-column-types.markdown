@@ -1,3 +1,8 @@
+---
+layout: default
+title: Working with Advanced Column Types
+---
+
 # Working with Advanced Column Types #
 
 Propel offers a set of advanced column types. The database-agnostic implementation allows these types to work on all supported RDBMS.
