@@ -28,26 +28,29 @@ The ticketing system is also hosted on Github:
 The best way to submit a patch is to make a Pull Request on Github. First, you should create a new branch from the `master`.
 Assuming you are in your local Propel project:
 
-    git checkout -b master fix-my-patch
+{% highlight bash %}
+> git checkout -b master fix-my-patch
+{% endhighlight %}
 
 Now you can write your patch in this branch. Don't forget to provide unit tests with your fix to prove both the bug and the patch.
 It will ease the process to accept or refuse a Pull Request.
 
 When you're done, you have to rebase your branch to provide a clean and safe Pull Request.
 
-    git checkout master
-
-    git pull --ff-only upstream master
-
-    git checkout fix-my-patch
-
-    git rebase master
+{% highlight bash %}
+> git checkout master
+> git pull --ff-only upstream master
+> git checkout fix-my-patch
+> git rebase master
+{% endhighlight %}
 
 In this example, the `upstream` remote is the PropelORM organization repository.
 
 Once done, you can submit the Pull Request by pushing your branch to your fork:
 
-    git push origin fix-my-patch
+{% highlight bash %}
+> git push origin fix-my-patch
+{% endhighlight %}
 
 Go to the www.github.com and press the _Pull Request_ button. Add a short description to this Pull Request and submit it.
 
