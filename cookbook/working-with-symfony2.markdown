@@ -22,23 +22,23 @@ It currently supports:
 
 ## Installation ##
 
-* Clone this bundle in the `vendor/bundles/Propel` directory:
+Clone this bundle in the `vendor/bundles/Propel` directory:
 
     git submodule add git://github.com/propelorm/PropelBundle.git vendor/bundles/Propel/PropelBundle
 
-* Checkout Propel and Phing in the `vendor` directory:
+Checkout Propel and Phing in the `vendor` directory:
 
     svn checkout http://svn.github.com/propelorm/Propel.git vendor/propel
 
     svn checkout http://phing.mirror.svn.symfony-project.com/tags/2.3.3 vendor/phing
 
-* Instead of using svn, you can clone the unofficial Git repositories:
+Instead of using svn, you can clone the unofficial Git repositories:
 
     git submodule add git://github.com/Xosofox/phing vendor/phing
 
     git submodule add git://github.com/propelorm/Propel.git vendor/propel
 
-* Register this bundle in the `AppKernel` class:
+Register this bundle in the `AppKernel` class:
 
 {% highlight php %}
 <?php
@@ -58,7 +58,7 @@ public function registerBundles()
 }
 {% endhighlight %}
 
- * Don't forget to register the PropelBundle namespace in `app/autoload.php`:
+Don't forget to register the PropelBundle namespace in `app/autoload.php`:
 
 {% highlight php %}
 <?php
