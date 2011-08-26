@@ -22,25 +22,27 @@ It currently supports:
 
 ## Installation ##
 
- * Clone this bundle in the `vendor/bundles/Propel` directory:
+* Clone this bundle in the `vendor/bundles/Propel` directory:
 
-    > git submodule add git://github.com/propelorm/PropelBundle.git vendor/bundles/Propel/PropelBundle
+    git submodule add git://github.com/propelorm/PropelBundle.git vendor/bundles/Propel/PropelBundle
 
- * Checkout Propel and Phing in the `vendor` directory:
+* Checkout Propel and Phing in the `vendor` directory:
 
-    > svn checkout http://svn.github.com/propelorm/Propel.git vendor/propel
+    svn checkout http://svn.github.com/propelorm/Propel.git vendor/propel
 
-    > svn checkout http://phing.mirror.svn.symfony-project.com/tags/2.3.3 vendor/phing
+    svn checkout http://phing.mirror.svn.symfony-project.com/tags/2.3.3 vendor/phing
 
- * Instead of using svn, you can clone the unofficial Git repositories:
+* Instead of using svn, you can clone the unofficial Git repositories:
 
-    > git submodule add git://github.com/Xosofox/phing vendor/phing
+    git submodule add git://github.com/Xosofox/phing vendor/phing
 
-    > git submodule add git://github.com/propelorm/Propel.git vendor/propel
+    git submodule add git://github.com/propelorm/Propel.git vendor/propel
 
- * Register this bundle in the `AppKernel` class:
+* Register this bundle in the `AppKernel` class:
 
 {% highlight php %}
+<?php
+
 public function registerBundles()
 {
     $bundles = array(
@@ -56,9 +58,11 @@ public function registerBundles()
 }
 {% endhighlight %}
 
-  * Don't forget to register the PropelBundle namespace in `app/autoload.php`:
+ * Don't forget to register the PropelBundle namespace in `app/autoload.php`:
 
 {% highlight php %}
+<?php
+
 $loader->registerNamespaces(array(
     ...
 
@@ -71,7 +75,7 @@ $loader->registerNamespaces(array(
 
 ### Project configuration
 
-{% highlight yaml
+{% highlight yaml %}
 # in app/config/config.yml
 propel:
     path:       "%kernel.root_dir%/../vendor/propel"
@@ -106,12 +110,14 @@ propel:
 
 You can define _build properties_ by creating a `propel.ini` file in `app/config` and put build properties (see [Build properties Reference](http://www.propelorm.org/wiki/Documentation/1.6/BuildConfiguration)).
 
-    # in app/config/propel.ini
-    xxxx.xxxx.xxxx = XXXX
+{% highlight ini %}
+# in app/config/propel.ini
+xxxx.xxxx.xxxx = XXXX
+{% endhighlight %}
 
 But you can follow the Symfony2 way by adding build properties in `app/config/config.yml`:
 
-{% highlight yaml
+{% highlight yaml %}
 # in app/config/config.yml
 propel:
     build_properties:
@@ -155,14 +161,14 @@ Place the following schema in `src/Sensio/HelloBundle/Resources/config/schema.xm
 
 Call the application console with the `propel:build` command:
 
-    > php app/console propel:build [--classes] [--sql] [--insert-sql]
+    php app/console propel:build [--classes] [--sql] [--insert-sql]
 
 
 ### Insert SQL
 
 Call the application console with the `propel:insert-sql` command:
 
-    > php app/console propel:insert-sql [--force]
+    php app/console propel:insert-sql [--force]
 
 Note that the `--force` option is needed to actually execute the SQL statements.
 
@@ -171,59 +177,63 @@ Note that the `--force` option is needed to actually execute the SQL statements.
 
 Use the Model classes as any other class in Symfony2. Just use the correct namespace, and Symfony2 will autoload them:
 
-    class HelloController extends Controller
-    {
-        public function indexAction($name)
-        {
-            $author = new \Sensio\HelloBundle\Model\Author();
-            $author->setFirstName($name);
-            $author->save();
+{% highlight php %}
+<?php
 
-            return $this->render('HelloBundle:Hello:index.html.twig', array('name' => $name, 'author' => $author));
-        }
+class HelloController extends Controller
+{
+    public function indexAction($name)
+    {
+        $author = new \Sensio\HelloBundle\Model\Author();
+        $author->setFirstName($name);
+        $author->save();
+
+        return $this->render('HelloBundle:Hello:index.html.twig', array('name' => $name, 'author' => $author));
     }
+}
+{% endhighlight %}
 
 
 ### Migrations
 
 Generates SQL diff between the XML schemas and the current database structure:
 
-    > php app/console propel:migration:generate-diff
+    php app/console propel:migration:generate-diff
 
 Executes the migrations:
 
-    > php app/console propel:migration:migrate
+    php app/console propel:migration:migrate
 
 Executes the next migration up:
 
-    > php app/console propel:migration:migrate --up
+    php app/console propel:migration:migrate --up
 
 Executes the previous migration down:
 
-    > php app/console propel:migration:migrate --down
+    php app/console propel:migration:migrate --down
 
 Lists the migrations yet to be executed:
 
-    > php app/console propel:migration:status
+    php app/console propel:migration:status
 
 
 ### Working with existing databases
 
 Run the following command to generate an XML schema from your `default` database:
 
-    > php app/console propel:reverse
+    php app/console propel:reverse
 
 You can define which connection to use:
 
-    > php app/console propel:reverse --connection=default
+    php app/console propel:reverse --connection=default
 
 You can dump data from your database in XML to `app/propel/dump/xml/`:
 
-    > php app/console propel:data-dump [--connection[="..."]]
+    php app/console propel:data-dump [--connection[="..."]]
 
 Once you ran `propel:data-dump` you can generate SQL statements from dumped data:
 
-    > php app/console propl:data-sql
+    php app/console propl:data-sql
 
 SQL will be write in `app/propel/sql/`.
 
@@ -232,7 +242,7 @@ SQL will be write in `app/propel/sql/`.
 
 You can load your own fixtures by using the following command:
 
-    > php app/console propel:load-fixtures [-d|--dir[="..."]] [--xml] [--sql] [--connection[="..."]]
+    php app/console propel:load-fixtures [-d|--dir[="..."]] [--xml] [--sql] [--connection[="..."]]
 
 As usual, `--connection` allows to specify a connection.
 
@@ -258,7 +268,7 @@ A valid _XML fixtures file_ is:
 
 You can generate **Graphviz** file for your project by using the following command line:
 
-    > php app/console propel:graphviz
+    php app/console propel:graphviz
 
 It will write files in `app/propel/graph/`.
 
@@ -267,14 +277,14 @@ It will write files in `app/propel/graph/`.
 
 You can create a **database**:
 
-    > php app/console propel:database:create [--connection[=""]]
+    php app/console propel:database:create [--connection[=""]]
 
 As usual, `--connection` allows to specify a connection.
 
 
 You can drop a **database**:
 
-    > php app/console propel:database:drop [--connection[=""]] [--force]
+    php app/console propel:database:drop [--connection[=""]] [--force]
 
 As usual, `--connection` allows to specify a connection.
 
