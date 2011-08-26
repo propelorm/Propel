@@ -45,6 +45,8 @@ echo $archivedBook->getArchivedAt(); // 2011-08-23 18:14:23
 The ActiveRecord class of an `archivable` model has more methods to deal with the archive:
 
 {{{
+#!php
+<?php
 // restore an object to the state it had when last archived
 $book->restoreFromArchive();
 // find the archived version of an existing book
