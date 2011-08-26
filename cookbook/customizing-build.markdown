@@ -17,18 +17,18 @@ _Properties_ are essentially variables. These variables can be specified on the 
 
 For example, here's how a property might be specified on the commandline:
 
-{% highlight text %}
+{% highlight bash %}
 > phing -Dpropertyname=value
 {% endhighlight %}
 
 More typically, properties are stored in files and loaded by Phing. For those not familiar with Java properties files, these files look like PHP INI files; the main difference is that values in properties files can be references to other properties (a feature that will probably exist in in INI files in PHP 5.1).
 
-_Importantly:_ properties, once loaded, are not overridden by properties with the same name unless explicitly told to do so. In the Propel build process, the order of precedence for property values is as follows:
+>**Importantly**<br />properties, once loaded, are not overridden by properties with the same name unless explicitly told to do so. In the Propel build process, the order of precedence for property values is as follows:
 
- 1. Commandline properties
- 2. Project `build.properties`
- 3. Top-level `build.properties`
- 4. Top-level `default.properties`
+1. Commandline properties
+2. Project `build.properties`
+3. Top-level `build.properties`
+4. Top-level `default.properties`
 
 This means, for example, that values specified in the project's `build.properties` files will override those in the top-level `build.properties` and `default.properties` files.
 
@@ -42,7 +42,7 @@ _Note, however, that some of the current values exist for legacy reasons and wil
 
 This can easily be customized on a project-by-project basis. For example, here is a `build.properties` file for the _bookstore _project that puts the generated classes in `/var/www/bookstore/classes` and puts the generated SQL in `/var/www/bookstore/db/sql`:
 
-{% highlight text %}
+{% highlight ini %}
 propel.project = bookstore
 propel.database = sqlite
 propel.database.url = sqlite://localhost/./test/bookstore.db
@@ -57,7 +57,7 @@ propel.sql.dir = ${propel.output.dir}/db/sql
 
 The _targetPackage_ property is also used in determining the path of the generated classes. In the example above, the `Book.php` class will be located at `/var/www/bookstore/classes/bookstore/Book.php`. You can change this `bookstore` subdir by altering the _targetPackage_ property:
 
-{% highlight text %}
+{% highlight ini %}
 propel.targetPackage = propelom
 {% endhighlight %}
 
@@ -69,7 +69,7 @@ _Note that you can override the targetPackage property by specifying a package="
 
 If you want to make more major changes to the way the build script works, you can setup your own Phing build script. This actually is not a very scary task, and once you've managed to create a Phing build script, you'll probably want to create build targets for other aspects of your project (e.g. running batch unit tests is now supported in Phing 2.1-CVS).
 
-To start with, I suggest taking a look at the `build-propel.xml` script (the build.xml script is just a wrapper script). Note, however, that the `build-propel.xml` script does a lot & has a lot of complexity that is designed to make it easy to configure using properties (so, don't be scared).
+To start with, I suggest taking a look at the `build-propel.xml` script (the build.xml script is just a wrapper script). Note, however, that the `build-propel.xml` script does a lot and has a lot of complexity that is designed to make it easy to configure using properties (so, don't be scared).
 
 Without going into too much detail about how Phing works, the important thing is that Phing build scripts XML and they are grouped into _targets_ which are kinda like functions. The actual work of the scripts is performed by _tasks_, which are PHP5 classes that extend the base Phing _Task_ class and implement its abstract methods. Propel provides some Phing tasks that work with templates to create the object model.
 
@@ -78,7 +78,8 @@ Without going into too much detail about how Phing works, the important thing is
 The Propel tasks must be registered so that Phing can find them. This is done using the _<taskdef>_ tag. You can see this near the top of the `build-propel.xml` file.
 
 For example, here is how we register the _propel-om_ task, which is the task that creates the PHP classes for your object model:
-{% highlight text %}
+
+{% highlight xml %}
 <taskdef
     name="propel-om"
     classname="propel.phing.PropelOMTask"/>
@@ -86,7 +87,7 @@ For example, here is how we register the _propel-om_ task, which is the task tha
 
 Simple enough. Phing will now associate the _<propel-data-model>_ tag with the _PropelOMTask_ class, which it expects to find at `propel/phing/PropelOMTask.php` (on your _include_path_). If Propel generator classes are not on your _include_path_, you can specify that path in your _<taskdef>_ tag:
 
-{% highlight text %}
+{% highlight xml %}
 <taskdef
     name="propel-om"
     classname="propel.phing.PropelOMTask"
@@ -95,7 +96,7 @@ Simple enough. Phing will now associate the _<propel-data-model>_ tag with the _
 
 Or, for maximum re-usability, you can create a _<path>_ object, and then reference it (this is the way `build-propel.xml` does it):
 
-{% highlight text %}
+{% highlight xml %}
   <path id="propelclasses">
       <pathelement dir="/path/to/propel-generator/classes"/>
   </path>
@@ -110,7 +111,7 @@ Or, for maximum re-usability, you can create a _<path>_ object, and then referen
 
 Now that the _<propel-om>_ task has been registered with Phing, it can be invoked in your build file.
 
-{% highlight text %}
+{% highlight xml %}
 <propel-om
       outputDirectory="/var/www/bookstore/classes"
       targetDatabase="mysql"
@@ -127,7 +128,7 @@ In the example above, it's worth pointing out that the _<propel-om>_ task can ac
 
 Now that we've seen the essential elements of our custom build file, it's time to look at how to assemble them into a working whole:
 
-{% highlight text %}
+{% highlight xml %}
 <?xml version="1.0">
 <project name="propel" default="om">
 
@@ -170,3 +171,4 @@ If that build script was named `build.xml` then it could be executed by simply r
 Actually, specifying the _om_ target is not necessary since it is the default.
 
 Refer to the `build-propel.xml` file for examples of how to use the other Propel Phing tasks -- e.g. _<propel-sql>_ for generating the DDL SQL, _<propel-sql-exec>_ for inserting the SQL, etc.
+
