@@ -7,7 +7,7 @@ title: How to Write A Behavior
 
 Behaviors are a good way to reuse code across models without requiring inheritance (a.k.a. horizontal reuse). This step-by-step tutorial explains how to port model code to a behavior, focusing on a simple example.
 
-In the tutorial "[http://propel.posterous.com/getting-to-know-propel-15-keeping-an-aggregat Keeping an Aggregate Column up-to-date]", posted in the [http://propel.posterous.com/ Propel blog], the `TotalNbVotes` property of a `PollQuestion` object was updated each time a related `PollAnswer` object was saved, edited, or deleted. This "aggregate column" behavior was implemented by hand using hooks in the model classes. To make it truly reusable, the custom model code needs to be refactored and moved to a Behavior class.
+In the tutorial "[Keeping an Aggregate Column up-to-date](http://propel.posterous.com/getting-to-know-propel-15-keeping-an-aggregat)", posted in the [Propel blog](http://propel.posterous.com/), the `TotalNbVotes` property of a `PollQuestion` object was updated each time a related `PollAnswer` object was saved, edited, or deleted. This "aggregate column" behavior was implemented by hand using hooks in the model classes. To make it truly reusable, the custom model code needs to be refactored and moved to a Behavior class.
 
 ## Boostrapping A Behavior ##
 
