@@ -116,3 +116,7 @@
   margin: 0 0.5m;
   border: none;
 }
+
+.markdown a {
+    text-decoration: underline;
+}
