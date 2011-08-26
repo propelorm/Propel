@@ -24,13 +24,13 @@ Now we save that as _'my_column-default.sql_' in the same directory as the gener
 
 In that same directory (where your _'schema.sql_' is located), there is a _'sqldb.map_' file which contains a mapping of SQL DDL files to the database that they should be executed against.  After running the propel generator, you will probably have a single entry in that file that looks like:
 
-{{{
+{% highlight text %}
 schema.sql=your-db-name
 {% endhighlight %}
 
 We want to simply add the new file we created to this file (future builds will preserve anything you add to this file).  When we're done, the file will look like this:
 
-{{{
+{% highlight text %}
 schema.sql=your-db-name
 my_column-default.sql=your-db-name
 {% endhighlight %}
