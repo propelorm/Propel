@@ -19,40 +19,40 @@ This is a driver [released in August 2010 by Microsoft](http://blogs.msdn.com/b/
 
 Sample dsn's for pdo_sqlsrv:
 
-{% highlight xml
+{% highlight xml %}
 <dsn>sqlsrv:server=localhost\SQLEXPRESS;Database=propel</dsn>
 <dsn>sqlsrv:server=localhost\SQLEXPRESS,1433;Database=propel</dsn>
 <dsn>sqlsrv:server=localhost,1433;Database=propel</dsn>
 {% endhighlight %}
-  
+
 Sample runtime-conf.xml for pdo_sqlsrv:
 
-{% highlight xml
+{% highlight xml %}
 <datasource id="bookstore">
   <adapter>sqlsrv</adapter>
   <connection>
     <classname>DebugPDO</classname>
     <dsn>sqlsrv:server=localhost,1433;Database=propel</dsn>
     <user>username</user>
-    <password>password</password>         
+    <password>password</password>
   </connection>
 </datasource>
 {% endhighlight %}
 
 Sample build.properties for pdo_sqlsrv:
 
-{% highlight ini
+{% highlight ini %}
 propel.database = sqlsrv
 propel.database.url = sqlsrv:server=127.0.0.1,1433;Database=propel
-{% endhighlight %}   
+{% endhighlight %}
 
 ### pdo_sybase ###
 
 When built against FreeTDS dblib it will be called `pdo_sybase`. This requires properly setting up the FreeTDS `freetds.conf` and `locales.conf`. There is a workaround for the lack of transactions support in the `pdo_dblib` driver by using `MssqlDebugPDO` or `MssqlPropelPDO` classes.
 
 c:\freetds.conf
-{% highlight text %}   
-#!ini
+
+{% highlight ini %}
 [global]
   client charset = UTF-8
   tds version = 8.0
@@ -60,47 +60,52 @@ c:\freetds.conf
 {% endhighlight %}
 
 c:\locales.conf
-{% highlight ini
+
+{% highlight ini %}
 [default]
   date format = %Y-%m-%d %H:%M:%S.%z
 {% endhighlight %}
 
 Sample dsn's for pdo_sybase:
-{% highlight xml
+
+{% highlight xml %}
 <dsn>sybase:host=localhost\SQLEXPRESS;dbname=propel</dsn>
 <dsn>sybase:host=localhost\SQLEXPRESS:1433;dbname=propel</dsn>
 <dsn>sybase:host=localhost:1433;dbname=propel</dsn>
-{% endhighlight %} 
+{% endhighlight %}
 
 Sample `runtime-conf.xml` for pdo_sybase:
-{% highlight xml
+
+{% highlight xml %}
 <datasource id="bookstore">
   <adapter>mssql</adapter>
   <connection>
     <classname>MssqlDebugPDO</classname>
     <dsn>sybase:host=localhost:1433;dbname=propel</dsn>
     <user>username</user>
-    <password>password</password>         
+    <password>password</password>
   </connection>
 </datasource>
 {% endhighlight %}
 
 Sample `build.properties` for `pdo_sybase`:
-{% highlight ini
+
+{% highlight ini %}
 propel.database = mssql
 propel.database.url = sybase:host=localhost:1433;dbname=propel
-{% endhighlight %}   
+{% endhighlight %}
 
 ### pdo_mssql ###
 
 When built against MS SQL Server dblib the driver will be called `pdo_mssql`. It is not recommeneded to use the `pdo_mssql` driver because it strips blobs of single quotes when retreiving from the database and will not return blobs or clobs longer that 8192 characters. The dsn differs from `pdo_sybase` in that it uses a comma between the server and port number instead of a colon and mssql instead of sybase for the driver name.
 
 Sample dsn's for `pdo_mssql`:
-{% highlight xml
+
+{% highlight xml %}
 <dsn>mssql:host=localhost\SQLEXPRESS;dbname=propel</dsn>
 <dsn>mssql:host=localhost\SQLEXPRESS,1433;dbname=propel</dsn>
 <dsn>mssql:host=localhost,1433;dbname=propel</dsn>
-{% endhighlight %}      
+{% endhighlight %}
 
 ### pdo_odbc ###
 
@@ -116,7 +121,8 @@ Linux has 2 driver implementations that could be used: `pdo_dblib`, and `pdo_obd
 
 Redhat: `/etc/freetds.conf`
 Ubuntu: `/etc/freetds/freetds.conf`
-{% highlight ini   
+
+{% highlight ini %}
 [global]
   client charset = UTF-8
   tds version = 8.0
@@ -125,36 +131,40 @@ Ubuntu: `/etc/freetds/freetds.conf`
 
 Redhat: `/etc/locales.conf`
 Ubuntu: `/etc/freetds/locales.conf`
-{% highlight ini
+
+{% highlight ini %}
 [default]
   date format = %Y-%m-%d %H:%M:%S.%z
 {% endhighlight %}
 
 Sample dsn's for `pdo_dblib`:
-{% highlight xml
+
+{% highlight xml %}
 <dsn>dblib:host=localhost\SQLEXPRESS;dbname=propel</dsn>
 <dsn>dblib:host=localhost\SQLEXPRESS:1433;dbname=propel</dsn>
 <dsn>dblib:host=localhost:1433;dbname=propel</dsn>
-{% endhighlight %} 
+{% endhighlight %}
 
 Sample `runtime-conf.xml` for `pdo_dblib`:
-{% highlight xml
+
+{% highlight xml %}
 <datasource id="bookstore">
   <adapter>mssql</adapter>
   <connection>
     <classname>MssqlDebugPDO</classname>
     <dsn>dblib:host=localhost:1433;dbname=propel</dsn>
     <user>username</user>
-    <password>password</password>         
+    <password>password</password>
   </connection>
 </datasource>
 {% endhighlight %}
 
 Sample `build.properties` for `pdo_dblib`:
-{% highlight ini
+
+{% highlight ini %}
 propel.database = mssql
 propel.database.url = dblib:host=localhost:1433;dbname=propel
-{% endhighlight %} 
+{% endhighlight %}
 
 ### pdo_odbc ###
 
