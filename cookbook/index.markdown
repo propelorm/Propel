@@ -30,3 +30,5 @@ title: The Cookbook
 [Using SQL Schemas](using-sql-schemas)
 
 [How to Write A Behavior](writing-behavior)
+
+[Working with Symfony2](working-with-symfony2)
