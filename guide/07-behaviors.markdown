@@ -133,19 +133,20 @@ Then rebuild your model, and there you go: two columns, `created_at` and `update
 
 Propel currently bundles several behaviors. Check the behavior documentation for details on usage:
 
-* [naggregate_column](behaviors/aggregate_colum)
-* [alternative_coding_standards](behaviors/alternative_coding_standards)
-* [auto_add_pk](behaviors/auto_add_pk)
-* [delegate](behaviors/delegate)
-* [timestampable](behaviors/timestampable)
-* [sluggable](behaviors/sluggable)
-* [soft_delete](behaviors/soft_delete)
-* [sortable](behaviors/sortable)
-* [nested_set](behaviors/nested_set)
-* [versionable](behaviors/versionable)
-* [i18n](behaviors/i18n)
-* [query_cache](behaviors/query_cache)
-* And [concrete_inheritance](), documented in the Inheritance Chapter even if it's a behavior
+* [aggregate_column](../behaviors/aggregate-colum)
+* [alternative_coding_standards](../behaviors/alternative-coding-standards)
+* [archivable](../behaviors/archivable) (Replace the deprecated `soft-delete` behavior)
+* [auto_add_pk](../behaviors/auto-add-pk)
+* [delegate](../behaviors/delegate)
+* [timestampable](../behaviors/timestampable)
+* [sluggable](../behaviors/sluggable)
+* [soft_delete](../behaviors/soft-delete) **Deprecated**
+* [sortable](../behaviors/sortable)
+* [nested_set](../behaviors/nested-set)
+* [versionable](../behaviors/versionable)
+* [i18n](../behaviors/i18n)
+* [query_cache](../behaviors/query-cache)
+* And [concrete_inheritance](./09-inheritance), documented in the Inheritance Chapter even if it's a behavior
 
 Behaviors bundled with Propel require no further installation and work out of the box.
 
