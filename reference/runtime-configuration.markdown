@@ -10,7 +10,7 @@ title: Runtime Configuration File
 Here is a the sample runtime configuration file.
 
 {% highlight xml %}
-<?xml version#"1.0"?>
+<?xml version="1.0"?>
 <config>
   <log>
     <ident>propel-bookstore</ident>
@@ -18,23 +18,23 @@ Here is a the sample runtime configuration file.
     <level>7</level>
   </log>
   <propel>
-    <datasources default#"bookstore">
-      <datasource id#"bookstore">
+    <datasources default="bookstore">
+      <datasource id="bookstore">
         <adapter>sqlite</adapter>
         <connection>
           <classname>DebugPDO</classname>
-          <dsn>mysql:host#localhost;dbname#bookstore</dsn>
+          <dsn>mysql:host=localhost;dbname=bookstore</dsn>
           <user>testuser</user>
           <password>password</password>
           <options>
-            <option id#"ATTR_PERSISTENT">false</option>
+            <option id="ATTR_PERSISTENT">false</option>
           </options>
           <attributes>
-            <option id#"ATTR_EMULATE_PREPARES">true</option>
+            <option id="ATTR_EMULATE_PREPARES">true</option>
           </attributes>
           <settings>
-            <setting id#"charset">utf8</setting>
-            <setting id#"queries">
+            <setting id="charset">utf8</setting>
+            <setting id="queries">
               <query>set search_path myschema, public</query><!-- automatically set postgresql's search_path -->
               <query>INSERT INTO BAR ('hey', 'there')</query><!-- execute some other query -->
             </setting>
@@ -42,10 +42,10 @@ Here is a the sample runtime configuration file.
         </connection>
         <slaves>
          <connection>
-          <dsn>mysql:host#slave-server1; dbname#bookstore</dsn>
+          <dsn>mysql:host=slave-server1; dbname=bookstore</dsn>
          </connection>
          <connection>
-          <dsn>mysql:host#slave-server2; dbname#bookstore</dsn>
+          <dsn>mysql:host=slave-server2; dbname=bookstore</dsn>
          </connection>
         </slaves>
       </datasource>
@@ -77,7 +77,7 @@ Below you will find an explanation of the primary elements in the configuration.
 
 ### <log> ###
 
-If the **<log>** element is present, Propel will use the specified information to instantiate a [PEAR Log]() logger.
+If the `<log>` element is present, Propel will use the specified information to instantiate a PEAR Log logger.
 
 {% highlight xml %}
 <config>
@@ -98,7 +98,7 @@ The nested elements correspond to the configuration options for the logger (opti
 | ident     |propel             |The identifier tag for the log.
 | level     |7 (PEAR_LOG_DEBUG) |The logging level.
 
-This log configuring API is designed to provide a simple way to get log output from Propel; however, if your application already has a logging mechanism, we recommend instead that you use your existing logger (writing a simple log adapter, if you are using an unsupported logger). See the [Logging Logging documentation]() for more info.
+This log configuring API is designed to provide a simple way to get log output from Propel; however, if your application already has a logging mechanism, we recommend instead that you use your existing logger (writing a simple log adapter, if you are using an unsupported logger). See the [Logging Logging documentation](../guide/08-logging) for more info.
 
 ### <datasources> ###
 
@@ -116,7 +116,7 @@ This is the top-level tag for Propel datasources configuration.
 <config>
  <propel>
   <datasources>
-   <datasource id#"bookstore">
+   <datasource id="bookstore">
 {% endhighlight %}
 A specific datasource being configured.
 
@@ -161,7 +161,7 @@ A custom PDO class (must be a PropelPDO subclass) that you would like to use for
      <classname>DebugPDO</classname>
 {% endhighlight %}
 
-This can be used to specify the alternative **DebugPDO** class bundled with Propel, or your own subclass.  ''Your class must extend PropelPDO, because Propel requires the ability to nest transactions (without having exceptions being thrown by PDO).''
+This can be used to specify the alternative **DebugPDO** class bundled with Propel, or your own subclass.  _Your class must extend PropelPDO, because Propel requires the ability to nest transactions (without having exceptions being thrown by PDO)._
 
 #### <dsn> ####
 
@@ -173,7 +173,7 @@ The PDO DSN that Propel will use to connect to the database for this datasource.
   <datasources>
    <datasource>
     <connection>
-     <dsn>mysql:host#localhost;dbname#bookstore</dsn>
+     <dsn>mysql:host=localhost;dbname=bookstore</dsn>
 {% endhighlight %}
 
 See the PHP documentation for specific format:
@@ -195,14 +195,14 @@ Specifies credentials for databases that specify username and password separatel
   <datasources>
    <datasource>
     <connection>
-     <dsn>mysql:host#localhost;dbname#bookstore</dsn>
+     <dsn>mysql:host=localhost;dbname=bookstore</dsn>
      <user>test</user>
      <password>testpass</password>
 {% endhighlight %}
 
 #### <options> ####
 
-Specify any options which ''must'' be specified when the PDO connection is created.  For example, the ATTR_PERSISTENT option must be specified at object creation time.
+Specify any options which _must_ be specified when the PDO connection is created.  For example, the ATTR_PERSISTENT option must be specified at object creation time.
 
 See the [PDO documentation](http://www.php.net/pdo) for more details.
 
@@ -214,7 +214,7 @@ See the [PDO documentation](http://www.php.net/pdo) for more details.
     <connection>
      <!-- ... -->
      <options>
-      <option id#"ATTR_PERSISTENT">false</option>
+      <option id="ATTR_PERSISTENT">false</option>
      </options>
 {% endhighlight %}
 
@@ -238,16 +238,16 @@ In addition to the standard attributes that can be set on the PDO object, there 
     <connection>
      <!-- ... -->
      <attributes>
-      <option id#"ATTR_ERRMODE">PDO::ERRMODE_WARNING</option>
-      <option id#"ATTR_STATEMENT_CLASS">myPDOStatement</option>
-      <option id#"PROPEL_ATTR_CACHE_PREPARES">true</option>
+      <option id="ATTR_ERRMODE">PDO::ERRMODE_WARNING</option>
+      <option id="ATTR_STATEMENT_CLASS">myPDOStatement</option>
+      <option id="PROPEL_ATTR_CACHE_PREPARES">true</option>
      </attributes>
 {% endhighlight %}
 
 >**Tip**<br />If you are using MySQL and get the following error : "SQLSTATE[HY000]: General error: 2014 Cannot execute queries while other unbuffered queries are active", you can try adding the following attribute:
 
 {% highlight xml %}
-<option id#"MYSQL_ATTR_USE_BUFFERED_QUERY">true</option>
+<option id="MYSQL_ATTR_USE_BUFFERED_QUERY">true</option>
 {% endhighlight %}
 
 #### <settings> ####
@@ -271,7 +271,7 @@ Specifies the character set to use.  Currently you must specify the charset in t
     <connection>
      <!-- ... -->
      <settings>
-      <setting id#"charset">utf8</setting>
+      <setting id="charset">utf8</setting>
      </settings>
 {% endhighlight %}
 
@@ -287,7 +287,7 @@ Specifies any SQL statements to run when the database connection is initialized.
     <connection>
      <!-- ... -->
      <settings>
-      <setting id#"queries">
+      <setting id="queries">
        <query>set search_path myschema, public</query><!-- automatically set postgresql's search_path -->
        <query>INSERT INTO BAR ('hey', 'there')</query>
       </setting>
@@ -304,8 +304,8 @@ Specifies any SQL statements to run when the database connection is initialized.
     <slaves>
 {% endhighlight %}
 
-The `<slaves>` tag groups slave `<connection>` elements which provide support for configuring slave db servers -- when using Propel in a master-slave replication environment. See the [Master-Slave Master-Slave documentation]() for more information.  The nested `<connection>` elements are configured the same way as the top-level `<connection>` element is configured.
+The `<slaves>` tag groups slave `<connection>` elements which provide support for configuring slave db servers -- when using Propel in a master-slave replication environment. See the [Master-Slave documentation](../cookbook/master-slave) for more information.  The nested `<connection>` elements are configured the same way as the top-level `<connection>` element is configured.
 
 ### <debugpdo> ###
 
-The optional `<debugpdo>` element may be provided to pass additional logging configuration options to DebugPDO. Note that these settings have no effect unless DebugPDO has been selected in [RuntimeConfiguration#debugpdo `runtime-conf.xml`]() as the PDO connection class. See the [Logging Logging documentation]() for more information on configuring DebugPDO.
+The optional `<debugpdo>` element may be provided to pass additional logging configuration options to DebugPDO. Note that these settings have no effect unless DebugPDO has been selected in `runtime-conf.xml` as the PDO connection class. See the [Logging documentation](../guide/08-logging) for more information on configuring DebugPDO.
