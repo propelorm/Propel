@@ -56,7 +56,7 @@ echo $author->toJSON();
 
 >**Tip**<br />For each export method, Propel also provides an import method counterpart. So you can easily populate an object from an array using `fromArray()`, and from a string using any of `fromXML()`, `fromYAML()`, `fromJSON()`, and `fromCSV()`.
 
-There are a lot more useful methods offered by the generated objects. You can find an extensive  list of these methods in the [Active Record reference]().
+There are a lot more useful methods offered by the generated objects. You can find an extensive  list of these methods in the [Active Record reference](../reference/active-record).
 
 ## Retrieving Rows ##
 
@@ -153,7 +153,7 @@ $author = AuthorQuery::create()
 $author = AuthorQuery::create()->findOneByFirstName('Jane');
 {% endhighlight %}
 
-The Propel Query API is very powerful. The next chapter will teach you to use it to add conditions on related objects. If you can't wait, jump to the [Query API reference]().
+The Propel Query API is very powerful. The next chapter will teach you to use it to add conditions on related objects. If you can't wait, jump to the [Query API reference](../reference/model-criteria).
 
 ### Using Custom SQL ###
 
@@ -295,7 +295,7 @@ In this example, Propel will hydrate the `Author` objects row by row, after the 
 
 `ModelCriteria::FORMAT_ON_DEMAND` is one of the many formatters provided by the Query objects. You can also get a collection of associative arrays instead of objects, if you don't need any of the logic stored in your model object, by using `ModelCriteria::FORMAT_ARRAY`.
 
-The [wiki:Documentation/1.6/ModelCriteria Query API reference] describes each formatter, and how to use it.
+The [ModelCriteria Query API reference](../reference/model-criteria) describes each formatter, and how to use it.
 
 ## Propel Instance Pool ##
 
