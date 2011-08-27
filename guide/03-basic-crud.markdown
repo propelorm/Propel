@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: documentation
 title: Basic C.R.U.D. Operations
 ---
 
