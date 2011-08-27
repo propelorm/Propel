@@ -1,0 +1,14 @@
+---
+layout: default
+---
+
+<ul class="toc"></ul>
+<div class="documentation">
+    {{ content }}
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('.toc').tableOfContents();
+    });
+</script>

@@ -242,3 +242,12 @@ h1.no_margin_bottom {
   font-style: italic;
 }
 
+.toc {
+	float: right;
+	font-size: 10pt;
+	width: 200px;
+	padding: 10px 10px 10px 20px;
+	background: #efffb1;
+	border: solid 1px #ccd136;
+	margin: 0 0 10px 15px;
+}
