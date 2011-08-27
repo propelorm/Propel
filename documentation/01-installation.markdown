@@ -5,7 +5,7 @@ title: Installing Propel
 
 # Installing Propel #
 
-Propel is available as a [PEAR](http://pear.php.net/manual/en/installation.getting.php) package, as a checkout from a Subversion repository, and as a "traditional" tgz or zip package. Whatever installation method you may choose, getting Propel to work is pretty straightforward.
+Propel is available as a [PEAR](http://pear.php.net/manual/en/installation.getting.php) package, as a clone from the official [Github repository](http://github.com/propelorm/Propel), as a checkout from Subversion through Github and as a "traditional" [tgz](https://github.com/propelorm/Propel/tarball/master) or [zip](https://github.com/propelorm/Propel/zipball/master) package. Whatever installation method you may choose, getting Propel to work is pretty straightforward.
 
 ## Prerequisites ##
 
@@ -56,7 +56,6 @@ The root directory of the Propel library includes the following folders:
 |---------------|----------------------------------------------------------------------
 |generator      |Contains the classes required to run Propel in the command line. Propel commands can build the object model, compile configuration files, execute migrations, etc.
 |runtime        |Contains the classes required to access Propel models and the database. Typically, applications using a web server will only access the `runtime` directory and not the `generator`.
-|docs           |Complete documentation: guide, cookbook, reference, API. Don't hesitate to browse it - that's how you will learn Propel.
 |tests          |Propel unit tests. Ignore this if you don't want to contribute to Propel.
 
 Usually, both the generator and the runtime components are installed on development environments, while the actual test or production servers may need only the runtime component installed.
