@@ -385,8 +385,8 @@ The following settings can be customized at runtime or in the configuration file
 |-----------------------------------------------|-----------|---------------------------------------------------------------------------------
 |`debugpdo.logging.innerglue`                   |":"        |String to use for combining the title of a detail and its value
 |`debugpdo.logging.outerglue`                   |"&#124;"   |String to use for combining details together on a log line
-|`debugpdo.logging.realmemoryusage`             |`false`    |Parameter to [http://www.php.net/manual/en/function.memory-get-usage.php memory_get_usage()] and [http://www.php.net/manual/en/function.memory-get-peak-usage.php memory_get_peak_usage()] calls
-|`debugpdo.logging.methods`                     |array(...) |An array of method names `Class::method`) to be included in method call logging
+|`debugpdo.logging.realmemoryusage`             |`false`    |Parameter to [memory_get_usage()](http://www.php.net/manual/en/function.memory-get-usage.php) and [memory_get_peak_usage()](http://www.php.net/manual/en/function.memory-get-peak-usage.php) calls
+|`debugpdo.logging.methods`                     |`array`    |An array of method names (`Class::method`) to be included in method call logging
 |`debugpdo.logging.details.slow.enabled`        |`false`    |Enables flagging of slow method calls
 |`debugpdo.logging.details.slow.threshold`      |`0.1`      |Method calls taking more seconds than this threshold are considered slow
 |`debugpdo.logging.details.time.enabled`        |`false`    |Enables logging of method execution times
@@ -429,7 +429,6 @@ If you would like the queries to be logged using a different logger (e.g. to a d
 $con = Propel::getConnection(MyObjPeer::DATABASE_NAME);
 $logger = Log::factory('syslog', LOG_LOCAL0, 'propel', array(), PEAR_LOG_INFO);
 $con->setLogger($logger);
-}
 {% endhighlight %}
 
 This will not affect the general Propel logging, but only the full query logging. That way you can log the Propel error and warnings in one file, and the SQL queries in another file.
