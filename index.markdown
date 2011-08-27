@@ -5,6 +5,8 @@ title: Propel documentation
 
 # Welcome to the Propel Website! #
 
+![Propel logo](./images/propel-logo.png)
+
 ### What? ###
 
 Propel is an open-source Object-Relational Mapping (ORM) for PHP5. It allows you to access your database using a set of objects, providing a simple API for storing and retrieving data.
