@@ -5,7 +5,7 @@ title: Archivable Behavior
 
 # Archivable Behavior #
 
-The `archivable` behavior gives model objects the ability to be copied to an archive table. By default, the behavior archives objects on deletion, acting as a replacement of the [wiki:Documentation/1.6/Behaviors/soft_delete `soft_delete`] behavior, which is deprecated.
+The `archivable` behavior gives model objects the ability to be copied to an archive table. By default, the behavior archives objects on deletion, acting as a replacement of the [`soft_delete`](./soft-delete) behavior, which is deprecated.
 
 ## Basic Usage ##
 
@@ -44,7 +44,7 @@ echo $archivedBook->getArchivedAt(); // 2011-08-23 18:14:23
 
 The ActiveRecord class of an `archivable` model has more methods to deal with the archive:
 
-{% highlight text %}
+{% highlight php %}
 // restore an object to the state it had when last archived
 $book->restoreFromArchive();
 // find the archived version of an existing book
