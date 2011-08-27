@@ -5,7 +5,7 @@ title: Download Propel
 
 # Download Propel #
 
-For a full installation tutorial, check the [Installation documentation](guide/01-installation). The following options allow you to download the Propel code and documentation.
+For a full installation tutorial, check the [Installation documentation](documentation/01-installation). The following options allow you to download the Propel code and documentation.
 
 ## Git ##
 
