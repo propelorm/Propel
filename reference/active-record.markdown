@@ -9,7 +9,7 @@ Propel generates smart Active Record classes based on the schema definition of t
 
 ## Overview ##
 
-For each table present in the XML schema, Propel generates one Active Record class - also called the Model class on some parts of the documentation. Instances of the Active Record classes represent a single row from the database, as specified in the [http://en.wikipedia.org/wiki/Active_record_pattern Active record design pattern](http://github.com/seven1m/trac_wiki_to_github). That makes it easy to create, edit, insert or delete an individual row in the persistence layer.
+For each table present in the XML schema, Propel generates one Active Record class - also called the Model class on some parts of the documentation. Instances of the Active Record classes represent a single row from the database, as specified in the [Active record design pattern](http://en.wikipedia.org/wiki/Active_record_pattern). That makes it easy to create, edit, insert or delete an individual row in the persistence layer.
 
 Consider the following schema, describing a simple `book` table with four columns:
 
@@ -104,7 +104,7 @@ class Book extends BaseBook
 }
 {% endhighlight %}
 
->**Tip**<br />See the [Namespaces PHP 5.3 Namespaces]() chepter for more information on namespace usage in Propel.
+>**Tip**<br />See the [PHP 5.3 Namespaces](../cookbook/namespaces) chepter for more information on namespace usage in Propel.
 
 ## Generated Getter and Setter ##
 
@@ -221,7 +221,7 @@ Based on this schema, Propel defines:
 * A many-to-one relationship from the `Book` class to the `Author` class
 * A one-to-many relationship from the `Author` class to the `Book` class
 
-See the [Relationships Relationships documentation]() for more details.
+See the [Relationships documentation](../documentation/04-relationships) for more details.
 
 For each relationship, Propel generates additional getters and setters.
 
@@ -423,7 +423,7 @@ class GeographicCoordinates
 }
 {% endhighlight %}
 
->**Tip**<br />OBJECT columns are searchable, given an object as the search value. See the [ColumnFilterMethods Query reference]() for more details.
+>**Tip**<br />OBJECT columns are searchable, given an object as the search value. See the [ColumnFilterMethods Query reference](./model-criteria#column-filter-methods) for more details.
 
 ### ARRAY columns ###
 
@@ -449,7 +449,7 @@ $book->removeTag('russian');
 print_r($book->getTags()); // array('novel', 'romantic')
 {% endhighlight %}
 
->**Tip**<br />ARRAY columns are searchable, given an array or a scalar as the search value. See the [ColumnFilterMethods Query reference]() for more details.
+>**Tip**<br />ARRAY columns are searchable, given an array or a scalar as the search value. See the [ColumnFilterMethods Query reference](./model-criteria#column-filter-methods) for more details.
 
 ## Generic Getters and Setters ##
 
@@ -540,7 +540,7 @@ if ($book->validate()) {
 }
 {% endhighlight %}
 
-See the [Validators Validators documentation]() for more details.
+See the [Validators documentation](../documentation/05-validators) for more details.
 
 ## Import and Export Capabilities ##
 
@@ -642,7 +642,7 @@ echo $author->getVirtualColumn('AuthorName'); // Tolstoi
 echo $author->getAuthorName(); // Tolstoi
 {% endhighlight %}
 
-See the [ModelCriteria Query API reference]() for more details.
+See the [Query API reference](./model-criteria) for more details.
 
 ## Lifecycle Events ##
 
@@ -662,7 +662,7 @@ preDelete()            // code executed before deleting an object
 postDelete()           // code executed after deleting an object
 {% endhighlight %}
 
-See the [Behaviors Behaviors guide]() for more details.
+See the [Behaviors guide](../documentation/07-behaviors) for more details.
 
 ## Persistence Status ##
 
