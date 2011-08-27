@@ -20,7 +20,7 @@ The process is very straightforward. Just copy a DBDesigner model file under the
 
 Propel looks for all `dbd/*.xml` files, converts them to the Propel XML schema format, and saves the new schemas in the project folder. For instance, if you have a DBDesigner4 model named `model.xml` under the `dbd/` directory, Propel will create a `model.schema.xml` file out of it.
 
-Once the Propel XML schema is created, you can build the project, as described in the [Building A Project chapter](../guide/02-buildtime).
+Once the Propel XML schema is created, you can build the project, as described in the [Building A Project chapter](../documentation/02-buildtime).
 
 ## Customizing The Task ##
 
