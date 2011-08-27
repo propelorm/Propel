@@ -244,11 +244,28 @@ h1.no_margin_bottom {
 
 .toc {
 	float: right;
-	font-size: 10px;
 	width: 200px;
-	padding: 10px 10px 10px 20px;
+	text-align: left;
 	background: #efffb1;
 	border: solid 1px #ccd136;
-	margin: 0 0 10px 15px;
+	margin: 30px 0 10px 15px;
+	padding: 10px 10px 10px 20px;
+}
+
+.toc li {
+	font-size: 11px;
+	text-align: left;
 	list-style-type: none;
+}
+
+.toc > li:first-child {
+    display: none;
+}
+
+.toc li ul li {
+    margin-left: 10px;
+}
+
+.toc li ul li ul li {
+    margin-left: 20px;
 }
