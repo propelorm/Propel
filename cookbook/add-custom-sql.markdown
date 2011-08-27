@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: documentation
 title: Adding Additional SQL Files
 ---
 

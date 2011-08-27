@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: documentation
 title: How to Use PHP 5.3 Namespaces
 ---
 

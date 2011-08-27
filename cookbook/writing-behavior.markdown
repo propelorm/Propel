@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: documentation
 title: How to Write A Behavior
 ---
 

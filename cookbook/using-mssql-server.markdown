@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: documentation
 title: Using Propel With MSSQL Server
 ---
 

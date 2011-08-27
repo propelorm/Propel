@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: documentation
 title: Multi-Component Data Model
 ---
 

@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: documentation
 title: How to Create A Schema Based On A DBDesigner Model
 ---
 

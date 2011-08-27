@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: documentation
 title: Working With Existing Databases
 ---
 
