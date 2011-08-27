@@ -244,10 +244,11 @@ h1.no_margin_bottom {
 
 .toc {
 	float: right;
-	font-size: 10pt;
+	font-size: 10px;
 	width: 200px;
 	padding: 10px 10px 10px 20px;
 	background: #efffb1;
 	border: solid 1px #ccd136;
 	margin: 0 0 10px 15px;
+	list-style-type: none;
 }
