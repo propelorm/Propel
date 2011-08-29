@@ -151,7 +151,7 @@ To use a custom name for these methods, set the `phpName` attribute in the `<col
 {% endhighlight %}
 
 >**Tip**<br />Calling the setter on an autoincremented PK will throw an exception as soon as you try to save the object. You can allow PK inserts on such columns by setting the `allowPkInsert` attribute to `true` in the `<table>` tag of the XML schema.
-
+<br />
 >**Tip**<br />Calling a getter doesn't issue any database query, except for lazy-loaded columns.
 
 ## Persistence Methods ##
