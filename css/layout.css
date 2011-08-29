@@ -11,6 +11,11 @@ a:hover, a:focus {
   padding: 10px;
 }
 
+.topmenu a.link:hover {
+  background-color: #edbc1c;
+  color: #fff;
+}
+
 p, li {
   font-size: 16px;
   line-height:21px;
@@ -145,7 +150,7 @@ h2.title a:focus {
 }
 
 .bottom a {
-  color:#fff;
+  color:#000;
 }
 
 .bottom a:focus,
