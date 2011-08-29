@@ -7,6 +7,15 @@ a:hover, a:focus {
   color:#edbc1c;
 }
 
+.topmenu a.link {
+  padding: 12px;
+}
+
+.topmenu a.link:hover {
+  background-color: #edbc1c;
+  color: #fff;
+}
+
 p, li {
   font-size: 16px;
   line-height:21px;
@@ -141,15 +150,16 @@ h2.title a:focus {
 }
 
 .bottom a {
-  color:#fff;
+  color:#000;
 }
 
 .bottom a:focus,
 .bottom a:hover {
   color:#fff;
 }
+
 .bottom li{
-    display:inline-block;
+  display:inline-block;
 }
 
 h1 {
@@ -189,9 +199,6 @@ h1.no_margin_bottom {
 
 .topmenu li.element {
   display:inline;
-  margin-left:10px;
-  margin-right:10px;
-  padding:0 5px 0 5px;
 }
 
 .ribbon {
@@ -243,29 +250,35 @@ h1.no_margin_bottom {
 }
 
 .toc {
-	float: right;
-	width: 200px;
-	text-align: left;
-	background: #efffb1;
-	border: solid 1px #ccd136;
-	margin: 30px 0 10px 15px;
-	padding: 10px 10px 10px 20px;
+  float: right;
+  width: 200px;
+  text-align: left;
+  background: #edbc1c;
+  margin: 30px 0 10px 15px;
+  padding: 10px 10px 10px 20px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
 }
 
 .toc li {
-	font-size: 11px;
-	text-align: left;
-	list-style-type: none;
+  font-size: 11px;
+  text-align: left;
+  list-style-type: none;
 }
 
 .toc > li:first-child {
-    display: none;
+  display: none;
 }
 
 .toc li ul li {
-    margin-left: 10px;
+  margin-left: 10px;
 }
 
 .toc li ul li ul li {
-    margin-left: 20px;
+  margin-left: 20px;
+}
+
+.toc a:hover {
+  color: #fff;
 }
