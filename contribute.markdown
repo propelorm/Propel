@@ -5,7 +5,7 @@ title: How To Contribute ?
 
 # How To Contribute ? #
 
-You can easily contribute to the Propel project since all projects are hosted by [Github](https://github.com).
+You can easily contribute to the Propel project since all projects are hosted by [GitHub](https://github.com).
 You just have to _fork_ the Propel project on the [PropelORM organization](https://github.com/propelorm) and
 to provide Pull Requests or to submit issues. Note, we are using [Git](http://git-scm.com) as main Source Code Management.
 
@@ -18,7 +18,7 @@ The Propel organization maintains four projects:
 
 ## Submit an issue ##
 
-The ticketing system is also hosted on Github:
+The ticketing system is also hosted on GitHub:
 
 * Propel: [https://github.com/propelorm/Propel/issues](https://github.com/propelorm/Propel/issues)
 * PropelBundle: [https://github.com/propelorm/PropelBundle/issues](https://github.com/propelorm/PropelBundle/issues)
@@ -26,7 +26,7 @@ The ticketing system is also hosted on Github:
 
 ## Make a Pull Request ##
 
-The best way to submit a patch is to make a Pull Request on Github. First, you should create a new branch from the `master`.
+The best way to submit a patch is to make a Pull Request on GitHub. First, you should create a new branch from the `master`.
 Assuming you are in your local Propel project:
 
 {% highlight bash %}
@@ -53,7 +53,7 @@ Once done, you can submit the Pull Request by pushing your branch to your fork:
 > git push origin fix-my-patch
 {% endhighlight %}
 
-Go to the www.github.com and press the _Pull Request_ button. Add a short description to this Pull Request and submit it.
+Go to www.github.com and press the _Pull Request_ button. Add a short description to this Pull Request and submit it.
 
 ## Running Unit Tests ##
 
