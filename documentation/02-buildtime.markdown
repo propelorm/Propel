@@ -165,27 +165,27 @@ You should normally see a some colored lines appear in the terminal, logging all
 The "om" command added a new directory in the `bookstore/` project, called `build/`. The generated model classes are located under the `classes/bookstore/` subdirectory:
 
 {% highlight bash %}
-cd /path/to/bookstore
-cd build/classes/bookstore/
-ls
-  om/
-  map/
-  Author.php
-  AuthorPeer.php
-  AuthorQuery.php
-  Book.php
-  BookPeer.php
-  BookQuery.php
-  Publisher.php
-  PublisherPeer.php
-  PublisherQuery.php
+> cd /path/to/bookstore
+> cd build/classes/bookstore/
+> ls
+    om/
+    map/
+    Author.php
+    AuthorPeer.php
+    AuthorQuery.php
+    Book.php
+    BookPeer.php
+    BookQuery.php
+    Publisher.php
+    PublisherPeer.php
+    PublisherQuery.php
 {% endhighlight %}
 
 For every table in the database, Propel creates 3 PHP classes:
 
-* a _model'' class (e.g. `Book`), which represents a row in the database;
-* a _peer'' class (e.g. `BookPeer`), offering static constants and methods mostly for compatibility with previous Propel versions;
-* a _query'' class (e.g. `BookQuery`), used to operate on a table to retrieve and update rows
+* a _model_ class (e.g. `Book`), which represents a row in the database;
+* a _peer_ class (e.g. `BookPeer`), offering static constants and methods mostly for compatibility with previous Propel versions;
+* a _query_ class (e.g. `BookQuery`), used to operate on a table to retrieve and update rows
 
 Propel uses the `phpName` attribute of each table as the base for the PHP class names.
 
