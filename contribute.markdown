@@ -5,15 +5,15 @@ title: How To Contribute ?
 
 # How To Contribute ? #
 
-You can easily contribute to the Propel project since all projects are hosted by [Github](http://www.github.com).
-You just have to _fork_ the Propel project on the [PropelORM organization](http://www.github.com/propelorm) and
+You can easily contribute to the Propel project since all projects are hosted by [Github](https://github.com).
+You just have to _fork_ the Propel project on the [PropelORM organization](https://github.com/propelorm) and
 to provide Pull Requests or to submit issues. Note, we are using [Git](http://git-scm.com) as main Source Code Management.
 
 The Propel organization maintains four projects:
 
-* [Propel](http://www.github.com/propelorm/Propel) : the main project.
-* [PropelBundle](http://www.github.com/propelorm/PropelBundle) : a bundle to integrate Propel with [Symfony2](http://www.symfony.com).
-* [sfPropelORMPlugin](http://www.github.com/propelorm/sfPropelORMPlugin) : a plugin to integrate Propel with [symfony 1.x](http://www.symfony-project.org);
+* [Propel](http://github.com/propelorm/Propel) : the main project.
+* [PropelBundle](http://github.com/propelorm/PropelBundle) : a bundle to integrate Propel with [Symfony2](http://www.symfony.com).
+* [sfPropelORMPlugin](http://github.com/propelorm/sfPropelORMPlugin) : a plugin to integrate Propel with [symfony 1.x](http://www.symfony-project.org);
 * [propel-docs](https://github.com/propelorm/propel-docs) : the Propel documentation (aka this website).
 
 ## Submit an issue ##
