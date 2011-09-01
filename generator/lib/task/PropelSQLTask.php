@@ -144,15 +144,21 @@ class PropelSQLTask extends AbstractPropelDataModelTask
 		foreach ($dataModels as $package => $dataModel) {
 
 			foreach ($dataModel->getDatabases() as $database) {
-
 				$platform = $database->getPlatform();
+
 				if (!$this->packageObjectModel) {
 					$name = $dataModel->getName();
 				} else {
 					$name = ($package ? $package . '.' : '') . 'schema.xml';
 				}
+
+				if (strpos($name, '/')) {
+					$name = substr($name, strrpos($name, '/'));
+				}
+
 				$outFile = $this->getMappedFile($name);
 				$absPath = $outFile->getAbsolutePath();
+
 				if ($this->getGeneratorConfig()->getBuildProperty('disableIdentifierQuoting')) {
 					$platform->setIdentifierQuoting(false);
 				}
