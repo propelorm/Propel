@@ -7,7 +7,7 @@ title: How To Use Propel i18n Behavior With Symfony 1.4
 
 `Propel` i18n behavior is now fully integrated with `symfony 1.4`.
  
-All you have to do is to write your `schema.xml` with the i18n `<behavior>` tag, instead of using the old SfPropelBehaviorI18n style `<table is18n=true>` with a `culture` column.
+All you have to do is to write your `schema.xml` with the i18n `<behavior>` tag, instead of using the old SfPropelBehaviorI18n style `<table is18n="true">` with a `culture` column.
 
 First [init a `symfony` project with `Propel` as default ORM](init-a-Symfony-project-with-Propel-git-way) and let's start with this `schema.xml`  
 
@@ -84,7 +84,7 @@ Let's build this schema:
 php symfony propel:build --all --and-load --no-confirmation
 {% endhighlight %}
 
-## Simple Use Of embedI18n() ## 
+## Simple Use Of embedI18n()
 
 Create a book module:
 
@@ -136,7 +136,7 @@ Let's print the form with the i18n embedded form in `apps/main/modules/book/temp
 </form>
 {% endhighlight %}
 
-## Use embedI18n() In An Embedded Form ##
+## Use embedI18n() In An Embedded Form
 
 Create an author module:
 
