@@ -5,11 +5,11 @@ title: How To Use Propel i18n Behavior With Symfony 1.4
 
 # How To Use Propel i18n Behavior With Symfony 1.4 #
 
-`Propel` i18n behavior is now fully integrated with `Symfony 1.4`.
+`Propel` i18n behavior is now fully integrated with `symfony 1.4`.
  
 All you have to do is to write your `schema.xml` with the i18n `<behavior>` tag, instead of using the old SfPropelBehaviorI18n style `<table is18n=true>` with a `culture` column.
 
-First init a `Symfony` project with `Propel` as default ORM and let's start with this `schema.xml`  
+First [init a `symfony` project with `Propel` as default ORM](init-a-Symfony-project-with-Propel-git-way) and let's start with this `schema.xml`  
 
 {% highlight xml %}
 <?xml version="1.0" encoding="UTF-8"?>
@@ -41,9 +41,9 @@ First init a `Symfony` project with `Propel` as default ORM and let's start with
 </database>
 {% endhighlight %}
 
-and those fixtures
+And those fixtures:
 
-{% highlight yml %}
+{% highlight yaml %}
 Author:
   bach:
     id: 1
@@ -78,7 +78,7 @@ BookI18n:
     title: Jonathan Livingston Seagull
 {% endhighlight %}
 
-let's build this schema
+Let's build this schema:
 
 {% highlight bash %}
 php symfony propel:build --all --and-load --no-confirmation
@@ -86,13 +86,13 @@ php symfony propel:build --all --and-load --no-confirmation
 
 ## Simple Use Of embedI18n() ## 
 
-create a book module
+Create a book module:
 
 {% highlight bash %}
-php symfony propel:generate-module main book Book
+php symfony propel:generate-module main book Book:
 {% endhighlight %}
 
-add i18N to book form `lib/form/BookForm.class.php`   
+Add i18N to book form `lib/form/BookForm.class.php`:
 
 {% highlight php %}
 <?php
@@ -105,7 +105,7 @@ class BookForm extends BaseBookForm
 }
 {% endhighlight %}
 
-let's print the form with the i18n embedded form in `apps/main/modules/book/templates/_form.php`
+Let's print the form with the i18n embedded form in `apps/main/modules/book/templates/_form.php`:
 
 {% highlight php %}
 <?php use_stylesheets_for_form($form) ?>
@@ -138,13 +138,13 @@ let's print the form with the i18n embedded form in `apps/main/modules/book/temp
 
 ## Use embedI18n() In An Embedded Form ##
 
-create an author module
+Create an author module:
 
 {% highlight php %}
 php symfony propel:generate-module main author Author
 {% endhighlight %}
 
-embed book form in author `lib/form/AuthorForm.class.php`
+Embed book form in author `lib/form/AuthorForm.class.php`:
 
 {% highlight php %}
 <?php
@@ -157,7 +157,7 @@ class AuthorForm extends BaseAuthorForm
 }
 {% endhighlight %}
 
-finally let's print the form with all his embedded forms in `apps/main/modules/templates/_form.php`
+Finally let's print the form with all his embedded forms in `apps/main/modules/templates/_form.php`:
 
 {% highlight php %}
 <?php use_stylesheets_for_form($form) ?>
