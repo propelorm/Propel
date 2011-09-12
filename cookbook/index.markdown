@@ -29,14 +29,20 @@ title: The Cookbook
 
 [Using SQL Schemas](using-sql-schemas)
 
-[How to Write A Behavior](writing-behavior)
+### Extending Propel ###
 
-[Working with Symfony2](working-with-symfony2)
+* [How to Write A Behavior](writing-behavior)
+
 
 ### Working with symfony 1.4 ###
 
-[Init A Symfony Project With Propel As Default ORM - The Git Way](symfony1/init-a-Symfony-project-with-Propel-git-way)
+* [Init A Symfony Project With Propel As Default ORM - The Git Way](symfony1/init-a-Symfony-project-with-Propel-git-way)
 
-[How To Use Propel i18n Behavior With Symfony 1.4](symfony1/how-to-use-Propel i18n-behavior-with-sf1.4)
+* [How To Use Propel i18n Behavior With Symfony 1.4](symfony1/how-to-use-Propel i18n-behavior-with-sf1.4)
 
-[How To Use Old SfPropelBehaviori18n (Aka symfony_i18n) With Symfony 1.4](symfony1/how-to-use-old-SfPropelBehaviori18n-with-sf1.4)
+* [How To Use Old SfPropelBehaviori18n (Aka symfony_i18n) With Symfony 1.4](symfony1/how-to-use-old-SfPropelBehaviori18n-with-sf1.4)
+
+
+### Working with Symfony2 ###
+
+* [Working with Symfony2 (Introduction)](working-with-symfony2)
