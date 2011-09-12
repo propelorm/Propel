@@ -5,28 +5,48 @@ title: Init A Symfony Project With Propel As Default ORM - The Git Way
 
 # Init A Symfony Project With Propel As Default ORM - The Git Way #
 
-Since this summer `Propel` ORM has had a new `Symfony` integration plugin `sfPropelORMPlugin` replacing the old one `sfPropel15Plugin`.
+Since this summer (2011) `Propel` ORM has a new `symfony` integration plugin `sfPropelORMPlugin` replacing the old one `sfPropel15Plugin`.
  
 The old `sfPropel15Plugin` caused [some misunderstood at each new Propel's version](http://propel.posterous.com/sfpropel16plugin-is-already-there-didnt-you-k).
    
 Now `sfPropelORMPlugin` will always integrate the last `Propel`'s version to `Symfony 1.4`.
  
-Let me show you how to start a new `Symfony 1.4` project with all necessary libraries as `git submodule`.
-  
-## Install `Symfony1.4` as `git submodule`, init a new project, init `sfPropelORMPlugin` as `git submodule` ##
- 
+You'll learn how to set up a new `symfony 1.4` project with all necessary libraries as git submodules.
+
+## Set up a new project ##
+
 {% highlight bash %}
-mkdir propel
-cd propel
+mkdir propel_project
+cd propel_project
 git init
+{% endhighlight %}
+
+Install `symfony 1.4` as a git submodule:
+
+{% highlight bash %}
 git submodule add git://github.com/vjousse/symfony-1.4.git lib/vendor
+{% endhighlight %}
+
+Generate a symfony project:
+
+{% highlight bash %}
 php lib/vendor/data/bin/symfony generate:project propel
+{% endhighlight %}
+
+Add the `sfPropelORMPlugin` plugin:
+
+{% highlight bash %}
 git submodule add git://github.com/propelorm/sfPropelORMPlugin plugins/sfPropelORMPlugin
+{% endhighlight %}
+
+Get Propel and Phing bundled with the plugin:
+
+{% highlight bash %}
 cd plugins/sfPropelORMPlugin
 git submodule update --init
 {% endhighlight %}
 
-the `.gitignore` file will be something like
+You should add a `.gitignore` file with the following content:
 
 {% highlight bash %}
 config/databases.yml
@@ -39,9 +59,11 @@ lib/model/map/*
 lib/model/om/*
 {% endhighlight %}
 
-enable `sfPropelORMPlugin` in `config/ProjectConfiguration.class.php`
+Now, enable `sfPropelORMPlugin` in `config/ProjectConfiguration.class.php`:
 
 {% highlight php %}
+<?php
+
 class ProjectConfiguration extends sfProjectConfiguration
 {
   public function setup()
@@ -51,22 +73,21 @@ class ProjectConfiguration extends sfProjectConfiguration
 }
 {% endhighlight %}
 
-publish assets
+Publish assets:
 
 {% highlight bash %}
 php symfony plugin:publish-assets
 {% endhighlight %}
 
-copy `propel.ini` model in your project
+Copy the `propel.ini` default file in your project:
 
 {% highlight bash %}
 cp plugins/sfPropelORMPlugin/config/skeleton/config/propel.ini config/propel.ini
 {% endhighlight %}
 
-verify behaviors lines look like: 
+Verify behaviors lines look like:
 
 {% highlight ini %}
-
 // config/propel.ini
 
 propel.behavior.symfony.class                  = plugins.sfPropelORMPlugin.lib.behavior.SfPropelBehaviorSymfony
@@ -76,13 +97,13 @@ propel.behavior.symfony_behaviors.class        = plugins.sfPropelORMPlugin.lib.b
 propel.behavior.symfony_timestampable.class    = plugins.sfPropelORMPlugin.lib.behavior.SfPropelBehaviorTimestampable
 {% endhighlight %}
                  
-adapt your `databases.yml` or copy the model in your project
+Adapt your `databases.yml` or copy the model in your project:
 
 {% highlight bash %}
 cp plugins/sfPropelORMPlugin/config/skeleton/config/databases.yml config/databases.yml
 {% endhighlight %}
 
-it has to look like this
+It has to look like this:
 
 {% highlight yml %}
 # You can find more information about this file on the symfony website:
@@ -120,4 +141,6 @@ all:
 
 {% endhighlight %}
 
-you're now ready for writing a `schema.xml` and building your project  
+>**Warning**<br/>If you PHP version is under 5.3.5 you won't be allowed to set the `encoding` parameter due to a security issue in PHP.
+
+You're now ready for writing a `schema.xml` and building your project.
