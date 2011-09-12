@@ -35,7 +35,7 @@ title: The Cookbook
 
 ## Working with symfony 1.4 ##
 
-[Init A Symfony Project With Propel As Default ORM - The Git Way](init-a-Symfony project with Propel as default ORM - the-git-way)
+[Init A Symfony Project With Propel As Default ORM - The Git Way](init-a-Symfony-project-with-Propel-git-way)
 
 [How To Use Propel i18n Behavior With Symfony 1.4](how-to-use-Propel i18n-behavior-with-sf1.4)
 
