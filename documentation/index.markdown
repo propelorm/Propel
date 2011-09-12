@@ -5,6 +5,11 @@ title: Documentation
 
 # Documentation #
 
+
+>**Warning**<br />This is the up-to-date documentation for the last Propel version. To access the old documentation,
+please visit [trac.propelorm.org](http://trac.propelorm.org).
+
+
 [Installing Propel](01-installation.html)
 
 [The Build Time](02-buildtime.html)
