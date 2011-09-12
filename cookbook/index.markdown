@@ -33,7 +33,7 @@ title: The Cookbook
 
 [Working with Symfony2](working-with-symfony2)
 
-## Working with symfony 1.4 ##
+### Working with symfony 1.4 ###
 
 [Init A Symfony Project With Propel As Default ORM - The Git Way](symfony1/init-a-Symfony-project-with-Propel-git-way)
 
