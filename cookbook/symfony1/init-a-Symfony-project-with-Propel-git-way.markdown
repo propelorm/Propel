@@ -104,7 +104,7 @@ cp plugins/sfPropelORMPlugin/config/skeleton/config/databases.yml config/databas
 
 It has to look like this:
 
-{% highlight yml %}
+{% highlight yaml %}
 # You can find more information about this file on the symfony website:
 # http://www.symfony-project.org/reference/1_4/en/07-Databases
 
@@ -137,7 +137,6 @@ all:
       encoding:   utf8
       persistent: true
       pooling:    true
-
 {% endhighlight %}
 
 >**Warning**<br/>If you PHP version is under 5.3.6 you won't be allowed to set the `encoding` parameter due to a security issue in PHP.
