@@ -5,11 +5,11 @@ title: How To Use Old SfPropelBehaviori18n (Aka symfony_i18n) With Symfony 1.4
 
 # How To Use Old SfPropelBehaviori18n (Aka symfony_i18n) With Symfony 1.4 #
 
->**Warning**<br /> If you're currently starting a new project or just willing to update your `Symfony` project, you should consider using the `Propel` i18n behavior integration with `Symfony 1.4`.
+>**Warning**<br /> If you're currently starting a new project or just willing to update your `symfony` project, you should consider using the `Propel` i18n behavior integration with `symfony 1.4`.
  
-All you have to do is to write your `schema.xml` with the old SfPropelBehaviorI18n style `<table is18n=true>` with a `culture` column, instead of the i18n `<behavior>` tag.
+All you have to do is to write your `schema.xml` with the old SfPropelBehaviorI18n style `<table is18n="true">` with a `culture` column, instead of the i18n `<behavior>` tag.
  
-First init a `Symfony` project with `Propel` as default ORM and let's start with this `schema.xml`
+First [init a `symfony` project with `Propel` as default ORM](init-a-Symfony-project-with-Propel-git-way) and let's start with this `schema.xml`:
   
 {% highlight xml %}
 <?xml version="1.0" encoding="UTF-8"?>
@@ -38,9 +38,9 @@ First init a `Symfony` project with `Propel` as default ORM and let's start with
 </database>
 {% endhighlight %}
 
-and those fixtures
+And those fixtures:
 
-{% highlight yml %}
+{% highlight yaml %}
 Author:
   bach:
     id: 1
@@ -75,21 +75,21 @@ BookI18n:
     title: Jonathan Livingston Seagull
 {% endhighlight %}
 
-let's build this schema
+Let's build this schema:
 
 {% highlight bash %}
 php symfony propel:build --all --and-load --no-confirmation
 {% endhighlight %}
 
-## Simple Use Of embedI18n() ## 
+## Simple Use Of embedI18n()
 
-create a book module
+Create a book module:
 
 {% highlight bash %}
 php symfony propel:generate-module main book Book
 {% endhighlight %}
 
-add i18N to book form `lib/form/BookForm.class.php`   
+Add i18N to book form `lib/form/BookForm.class.php`:  
 
 {% highlight php %}
 <?php
@@ -102,7 +102,7 @@ class BookForm extends BaseBookForm
 }
 {% endhighlight %}
 
-let's print the form with the i18n embedded forms in `apps/main/modules/book/templates/_form.php`
+Let's print the form with the i18n embedded forms in `apps/main/modules/book/templates/_form.php`:
 
 {% highlight php %}
 <?php use_stylesheets_for_form($form) ?>
@@ -133,15 +133,15 @@ let's print the form with the i18n embedded forms in `apps/main/modules/book/tem
 </form>
 {% endhighlight %}
 
-## Use embedI18n() In An Embedded Form ##
+## Use embedI18n() In An Embedded Form
 
-create an author module
+Create an author module:
 
 {% highlight bash %}
 php symfony propel:generate-module main author Author
 {% endhighlight %}
 
-embed book form in author `lib/form/AuthorForm.class.php`
+Embed book form in author `lib/form/AuthorForm.class.php`:
 
 {% highlight php %}
 <?php
@@ -154,7 +154,7 @@ class AuthorForm extends BaseAuthorForm
 }
 {% endhighlight %}
 
-finally let's print the form with all his embedded forms in `apps/main/modules/templates/_form.php`
+Finally let's print the form with all his embedded forms in `apps/main/modules/templates/_form.php`:
 
 {% highlight php %}
 <?php use_stylesheets_for_form($form) ?>
@@ -187,7 +187,7 @@ finally let's print the form with all his embedded forms in `apps/main/modules/t
 
 As a bonus you can use special joinWithI18n() query even if it's not native (thanks to javer).
 
->**Warning**<br />Remember you should consider using the `Propel i18n behavior integration with `symfony 1.4`.    
+>**Warning**<br />Remember you should consider using the `Propel` i18n behavior integration with `symfony 1.4`.    
 
  
  
