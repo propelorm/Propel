@@ -14,7 +14,7 @@ The Propel organization maintains four projects:
 * [Propel](http://github.com/propelorm/Propel) : the main project.
 * [PropelBundle](http://github.com/propelorm/PropelBundle) : a bundle to integrate Propel with [Symfony2](http://www.symfony.com).
 * [sfPropelORMPlugin](http://github.com/propelorm/sfPropelORMPlugin) : a plugin to integrate Propel with [symfony 1.x](http://www.symfony-project.org);
-* [propel-docs](https://github.com/propelorm/propel-docs) : the Propel documentation (aka this website).
+* [propelorm.github.com](https://github.com/propelorm/propelorm.github.com) : the Propel documentation (aka this website).
 
 ## Submit an issue ##
 
@@ -222,4 +222,4 @@ You can also write additional unit test classes to any of the directories in `te
 
 ## Improve the documentation ##
 
-The Propel documentation is written in [Markdown](http://daringfireball.net/projects/markdown/) syntax and runs through [GitHub Pages](http://pages.github.com/). Everybody can contribute to the documentation by forking the [propel-docs](https://github.com/propelorm/propel-docs) project and to submit Pull Requests.
+The Propel documentation is written in [Markdown](http://daringfireball.net/projects/markdown/) syntax and runs through [GitHub Pages](http://pages.github.com/). Everybody can contribute to the documentation by forking the [propelorm.github.com](https://github.com/propelorm/propelorm.github.com) project and to submit Pull Requests.
