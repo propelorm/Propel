@@ -7,7 +7,7 @@ title: Init A Symfony Project With Propel As Default ORM - The Git Way
 
 Since this summer (2011) `Propel` ORM has a new `symfony` integration plugin `sfPropelORMPlugin` replacing the old one `sfPropel15Plugin`.
 
-The old `sfPropel15Plugin` caused [some misunderstood at each new Propel's version](http://propel.posterous.com/sfpropel16plugin-is-already-there-didnt-you-k).
+The old `sfPropel15Plugin` caused [some confusion at each new Propel's version](http://propel.posterous.com/sfpropel16plugin-is-already-there-didnt-you-k).
 Now `sfPropelORMPlugin` will always integrate the last `Propel`'s version to `Symfony 1.4`.
 
 You'll learn how to set up a new `symfony 1.4` project with all necessary libraries as git submodules.
