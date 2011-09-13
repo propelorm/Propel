@@ -15,14 +15,9 @@
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.js"></script>
     <script type="text/javascript" src="/js/jquery.tableofcontents.min.js" charset="utf-8"></script>
   </head>
-  <body{% if page.url == '/index.html' %} class="home"{% endif %}>
+  <body class="home">
     <div id="fond">
       <div class="layout">
-        <ul class="rootnav">
-          <li class="element">
-            <a class="link" href="/">Propel</a>
-          </li>
-        </ul>
         <ul class="topmenu">
           <li class="element first">
             <a class="link" href="/documentation/">Documentation</a>
@@ -46,11 +41,23 @@
             <a class="link" href="http://propel.posterous.com/">Blog</a>
           </li>
         </ul>
+        <div id="banner">
+          <div id="text">
+            <h2 class="title">
+              <a href="/">Propel</a>
+            </h2>
+            <p class="title">
+            Smart, easy object persistence.
+            </p>
+          </div>
+        </div>
         <div class="ribbon">
           <a href="https://github.com/propelorm/Propel" rel="me">Fork me on GitHub</a>
         </div>
         <div class="content">
-          {{ content }}
+          <div class="markdown">
+            {{ content }}
+          </div>
         </div>
       </div>
       <div class="bottom">

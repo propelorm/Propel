@@ -34,6 +34,9 @@ body {
   padding:0;
   color:#000;
   font-family: Georgia,"Times New Roman",serif;
+}
+
+body.home {
   background:#fff url(../images/background.png) top repeat-x;
 }
 
@@ -106,6 +109,10 @@ h2.title a:focus {
   clear:both;
   width: 100%;
   margin: 30px 0;
+  padding-top: 10px;
+}
+
+.home .content {
   padding-top: 260px;
 }
 
@@ -199,6 +206,21 @@ h1.no_margin_bottom {
 
 .topmenu li.element {
   display:inline;
+}
+
+.rootnav {
+  float:left;
+  margin-top:0px;
+}
+
+.rootnav li {
+  padding: 12px;
+  background-color: #edbc1c;
+  color: #fff;
+}
+
+.rootnav a.link:hover {
+  color: white;
 }
 
 .ribbon {
