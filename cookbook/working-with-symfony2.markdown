@@ -5,7 +5,7 @@ title: Working With Symfony2
 
 # Working With Symfony2 #
 
-The [PropelBundle](http://www.github.com/propelorm/PropelBundle) ease the integration of Propel in Symfony2.
+The [PropelBundle](http://www.github.com/propelorm/PropelBundle) eases the integration of Propel in Symfony2.
 
 It currently supports:
 
@@ -20,11 +20,12 @@ It currently supports:
 * Create/Drop databases.
 * Dump data into XML and SQL.
 
-## Installation ##
+
+## Installation
 
 Clone this bundle in the `vendor/bundles/Propel` directory:
 
-    git submodule add git://github.com/propelorm/PropelBundle.git vendor/bundles/Propel/PropelBundle
+    git submodule add https://github.com/propelorm/PropelBundle.git vendor/bundles/Propel/PropelBundle
 
 Checkout Propel and Phing in the `vendor` directory:
 
@@ -34,9 +35,9 @@ Checkout Propel and Phing in the `vendor` directory:
 
 Instead of using svn, you can clone the unofficial Git repositories:
 
-    git submodule add git://github.com/Xosofox/phing vendor/phing
+    git submodule add https://github.com/Xosofox/phing vendor/phing
 
-    git submodule add git://github.com/propelorm/Propel.git vendor/propel
+    git submodule add https://github.com/propelorm/Propel.git vendor/propel
 
 Register this bundle in the `AppKernel` class:
 
@@ -58,7 +59,7 @@ public function registerBundles()
 }
 {% endhighlight %}
 
-Don't forget to register the PropelBundle namespace in `app/autoload.php`:
+  * Don't forget to register the PropelBundle namespace in `app/autoload.php`:
 
 {% highlight php %}
 <?php
@@ -66,12 +67,12 @@ Don't forget to register the PropelBundle namespace in `app/autoload.php`:
 $loader->registerNamespaces(array(
     ...
 
-    'Propel' => __DIR__.'/../vendor/bundles',
+    'Propel' =__DIR__.'/../vendor/bundles',
 ));
 {% endhighlight %}
 
 
-## Sample Configuration ##
+## Sample Configuration
 
 ### Project configuration
 
@@ -97,18 +98,25 @@ propel:
 #        default_connection:       default
 #        connections:
 #           default:
-#               driver:               mysql
-#               user:                 root
-#               password:             null
-#               dsn:                  mysql:host=localhost;dbname=test
-#               options:              {}
-#               attributes:           {}
+#               driver:             mysql
+#               user:               root
+#               password:           null
+#               dsn:                mysql:host=localhost;dbname=test
+#               options:
+#                   ATTR_PERSISTENT: false
+#               attributes:
+#                   ATTR_EMULATE_PREPARES: true
+#               settings:
+#                   charset:        { value: UTF8 }
+#                   queries:        { query: 'INSERT INTO BAR ('hey', 'there')' }
 {% endhighlight %}
+
+`options`, `attributes` and `settings` are parts of the runtime configuration. See [Runtime Configuration File](../reference/runtime-configuration) documentation for more explanation.
 
 
 ### Build properties
 
-You can define _build properties_ by creating a `propel.ini` file in `app/config` and put build properties (see [Build properties Reference](http://www.propelorm.org/wiki/Documentation/1.6/BuildConfiguration)).
+You can define _build properties_ by creating a `propel.ini` file in `app/config` and put build properties (see [Build properties Reference](../reference/buildtime-configuration)).
 
 {% highlight ini %}
 # in app/config/propel.ini
@@ -188,7 +196,7 @@ class HelloController extends Controller
         $author->setFirstName($name);
         $author->save();
 
-        return $this->render('HelloBundle:Hello:index.html.twig', array('name' => $name, 'author' => $author));
+        return $this->render('HelloBundle:Hello:index.html.twig', array('name' =$name, 'author' =$author));
     }
 }
 {% endhighlight %}
@@ -227,41 +235,59 @@ You can define which connection to use:
 
     php app/console propel:reverse --connection=default
 
-You can dump data from your database in XML to `app/propel/dump/xml/`:
-
-    php app/console propel:data-dump [--connection[="..."]]
-
-Once you ran `propel:data-dump` you can generate SQL statements from dumped data:
-
-    php app/console propl:data-sql
-
-SQL will be write in `app/propel/sql/`.
-
 
 ### Fixtures
 
 You can load your own fixtures by using the following command:
 
-    php app/console propel:load-fixtures [-d|--dir[="..."]] [--xml] [--sql] [--connection[="..."]]
+    php app/console propel:fixtures:load [-d|--dir[="..."]] [--xml] [--sql] [--yml] [--connection[="..."]]
 
 As usual, `--connection` allows to specify a connection.
 
 The `--dir` option allows to specify a directory containing the fixtures (default is: `app/propel/fixtures/`).
 Note that the `--dir` expects a relative path from the root dir (which is `app/`).
 
-The --xml parameter allows you to load only XML fixtures.
-The --sql parameter allows you to load only SQL fixtures.
-You can mix --xml parameter and --sql parameter to load XML and SQL fixtures.
-If none of this parameter are set all files, XML and SQL, in the directory will be load.
+The `--xml` parameter allows you to load only XML fixtures.
+The `--sql` parameter allows you to load only SQL fixtures.
+The `--yml` parameter allows you to load only YAML fixtures.
+
+You can mix `--xml`, `--yml` and `--sql` parameters to load XML, YAML and SQL fixtures.
+If none of this parameter are set all files YAML, XML and SQL in the directory will be load.
 
 A valid _XML fixtures file_ is:
 
 {% highlight xml %}
-<?xml version="1.0" encoding="utf-8"?>
-<dataset name="all">
-    <Object Id="..." />
-</dataset>
+<Fixtures>
+    <Object Namespace="Awesome">
+        <o1 Title="My title" MyFoo="bar" />
+    </Object>
+    <Related Namespace="Awesome">
+        <r1 ObjectId="o1" Description="Hello world !" />
+    </Related>
+</Fixtures>
 {% endhighlight %}
+
+A valid _YAML fixtures file_ is:
+
+{% highlight yaml %}
+\Awesome\Object:
+     o1:
+         Title: My title
+         MyFoo: bar
+
+ \Awesome\Related:
+     r1:
+         ObjectId: o1
+         Description: Hello world !
+{% endhighlight %}
+
+You can dump data into YAML fixtures file by using this command:
+
+    php app/console propel:fixtures:dump [--connection[="..."]]
+
+Dumped files will be written in the fixtures directory: `app/propel/fixtures/` with the following name: `fixtures_99999.yml` where `99999`
+is a timestamp.
+Once done, you will be able to load this files by using the `propel:fixtures:load` command.
 
 
 ### Graphviz
