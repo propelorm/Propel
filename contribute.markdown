@@ -207,7 +207,7 @@ public function testSaveWithDefaultValues() {
   $pub->save();
 
   // if getId() returns the new ID, then we know save() worked.
-  $this->assertTrue($pub->getId() !== null, "Expect Publisher->save() to work  with only default values.");
+  $this->assertNotNull($pub->getId(), "Expect Publisher->save() to work  with only default values.");
 }
 ?>
 {% endhighlight %}
