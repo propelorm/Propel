@@ -148,4 +148,4 @@ pear upgrade phing/phing
 
 ### Getting Help ###
 
-If you can't manage to install Propel, don't hesitate to ask for help. See [wiki:Support] for details on getting help.
+If you can't manage to install Propel, don't hesitate to ask for help. See [Support](../support) for details on getting help.
