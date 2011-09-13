@@ -133,7 +133,7 @@ Then rebuild your model, and there you go: two columns, `created_at` and `update
 
 Propel currently bundles several behaviors. Check the behavior documentation for details on usage:
 
-* [aggregate_column](../behaviors/aggregate-colum)
+* [aggregate_column](../behaviors/aggregate-column)
 * [alternative_coding_standards](../behaviors/alternative-coding-standards)
 * [archivable](../behaviors/archivable) (Replace the deprecated `soft-delete` behavior)
 * [auto_add_pk](../behaviors/auto-add-pk)
