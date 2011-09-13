@@ -46,7 +46,7 @@ tar zxvf propel-1.6.0.tar.gz
 mv propel-1.6.0 propel
 {% endhighlight %}
 
-Or, in Windows, download a ZIP from http://files.propelorm.org, unzip it under the `vendor/` directory, and rename it to `propel`.
+Or, in Windows, download a ZIP from [files.propelorm.org](http://files.propelorm.org), unzip it under the `vendor/` directory, and rename it to `propel`.
 
 ## Propel Directory Structure ##
 
@@ -92,7 +92,7 @@ cd myproject
 ln -s vendor/propel/generator/bin/propel-gen propel-gen
 {% endhighlight %}
 
-At this point, Propel should be setup and ready to use. You can follow the steps in the [wiki:Documentation/1.6/BuildTime Build Guide] to try it out.
+At this point, Propel should be setup and ready to use. You can follow the steps in the [Build Guide](02-buildtime.html) to try it out.
 
 ## Alternative: Global Installation Using PEAR ##
 
