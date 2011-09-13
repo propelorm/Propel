@@ -25,6 +25,17 @@ require_once dirname(__FILE__) . '/Index.php';
  */
 class Unique extends Index
 {
+	private $isConstraint = false;
+
+	public function isConstraint()
+	{
+		return $this->isConstraint;
+	}
+
+	public function setIsConstraint($isConstraint)
+	{
+		$this->isConstraint = $isConstraint;
+	}
 
 	/**
 	 * Returns <code>true</code>.
@@ -32,6 +43,20 @@ class Unique extends Index
 	public function isUnique()
 	{
 		return true;
+	}
+
+	/**
+	 * Set the isConstraint flag that indicates wether this unique is a part
+	 * of a constraint or an ordinary unique index so RDBMSs can take the
+	 * appropriate steps when generating code. Defaults to false unless overridden
+	 * by the platforms.
+	 */
+	public function setupObject()
+	{
+		if (($attr = $this->getAttribute('isConstraint')) != null) {
+			$this->setIsConstraint(($attr == "true" ? true : false));
+		}
+		parent::setupObject();
 	}
 
 	/**

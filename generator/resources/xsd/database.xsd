@@ -274,6 +274,7 @@
 			<xs:element ref="vendor" minOccurs="0" maxOccurs="unbounded"/>
 		</xs:choice>
 		<xs:attribute name="name" type="index_name" use="optional"/>
+		<xs:attribute name="isConstraint" type="xs:boolean" default="false" use="optional"/>
 	</xs:complexType>
 
 	<xs:complexType name="index-column">

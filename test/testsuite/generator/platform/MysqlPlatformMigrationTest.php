@@ -281,4 +281,13 @@ ALTER TABLE `foo` ADD
 ";
 		$this->assertEquals($expected, $this->getPlatform()->getAddColumnsDDL($columns));
 	}
+
+	/**
+	 * @dataProvider providerForTestGetModifyUniqueConstraintDDL
+	 */
+	public function testGetModifyUniqueConstraintDDL($tableDiff)
+	{
+		$this->assertFalse($tableDiff);
+	}
+	
 }

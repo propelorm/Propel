@@ -134,6 +134,22 @@ EOF;
 	<table name="foo">
 		<column name="id" primaryKey="true" type="INTEGER" autoIncrement="true" />
 		<column name="bar" type="INTEGER" />
+		<unique isConstraint="false">
+			<unique-column name="bar" />
+		</unique>
+	</table>
+</database>
+EOF;
+		return array(array($schema));
+	}
+
+	public function providerForTestGetAddTableDDLUniqueConstraint()
+	{
+		$schema = <<<EOF
+<database name="test">
+	<table name="foo">
+		<column name="id" primaryKey="true" type="INTEGER" autoIncrement="true" />
+		<column name="bar" type="INTEGER" />
 		<unique>
 			<unique-column name="bar" />
 		</unique>
@@ -167,6 +183,46 @@ EOF;
 		$column2->getDomain()->copy(new Domain('BARTYPE'));
 		$table->addColumn($column2);
 		$index = new Unique('babar');
+		$index->setIsConstraint(true);
+		$index->addColumn($column1);
+		$index->addColumn($column2);
+		$table->addUnique($index);
+
+		return array(
+			array($index)
+		);
+	}
+
+	public function providerForTestGetUniqueIndexDDL()
+	{
+		$table = new Table('foo');
+		$column1 = new Column('bar1');
+		$column1->getDomain()->copy(new Domain('FOOTYPE'));
+		$table->addColumn($column1);
+		$column2 = new Column('bar2');
+		$column2->getDomain()->copy(new Domain('BARTYPE'));
+		$table->addColumn($column2);
+		$index = new Unique('babar');
+		$index->addColumn($column1);
+		$index->addColumn($column2);
+		$table->addUnique($index);
+
+		return array(
+			array($index)
+		);
+	}
+
+	public function providerForTestGetUniqueConstraintDDL()
+	{
+		$table = new Table('foo');
+		$column1 = new Column('bar1');
+		$column1->getDomain()->copy(new Domain('FOOTYPE'));
+		$table->addColumn($column1);
+		$column2 = new Column('bar2');
+		$column2->getDomain()->copy(new Domain('BARTYPE'));
+		$table->addColumn($column2);
+		$index = new Unique('babar');
+		$index->setIsConstraint(true);
 		$index->addColumn($column1);
 		$index->addColumn($column2);
 		$table->addUnique($index);
@@ -210,6 +266,21 @@ EOF;
 		$index = new Index('babar');
 		$index->addColumn($column1);
 		$index->addColumn($column2);
+		$table->addIndex($index);
+
+		return array(
+			array($index)
+		);
+	}
+
+	public function providerForTestGetDropIndexWithSchemaDDL()
+	{
+		$table = new Table('foo');
+		$table->setSchema('test');
+		$column1 = new Column('bar1');
+		$column1->getDomain()->copy(new Domain('FOOTYPE'));
+		$table->addColumn($column1);
+		$index = new Index('bar');
 		$table->addIndex($index);
 
 		return array(

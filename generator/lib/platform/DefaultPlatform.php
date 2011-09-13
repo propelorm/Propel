@@ -1076,11 +1076,22 @@ ALTER TABLE %s ADD
 		return true;
 	}
 
-	
+	/**
+	 * @see	       Platform::supportsVarcharWithoutSize()
+	 */
 	public function supportsVarcharWithoutSize()
 	{
 		return false;
 	}
+
+	/**
+	 * @see        Platform::supportsUniqueConstraints();
+	 */
+	public function supportsUniqueConstraints()
+	{
+		return false;
+	}
+
 	/**
 	 * Returns the boolean value for the RDBMS.
 	 *

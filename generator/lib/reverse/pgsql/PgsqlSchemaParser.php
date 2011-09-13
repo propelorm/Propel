@@ -444,13 +444,20 @@ class PgsqlSchemaParser extends BaseSchemaParser
 										DISTINCT ON(cls.relname)
 										cls.relname as idxname,
 								        indkey,
-								        indisunique
+								        indisunique,
+										  CASE WHEN
+										    (SELECT contype FROM pg_constraint
+										      WHERE conname=cls.relname
+											    AND conrelid=?) = 'u'
+										  THEN true ELSE false END
+									     AS indisconstr
 								    FROM pg_index idx
 								         JOIN pg_class cls ON cls.oid=indexrelid
 								    WHERE indrelid = ? AND NOT indisprimary
 								    ORDER BY cls.relname");
 
 		$stmt->bindValue(1, $oid);
+		$stmt->bindValue(2, $oid);
 		$stmt->execute();
 
 		$stmt2 = $this->dbh->prepare("SELECT a.attname
@@ -463,9 +470,11 @@ class PgsqlSchemaParser extends BaseSchemaParser
 		while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 			$name = $row["idxname"];
 			$unique = ($row["indisunique"] == 't') ? true : false;
+			$constraint = ($row["indisconstr"] == 't') ? true : false;
 			if (!isset($indexes[$name])) {
 				if ($unique) {
 					$indexes[$name] = new Unique($name);
+					$indexes[$name]->setIsConstraint($constraint);
 				} else {
 					$indexes[$name] = new Index($name);
 				}
