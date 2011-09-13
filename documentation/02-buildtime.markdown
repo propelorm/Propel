@@ -7,7 +7,7 @@ title: The Build Time
 
 The initial step in every Propel project is the "build". During build time, a developer describes the structure of the datamodel in a XML file called the "schema". From this schema, Propel generates PHP classes, called "model classes", made of object-oriented PHP code optimized for a given RMDBS. The model classes are the primary interface to find and manipulate data in the database in Propel.
 
-The XML schema can also be used to generate SQL code to setup your database. Alternatively, you can generate the schema from an existing database (see the [Existing-Database reverse engineering chapter]() for more details), or from a DBDesigner 4 model (see the [DBDesigner2Propel chapter]()).
+The XML schema can also be used to generate SQL code to setup your database. Alternatively, you can generate the schema from an existing database (see the [Existing-Database reverse engineering chapter](../cookbook/existing-database) for more details), or from a DBDesigner 4 model (see the [DBDesigner2Propel chapter](../cookbook/dbdesigner)).
 
 During build time, a developer also defines the connection settings for communicating with the database.
 
@@ -145,7 +145,7 @@ propel.project = bookstore
 
 Use your own database vendor driver, chosen among pgsql, mysql, sqlite, mssql, and oracle.
 
-You can learn more about the available build settings and their possible values in the  [build configuration reference]().
+You can learn more about the available build settings and their possible values in the  [build configuration reference](../reference/buildtime-configuration).
 
 ### Using the `propel-gen` Script To Build The Model ###
 
@@ -256,7 +256,7 @@ propel.database.password = my_db_password
 # propel.database.url = pgsql:host=localhost dbname=my_db_name user=my_db_user password=my_db_password
 {% endhighlight %}
 
-The `propel.database.url` setting should be a PDO DSN (see the [http://www.php.net/pdo PDO documentation]  for more information about vendor-specific DSN). The `user` and `password` are only necessary for the `mysql` and `oracle` drivers.
+The `propel.database.url` setting should be a PDO DSN (see the [PDO documentation](http://www.php.net/pdo) for more information about vendor-specific DSN). The `user` and `password` are only necessary for the `mysql` and `oracle` drivers.
 
 Then use the `propel-gen` script with the "insert-sql" command to connect to the database and inject the generated SQL code:
 
@@ -303,7 +303,7 @@ Notice how the `id` attribute of the `<datasource>` tag matches the connection n
 
 Replace the `<adapter>` and the `<connection>` settings wit hthe ones of your database.
 
-See the [wiki:Documentation/1.6/RuntimeConfiguration runtime configuration reference] for a more detailed explanation of this file.
+See the [runtime configuration reference](../reference/runtime-configuration) for a more detailed explanation of this file.
 
 >**Tip**<br />If you uncomment the `<log>` section, Propel will attempt to instantiate the `Log` class (from the [PEAR Log](http://pear.php.net/package/Log/) package) with the specified parameters and use that to log queries. Propel's statement logging happens at the DEBUG level (7); errors and warnings are logged at the appropriate (non-debug) level.
 
