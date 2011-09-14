@@ -55,4 +55,4 @@ Please download one of the packages below if you would like to install the tradi
 * [Last version of Propel as ZIP file](https://github.com/propelorm/Propel/zipball/master)
 * [Last version of Propel as TAR.GZ file](https://github.com/propelorm/Propel/tarball/master)
 
-Older releases are available for download at  [files.propelorm.org](http://files.propelorm.org).
+Other releases are available for download at [files.propelorm.org](http://files.propelorm.org).
