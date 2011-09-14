@@ -6,7 +6,8 @@ title: Documentation
 # Documentation #
 
  * [What's New in Propel 1.6](whats-new.html) Users of previous versions can check the changes here.
- * [Changelog]() Updates in the 1.6 branch since the release of 1.6.0 stable.
+ * [Changelog](https://raw.github.com/propelorm/Propel/master/CHANGELOG) Updates in the 1.6 branch since the release of 1.6.0 stable.
+ * [API Documentation](http://api.propelorm.org/)
 
 ## Project Setup ##
 
