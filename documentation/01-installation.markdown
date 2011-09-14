@@ -26,16 +26,14 @@ myproject/
   vendor/ <= This is where third-party libraries usually go
 {% endhighlight %}
 
-To install Propel there using Subversion, type:
+To install Propel there using Git, type:
 
 {% highlight bash %}
 cd myproject/vendor
-svn checkout http://svn.propelorm.org/branches/1.6 propel
+git clone https://github.com/propelorm/Propel.git propel
 {% endhighlight %}
 
 This will export the propel library to a local `myproject/vendor/propel/` directory.
-
->**Tip**<br />Don't use the `trunk` from the Propel SVN repository. `branches/1.6` is the most up to date version.
 
 Alternatively, to use a tarball, type the following commands on *nix platforms:
 
