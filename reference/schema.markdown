@@ -39,7 +39,7 @@ You can find example schemas in the test fixtures that the Propel development te
 {% highlight xml %}
 <database name="my_connection_name" defaultIdMethod="native"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:noNamespaceSchemaLocation="http://svn.propelorm.org/branches/1.6/generator/resources/xsd/database.xsd" >
+  xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd" >
 {% endhighlight %}
 
 ## Detailed Reference ##
