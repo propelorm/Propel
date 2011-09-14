@@ -217,6 +217,12 @@ h1.no_margin_bottom {
   padding: 12px;
   background-color: #edbc1c;
   color: #fff;
+  -webkit-border-bottom-right-radius: 5px;
+  -webkit-border-bottom-left-radius: 5px;
+  -moz-border-bottom-right-radius: 5px;
+  -moz-border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
 }
 
 .rootnav a.link:hover {
