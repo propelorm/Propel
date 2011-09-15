@@ -63,7 +63,7 @@ propel.targetPackage = propelom
 
 Now the class will be located at `/var/www/bookstore/classes/propelom/Book.php`
 
-_Note that you can override the targetPackage property by specifying a package="" attribute in the <database> tag or even the <table> tag of the schema.xml._
+_Note that you can override the targetPackage property by specifying a package="" attribute in the `<database>` tag or even the <table> tag of the schema.xml._
 
 ## Creating a custom build.xml file ##
 
@@ -75,9 +75,9 @@ Without going into too much detail about how Phing works, the important thing is
 
 ### Step 1: register the needed tasks ###
 
-The Propel tasks must be registered so that Phing can find them. This is done using the _<taskdef>_ tag. You can see this near the top of the `build-propel.xml` file.
+The Propel tasks must be registered so that Phing can find them. This is done using the `<taskdef>` tag. You can see this near the top of the `build-propel.xml` file.
 
-For example, here is how we register the _propel-om_ task, which is the task that creates the PHP classes for your object model:
+For example, here is how we register the `<propel-om>` task, which is the task that creates the PHP classes for your object model:
 
 {% highlight xml %}
 <taskdef
@@ -85,7 +85,7 @@ For example, here is how we register the _propel-om_ task, which is the task tha
     classname="propel.phing.PropelOMTask"/>
 {% endhighlight %}
 
-Simple enough. Phing will now associate the _<propel-data-model>_ tag with the _PropelOMTask_ class, which it expects to find at `propel/phing/PropelOMTask.php` (on your _include_path_). If Propel generator classes are not on your _include_path_, you can specify that path in your _<taskdef>_ tag:
+Simple enough. Phing will now associate the _<propel-data-model>_ tag with the _PropelOMTask_ class, which it expects to find at `propel/phing/PropelOMTask.php` (on your _include_path_). If Propel generator classes are not on your _include_path_, you can specify that path in your `<taskdef>` tag:
 
 {% highlight xml %}
 <taskdef
@@ -94,7 +94,7 @@ Simple enough. Phing will now associate the _<propel-data-model>_ tag with the _
     classpath="/path/to/propel-generator/classes"/>
 {% endhighlight %}
 
-Or, for maximum re-usability, you can create a _<path>_ object, and then reference it (this is the way `build-propel.xml` does it):
+Or, for maximum re-usability, you can create a `<path>` object, and then reference it (this is the way `build-propel.xml` does it):
 
 {% highlight xml %}
   <path id="propelclasses">
@@ -109,7 +109,7 @@ Or, for maximum re-usability, you can create a _<path>_ object, and then referen
 
 ### Step 2: invoking the new task ###
 
-Now that the _<propel-om>_ task has been registered with Phing, it can be invoked in your build file.
+Now that the `<propel-om>` task has been registered with Phing, it can be invoked in your build file.
 
 {% highlight xml %}
 <propel-om
@@ -122,7 +122,7 @@ Now that the _<propel-om>_ task has been registered with Phing, it can be invoke
 </propel-om>
 {% endhighlight %}
 
-In the example above, it's worth pointing out that the _<propel-om>_ task can actually transform multiple `schema.xml` files, which is why there is a _<schemafileset>_ sub-element. Phing _filesets_ are beyond the scope of this HOWTO, but hopefully the above example is obvious enough.
+In the example above, it's worth pointing out that the `<propel-om>` task can actually transform multiple `schema.xml` files, which is why there is a `<schemafileset>` sub-element. Phing _filesets_ are beyond the scope of this HOWTO, but hopefully the above example is obvious enough.
 
 ### Step 3: putting it together into a build.xml file ###
 
@@ -164,11 +164,10 @@ Now that we've seen the essential elements of our custom build file, it's time t
 
 If that build script was named `build.xml` then it could be executed by simply running _phing_ in the directory where it is located:
 
-{% highlight text %}
+{% highlight bash %}
 > phing om
 {% endhighlight %}
 
 Actually, specifying the _om_ target is not necessary since it is the default.
 
-Refer to the `build-propel.xml` file for examples of how to use the other Propel Phing tasks -- e.g. _<propel-sql>_ for generating the DDL SQL, _<propel-sql-exec>_ for inserting the SQL, etc.
-
+Refer to the `build-propel.xml` file for examples of how to use the other Propel Phing tasks -- e.g. `<propel-sql>` for generating the DDL SQL, `<propel-sql-exec>` for inserting the SQL, etc.
