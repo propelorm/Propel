@@ -73,13 +73,13 @@ title: Documentation
 
 ### Working with symfony 1.4 ###
 
-* [Using Propel as Default ORM](symfony1/init-a-Symfony-project-with-Propel-git-way) How to initialize a symfony project with Propel as default ORM - the git way.
-* [Using the `i18n` behavior](symfony1/how-to-use-Propel i18n-behavior-with-sf1.4) How to use Propel's `i18n` behavior with symfony 1.4.
-* [Using the legacy `symfony_i18n` behavior](symfony1/how-to-use-old-SfPropelBehaviori18n-with-sf1.4) How to use the old `SfPropelBehaviori18n` (a.k.a. `symfony_i18n`) with symfony 1.4.
+* [Using Propel as Default ORM](../cookbook/init-a-Symfony-project-with-Propel-git-way) How to initialize a symfony project with Propel as default ORM - the git way.
+* [Using the `i18n` behavior](../cookbook/how-to-use-Propel i18n-behavior-with-sf1.4) How to use Propel's `i18n` behavior with symfony 1.4.
+* [Using the legacy `symfony_i18n` behavior](../cookbook/how-to-use-old-SfPropelBehaviori18n-with-sf1.4) How to use the old `SfPropelBehaviori18n` (a.k.a. `symfony_i18n`) with symfony 1.4.
 
 ### Working with Symfony2 ###
 
-* [Working with Symfony2 (Introduction)](working-with-symfony2)
+* [Working with Symfony2 (Introduction)](../cookbook/working-with-symfony2)
 
 >**Tip**<br />This is the up-to-date documentation for the last Propel version. To access the old documentation,
 please visit [trac.propelorm.org](http://trac.propelorm.org).
