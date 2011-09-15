@@ -5,29 +5,32 @@ title: The Cookbook
 
 # The Cookbook #
 
-[Add Custom SQL](add-custom-sql)
+### Common Tasks ###
 
-[Advanced Column Types](advanced-column-types)
+* [Add Custom SQL](add-custom-sql)
 
-[Copying Objects](copying-objects)
+* [Advanced Column Types](advanced-column-types)
 
-[Customizing build](customizing-build)
+* [Copying Objects](copying-objects)
 
-[DB Designer](dbdesigner)
+* [Customizing build](customizing-build)
 
-[Working With Existing Databases](existing-database)
+* [DB Designer](dbdesigner)
 
-[Replication](master-slave)
+* [How to Use PHP 5.3 Namespaces](namespaces)
 
-[Multi-Component Data Model](multi-component)
+* [Model Introspection At Runtime](runtime-introspection)
 
-[How to Use PHP 5.3 Namespaces](namespaces)
+* [Multi-Component Data Model](multi-component)
 
-[Model Introspection At Runtime](runtime-introspection)
+* [Replication](master-slave)
 
-[Using Propel With MSSQL Server](using-mssql-server)
+* [Using Propel With MSSQL Server](using-mssql-server)
 
-[Using SQL Schemas](using-sql-schemas)
+* [Using SQL Schemas](using-sql-schemas)
+
+* [Working With Existing Databases](existing-database)
+
 
 ### Extending Propel ###
 
