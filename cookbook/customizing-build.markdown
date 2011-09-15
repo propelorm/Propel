@@ -63,7 +63,7 @@ propel.targetPackage = propelom
 
 Now the class will be located at `/var/www/bookstore/classes/propelom/Book.php`
 
-_Note that you can override the targetPackage property by specifying a package="" attribute in the `<database>` tag or even the <table> tag of the schema.xml._
+_Note that you can override the targetPackage property by specifying a package="" attribute in the `<database>` tag or even the `<table>` tag of the schema.xml._
 
 ## Creating a custom build.xml file ##
 
@@ -85,7 +85,7 @@ For example, here is how we register the `<propel-om>` task, which is the task t
     classname="propel.phing.PropelOMTask"/>
 {% endhighlight %}
 
-Simple enough. Phing will now associate the _<propel-data-model>_ tag with the _PropelOMTask_ class, which it expects to find at `propel/phing/PropelOMTask.php` (on your _include_path_). If Propel generator classes are not on your _include_path_, you can specify that path in your `<taskdef>` tag:
+Simple enough. Phing will now associate the `<propel-data-model>` tag with the _PropelOMTask_ class, which it expects to find at `propel/phing/PropelOMTask.php` (on your _include_path_). If Propel generator classes are not on your _include_path_, you can specify that path in your `<taskdef>` tag:
 
 {% highlight xml %}
 <taskdef
