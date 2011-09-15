@@ -54,14 +54,14 @@ title: Documentation
 
 ### Common Tasks ###
 
-* [Additional SQL Files](../cookbook/add-custom-sql.html) How to execute custom SQL statements at buildtime
+* [Additional SQL Files](../cookbook/adding-additional-sql-files.html) How to execute custom SQL statements at buildtime
 * [Advanced Column Types](../cookbook/advanced-column-types.html) How to work with BLOBs, serialized PHP objects, ENUM, and ARRAY column types.
-* [Object Copy](../cookbook/copying-objects.html) How to clone and copy persisted objects.
+* [Object Copy](../cookbook/copying-persisted-objects.html) How to clone and copy persisted objects.
 * [Customizing build](../cookbook/customizing-build.html) How to customize the Phing build process.
 * [DB Designer](../cookbook/dbdesigner.html) How to import an XML schema from existing DBDesigner 4 file.
-* [Working With Existing Databases](../cookbook/existing-database.html) How to build an XML schema from an existing db structure, how to dump data to XML, how to import it into a new database, etc.
-* [Replication](../cookbook/master-slave.html) How to use Propel in a Master-Slave Replication Environment.
-* [Multi-Component Data Model](../cookbook/multi-component.html) How to generate model classes in subdirectories, and organize your model into independent packages / modules.
+* [Working With Existing Databases](../cookbook/working-with-existing-databases.html) How to build an XML schema from an existing db structure, how to dump data to XML, how to import it into a new database, etc.
+* [Replication](../cookbook/replication.html) How to use Propel in a Master-Slave Replication Environment.
+* [Multi-Component Data Model](../cookbook/multi-component-data-model.html) How to generate model classes in subdirectories, and organize your model into independent packages / modules.
 * [How to Use PHP 5.3 Namespaces](../cookbook/namespaces.html) How to generate model classes with namespaces, and how to use them.
 * [Model Introspection At Runtime](../cookbook/runtime-introspection.html) How to use the Map classes to discover table properties at runtime.
 * [Using Propel With MSSQL Server](../cookbook/using-mssql-server.html) How to choose and configure Propel to persist data to a Microsoft SQL Server database.

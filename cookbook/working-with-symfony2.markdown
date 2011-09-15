@@ -13,8 +13,8 @@ It currently supports:
 * Insertion of SQL statements.
 * Runtime autoloading of Propel and generated classes.
 * Propel runtime initialization through the XML configuration.
-* Migrations [Propel 1.6](../documentation/10-migrations).
-* Reverse engineering from [existing database](./existing-database).
+* Migrations [Propel 1.6](../documentation/10-migrations.html).
+* Reverse engineering from [existing database](working-with-existing-databases.html).
 * Integration to the Symfony2 Profiler.
 * Load SQL and XML fixtures.
 * Create/Drop databases.
