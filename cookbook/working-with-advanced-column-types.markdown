@@ -9,7 +9,7 @@ Propel offers a set of advanced column types. The database-agnostic implementati
 
 ## LOB Columns ##
 
-Propel uses PHP streams internally for storing _Binary_ Locator Objects (BLOBs).  This choice was made because PDO itself uses streams as a convention when returning LOB columns in a resultset and when binding values to prepared statements.  Unfortunately, not all PDO drivers support this (see, for example, http://bugs.php.net/bug.php?id=40913); in those cases, Propel creates a `php://temp` stream to hold the LOB contents and thus provide a consistent API.
+Propel uses PHP streams internally for storing _Binary_ Locator Objects (BLOBs).  This choice was made because PDO itself uses streams as a convention when returning LOB columns in a resultset and when binding values to prepared statements.  Unfortunately, not all PDO drivers support this (see, for example, [http://bugs.php.net/bug.php?id=40913](http://bugs.php.net/bug.php?id=40913)); in those cases, Propel creates a `php://temp` stream to hold the LOB contents and thus provide a consistent API.
 
 Note that CLOB (_Character_ Locator Objects) are treated as strings in Propel, as there is no convention for them to be treated as streams by PDO.
 
