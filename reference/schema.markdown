@@ -55,7 +55,7 @@ First, some conventions:
 *  Alternative choices may be delimited by  `{` and `}` to indicate that this is the default option, if not overridden elsewhere.
 *  **...** means repeat the previous item.
 
-### `database` element ###
+### database element ###
 
 Starting with the `<database>` element. The _attributes_ and _elements_ available are:
 
@@ -94,7 +94,7 @@ A Database element may include an `<external-schema>` element, or multiple `<tab
 * `heavyIndexing` adds indexes for each component of the primary key (when using composite primary keys).
 * `tablePrefix` adds a prefix to all the SQL table names.
 
-### `table` element ###
+### table element ###
 
 The `<table>` element is the most complicated of the usable elements. Its definition looks like this:
 
@@ -154,7 +154,7 @@ According to the schema, `name` is the only required attribute.  Also, the `idMe
 * `reloadOnUpdate` is used to indicate that the object should be reloaded from the database when an UPDATE is performed.  This is useful if you have triggers (or other server-side functionality like column default expressions) that alters the database row on UPDATE.
 * `allowPkInsert` can be used if you want to define the primary key of a new object being inserted. By default if idMethod is "native", Propel would throw an exception. However, in some cases this feature is useful, for example if you do some replication of data in an master-master environment. It defaults to false.
 
-### `column` element ###
+### column element ###
 
 {% highlight xml %}
 <column
@@ -194,7 +194,7 @@ According to the schema, `name` is the only required attribute.  Also, the `idMe
 
 >**Tip**<br />For performance reasons, it is often a good idea to set BLOB and CLOB columns as lazyLoaded. A resultset containing one of more very large columns takes time to transit between the database and the PHP server, so you want to make sure this only happen when you actually need it.
 
-### `foreign-key` element ###
+### foreign-key element ###
 
 To link a column to another table use the following syntax:
 
@@ -219,7 +219,7 @@ To link a column to another table use the following syntax:
 * `skipSql` Instructs Propel not to generate DDL SQL for the specified foreign key. This can be used to support relationships in the model without an actual foreign key.
 * `defaultJoin` This affects the default join type used in the generated `joinXXX()` methods in the model query class. Propel uses an INNER JOIN for foreign keys attached to a required column, and a LEFT JOIN for foreign keys attached to a non-required column, but you can override this in the foreign key element.
 
-### `index` element ###
+### index element ###
 
 To create an index on one or more columns, use the following syntax:
 
@@ -232,7 +232,7 @@ To create an index on one or more columns, use the following syntax:
 
 In some cases your RDBMS may require you to specify an index size.
 
-### `unique` element ###
+### unique element ###
 
 To create a unique index on one or more columns, use the following syntax:
 
@@ -245,7 +245,7 @@ To create a unique index on one or more columns, use the following syntax:
 
 In some cases your RDBMS may require you to specify an index size for unique indexes.
 
-### `id-method-parameter` element ###
+### id-method-parameter element ###
 
 If you are using a database that uses sequences for auto-increment columns (e.g. PostgreSQL or Oracle), you can customize the name of the sequence using  the `<id-method-parameter>` tag:
 
@@ -253,7 +253,7 @@ If you are using a database that uses sequences for auto-increment columns (e.g.
 <id-method-parameter value="my_custom_sequence_name"/>
 {% endhighlight %}
 
-### `external-schema` element ###
+### external-schema element ###
 
 The `<external-schema>` element includes another schema file from the filesystem into the current schema. The format is:
 
