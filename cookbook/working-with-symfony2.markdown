@@ -31,7 +31,7 @@ Checkout Propel and Phing in the `vendor` directory:
 
     svn checkout http://svn.github.com/propelorm/Propel.git vendor/propel
 
-    svn checkout http://svn.phing.info/tags/2.4.7.1/ vendor/phing
+    svn checkout http://svn.phing.info/tags/2.4.6/ vendor/phing
 
 Instead of using svn, you can clone the unofficial Git repositories:
 
