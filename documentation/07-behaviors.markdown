@@ -396,7 +396,7 @@ public function findPk(\$key, \$con = null)
 ";
     $table = $this->getTable();
     $newFindPkMethod = sprintf($newFindPkMethod, $table->getName(), $table->getPhpName(), $table->getPhpName());
-    $parser = new PropelPHPParser($script);
+    $parser = new PropelPHPParser($script, true);
     $parser->replaceMethod('findPk', $newFindPkMethod);
     $script = $parser->getCode();
   }
