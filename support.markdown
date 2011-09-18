@@ -18,7 +18,7 @@ If you want to help with the development of Propel, or if you want to be informe
 
 [http://groups.google.com/group/propel-development](http://groups.google.com/group/propel-development)
 
-Both these lists are quite new because the lists moved to Google Groups in May 2009. However, you will find valuable information in the old mailing lists archives, now read-only:
+These lists were created in May 2009. A previous set mailing-lists were hosted by tigris.org, you can still consult the archives:
 
 * [Users list archives](http://propel.tigris.org/ds/viewForumSummary.do?dsForumId=1097)
 * [Development list archives](http://propel.tigris.org/ds/viewForumSummary.do?dsForumId=1093)

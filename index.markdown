@@ -1,6 +1,5 @@
 ---
 layout: home
-title: Propel documentation
 ---
 
 # Welcome to the Propel Website! #
