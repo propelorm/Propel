@@ -306,3 +306,7 @@ h1.no_margin_bottom {
 .toc a:hover {
   color: #fff;
 }
+
+.center {
+    text-align:center;
+}
