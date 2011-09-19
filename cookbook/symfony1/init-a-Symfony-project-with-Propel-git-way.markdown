@@ -1,5 +1,5 @@
 ---
-layout: documentation
+layout: default
 title: Init A Symfony Project With Propel As Default ORM - The Git Way
 ---
 
@@ -139,6 +139,6 @@ all:
       pooling:    true
 {% endhighlight %}
 
->**Warning**<br/>If you PHP version is under 5.3.6 you won't be allowed to set the `encoding` parameter due to a security issue in PHP.
+>**Warning**<br/>If your PHP version is under 5.3.6 you won't be allowed to set the `encoding` parameter due to a security issue in PHP.
 
 You're now ready for writing a `schema.xml` and building your project.
