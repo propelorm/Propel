@@ -295,10 +295,6 @@ h1.no_margin_bottom {
   list-style-type: none;
 }
 
-.toc > li:first-child {
-  display: none;
-}
-
 .toc li ul li {
   margin-left: 10px;
 }
