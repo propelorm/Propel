@@ -196,7 +196,7 @@ class HelloController extends Controller
         $author->setFirstName($name);
         $author->save();
 
-        return $this->render('HelloBundle:Hello:index.html.twig', array('name' =$name, 'author' =$author));
+        return $this->render('HelloBundle:Hello:index.html.twig', array('name' => $name, 'author' => $author));
     }
 }
 {% endhighlight %}
