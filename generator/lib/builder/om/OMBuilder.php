@@ -398,7 +398,7 @@ abstract class OMBuilder extends DataModelBuilder
 			}
 			if (count($localTable->getForeignKeysReferencingTable($fk->getForeignTableName())) > 1
 			 || count($fk->getForeignTable()->getForeignKeysReferencingTable($fk->getTableName())) > 0
-			 || $fk->getForeignTableName() == $fk->getTableName()) {
+			 || $fk->getForeignTableName() == $localColumnName) {
 				// self referential foreign key, or several foreign keys to the same table, or cross-reference fkey
 				$relCol .= $localColumn->getPhpName();
 			}
