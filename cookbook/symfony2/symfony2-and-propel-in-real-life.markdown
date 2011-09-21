@@ -35,7 +35,7 @@ By convention, this information is usually configured in an `app/config/paramete
 >**Information**<br />Defining the configuration via `parameters.ini` is just a convention. The parameters defined
 in that file are referenced by the main configuration file when setting up Propel:
 
-``` yaml
+{{ highlight yaml }}
 propel:
     dbal:
         driver:               %database_driver%
