@@ -13,15 +13,14 @@ easy to integrate Propel into Symfony2. To get started, read [how to set up Prop
 
 In this section, you'll configure your database, create a `Product` object, persist it to the database and fetch it back out.
 
->**Code along with the example**<br />If you want to follow along with the example in this chapter, create an `AcmeStoreBundle` via:
-`php app/console generate:bundle --namespace=Acme/StoreBundle`.
+>**Code along with the example**<br />If you want to follow along with the example in this chapter, create an `AcmeStoreBundle` via: `php app/console generate:bundle --namespace=Acme/StoreBundle`.
 
 ### Configuring the Database ###
 
 Before you really begin, you'll need to configure your database connection information.
 By convention, this information is usually configured in an `app/config/parameters.ini` file:
 
-{{ highlight ini }}
+{% highlight ini %}
 ;app/config/parameters.ini
 [parameters]
     database_driver   = mysql
@@ -30,19 +29,18 @@ By convention, this information is usually configured in an `app/config/paramete
     database_user     = root
     database_password = password
     database_charset  = UTF8
-{{ endhighlight }}
+{% endhighlight %}
 
->**Information**<br />Defining the configuration via `parameters.ini` is just a convention. The parameters defined
-in that file are referenced by the main configuration file when setting up Propel:
+>**Information**<br />Defining the configuration via `parameters.ini` is just a convention. The parameters defined in that file are referenced by the main configuration file when setting up Propel:
 
-{{ highlight yaml }}
+{% highlight yaml %}
 propel:
     dbal:
-        driver:               %database_driver%
-        user:                 %database_user%
-        password:             %database_password%
-        dsn:                  %database_driver%:host=%database_host%;dbname=%database_name%;charset=%database_charset%
-{{ endhighlight }}
+        driver:     %database_driver%
+        user:       %database_user%
+        password:   %database_password%
+        dsn:        %database_driver%:host=%database_host%;dbname=%database_name%;charset=%database_charset%
+{% endhighlight %}
 
 Now that Propel knows about your database, you can have it create the database for you:
 
@@ -59,7 +57,7 @@ it's better to call them **Model classes** as generated Propel classes contains 
 Suppose you're building an application where products need to be displayed. Let's writing a `schema.xml` inside
 the `Resources/config/` directory of your `AcmeStoreBundle`:
 
-{{ highlight xml }}
+{% highlight xml %}
 <?xml version="1.0" encoding="UTF-8"?>
 <database name="default" namespace="Acme\StoreBundle\Model" defaultIdMethod="native">
     <table name="product">
@@ -69,7 +67,7 @@ the `Resources/config/` directory of your `AcmeStoreBundle`:
         <column name="description" type="longvarchar" />
     </table>
 </database>
-{{ endhighlight }}
+{% endhighlight %}
 
 ### Build the Model ###
 
@@ -100,7 +98,7 @@ Your database now has a fully-functional `product` table with columns that match
 Now that you have a `Product` object and corresponding `product` table, you're ready to persist data to the database.
 From inside a controller, this is pretty easy. Add the following method to the `DefaultController` of the bundle:
 
-{{ highlight php }}
+{% highlight php %}
 <?php
 // src/Acme/StoreBundle/Controller/DefaultController.php
 use Acme\StoreBundle\Model\Product;
@@ -118,7 +116,7 @@ public function createAction()
 
     return new Response('Created product id '.$product->getId());
 }
-{{ endhighlight }}
+{% endhighlight %}
 
 In this piece of code, you instantiate and work with the `$product` object. When you call the `save()` method on it, you persist
 it in the database. No need to use other services, the object knows how to persist it itself.
@@ -130,7 +128,7 @@ it in the database. No need to use other services, the object knows how to persi
 Fetching an object back out of the database is even easier. For example, suppose you've configured a route to display
 a specific `Product` based on its `id` value:
 
-{{ highlight php }}
+{% highlight php %}
 <?php
 
 use Acme\StoreBundle\Model\ProductQuery;
@@ -146,14 +144,14 @@ public function showAction($id)
 
     // do something, like pass the $product object into a template
 }
-{{ endhighlight }}
+{% endhighlight %}
 
 ### Updating an Object ###
 
 Once you've fetched an object from Propel, updating it is easy. Suppose you have a route that maps a product id
 to an update action in a controller:
 
-{{ highlight php }}
+{% highlight php %}
 <?php
 
 use Acme\StoreBundle\Model\ProductQuery;
@@ -172,7 +170,7 @@ public function updateAction($id)
 
     return $this->redirect($this->generateUrl('homepage'));
 }
-{{ endhighlight }}
+{% endhighlight %}
 
 Updating an object involves just three steps:
 
@@ -184,11 +182,11 @@ Updating an object involves just three steps:
 
 Deleting an object is very similar, but requires a call to the `delete()` method on the object:
 
-{{ highlight php }}
+{% highlight php %}
 <?php
 
 $product->delete();
-{{ endhighlight }}
+{% endhighlight %}
 
 
 ## Entity Relationships/Associations ##
@@ -198,7 +196,7 @@ you'll need a `Category` object and a way to relate a `Product` object to a `Cat
 
 Start by adding the `category` definition in your `schema.xml`:
 
-{{ highlight xml }}
+{% highlight xml %}
 <database name="default" namespace="Acme\StoreBundle\Model" defaultIdMethod="native">
     <table name="product">
         <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
@@ -217,7 +215,7 @@ Start by adding the `category` definition in your `schema.xml`:
         <column name="name" type="varchar" primaryString="1" size="100" />
    </table>
 </database>
-{{ endhighlight }}
+{% endhighlight %}
 
 Create the classes:
 
@@ -236,7 +234,7 @@ Your database has been updated, you can continue to write your application.
 
 Now, let's see the code in action. Imagine you're inside a controller:
 
-{{ highlight php }}
+{% highlight php %}
 <?php
 // ...
 use Acme\StoreBundle\Model\Category;
@@ -265,9 +263,9 @@ class DefaultController extends Controller
         );
     }
 }
-{{ endhighlight }}
+{% endhighlight %}
 
-Now, a single row is added to both the `category` and product tables. The `product.category_id` column for the 
+Now, a single row is added to both the `category` and product tables. The `product.category_id` column for the
 new product is set to whatever the id is of the new category. Propel manages the persistence of this relationship for you..
 
 ### Fetching Related Objects ###
@@ -275,7 +273,7 @@ new product is set to whatever the id is of the new category. Propel manages the
 When you need to fetch associated objects, your workflow looks just like it did before.
 First, fetch a `$product` object and then access its related `Category`:
 
-{{ highlight php }}
+{% highlight php %}
 <?php
 // ...
 use Acme\StoreBundle\Model\ProductQuery;
@@ -291,7 +289,7 @@ public function showAction($id)
 
     // ...
 }
-{{ endhighlight }}
+{% endhighlight %}
 
 ### More information on Associations ###
 
