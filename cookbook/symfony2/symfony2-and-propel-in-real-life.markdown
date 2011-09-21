@@ -6,7 +6,7 @@ title: Symfony2 And Propel In Real Life
 # Symfony2 And Propel In Real Life #
 
 Let's face it, one of the most common and challenging tasks for any application involves persisting and reading
-information to and from a database. Unfortunately, Symfony2 does not come integrated with Propel but it's quite
+information to and from a database. Unfortunately, Symfony2 does not come integrated with Propel but it's really
 easy to integrate Propel into Symfony2. To get started, read [how to set up Propel into Symfony2](working-with-symfony2.html#installation).
 
 ## A Simple Example: A Product ##
@@ -51,8 +51,8 @@ than one connection, read the [PropelBundle configuration section](working-with-
 
 ### Creating a Model Class ###
 
-In Symfony2 world, **Model classes** also known as ActiveRecord classes in Propel are called **entities**. With Propel,
-it's better to call them **Model classes** as generated Propel classes contains some business logic.
+In Symfony2 world, **Model classes** also known as ActiveRecord classes in Propel are called **entities**.
+With Propel, it's better to call them **Model classes** as generated Propel classes contain some business logic.
 
 Suppose you're building an application where products need to be displayed. Let's writing a `schema.xml` inside
 the `Resources/config/` directory of your `AcmeStoreBundle`:
@@ -71,11 +71,11 @@ the `Resources/config/` directory of your `AcmeStoreBundle`:
 
 ### Build the Model ###
 
-Once you wrote your _schema_, you just have to generate it:
+Once you wrote your `schema.xml`, you just have to generate it:
 
     php app/console propel:build-model
 
-It will generate all you need to fast develop your application in the `Model/` directory of your `AcmeStoreBundle`.
+It will generate all classes to quickly develop your application in the `Model/` directory of your `AcmeStoreBundle` bundle.
 
 ### Creating the Database Tables/Schema ###
 
@@ -188,8 +188,7 @@ Deleting an object is very similar, but requires a call to the `delete()` method
 $product->delete();
 {% endhighlight %}
 
-
-## Entity Relationships/Associations ##
+## Relationships/Associations ##
 
 Suppose that the products in your application all belong to exactly one "category". In this case,
 you'll need a `Category` object and a way to relate a `Product` object to a `Category` object.
