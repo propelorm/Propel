@@ -1,6 +1,6 @@
 ---
 layout: documentation
-title:  Symfony2 And Propel In Real Life
+title: Symfony2 And Propel In Real Life
 ---
 
 # Symfony2 And Propel In Real Life #
@@ -13,7 +13,7 @@ easy to integrate Propel into Symfony2. To get started, read [how to set up Prop
 
 In this section, you'll configure your database, create a `Product` object, persist it to the database and fetch it back out.
 
->**Code along with the example**:<br />If you want to follow along with the example in this chapter, create an `AcmeStoreBundle` via:
+>**Code along with the example**<br />If you want to follow along with the example in this chapter, create an `AcmeStoreBundle` via:
 `php app/console generate:bundle --namespace=Acme/StoreBundle`.
 
 ### Configuring the Database ###
@@ -32,7 +32,7 @@ By convention, this information is usually configured in an `app/config/paramete
     database_charset  = UTF8
 ```
 
->**Information**:<br />Defining the configuration via `parameters.ini` is just a convention. The parameters defined
+>**Information**<br />Defining the configuration via `parameters.ini` is just a convention. The parameters defined
 in that file are referenced by the main configuration file when setting up Propel:
 
 ``` yaml
