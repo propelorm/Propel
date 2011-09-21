@@ -35,7 +35,7 @@ git clone https://github.com/propelorm/Propel.git propel
 
 This will export the propel library to a local `myproject/vendor/propel/` directory.
 
-Alternatively, to use a tarball, type the following commands on *nix platforms:
+Alternatively, to use a tarball, type the following commands on unix platforms:
 
 {% highlight bash %}
 cd myproject/vendor

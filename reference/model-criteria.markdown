@@ -337,7 +337,7 @@ $nbBooks = BookQuery::create()
   ->findOne($con);
 {% endhighlight %}
 
->**Tip**<br />In debug mode, the connection object provides a way to check the latest executed query, by calling `$con->getLastExecutedQuery()`. See the [wiki:Documentation/1.6/07-Logging Logging documentation] for more details.
+>**Tip**<br />In debug mode, the connection object provides a way to check the latest executed query, by calling `$con->getLastExecutedQuery()`. See the [Logging documentation](../documentation/08-logging.html) for more details.
 
 ### Counting Objects ###
 

@@ -323,7 +323,7 @@ class AddChildBehavior extends Behavior
 }
 {% endhighlight %}
 
-Next, write a builder extending the `OMBuilder` class, and implement the `getUnprefixedClassName()`, `addClassOpen()``, and `addClassBody()` methods:
+Next, write a builder extending the `OMBuilder` class, and implement the `getUnprefixedClassName()`, `addClassOpen()`, and `addClassBody()` methods:
 
 {% highlight php %}
 <?php

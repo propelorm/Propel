@@ -59,7 +59,7 @@ The replication functionality is implemented in the Propel connection configurat
 
 ### Propel::getConnection() ###
 
-When requesting a connection from Propel (_Propel::getConnection()_), you can either specify that you want a READ connection (slave) or WRITE connection (master).  Methods that are designed to perform READ operations, like the _doSelect*()_ methods of your generated Peer classes, will always request a READ connection like so:
+When requesting a connection from Propel (_Propel::getConnection()_), you can either specify that you want a READ connection (slave) or WRITE connection (master).  Methods that are designed to perform READ operations, like the `doSelect*()` methods of your generated Peer classes, will always request a READ connection like so:
 
 {% highlight php %}
 <?php
