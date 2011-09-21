@@ -79,6 +79,7 @@ title: Documentation
 
 ### Working with Symfony2 ###
 
-* [Working with Symfony2 (Introduction)](../cookbook/symfony2/working-with-symfony2)
+* [Working with Symfony2 (Introduction)](../cookbook/symfony2/working-with-symfony2.html)
+* [Symfony2 And Propel In Real Life](../cookbook/symfony2/symfony2-and-propel-in-real-life.html)
 
 >**Tip**<br />This is the up-to-date documentation for the last Propel version. To access the old documentation, please visit [trac.propelorm.org](http://trac.propelorm.org).
