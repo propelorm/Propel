@@ -29,7 +29,7 @@ $b->save(); // so that auto-increment IDs are created
 $bcopy = $b->copy();
 var_export($bcopy->getId() == $b->getId()); // FALSE
 var_export($bcopy->getAuthorId() == $b->getAuthorId()); // TRUE
-var_export($bcopy->getAuthor() ### $b->getAuthor()); // TRUE
+var_export($bcopy->getAuthor() == $b->getAuthor()); // TRUE
 {% endhighlight %}
 
 ## Deep Copies ##
@@ -44,5 +44,5 @@ To continue with example from above:
 $bdeep = $b->copy(true);
 var_export($bcopy->getId() == $b->getId()); // FALSE
 var_export($bcopy->getAuthorId() == $b->getAuthorId()); // FALSE
-var_export($bcopy->getAuthor() ### $b->getAuthor()); // FALSE
+var_export($bcopy->getAuthor() == $b->getAuthor()); // FALSE
 {% endhighlight %}
