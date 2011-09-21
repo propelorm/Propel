@@ -55,11 +55,11 @@ Here is an example schema using namespaces:
 
 The `<database>` element defines a `namespace` attribute. The `book` and `author` tables inherit their namespace from the database, therefore the generated classes for these tables will be `\Bookstore\Book` and `\Bookstore\Author`.
 
-The `publisher` table defines a `namespace` attribute on ots own, which _extends_ the database namespace. That means that the generated class will be `\Bookstore\Book\Publisher`.
+The `publisher` table defines a `namespace` attribute on its own, which _extends_ the database namespace. That means that the generated class will be `\Bookstore\Book\Publisher`.
 
 As for the `user` table, it defines an absolute namespace (starting with a backslash), which _overrides_ the database namespace. The generated class for the `user` table will be `Admin\User`.
 
-_Tip_: You can use subnamespaces (i.e. namespaces containing backslashes) in the `namespace` attribute.
+>**Tip**<br />You can use subnamespaces (i.e. namespaces containing backslashes) in the `namespace` attribute.
 
 ## Using Namespaced Models ##
 
