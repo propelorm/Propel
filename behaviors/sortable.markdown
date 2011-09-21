@@ -82,7 +82,7 @@ $t2->moveToRank(3);
 $t2->moveToRank(2);
 {% endhighlight %}
 
-By default, new objects are added at the bottom of the list. But you can also insert them at a specific position, using any of the `insertAtTop(), `insertAtBottom()`, and `insertAtRank()` methods. Note that the `insertAtXXX` methods don't save the object:
+By default, new objects are added at the bottom of the list. But you can also insert them at a specific position, using any of the `insertAtTop()`, `insertAtBottom()`, and `insertAtRank()` methods. Note that the `insertAtXXX` methods don't save the object:
 
 {% highlight php %}
 <?php
