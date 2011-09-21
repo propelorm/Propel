@@ -48,4 +48,4 @@ title: The Cookbook
 
 ### Working with Symfony2 ###
 
-* [Working with Symfony2 (Introduction)](working-with-symfony2.html)
+* [Working with Symfony2 (Introduction)](symfony2/working-with-symfony2.html)
