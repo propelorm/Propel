@@ -69,7 +69,7 @@ the `Resources/config/` directory of your `AcmeStoreBundle`:
 </database>
 {% endhighlight %}
 
-### Build the Model ###
+### Building the Model ###
 
 Once you wrote your `schema.xml`, you just have to generate it:
 
