@@ -70,7 +70,7 @@ $account->save();
 echo $account->getEmail(); // francois@example.com
 {% endhighlight %}
 
-Getter an setter methods for delegate columns don't exist on the main object ; the delegation is handled by the magical `__call()` method. Therefore, the delegation also works for custom methods in the delegate table.
+Getter and setter methods for delegate columns don't exist on the main object ; the delegation is handled by the magical `__call()` method. Therefore, the delegation also works for custom methods in the delegate table.
 
 {% highlight php %}
 <?php
