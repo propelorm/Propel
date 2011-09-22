@@ -140,7 +140,7 @@ echo $basketballer->getFirstName(); // Michael
 
 And since several models can delegate to the same player object, that means that a single player can have both basketball and soccer stats!
 
->**Tip**<br />In this example, table delegation is used to implement [Class Table Inheritance](http://martinfowler.com/eaaCatalog/classTableInheritance.html). See how Propel implements this inheritance type, and others, in the [inheritance chapter]().
+>**Tip**<br />In this example, table delegation is used to implement [Class Table Inheritance](http://martinfowler.com/eaaCatalog/classTableInheritance.html). See how Propel implements this inheritance type, and others, in the [inheritance chapter](../documentation/09-inheritance.html).
 
 ## Delegating To Several Tables ##
 
