@@ -46,8 +46,7 @@ Now that Propel knows about your database, you can have it create the database f
 
     php app/console propel:database:create
 
->**Keep in mind**<br />In this example, you have one configured connection, named `default`. If you want to configure more
-than one connection, read the [PropelBundle configuration section](working-with-symfony2.html#project_configuration).
+>**Keep in mind**<br />In this example, you have one configured connection, named `default`. If you want to configure more than one connection, read the [PropelBundle configuration section](working-with-symfony2.html#project_configuration).
 
 ### Creating a Model Class ###
 
@@ -296,11 +295,12 @@ You will find more information on relations by reading the dedicated chapter on 
 
 ## Behaviors ##
 
-All bundled behaviors in Propel are working with Symfony2. To get more information, look at the [behaviors reference section](http://www.propelorm.org/documentation/#behaviors_reference).
+All bundled behaviors in Propel are working with Symfony2. To get more information about how to use Propel behaviors,
+look at the [behaviors reference section](http://www.propelorm.org/documentation/#behaviors_reference).
 
 ## Commands ##
 
-Read the dedicated section for [Propel commands in Symfony2](working-with-symfony2#commands).
+You should read the dedicated section for [Propel commands in Symfony2](working-with-symfony2#commands).
 
 ## Summary ##
 
