@@ -64,7 +64,7 @@ $author->setLastName("Tolstoy");
 
 $publisher = new Publisher();
 $publisher->setName("Viking Press");
-// no need to the publisher yet
+// no need to save the publisher yet
 
 $book = new Book();
 $book->setTitle("War & Peace");
