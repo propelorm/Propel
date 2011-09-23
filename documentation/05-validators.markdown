@@ -5,7 +5,7 @@ title: Validators
 
 # Validators #
 
-Validators help you to validate an input before perstisting it to the database. In Propel, validators are rules describing what type of data a column accepts. Validators are referenced in the `schema.xml` file, using `<validator>` tags.
+Validators help you to validate an input before persisting it to the database. In Propel, validators are rules describing what type of data a column accepts. Validators are referenced in the `schema.xml` file, using `<validator>` tags.
 
 Validators are applied at the PHP level, they are not created as constraints on the database itself. That means that if you also use another language to work with the database, the validator rules will not be enforced.
 You can also apply multiple rule entries per validator entry in the schema.xml file.
