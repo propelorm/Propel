@@ -295,7 +295,7 @@ $book = BookQuery::create()
 $author = $book->getAuthor();  // Needs another database query
 {% endhighlight %}
 
-Propel allows you to retrieve the main object together with related objects in a single query. You just the `with()` method to specify which objects the main object should be hydrated with.
+Propel allows you to retrieve the main object together with related objects in a single query. You just use the `with()` method to specify which objects the main object should be hydrated with.
 
 {% highlight php %}
 <?php
