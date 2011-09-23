@@ -35,12 +35,12 @@ For one-to-many relationships - meaning, from the other side of a many-to-one re
 <?php
 $book = new Book();
 $book->setTitle("War & Peace");
-// associate the $author object with the current $book
 $book->save();
 
 $author = new Author();
 $author->setFirstName("Leo");
 $author->setLastName("Tolstoy");
+// associate the $book object with the current $author
 $author->addBook($book);
 $author->save();
 {% endhighlight %}
