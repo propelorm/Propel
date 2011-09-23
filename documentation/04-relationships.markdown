@@ -336,7 +336,7 @@ $publisher = $book->getPublisher(); // No additional query needed
 
 So `with()` is very useful to minimize the number of database queries. As soon as you see that the number of queries necessary to perform an action is proportional to the number of results, adding a `with()` call is the trick to get down to a more reasonnable query count.
 
->**Tip**<br />`with()` also works for left joins on one-to-many relationships, but you musn't use a `limit()` in the query in this case. This is because Propel has no way to determine the actual number of rows of the main object in such a case.
+>**Tip**<br />`with()` also works for left joins on one-to-many relationships, but you mustn't use a `limit()` in the query in this case. This is because Propel has no way to determine the actual number of rows of the main object in such a case.
 
 {% highlight php %}
 <?php
