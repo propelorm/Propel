@@ -266,7 +266,7 @@ Because the primary key of the `bookstore_employee_account` is also a foreign ke
 
 ## On-Update and On-Delete Triggers #
 
-Propel also supports the _ON UPDATE_ and _ON DELETE_ aspect of foreign keys. These properties can be specified in the `<foreign-key>` tag using the `onUpdate` and `onDelete` attributes. Propel supports values of `CASCADE`, `SETNULL`, and `RESTRICT` for these attributes. For databases that have native foreign key support, these trigger events will be specified at the datbase level when the foreign keys are created. For databases that do not support foreign keys, this functionality will be emulated by Propel.
+Propel also supports the _ON UPDATE_ and _ON DELETE_ aspect of foreign keys. These properties can be specified in the `<foreign-key>` tag using the `onUpdate` and `onDelete` attributes. Propel supports values of `CASCADE`, `SETNULL`, and `RESTRICT` for these attributes. For databases that have native foreign key support, these trigger events will be specified at the database level when the foreign keys are created. For databases that do not support foreign keys, this functionality will be emulated by Propel.
 
 {% highlight xml %}
 <table name="review">
