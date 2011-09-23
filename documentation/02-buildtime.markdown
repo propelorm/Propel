@@ -301,7 +301,7 @@ Create a file called `runtime-conf.xml` at the root of the `bookstore` project, 
 
 Notice how the `id` attribute of the `<datasource>` tag matches the connection name defined in the `<database>` tag of the `schema.xml`. This is how Propel maps a database description to a connection.
 
-Replace the `<adapter>` and the `<connection>` settings wit hthe ones of your database.
+Replace the `<adapter>` and the `<connection>` settings with the ones of your database.
 
 See the [runtime configuration reference](../reference/runtime-configuration) for a more detailed explanation of this file.
 
