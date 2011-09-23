@@ -360,9 +360,9 @@ $authors = AuthorQuery::create()
   ->find();
 // $authors is a PropelObjectCollection
 $authors->populateRelation('Book');
-// now you can iterate over each author's book without further queries
 foreach ($authors as $author) {
-  foreach ($authors->getBooks() as $book) {  // no database query, the author already has a Books collection
+  // now you can iterate over each author's book without further queries
+  foreach ($author->getBooks() as $book) {  // no database query, the author already has a Books collection
     // do stuff with $book and $author
   }
 }
