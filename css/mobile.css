@@ -11,6 +11,10 @@ p, li {
   display: none;
 }
 
+.fork_and_edit {
+  display: none;
+}
+
 .rootnav li {
   padding: 12px;
   background-color: #edbc1c;
