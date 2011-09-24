@@ -19,7 +19,7 @@ But before saving it, you probably want to define the value for its columns. For
 
 $author = new Author();
 $author->setFirstName('Jane');
-$author->setLastName('austen');
+$author->setLastName('Austen');
 $author->save();
 {% endhighlight %}
 
@@ -39,7 +39,7 @@ Propel maps the columns of a table into properties of the generated objects. For
 <?php
 echo $author->getId();        // 1
 echo $author->getFirstName(); // 'Jane'
-echo $author->getLastName();  // 'austen'
+echo $author->getLastName();  // 'Austen'
 {% endhighlight %}
 
 The `id` column was set automatically by the database, since the `schema.xml` defines it as an `autoIncrement` column. The value is very easy to retrieve once the object is saved: just call the getter on the column phpName.

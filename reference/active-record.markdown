@@ -22,7 +22,7 @@ Consider the following schema, describing a simple `book` table with four column
 </table>
 {% endhighlight %}
 
-Based on this schema, Propel generates a `Book` class that lets you manipulates `book` records:
+Based on this schema, Propel generates a `Book` class that lets you manipulate `book` records:
 
 {% highlight php %}
 <?php

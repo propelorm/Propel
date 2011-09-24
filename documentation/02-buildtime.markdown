@@ -192,9 +192,10 @@ Propel uses the `phpName` attribute of each table as the base for the PHP class 
 All these classes are empty, but they inherit from `Base` classes that you will find under the `om/` directory:
 
 {% highlight php %}
+/**
+ * Skeleton subclass for representing a row from the 'book' table.
+ */
 <?php
-require 'om/BaseBook.php';
-
 class Book extends BaseBook
 {
 }
