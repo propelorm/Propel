@@ -310,9 +310,11 @@ doesn't handle the add/remove abilities in the view. You have to write some Java
 
 ![](./images/many_to_many_form.png)
 
-### The `ModelType` ###
+### The ModelType ###
 
-But in this example, you'll always create new objects. If you want to select existing authors when you create new books, you'll use the `model` type:
+In the previous example, you always create new objects.
+
+If you want to select existing authors when you create new books, you'll have to use a `model` type:
 
 {% highlight php %}
 <?php
@@ -340,9 +342,11 @@ class BookType extends AbstractType
 }
 {% endhighlight %}
 
-The `ModelType` is part of the `PropelBundle` bundle. You'll get the following result:
+You'll obtain the following result:
 
 ![](./images/many_to_many_form_with_existing_objects.png)
+
+>**Information**<br />The `ModelType` is part of the [`PropelBundle`](http://github.com/propelorm/PropelBundle.git).
 
 
 ## Summary ##
