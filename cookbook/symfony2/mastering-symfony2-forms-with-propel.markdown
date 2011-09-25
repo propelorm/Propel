@@ -6,8 +6,10 @@ title: Mastering Symfony2 Forms With Propel
 # Mastering Symfony2 Forms With Propel #
 
 In this chapter, you'll learn how to master Symfony2 forms with Propel.
-First of all, you have to assume you'll play with `Book` and `Author` objects
-into a `LibraryBundle` bundle. The `schema.xml` file is defined as following:
+
+>**Code along with the example**<br />If you want to follow along with the example in this chapter, create a `LibraryBundle` bundle by using this command: `php app/console generate:bundle --namespace=Acme/LibraryBundle`.
+
+Assuming you manage `Book` and `Author` objects, you'll define the following `schema.xml`:
 
 {% highlight xml %}
 <?xml version="1.0" encoding="UTF-8"?>
@@ -45,7 +47,7 @@ class BookType extends AbstractType
 {
     public function buildForm(FormBuilder $builder, array $options)
     {
-        $builder->add('name');
+        $builder->add('title');
         $builder->add('isbn');
     }
 
@@ -75,20 +77,42 @@ write the following code to create new books:
 
 namespace Acme\LibraryBundle\Controller;
 
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
 use Acme\LibraryBundle\Model\Book;
 use Acme\LibraryBundle\Form\Type\BookType;
 
-class BookController
+class BookController extends Controller
 {
     public function newAction()
     {
         $book = new Book();
         $form = $this->createForm(new BookType(), $book);
 
-        // ...
+        return $this->render('AcmeLibraryBundle:Book:new.html.twig', array(
+            'form' => $form->createView(),
+        ));
     }
 }
 {% endhighlight %}
+
+>**Warning**<br />To quickly explain how forms are rendered, the controller above extends the `Controller` class which provides the `render()` method used to return a `Response` but this is not considered as a best practice. It's better to create a controller as a service.
+
+To render the form, you'll need to create a Twig template like below:
+
+{% highlight django+jinja %}
+{# src/Acme/LibraryBundle/Resources/views/Book/new.html.twig #}
+
+<form action="{{ "{{ path('book_new')" }} }}" method="post" {{ "{{ form_enctype(form)" }} }}>
+    {{ "{{ form_widget(form)" }} }}
+
+    <input type="submit" />
+</form>
+{% endhighlight %}
+
+You'll get this result:
+
+![](./images/basic_form.png)
 
 As such, the topic of persisting the `Book` object to the database is entirely
 unrelated to the topic of forms. But, if you've created a `Book` class with Propel,
@@ -101,15 +125,27 @@ then persisting it after a form submission can be done when the form is valid:
 // ...
 
     public function newAction()
-    {
-        // ...
+    {   
+        $book = new Book();
+        $form = $this->createForm(new BookType(), $book);
 
-        if ($form->isValid()) {
-            $book->save();
+        $request = $this->getContainer()->get('request');
 
-            return $this->redirect($this->generateUrl('book_success'));
-        }
-    }
+        if ($request->getMethod() === 'POST') {
+            $form->bindRequest($request);
+
+            if ($form->isValid()) {
+                $book->save();
+
+                return $this->redirect($this->generateUrl('book_success'));
+            }   
+        }   
+
+        return $this->render('AcmeLibraryBundle:Book:new.html.twig', array(
+            'form' => $form->createView(),
+        )); 
+    }   
+}
 {% endhighlight %}
 
 If, for some reason, you don't have access to your original `$book` object,
@@ -144,7 +180,7 @@ class BookType extends AbstractType
 {
     public function buildForm(FormBuilder $builder, array $options)
     {
-        $builder->add('name');
+        $builder->add('title');
         $builder->add('isbn');
         // Author relation
         $builder->add('author', new AuthorType());
@@ -187,6 +223,10 @@ class AuthorType extends AbstractType
 }
 {% endhighlight %}
 
+If you refresh your page, you'll now get the following result:
+
+![](./images/one_to_many_form.png)
+
 When the user submits the form, the submitted data for the `Author` fields are used to construct an
 instance of `Author`, which is then set on the author field of the `Book` instance.
 The `Author` instance is accessible naturally via $book->getAuthor().
@@ -196,6 +236,7 @@ The `Author` instance is accessible naturally via $book->getAuthor().
 
 Now, imagine you want to add your books to some lists for book clubs. A `BookClubList` can have many
 `Book` objects and a `Book` can be in many lists (`BookClubList`). This is a **Many-To-Many** relation.
+
 Add the following defintion to your `schema.xml ` and rebuild your model classes:
 
 {% highlight xml %}
@@ -237,7 +278,7 @@ class BookClubListType extends AbstractType
         $builder->add('theme');
         // Book collection
         $builder->add('books', 'collection', array(
-            'type'          => 'Acme\LibraryBundle\Form\Type\BookType',
+            'type'          => new \Acme\LibraryBundle\Form\Type\BookType(),
             'allow_add'     => true,
             'allow_delete'  => true,
             'by_reference'  => false
@@ -267,6 +308,7 @@ Thanks to the smart collection setter provided by Propel, there is nothing more 
 Use the `BookClubListType` as you previously did with the `BookType`. Note the Symfony2 component
 doesn't handle the add/remove abilities in the view. You have to write some JavaScript for that.
 
+![](./images/many_to_many_form.png)
 
 ## Summary ##
 
