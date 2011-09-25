@@ -129,7 +129,7 @@ then persisting it after a form submission can be done when the form is valid:
         $book = new Book();
         $form = $this->createForm(new BookType(), $book);
 
-        $request = $this->getContainer()->get('request');
+        $request = $this->getRequest();
 
         if ($request->getMethod() === 'POST') {
             $form->bindRequest($request);
