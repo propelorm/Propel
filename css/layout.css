@@ -312,7 +312,7 @@ h1.no_margin_bottom {
     font-style: italic;
     background: transparent url(../images/github.gif) no-repeat  0 0;
     height: 30px;
-    margin: 0 auto;
+    margin: 60px auto 0;
     padding-top: 5px;
     width: 670px;
 }
