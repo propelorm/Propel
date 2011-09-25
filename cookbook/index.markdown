@@ -49,4 +49,7 @@ title: The Cookbook
 ### Working with Symfony2 ###
 
 * [Working with Symfony2 (Introduction)](symfony2/working-with-symfony2.html)
+
 * [Symfony2 And Propel In Real Life](symfony2/symfony2-and-propel-in-real-life.html)
+
+* [Mastering Symfony2 Forms With Propel](symfony2/mastering-symfony2-forms-with-propel.html)
