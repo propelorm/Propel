@@ -302,13 +302,15 @@ class BookClubListType extends AbstractType
 You've added a `CollectionType` for the `Book` list and you've configured it
 with your `BookType`. In this example, you allow to add and/or delete books.
 
->**Warning**<br />The parameter `by_reference` has to be defined and set to `false`. This is required to tell the Forms component to call the setter method (`setBooks()` in this example).
+>**Warning**<br />The parameter `by_reference` has to be defined and set to `false`. This is required to tell the Form Component to call the setter method (`setBooks()` in this example).
 
 Thanks to the smart collection setter provided by Propel, there is nothing more to configure.
-Use the `BookClubListType` as you previously did with the `BookType`. Note the Symfony2 component
+Use the `BookClubListType` as you previously did with the `BookType`. Note the Symfony2 Form Component
 doesn't handle the add/remove abilities in the view. You have to write some JavaScript for that.
 
 ![](./images/many_to_many_form.png)
+
+### The `ModelType` ###
 
 But in this example, you'll always create new objects. If you want to select existing authors when you create new books, you'll use the `model` type:
 
