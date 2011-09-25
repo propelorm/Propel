@@ -125,7 +125,7 @@ then persisting it after a form submission can be done when the form is valid:
 // ...
 
     public function newAction()
-    {   
+    {
         $book = new Book();
         $form = $this->createForm(new BookType(), $book);
 
@@ -138,13 +138,13 @@ then persisting it after a form submission can be done when the form is valid:
                 $book->save();
 
                 return $this->redirect($this->generateUrl('book_success'));
-            }   
-        }   
+            }
+        }
 
         return $this->render('AcmeLibraryBundle:Book:new.html.twig', array(
             'form' => $form->createView(),
-        )); 
-    }   
+        ));
+    }
 }
 {% endhighlight %}
 
@@ -309,6 +309,39 @@ Use the `BookClubListType` as you previously did with the `BookType`. Note the S
 doesn't handle the add/remove abilities in the view. You have to write some JavaScript for that.
 
 ![](./images/many_to_many_form.png)
+
+But in this example, you'll always create new objects. If you want to select existing authors when you create new books, you'll use the `model` type:
+
+{% highlight php %}
+<?php
+// src/Acme/LibraryBundle/Form/Type/BookType.php
+
+namespace Acme\LibraryBundle\Form\Type;
+
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilder;
+
+class BookType extends AbstractType
+{
+    public function buildForm(FormBuilder $builder, array $options)
+    {
+        $builder->add('title');
+        $builder->add('isbn');
+
+        //$builder->add('author', new AuthorType());
+        $builder->add('author', 'model', array(
+            'class' => 'Acme\LibraryBundle\Model\Author',
+        ));
+    }
+
+    // ...
+}
+{% endhighlight %}
+
+The `ModelType` is part of the `PropelBundle` bundle. You'll get the following result:
+
+![](./images/many_to_many_form_with_existing_objects.png)
+
 
 ## Summary ##
 
