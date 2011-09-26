@@ -31,7 +31,7 @@ Assuming you manage `Book` and `Author` objects, you'll define the following `sc
 </database>
 {% endhighlight %}
 
-In Symfony2, you deal with `Type` so let's creating a `BookType` to manage
+In Symfony2, you deal with `Type` so let's create a `BookType` to manage
 our books. For the moment, just ignore the relation with `Author` objects.
 
 {% highlight php %}
@@ -259,7 +259,7 @@ Add the following defintion to your `schema.xml ` and rebuild your model classes
 </table>
 {% endhighlight %}
 
-You now have `BookClubList` and `BookListRel` objects. Let's creating a `BookClubListType`:
+You now have `BookClubList` and `BookListRel` objects. Let's create a `BookClubListType`:
 
 {% highlight php %}
 <?php
