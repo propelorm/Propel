@@ -338,6 +338,12 @@ class BookType extends AbstractType
         ));
     }
 
+    public function getDefaultOptions(array $options)
+    {
+        return array(
+            'data_class' => 'Acme\LibraryBundle\Model\Book',
+        );
+    }
     // ...
 }
 {% endhighlight %}
