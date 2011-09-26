@@ -3,6 +3,8 @@ layout: default
 title: The Symfony2 Security Component And Propel
 ---
 
+# The Symfony2 Security Component And Propel #
+
 If you've started to play with the awesome Symfony2 Security Component, you'll know that you can configure a **provider**
 to retrieve your users. Symfony2 has two providers: `in_memory` and `entity`. Unfortunately, no other providers exist.
 
