@@ -89,7 +89,7 @@ propel.dateTimeClass = DateTime
 # the defaults.
 # To have these methods return DateTime objects instead, you should set these
 # to empty values
-propel.defaultTimeStampFormat = Y-m-d H:i:s
+propel.defaultTimeStampFormat =
 propel.defaultTimeFormat =
 propel.defaultDateFormat =
 {% endhighlight %}
