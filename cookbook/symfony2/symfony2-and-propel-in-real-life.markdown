@@ -187,6 +187,66 @@ Deleting an object is very similar, but requires a call to the `delete()` method
 $product->delete();
 {% endhighlight %}
 
+
+## Querying for Objects ##
+
+Propel provides `Query` classes to run both basic and complex queries without any work:
+
+{% highlight php %}
+<?php
+
+\Acme\StoreBundle\Model\ProductQuery::create()->findPk($id);
+
+\Acme\StoreBundle\Model\ProductQuery::create()
+    ->filterByName('Foo')
+    ->findOne();
+{% endhighlight %}
+
+Imaging that you want to query for products, but only return products that cost more than 19.99,
+ordered from cheapest to most expensive. From inside a controller, do the following:
+
+{% highlight php %}
+<?php
+
+$products = \Acme\StoreBundle\Model\ProductQuery::create()
+    ->filterByPrice('19.99', \Criteria::GREATER_THAN)
+    ->orderByPrice()
+    ->find();
+{% endhighlight %}
+
+In one line, you get your products in a powerful oriented object way.
+No need to spend time with SQL or whatever, as Symfony2 is fully object oriented programming, Propel
+respects the same philosophy by providing an awesome abstraction layer.
+
+If you want to reuse some queries, you can add your own methods to the `ProductQuery`:
+
+{% highlight php %}
+<?php
+// src/Acme/StoreBundle/Model/ProductQuery.php
+
+class ProductQuery extends BaseProductQuery
+{
+    public function filterByExpensivePrice()
+    {
+        return $this
+            ->filterByPrice('1000', \Criteria::GREATER_THAN)
+            ;
+    }
+}
+{% endhighlight %}
+
+But note that Propel generates a lot of methods for you and a simple `findAllOrderedByName()` can be written without
+any effort:
+
+{% highlight php %}
+<?php
+
+\Acme\StoreBundle\Model\ProductQuery::create()
+    ->orderByName()
+    ->find();
+{% endhighlight %}
+
+
 ## Relationships/Associations ##
 
 Suppose that the products in your application all belong to exactly one "category". In this case,
@@ -228,7 +288,7 @@ be able to update your database without loosing existing data.
 
 Your database has been updated, you can continue to write your application.
 
-### Saving Related Entities ###
+### Saving Related Objects ###
 
 Now, let's see the code in action. Imagine you're inside a controller:
 
@@ -289,18 +349,59 @@ public function showAction($id)
 }
 {% endhighlight %}
 
+Note, in the above example, only one query was made.
+
+
 ### More information on Associations ###
 
 You will find more information on relations by reading the dedicated chapter on [relationships](../../documentation/04-relationships.html).
+
+
+## Lifecycle Callbacks ##
+
+Sometimes, you need to perform an action right before or after an object is inserted, updated, or deleted.
+These types of actions are known as "lifecycle" callbacks or "hooks", as they're callback methods that you need
+to execute during different stages of the lifecycle of an object (e.g. the object is inserted, updated, deleted, etc).
+
+To add a hook, just add a new method to the object class:
+
+{% highlight php %}
+<?php
+// src/Acme/StoreBundle/Model/Product.php
+
+// ...
+
+class Product extends BaseProduct
+{
+    public function preInsert($con = null)
+    {
+        // do something before the object is inserted
+    }
+}
+{% endhighlight %}
+
+Propel provides the following hooks:
+
+* `preInsert()` code executed before insertion of a new object
+* `postInsert()` code executed after insertion of a new object
+* `preUpdate()` code executed before update of an existing object
+* `postUpdate()` code executed after update of an existing object
+* `preSave()` code executed before saving an object (new or existing)
+* `postSave()` code executed after saving an object (new or existing)
+* `preDelete()` code executed before deleting an object
+* `postDelete()` code executed after deleting an object
+
 
 ## Behaviors ##
 
 All bundled behaviors in Propel are working with Symfony2. To get more information about how to use Propel behaviors,
 look at the [behaviors reference section](http://www.propelorm.org/documentation/#behaviors_reference).
 
+
 ## Commands ##
 
 You should read the dedicated section for [Propel commands in Symfony2](working-with-symfony2#commands).
+
 
 ## Summary ##
 
