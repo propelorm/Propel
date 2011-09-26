@@ -186,7 +186,17 @@ class BookType extends AbstractType
         $builder->add('author', new AuthorType());
     }
 
-    // ...
+    public function getDefaultOptions(array $options)
+    {
+        return array(
+            'data_class' => 'Acme\LibraryBundle\Model\Book',
+        );
+    }
+
+    public function getName()
+    {
+        return 'book';
+    }
 }
 {% endhighlight %}
 
@@ -344,7 +354,11 @@ class BookType extends AbstractType
             'data_class' => 'Acme\LibraryBundle\Model\Book',
         );
     }
-    // ...
+
+    public function getName()
+    {
+        return 'book';
+    }
 }
 {% endhighlight %}
 
