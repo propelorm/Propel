@@ -53,3 +53,5 @@ title: The Cookbook
 * [Symfony2 And Propel In Real Life](symfony2/symfony2-and-propel-in-real-life.html)
 
 * [Mastering Symfony2 Forms With Propel](symfony2/mastering-symfony2-forms-with-propel.html)
+
+* [The Symfony2 Security Component And Propel](symfony2/the-symfony2-security-component-and-propel.html)
