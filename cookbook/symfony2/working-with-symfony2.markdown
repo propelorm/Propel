@@ -67,7 +67,7 @@ Don't forget to register the PropelBundle namespace in `app/autoload.php`:
 $loader->registerNamespaces(array(
     ...
 
-    'Propel' =__DIR__.'/../vendor/bundles',
+    'Propel' => __DIR__.'/../vendor/bundles',
 ));
 {% endhighlight %}
 
