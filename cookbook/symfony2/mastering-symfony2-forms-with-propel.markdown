@@ -131,7 +131,7 @@ then persisting it after a form submission can be done when the form is valid:
 
         $request = $this->getRequest();
 
-        if ($request->getMethod() === 'POST') {
+        if ('POST' === $request->getMethod()) {
             $form->bindRequest($request);
 
             if ($form->isValid()) {
