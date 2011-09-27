@@ -241,6 +241,83 @@ When the user submits the form, the submitted data for the `Author` fields are u
 instance of `Author`, which is then set on the author field of the `Book` instance.
 The `Author` instance is accessible naturally via $book->getAuthor().
 
+But you could have the following use case: to add books to an author. The main type will be the `AuthorType` as below:
+
+{% highlight php %}
+<?php
+// src/Acme/LibraryBundle/Form/Type/AuthorType.php
+
+namespace Acme\LibraryBundle\Form\Type;
+
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilder;
+
+class AuthorType extends AbstractType
+{
+    public function buildForm(FormBuilder $builder, array $options)
+    {
+        $builder->add('first_name');
+        $builder->add('last_name');
+        $builder->add('books', 'collection', array(
+            'type'          => new \Acme\LibraryBundle\Form\Type\BookType(),
+            'allow_add'     => true,
+            'allow_delete'  => true,
+            'by_reference'  => false,
+        ));
+    }
+
+    public function getDefaultOptions(array $options)
+    {
+        return array(
+            'data_class' => 'Acme\LibraryBundle\Model\Author',
+        );
+    }
+
+    public function getName()
+    {
+        return 'author';
+    }
+}
+{% endhighlight %}
+
+You'll also need to refactor your `BookType`:
+
+{% highlight php %}
+<php
+// src/Acme/LibraryBundle/Form/Type/BookType.php
+
+namespace Acme\LibraryBundle\Form\Type;
+
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilder;
+
+class BookType extends AbstractType
+{
+    public function buildForm(FormBuilder $builder, array $options)
+    {
+        $builder->add('title');
+        $builder->add('isbn');
+    }
+
+    public function getDefaultOptions(array $options)
+    {
+        return array(
+            'data_class' => 'Acme\LibraryBundle\Model\Book',
+        );
+    }
+
+    public function getName()
+    {
+        return 'book';
+    }
+}
+{% endhighlight %}
+
+When you'll create a new `Author` object, you'll be able to add a set of new `Books` objects and they will be
+linked to this author without any effort thanks to Propel and specific methods to handle collections on related objects.
+
+![](./images/one_to_many_form_with_collection.png)
+
 
 ## Many-To-Many relations ##
 
