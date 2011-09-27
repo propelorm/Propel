@@ -215,7 +215,7 @@ $products = \Acme\StoreBundle\Model\ProductQuery::create()
 {% endhighlight %}
 
 In one line, you get your products in a powerful oriented object way.
-No need to spend time with SQL or whatever, as Symfony2 is fully object oriented programming, Propel
+No need to waste your time with SQL or whatever, Symfony2 is fully object oriented programming and Propel
 respects the same philosophy by providing an awesome abstraction layer.
 
 If you want to reuse some queries, you can add your own methods to the `ProductQuery`:
