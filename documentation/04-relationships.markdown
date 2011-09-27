@@ -82,7 +82,7 @@ Just like the related object setters, Propel generates a getter for every relati
 
 {% highlight php %}
 <?php
-$book = BookQuery()::create()->findPk(1);
+$book = BookQuery::create()->findPk(1);
 $author = $book->getAuthor();
 echo $author->getFirstName(); // 'Leo'
 {% endhighlight %}
