@@ -184,7 +184,13 @@ interface PropelPlatformInterface
 	 * @return boolean
 	 */
 	public function supportsVarcharWithoutSize();
-	
+
+	/**
+	 * Wether uniques should be considered constraints or normal indexes
+	 * @return boolean
+	 */
+	public function supportsUniqueConstraints();
+
 	/**
 	 * Returns the boolean value for the RDBMS.
 	 *

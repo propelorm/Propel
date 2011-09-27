@@ -333,7 +333,7 @@ EOF;
 		$this->assertSame($expected, $columnDiff);
 	}
 
-public function testGetModifyColumnDDLWithVarcharWithoutSizeAndPlatform()
+	public function testGetModifyColumnDDLWithVarcharWithoutSizeAndPlatform()
 	{
 		$t1 = new Table('foo');
 		$c1 = new Column('bar');
@@ -389,6 +389,61 @@ EOF;
 	public function testGetModifyTableForeignKeysSkipSql4DDL($databaseDiff)
 	{
 		$this->assertFalse($databaseDiff);
+	}
+
+	/**
+	 * @dataProvider providerForTestGetModifyUniqueConstraintDDL
+	 */
+	public function testGetModifyUniqueConstraintDDL($tableDiff)
+	{
+		$expected1 = "
+DROP INDEX \"test_U_1\";
+
+ALTER TABLE \"test\" ADD CONSTRAINT \"test_U_1\" UNIQUE (\"test\");
+";
+		$expected2 = "
+ALTER TABLE \"test\" DROP CONSTRAINT \"test_U_1\";
+
+CREATE UNIQUE INDEX \"test_U_1\" ON \"test\" (\"test\");
+";
+		$this->assertEquals($this->getPlatform()->getModifyTableDDL($tableDiff), $expected1);
+		$this->assertEquals($this->getPlatform()->getModifyTableDDL($tableDiff->getReverseDiff()), $expected2);
+	}
+
+	/**
+	 * @dataProvider providerForTestGetModifyUniqueConstraintWithSchemaDDL
+	 */
+	public function testGetModifyUniqueConstraintWithSchemaDDL($tableDiff)
+	{
+		$expected1 = "
+DROP INDEX \"test\".\"test_U_1\";
+
+ALTER TABLE \"test\".\"test\" ADD CONSTRAINT \"test_U_1\" UNIQUE (\"test\");
+";
+		$expected2 = "
+ALTER TABLE \"test\".\"test\" DROP CONSTRAINT \"test_U_1\";
+
+CREATE UNIQUE INDEX \"test_U_1\" ON \"test\".\"test\" (\"test\");
+";
+		$this->assertEquals($expected1, $this->getPlatform()->getModifyTableDDL($tableDiff));
+		$this->assertEquals($expected2, $this->getPlatform()->getModifyTableDDL($tableDiff->getReverseDiff()));
+	}
+
+	/**
+	 * @dataProvider providerForTestGetModifyUniqueConstraintWithSameColumnWithoutPlatformDDL
+	 */
+
+	public function testGetModifyUniqueConstraintWithSameColumnWithoutPlatformDDL($tableDiff)
+	{
+		$this->assertFalse($tableDiff);
+	}
+
+	/**
+	 * @dataProvider providerForTestGetModifyUniqueConstraintWithSameColumnAndTargetPlatformNotSupportingConstraintsDDL
+	 */
+	public function testGetModifyUniqueConstraintWithSameColumnAndTargetPlatformNotSupportingConstraintsDDL($tableDiff)
+	{
+		$this->assertFalse($tableDiff);
 	}
 
 }

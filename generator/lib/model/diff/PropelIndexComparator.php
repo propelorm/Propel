@@ -54,6 +54,27 @@ class PropelIndexComparator
 			return true;
 		}
 
+		// Check if the platforms supports constraints and
+		// if the index has been changed to constraint or vice versa
+		if ((($ft = $fromIndex->getTable()) != null && ($fd = $ft->getDatabase()) != null &&
+		     ($fp = $fd->getPlatform()) != null) &&
+		     ($tt = $toIndex->getTable()) != null && ($td = $tt->getDatabase()) != null &&
+		     ($tp = $td->getPlatform()) != null) {
+
+			// Either the from- or to-platform does not support unique constraints,
+			// which means something has happened that has caused the platform
+			// to change, so we cannot be certain how to generate DROP or CREATE
+			// SQL - we must bail out (extremely hypothetical situation).
+			if (!$fp->supportsUniqueConstraints() || !$tp->supportsUniqueConstraints()) {
+				return false;
+			}
+
+			if ($fromIndex instanceof Unique && $toIndex instanceof Unique &&
+				$fromIndex->isConstraint() != $toIndex->isConstraint()) {
+				return true;
+			}
+		}
+
 		return false;
 	}
 

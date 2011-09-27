@@ -316,6 +316,26 @@ CREATE TABLE "foo"
 (
 	"id" serial NOT NULL,
 	"bar" INTEGER,
+	PRIMARY KEY ("id")
+);
+
+CREATE UNIQUE INDEX "foo_U_1" ON "foo" ("bar");
+
+EOF;
+		$this->assertEquals($expected, $this->getPlatform()->getAddTableDDL($table));
+	}
+	/**
+	 * @dataProvider providerForTestGetAddTableDDLUniqueConstraint
+	 */
+	public function testGetAddTableDDLUniqueConstraint($schema)
+	{
+		$table = $this->getTableFromSchema($schema);
+		$expected = <<<EOF
+
+CREATE TABLE "foo"
+(
+	"id" serial NOT NULL,
+	"bar" INTEGER,
 	PRIMARY KEY ("id"),
 	CONSTRAINT "foo_U_1" UNIQUE ("bar")
 );
@@ -605,7 +625,18 @@ CREATE INDEX \"foo_index\" ON \"foo\" (\"bar1\");
 		$expected = "
 DROP INDEX \"babar\";
 ";
-		$this->assertEquals($expected, $this->getPLatform()->getDropIndexDDL($index));
+		$this->assertEquals($expected, $this->getPlatform()->getDropIndexDDL($index));
+	}
+
+	/**
+	 * @dataProvider providerForTestGetDropIndexWithSchemaDDL
+	 */
+	public function testDropIndexWithSchemaDDL($index)
+	{
+		$expected ="
+DROP INDEX \"test\".\"bar\";
+";
+		$this->assertEquals($expected, $this->getPlatform()->getDropIndexDDL($index));
 	}
 
 	/**
@@ -624,6 +655,17 @@ DROP INDEX \"babar\";
 	{
 		$expected = 'CONSTRAINT "babar" UNIQUE ("bar1","bar2")';
 		$this->assertEquals($expected, $this->getPlatform()->getUniqueDDL($index));
+	}
+
+	/**
+	 * @dataProvider providerForTestGetUniqueIndexDDL
+	 */
+	public function testGetUniqueIndexDDL($index)
+	{
+		$expected = '
+CREATE UNIQUE INDEX "babar" ON "foo" ("bar1","bar2");
+';
+		$this->assertEquals($expected, $this->getPlatform()->getAddIndexDDL($index));
 	}
 
 	/**

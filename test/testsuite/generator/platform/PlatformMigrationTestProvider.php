@@ -539,4 +539,136 @@ EOF;
 		return array(array($diff));
 	}
 
+	public function providerForTestGetModifyUniqueConstraintDDL()
+	{
+		$schema1 = <<<EOF
+<database name="test">
+  <table name="test">
+    <column name="id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true" />
+	<column name="test" type="INTEGER" />
+	<unique isConstraint="false">
+	  <unique-column name="test" />
+	</unique>
+  </table>
+</database>
+EOF;
+		$schema2 = <<<EOF
+<database name="test">
+  <table name="test">
+    <column name="id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true" />
+	<column name="test" type="INTEGER" />
+	<unique>
+	  <unique-column name="test" />
+	</unique>
+  </table>
+</database>
+EOF;
+		$t1 = $this->getDatabaseFromSchema($schema1)->getTable('test');
+		$t2 = $this->getDatabaseFromSchema($schema2)->getTable('test');
+		$diff = PropelTableComparator::computeDiff($t1, $t2);
+		return array(array($diff));
+	}
+
+	public function providerForTestGetModifyUniqueConstraintWithSchemaDDL()
+	{
+		$schema1 = <<<EOF
+<database name="test">
+  <table name="test" schema="test">
+    <column name="id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true" />
+	<column name="test" type="INTEGER" />
+	<unique isConstraint="false">
+	  <unique-column name="test" />
+	</unique>
+  </table>
+</database>
+EOF;
+		$schema2 = <<<EOF
+<database name="test">
+  <table name="test" schema="test">
+    <column name="id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true" />
+	<column name="test" type="INTEGER" />
+	<unique>
+	  <unique-column name="test" />
+	</unique>
+  </table>
+</database>
+EOF;
+		$t1 = $this->getDatabaseFromSchema($schema1)->getTable('test.test');
+		$t2 = $this->getDatabaseFromSchema($schema2)->getTable('test.test');
+		$diff = PropelTableComparator::computeDiff($t1, $t2);
+		return array(array($diff));
+	}
+
+	public function providerForTestGetModifyUniqueConstraintWithSameColumnWithoutPlatformDDL()
+	{
+		$schema1 = <<<EOF
+<database name="test">
+  <table name="test">
+    <column name="id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true" />
+	<column name="test" type="INTEGER" />
+	<unique isConstraint="false" name="test_U_1">
+	  <unique-column name="test" />
+	</unique>
+  </table>
+</database>
+EOF;
+		$schema2 = <<<EOF
+<database name="test">
+  <table name="test">
+    <column name="id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true" />
+	<column name="test" type="INTEGER" />
+	<unique name="test_U_1">
+	  <unique-column name="test" />
+	</unique>
+  </table>
+</database>
+EOF;
+		$xtad1 = new XmlToAppData(null);
+		$appData = $xtad1->parseString($schema1);
+		$db1 = $appData->getDatabase();
+		$table1 = $db1->getTable('test');
+		$xtad2 = new XmlToAppData(null);
+		$appData = $xtad2->parseString($schema2);
+		$db2 = $appData->getDatabase();
+		$table2 = $db2->getTable('test');
+		$diff = PropelTableComparator::computeDiff($table1, $table2);
+		return array(array($diff));
+	}
+
+	public function providerForTestGetModifyUniqueConstraintWithSameColumnAndTargetPlatformNotSupportingConstraintsDDL()
+	{
+		$schema1 = <<<EOF
+<database name="test">
+  <table name="test">
+    <column name="id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true" />
+	<column name="test" type="INTEGER" />
+	<unique isConstraint="false" name="test_U_1">
+	  <unique-column name="test" />
+	</unique>
+  </table>
+</database>
+EOF;
+		$schema2 = <<<EOF
+<database name="test">
+  <table name="test">
+    <column name="id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true" />
+	<column name="test" type="INTEGER" />
+	<unique name="test_U_1">
+	  <unique-column name="test" />
+	</unique>
+  </table>
+</database>
+EOF;
+		$xtad1 = new XmlToAppData(new PgsqlPlatform());
+		$appData = $xtad1->parseString($schema1);
+		$db1 = $appData->getDatabase();
+		$table1 = $db1->getTable('test');
+		$xtad2 = new XmlToAppData(new DefaultPlatform());
+		$appData = $xtad2->parseString($schema2);
+		$db2 = $appData->getDatabase();
+		$table2 = $db2->getTable('test');
+		$diff = PropelTableComparator::computeDiff($table1, $table2);
+		return array(array($diff));
+	}
+
 }

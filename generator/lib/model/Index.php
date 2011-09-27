@@ -114,7 +114,7 @@ class Index extends XMLElement
 				// still no name
 			}
 		}
-		if ($database = $this->getTable()->getDatabase()) {
+		if (($database = $this->getTable()->getDatabase()) && $database->getPlatform()) {
 			return substr($this->indexName, 0, $database->getPlatform()->getMaxColumnNameLength());
 		} else {
 			return $this->indexName;

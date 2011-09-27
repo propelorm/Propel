@@ -1034,6 +1034,13 @@ class Table extends ScopedElement implements IDMethod
 			return $unique;
 		} else {
 			$unique = new Unique($this);
+			if (!isset($unqdata['isConstraint'])) {
+				if ($this->getDatabase() && $this->getDatabase()->getPlatform()) {
+					$unqdata['isConstraint'] =
+						($this->getDatabase()->getPlatform()->supportsUniqueConstraints() ?
+							"true" : "false");
+				}
+			}
 			$unique->loadFromXML($unqdata);
 			return $this->addUnique($unique);
 		}

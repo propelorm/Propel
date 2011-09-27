@@ -225,8 +225,11 @@ SET search_path TO public;
 			$lines[] = $this->getPrimaryKeyDDL($table);
 		}
 
+		// Add unique constraints
 		foreach ($table->getUnices() as $unique) {
-			$lines[] = $this->getUniqueDDL($unique);
+			if ($unique->isConstraint()) {
+				$lines[] = $this->getConstraintDDL($unique);
+			}
 		}
 
 		$sep = ",
@@ -250,6 +253,13 @@ COMMENT ON TABLE %s IS %s;
 				$this->quoteIdentifier($table->getName()),
 				$this->quote($table->getDescription())
 			);
+		}
+
+		// Add uniques that aren't constraints (as in, normal unique indices)
+		foreach ($table->getUnices() as $unique) {
+			if (!$unique->isConstraint()) {
+				$ret .= $this->getAddIndexDDL($unique);
+			}
 		}
 
 		$ret .= $this->getAddColumnsComments($table);
@@ -328,12 +338,45 @@ DROP TABLE %s CASCADE;
 		return implode(' ', $ddl);
 	}
 
-	public function getUniqueDDL(Unique $unique)
+	public function getConstraintDDL(Unique $unique)
 	{
-		return sprintf('CONSTRAINT %s UNIQUE (%s)',
-			$this->quoteIdentifier($unique->getName()),
-			$this->getColumnListDDL($unique->getColumns())
-		);
+		if ($unique->isConstraint()) {
+			return sprintf('CONSTRAINT %s UNIQUE (%s)',
+				$this->quoteIdentifier($unique->getName()),
+				$this->getColumnListDDL($unique->getColumns())
+			);
+		}
+	}
+
+	/**
+	 * Override the getUniqueDDL -method from the parent class
+	 * and forward it to a more appropriately named getConstraintDDL 
+	 * method to avoid a misnomer
+	 *
+	 * @author Markus Lervik <markus.lervik@necora.fi>
+	 */
+	public function getUniqueDDL(Unique $unique) {
+		return $this->getConstraintDDL($unique);
+	}
+
+	public function getAddIndexDDL(Index $index) {
+		if ($index instanceof Unique) {
+			if ($index->isConstraint()) {
+				$pattern = "
+ALTER TABLE %s ADD CONSTRAINT %s UNIQUE (%s);
+";
+				return sprintf($pattern,
+						$this->quoteIdentifier($index->getTable()->getName()),
+						$this->quoteIdentifier($index->getName()),
+						$this->getColumnListDDL($index->getColumns()));
+			}
+		}
+		return parent::getAddIndexDDL($index);
+	}
+
+	public function supportsUniqueConstraints()
+	{
+		return true;
 	}
 
 	/**
@@ -457,15 +500,41 @@ ALTER TABLE %s ALTER COLUMN %s;
 	public function getDropIndexDDL(Index $index)
 	{
 		if ($index instanceof Unique) {
-			$pattern = "
-	ALTER TABLE %s DROP CONSTRAINT %s;
-	";
-			return sprintf($pattern,
-				$this->quoteIdentifier($index->getTable()->getName()),
-				$this->quoteIdentifier($index->getName())
-			);
-		} else {
-			return parent::getDropIndexDDL($index);
+			if ($index->isConstraint()) {
+				$pattern = "
+ALTER TABLE %s DROP CONSTRAINT %s;
+";
+				return sprintf($pattern,
+						$this->quoteIdentifier($index->getTable()->getName()),
+						$this->quoteIdentifier($index->getName()));
+			}
 		}
+		$pattern = "
+DROP INDEX %s;
+";
+		$name = $index->getName();
+		if ($index->getTable() && $index->getTable()->getSchema()) {
+			$name = $index->getTable()->getSchema() . '.' .
+					$name;
+		}
+		return sprintf($pattern, $this->quoteIdentifier($name));
 	}
+	
+	/**
+	 * Builds the DDL SQL to drop the primary key of a table.
+	 *
+	 * @param      Table $table
+	 * @return     string
+	 */
+	public function getDropPrimaryKeyDDL(Table $table)
+	{
+		$pattern = "
+ALTER TABLE %s DROP CONSTRAINT %s;
+";
+		return sprintf($pattern,
+			$this->quoteIdentifier($table->getName()),
+			$this->quoteIdentifier($table->getCommonName() . '_pkey')
+		);
+	}
+
 }
