@@ -108,7 +108,7 @@ public function createAction()
 {
     $product = new Product();
     $product->setName('A Foo Bar');
-    $product->setPrice('19.99');
+    $product->setPrice(19.99);
     $product->setDescription('Lorem ipsum dolor');
 
     $product->save();
@@ -209,7 +209,7 @@ ordered from cheapest to most expensive. From inside a controller, do the follow
 <?php
 
 $products = \Acme\StoreBundle\Model\ProductQuery::create()
-    ->filterByPrice('19.99', \Criteria::GREATER_THAN)
+    ->filterByPrice(19.99, \Criteria::GREATER_THAN)
     ->orderByPrice()
     ->find();
 {% endhighlight %}
@@ -229,8 +229,7 @@ class ProductQuery extends BaseProductQuery
     public function filterByExpensivePrice()
     {
         return $this
-            ->filterByPrice('1000', \Criteria::GREATER_THAN)
-            ;
+            ->filterByPrice(1000, \Criteria::GREATER_THAN);
     }
 }
 {% endhighlight %}
@@ -340,8 +339,7 @@ public function showAction($id)
 {
     $product = ProductQuery::create()
         ->joinWithCategory()
-        ->findPk($id)
-        ;
+        ->findPk($id);
 
     $categoryName = $product->getCategory()->getName();
 
@@ -373,7 +371,7 @@ To add a hook, just add a new method to the object class:
 
 class Product extends BaseProduct
 {
-    public function preInsert($con = null)
+    public function preInsert(\PropelPDO $con = null)
     {
         // do something before the object is inserted
     }
