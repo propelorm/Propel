@@ -551,4 +551,13 @@ class PropelCollection extends ArrayObject implements Serializable
 	{
 		return (string) $this->exportTo(constant($this->getPeerClass() . '::DEFAULT_STRING_FORMAT'));
 	}
+
+	/**
+	 * Override ArrayObject::offsetGet() to avoid a notice error.
+	 *
+	 * @return    mixed
+	 */
+	public function offsetGet($offset) {
+		return parent::offsetExists($offset) ? parent::offsetGet($offset) : null;
+	}
 }
