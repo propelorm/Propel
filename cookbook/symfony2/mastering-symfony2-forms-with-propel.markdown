@@ -283,7 +283,7 @@ class AuthorType extends AbstractType
 You'll also need to refactor your `BookType`:
 
 {% highlight php %}
-<php
+<?php
 // src/Acme/LibraryBundle/Form/Type/BookType.php
 
 namespace Acme\LibraryBundle\Form\Type;
