@@ -1,3 +1,15 @@
+body.home {
+  background:#fff;
+}
+
+.home .content {
+  padding-top: 10px;
+}
+
+#banner {
+  display: none;
+}
+
 p, li {
   font-family: Helvetica, sans-serif;
   font-size: 17pt;
