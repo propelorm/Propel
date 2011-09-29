@@ -359,6 +359,11 @@ DROP TABLE %s CASCADE;
 		return true;
 	}
 
+    public function quoteIdentifier($text)
+	{
+		return $text;
+	}
+
 	/**
 	 * Overrides the implementation from DefaultPlatform
 	 *
