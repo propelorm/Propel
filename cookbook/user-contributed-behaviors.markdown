@@ -25,6 +25,4 @@ Here is a list of Propel behaviors contributed by users. Feel free to use them o
 
 * [sfPropelObjectPathBehaviorPlugin](http://www.symfony-project.org/plugins/sfPropelObjectPathBehaviorPlugin) Simplifies joining and handling relations deeper than one level. (Not Symfony specific)
 
-* [sfPropel15RatableBehaviorPlugin](https://github.com/matteosister/sfPropel15RatableBehaviorPlugin) A behavior for propel 1.5 and symfony to rate your objects.
-
 * [sfPropel15TaggableBehaviorPlugin](https://github.com/matteosister/sfPropel15TaggableBehaviorPlugin) A behavior and a widget for propel 1.5 and symfony to tag your objects.
