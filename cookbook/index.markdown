@@ -36,6 +36,8 @@ title: The Cookbook
 
 * [How to Write A Behavior](writing-behavior.html)
 
+* [User Contributed Behaviors](user-contributed-behaviors.html)
+
 
 ### Working with symfony 1.4 ###
 

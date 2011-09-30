@@ -50,6 +50,8 @@ title: Documentation
 * [`versionable`](../behaviors/versionable.html)
 * And [`concrete_inheritance`](09-inheritance.html), documented in the Inheritance Chapter even if it's a behavior
 
+You can also look at [user contributed behaviors](../cookbook/user-contributed-behaviors.html).
+
 ## Cookbook ##
 
 ### Common Tasks ###
