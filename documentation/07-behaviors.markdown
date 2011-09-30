@@ -148,6 +148,8 @@ Propel currently bundles several behaviors. Check the behavior documentation for
 * [query_cache](../behaviors/query-cache)
 * And [concrete_inheritance](./09-inheritance), documented in the Inheritance Chapter even if it's a behavior
 
+You can also look at [user contributed behaviors](../cookbook/user-contributed-behaviors.html).
+
 Behaviors bundled with Propel require no further installation and work out of the box.
 
 ## Customizing Behaviors ##
