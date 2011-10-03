@@ -35,7 +35,7 @@ $s2->save();
 $s3 = new Section();
 $s3->setTitle('Europe');
 $s3->insertAsFirstChildOf($s2); // insert the node in the tree
-$s3->save()
+$s3->save();
 $s4 = new Section();
 $s4->setTitle('Business');
 $s4->insertAsNextSiblingOf($s2); // insert the node in the tree
