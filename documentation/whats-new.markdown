@@ -468,7 +468,7 @@ $books = BookQuery::create()
 
 ## Join With Several Conditions ##
 
-Creating a Join with more than one connection is now very easy. Just call `ModelCriteria::addJoinCondition($joinName, $condition)` after a `ModelCriteria::join()` to add further conditions to a join:
+Creating a Join with more than one condition is now very easy. Just call `ModelCriteria::addJoinCondition($joinName, $condition)` after a `ModelCriteria::join()` to add further conditions to a join:
 
 {% highlight php %}
 <?php
