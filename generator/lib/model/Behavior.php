@@ -158,6 +158,9 @@ class Behavior extends XMLElement
 	{
 		foreach ($this->getDatabase()->getTables() as $table)
 		{
+			if($table->hasBehavior($this->getName())) {
+				continue;
+			}
 			$b = clone $this;
 			$table->addBehavior($b);
 		}
