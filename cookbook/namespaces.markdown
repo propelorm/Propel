@@ -110,11 +110,11 @@ echo get_class($book->getPublisher());
 
 ## Using Namespaces As A Directory Structure ##
 
-In a schema, you can define a `package` attribute on a `<database>` or a `<table>` tag to generate model classes in a subdirectory (see [Multi-Component](multi-component-data-model.html)). If you use namespaces to autoload your classes based on a SplClassAutoloader (see http://groups.google.com/group/php-standards), then you may find yourself repeating the `namespace` data in the `package` attribute:
+In a schema, you can define a `package` attribute on a `<database>` or a `<table>` tag to generate model classes in a subdirectory (see [Multi-Component](multi-component-data-model.html)). If you use namespaces to autoload your classes based on a SplClassAutoloader (see [http://groups.google.com/group/php-standards](http://groups.google.com/group/php-standards)), then you may find yourself repeating the `namespace` data in the `package` attribute:
 
 {% highlight xml %}
 <database name="bookstore" defaultIdMethod="native"
-  namespace="Foo/Bar" package="Foo.Bar">
+  namespace="Foo\Bar" package="Foo.Bar">
 {% endhighlight %}
 
 To avoid such repetitions, just set the `propel.namespace.autoPackage` setting to `true` in your `build.properties`:
@@ -126,5 +126,5 @@ propel.namespace.autoPackage = true
 Now Propel will automatically create a `package` attribute, and therefore distribute model classes in subdirectories, based on the `namespace` attribute, and you can  omit the manual `package` attribute in the schema:
 
 {% highlight xml %}
-<database name="bookstore" defaultIdMethod="native" namespace="Foo/Bar">
+<database name="bookstore" defaultIdMethod="native" namespace="Foo\Bar">
 {% endhighlight %}
