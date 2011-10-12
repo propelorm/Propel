@@ -23,7 +23,7 @@ It currently supports:
 
 ## Installation
 
-###via git submodule
+### via Git submodule
 
 Clone this bundle in the `vendor/bundles/Propel` directory:
 
@@ -41,10 +41,11 @@ Instead of using svn, you can clone the unofficial Git repositories:
 
     git submodule add https://github.com/propelorm/Propel.git vendor/propel
 
-###via Symfony2 vendor management
+### via Symfony2 vendor management
 
-As an alternative, you can also manage your vendors via the Sf2 bin/vendor command.
+As an alternative, you can also manage your vendors via Symfony2's own bin/vendor command.
 Add the following lines to your deps file (located in the root of the Symfony project:
+
     [PropelBundle]
         git=https://github.com/propelorm/PropelBundle.git
         target=/bundles/Propel/PropelBundle
@@ -59,7 +60,7 @@ Update your vendor directory with
 
     php bin/vendors install
     
-##Register your Bundle
+## Register your Bundle
 
 Register this bundle in the `AppKernel` class:
 
