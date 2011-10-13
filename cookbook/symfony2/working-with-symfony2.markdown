@@ -49,12 +49,10 @@ Add the following lines to your deps file (located in the root of the Symfony pr
     [PropelBundle]
         git=https://github.com/propelorm/PropelBundle.git
         target=/bundles/Propel/PropelBundle
-    [Phing]
+    [phing]
         git=https://github.com/Xosofox/phing
-        target=phing
-    [Propel]
+    [propel]
         git=https://github.com/propelorm/Propel.git
-        target=propel
     
 Update your vendor directory with
 
