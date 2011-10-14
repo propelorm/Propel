@@ -70,7 +70,7 @@ class PgsqlPlatformTest extends PlatformTestProvider
 -- book
 -----------------------------------------------------------------------
 
-DROP TABLE book CASCADE;
+DROP TABLE IF EXISTS book CASCADE;
 
 CREATE TABLE book
 (
@@ -86,7 +86,7 @@ CREATE INDEX book_I_1 ON book (title);
 -- author
 -----------------------------------------------------------------------
 
-DROP TABLE author CASCADE;
+DROP TABLE IF EXISTS author CASCADE;
 
 CREATE TABLE author
 (
@@ -148,7 +148,7 @@ CREATE SCHEMA Yipee;
 
 SET search_path TO Woopah;
 
-DROP TABLE table1 CASCADE;
+DROP TABLE IF EXISTS table1 CASCADE;
 
 SET search_path TO public;
 
@@ -166,7 +166,7 @@ SET search_path TO public;
 -- table2
 -----------------------------------------------------------------------
 
-DROP TABLE table2 CASCADE;
+DROP TABLE IF EXISTS table2 CASCADE;
 
 CREATE TABLE table2
 (
@@ -180,7 +180,7 @@ CREATE TABLE table2
 
 SET search_path TO Yipee;
 
-DROP TABLE table3 CASCADE;
+DROP TABLE IF EXISTS table3 CASCADE;
 
 SET search_path TO public;
 
@@ -210,7 +210,7 @@ EOF;
 -- x.book
 -----------------------------------------------------------------------
 
-DROP TABLE x.book CASCADE;
+DROP TABLE IF EXISTS x.book CASCADE;
 
 CREATE TABLE x.book
 (
@@ -226,7 +226,7 @@ CREATE INDEX book_I_1 ON x.book (title);
 -- y.author
 -----------------------------------------------------------------------
 
-DROP TABLE y.author CASCADE;
+DROP TABLE IF EXISTS y.author CASCADE;
 
 CREATE TABLE y.author
 (
@@ -240,7 +240,7 @@ CREATE TABLE y.author
 -- x.book_summary
 -----------------------------------------------------------------------
 
-DROP TABLE x.book_summary CASCADE;
+DROP TABLE IF EXISTS x.book_summary CASCADE;
 
 CREATE TABLE x.book_summary
 (
@@ -429,7 +429,7 @@ EOF;
 	{
 		$table = new Table('foo');
 		$expected = "
-DROP TABLE foo CASCADE;
+DROP TABLE IF EXISTS foo CASCADE;
 ";
 		$this->assertEquals($expected, $this->getPlatform()->getDropTableDDL($table));
 	}
@@ -451,7 +451,7 @@ EOF;
 
 SET search_path TO Woopah;
 
-DROP TABLE foo CASCADE;
+DROP TABLE IF EXISTS foo CASCADE;
 
 SET search_path TO public;
 
@@ -467,7 +467,7 @@ EOF;
 		$table = $this->getTableFromSchema($schema, 'Woopah.foo');
 		$expected = <<<EOF
 
-DROP TABLE Woopah.foo CASCADE;
+DROP TABLE IF EXISTS Woopah.foo CASCADE;
 
 EOF;
 		$this->assertEquals($expected, $this->getPlatform()->getDropTableDDL($table));
@@ -481,7 +481,7 @@ EOF;
 		$table->addIdMethodParameter($idMethodParameter);
 		$table->setIdMethod(IDMethod::NATIVE);
 		$expected = "
-DROP TABLE foo CASCADE;
+DROP TABLE IF EXISTS foo CASCADE;
 
 DROP SEQUENCE foo_sequence;
 ";
