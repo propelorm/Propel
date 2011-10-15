@@ -60,6 +60,9 @@ class TableMap
   // Whether the table uses single table inheritance
   protected $isSingleTableInheritance = false;
 
+  // Whether the table is a Many to Many table
+  protected $isCrossRef = false;
+
   // The primary key columns in the table
   protected $primaryKeys = array();
 
@@ -430,6 +433,24 @@ class TableMap
   public function addForeignPrimaryKey($columnName, $phpName, $type, $fkTable, $fkColumn, $isNotNull = false, $size = 0, $defaultValue = null)
   {
     return $this->addColumn($columnName, $phpName, $type, $isNotNull, $size, $defaultValue, true, $fkTable, $fkColumn);
+  }
+
+
+  /**
+   * @return boolean true if the table is a many to many
+   */
+  public function isCrossRef()
+  {
+    return $this->isCrossRef;
+  }
+
+  /**
+   * set the isCrossRef
+   * @param boolean $isCrossRef
+   */
+  public function setIsCrossRef($isCrossRef)
+  {
+    $this->isCrossRef = $isCrossRef;
   }
 
   /**
