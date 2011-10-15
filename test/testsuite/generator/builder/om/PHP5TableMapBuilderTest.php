@@ -152,4 +152,12 @@ class PHP5TableMapBuilderTest extends BookstoreTestBase
 		$this->assertTrue($bookTable->hasPrimaryStringColumn(), 'The map builder adds primaryString columns.');
 		$this->assertEquals($bookTable->getColumn('TITLE'), $bookTable->getPrimaryStringColumn(), 'The map builder maps the correct column as primaryString.');
 	}
+
+	public function testIsCrossRef()
+	{
+		$bookTable = $this->databaseMap->getTableByPhpName('Book');
+		$this->assertFalse($bookTable->isCrossRef(), 'The map builder add isCrossRef information "false"');
+		$BookListRelTable = $this->databaseMap->getTableByPhpName('BookListRel');
+		$this->assertTrue($BookListRelTable->isCrossRef(), 'The map builder add isCrossRef information "true"');
+	}
 }
