@@ -5,7 +5,7 @@ title: The Build Time
 
 # The Build Time #
 
-The initial step in every Propel project is the "build". During build time, a developer describes the structure of the datamodel in a XML file called the "schema". From this schema, Propel generates PHP classes, called "model classes", made of object-oriented PHP code optimized for a given RMDBS. The model classes are the primary interface to find and manipulate data in the database in Propel.
+The initial step in every Propel project is the "build". During build time, a developer describes the structure of the datamodel in a XML file called the "schema". From this schema, Propel generates PHP classes, called "model classes", made of object-oriented PHP code optimized for a given RDMBS. The model classes are the primary interface to find and manipulate data in the database in Propel.
 
 The XML schema can also be used to generate SQL code to setup your database. Alternatively, you can generate the schema from an existing database (see the [Existing-Database reverse engineering chapter](../cookbook/working-with-existing-databases) for more details), or from a DBDesigner 4 model (see the [DBDesigner2Propel chapter](../cookbook/dbdesigner)).
 
