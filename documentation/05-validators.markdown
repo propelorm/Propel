@@ -151,7 +151,7 @@ To limit the value of an integer column, use the `MaxValueValidator`. Note that 
 
 ### RequiredValidator ###
 
-This validtor checks the same rule as a `required=true` on the column at the database level. However it will not give you a clean error to work with.
+This validator checks the same rule as a `required=true` on the column at the database level. This, however, will give you a clean error to work with.
 
 {% highlight xml %}
 <column name="username" type="VARCHAR" size="25" required="true" />
