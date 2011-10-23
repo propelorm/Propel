@@ -2033,6 +2033,19 @@ class ModelCriteriaTest extends BookstoreTestBase
 		$expectedSQL = "SELECT book.ID, book.TITLE, book.ISBN, book.PRICE, book.PUBLISHER_ID, book.AUTHOR_ID FROM `book` WHERE book.TITLE='Don Juan' AND book.ISBN=1234 LIMIT 1";
 		$this->assertEquals($expectedSQL, $con->getLastExecutedQuery(), 'findOneByXXX($value) is turned into findOneBy(XXX, $value)');
 	}
+	
+	public function testMagicFindByObject()
+	{
+		$con = Propel::getConnection(BookPeer::DATABASE_NAME);
+
+		$c = new ModelCriteria('bookstore', 'Author');
+		$testAuthor = $c->findOne();
+
+		$q = BookQuery::create()
+			->findByAuthorAndISBN($testAuthor, 1234);
+		$expectedSQL = "SELECT book.ID, book.TITLE, book.ISBN, book.PRICE, book.PUBLISHER_ID, book.AUTHOR_ID FROM `book` WHERE book.AUTHOR_ID=" . $testAuthor->getId() . " AND book.ISBN=1234";
+		$this->assertEquals($expectedSQL, $con->getLastExecutedQuery(), 'findByXXXAndYYY($value) is turned into findBy(array(XXX, YYY), $value)');
+	}
 
 	public function testMagicFilterBy()
 	{

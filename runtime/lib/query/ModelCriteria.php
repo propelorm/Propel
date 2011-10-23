@@ -242,7 +242,7 @@ class ModelCriteria extends Criteria
 	public function filterByArray($conditions)
 	{
 		foreach ($conditions as $column => $args) {
-			call_user_func_array(array($this, 'filterBy' . $column), (array) $args);
+			call_user_func(array($this, 'filterBy' . $column), $args);
 		}
 
 		return $this;
