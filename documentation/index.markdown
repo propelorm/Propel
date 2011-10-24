@@ -57,7 +57,7 @@ You can also look at [user contributed behaviors](../cookbook/user-contributed-b
 ### Common Tasks ###
 
 * [Additional SQL Files](../cookbook/adding-additional-sql-files.html) How to execute custom SQL statements at buildtime
-* [Advanced Column Types](../cookbook/advanced-column-types.html) How to work with BLOBs, serialized PHP objects, ENUM, and ARRAY column types.
+* [Advanced Column Types](../cookbook/working-with-advanced-column-types.html) How to work with BLOBs, serialized PHP objects, ENUM, and ARRAY column types.
 * [Customizing build](../cookbook/customizing-build.html) How to customize the Phing build process.
 * [DB Designer](../cookbook/dbdesigner.html) How to import an XML schema from existing DBDesigner 4 file.
 * [How to Use PHP 5.3 Namespaces](../cookbook/namespaces.html) How to generate model classes with namespaces, and how to use them.
