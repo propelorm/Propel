@@ -37,7 +37,7 @@ Using these parameters, Propel creates a `file` Log handler in the background, a
 
 {% highlight php %}
 <?php
-Propel::$logger = Log::singleton($type = 'file', $name = './propel.log', $ident = 'propel', $conf = array(), $level = PEAR_LOG_DEBUG);
+Propel::setLogger(Log::singleton($type = 'file', $name = './propel.log', $ident = 'propel', $conf = array(), $level = PEAR_LOG_DEBUG));
 {% endhighlight %}
 
 The meaning of each of the `<log>` nested elements may vary, depending on which log handler you are using. Most common accepted logger types are `file`, `console`, `syslog`, `display`, `error_log`, `firebug`, and `sqlite`. Refer to the [PEAR::Log](http://www.indelible.org/php/Log/guide.html#standard-log-handlers) documentation for more details on log handlers configuration and options.
