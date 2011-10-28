@@ -63,7 +63,7 @@ Use the static `Propel::log()` method to log a message using the configured log 
 <?php
 $myObj = new MyObj();
 $myObj->setName('foo');
-Propel::log('uh-oh, something went wrong with ' . $myObj->getName(), Propel::LOG_ERROR);
+Propel::log('uh-oh, something went wrong with ' . $myObj->getName(), Propel::LOG_ERR);
 {% endhighlight %}
 
 You can log your own messages from the generated model objects by using their `log()` method, inherited from `BaseObject`:
@@ -71,7 +71,7 @@ You can log your own messages from the generated model objects by using their `l
 {% highlight php %}
 <?php
 $myObj = new MyObj();
-$myObj->log('uh-oh, something went wrong', Propel::LOG_ERROR);
+$myObj->log('uh-oh, something went wrong', Propel::LOG_ERR);
 {% endhighlight %}
 
 The log messages will show up in the log handler defined in `runtime-conf.xml` (`propel.log` file by default) as follows:
