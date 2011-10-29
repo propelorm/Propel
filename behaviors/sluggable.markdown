@@ -56,7 +56,7 @@ By default, the behavior adds one columns to the model. If this column is alread
   <column name="id" required="true" primaryKey="true" autoIncrement="true" type="INTEGER" />
   <column name="title" type="VARCHAR" required="true" primaryString="true" />
   <column name="url" type="VARCHAR" size="100" />
-  <behavior name="sluggable" />
+  <behavior name="sluggable">
     <parameter name="slug_column" value="url" />
     <parameter name="slug_pattern" value="/posts/{Title}" />
     <parameter name="replace_pattern" value="/[^\w\/]+/u" />
