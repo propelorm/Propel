@@ -126,20 +126,23 @@ class ArchivableBehavior extends Behavior
 
 	public function getArchiveTablePhpName($builder)
 	{
-		if ($this->getParameter('archive_class') == '') {
-			return $builder->getNewStubObjectBuilder($this->getArchiveTable())->getClassname();
-		} else {
+		if ($this->hasArchiveClass()) {
 			return $this->getParameter('archive_class');
 		}
+		return $builder->getNewStubObjectBuilder($this->getArchiveTable())->getClassname();
 	}
 
 	public function getArchiveTableQueryName($builder)
 	{
-		if ($this->getParameter('archive_class') == '') {
-			return $builder->getNewStubQueryBuilder($this->getArchiveTable())->getClassname();
-		} else {
+		if ($this->hasArchiveClass()) {
 			return $this->getParameter('archive_class') . 'Query';
 		}
+		return $builder->getNewStubQueryBuilder($this->getArchiveTable())->getClassname();
+	}
+	
+	public function hasArchiveClass()
+	{
+		return $this->getParameter('archive_class') != '';
 	}
 
 	/**
