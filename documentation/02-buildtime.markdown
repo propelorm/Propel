@@ -32,7 +32,7 @@ The root tag of the XML schema is the `<database>` tag:
 </database>
 {% endhighlight %}
 
-The `name` attribute defines the name of the connection that Propel uses for the tables in this schema. It is not necessarily the name of the actual database. In fact, Propel uses a second file to link a connection name with real connection settings (like databae name, user and password). This `runtime-conf.xml` file will be explained later in this chapter.
+The `name` attribute defines the name of the connection that Propel uses for the tables in this schema. It is not necessarily the name of the actual database. In fact, Propel uses a second file to link a connection name with real connection settings (like database name, user and password). This `runtime-conf.xml` file will be explained later in this chapter.
 
 The `defaultIdMethod` attribute indicates that the tables in this schema use the database's "native" auto-increment/sequence features to handle id columns that are set to auto-increment.
 
@@ -87,7 +87,7 @@ Each column has a `name` (the one used by the database), and an optional `phpNam
 
 Each column also requires a `type`. The XML schema is database agnostic, so the column types and attributes are probably not exactly the same as the one you use in your own database. But Propel knows how to map the schema types with SQL types for many database vendors. Existing Propel column types are `boolean`, `tinyint`, `smallint`, `integer`, `bigint`, `double`, `float`, `real`, `decimal`, `char`, `varchar`, `longvarchar`, `date`, `time`, `timestamp`, `blob`, `clob`, `object`, and `array`. Some column types use a `size` (like `varchar` and `int`), some have unlimited size (`longvarchar`, `clob`, `blob`). Check the [schema reference]() for more details on each column type.
 
-As for the other column attributes, `required`, `primaryKey`, and `autoIncrement`, they mean exactly what their names suppose.
+As for the other column attributes, `required`, `primaryKey`, and `autoIncrement`, they mean exactly what their names imply.
 
 >**Tip**<br />Propel supports namespaces (for PHP > 5.3). If you specify a `namespace` attribute in a `<table>` element, the generated PHP classes for this table will use this namespace.
 
