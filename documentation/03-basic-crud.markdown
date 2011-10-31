@@ -127,6 +127,8 @@ $authors = AuthorQuery::create()
 
 When you pass a value to a `filterByXXX()` method, Propel uses the column type to escape this value in PDO. This protects you from SQL injection risks.
 
+>**Tip**<br />`filterByXXX()` is the preferred method for creating queries. It is very flexible and accepts values with wildcards as well as arrays for more complex use cases. See [Column Filter Methods](../reference/model-criteria.html#column_filter_methods) for details.
+
 You can also easily limit and order the results on a query. Once again, the Query methods return the current Query object, so you can easily chain them:
 
 {% highlight php %}
