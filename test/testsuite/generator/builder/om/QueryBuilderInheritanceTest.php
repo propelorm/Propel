@@ -57,8 +57,8 @@ class QueryBuilderInheritanceTest extends BookstoreTestBase
 		$cashier2->save($this->con);
 		BookstoreManagerQuery::create()->update(array('Name' => 'foo'), $this->con);
 		$nbMan = BookstoreEmployeeQuery::create()
-		  ->filterByName('foo')
-		  ->count($this->con);
+			->filterByName('foo')
+			->count($this->con);
 		$this->assertEquals(1, $nbMan, 'Update in sub query affects only child results');
 	}
 
@@ -90,6 +90,31 @@ class QueryBuilderInheritanceTest extends BookstoreTestBase
 		BookstoreManagerQuery::create()->deleteAll();
 		$nbCash = BookstoreEmployeeQuery::create()->count();
 		$this->assertEquals(2, $nbCash, 'Delete in sub query affects only child results');
+	}
+
+	public function testFindPkSimpleWithSingleTableInheritanceReturnCorrectClass()
+	{
+		Propel::disableInstancePooling();
+
+		$employee = new BookstoreEmployee();
+		$employee->save($this->con);
+		$manager = new BookstoreManager();
+		$manager->save($this->con);
+		$cashier1 = new BookstoreCashier();
+		$cashier1->save($this->con);
+		$cashier2 = new BookstoreCashier();
+		$cashier2->save($this->con);
+
+		$this->assertInstanceOf('BookstoreEmployee', BookstoreEmployeeQuery::create()->findPk($employee->getId()),
+			'findPk() return right object : BookstoreEmployee');
+		$this->assertInstanceOf('BookstoreManager', BookstoreEmployeeQuery::create()->findPk($manager->getId()),
+			'findPk() return right object : BookstoreManager');
+		$this->assertInstanceOf('BookstoreCashier', BookstoreEmployeeQuery::create()->findPk($cashier1->getId()),
+			'findPk() return right object : BookstoreCashier');
+		$this->assertInstanceOf('BookstoreCashier', BookstoreEmployeeQuery::create()->findPk($cashier2->getId()),
+			'findPk() return right object : BookstoreCashier');
+
+		Propel::enableInstancePooling();
 	}
 }
 
