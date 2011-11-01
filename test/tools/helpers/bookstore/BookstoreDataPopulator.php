@@ -167,6 +167,11 @@ class BookstoreDataPopulator
 		$bemp2->setSupervisor($bemp1);
 		$bemp2->save($con);
 
+		$bemp3 = new BookstoreCashier();
+		$bemp3->setName("Tim");
+		$bemp3->setJobTitle("Cashier");
+		$bemp3->save($con);
+
 		$role = new AcctAccessRole();
 		$role->setName("Admin");
 
