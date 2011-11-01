@@ -116,5 +116,48 @@ class QueryBuilderInheritanceTest extends BookstoreTestBase
 
 		Propel::enableInstancePooling();
 	}
+
+	public function testGetCorrectTableMapClassWithAbstractSingleTableInheritance()
+	{
+		Propel::initialize();
+		$this->assertInstanceOf('DistributionTableMap', DistributionPeer::getTableMap(), 'getTableMap should return the right table map');
+	}
+
+	/**
+	 * This test prove failure with propel.emulateForeignKeyConstraints = true
+	 */
+	public function testDeleteCascadeWithAbstractSingleTableInheritance()
+	{
+		$manager = new DistributionManager();
+		$manager->setName('test');
+		$manager->save();
+		$manager->delete();
+	}
+
+	public function  testFindPkSimpleWithAbstractSingleTableInheritanceReturnCorrectClass()
+	{
+		Propel::disableInstancePooling();
+
+		$manager = new DistributionManager();
+		$manager->setName('manager1');
+		$manager->save();
+
+		$distributionStore = new DistributionStore();
+		$distributionStore->setName('my store 1');
+		$distributionStore->setDistributionManager($manager);
+		$distributionStore->save();
+
+		$distributionVirtualStore = new DistributionVirtualStore();
+		$distributionVirtualStore->setName('my VirtualStore 1');
+		$distributionVirtualStore->setDistributionManager($manager);
+		$distributionVirtualStore->save();
+
+		$this->assertInstanceOf('DistributionStore', DistributionQuery::create()->findPk($distributionStore->getId()),
+			'findPk() return right object : DistributionStore');
+		$this->assertInstanceOf('DistributionVirtualStore', DistributionQuery::create()->findPk($distributionVirtualStore->getId()),
+			'findPk() return right object : DistributionVirtualStore');
+
+		Propel::enableInstancePooling();
+	}
 }
 

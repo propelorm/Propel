@@ -172,7 +172,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
 
 	public function getTableMapClass()
 	{
-		return $this->getTablePhpName() . 'TableMap';
+		return $this->getStubObjectBuilder()->getClassname() . 'TableMap';
 	}
 
 	public function getTablePhpName()
