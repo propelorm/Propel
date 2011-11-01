@@ -338,11 +338,31 @@
 		</foreign-key>
 	</table>
 
-    <table name="book2">
-        <column name="id" type="INTEGER" primaryKey="true" autoIncrement="true" />
-        <column name="title" type="VARCHAR" />
-        <column name="style" type="ENUM" valueSet="novel, essay, poetry" />
-        <column name="tags" type="ARRAY" />
-    </table>
+	<table name="book2">
+		<column name="id" type="INTEGER" primaryKey="true" autoIncrement="true" />
+		<column name="title" type="VARCHAR" />
+		<column name="style" type="ENUM" valueSet="novel, essay, poetry" />
+		<column name="tags" type="ARRAY" />
+	</table>
+
+	<!-- Test single table inheritance with Abstract true -->
+	<table name="distribution" abstract="true">
+		<column name="id" type="INTEGER" primaryKey="true" autoIncrement="true" />
+		<column name="name" type="VARCHAR" />
+		<column name="type" type="INTEGER" required="true" default="0" inheritance="single">
+			<inheritance key="44" class="DistributionStore" />
+			<inheritance key="23" class="DistributionOnline" extends="DistributionStore" />
+			<inheritance key="3838" class="DistributionVirtualStore" extends="DistributionStore" />
+		</column>
+		<column name="distribution_manager_id" type="INTEGER" required="true"/>
+		<foreign-key foreignTable="distribution_manager" onDelete="cascade">
+			<reference local="distribution_manager_id" foreign="id" />
+		</foreign-key>
+	</table>
+
+	<table name="distribution_manager">
+		<column name="id" type="INTEGER" primaryKey="true" autoIncrement="true" />
+		<column name="name" type="VARCHAR" />
+	</table>
 
 </database>
