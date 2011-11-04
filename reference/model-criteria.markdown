@@ -584,7 +584,7 @@ $books = BookQuery::create()
 $books = BookQuery::create()
   ->condition('cond1', 'Book.Title = ?', 'War And Peace') // create a condition named 'cond1'
   ->condition('cond2', 'Book.Title LIKE ?', 'War%')       // create a condition named 'cond2'
-  ->where(array('cond1', 'cond2'), 'or')->                // combine 'cond1' and 'cond2' with a logical OR
+  ->where(array('cond1', 'cond2'), 'or')                  // combine 'cond1' and 'cond2' with a logical OR
   ->find();
   // SELECT book.* from book WHERE (book.TITLE = 'War And Peace' OR book.TITLE LIKE 'War%');
 
