@@ -681,7 +681,7 @@ $latestBooks = BookQuery::create()
   ->withColumn('MAX(Book.CreatedAt)')
   ->groupBy('Book.AuthorId');
 $latestCheapBooks = BookQuery::create()
-  ->useSelectQuery($latestBooks, 'lastBook')
+  ->addSelectQuery($latestBooks, 'lastBook')
   ->where('lastBook.Price < ?', 20)
   ->find();
 {% endhighlight %}
