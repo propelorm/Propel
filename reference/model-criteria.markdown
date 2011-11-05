@@ -904,6 +904,8 @@ WHERE lastBook.PRICE < 20
 To achieve this query using Propel, call `addSelectQuery()` to use a first query as the source for the SELECT part of a second query:
 
 {% highlight php %}
+<?php
+
 $latestBooks = BookQuery::create()
   ->withColumn('MAX(Book.CreatedAt)')
   ->groupBy('Book.AuthorId');
