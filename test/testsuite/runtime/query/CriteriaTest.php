@@ -417,7 +417,7 @@ class CriteriaTest extends BookstoreTestBase
 
 	}
 
-	public function testIn()
+	public function testInOperator()
 	{
 		$c = new Criteria();
 		$c->addSelectColumn("*");
@@ -435,7 +435,7 @@ class CriteriaTest extends BookstoreTestBase
 		$this->assertEquals($expect, $result);
 	}
 
-	public function testInEmptyAfterFull()
+	public function testInOperatorEmptyAfterFull()
 	{
 		$c = new Criteria();
 		$c->addSelectColumn("*");
@@ -453,7 +453,7 @@ class CriteriaTest extends BookstoreTestBase
 		$this->assertEquals($expect, $result);
 	}
 
-	public function testInNested()
+	public function testInOperatorNested()
 	{
 		// now do a nested logic test, just for sanity (not that this should be any surprise)
 
@@ -473,6 +473,41 @@ class CriteriaTest extends BookstoreTestBase
 		}
 		$this->assertEquals($expect, $result);
 
+	}
+
+	/**
+	 * Test the Criteria::CUSTOM behavior.
+	 */
+	public function testCustomOperator()
+	{
+		$c = new Criteria();
+		$c->addSelectColumn('A.COL');
+		$c->add('A.COL', 'date_part(\'YYYY\', A.COL) = \'2007\'', Criteria::CUSTOM);
+
+		$expected = "SELECT A.COL FROM A WHERE date_part('YYYY', A.COL) = '2007'";
+		$params = array();
+		$result = BasePeer::createSelectSql($c, $params);
+		$this->assertEquals($expected, $result);
+	}
+	
+	/**
+	 * Test the Criteria::RAW behavior.
+	 */
+	public function testRawOperator()
+	{
+		$c = new Criteria();
+		$c->addSelectColumn('A.COL');
+		$c->addAsColumn('foo', 'B.COL');
+		$c->add('foo = ?', 123, Criteria::RAW, PDO::PARAM_STR);
+		
+		$params = array();
+		$result = BasePeer::createSelectSql($c, $params);
+		$expected = "SELECT A.COL, B.COL AS foo FROM A WHERE foo = :p1";
+		$this->assertEquals($expected, $result);
+		$expected = array(
+			array('table' => null, 'type' => PDO::PARAM_STR, 'value' => 123)
+		);
+		$this->assertEquals($expected, $params);
 	}
 
 	public function testJoinObject ()
@@ -821,21 +856,6 @@ class CriteriaTest extends BookstoreTestBase
 		$params = array();
 		$result = BasePeer::createSelectSql($c, $params);
 		$this->assertEquals($expect, $result);
-	}
-
-	/**
-	 * Test the Criteria::CUSTOM behavior.
-	 */
-	public function testCustomOperator()
-	{
-		$c = new Criteria();
-		$c->addSelectColumn('A.COL');
-		$c->add('A.COL', 'date_part(\'YYYY\', A.COL) = \'2007\'', Criteria::CUSTOM);
-
-		$expected = "SELECT A.COL FROM A WHERE date_part('YYYY', A.COL) = '2007'";
-		$params = array();
-		$result = BasePeer::createSelectSql($c, $params);
-		$this->assertEquals($expected, $result);
 	}
 
 	/**
