@@ -546,7 +546,8 @@ abstract class DBAdapter
 			}
 			$tableName = $param['table'];
 			if (null === $tableName) {
-				$stmt->bindValue($parameter, $value);
+				$type = isset($param['type']) ? $param['type'] : PDO::PARAM_STR;
+				$stmt->bindValue($parameter, $value, $type);
 				continue;
 			}
 			$cMap = $dbMap->getTable($tableName)->getColumn($param['column']);
