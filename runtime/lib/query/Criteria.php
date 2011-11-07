@@ -72,6 +72,9 @@ class Criteria implements IteratorAggregate
 	/** Comparison type. */
 	const CUSTOM = "CUSTOM";
 
+	/** Comparison type */
+	const RAW = "RAW";
+
 	/** Comparison type for update */
 	const CUSTOM_EQUAL = "CUSTOM_EQUAL";
 
@@ -735,16 +738,17 @@ class Criteria implements IteratorAggregate
 	 * @param      mixed $value
 	 * @param      string $comparison A String.
 	 *
-	 * @return     A modified Criteria object.
+	 * @return     Criteria A modified Criteria object.
 	 */
 	public function add($p1, $value = null, $comparison = null)
 	{
+		$criterion = $this->getCriterionForCondition($p1, $value, $comparison);
 		if ($p1 instanceof Criterion) {
-			$this->map[$p1->getTable() . '.' . $p1->getColumn()] = $p1;
+			$this->map[$p1->getTable() . '.' . $p1->getColumn()] = $criterion;
 		} else {
-			$criterion = new Criterion($this, $p1, $value, $comparison);
 			$this->map[$p1] = $criterion;
 		}
+
 		return $this;
 	}
 
@@ -773,12 +777,8 @@ class Criteria implements IteratorAggregate
 	 */
 	public function addCond($name, $p1, $value = null, $comparison = null)
 	{
-		if ($p1 instanceof Criterion) {
-			$this->namedCriterions[$name] = $p1;
-		} else {
-			$criterion = new Criterion($this, $p1, $value, $comparison);
-			$this->namedCriterions[$name] = $criterion;
-		}
+		$this->namedCriterions[$name] = $this->getCriterionForCondition($p1, $value, $comparison);
+
 		return $this;
 	}
 
@@ -1479,7 +1479,6 @@ class Criteria implements IteratorAggregate
 	 * @param     string $operator The logical operator used to combine conditions
 	 *            Defaults to Criteria::LOGICAL_AND, also accapts Criteria::LOGICAL_OR
 	 *            This parameter is deprecated, use _or() instead
-
 	 *
 	 * @return    Criteria The current criteria object
 	 */
@@ -1576,10 +1575,48 @@ class Criteria implements IteratorAggregate
 	 *
 	 * @return     A modified Criteria object.
 	 */
-	public function addHaving(Criterion $having)
+	public function addHaving($p1, $value = null, $comparison = null)
 	{
-		$this->having = $having;
+		$this->having = $this->getCriterionForCondition($p1, $value, $comparison);
+
 		return $this;
+	}
+
+	/**
+	 * Build a Criterion.
+	 *
+	 * This method has multiple signatures, and behaves differently according to it:
+  *
+	 *  - If the first argument is a Criterion, it just resturns this Criterion.
+	 *    <code>$c->getCriterionForConsition($criterion); // returns $criterion</code>
+	 *
+	 *  - If the last argument is a PDO::PARAM_* constant value, create a Criterion
+	 *    using Criteria::RAW and $comparison as a type.
+	 *    <code>$c->getCriterionForConsition('foo like ?', '%bar%', PDO::PARAM_STR);</code>
+	 *
+	 *  - Otherwise, create a classic Criterion based on a column name and a comparison.
+	 *    <code>$c->getCriterionForConsition(BookPeer::TITLE, 'War%', Criteria::LIKE);</code>
+	 * 
+	 * @param mixed $p1 A Criterion, or a SQL clause with a question mark placeholder, or a column name
+	 * @param mixed $value The value to bind in the condition
+	 * @param mixed $comparison A Criteria class constant, or a PDO::PARAM_ class constant
+	 *
+	 * @return Criterion
+	 */
+	protected function getCriterionForCondition($p1, $value = null, $comparison = null)
+	{
+		if ($p1 instanceof Criterion) {
+			// it's already a Criterion, so ignore $value and $comparison
+			return $p1;
+		} elseif (is_int($comparison)) {
+			// $comparison is a PDO::PARAM_* constant value
+			// something like $c->add('foo like ?', '%bar%', PDO::PARAM_STR);
+			return new Criterion($this, $p1, $value, Criteria::RAW, $comparison);;
+		} else {
+			// $comparison is one of Criteria's constants
+			// something like $c->add(BookPeer::TITLE, 'War%', Criteria::LIKE);
+			return new Criterion($this, $p1, $value, $comparison);
+		}
 	}
 
 	/**
@@ -1598,7 +1635,7 @@ class Criteria implements IteratorAggregate
 	 */
 	public function addAnd($p1, $p2 = null, $p3 = null, $preferColumnCondition = true)
 	{
-		$criterion = ($p1 instanceof Criterion) ? $p1 : new Criterion($this, $p1, $p2, $p3);
+		$criterion = $this->getCriterionForCondition($p1, $p2, $p3);
 
 		$key = $criterion->getTable() . '.' . $criterion->getColumn();
 		if ($preferColumnCondition && $this->containsKey($key)) {
@@ -1629,7 +1666,7 @@ class Criteria implements IteratorAggregate
 	 */
 	public function addOr($p1, $p2 = null, $p3 = null, $preferColumnCondition = true)
 	{
-		$rightCriterion = ($p1 instanceof Criterion) ? $p1 : new Criterion($this, $p1, $p2, $p3);
+		$rightCriterion = $this->getCriterionForCondition($p1, $p2, $p3);
 
 		$key = $rightCriterion->getTable() . '.' . $rightCriterion->getColumn();
 		if ($preferColumnCondition && $this->containsKey($key)) {

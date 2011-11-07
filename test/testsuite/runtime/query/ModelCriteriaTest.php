@@ -300,6 +300,21 @@ class ModelCriteriaTest extends BookstoreTestBase
 		$this->assertCriteriaTranslation($c, $sql, $params, 'where() accepts a complex calculation');
 	}
 
+	public function testWhereTypeValue()
+	{
+		$c = new ModelCriteria('bookstore', 'Book', 'b');
+		$c->where('LOCATE(\'foo\', b.Title) = ?', true, PDO::PARAM_BOOL);
+
+		$sql = "SELECT  FROM `book` WHERE LOCATE('foo', book.TITLE) = :p1";
+		$params = array(
+			array('table' => null, 'type' => PDO::PARAM_BOOL, 'value' => true),
+		);
+		$this->assertCriteriaTranslation($c, $sql, $params, 'where() accepts a complex calculation');
+		$c->find($this->con);
+		$expected = "SELECT book.ID, book.TITLE, book.ISBN, book.PRICE, book.PUBLISHER_ID, book.AUTHOR_ID FROM `book` WHERE LOCATE('foo', book.TITLE) = true";
+		$this->assertEquals($expected, $this->con->getLastExecutedQuery());
+	}
+
 	public function testOrWhere()
 	{
 		$c = new ModelCriteria('bookstore', 'Book');
@@ -418,6 +433,22 @@ class ModelCriteriaTest extends BookstoreTestBase
 
 		$sql = "SELECT  FROM  HAVING (book.TITLE <> :p1 OR book.TITLE like :p2)";
 		$this->assertCriteriaTranslation($c, $sql, $params, 'having() accepts an array of named conditions with an operator');
+	}
+
+	public function testHavingWithColumn()
+	{
+		$c = new ModelCriteria('bookstore', 'Book');
+		$c->withColumn('SUBSTRING(Book.Title, 1, 4)', 'title_start');
+		$c->having('title_start = ?', 'foo', PDO::PARAM_STR);
+
+		$sql = 'SELECT book.ID, book.TITLE, book.ISBN, book.PRICE, book.PUBLISHER_ID, book.AUTHOR_ID, SUBSTRING(book.TITLE, 1, 4) AS title_start FROM `book` HAVING title_start = :p1';
+		$params = array(
+			array('table' => null, 'type' => 2, 'value' => 'foo'),
+		);
+		$this->assertCriteriaTranslation($c, $sql, $params, 'having() accepts a string clause');
+		$c->find($this->con);
+		$expected = 'SELECT book.ID, book.TITLE, book.ISBN, book.PRICE, book.PUBLISHER_ID, book.AUTHOR_ID, SUBSTRING(book.TITLE, 1, 4) AS title_start FROM `book` HAVING title_start = \'foo\'';
+		$this->assertEquals($expected, $this->con->getLastExecutedQuery());
 	}
 
 	public function testOrderBy()
