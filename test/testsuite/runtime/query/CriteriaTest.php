@@ -490,15 +490,12 @@ class CriteriaTest extends BookstoreTestBase
 		$this->assertEquals($expected, $result);
 	}
 	
-	/**
-	 * Test the Criteria::RAW behavior.
-	 */
-	public function testRawOperator()
+	public function testAddRaw()
 	{
 		$c = new Criteria();
 		$c->addSelectColumn('A.COL');
 		$c->addAsColumn('foo', 'B.COL');
-		$c->add('foo = ?', 123, Criteria::RAW, PDO::PARAM_STR);
+		$c->addRaw('foo = ?', 123, PDO::PARAM_STR);
 		
 		$params = array();
 		$result = BasePeer::createSelectSql($c, $params);
