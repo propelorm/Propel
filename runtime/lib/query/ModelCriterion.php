@@ -28,7 +28,7 @@ class ModelCriterion extends Criterion
 	 * @param      string $comparison, among ModelCriteria::MODEL_CLAUSE
 	 * @param      string $clause A simple pseudo-SQL clause, e.g. 'foo.BAR LIKE ?'
 	 */
-	public function __construct(Criteria $outer, $column, $value = null, $comparison = ModelCriteria::MODEL_CLAUSE, $clause)
+	public function __construct(Criteria $outer, $column, $value = null, $comparison = ModelCriteria::MODEL_CLAUSE, $clause, $type = null)
 	{
 		$this->value = $value;
 		if ($column instanceof ColumnMap) {
@@ -47,6 +47,7 @@ class ModelCriterion extends Criterion
 		}
 		$this->comparison = ($comparison === null ? Criteria::EQUAL : $comparison);
 		$this->clause = $clause;
+		$this->type = $type;
 		$this->init($outer);
 	}
 
@@ -100,6 +101,10 @@ class ModelCriterion extends Criterion
 			case ModelCriteria::MODEL_CLAUSE_ARRAY:
 				// IN or NOT IN model clause, e.g. 'book.TITLE NOT IN ?'
 				$this->appendModelClauseArrayToPs($sb, $params);
+				break;
+			case ModelCriteria::MODEL_CLAUSE_RAW:
+				// raw model clause, with type, e.g. 'foobar = ?'
+				$this->appendModelClauseRawToPs($sb, $params);
 				break;
 			default:
 				// table.column = ? or table.column >= ? etc. (traditional expressions, the default)
@@ -192,6 +197,22 @@ class ModelCriterion extends Criterion
 	}
 
 	/**
+	 * Appends a Prepared Statement representation of the Criterion onto the buffer
+	 * For custom expressions with a typed binding, e.g. 'foobar = ?'
+	 *
+	 * @param      string &$sb The string that will receive the Prepared Statement
+	 * @param      array $params A list to which Prepared Statement parameters will be appended
+	 */
+	protected function appendModelClauseRawToPs(&$sb, array &$params)
+	{
+		if (substr_count($this->clause, '?') != 1) {
+			throw new PropelException(sprintf('Could not build SQL for expression "%s" because Criteria::RAW works only with a clause containing a single question mark placeholder', $this->column));
+		}
+		$params[] = array('table' => null, 'type' => $this->type, 'value' => $this->value);
+		$sb .= str_replace('?', ':p' . count($params), $this->clause);
+	}
+
+	/**
 	 * This method checks another Criteria to see if they contain
 	 * the same attributes and hashtable entries.
 	 * @return     boolean
@@ -271,13 +292,13 @@ class ModelCriterion extends Criterion
 	 */
 	protected static function strReplaceOnce($search, $replace, $subject)
 	{
-    $firstChar = strpos($subject, $search);
-    if($firstChar !== false) {
-        $beforeStr = substr($subject,0,$firstChar);
-        $afterStr = substr($subject, $firstChar + strlen($search));
-        return $beforeStr.$replace.$afterStr;
-    } else {
-        return $subject;
-    }
+		$firstChar = strpos($subject, $search);
+		if($firstChar !== false) {
+			$beforeStr = substr($subject,0,$firstChar);
+			$afterStr = substr($subject, $firstChar + strlen($search));
+			return $beforeStr.$replace.$afterStr;
+		} else {
+			return $subject;
+		}
 	}
 }
