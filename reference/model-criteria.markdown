@@ -555,6 +555,10 @@ $books = BookQuery::create()
 $books = BookQuery::create()
   ->where('UPPER(Book.Title) = ?', 'WAR AND PEACE')
   ->find();
+// When needed, you can specify the binding type as third parameter
+$books = BookQuery::create()
+  ->where("LOCATE('War', Book.Title) = ?", true, PDO::PARAM_BOOL)
+  ->find();
 {% endhighlight %}
 
 ### Combining Several Conditions ###
@@ -962,13 +966,16 @@ distinct()
 limit($limit)
 offset($offset)
 where($clause, $value)
+where($clause, $value, $bindingType = PDO::PARAM_STR)
 where($conditions, $operator)
 _or()
 filterBy($column, $value, $comparison)
 filterByArray($conditions)
 condition($name, $clause, $value)
+condition($name, $clause, $value, $bindingType = PDO::PARAM_STR)
 combine($conditions, $operator = 'and', $name)
 having($clause, $value)
+having($clause, $value, $bindingType = PDO::PARAM_STR)
 having($conditions, $operator)
 orderBy($columnName, $order = 'asc')
 groupBy($columnName)
