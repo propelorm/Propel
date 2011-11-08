@@ -100,11 +100,18 @@ class ArchivableBehavior extends Behavior
 				$copiedIndex->setName('');
 				$archiveTable->addIndex($copiedIndex);
 			}
-			// copy unique indices
+			// copy unique indices to indices
+			// see https://github.com/propelorm/Propel/issues/175 for details
 			foreach ($table->getUnices() as $unique) {
-				$copiedUnique = clone $unique;
-				$copiedUnique->setName('');
-				$archiveTable->addUnique($copiedUnique);
+				$index = new Index();
+				foreach ($unique->getColumns() as $columnName) {
+					if ($size = $unique->getColumnSize($columnName)) {
+						$index->addColumn(array('name' => $columnName, 'size' => $size));
+					} else {
+						$index->addColumn(array('name' => $columnName));
+					}
+				}
+				$archiveTable->addIndex($index);
 			}
 			// every behavior adding a table should re-execute database behaviors
 			foreach ($database->getBehaviors() as $behavior) {
