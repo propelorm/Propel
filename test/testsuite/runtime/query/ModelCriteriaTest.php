@@ -1590,7 +1590,7 @@ class ModelCriteriaTest extends BookstoreTestBase
 
 		$c = new ModelCriteria('bookstore', 'Book');
 		$books = $c->findPks(array(765432, 434535));
-		$this->assertEquals($books instanceof PropelCollection, 'findPks() returns a PropelCollection');
+		$this->assertTrue($books instanceof PropelCollection, 'findPks() returns a PropelCollection');
 		$this->assertEquals(0, count($books), 'findPks() returns an empty collection when the primary keys are not found');
 
 		BookstoreDataPopulator::populate();
