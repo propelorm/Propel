@@ -157,12 +157,12 @@ propel:
 #                   queries:        { query: 'INSERT INTO BAR ('hey', 'there')' }
 {% endhighlight %}
 
-`options`, `attributes` and `settings` are parts of the runtime configuration. See [Runtime Configuration File](../reference/runtime-configuration) documentation for more explanation.
+`options`, `attributes` and `settings` are parts of the runtime configuration. See [Runtime Configuration File](../../reference/runtime-configuration.html) documentation for more explanation.
 
 
 ### Build properties
 
-You can define _build properties_ by creating a `propel.ini` file in `app/config` and put build properties (see [Build properties Reference](../reference/buildtime-configuration)).
+You can define _build properties_ by creating a `propel.ini` file in `app/config` and put build properties (see [Build properties Reference](../../reference/buildtime-configuration.html)).
 
 {% highlight ini %}
 # in app/config/propel.ini
