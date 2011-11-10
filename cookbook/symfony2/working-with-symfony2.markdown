@@ -129,8 +129,10 @@ propel:
 #    build_properties:
 #        xxxxx.xxxxx: xxxxxx
 #        xxxxx.xxxxx: xxxxxx
+{% endhighlight %}
 
-# in app/config/config*.yml
+{% highlight yaml %}
+# in app/config/config_*.yml
 propel:
     dbal:
         driver:               mysql
