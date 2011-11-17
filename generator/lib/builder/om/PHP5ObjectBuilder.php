@@ -4952,11 +4952,15 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
 	{";
 
 		$autoIncCols = array();
-		foreach ($table->getColumns() as $col) {
-			/* @var        $col Column */
-			if ($col->isAutoIncrement()) {
-				$autoIncCols[] = $col;
+		if ($table->hasCompositePrimaryKey()) {
+			foreach ($table->getColumns() as $col) {
+				/* @var        $col Column */
+				if ($col->isAutoIncrement()) {
+					$autoIncCols[] = $col;
+				}
 			}
+		} else {
+			$autoIncCols = $table->getPrimaryKey();
 		}
 
 		foreach ($table->getColumns() as $col) {
