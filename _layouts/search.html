@@ -30,6 +30,7 @@ layout: base
         var siteSearch    = new google.search.WebSearch();
         options.setExpandMode(google.search.SearchControl.EXPAND_MODE_OPEN);
         options.setRoot(document.getElementById("searchResults"));
+        siteSearch.setResultSetSize(google.search.WebSearch.LARGE_RESULTSET);
         siteSearch.setUserDefinedLabel("propelorm.org");
         siteSearch.setUserDefinedClassSuffix("siteSearch");
         siteSearch.setSiteRestriction("propelorm.org");
