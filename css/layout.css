@@ -320,3 +320,12 @@ h1.no_margin_bottom {
 .fork_and_edit a {
     text-decoration: underline;
 }
+
+.search {
+    float: right; padding-top:5px;
+}
+
+.gsc-search-box, .gsc-control {
+    width: 100% !important;
+    font-size: 14px !important;
+}

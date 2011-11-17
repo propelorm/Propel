@@ -1,0 +1,41 @@
+---
+layout: base
+---
+
+<div class="markdown">
+    <div class="doc">
+        {{ content }}
+    </div>
+
+    <div id="searchcontrol">
+    </div>
+
+    <div id="searchResults">
+    </div>
+</div>
+
+<script src="https://www.google.com/jsapi?key=ABQIAAAAFmhC4M8xhUur1W64-vxMwxSVfK-M2qovUimjXgIl-8kDXzTZ-RTxn_kwP8G0SqjoYVjEc8dgl6Kxvw" type="text/javascript"></script>
+<script language="Javascript" type="text/javascript">
+    google.load('search', '1');
+
+    function getParamValue(param, url) {
+        var u = url == undefined ? document.location.href : url;
+        var reg = new RegExp('(\\?|&|^)'+param+'=(.*?)(&|$)');
+        matches = u.match(reg);
+        return matches[2] != undefined ? decodeURIComponent(matches[2]).replace(/\+/g,' ') : '';
+    }
+    function triggerOnLoad() {
+        var searchControl = new google.search.SearchControl();
+        var options       = new google.search.SearcherOptions();
+        var siteSearch    = new google.search.WebSearch();
+        options.setExpandMode(google.search.SearchControl.EXPAND_MODE_OPEN);
+        options.setRoot(document.getElementById("searchResults"));
+        siteSearch.setUserDefinedLabel("propelorm.org");
+        siteSearch.setUserDefinedClassSuffix("siteSearch");
+        siteSearch.setSiteRestriction("propelorm.org");
+        searchControl.addSearcher(siteSearch, options);
+        searchControl.draw(document.getElementById("searchcontrol"));
+        searchControl.execute(getParamValue('q'));
+    }
+    google.setOnLoadCallback(triggerOnLoad);
+</script>
