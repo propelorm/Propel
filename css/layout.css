@@ -322,7 +322,9 @@ h1.no_margin_bottom {
 }
 
 .search {
-    float: right; padding-top:5px;
+    padding-top: 10px;
+    float: left;
+    padding-left: 20px;
 }
 
 .gsc-search-box, .gsc-control {
