@@ -693,6 +693,29 @@ class GeneratedObjectTest extends BookstoreTestBase
         $this->assertNull($copy->getId(), "single PK not autoincremented shouldn't be copied");
     }
 
+    public function testDeepCopyConcretInheritance()
+    {
+        $comment1 = new ConcreteComment();
+        $comment1->setMessage('my-new-comment1');
+        $concreteArticle = new ConcreteArticle();
+        $concreteArticle->setBody('TestBody');
+        $concreteArticle->addConcreteComment($comment1);
+        $concreteArticle->save();
+        $comment1->save();
+
+        $this->assertNotNull($comment1->getId());
+        $this->assertNotNull($concreteArticle->getId());
+        $this->assertEquals(1, $concreteArticle->countConcreteComments());
+        $this->assertEquals($comment1->getConcreteContentId(), $concreteArticle->getId());
+
+        $copy = $concreteArticle->copy(true);
+        $this->assertNull($copy->getId());
+        $this->assertEquals(1, $concreteArticle->countConcreteComments());
+
+        $comments = $copy->getConcreteContent()->getConcreteComments();
+        $this->assertEquals('my-new-comment1', $comments[0]->getMessage());
+    }
+
     public function testToArray()
     {
         $b = new Book();

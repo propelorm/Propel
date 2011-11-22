@@ -342,6 +342,12 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
 	 * @var        ".$this->getPeerClassname()."
 	 */
 	protected static \$peer;
+
+	/**
+	 * The flag var to prevent infinit loop in deep copy
+	 * @var       boolean
+	 */
+	protected \$startCopy = false;
 ";
 		if (!$table->isAlias()) {
 			$this->addColumnAttributes($script);
@@ -4972,13 +4978,15 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
 
 		// Avoid useless code by checking to see if there are any referrers
 		// to this table:
-		if (count($table->getReferrers()) > 0) {
+		if (count($table->getReferrers()) > 0 || count($table->getForeignKeys()) > 0 ) {
 			$script .= "
 
-		if (\$deepCopy) {
+		if (\$deepCopy && !\$this->startCopy) {
 			// important: temporarily setNew(false) because this affects the behavior of
 			// the getter/setter methods for fkey referrer objects.
 			\$copyObj->setNew(false);
+			// store object hash to prevent cycle
+			\$this->startCopy = true;
 ";
 			foreach ($table->getReferrers() as $fk) {
 				//HL: commenting out self-referrential check below
@@ -5007,7 +5015,21 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
 				// HL: commenting out close of self-referential check
 				// } /* if tblFK != table */
 			} /* foreach */
+			// do deep copy for one to one relation
+			foreach ($table->getForeignKeys() as $fk) {
+				if ($fk->isLocalPrimaryKey()) {
+					$afx = $this->getFKPhpNameAffix($fk, $plural = false);
+					$script .= "
+			\$relObj = \$this->get$afx();
+			if (\$relObj) {
+				\$copyObj->set$afx(\$relObj->copy(\$deepCopy));
+			}
+";
+				}
+			}
 			$script .= "
+			//unflag object copy
+			\$this->startCopy = false;
 		} // if (\$deepCopy)
 ";
 		} /* if (count referrers > 0 ) */
