@@ -23,7 +23,7 @@ git init
 Install `symfony 1.4` as a git submodule:
 
 {% highlight bash %}
-git submodule add git://github.com/vjousse/symfony-1.4.git lib/vendor
+git submodule add git://github.com/symfony/symfony1.git lib/vendor
 {% endhighlight %}
 
 Generate a symfony project:
