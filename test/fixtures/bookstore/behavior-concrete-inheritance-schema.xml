@@ -63,7 +63,15 @@
 		<foreign-key foreignTable="concrete_quizz" onDelete="cascade">
 			<reference local="quizz_id" foreign="id" />
 		</foreign-key>
+	</table>
 
+	<table name="concrete_comment">
+		<column name="id" required="true" primaryKey="true" autoIncrement="true" type="INTEGER" />
+		<column name="message" type="VARCHAR" size="255" />
+		<column name="concrete_content_id" required="true" type="INTEGER" />
+		<foreign-key foreignTable="concrete_content" onDelete="cascade">
+			<reference local="concrete_content_id" foreign="id" />
+		</foreign-key>
 	</table>
 
 </database>
