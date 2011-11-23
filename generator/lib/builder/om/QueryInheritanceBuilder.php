@@ -257,7 +257,7 @@ class "  .$this->getClassname() . " extends " . $baseClassname . " {
 	{
 		$child = $this->getChild();
 		$col = $child->getColumn();
-		return "\$this->addUsingAlias(" . $col->getConstantName() . ", " . $this->getPeerClassname()."::CLASSKEY_".strtoupper($child->getKey()).");";
+		return "\$this->addUsingAlias(" . $col->getConstantName() . ", " . $this->getPeerClassname()."::CLASSKEY_".strtoupper(str_replace('\\', '_', $child->getKey())).");";
 	}
 
 	protected function addDoDeleteAll(&$script)

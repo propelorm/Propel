@@ -540,13 +540,13 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
 
 					$script .= "
 	/** A key representing a particular subclass */
-	const CLASSKEY_".strtoupper($child->getKey())." = '" . $child->getKey() . "';
+	const CLASSKEY_".strtoupper(str_replace('\\', '_', $child->getKey()))." = '" . $child->getKey() . "';
 ";
 
 					if (strtoupper($child->getClassname()) != strtoupper($child->getKey())) {
 						$script .= "
 	/** A key representing a particular subclass */
-	const CLASSKEY_".strtoupper($child->getClassname())." = '" . $child->getKey() . "';
+	const CLASSKEY_".strtoupper(str_replace('\\', '_', $child->getClassname()))." = '" . $child->getKey() . "';
 ";
 					}
 
