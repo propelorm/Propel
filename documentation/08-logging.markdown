@@ -33,6 +33,8 @@ The Propel log handler is configured in the `<log>` section of your project's `r
 </config>
 {% endhighlight %}
 
+>**Tip**<br />Remember to run `propel-gen convert-conf` after modifying the configuration files.
+
 Using these parameters, Propel creates a `file` Log handler in the background, and keeps it for later use:
 
 {% highlight php %}
