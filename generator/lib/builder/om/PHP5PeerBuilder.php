@@ -537,6 +537,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
 				foreach ($col->getChildren() as $child) {
 					$childBuilder = $this->getMultiExtendObjectBuilder();
 					$childBuilder->setChild($child);
+					$fqcn = addslashes('\\'.$childBuilder->getFullyQualifiedClassname());
 
 					$script .= "
 	/** A key representing a particular subclass */
@@ -546,13 +547,13 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
 					if (strtoupper($child->getClassname()) != strtoupper($child->getKey())) {
 						$script .= "
 	/** A key representing a particular subclass */
-	const CLASSKEY_".strtoupper($child->getClassname())." = '" . $child->getKey() . "';
+	const CLASSKEY_".strtoupper($child->getClassname())." = '" . $fqcn . "';
 ";
 					}
 
 					$script .= "
 	/** A class that can be returned by this peer. */
-	const CLASSNAME_".strtoupper($child->getKey())." = '". $childBuilder->getClasspath() . "';
+	const CLASSNAME_".strtoupper($child->getKey())." = '". $fqcn . "';
 ";
 				} /* foreach children */
 			} /* if col->isenumerated...() */
