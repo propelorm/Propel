@@ -169,7 +169,7 @@ class ".$this->getClassname()." extends ".$this->getParentClassname()." {
 		$col = $child->getColumn();
 		$cfc = $col->getPhpName();
 
-		$const = "CLASSKEY_".strtoupper(str_replace('\\', '_', $child->getKey()));
+		$const = "CLASSKEY_".strtoupper($child->getKey());
 
 		$script .= "
 	/**
@@ -179,7 +179,7 @@ class ".$this->getClassname()." extends ".$this->getParentClassname()." {
 	{";
 		$script .= "
 		parent::__construct();
-		\$this->set$cfc(".$this->getPeerClassname()."::CLASSKEY_".strtoupper(str_replace('\\', '_', $child->getKey())).");
+		\$this->set$cfc(".$this->getPeerClassname()."::CLASSKEY_".strtoupper($child->getKey()).");
 	}
 ";
 	}
