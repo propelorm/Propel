@@ -51,7 +51,7 @@ class Behavior extends XMLElement
 	}
 
 	/**
-	 * Sets the table this behavior is applied to 
+	 * Sets the table this behavior is applied to
 	 *
 	 * @param Table $table the table this behavior is applied to
 	 */
@@ -72,7 +72,7 @@ class Behavior extends XMLElement
 
 	/**
 	 * Sets the database this behavior is applied to
-	 * 
+	 *
 	 * @param Database $database the database this behavior is applied to
 	 */
 	public function setDatabase(Database $database)
@@ -123,8 +123,12 @@ class Behavior extends XMLElement
 	}
 
 	public function getParameter($name)
-	{
-		return $this->parameters[$name];
+    {
+        if (isset($this->parameters[$name])) {
+            return $this->parameters[$name];
+        }
+
+        return null;
 	}
 
 	/**
