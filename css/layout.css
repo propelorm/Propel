@@ -331,3 +331,7 @@ h1.no_margin_bottom {
     width: 100% !important;
     font-size: 14px !important;
 }
+
+.ecg th {
+    text-align: center;
+}
