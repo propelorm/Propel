@@ -60,7 +60,7 @@ Propel is released under the [MIT license](http://www.propelorm.org/download#lic
 Do you want to know more? Jump to the Documentation tab, or start exploring the code in the GitHub repository.
 
 
-### Propel ECG ###
+### Propel ECG (Build Status) ###
 
 Propel is strongly unit tested. Propel is developed under Continuous Integration and with a Test Driven Development approach.
 You can look at the [Propel CI server](http://ci.propelorm.org/) powered by [Jenkins](http://jenkins-ci.org/) or look at the results below:
