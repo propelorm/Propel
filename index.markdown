@@ -58,3 +58,21 @@ Propel is built for developers who need to keep control of their code:
 Propel is released under the [MIT license](http://www.propelorm.org/download#license). It's free to use, even in commercial applications.
 
 Do you want to know more? Jump to the Documentation tab, or start exploring the code in the GitHub repository.
+
+
+### Propel ECG ###
+
+<table width="100%">
+    <tr>
+        <th>Propel</th>
+        <th>Propel2 (unstable)</th>
+        <th>sfPropelORMPlugin</th>
+        <th>PropelBundle</th>
+    </tr>
+    <tr>
+        <td><img src="http://ci.propelorm.org/job/Propel/lastBuild/buildStatus" /></td>
+        <td><img src="http://ci.propelorm.org/job/Propel2/lastBuild/buildStatus" /></td>
+        <td><img src="http://ci.propelorm.org/job/sfPropelORMPlugin/lastBuild/buildStatus" /></td>
+        <td><img src="http://ci.propelorm.org/job/PropelBundle/lastBuild/buildStatus" /></td>
+    </tr>
+</table>
