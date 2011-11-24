@@ -67,10 +67,10 @@ You can look at the [Propel CI server](http://ci.propelorm.org/) powered by [Jen
 
 <table width="100%" class="ecg">
     <tr>
-        <th>Propel 1.6</th>
-        <th>Propel2 (unstable)</th>
-        <th>sfPropelORMPlugin</th>
-        <th>PropelBundle</th>
+        <th><a href="https://github.com/propelorm/Propel">Propel 1.6</a></th>
+        <th><a href="https://github.com/propelorm/Propel2">Propel2 (unstable)</a></th>
+        <th><a href="https://github.com/propelorm/sfPropelORMPlugin">sfPropelORMPlugin</a></th>
+        <th><a href="https://github.com/propelorm/PropelBundle">PropelBundle</a></th>
     </tr>
     <tr>
         <td><img src="http://ci.propelorm.org/job/Propel/lastBuild/buildStatus" /></td>
