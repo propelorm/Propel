@@ -12,8 +12,9 @@ Here is a list of Propel behaviors contributed by users. Feel free to use them o
 
 * [EqualNestBehavior](http://github.com/CraftyShadow/EqualNestBehavior) Supports relations where a class references to itself and the columns within the reference class are equal. Suitable for "Friends"-like relationships.
 
-* [ArrayAccessBehavior](http://github.com/nnarhinen/propel-arrayaccess) Adds ArrayAccess implementations to the BaseObjects
+* [ArrayAccessBehavior](http://github.com/nnarhinen/propel-arrayaccess) Adds ArrayAccess implementations to the BaseObjects.
 
+* [GeocodableBehavior](./geocodable-behavior.html) Helps you build geo-aware applications.
 
 ## symfony 1.x Behaviors ##
 
