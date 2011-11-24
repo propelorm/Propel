@@ -62,8 +62,8 @@ Do you want to know more? Jump to the Documentation tab, or start exploring the 
 
 ### Propel ECG ###
 
-Propel is strongly unit tested, and it's developed under Continuous Integration.
-You can look at the [CI server](http://ci.propelorm.org/) powered by [Jenkins](http://jenkins-ci.org/) or look at the results below:
+Propel is strongly unit tested. Propel is developed under Continuous Integration and with a Test Driven Development approach.
+You can look at the [Propel CI server](http://ci.propelorm.org/) powered by [Jenkins](http://jenkins-ci.org/) or look at the results below:
 
 <table width="100%" class="ecg">
     <tr>
