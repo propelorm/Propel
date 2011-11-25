@@ -293,14 +293,12 @@ public function toVersion(\$versionNumber, \$con = null)
  *
  * @param   {$versionARClassname} \$version The version object to use
  * @param   PropelPDO \$con the connection to use
+ * @param   array \$loadedObjects objects thats been loaded in a chain of populateFromVersion calls on referrer or fk objects.
  *
  * @return  {$ARclassName} The current object (for fluent API support)
  */
-public function populateFromVersion(\$version, \$con = null, &\$loadedObjects = null)
+public function populateFromVersion(\$version, \$con = null, &\$loadedObjects = array())
 {
-	if (!\$loadedObjects) {
-		\$loadedObjects = array();
-	}
 ";
 		$script .= "
 	\$loadedObjects['{$ARclassName}'][\$version->get{$primaryKeyName}()][\$version->get{$versionColumnName}()] = \$this;";
