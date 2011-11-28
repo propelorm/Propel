@@ -445,11 +445,11 @@ public function myAction(Post $post)
 In a form, if you want to validate the unicity of a field in a table you have to use the UniqueObjectValidator.
 The only way to use it is in a validation.yml file, like this:
 
-``` yaml
+{% highlight yaml %}
 BundleNamespace\Model\User:
   constraints:
     - Propel\PropelBundle\Validator\Constraints\UniqueObject: username
-```
+{% endhighlight %}
 
 For validate the unicity of more than just one fields:
 
