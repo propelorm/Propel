@@ -361,3 +361,115 @@ You can drop a **database**:
 As usual, `--connection` allows to specify a connection.
 
 Note that the `--force` option is needed to actually execute the SQL statements.
+
+
+### Database ###
+
+You can create a **database**:
+
+    > php app/console propel:database:create [--connection[=""]]
+
+As usual, `--connection` allows to specify a connection.
+
+
+You can drop a **database**:
+
+    > php app/console propel:database:drop [--connection[=""]] [--force]
+
+As usual, `--connection` allows to specify a connection.
+
+Note that the `--force` option is needed to actually execute the SQL statements.
+
+### Table ###
+
+You can drop one or several **table**:
+
+    > php app/console propel:table:drop [--force] [--connection[="..."]] [table1] ... [tableN]
+
+As usual, `--connection` allows to specify a connection.
+
+The table arguments define which table will be delete, by default all table.
+
+Note that the `--force` option is needed to actually execute the deletion.
+
+
+## PropelParamConverter ##
+
+You can use the Propel ParamConverter with the SensioFrameworkExtraBundle.
+You just need to put the right _Annotation_ on top of your controller:
+
+{% highlight php %}
+<?php
+
+/**
+ * @ParamConverter("post", class="BlogBundle\Model\Post")
+ */
+public function myAction(Post $post)
+{
+}
+{% endhighlight %}
+
+Your request needs to have an `id` parameter or any field as parameter (slug, title, ...).
+
+The _Annotation_ is optional if your parameter is typed you could only have this:
+
+{% highlight php %}
+<?php
+
+public function myAction(Post $post)
+{
+}
+{% endhighlight %}
+
+Exclude some parameters:
+
+You can exclude some attributes from being used by the converter:
+
+If you have a route like `/my-route/{slug}/{name}/edit/{id}`
+you can exclude `name` and `slug` by setting the option "exclude":
+
+{% highlight php %}
+<?php
+
+/**
+ * @ParamConverter("post", class="BlogBundle\Model\Post", options={"exclude"={"name", "slug"}})
+ */
+public function myAction(Post $post)
+{
+}
+{% endhighlight %}
+
+
+## UniqueObjectValidator ##
+
+In a form, if you want to validate the unicity of a field in a table you have to use the UniqueObjectValidator.
+The only way to use it is in a validation.yml file, like this:
+
+``` yaml
+BundleNamespace\Model\User:
+  constraints:
+    - Propel\PropelBundle\Validator\Constraints\UniqueObject: username
+```
+
+For validate the unicity of more than just one fields:
+
+{% highlight yaml %}
+BundleNamespace\Model\User:
+  constraints:
+    - Propel\PropelBundle\Validator\Constraints\UniqueObject: [username, login]
+{% endhighlight %}
+
+As many validator of this type as you want can be used.
+
+## Bundle Inheritance ##
+
+The `PropelBundle` makes use of the bundle inheritance.
+Currently only schema inheritance is provided.
+
+### Schema Inheritance ###
+
+You can override the defined schema of a bundle from within its child bundle.
+The child's schema will *completely* override the parent's one.
+To make use of the inheritance you only need to drop a schema file in the `Resources/config` folder of the child bundle.
+
+**IMPORTANT**: If there is *at least one* schema file in the child bundle, *none* of the parent's schema files will be used.
