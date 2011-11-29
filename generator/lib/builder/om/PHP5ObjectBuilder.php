@@ -4258,6 +4258,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
 	 */
 	protected function addDoInsert()
 	{
+		$table = $this->getTable();
 		$script = "
 	/**
 	 * Insert the row in the database.
