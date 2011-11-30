@@ -16,6 +16,8 @@ Here is a list of Propel behaviors contributed by users. Feel free to use them o
 
 * [GeocodableBehavior](./geocodable-behavior.html) Helps you build geo-aware applications.
 
+* [ExtraPropertiesBehavior](https://github.com/Carpe-Hora/ExtraPropertiesBehavior) Extend your models with key/value attributes.
+
 ## symfony 1.x Behaviors ##
 
 * [sfNestedCommentPlugin](https://github.com/nibsirahsieu/sfNestedCommentPlugin) A behavior for propel 1.5 and symfony to enabled the model(s) to be commentable.
@@ -29,3 +31,5 @@ Here is a list of Propel behaviors contributed by users. Feel free to use them o
 * [sfPropelORMTaggableBehaviorPlugin](https://bitbucket.org/matteosister/sfpropelormtaggablebehaviorplugin) A behavior and a widget for propel 1.6 and symfony 1.4.x to tag your objects.
 
 * [sfPropelORMRatableBehaviorPlugin](https://bitbucket.org/matteosister/sfpropelormratablebehaviorplugin)  A behavior for propel 1.6 and symfony 1.4.x to rate your objects.
+
+* [sfContextBehavior](https://github.com/Carpe-Hora/sfContextBehavior) A behavior for propel 1.6 and symfony 1.x redering object context aware.
