@@ -18,6 +18,8 @@ Here is a list of Propel behaviors contributed by users. Feel free to use them o
 
 * [ExtraPropertiesBehavior](https://github.com/Carpe-Hora/ExtraPropertiesBehavior) Extend your models with key/value attributes.
 
+* [AuditableBehavior](https://github.com/Carpe-Hora/AuditableBehavior) Audit your objects activity.
+
 ## symfony 1.x Behaviors ##
 
 * [sfNestedCommentPlugin](https://github.com/nibsirahsieu/sfNestedCommentPlugin) A behavior for propel 1.5 and symfony to enabled the model(s) to be commentable.
