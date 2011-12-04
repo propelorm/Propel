@@ -438,11 +438,10 @@ abstract class DBAdapter
 						// functions may contain qualifiers so only take the last
 						// word as the table name.
 						// COUNT(DISTINCT books.price)
-						$lastSpace = strpos($tableName, ' ');
+						$tableName = substr($columnName, $parenPos + 1, $dotPos - ($parenPos + 1));
+						$lastSpace = strrpos($tableName, ' ');
 						if ($lastSpace !== false) { // COUNT(DISTINCT books.price)
 							$tableName = substr($tableName, $lastSpace + 1);
-						} else {
-							$tableName = substr($columnName, $parenPos + 1, $dotPos - ($parenPos + 1));
 						}
 					}
 					// is it a table alias?
