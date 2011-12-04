@@ -64,9 +64,10 @@ For instance, suppose that you have an `Author` model with a one to many relatio
 If you have a large number of authors and books, this simple code snippet can be a real performance blow to your application. The usual way to optimize it is to _denormalize_ your schema by storing the number of books by each author in a new `nb_books` column, in the `author` table.
 
 {% highlight xml %}
-<table name="book">
-  <column name="id" required="true" primaryKey="true" autoIncrement="true" type="INTEGER" />
-  <column name="title" type="VARCHAR" required="true" />
+<table name="author" phpName="Author">
+  <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true"/>
+  <column name="first_name" type="varchar" size="128" required="true"/>
+  <column name="last_name" type="varchar" size="128" required="true"/>
   <column name="nb_books" type="INTEGER" default="0" />
 </table>
 {% endhighlight %}
