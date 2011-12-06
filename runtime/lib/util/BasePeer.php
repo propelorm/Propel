@@ -354,15 +354,15 @@ class BasePeer
 				}
 				// is it a table alias?
 				if ($tableName2 = $selectCriteria->getTableForAlias($tableName)) {
-					$udpateTable = $tableName2 . ' ' . $tableName;
+					$updateTable = $tableName2 . ' ' . $tableName;
 					$tableName = $tableName2;
 				} else {
-					$udpateTable = $tableName;
+					$updateTable = $tableName;
 				}
 				if ($db->useQuoteIdentifier()) {
-					$sql .= $db->quoteIdentifierTable($udpateTable);
+					$sql .= $db->quoteIdentifierTable($updateTable);
 				} else {
-					$sql .= $udpateTable;
+					$sql .= $updateTable;
 				}
 				$sql .= " SET ";
 				$p = 1;
