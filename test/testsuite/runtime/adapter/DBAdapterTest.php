@@ -86,6 +86,18 @@ class DBAdapterTest extends BookstoreTestBase
 		$this->assertEquals(array('book'), $fromClause, 'createSelectSqlPart() adds the tables from the select columns to the from clause');
 	}
 
+	public function testCreateSelectSqlPartWithFnc()
+	{
+		$db = Propel::getDB(BookPeer::DATABASE_NAME);
+		$c = new Criteria();
+		$c->addSelectColumn(BookPeer::ID);
+		$c->addAsColumn('book_ID', 'IF(1, '.BookPeer::ID.', '.BookPeer::TITLE.')');
+		$fromClause = array();
+		$selectSql = $db->createSelectSqlPart($c, $fromClause);
+		$this->assertEquals('SELECT book.ID, IF(1, book.ID, book.TITLE) AS book_ID', $selectSql, 'createSelectSqlPart() returns a SQL SELECT clause with both select and as columns');
+		$this->assertEquals(array('book'), $fromClause, 'createSelectSqlPart() adds the tables from the select columns to the from clause');
+	}
+
 	public function testCreateSelectSqlPartSelectModifier()
 	{
 		$db = Propel::getDB(BookPeer::DATABASE_NAME);
