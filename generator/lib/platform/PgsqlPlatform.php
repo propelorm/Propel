@@ -286,7 +286,7 @@ COMMENT ON COLUMN %s.%s IS %s;
 		$ret = '';
 		$ret .= $this->getUseSchemaDDL($table);
 		$pattern = "
-DROP TABLE %s CASCADE;
+DROP TABLE IF EXISTS %s CASCADE;
 ";
 		$ret .= sprintf($pattern, $this->quoteIdentifier($table->getName()));
 		$ret .= $this->getDropSequenceDDL($table);
