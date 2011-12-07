@@ -10,7 +10,7 @@ Propel can be used in a master-slave replication environment. These environments
 ## Configuring Propel for Replication ##
 
 * Set up a replication environment (see the Databases section below)
-* Use the latest Propel-Version from SVN
+* Use the latest Propel-Version
 * add a slaves-section to your `runtime-conf.xml` file
 * verify the correct setup by checking the masters log file (should not contain "select ..." statements)
 
