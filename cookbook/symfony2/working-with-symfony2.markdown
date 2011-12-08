@@ -20,7 +20,7 @@ It currently supports:
 * Create/Drop databases.
 * Dump data into XML and SQL.
 
->**Important**<br />The `master` branch follows the Symfony2 `master` branch, and uses the _Propel Bridge_. If you want to use the bundle with a _Symfony2 version under 2.0.7_, please use the `2.0` branch.
+>**Important**<br />The `master` branch follows the Symfony2 `master` branch, and uses the _Propel Bridge_. If you want to use the bundle with a Symfony2 _version 2.x.x_ (actually, a version which is not _2.1_ or above), please use the `2.0` branch.
 
 ## Installation
 
