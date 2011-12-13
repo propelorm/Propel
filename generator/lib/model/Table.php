@@ -192,7 +192,7 @@ class Table extends ScopedElement implements IDMethod
 	 *
 	 * @var       string
 	 */
-	private $enterface;
+	private $interface;
 
 	/**
 	 * The base class to extend for the generated "object" class.
@@ -348,7 +348,7 @@ class Table extends ScopedElement implements IDMethod
 			|| ("false" !== $this->getAttribute("heavyIndexing")
 			&& $this->getDatabase()->isHeavyIndexing() ) );
 		$this->description = $this->getAttribute("description");
-		$this->enterface = $this->getAttribute("interface"); // sic ('interface' is reserved word)
+		$this->interface = $this->getAttribute("interface"); // sic ('interface' is reserved word)
 		$this->treeMode = $this->getAttribute("treeMode");
 
 		$this->reloadOnInsert = $this->booleanValue($this->getAttribute("reloadOnInsert"));
@@ -1392,7 +1392,7 @@ class Table extends ScopedElement implements IDMethod
 	 */
 	public function getInterface()
 	{
-		return $this->enterface;
+		return $this->interface;
 	}
 
 	/**
@@ -1401,7 +1401,7 @@ class Table extends ScopedElement implements IDMethod
 	 */
 	public function setInterface($v)
 	{
-		$this->enterface = $v;
+		$this->interface = $v;
 	}
 
 	/**
@@ -1725,8 +1725,8 @@ class Table extends ScopedElement implements IDMethod
 			$tableNode->setAttribute('abstract', var_export($this->abstractValue, true));
 		}
 
-		if ($this->enterface !== null) {
-			$tableNode->setAttribute('interface', $this->enterface);
+		if ($this->interface !== null) {
+			$tableNode->setAttribute('interface', $this->interface);
 		}
 
 		if ($this->description !== null) {
