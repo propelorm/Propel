@@ -289,7 +289,7 @@ Create a file called `runtime-conf.xml` at the root of the `bookstore` project, 
   <propel>
     <datasources default="bookstore">
       <datasource id="bookstore">
-        <adapter>mysql</adapter> <!-- sqlite, mysql, myssql, oracle, or pgsql -->
+        <adapter>mysql</adapter> <!-- sqlite, mysql, mssql, oracle, or pgsql -->
         <connection>
           <dsn>mysql:host=localhost;dbname=my_db_name</dsn>
           <user>my_db_user</user>
