@@ -1085,10 +1085,10 @@ string toJSON() // exports all the objects as a JSON string
 string toCSV() // exports all the objects as a CSV string
 string __toString() // exports to a string using the default string representation (YAML)
 void  fromArray($array) // imports a collection from an array
-void toXML($xml) // imports a collection from an XML string
-void toYAML($yaml) // imports a collection from a YAML string
-void toJSON($json) // imports a collection from a JSON string
-void toCSV($csv) // imports a collection from a CSV string
+void fromXML($xml) // imports a collection from an XML string
+void fromYAML($yaml) // imports a collection from a YAML string
+void fromJSON($json) // imports a collection from a JSON string
+void fromCSV($csv) // imports a collection from a CSV string
 {% endhighlight %}
 
 >**Tip**<br />`PropelCollection` extends `ArrayObject`, so you can also call all the methods of this SPL class on a collection (including `count()`, `append()`, `ksort()`, etc.).
