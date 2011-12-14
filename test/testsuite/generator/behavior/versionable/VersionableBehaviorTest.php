@@ -440,7 +440,25 @@ EOF;
 EOF;
 			$builder = new PropelQuickBuilder();
 			$builder->setSchema($schema);
-			$builder->getSQL();
+      $expected = <<<EOF
+-----------------------------------------------------------------------
+-- versionable_behavior_test_0_version
+-----------------------------------------------------------------------
+
+DROP TABLE versionable_behavior_test_0_version;
+
+CREATE TABLE versionable_behavior_test_0_version
+(
+	id INTEGER NOT NULL,
+	bar INTEGER,
+	version INTEGER DEFAULT 0 NOT NULL,
+	PRIMARY KEY (id,version)
+);
+
+-- SQLite does not support foreign keys; this is just for reference
+-- FOREIGN KEY (id) REFERENCES versionable_behavior_test_0 (id)
+EOF;
+      $this->assertContains($expected, $builder->getSQL());
 	}
 
 }
