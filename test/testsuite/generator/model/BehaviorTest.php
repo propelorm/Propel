@@ -98,7 +98,7 @@ EOF;
   /**
    * @expectedException InvalidArgumentException
    */
-	public function testUnkownBehavior()
+	public function testUnknownBehavior()
 	{
 		$xmlToAppData = new XmlToAppData();
 		$schema = <<<EOF
