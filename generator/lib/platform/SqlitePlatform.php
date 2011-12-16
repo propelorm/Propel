@@ -112,6 +112,13 @@ class SqlitePlatform extends DefaultPlatform
 		return '';
 	}
 
+	public function getDropTableDDL(Table $table)
+	{
+		return "
+DROP TABLE IF EXISTS " . $this->quoteIdentifier($table->getName()) . ";
+";
+	}
+
 	public function getForeignKeyDDL(ForeignKey $fk)
 	{
 		$pattern = "

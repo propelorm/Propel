@@ -48,7 +48,7 @@ EOF;
 -- versionable_behavior_test_0
 -----------------------------------------------------------------------
 
-DROP TABLE versionable_behavior_test_0;
+DROP TABLE IF EXISTS versionable_behavior_test_0;
 
 CREATE TABLE versionable_behavior_test_0
 (
@@ -80,7 +80,7 @@ EOF;
 -- versionable_behavior_test_0
 -----------------------------------------------------------------------
 
-DROP TABLE versionable_behavior_test_0;
+DROP TABLE IF EXISTS versionable_behavior_test_0;
 
 CREATE TABLE versionable_behavior_test_0
 (
@@ -111,7 +111,7 @@ EOF;
 -- versionable_behavior_test_0
 -----------------------------------------------------------------------
 
-DROP TABLE versionable_behavior_test_0;
+DROP TABLE IF EXISTS versionable_behavior_test_0;
 
 CREATE TABLE versionable_behavior_test_0
 (
@@ -158,7 +158,7 @@ EOF;
 -- versionable_behavior_test_0
 -----------------------------------------------------------------------
 
-DROP TABLE versionable_behavior_test_0;
+DROP TABLE IF EXISTS versionable_behavior_test_0;
 
 CREATE TABLE versionable_behavior_test_0
 (
@@ -175,7 +175,7 @@ EOF;
 -- versionable_behavior_test_0_version
 -----------------------------------------------------------------------
 
-DROP TABLE versionable_behavior_test_0_version;
+DROP TABLE IF EXISTS versionable_behavior_test_0_version;
 
 CREATE TABLE versionable_behavior_test_0_version
 (
@@ -205,7 +205,7 @@ EOF;
 -- versionable_behavior_test_1
 -----------------------------------------------------------------------
 
-DROP TABLE versionable_behavior_test_1;
+DROP TABLE IF EXISTS versionable_behavior_test_1;
 
 CREATE TABLE versionable_behavior_test_1
 (
@@ -221,7 +221,7 @@ EOF;
 -- versionable_behavior_test_1_version
 -----------------------------------------------------------------------
 
-DROP TABLE versionable_behavior_test_1_version;
+DROP TABLE IF EXISTS versionable_behavior_test_1_version;
 
 CREATE TABLE versionable_behavior_test_1_version
 (
@@ -251,7 +251,7 @@ EOF;
 -- versionable_behavior_test_0_version
 -----------------------------------------------------------------------
 
-DROP TABLE versionable_behavior_test_0_version;
+DROP TABLE IF EXISTS versionable_behavior_test_0_version;
 
 CREATE TABLE versionable_behavior_test_0_version
 (
@@ -287,7 +287,7 @@ EOF;
 -- foo_ver
 -----------------------------------------------------------------------
 
-DROP TABLE foo_ver;
+DROP TABLE IF EXISTS foo_ver;
 
 CREATE TABLE foo_ver
 (
@@ -326,7 +326,7 @@ EOF;
 -- versionable_behavior_test_0
 -----------------------------------------------------------------------
 
-DROP TABLE versionable_behavior_test_0;
+DROP TABLE IF EXISTS versionable_behavior_test_0;
 
 CREATE TABLE versionable_behavior_test_0
 (
@@ -339,7 +339,7 @@ CREATE TABLE versionable_behavior_test_0
 -- versionable_behavior_test_0_version
 -----------------------------------------------------------------------
 
-DROP TABLE versionable_behavior_test_0_version;
+DROP TABLE IF EXISTS versionable_behavior_test_0_version;
 
 CREATE TABLE versionable_behavior_test_0_version
 (
@@ -381,7 +381,7 @@ EOF;
 -- versionable_behavior_test_0
 -----------------------------------------------------------------------
 
-DROP TABLE versionable_behavior_test_0;
+DROP TABLE IF EXISTS versionable_behavior_test_0;
 
 CREATE TABLE versionable_behavior_test_0
 (
@@ -408,7 +408,7 @@ EOF;
 -- versionable_behavior_test_0_version
 -----------------------------------------------------------------------
 
-DROP TABLE versionable_behavior_test_0_version;
+DROP TABLE IF EXISTS versionable_behavior_test_0_version;
 
 CREATE TABLE versionable_behavior_test_0_version
 (
@@ -445,7 +445,7 @@ EOF;
 -- versionable_behavior_test_0_version
 -----------------------------------------------------------------------
 
-DROP TABLE versionable_behavior_test_0_version;
+DROP TABLE IF EXISTS versionable_behavior_test_0_version;
 
 CREATE TABLE versionable_behavior_test_0_version
 (

@@ -64,7 +64,7 @@ EOF;
 -- quick_build_foo_1
 -----------------------------------------------------------------------
 
-DROP TABLE quick_build_foo_1;
+DROP TABLE IF EXISTS quick_build_foo_1;
 
 CREATE TABLE quick_build_foo_1
 (
