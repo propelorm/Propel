@@ -12,3 +12,5 @@ title: Working With Symfony2
 * [Mastering Symfony2 Forms With Propel](mastering-symfony2-forms-with-propel.html)
 
 * [The Symfony2 Security Component And Propel](the-symfony2-security-component-and-propel.html)
+
+* [Adding A New Behavior In Symfony2](adding-a-new-behavior-in-symfony2.html)
