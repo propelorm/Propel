@@ -1,5 +1,5 @@
 ---
-layout: documentation
+layout: default
 title: Adding A New Behavior In Symfony2
 ---
 
