@@ -176,10 +176,8 @@ class PropelDateTimeTest extends PHPUnit_Framework_TestCase
 		return array(
 			'Y-m-d'		       => array('2011-08-10', '2011-08-10 00:00:00'),
 			// 1312960848 : Wed, 10 Aug 2011 07:20:48 GMT
-			'unix_timestamp'	=> array('1312960848', '2011-08-10 07:20:48'),
-			'Y-m-d H:is'		  => array('2011-08-10 10:22:15', '2011-08-10 10:22:15'),
-			'Ymd'		         => array('20110810', '2011-08-10 00:00:00'),
-			'Ymd'		         => array('20110720', '2011-07-20 00:00:00'),
+			'unix_timestamp'  => array('1312960848', '2011-08-10 07:20:48'),
+			'Y-m-d H:is'      => array('2011-08-10 10:22:15', '2011-08-10 10:22:15'),
 			'datetime_object' => array(new DateTime('2011-08-10 10:23:10'), '2011-08-10 10:23:10')
 		);
 	}
@@ -194,20 +192,5 @@ class PropelDateTimeTest extends PHPUnit_Framework_TestCase
 			// "2011-12-10 12:38:35" : GMT +1
 			'unix_timestamp'	=> array('1323517115', '2011-12-10 12:38:35'),
 		);
-	}
-
-	public function testIsTimestamp()
-	{
-		$this->assertEquals(false, TestPropelDateTime::isTimestamp('20110325'));
-		$this->assertEquals(true, TestPropelDateTime::isTimestamp(1319580000));
-		$this->assertEquals(false, TestPropelDateTime::isTimestamp('2011-07-20 00:00:00'));
-	}
-}
-
-class TestPropelDateTime extends PropelDateTime
-{
-	public static function isTimestamp($value)
-	{
-		return parent::isTimestamp($value);
 	}
 }
