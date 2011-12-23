@@ -445,6 +445,66 @@ You'll obtain the following result:
 
 >**Information**<br />The `ModelType` is part of the [`PropelBundle`](http://github.com/propelorm/PropelBundle.git).
 
+## Validation ##
+
+Using Propel in a Symfony2 project avoid you to use validation through annotation, or at least in a convenient way.
+Instead you have to use classic validation process, using a validation (in yml, xml or php format) file.
+
+In order to use this type of validation you must configure your application.
+
+In YAML:
+
+{% highlight yaml %}
+# in app/config/config.yml
+framework:
+    validation: { enabled: true }
+{% endhighlight %}
+
+In XML:
+
+{% highlight xml %}
+<!-- in app/config/config.xml -->
+<framework:config>
+    <framework:validation enabled="true" />
+</framework:config>
+{% endhighlight %}
+
+In PHP:
+
+{% highlight php %}
+// in app/config/config.php
+$container->loadFromExtension('framework', array('validation' => array(
+    'enabled' => true,
+)));
+{% endhighlight %}
+
+Now just follow the official documentation [`about validation`](http://symfony.com/doc/current/book/validation.html) to know how to create your validation file.
+
+
+### Introducing the UniqueObject constraint ###
+
+As Doctrine has his `UniqueEntity` constraint, Propel has its `UniqueObject` constraint.
+The use of this constraint is similar to the use of the UniqueEntity.
+
+
+In a form, if you want to validate the unicity of a field in a table you have to use the UniqueObject constraint.
+To use it is in a `validation.yml` file just add those few lines in your validation file:
+
+{% highlight yaml %}
+BundleNamespace\Model\User:
+  constraints:
+    - Propel\PropelBundle\Validator\Constraints\UniqueObject: username
+{% endhighlight %}
+
+In order to validate the unicity of more than just one fields:
+
+{% highlight yaml %}
+BundleNamespace\Model\User:
+  constraints:
+    - Propel\PropelBundle\Validator\Constraints\UniqueObject: [username, login]
+{% endhighlight %}
+
+As many validator of this type as you want can be used.
 
 ## Summary ##
 
