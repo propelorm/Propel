@@ -111,4 +111,26 @@ class DBAdapterTest extends BookstoreTestBase
 		$this->assertEquals(array(), $fromClause, 'createSelectSqlPart() does not add the tables from an all-aliased list of select columns');
 	}
 
+	public function testCreateSelectSqlPartFunc()
+	{
+		$db = Propel::getDB(BookPeer::DATABASE_NAME);
+		$c = new Criteria();
+		$c->addSelectColumn('COUNT(books.price)');
+		$fromClause = array();
+		$selectSql = $db->createSelectSqlPart($c, $fromClause);
+		$this->assertEquals('SELECT COUNT(books.price)', $selectSql, 'createSelectSqlPart() returns a SQL SELECT clause with the function');
+		$this->assertEquals(array('books'), $fromClause, 'createSelectSqlPart() must get only the table name without function');
+	}
+
+	public function testCreateSelectSqlPartFuncWithQualifier()
+	{
+		$db = Propel::getDB(BookPeer::DATABASE_NAME);
+		$c = new Criteria();
+		$c->addSelectColumn('COUNT(DISTINCT books.price)');
+		$fromClause = array();
+		$selectSql = $db->createSelectSqlPart($c, $fromClause);
+		$this->assertEquals('SELECT COUNT(DISTINCT books.price)', $selectSql, 'createSelectSqlPart() returns a SQL SELECT clause with the function');
+		$this->assertEquals(array('books'), $fromClause, 'createSelectSqlPart() must get only the table name without qualifier');
+	}
+
 }
