@@ -380,7 +380,7 @@ Propel supports the following vendor parameters for MySQL:
 
 |Name               | Example values
 |-------------------|---------------
-|// in `<table>` element| 
+|// in `<table>` element||
 |`Engine`           | MYISAM (default), InnoDB, BDB, MEMORY, ISAM, MERGE, MRG_MYISAM, etc.
 |`AutoIncrement`    | 1234, N, etc
 |`AvgRowLength`     |
@@ -398,10 +398,10 @@ Propel supports the following vendor parameters for MySQL:
 |`PackKeys`         | 0, 1, DEFAULT
 |`RowFormat`        | FIXED, DYNAMIC, COMPRESSED, COMPACT, REDUNDANT
 |`Union`            | (t1,t2)  (for MERGE storage Engine)
-|// in `<column>` element| 
+|// in `<column>` element||
 |`Charset`          | utf8, latin1, etc.
 |`Collate`          | utf8_unicode_ci, latin1_german1_ci, etc.
-|// in `<index>` element| 
+|// in `<index>` element||
 |`Index_type`       | FULLTEXT
 
 #### Oracle Vendor Info ####
@@ -410,7 +410,7 @@ Propel supports the following vendor parameters for Oracle:
 
 |Name               | Example values
 |-------------------|---------------
-|// in `<table>` element| 
+|// in `<table>` element||
 |`PCTFree`          | 20
 |`InitTrans`        | 4
 |`MinExtents`       | 1
@@ -423,7 +423,7 @@ Propel supports the following vendor parameters for Oracle:
 |`PKMaxExtents`     | 99
 |`PKPCTIncrease`    | 0
 |`PKTablespace`     | IL_128K
-|// in `<index>` element| 
+|// in `<index>` element||
 |`PCTFree`          | 20
 |`InitTrans`        | 4
 |`MinExtents`       | 1
