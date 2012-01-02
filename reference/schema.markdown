@@ -378,7 +378,7 @@ CREATE TABLE book
 
 Propel supports the following vendor parameters for MySQL:
 
-{% highlight txt %}
+{% highlight %}
 Name             | Example values
 -----------------|---------------
 // in <table> element
@@ -410,7 +410,7 @@ Index_type       | FULLTEXT
 
 Propel supports the following vendor parameters for Oracle:
 
-{% highlight txt %}
+{% highlight %}
 Name             | Example values
 -----------------|---------------
 // in <table> element
