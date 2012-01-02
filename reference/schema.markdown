@@ -383,7 +383,7 @@ Propel supports the following vendor parameters for MySQL:
 |// in `<table>` element|&nbsp;
 |`Engine`           | MYISAM (default), InnoDB, BDB, MEMORY, ISAM, MERGE, MRG_MYISAM, etc.
 |`AutoIncrement`    | 1234, N, etc
-|`AvgRowLength`     |
+|`AvgRowLength`     | &nbsp;
 |`Charset`          | utf8, latin1, etc.
 |`Checksum`         | 0, 1
 |`Collate`          | utf8_unicode_ci, latin1_german1_ci, etc.
