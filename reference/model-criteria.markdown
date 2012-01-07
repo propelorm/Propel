@@ -634,7 +634,7 @@ WHERE book.TITLE = :p1'   // :p1 => 'War and Peace'
 {% highlight php %}
 <?php
 // Test data
-$author1 = new Book();
+$author1 = new Author();
 $author1->setName('Jane Austen');
 $author1->save();
 $book1 = new Book();
