@@ -100,7 +100,7 @@ class MysqlSchemaParser extends BaseSchemaParser
 			$name = $row[0];
 			$type = $row[1];
 
-			if ($name == $this->getMigrationTable()) {
+			if ($name == $this->getMigrationTable() || $type != "BASE TABLE") {
 				continue;
 			}
 
