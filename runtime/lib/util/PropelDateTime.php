@@ -35,29 +35,6 @@ class PropelDateTime extends DateTime
 	 */
 	private $tzString;
 
-	protected static function isTimestamp($value)
-	{
-		if (!is_numeric($value)) {
-			return false;
-		}
-
-		if (8 === strlen((string) $value)) {
-			return false;
-		}
-
-		$stamp = strtotime($value);
-
-		if (false === $stamp) {
-			return true;
-		}
-
-		$month = date('m', $value);
-		$day   = date('d', $value);
-		$year  = date('Y', $value);
-
-		return checkdate($month, $day, $year);
-	}
-
 	/**
 	 * Factory method to get a DateTime object from a temporal input
 	 *
@@ -95,6 +72,25 @@ class PropelDateTime extends DateTime
 			throw new PropelException('Error parsing date/time value: ' . var_export($value, true), $e);
 		}
 		return $dateTimeObject;
+	}
+
+	public static function isTimestamp($value)
+	{
+		if (!is_numeric($value)) {
+			return false;
+		}
+
+		$stamp = strtotime($value);
+
+		if (false === $stamp) {
+			return true;
+		}
+
+		$month = date('m', $value);
+		$day   = date('d', $value);
+		$year  = date('Y', $value);
+
+		return checkdate($month, $day, $year);
 	}
 
 	/**
