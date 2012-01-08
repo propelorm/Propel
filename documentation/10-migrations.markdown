@@ -17,6 +17,7 @@ The workflow of Propel migrations is very simple:
 2. Call the `diff` task to create a migration class containing the SQL statements altering the database structure
 3. Review the migration class Propel just generated, and add data migration code if necessary
 4. Execute the migration using the `migrate` task.
+5. Call the `om` task to generate the updated object model classes.
 
 Here is a concrete example. On a new bookstore project, a developer creates an XML schema with a single `book` table:
 
@@ -94,6 +95,13 @@ Now, to actually create the `book` table in the database, the developer has to c
 {% endhighlight %}
 
 The `book` table is now created in the database. It can be populated with data.
+
+Finally, in order to use the newly added table in application development, the developer has to call the `om` task to generate the updated object model classes:
+
+{% highlight text %}
+> propel-gen om
+
+{% endhighlight %}
 
 After a few days, the developer wants to add a new `author` table, with a foreign key in the `book` table. The schema is modified as follows:
 
