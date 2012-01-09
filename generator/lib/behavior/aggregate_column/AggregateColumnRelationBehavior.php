@@ -116,12 +116,14 @@ class AggregateColumnRelationBehavior extends Behavior
 	protected function addQueryFindRelated($builder)
 	{
 		$foreignKey = $this->getForeignKey();
+		$foreignQueryBuilder = $builder->getNewStubQueryBuilder($foreignKey->getForeignTable());
+		$builder->declareClass($foreignQueryBuilder->getFullyQualifiedClassname());
 		$relationName = $this->getRelationName($builder);
 		return $this->renderTemplate('queryFindRelated', array(
 			'foreignTable'     => $this->getForeignTable(),
 			'relationName'     => $relationName,
 			'variableName'     => self::lcfirst($relationName),
-			'foreignQueryName' => $foreignKey->getForeignTable()->getPhpName() . 'Query',
+			'foreignQueryName' => $foreignQueryBuilder->getClassname(),
 			'refRelationName'  => $builder->getRefFKPhpNameAffix($foreignKey),
 		));
 	}
