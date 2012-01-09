@@ -100,7 +100,6 @@ Finally, in order to use the newly added table in application development, the d
 
 {% highlight text %}
 > propel-gen om
-
 {% endhighlight %}
 
 After a few days, the developer wants to add a new `author` table, with a foreign key in the `book` table. The schema is modified as follows:
