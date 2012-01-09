@@ -73,6 +73,17 @@ class PropelSchemaValidator
 		if (in_array($tableName, $reservedTableNames)) {
 			$this->errors[] = sprintf('Table "%s" uses a reserved keyword as name', $table->getName());
 		}
+		if ($table->getIsCrossRef()) {
+			$fkTables = array();
+			foreach ($table->getForeignKeys() as $fk) {
+				$foreignTableName = $fk->getForeignTableName();
+				if (isset($fkTables[$foreignTableName])) {
+					$this->errors[] = sprintf('Table "%s" implements an equal nest relationship for table "%s". This feature is not supported', $table->getName(), $foreignTableName);
+					break;
+				}
+				$fkTables[$foreignTableName] = true;
+			}
+		}
 	}
 
 	protected function validateTableColumns(Table $table)
