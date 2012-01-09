@@ -116,6 +116,36 @@ EOF;
 		$this->assertFalse($validator->validate());
 		$this->assertContains('Table "TABLE_NAME" uses a reserved keyword as name', $validator->getErrors());
 	}
+	
+	public function testValidateReturnsFalseWhenCrossRefTableHasTwoFksToTheSameTable()
+	{
+		$schema = <<<EOF
+<database name="bookstore">
+	<table name="book">
+		<column name="id" required="true" primaryKey="true" autoIncrement="true" type="INTEGER" />
+		<column name="title" type="VARCHAR" size="100" primaryString="true" />
+	</table>
+	<table name="book_book" isCrossRef="true">
+		<column name="parent_id" type="INTEGER" primaryKey="true" required="true"/>
+		<column name="child_id" type="INTEGER" primaryKey="true" required="true"/>
+		<foreign-key foreignTable="book">
+			<reference local="child_id" foreign="id"/>
+		</foreign-key>
+		<foreign-key foreignTable="book">
+			<reference local="parent_id" foreign="id"/>
+		</foreign-key>
+	</table>
+</database>
+EOF;
+		$builder = new PropelQuickBuilder();
+		$builder->setSchema($schema);
+		$database = $builder->getDatabase();
+		$appData = new AppData();
+		$appData->addDatabase($database);
+		$validator = new PropelSchemaValidator($appData);
+		$this->assertFalse($validator->validate());
+		$this->assertContains('Table "book_book" implements an equal nest relationship for table "book". This feature is not supported', $validator->getErrors());
+	}
 
 	public function testValidateReturnsFalseWhenTwoColumnssHaveSamePhpName()
 	{
