@@ -1,5 +1,68 @@
 # Changelog Of The Propel 1.6 Branch #
 
+## 2012-01-16: Version 1.6.4 ##
+
+[f8fdf43] Preparing the 1.6.4 release
+[6984ed0] Merged PR #177. Fixes #90
+[1acaf0c] Fix #90 PropelOnDemandFormatter formatter broken when using single table inheritance
+[aa7870b] [aggregate] Fix behavior when used with namespaces.
+[843a7fb] [SchemaValidator] Schema validation fails for equal nest relations.
+[65da18e] Added 'IF EXISTS' on 'DROP' clauses for PostgreSQL
+[176242b] restoring the ability of reverse-engineering views
+[2280ccb] add tests for Graphviz DOT generation
+[3210ec9] mark FK with PK if both apply to column
+[582d79b] Add unit test for 08e597835dd484e8b894f2ca1f56f053d3a4cfdb.
+[08e5978] Add to phpName parameter to ArchivableBehavior.
+[01994f2] Update test/testsuite/runtime/adapter/DBAdapterTest.php
+[a6421e8] Correction to createSelectSqlPart at & after line 441 - it tries to look for a space between the rightmost '(' and the rightmost '.' after it.
+[f93fff8] [Generator][I18nBehavior] fix setLocale when using custom locale_column fixes #223
+[4eb6602] Revert "Fixed Ymd format for PropelDateTime::newInstance"
+[1b97344] Revert "fix isTimestamp."
+[d0813bf] fix PropelQuickBuilder-dependent tests after SQLite DROP TABLE change
+[87f30a6] use DROP TABLE IF EXISTS with SQLite
+[0671d6b] Fixes #218, plus some typo fixes.
+[9d8e12a] fixes #135
+[059df0a] empty test case
+[6c8e974] typo fix (enterface -> interface)
+[3d753de] add extensible ability to versionable
+[18bc846] test typo fix
+[5b0e107] Fixed missing typehint on crossFK methods
+[c47f9fb] add raw sql capability to conditions
+[cc29263] add namespace to check for duplicate table phpName
+[68fe060] fixed versionnable infinite loop when no diff.
+[47e9a2c] add tests to versionnable behavior whit foreign key
+[047fa1e] [Generator] Fixed undefined variable. Fixes #202
+[5b6dda3] Updated phpDoc for populateFromVersion Initialized variable in function declaration instead of the beginning of the function
+[6704737] Fixed so versionable behavior loads correct relations when populating from a an older version. See https://github.com/propelorm/Propel/issues/198 for more info about this issue.
+[5ce2674] Allowed FQCN with namespaces in inheritance keys (working solution). Fixes #135
+[eab615f] Revert "Allowed FQCN with namespaces in inheritance keys. Fixes #135"
+[9e279b6] Prevent notice error if no parameter found. Fixes #190
+[c43415c] Allowed FQCN with namespaces in inheritance keys. Fixes #135
+[af11116] [Generator] fix concrete inheritance deep copy, fix also one to one deep copy, fixes #192
+[7a80f9a] [Generator] fix first part #192, remove pk value when copy object with single PK not autoincremented
+[12b2ddd] Updated composer file
+[af5f683] Fixed a unit test in ModelCriteria
+[0f3eee9] add BasePeer in declare classes, because when you use query_cache behavior with namespace, the BasePeer is not found
+[8ba9370] Fix archivable behavior when used with unique index.
+[16e3554] Fix bug that caused new I18n rows to not return a valid object causing a fatal error.
+[d222741] Put `ModelCriteria` on par with `Criteria` for raw conditions.
+[c89474c] Remove just added methods.
+[1191479] Add the ability to create a raw Criterion to all Criteria methods
+[0af997d] Introducing Criteria::RAW operator (WIP)
+[f720e60] [Generator] [Builder] Fix abstract single table inheritance, refs #159
+[cb71e64] [behavior] [delegate] Fixed behavior with namespaces
+[5423afb] [Generator] [QueryBuilder] fix single table inheritance findPk
+[a8d80bd] Fix archivable behavior when archive table is in another database. There is a nasty bug causing the `archive()` method to use the wrong connection when called after `delete()` (this is because we want to enclose the two operations in a transaction when they operate on the same database) so we need to remove the connection parameter in case the user uses cross-databases archives. A unit test for this case is quite heavy to set up (two more DBs to create), but I have tested it locally and it is OK.
+[f2e260e] Fix regression in 1.6.3, where exception is not caught on namespaced objects. Closes #165.
+[7130d13] Fix BaseObject phpDoc. Closes #170.
+[2b8accf] Do not specify -dev in composer.json
+[2d66201] fix findByXXXAndYYY() when one of the parameters is a relation. Refs #158. Based on a patch by @maikg
+[6cfab63] Fix sql_type regex to allow for values like enum('_self','_blank').
+[efa1c93] fixes #145 : isCrossRef attribute can now be set to false, with tests
+[87c89c6] add test for isCrossRef attribute
+[0204345] add isCrossRef attribute to the TableMap object, set the right value in the TableMapBuilder
+[1b28424] Bumped version to 1.6.4-dev
+
 ## 2011-10-13: Version 1.6.3 ##
 
 * [54b1941] [generator] Fix typos in new buildtime validation service
