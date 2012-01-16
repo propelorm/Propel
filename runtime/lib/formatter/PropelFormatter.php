@@ -169,12 +169,14 @@ abstract class PropelFormatter
 	 */
 	protected function getWorkerObject($col, $class)
 	{
-		if(isset($this->currentObjects[$col])) {
-			$this->currentObjects[$col]->clear();
+		$key = $col . '_' . $class;
+
+		if (isset($this->currentObjects[$key])) {
+			$this->currentObjects[$key]->clear();
 		} else {
-			$this->currentObjects[$col] = new $class();
+			$this->currentObjects[$key] = new $class();
 		}
-		return $this->currentObjects[$col];
+		return $this->currentObjects[$key];
 	}
 
 	/**

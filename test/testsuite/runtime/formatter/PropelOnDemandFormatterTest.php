@@ -148,4 +148,25 @@ class PropelOnDemandFormatterTest extends BookstoreEmptyTestBase
 		$this->assertTrue($book instanceof Book, 'PropelOnDemandFormatter::formatOne() returns a model object');
 	}
 
+	public function testFormatSingleTableInheritanceManyResults()
+	{
+		$con = Propel::getConnection(BookPeer::DATABASE_NAME);
+		BookstoreDataPopulator::populate($con);
+
+		$stmt = $con->query('SELECT * FROM bookstore_employee');
+		$formatter = new PropelOnDemandFormatter();
+		$formatter->init(new ModelCriteria('bookstore', 'BookstoreEmployee'));
+
+		$employees = $formatter->format($stmt);
+
+		foreach ($employees as $employee) {
+			$row = array();
+			$row[1] = $employee->getClassKey();
+
+			$omClass = BookstoreEmployeePeer::getOMClass($row, 0, false);
+			$actualClass = get_class($employee);
+
+			$this->assertEquals($omClass, $actualClass, 'PropelOnDemandFormatter::format() should handle single table inheritance');
+		}
+	}
 }
