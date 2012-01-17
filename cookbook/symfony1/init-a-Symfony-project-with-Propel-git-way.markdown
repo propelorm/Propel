@@ -48,14 +48,14 @@ git submodule update --init
 You should add a `.gitignore` file with the following content:
 
 {% highlight bash %}
-/config/databases.yml
-/cache/*
-/log/*
-/data/sql/*
-/lib/filter/base/*
-/lib/form/base/*
-/lib/model/map/*
-/lib/model/om/*
+config/databases.yml
+cache/*
+log/*
+data/sql/*
+lib/filter/base/*
+lib/form/base/*
+lib/model/map/*
+lib/model/om/*
 {% endhighlight %}
 
 Now, enable `sfPropelORMPlugin` in `config/ProjectConfiguration.class.php`:
