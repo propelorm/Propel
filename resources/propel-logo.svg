@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generator: Adobe Illustrator 12.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 51448)  -->
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://web.resource.org/cc/"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.1"
+   id="Layer_1"
+   width="884"
+   height="314"
+   viewBox="0 0 884 314"
+   overflow="visible"
+   enable-background="new 0 0 884 314"
+   xml:space="preserve"
+   sodipodi:version="0.32"
+   inkscape:version="0.45.1"
+   sodipodi:docname="propel-logo.svg"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape"
+   sodipodi:docbase="D:\workspace\propelorm.org\dev\graphics"><metadata
+   id="metadata87"><rdf:RDF><cc:Work
+       rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
+         rdf:resource="http://purl.org/dc/dcmitype/StillImage" /></cc:Work></rdf:RDF></metadata><defs
+   id="defs85"><linearGradient
+   id="linearGradient3177"><stop
+     id="stop3179"
+     offset="0"
+     style="stop-color:#f0f0f0;stop-opacity:1;" /><stop
+     id="stop3181"
+     offset="1"
+     style="stop-color:#ffffff;stop-opacity:1;" /></linearGradient><linearGradient
+   id="linearGradient5128"><stop
+     style="stop-color:#ffedab;stop-opacity:1;"
+     offset="0"
+     id="stop5130" /><stop
+     style="stop-color:#ffffff;stop-opacity:1;"
+     offset="1"
+     id="stop5132" /></linearGradient><linearGradient
+   id="linearGradient3176"><stop
+     style="stop-color:#edf6fe;stop-opacity:1;"
+     offset="0"
+     id="stop3178" /><stop
+     style="stop-color:#ffffff;stop-opacity:1;"
+     offset="1"
+     id="stop3180" /></linearGradient><linearGradient
+   id="linearGradient4193"><stop
+     style="stop-color:#ffffff;stop-opacity:1;"
+     offset="0"
+     id="stop4195" /><stop
+     style="stop-color:#f0f0f0;stop-opacity:1;"
+     offset="1"
+     id="stop4197" /></linearGradient>
+	
+	
+	
+	
+
+		
+		
+	<linearGradient
+   inkscape:collect="always"
+   xlink:href="#linearGradient3176"
+   id="linearGradient3186"
+   gradientUnits="userSpaceOnUse"
+   x1="441.89075"
+   y1="34.536976"
+   x2="441.89075"
+   y2="266.73895"
+   gradientTransform="matrix(0.1037146,0,0,1,324.96465,-325.96662)" /><linearGradient
+   inkscape:collect="always"
+   xlink:href="#linearGradient5128"
+   id="linearGradient5134"
+   x1="-483.94006"
+   y1="-204.79814"
+   x2="-483.94006"
+   y2="-50.83799"
+   gradientUnits="userSpaceOnUse"
+   gradientTransform="matrix(0.5081967,0,0,0.4827586,297.37884,-86.675214)" /><linearGradient
+   inkscape:collect="always"
+   xlink:href="#linearGradient3177"
+   id="linearGradient2203"
+   gradientUnits="userSpaceOnUse"
+   gradientTransform="matrix(0.5081967,0,0,0.2327586,353.04804,-131.58644)"
+   x1="-483.94006"
+   y1="-204.79814"
+   x2="-483.94006"
+   y2="-50.83799" /></defs><sodipodi:namedview
+   inkscape:window-height="1003"
+   inkscape:window-width="1680"
+   inkscape:pageshadow="2"
+   inkscape:pageopacity="0.0"
+   guidetolerance="10.0"
+   gridtolerance="10.0"
+   objecttolerance="10.0"
+   borderopacity="1.0"
+   bordercolor="#666666"
+   pagecolor="#ffffff"
+   id="base"
+   inkscape:zoom="0.74547511"
+   inkscape:cx="442"
+   inkscape:cy="157"
+   inkscape:window-x="110"
+   inkscape:window-y="110"
+   inkscape:current-layer="Layer_1" />
+
+<linearGradient
+   id="XMLID_11_"
+   gradientUnits="userSpaceOnUse"
+   x1="43.2773"
+   y1="-89.4688"
+   x2="781.2862"
+   y2="369.7625">
+	<stop
+   offset="0"
+   style="stop-color:#FFFFFF"
+   id="stop10" />
+	<stop
+   offset="0.1564"
+   style="stop-color:#FDFDFD"
+   id="stop12" />
+	<stop
+   offset="0.2332"
+   style="stop-color:#F5F6F6"
+   id="stop14" />
+	<stop
+   offset="0.2926"
+   style="stop-color:#E8E9EA"
+   id="stop16" />
+	<stop
+   offset="0.309"
+   style="stop-color:#E3E4E5"
+   id="stop18" />
+	<stop
+   offset="0.5037"
+   style="stop-color:#E1E2E3"
+   id="stop20" />
+	<stop
+   offset="0.6419"
+   style="stop-color:#D9DBDC"
+   id="stop22" />
+	<stop
+   offset="0.7626"
+   style="stop-color:#CCCECF"
+   id="stop24" />
+	<stop
+   offset="0.8732"
+   style="stop-color:#BABCBE"
+   id="stop26" />
+	<stop
+   offset="0.976"
+   style="stop-color:#A3A5A8"
+   id="stop28" />
+	<stop
+   offset="1"
+   style="stop-color:#9D9FA1"
+   id="stop30" />
+</linearGradient>
+
+
+<rect
+   style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1.61699998;stroke-miterlimit:4;stroke-dasharray:6.468, 6.468;stroke-dashoffset:0;stroke-opacity:1"
+   id="rect3198"
+   width="864.85339"
+   height="231.15562"
+   x="11.476191"
+   y="38.541222"
+   rx="0"
+   ry="0"
+   inkscape:export-filename="D:\workspace\propelorm.org\propel-logo.png"
+   inkscape:export-xdpi="72.029396"
+   inkscape:export-ydpi="72.029396" /><g
+   id="g2208"
+   transform="matrix(1.415534,0,0,1.415534,-59.848158,-75.80184)"
+   inkscape:export-filename="D:\workspace\propelorm.org\propel-logo.png"
+   inkscape:export-xdpi="72.029396"
+   inkscape:export-ydpi="72.029396"><g
+     transform="translate(-2.6828527,-12.072833)"
+     id="g52">
+			<g
+   id="g54">
+				<polygon
+   style="fill:#636466"
+   id="polygon56"
+   points="616.444,97.757 575.708,187.508 592.235,187.508 632.973,97.757 616.444,97.757 " />
+			</g>
+			<path
+   style="fill:#636466"
+   id="path58"
+   d="M 557.676,161.028 L 557.676,161.028 C 552.295,169.104 542.095,175.203 533.208,175.203 C 523.057,175.203 518.413,167.249 522.852,157.469 C 527.291,147.689 539.161,139.735 549.307,139.735 C 552.051,139.735 554.39,140.321 556.26,141.366 L 532.105,157.553 L 537.188,166.254 L 578.325,138.681 C 578.325,138.681 578.325,138.681 578.686,138.422 C 576.387,129.604 568.467,123.813 556.539,123.813 C 537.271,123.813 514.747,138.911 506.324,157.47 C 497.901,176.029 506.72,191.127 525.982,191.127 C 544,191.127 564.864,177.919 574.38,161.029 L 557.676,161.029 L 557.676,161.028 z " />
+			<g
+   id="g60">
+				<g
+   id="g62">
+					<path
+   style="fill:#636466"
+   id="path64"
+   d="M 476.523,123.812 C 457.26,123.812 434.736,138.91 426.314,157.469 L 399.864,215.736 L 416.392,215.736 L 425.702,195.228 L 425.699,195.228 L 442.818,157.518 L 442.823,157.518 C 442.83,157.501 442.835,157.486 442.843,157.469 C 447.277,147.689 459.146,139.735 469.298,139.735 C 479.444,139.735 484.093,147.689 479.654,157.469 C 475.215,167.249 463.345,175.203 453.199,175.203 C 449.563,175.203 446.649,174.169 444.59,172.409 L 436.72,189.749 C 439.447,190.642 442.539,191.125 445.968,191.125 C 465.235,191.125 487.76,176.027 496.182,157.468 C 504.604,138.909 495.786,123.812 476.523,123.812 z " />
+				</g>
+			</g>
+			<g
+   id="g66">
+				<path
+   style="fill:#636466"
+   id="path68"
+   d="M 343.668,157.469 C 335.245,176.029 344.064,191.126 363.326,191.126 C 382.588,191.126 405.118,176.028 413.54,157.469 C 421.962,138.91 413.144,123.812 393.882,123.812 C 374.62,123.812 352.096,138.909 343.668,157.469 z M 360.196,157.469 C 364.639,147.689 376.504,139.735 386.651,139.735 C 396.802,139.735 401.451,147.689 397.012,157.469 C 392.573,167.249 380.703,175.203 370.557,175.203 C 360.406,175.203 355.763,167.249 360.196,157.469 z " />
+			</g>
+			<path
+   style="fill:#636466"
+   id="path70"
+   d="M 324.303,132.83 L 328.068,124.534 L 311.535,124.534 L 281.642,189.676 L 298.17,189.676 C 298.17,189.676 305.607,174.017 310.484,163.27 C 315.361,152.523 328.716,139.012 343.78,139.012 L 350.352,124.534 C 341.949,124.534 332.994,127.425 324.303,132.83 z " />
+			<g
+   id="g72">
+				<g
+   id="g74">
+					<path
+   style="fill:#636466"
+   id="path76"
+   d="M 264.66,123.812 C 245.397,123.812 222.873,138.91 214.45,157.469 L 188,215.735 L 204.533,215.735 L 213.841,195.227 L 213.84,195.227 L 230.959,157.518 C 230.967,157.501 230.971,157.485 230.979,157.468 C 235.417,147.688 247.283,139.734 257.434,139.734 C 267.585,139.734 272.228,147.688 267.79,157.468 C 263.352,167.248 251.486,175.202 241.335,175.202 C 237.7,175.202 234.787,174.168 232.728,172.41 L 224.857,189.747 C 227.585,190.64 230.678,191.124 234.108,191.124 C 253.371,191.124 275.895,176.026 284.317,157.467 C 292.739,138.908 283.922,123.812 264.66,123.812 z " />
+				</g>
+			</g>
+		</g><path
+     d="M 147.48515,200.18617 C 170.66915,177.85217 174.07215,159.32717 58.760147,224.72217 C 108.06115,209.90317 147.48515,200.18617 147.48515,200.18617 z "
+     id="path78"
+     style="fill:#b3b397" /><path
+     d="M 180.11215,130.42517 C 203.29515,108.09117 206.69815,89.571167 91.387147,154.96617 C 140.68815,140.14717 180.11215,130.42517 180.11215,130.42517 z "
+     id="path80"
+     style="fill:#efc01b" /><path
+     d="M 163.51015,165.16617 C 186.69315,142.83217 190.09615,124.31217 74.790147,189.70717 C 124.08715,174.88817 163.51015,165.16617 163.51015,165.16617 z "
+     id="path82"
+     style="fill:#ffcc1d" /></g><text
+   xml:space="preserve"
+   style="font-size:32.60662079px;font-style:italic;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#636466;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Trebuchet MS"
+   x="292.4361"
+   y="249.16594"
+   id="text4189"
+   sodipodi:linespacing="125%"
+   inkscape:export-filename="D:\workspace\propelorm.org\propel-logo.png"
+   inkscape:export-xdpi="72.029396"
+   inkscape:export-ydpi="72.029396"><tspan
+     sodipodi:role="line"
+     id="tspan4191"
+     x="292.4361"
+     y="249.16594">Smart, easy object persistence</tspan></text>
+
+
+
+
+</svg>
