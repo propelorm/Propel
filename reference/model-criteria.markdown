@@ -866,7 +866,7 @@ $authors = AuthorQuery::create()
   ->find();
 {% endhighlight %}
 
-This is excatly whath the generated `useBookQuery()` does, except that you have more control over the join type and alias when you use the relational API. Behind the scene, `useQuery('Book')` creates a `BookQuery` instance and returns it. So the `recent()` call is actually called on `BookQuery`, not on `ArticleQuery`. Upon calling `endUse()`, the `BookQuery` merges into the original `ArticleQuery` and returns it. So the final `find()` is indeed called on the `AuthorQuery` instance.
+This is exactly what the generated `useBookQuery()` does, except that you have more control over the join type and alias when you use the relational API. Behind the scene, `useQuery('Book')` creates a `BookQuery` instance and returns it. So the `recent()` call is actually called on `BookQuery`, not on `ArticleQuery`. Upon calling `endUse()`, the `BookQuery` merges into the original `ArticleQuery` and returns it. So the final `find()` is indeed called on the `AuthorQuery` instance.
 
 You can nest queries in as many levels as you like, in order to avoid the repetition of code in your model.
 
