@@ -23,13 +23,13 @@ git init
 Install `symfony 1.4` as a git submodule:
 
 {% highlight bash %}
-git submodule add git://github.com/symfony/symfony1.git lib/vendor
+git submodule add git://github.com/symfony/symfony1.git lib/vendor/symfony
 {% endhighlight %}
 
 Generate a symfony project:
 
 {% highlight bash %}
-php lib/vendor/data/bin/symfony generate:project propel
+php lib/vendor/symfony/data/bin/symfony generate:project propel
 {% endhighlight %}
 
 Add the `sfPropelORMPlugin` plugin:
@@ -48,14 +48,14 @@ git submodule update --init
 You should add a `.gitignore` file with the following content:
 
 {% highlight bash %}
-config/databases.yml
-cache/*
-log/*
-data/sql/*
-lib/filter/base/*
-lib/form/base/*
-lib/model/map/*
-lib/model/om/*
+/config/databases.yml
+/cache/*
+/log/*
+/data/sql/*
+/lib/filter/base/*
+/lib/form/base/*
+/lib/model/map/*
+/lib/model/om/*
 {% endhighlight %}
 
 Now, enable `sfPropelORMPlugin` in `config/ProjectConfiguration.class.php`:
