@@ -190,6 +190,7 @@ class Propel
         'DebugPDOStatement'   => 'connection/DebugPDOStatement.php',
 
         'PropelException'     => 'exception/PropelException.php',
+		'PropelPDOException'  => 'exception/PropelPDOException.php',
 
         'ModelWith'           => 'formatter/ModelWith.php',
         'PropelArrayFormatter' => 'formatter/PropelArrayFormatter.php',
