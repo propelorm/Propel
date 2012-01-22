@@ -19,15 +19,16 @@ require_once 'AggregateColumnRelationBehavior.php';
  */
 class AggregateColumnBehavior extends Behavior
 {
-	
+
 	// default parameters value
 	protected $parameters = array(
 		'name'           => null,
 		'expression'     => null,
+		'condition'      => null,
 		'foreign_table'  => null,
 		'foreign_schema' => null,
 	);
-	
+
 	/**
 	 * Add the aggregate key to the current table
 	 */
@@ -37,7 +38,7 @@ class AggregateColumnBehavior extends Behavior
 		if (!$columnName = $this->getParameter('name')) {
 			throw new InvalidArgumentException(sprintf('You must define a \'name\' parameter for the \'aggregate_column\' behavior in the \'%s\' table', $table->getName()));
 		}
-		
+
 		// add the aggregate column if not present
 		if(!$this->getTable()->containsColumn($columnName)) {
 			$column = $this->getTable()->addColumn(array(
@@ -45,7 +46,7 @@ class AggregateColumnBehavior extends Behavior
 				'type'    => 'INTEGER',
 			));
 		}
-		
+
 		// add a behavior in the foreign table to autoupdate the aggregate column
 		$foreignTable = $this->getForeignTable();
 		if (!$foreignTable->hasBehavior('concrete_inheritance_parent')) {
@@ -57,7 +58,7 @@ class AggregateColumnBehavior extends Behavior
 			$foreignTable->addBehavior($relationBehavior);
 		}
 	}
-	
+
 	public function objectMethods($builder)
 	{
 		if (!$foreignTableName = $this->getParameter('foreign_table')) {
@@ -66,13 +67,17 @@ class AggregateColumnBehavior extends Behavior
 		$script = '';
 		$script .= $this->addObjectCompute();
 		$script .= $this->addObjectUpdate();
-		
+
 		return $script;
 	}
-	
+
 	protected function addObjectCompute()
 	{
 		$conditions = array();
+    if($this->getParameter('condition')) {
+      $conditions[] = $this->getParameter('condition');
+    }
+
 		$bindings = array();
 		$database = $this->getTable()->getDatabase();
 		foreach ($this->getForeignKey()->getColumnObjectsMapping() as $index => $columnReference) {
@@ -88,21 +93,21 @@ class AggregateColumnBehavior extends Behavior
 			$database->getPlatform()->quoteIdentifier($tableName),
 			implode(' AND ', $conditions)
 		);
-		
+
 		return $this->renderTemplate('objectCompute', array(
 			'column'   => $this->getColumn(),
 			'sql'      => $sql,
 			'bindings' => $bindings,
 		));
 	}
-	
+
 	protected function addObjectUpdate()
 	{
 		return $this->renderTemplate('objectUpdate', array(
 			'column'  => $this->getColumn(),
 		));
 	}
-	
+
 	protected function getForeignTable()
 	{
 		$database = $this->getTable()->getDatabase();
@@ -124,10 +129,10 @@ class AggregateColumnBehavior extends Behavior
 		// FIXME doesn't work when more than one fk to the same table
 		return array_shift($fks);
 	}
-	
+
 	protected function getColumn()
 	{
 		return $this->getTable()->getColumn($this->getParameter('name'));
 	}
-	
+
 }
