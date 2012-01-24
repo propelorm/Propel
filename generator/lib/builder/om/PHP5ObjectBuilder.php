@@ -4705,7 +4705,9 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
             $script .= "
         if (null === \$this->{$columnProperty}) {
             try {";
-            $script .= $platform->getIdentifierPhp('$this->'. $columnProperty, '$con', $primaryKeyMethodInfo, '				');
+			$script .= $platform->getIdentifierPhp('$newId', '$con', $primaryKeyMethodInfo, '				');
+			$script .= "
+				\$this->set{$column->getPhpName()}(\$newId);";
             $script .= "
             } catch (Exception \$e) {
                 throw new PropelException('Unable to get sequence id.', \$e);
