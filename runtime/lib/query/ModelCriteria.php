@@ -535,7 +535,7 @@ class ModelCriteria extends Criteria
 		}
 
 		// select() needs the PropelSimpleArrayFormatter if no formatter given
-		if (is_null($this->getFormatter())) {
+		if (is_null($this->formatter)) {
 				$this->setFormatter('PropelSimpleArrayFormatter');
 		}
 
