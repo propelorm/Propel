@@ -1429,7 +1429,8 @@ class ModelCriteria extends Criteria
 			|| $this->getOffset()
 			|| $this->getLimit()
 			|| $this->getHaving()
-			|| in_array(Criteria::DISTINCT, $this->getSelectModifiers());
+			|| in_array(Criteria::DISTINCT, $this->getSelectModifiers())
+			|| count($this->selectQueries) > 0;
 
 		$params = array();
 		if ($needsComplexCount) {
