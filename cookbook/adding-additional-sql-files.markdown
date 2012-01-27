@@ -18,11 +18,11 @@ For example, if we wanted to add a default value to a column that was unsupporte
 ALTER TABLE my_table ALTER COLUMN my_column SET DEFAULT CURRENT_TIMESTAMP;
 {% endhighlight %}
 
-Now we save that as _'my_column-default.sql_' in the same directory as the generated _'schema.sql_' file (usually in projectdir/build/sql/).
+Now we save that as _'my_column-default.sql'_ in the same directory as the generated _'schema.sql'_ file (usually in projectdir/build/sql/).
 
 ## 2. Tell Propel Generator about the new file ##
 
-In that same directory (where your _'schema.sql_' is located), there is a _'sqldb.map_' file which contains a mapping of SQL DDL files to the database that they should be executed against.  After running the propel generator, you will probably have a single entry in that file that looks like:
+In that same directory (where your _'schema.sql'_ is located), there is a _'sqldb.map'_ file which contains a mapping of SQL DDL files to the database that they should be executed against.  After running the propel generator, you will probably have a single entry in that file that looks like:
 
 {% highlight text %}
 schema.sql=your-db-name
