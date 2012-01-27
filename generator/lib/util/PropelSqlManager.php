@@ -195,7 +195,7 @@ class PropelSqlManager
 		foreach ($this->getProperties($this->getSqlDbMapFilename()) as $sqlFile => $database) {
 			if (null !== $datasource && $database !== $datasource) {
 				// skip
-				break;
+				continue;
 			}
 
 			if (!isset($statementsToInsert[$database])) {
