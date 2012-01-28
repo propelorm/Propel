@@ -451,10 +451,14 @@ abstract class ".$this->getClassname()." extends " . $parentClass . "
 			$platform->quoteIdentifier($table->getName()),
 			implode(' AND ', $conditions)
 		);
-		$pks = array();
-		foreach ($table->getPrimaryKey() as $index => $column) {
-			$pks []= "\$row[$index]";
-		}
+        $pks = array();
+        if ($table->hasCompositePrimaryKey()) {
+            foreach ($table->getPrimaryKey() as $index => $column) {
+                $pks []= "\$key[$index]";
+            }
+        } else {
+            $pks []= "\$key";
+        }
 		$pkHashFromRow = $this->getPeerBuilder()->getInstancePoolKeySnippet($pks);
 		$script .= "
 	/**
