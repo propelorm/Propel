@@ -219,6 +219,22 @@ class SubQueryTest extends BookstoreTestBase
 		$params = array();
 		$this->assertCriteriaTranslation($c, $sql, $params, 'addSelectQuery() forges a unique alias and adds select columns by default');
 	}
+
+	public function testSubQueryCount()
+	{
+		$subCriteria = new BookQuery();
+
+		$c = new BookQuery();
+		$c->addSelectQuery($subCriteria, 'subCriteriaAlias');
+		$c->filterByPrice(20, Criteria::LESS_THAN);
+		$nbBooks = $c->count();
+
+		$query = Propel::getConnection()->getLastExecutedQuery();
+
+		$sql = "SELECT COUNT(*) FROM (SELECT subCriteriaAlias.ID, subCriteriaAlias.TITLE, subCriteriaAlias.ISBN, subCriteriaAlias.PRICE, subCriteriaAlias.PUBLISHER_ID, subCriteriaAlias.AUTHOR_ID FROM (SELECT book.ID, book.TITLE, book.ISBN, book.PRICE, book.PUBLISHER_ID, book.AUTHOR_ID FROM `book`) AS subCriteriaAlias WHERE subCriteriaAlias.PRICE<20) propelmatch4cnt";
+
+		$this->assertEquals($sql, $query, 'addSelectQuery() doCount is defined as complexQuery');
+	}
 }
 
 class TestableBookQuery extends BookQuery
