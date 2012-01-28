@@ -220,7 +220,7 @@ class SubQueryTest extends BookstoreTestBase
 		$this->assertCriteriaTranslation($c, $sql, $params, 'addSelectQuery() forges a unique alias and adds select columns by default');
 	}
 
-    public function testSubQueryCount()
+	public function testSubQueryCount()
 	{
 		$subCriteria = new BookQuery();
 
