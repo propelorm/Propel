@@ -453,9 +453,9 @@ abstract class ".$this->getClassname()." extends " . $parentClass . "
 		);
         $pks = array();
         if ($table->hasCompositePrimaryKey()) {
-		    foreach ($table->getPrimaryKey() as $index => $column) {
-			    $pks []= "\$key[$index]";
-		    }
+            foreach ($table->getPrimaryKey() as $index => $column) {
+                $pks []= "\$key[$index]";
+            }
         } else {
             $pks []= "\$key";
         }
