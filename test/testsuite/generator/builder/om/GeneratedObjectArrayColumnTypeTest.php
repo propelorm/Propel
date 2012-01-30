@@ -128,7 +128,8 @@ EOF;
 		$this->assertEquals($value, $e->getTags(), 'array columns are persisted');
 	}
 
-	public function testWithFormatOnDemand() {
+	public function testGetterDoesNotKeepValueBetweenTwoHydrationsWhenUsingOnDemandFormatter()
+	{
 		ComplexColumnTypeEntity2Query::create()->deleteAll();
 		$e = new ComplexColumnTypeEntity2();
 		$e->setTags(array(1,2));
