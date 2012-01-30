@@ -949,7 +949,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
 		}
 
 		$script .= "
-		if (null == \$this->$cloUnserialized && null !== \$this->$clo) {
+		if (null !== \$this->$clo) {
 			\$this->$cloUnserialized = unserialize(\$this->$clo);
 		}
 		return \$this->$cloUnserialized;";
@@ -988,7 +988,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
 		if (null === \$this->$cloUnserialized) {
 			\$this->$cloUnserialized = array();
 		}
-		if (!\$this->$cloUnserialized && null !== \$this->$clo) {
+		if (null !== \$this->$clo) {
 			\$$cloUnserialized = substr(\$this->$clo, 2, -2);
 			\$this->$cloUnserialized = \$$cloUnserialized ? explode(' | ', \$$cloUnserialized) : array();
 		}
