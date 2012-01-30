@@ -1921,17 +1921,8 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
 					$script .= "
 			\$this->$clo = (\$row[\$startcol + $n] !== null) ? (".$col->getPhpType().") \$row[\$startcol + $n] : null;";
 				} elseif ($col->getType() == PropelTypes::OBJECT) {
-					$cloUnserialized = $clo.'_unserialized';
 					$script .= "
-			\$this->$clo = \$row[\$startcol + $n];
-			\$this->$cloUnserialized = null;
-			";
-				} elseif ($col->getType() == PropelTypes::PHP_ARRAY) {
-					$cloUnserialized = $clo.'_unserialized';
-					$script .= "
-			\$this->$clo = \$row[\$startcol + $n];
-			\$this->$cloUnserialized = array();
-			";
+			\$this->$clo = \$row[\$startcol + $n];";
 				} elseif ($col->isPhpObjectType()) {
 					$script .= "
 			\$this->$clo = (\$row[\$startcol + $n] !== null) ? new ".$col->getPhpType()."(\$row[\$startcol + $n]) : null;";
