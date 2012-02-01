@@ -564,6 +564,54 @@ ALTER TABLE %s CHANGE %s %s;
 		return $ret;
 	}
 
+	/**
+	 * Builds the DDL SQL to add a column
+	 *
+	 * @return     string
+	 */
+	public function getAddColumnDDL(Column $column)
+	{
+		$pattern="
+ALTER TABLE %s ADD COLUMN %s %s;
+";
+		
+		$table=$column->getTable();
+		$tableColumns=$table->getColumns();
+		$tableName = $column->getTable()->getName();
+		$columnName=$column->getName();
+		
+		$insertPositionDDL="FIRST"; //default to add to top if the before-column cannot be found
+		for ($i=0; $i<count($tableColumns); $i++)
+		{
+			if ($tableColumns[$i]->getName()==$columnName)
+			{ //we found the column, use the column before it, if its not the first
+				if ($i>0)
+				{ //we have a column that is not the first column
+					$insertPositionDDL="AFTER ".$this->quoteIdentifier($tableColumns[$i-1]->getName());
+				}
+				break;
+			}
+		}
+		return sprintf($pattern,$this->quoteIdentifier($tableName),$this->getColumnDDL($column),$insertPositionDDL);
+	}
+
+	/**
+	 * Builds the DDL SQL to add a list of columns
+	 *
+	 * @return     string
+	 */
+	public function getAddColumnsDDL($columns)
+	{
+		$lines=array();
+		
+		foreach ($columns as $column)
+		{
+			$lines[]=$this->getAddColumnDDL($column);
+
+		}
+		return implode("",$lines);
+	}
+
 
 	/**
 	 * @see        Platform::supportsSchemas()
