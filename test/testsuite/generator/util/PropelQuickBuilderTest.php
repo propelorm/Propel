@@ -101,6 +101,20 @@ EOF;
 		$this->assertTrue(QuickBuildFoo1Peer::getTableMap() instanceof QuickBuildFoo1TableMap);
 	}
 
+	/**
+	 * @dataProvider simpleSchemaProvider
+	 */
+	public function testGetClassesLimitedClassTargets($builder)
+	{
+		$script = $builder->getClasses(array('tablemap', 'peer', 'object', 'query'));
+		$this->assertNotContains('class QuickBuildFoo1 extends BaseQuickBuildFoo1', $script);
+		$this->assertNotContains('class QuickBuildFoo1Peer extends BaseQuickBuildFoo1Peer', $script);
+		$this->assertNotContains('class QuickBuildFoo1Query extends BaseQuickBuildFoo1Query', $script);
+		$this->assertContains('class BaseQuickBuildFoo1 extends BaseObject', $script);
+		$this->assertContains('class BaseQuickBuildFoo1Peer', $script);
+		$this->assertContains('class BaseQuickBuildFoo1Query extends ModelCriteria', $script);
+	}
+
 	public function testBuild()
 	{
 		$schema = <<<EOF
