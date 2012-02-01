@@ -55,10 +55,14 @@ EOF;
 	{
 		ComplexColumnTypeEntity1Query::create()->deleteAll();
 		$e = new ComplexColumnTypeEntity1();
-		$e->setBar((object)array(1,2));
+		$e->setBar((object)array(
+			'a' =>1,
+			'b' => 2));
 		$e->save();
 		$e = new ComplexColumnTypeEntity1();
-		$e->setBar((object)array(3,4));
+		$e->setBar((object)array(
+			'a' => 3,
+			'b' => 4));
 		$e->save();
 		$q = ComplexColumnTypeEntity1Query::create()
 			->setFormatter(ModelCriteria::FORMAT_ON_DEMAND)
