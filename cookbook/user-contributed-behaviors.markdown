@@ -36,6 +36,6 @@ Here is a list of Propel behaviors contributed by users. Feel free to use them o
 
 * [sfContextBehavior](https://github.com/Carpe-Hora/sfContextBehavior) A behavior for propel 1.6 and symfony 1.x redering object context aware.
 
-## symfony 2.x Behaviors ##
+## symfony2 2.x Behaviors ##
 
-* [PropelEventBundle](https://bitbucket.org/glorpen/glorpenpropeleventbundle) Adds a way of using Symfony2 DIC in Propel model classes through events.
+* [PropelEventBundle](https://bitbucket.org/glorpen/glorpenpropeleventbundle) Add a way of using Symfony2 DIC in Propel model classes through events.
