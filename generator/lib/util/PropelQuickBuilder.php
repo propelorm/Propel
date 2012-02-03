@@ -15,6 +15,13 @@ class PropelQuickBuilder
 {
 	protected $schema, $platform, $config, $database;
 
+	protected $classTargets = array('tablemap', 'peer', 'object', 'query', 'peerstub', 'objectstub', 'querystub');
+
+	public function setClassTargets(array $targets)
+	{
+		$this->classTargets = $targets;
+	}
+
 	public function setSchema($schema)
 	{
 		$this->schema = $schema;
@@ -75,7 +82,7 @@ class PropelQuickBuilder
 		return $builder->build($dsn, $user, $pass, $adapter);
 	}
 
-	public function build($dsn = null, $user = null, $pass = null, $adapter = null)
+	public function build($dsn = null, $user = null, $pass = null, $adapter = null, array $classTargets = null)
 	{
 		if (null === $dsn) {
 			$dsn = 'sqlite::memory:';
@@ -83,10 +90,13 @@ class PropelQuickBuilder
 		if (null === $adapter) {
 			$adapter = new DBSQLite();
 		}
+		if (null === $classTargets) {
+			$classTargets = $this->classTargets;
+		}
 		$con = new PropelPDO($dsn, $user, $pass);
 		$con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
 		$this->buildSQL($con);
-		$this->buildClasses();
+		$this->buildClasses($classTargets);
 		$name = $this->getDatabase()->getName();
 		if (!Propel::isInit()) {
 			Propel::setConfiguration(array('datasources' => array('default' => $name)));
@@ -129,25 +139,29 @@ class PropelQuickBuilder
 		return $this->getPlatform()->getAddTablesDDL($this->getDatabase());
 	}
 
-	public function buildClasses()
+	public function buildClasses(array $classTargets = null)
 	{
-		eval($this->getClasses());
+		eval($this->getClasses($classTargets));
 	}
 
-	public function getClasses()
+	public function getClasses(array $classTargets = null)
 	{
 		$script = '';
 		foreach ($this->getDatabase()->getTables() as $table) {
-			$script .= $this->getClassesForTable($table);
+			$script .= $this->getClassesForTable($table, $classTargets);
 		}
 		return $script;
 	}
 
-	public function getClassesForTable(Table $table)
+	public function getClassesForTable(Table $table, array $classTargets = null)
 	{
+		if (null === $classTargets) {
+			$classTargets = $this->classTargets;
+		}
+
 		$script = '';
 
-		foreach (array('tablemap', 'peer', 'object', 'query', 'peerstub', 'objectstub', 'querystub') as $target) {
+		foreach ($classTargets as $target) {
 			$script .= $this->getConfig()->getConfiguredBuilder($table, $target)->build();
 		}
 
