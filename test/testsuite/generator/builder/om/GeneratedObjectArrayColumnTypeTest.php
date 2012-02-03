@@ -140,7 +140,7 @@ EOF;
 		$q = ComplexColumnTypeEntity2Query::create()
 			->setFormatter(ModelCriteria::FORMAT_ON_DEMAND)
 			->find();
-		
+
 		$tags = array();
 		foreach($q as $e) {
 		  $tags[] = $e->getTags();
