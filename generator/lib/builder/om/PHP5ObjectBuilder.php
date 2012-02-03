@@ -5077,6 +5077,11 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
 				$script .= "
 		\$this->".$clo."_isLoaded = false;";
 			}
+			if($col->getType() == PropelTypes::OBJECT || $col->getType() == PropelTypes::PHP_ARRAY) {
+				$cloUnserialized = $clo.'_unserialized';
+				$script .="
+		\$this->$cloUnserialized = null;";
+			}
 		}
 
 		$script .= "
