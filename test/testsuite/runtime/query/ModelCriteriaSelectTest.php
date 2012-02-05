@@ -98,6 +98,25 @@ class ModelCriteriaSelectTest extends BookstoreTestBase
 		$this->assertEquals($authors->count(), 1, 'find() called after select(string) allows for where() statements');
 		$expectedSQL = "SELECT author.FIRST_NAME AS \"FirstName\" FROM `author` WHERE author.FIRST_NAME = 'Neal'";
 		$this->assertEquals($expectedSQL, $this->con->getLastExecutedQuery(), 'find() called after select(string) allows for where() statements');
+		
+		$c = new ModelCriteria('bookstore', 'Author');
+		$c->select(AuthorPeer::FIRST_NAME);
+		$author = $c->find($this->con);
+		$expectedSQL = "SELECT author.FIRST_NAME AS \"author.FIRST_NAME\" FROM `author`";
+		$this->assertEquals($expectedSQL, $this->con->getLastExecutedQuery(), 'select(string) accepts model Peer Constants');
+	}
+	
+	/**
+	* @expectedException PropelException
+	*/
+	public function testSelectStringFindCalledWithNonExistingColumn()
+	{
+		BookstoreDataPopulator::depopulate($this->con);
+		BookstoreDataPopulator::populate($this->con);
+	
+		$c = new ModelCriteria('bookstore', 'Author');
+		$c->select('author.NOT_EXISTING_COLUMN');
+		$author = $c->find($this->con);
 	}
 
 	public function testSelectStringFindOne()
@@ -121,7 +140,7 @@ class ModelCriteriaSelectTest extends BookstoreTestBase
 		$expectedSQL = "SELECT author.FIRST_NAME AS \"FirstName\" FROM `author` WHERE author.FIRST_NAME = 'Neal' LIMIT 1";
 		$this->assertEquals($expectedSQL, $this->con->getLastExecutedQuery(), 'findOne() called after select(string) allows for where() statements');
 	}
-
+	
 	public function testSelectStringJoin()
 	{
 		BookstoreDataPopulator::depopulate($this->con);

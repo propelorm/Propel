@@ -1918,33 +1918,38 @@ class ModelCriteria extends Criteria
 	protected function getColumnFromName($phpName, $failSilently = true)
 	{
 		if (strpos($phpName, '.') === false) {
-			$class = $this->getModelAliasOrName();
+			$prefix = $this->getModelAliasOrName();
 		} else {
-			list($class, $phpName) = explode('.', $phpName);
+			// $prefix could be either class name or table name
+			list($prefix, $phpName) = explode('.', $phpName);
 		}
 
-		if ($class == $this->getModelAliasOrName()) {
-			// column of the Criteria's model
+		if ($prefix == $this->getModelAliasOrName() || $prefix == $this->getTableMap()->getName()) {
+			// column of the Criteria's model, or column name from Criteria's peer
 			$tableMap = $this->getTableMap();
-		} elseif (isset($this->joins[$class])) {
+		} elseif (isset($this->joins[$prefix])) {
 			// column of a relations's model
-			$tableMap = $this->joins[$class]->getTableMap();
-		} elseif ($this->hasSelectQuery($class)) {
-			return $this->getColumnFromSubQuery($class, $phpName, $failSilently);
+			$tableMap = $this->joins[$prefix]->getTableMap();
+		} elseif ($this->hasSelectQuery($prefix)) {
+			return $this->getColumnFromSubQuery($prefix, $phpName, $failSilently);
 		} elseif ($failSilently) {
 			return array(null, null);
 		} else {
-			throw new PropelException(sprintf('Unknown model or alias "%s"', $class));
+			throw new PropelException(sprintf('Unknown model, alias or table "%s"', $prefix));
 		}
 
 		if ($tableMap->hasColumnByPhpName($phpName)) {
 			$column = $tableMap->getColumnByPhpName($phpName);
-			if (isset($this->aliases[$class])) {
-				$this->currentAlias = $class;
-				$realColumnName = $class . '.' . $column->getName();
+			if (isset($this->aliases[$prefix])) {
+				$this->currentAlias = $prefix;
+				$realColumnName = $prefix . '.' . $column->getName();
 			} else {
 				$realColumnName = $column->getFullyQualifiedName();
 			}
+			return array($column, $realColumnName);
+		} elseif ($tableMap->hasColumn($phpName,false)) {
+			$column = $tableMap->getColumn($phpName,false);
+			$realColumnName = $column->getFullyQualifiedName();
 			return array($column, $realColumnName);
 		} elseif (isset($this->asColumns[$phpName])) {
 			// aliased column
@@ -1952,7 +1957,7 @@ class ModelCriteria extends Criteria
 		} elseif ($failSilently) {
 			return array(null, null);
 		} else {
-			throw new PropelException(sprintf('Unknown column "%s" on model or alias "%s"', $phpName, $class));
+			throw new PropelException(sprintf('Unknown column "%s" on model, alias or table "%s"', $phpName, $prefix));
 		}
 	}
 
