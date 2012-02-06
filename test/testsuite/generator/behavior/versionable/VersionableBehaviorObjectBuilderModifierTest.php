@@ -70,37 +70,60 @@ class VersionableBehaviorObjectBuilderModifierTest extends PHPUnit_Framework_Tes
 EOF;
 			PropelQuickBuilder::buildSchema($schema);
 		}
+
 		if (!class_exists('VersionableBehaviorTest6')) {
 			$schema2 = <<<EOF
-<database name="versionable_behavior_test_2" defaultPhpNamingMethod="nochange">
-	<table name="VersionableBehaviorTest6">
-		<column name="Id" primaryKey="true" type="INTEGER" autoIncrement="true" />
-		<column name="FooBar" type="VARCHAR" size="100" />
-		<behavior name="versionable">
-			<parameter name="log_created_at" value="true" />
-			<parameter name="log_created_by" value="true" />
-			<parameter name="log_comment" value="true" />
-		</behavior>
-	</table>
+		<database name="versionable_behavior_test_2" defaultPhpNamingMethod="nochange">
+			<table name="VersionableBehaviorTest6">
+				<column name="Id" primaryKey="true" type="INTEGER" autoIncrement="true" />
+				<column name="FooBar" type="VARCHAR" size="100" />
+				<behavior name="versionable">
+					<parameter name="log_created_at" value="true" />
+					<parameter name="log_created_by" value="true" />
+					<parameter name="log_comment" value="true" />
+				</behavior>
+			</table>
 
-	<table name="VersionableBehaviorTest7">
-		<column name="Id" primaryKey="true" type="INTEGER" autoIncrement="true" />
-		<column name="FooBar" type="VARCHAR" size="100" />
+			<table name="VersionableBehaviorTest7">
+				<column name="Id" primaryKey="true" type="INTEGER" autoIncrement="true" />
+				<column name="FooBar" type="VARCHAR" size="100" />
 
-		<column name="Style" type="ENUM" valueSet="novel, essay, poetry" />
+				<column name="Style" type="ENUM" valueSet="novel, essay, poetry" />
 
-		<behavior name="versionable">
-			<parameter name="log_created_at" value="true" />
-			<parameter name="log_created_by" value="true" />
-			<parameter name="log_comment" value="true" />
+				<behavior name="versionable">
+					<parameter name="log_created_at" value="true" />
+					<parameter name="log_created_by" value="true" />
+					<parameter name="log_comment" value="true" />
 
-			<parameter name="version_created_by_column" value="VersionCreatedBy" />
-			<parameter name="version_created_at_column" value="VersionCreatedAt" />
-			<parameter name="version_comment_column" value="MyComment" />
-		</behavior>
-	</table>
+					<parameter name="version_created_by_column" value="VersionCreatedBy" />
+					<parameter name="version_created_at_column" value="VersionCreatedAt" />
+					<parameter name="version_comment_column" value="MyComment" />
+				</behavior>
+			</table>
 EOF;
 			PropelQuickBuilder::buildSchema($schema2);
+		}
+
+		if (!class_exists('VersionableBehaviorTest8')) {
+			$schema3 = <<<EOF
+		<database name="versionable_behavior_test_3">
+			<table name="VersionableBehaviorTest8">
+				<column name="alter_id" primaryKey="true" type="INTEGER" autoIncrement="true" />
+				<column name="FooBar" type="VARCHAR" size="100" />
+				<behavior name="versionable" />
+			</table>
+
+			<table name="VersionableBehaviorTest9">
+				<column name="id" primaryKey="true" type="INTEGER" autoIncrement="true" />
+				<column name="foo" type="VARCHAR" size="100" />
+				<column name="foreign_id" type="INTEGER" />
+				<foreign-key foreignTable="VersionableBehaviorTest8">
+					<reference local="foreign_id" foreign="alter_id" />
+				</foreign-key>
+				<behavior name="versionable" />
+			</table>
+EOF;
+			PropelQuickBuilder::buildSchema($schema3);
 		}
 	}
 
@@ -474,7 +497,7 @@ EOF;
 		$this->assertTrue($a->isVersioningNecessary());
 		$a->save();
 		$this->assertFalse($a->isVersioningNecessary());
-    $b2->setFoo('World !');
+		$b2->setFoo('World !');
 		$this->assertTrue($b2->isVersioningNecessary());
 		$this->assertTrue($a->isVersioningNecessary());
 		$a->save();
@@ -697,4 +720,18 @@ EOF;
 		$this->assertEquals('novel', $o->getOneVersion(1)->getStyle(), 'First version is a novel');
 		$this->assertEquals('essay', $o->getOneVersion(2)->getStyle(), 'Second version is an essay');
 	}
+
+	public function testCustomIdName()
+	{
+		$b1 = new VersionableBehaviorTest8();
+		$b2 = new VersionableBehaviorTest9();
+		$b1->save();
+		$b2->setVersionableBehaviorTest8($b1);
+		$b2->save();
+		$b2->setFoo('test2');
+		$b2->save();
+		$b1->setFoobar('test1');
+		$b1->save();
+	}
+
 }

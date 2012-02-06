@@ -244,7 +244,7 @@ public function addVersion(\$con = null)
 			$idsColumn = $this->behavior->getReferrerIdsColumn($fk);
 			$versionsColumn = $this->behavior->getReferrerVersionsColumn($fk);
 			$script .= "
-	if (\$relateds = \$this->get{$fkGetter}(\$con)->toKeyValue('{$fk->getForeignColumn()->getPhpName()}', 'Version')) {
+	if (\$relateds = \$this->get{$fkGetter}(\$con)->toKeyValue('{$fk->getTable()->getFirstPrimaryKeyColumn()->getPhpName()}', 'Version')) {
 		\$version->set{$idsColumn->getPhpName()}(array_keys(\$relateds));
 		\$version->set{$versionsColumn->getPhpName()}(array_values(\$relateds));
 	}";
@@ -354,7 +354,7 @@ public function populateFromVersion(\$version, \$con = null, &\$loadedObjects = 
 			$this->builder->declareClassFromBuilder($relatedVersionPeerBuilder);
 			$relatedVersionPeerClassname = $relatedVersionPeerBuilder->getClassname();
 			$relatedClassname = $this->builder->getNewStubObjectBuilder($foreignTable)->getClassname();
-			$fkColumn = $fk->getForeignColumn();
+			$fkColumn = $foreignVersionTable->getFirstPrimaryKeyColumn();
 			$fkVersionColumn = $foreignVersionTable->getColumn($this->behavior->getParameter('version_column'));
 			$script .= "
 	if (\$fkValues = \$version->get{$fkColumnIds->getPhpName()}()) {
