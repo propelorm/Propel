@@ -4035,6 +4035,8 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
 
 		$relatedObjectClassName = $this->getFKPhpNameAffix($crossFK, $plural = false);
 
+		$selfRelationName = $this->getFKPhpNameAffix($refFK, $plural = true);
+
 		$script .= "
 	/**
 	 * Associate a " . $crossObjectClassName . " object to this object
@@ -4048,10 +4050,13 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
 		if (\$this->" . $collName . " === null) {
 			\$this->init" . $relCol . "();
 		}
-		if (!\$this->" . $collName . "->contains(" . $crossObjectName . ")) { // only add it if the **same** object is not already associated
+
+		if (!{$crossObjectName}->get{$selfRelationName}()->contains(\$this)) {
 			\$this->doAdd{$relatedObjectClassName}($crossObjectName);
 
-			\$this->" . $collName . "[]= " . $crossObjectName . ";
+			if (!\$this->" . $collName . "->contains(" . $crossObjectName . ")) {
+				\$this->" . $collName . "[]= " . $crossObjectName . ";
+			}
 		}
 	}
 ";
