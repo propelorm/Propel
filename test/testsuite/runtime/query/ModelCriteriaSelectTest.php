@@ -365,6 +365,20 @@ class ModelCriteriaSelectTest extends BookstoreTestBase
 		$this->assertEquals(serialize($rows->getData()), serialize($expectedRows), 'find() called after select(array) can cope with a column added with withColumn()');
 	}
 
+	public function testSelectArrayPaginate()
+	{
+		BookstoreDataPopulator::depopulate($this->con);
+		BookstoreDataPopulator::populate($this->con);
+
+		$pager =  BookQuery::create()
+			->select(array('Id', 'Title', 'ISBN', 'Price'))
+			->paginate(1, 10, $this->con);
+		$this->assertInstanceOf('PropelModelPager', $pager);
+		foreach ($pager as $result) {
+			$this->assertEquals(array('Id', 'Title', 'ISBN', 'Price'), array_keys($result));
+		}
+	}
+
 	public function testGetSelectReturnsNullByDefault()
 	{
 		$c = new ModelCriteria('bookstore', 'Book');
