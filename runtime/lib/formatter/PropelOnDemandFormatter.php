@@ -58,12 +58,12 @@ class PropelOnDemandFormatter extends PropelObjectFormatter
 	{
 		$col = 0;
 		// main object
-		$class = $this->isSingleTableInheritance ? call_user_func(array($this->peer, 'getOMClass'), $row, $col, false) : $this->class;
+		$class = $this->isSingleTableInheritance ? call_user_func(array($this->peer, 'getOMClass'), $row, $col) : $this->class;
 		$obj = $this->getSingleObjectFromRow($row, $class, $col);
 		// related objects using 'with'
 		foreach ($this->getWith() as $modelWith) {
 			if ($modelWith->isSingleTableInheritance()) {
-				$class = call_user_func(array($modelWith->getModelPeerName(), 'getOMClass'), $row, $col, false);
+				$class = call_user_func(array($modelWith->getModelPeerName(), 'getOMClass'), $row, $col);
 				$refl = new ReflectionClass($class);
 				if ($refl->isAbstract()) {
 					$col += constant($class . 'Peer::NUM_COLUMNS');

@@ -112,7 +112,7 @@ class PropelArrayFormatter extends PropelFormatter
 
 			// determine class to use
 			if ($modelWith->isSingleTableInheritance()) {
-				$class = call_user_func(array($modelWith->getModelPeerName(), 'getOMClass'), $row, $col, false);
+				$class = call_user_func(array($modelWith->getModelPeerName(), 'getOMClass'), $row, $col);
 				$refl = new ReflectionClass($class);
 				if ($refl->isAbstract()) {
 					$col += constant($class . 'Peer::NUM_COLUMNS');

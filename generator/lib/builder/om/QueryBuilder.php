@@ -495,7 +495,7 @@ abstract class ".$this->getClassname()." extends " . $parentClass . "
 
 		if ($col = $table->getChildrenColumn()) {
 			$script .="
-			\$cls = {$peerClassname}::getOMClass(\$row, 0, false);
+			\$cls = {$peerClassname}::getOMClass(\$row, 0);
 			\$obj = new \$cls();";
 		} else {
 			$script .="
