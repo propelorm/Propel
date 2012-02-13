@@ -34,6 +34,9 @@ class ArchivableBehaviorObjectBuilderModifier
 	 */
 	public function objectAttributes($builder)
 	{
+		if (!$this->behavior->hasArchiveClass()) {
+			$builder->declareClassFromBuilder($builder->getNewStubQueryBuilder($this->behavior->getArchiveTable()));
+		}
 		$script = '';
 		if ($this->behavior->isArchiveOnInsert()) {
 			$script .= "protected \$archiveOnInsert = true;
