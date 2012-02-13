@@ -1594,6 +1594,97 @@ class ModelCriteriaTest extends BookstoreTestBase
 		$this->assertSame(array('poetry'), $book->getTags(), 'findOneOrCreate() returns a populated objects based on the conditions');
 	}
 
+	public function testFindOneOrCreateLeftJoinUniqueRelationExists()
+	{
+		BookstoreDataPopulator::depopulate();
+		BookstoreDataPopulator::populate();
+
+		$author = AuthorQuery::create()->findOneByLastName('Stephenson');
+
+		$book = BookQuery::create()
+			->filterByTitle('The power of the findOneOrCreate.')
+			->useAuthorQuery()
+				->filterByLastName('Stephenson')
+			->endUse()
+			->findOneOrCreate()
+		;
+
+		$this->assertInstanceOf('Book', $book, 'findOneOrCreate() returns a populated object based on a one-step inner join');
+		$this->assertTrue($book->isNew(), 'findOneOrCreate() returns a new instance of the model when the request has no result');
+
+		$expected = array(
+			'Id'          => null,
+			'Title'       => 'The power of the findOneOrCreate.',
+			'ISBN'        => null,
+			'Price'       => null,
+			'PublisherId' => null,
+			'AuthorId'    => $author->getId(),
+		);
+		$this->assertEquals($expected, $book->toArray(), 'findOneOrCreate() returns a populated objects based on the conditions');
+	}
+
+	public function testFindOneOrCreateLeftJoinMultipleConditionsUniqueRelationExists()
+	{
+		BookstoreDataPopulator::depopulate();
+		BookstoreDataPopulator::populate();
+
+		$author = AuthorQuery::create()->findOneByLastName('Stephenson');
+
+		$book = BookQuery::create()
+			->filterByTitle('The power of the findOneOrCreate.')
+			->useAuthorQuery()
+				->filterByFirstName('Neal')
+				->filterByLastName('Stephenson')
+			->endUse()
+			->findOneOrCreate()
+		;
+
+		$this->assertInstanceOf('Book', $book, 'findOneOrCreate() returns a populated object based on a one-step inner join');
+		$this->assertTrue($book->isNew(), 'findOneOrCreate() returns a new instance of the model when the request has no result');
+
+		$expected = array(
+			'Id'          => null,
+			'Title'       => 'The power of the findOneOrCreate.',
+			'ISBN'        => null,
+			'Price'       => null,
+			'PublisherId' => null,
+			'AuthorId'    => $author->getId(),
+		);
+		$this->assertEquals($expected, $book->toArray(), 'findOneOrCreate() returns a populated objects based on the conditions');
+	}
+
+	public function testFindOneOrCreateLeftJoinMultipleRelationsExist()
+	{
+		BookstoreDataPopulator::depopulate();
+		BookstoreDataPopulator::populate();
+
+		$this->setExpectedException('PropelException', 'Could not uniquely resolve relation "Author" while creating new object of class "Book"');
+
+		BookQuery::create()
+			->filterByTitle('The power of the findOneOrCreate.')
+			->useAuthorQuery()
+				->filterByAge(0)
+			->endUse()
+			->findOneOrCreate()
+		;
+	}
+
+	public function testFindOneOrCreateLeftJoinNoRelationExist()
+	{
+		BookstoreDataPopulator::depopulate();
+		BookstoreDataPopulator::populate();
+
+		$this->setExpectedException('PropelException', 'Could not uniquely resolve relation "Author" while creating new object of class "Book"');
+
+		BookQuery::create()
+			->filterByTitle('The power of the findOneOrCreate.')
+			->useAuthorQuery()
+				->filterByLastName('Foobar')
+			->endUse()
+			->findOneOrCreate()
+		;
+	}
+
 	public function testFindPkSimpleKey()
 	{
 		BookstoreDataPopulator::depopulate();
