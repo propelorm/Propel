@@ -239,6 +239,11 @@ class PropelMigrationManager
 		return $migrationTimestamps;
 	}
 
+	public function hasPendingMigrations()
+	{
+		return array() !== $this->getValidMigrationTimestamps();
+	}
+
 	public function getAlreadyExecutedMigrationTimestamps()
 	{
 		$oldestMigrationTimestamp = $this->getOldestDatabaseVersion();
