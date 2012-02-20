@@ -483,10 +483,10 @@ Currently only schema inheritance is provided.
 ### Schema Inheritance ###
 
 You can override the defined schema of a bundle from within its child bundle.
-The child's schema will *completely* override the parent's one.
 To make use of the inheritance you only need to drop a schema file in the `Resources/config` folder of the child bundle.
 
-**IMPORTANT**: If there is *at least one* schema file in the child bundle, *none* of the parent's schema files will be used.
+Each file can be overridden without interfering with other schema files.
+If you want to remove parts of a schema, you only need to add an empty schema file.
 
 ## ACL implementation ##
 
