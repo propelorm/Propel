@@ -924,6 +924,20 @@ class CriteriaTest extends BookstoreTestBase
 		$expected = 'SELECT book.TITLE, book.ISBN AS isb_n FROM book HAVING isb_n=\'1234567890123\'';
 		$this->assertEquals($expected, $this->con->getLastExecutedQuery());
 	}
+	
+	public function testMultipleHaving()
+	{
+		$c = new Criteria();
+		$c->addSelectColumn(BookPeer::TITLE);
+		$c->addAsColumn('isb_n', BookPeer::ISBN);
+		$crit = $c->getNewCriterion('isb_n', '1234567890123');
+		$crit->addAnd($c->getNewCriterion(BookPeer::TITLE, 'Foobar'));
+		$c->addHaving($crit);
+		$expected = 'SELECT book.TITLE, book.ISBN AS isb_n FROM book HAVING (isb_n=:p1 AND book.TITLE=:p2)';
+		$params = array();
+		$result = BasePeer::createSelectSql($c, $params);
+		$this->assertEquals($expected, $result);
+	}
 
 	public function testHavingRaw()
 	{
