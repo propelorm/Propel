@@ -834,7 +834,13 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
 
 		$php = array();
 		foreach ($pks as $pk) {
-			$php[] = '$obj->get' . $pk->getPhpName() . '()';
+			$param = '';
+			if ($pk->getType() == PropelTypes::TIMESTAMP) {
+				$param = "'c'";
+			} else if ($pk->getType() == PropelTypes::DATE) {
+				$param = "'Y-m-d'";
+			}
+			$php[] = '$obj->get' . $pk->getPhpName() . '(' . $param . ')';
 		}
 		$script .= "
 				\$key = ".$this->getInstancePoolKeySnippet($php).";";
@@ -875,7 +881,13 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
 
 			$php = array();
 			foreach ($pks as $pk) {
-				$php[] = '$value->get' . $pk->getPhpName() . '()';
+				$param = '';
+				if ($pk->getType() == PropelTypes::TIMESTAMP) {
+					$param = "'c'";
+				} else if ($pk->getType() == PropelTypes::DATE) {
+					$param = "'Y-m-d'";
+				}
+				$php[] = '$value->get' . $pk->getPhpName() . '(' . $param . ')';
 			}
 			$script .= "
 				\$key = ".$this->getInstancePoolKeySnippet($php).";";

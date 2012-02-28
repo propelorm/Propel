@@ -1297,4 +1297,34 @@ EOF;
 		$this->assertEquals(1, AuthorQuery::create()->count());
 		$this->assertEquals(2, BookQuery::create()->count());
 	}
+
+    public function testSetPropelCollectionWithDateInPrimaryKey()
+    {
+        // Ensure no data
+        BookQuery::create()->deleteAll();
+        AuthorQuery::create()->deleteAll();
+
+        $book = new Book();
+        $book->setTitle('foo');
+        $book->save();
+
+        $inventory = array(
+            array('stock' => 10, 'date' => '2010-01-01'),
+            array('stock' => 10, 'date' => '2010-01-02'),
+            array('stock' => 10, 'date' => '2010-01-03'),
+        );
+
+        $collection = new PropelCollection();
+        foreach ($inventory as $s) {
+            $data = new BookStock();
+            $data->setQuantity($s['stock']);
+            $data->setAvailableFrom($s['date']);
+            $collection->prepend($data);
+        }
+
+        $book->setBookStocks($collection);
+        $book->save();
+
+        $this->assertEquals(3, $book->countBookStocks());
+    }
 }
