@@ -26,7 +26,7 @@ Parameters
   Default is `false`
 
 
->**Tip**<br/>It's strongly recommanded to use **absolute paths** for previous options.
+>**Tip**<br/>It's strongly recommanded to use absolute paths for previous options.
 
 
 Services
