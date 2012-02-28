@@ -71,11 +71,13 @@ You can look at the [Propel CI server](http://ci.propelorm.org/) powered by [Jen
         <th><a href="https://github.com/propelorm/Propel2">Propel2 (unstable)</a></th>
         <th><a href="https://github.com/propelorm/sfPropelORMPlugin">sfPropelORMPlugin</a></th>
         <th><a href="https://github.com/propelorm/PropelBundle">PropelBundle</a></th>
+        <th><a href="https://github.com/propelorm/PropelServiceProvider">PropelServiceProvider</a></th>
     </tr>
     <tr>
         <td><img src="http://ci.propelorm.org/job/Propel/lastBuild/buildStatus" /></td>
         <td><img src="http://ci.propelorm.org/job/Propel2/lastBuild/buildStatus" /></td>
         <td><img src="http://ci.propelorm.org/job/sfPropelORMPlugin/lastBuild/buildStatus" /></td>
         <td><img src="http://ci.propelorm.org/job/PropelBundle/lastBuild/buildStatus" /></td>
+        <td><img src="http://ci.propelorm.org/job/PropelServiceProvider/lastBuild/buildStatus" /></td>
     </tr>
 </table>
