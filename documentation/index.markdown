@@ -89,6 +89,6 @@ You can also look at [user contributed behaviors](../cookbook/user-contributed-b
 
 ### Working with Silex ###
 
-* [Working with Silex](../cook/silex/working-with-silex.html)
+* [Working with Silex](../cookbook/silex/working-with-silex.html)
 
 >**Tip**<br />This is the up-to-date documentation for the last Propel version. To access the old documentation, please visit [trac.propelorm.org](http://trac.propelorm.org).
