@@ -87,4 +87,8 @@ You can also look at [user contributed behaviors](../cookbook/user-contributed-b
 * [The Symfony2 Security Component And Propel](../cookbook/symfony2/the-symfony2-security-component-and-propel.html)
 * [Adding A New Behavior In Symfony2](../cookbook/symfony2/adding-a-new-behavior-in-symfony2.html)
 
+### Working with Silex ###
+
+* [Working with Silex](../cook/silex/working-with-silex.html)
+
 >**Tip**<br />This is the up-to-date documentation for the last Propel version. To access the old documentation, please visit [trac.propelorm.org](http://trac.propelorm.org).
