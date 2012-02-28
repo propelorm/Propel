@@ -5,7 +5,7 @@ title: Working With Silex
 
 # Working With Silex #
 
-The *PropelServiceProvider* provides integration with [Propel](http://www.propelorm.org).
+The [PropelServiceProvider](https://github.com/propelorm/PropelServiceProvider) provides integration with [Propel](http://www.propelorm.org).
 
 Parameters
 ----------
