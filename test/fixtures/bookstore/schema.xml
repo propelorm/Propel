@@ -365,4 +365,14 @@
 		<column name="name" type="VARCHAR" />
 	</table>
 
+	<!-- Test use of DATE types as part of the primary key -->
+	<table name="book_stock">
+    <column name="book_id" type="INTEGER" required="true" primaryKey="true" />
+    <column name="available_from" type="TIMESTAMP" required="true" primaryKey="true" />
+    <column name="quantity" type="INTEGER" required="true" />
+		<foreign-key foreignTable="book" onDelete="cascade">
+			<reference local="book_id" foreign="id" />
+		</foreign-key>
+	</table>
+
 </database>
