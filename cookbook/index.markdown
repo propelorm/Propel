@@ -59,3 +59,8 @@ title: The Cookbook
 * [The Symfony2 Security Component And Propel](symfony2/the-symfony2-security-component-and-propel.html)
 
 * [Adding A New Behavior In Symfony2](symfony2/adding-a-new-behavior-in-symfony2.html)
+
+
+### Working with Silex ###
+
+* [Working with Silex](silex/working-with-silex.html)
