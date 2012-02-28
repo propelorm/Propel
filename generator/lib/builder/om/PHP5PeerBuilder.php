@@ -834,7 +834,13 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
 
 		$php = array();
 		foreach ($pks as $pk) {
-			$php[] = '$obj->get' . $pk->getPhpName() . '()';
+			$param = '';
+			if ($pk->getType() == 'TIMESTAMP') {
+				$param = "'c'";
+			} else if ($pk->getType() == 'DATE') {
+				$param = "'Y-m-d'";
+			}
+			$php[] = '$obj->get' . $pk->getPhpName() . '('.$param.')';
 		}
 		$script .= "
 				\$key = ".$this->getInstancePoolKeySnippet($php).";";
