@@ -1235,7 +1235,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
 			} /* foreach */
 			$script .= "
 				default:
-					\$omClass = self::CLASS_DEFAULT;
+					\$omClass = ".$this->getPeerClassname()."::OM_CLASS;
 ";
 			$script .= "
 			} // switch
