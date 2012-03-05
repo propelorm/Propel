@@ -200,9 +200,6 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
 	/** the related Propel class for this table */
 	const OM_CLASS = '$tablePhpName';
 
-	/** A class that can be returned by this peer. */
-	const CLASS_DEFAULT = '".$this->getStubObjectBuilder()->getClasspath()."';
-
 	/** the related TableMap class for this table */
 	const TM_CLASS = '".$this->getTableMapClass()."';
 
@@ -1112,7 +1109,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
 		if (!$table->getChildrenColumn()) {
 			$script .= "
 		// set the class once to avoid overhead in the loop
-		\$cls = ".$this->getPeerClassname()."::getOMClass(false);";
+		\$cls = ".$this->getPeerClassname()."::getOMClass();";
 		}
 
 		$script .= "
@@ -1189,7 +1186,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
 			\$cls = ".$this->getPeerClassname()."::OM_CLASS;";
 		} else {
 			$script .= "
-			\$cls = ".$this->getPeerClassname()."::getOMClass(\$row, \$startcol, false);";
+			\$cls = ".$this->getPeerClassname()."::getOMClass(\$row, \$startcol);";
 		}
 		$script .= "
 			\$obj = new \$cls();
@@ -1215,11 +1212,10 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
 	 *
 	 * @param      array \$row PropelPDO result row.
 	 * @param      int \$colnum Column to examine for OM class information (first is 0).
-	 * @param      boolean \$withPrefix Whether or not to return the path with the class name
 	 * @throws     PropelException Any exceptions caught during processing will be
 	 *		 rethrown wrapped into a PropelException.
 	 */
-	public static function getOMClass(\$row, \$colnum, \$withPrefix = true)
+	public static function getOMClass(\$row, \$colnum)
 	{
 		try {
 ";
@@ -1239,13 +1235,10 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
 			} /* foreach */
 			$script .= "
 				default:
-					\$omClass = self::CLASS_DEFAULT;
+					\$omClass = ".$this->getPeerClassname()."::OM_CLASS;
 ";
 			$script .= "
 			} // switch
-			if (!\$withPrefix) {
-				\$omClass = substr('.'.\$omClass, strrpos('.'.\$omClass, '.') + 1);
-			}
 ";
 		} else { /* if not enumerated */
 			$script .= "
@@ -1272,17 +1265,12 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
 	/**
 	 * The class that the Peer will make instances of.
 	 *
-	 * If \$withPrefix is true, the returned path
-	 * uses a dot-path notation which is tranalted into a path
-	 * relative to a location on the PHP include_path.
-	 * (e.g. path.to.MyClass -> 'path/to/MyClass.php')
 	 *
-	 * @param      boolean \$withPrefix Whether or not to return the path with the class name
-	 * @return     string path.to.ClassName
+	 * @return     string ClassName
 	 */
-	public static function getOMClass(\$withPrefix = true)
+	public static function getOMClass()
 	{
-		return \$withPrefix ? ".$this->getPeerClassname()."::CLASS_DEFAULT : ".$this->getPeerClassname()."::OM_CLASS;
+		return ".$this->getPeerClassname()."::OM_CLASS;
 	}
 ";
 	}
@@ -1300,7 +1288,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
 	 * This method must be overridden by the stub subclass, because
 	 * ".$this->getObjectClassname()." is declared abstract in the schema.
 	 */
-	abstract public static function getOMClass(\$withPrefix = true);
+	abstract public static function getOMClass();
 ";
 	}
 
@@ -2180,7 +2168,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
 ";
 						} else {
 							$script .= "
-				\$cls = ".$this->getPeerClassname()."::getOMClass(false);
+				\$cls = ".$this->getPeerClassname()."::getOMClass();
 ";
 						}
 						$script .= "
@@ -2201,7 +2189,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
 ";
 						} else {
 							$script .= "
-					\$cls = ".$joinedTablePeerBuilder->getPeerClassname()."::getOMClass(false);
+					\$cls = ".$joinedTablePeerBuilder->getPeerClassname()."::getOMClass();
 ";
 						}
 
@@ -2412,7 +2400,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
 ";
 		} else {
 			$script .= "
-				\$cls = ".$this->getPeerClassname()."::getOMClass(false);
+				\$cls = ".$this->getPeerClassname()."::getOMClass();
 ";
 		}
 
@@ -2459,7 +2447,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
 ";
 				} else {
 					$script .= "
-					\$cls = ".$joinedTablePeerBuilder->getPeerClassname()."::getOMClass(false);
+					\$cls = ".$joinedTablePeerBuilder->getPeerClassname()."::getOMClass();
 ";
 				} /* $joinTable->getChildrenColumn() */
 
@@ -2682,7 +2670,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
 ";
 			} else {
 				$script .= "
-				\$cls = ".$this->getPeerClassname()."::getOMClass(false);
+				\$cls = ".$this->getPeerClassname()."::getOMClass();
 ";
 			}
 
@@ -2730,7 +2718,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
 ";
 		  		} else {
 		  			$script .= "
-						\$cls = ".$joinedTablePeerBuilder->getPeerClassname()."::getOMClass(false);
+						\$cls = ".$joinedTablePeerBuilder->getPeerClassname()."::getOMClass();
 ";
 		  		} /* $joinTable->getChildrenColumn() */
 		  		$script .= "
