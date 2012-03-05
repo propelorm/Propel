@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Reset Propel tests fixtures
 # 2011 - William Durand <william.durand1@gmail.com>
 
@@ -43,7 +43,8 @@ done
 REVERSE_DIRS=`ls $FIXTURES_DIR/reverse`
 
 for dir in $REVERSE_DIRS ; do
-    echo "[ $dir ]"
-
-    $ROOT/generator/bin/propel-gen $FIXTURES_DIR/reverse/$dir insert-sql
+    if [ -f "$FIXTURES_DIR/reverse/$dir/build.properties" ] ; then
+        echo "[ $dir ]"
+        $ROOT/generator/bin/propel-gen $FIXTURES_DIR/reverse/$dir insert-sql
+    fi
 done
