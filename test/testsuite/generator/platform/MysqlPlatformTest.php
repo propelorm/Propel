@@ -363,6 +363,7 @@ CREATE TABLE `foo`
 		<vendor type="mysql">
 			<parameter name="Engine" value="InnoDB"/>
 			<parameter name="Charset" value="utf8"/>
+			<parameter name="AutoIncrement" value="1000"/>
 		</vendor>
 	</table>
 </database>
@@ -373,7 +374,7 @@ CREATE TABLE `foo`
 (
 	`id` INTEGER NOT NULL AUTO_INCREMENT,
 	PRIMARY KEY (`id`)
-) ENGINE=InnoDB CHARACTER SET='utf8';
+) ENGINE=InnoDB AUTO_INCREMENT=1000 CHARACTER SET='utf8';
 ";
 		$this->assertEquals($expected, $this->getPlatform()->getAddTableDDL($table));
 	}
