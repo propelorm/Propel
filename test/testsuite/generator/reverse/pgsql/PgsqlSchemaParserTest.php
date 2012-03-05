@@ -30,6 +30,8 @@ class PgsqlSchemaParserTest extends PHPUnit_Framework_TestCase
 {
 	protected function setUp()
 	{
+		$this->markTestSkipped('PGSQL unit test');
+
 		parent::setUp();
 
 		$xmlDom = new DOMDocument();
