@@ -108,6 +108,7 @@ The `<table>` element is the most complicated of the usable elements. Its defini
   [namespace = "/PhpObjectNamespace/"]
   [skipSql = "true|false"]
   [abstract = "true|false"]
+  [isCrossRef = "true|false"]
   [phpNamingMethod = "nochange|{underscore}|phpname|clean"]
   [baseClass = "/baseClassName/"]
   [basePeer = "/baseClassPeerName/"]
@@ -144,6 +145,7 @@ According to the schema, `name` is the only required attribute.  Also, the `idMe
 * `namespace` specifies the namespace that the generated model classes will use (PHP 5.3 only). If the table namespace starts with a `\\`, it overrides the namespace defined in the `<database>` tag; otherwise, the actual table namespace is the concatenation of the database namespace and the table namespace.
 * `skipSql` instructs Propel not to generate DDL SQL for the specified table. This can be used together with `readOnly` for supporting VIEWS in Propel.
 * `abstract` Whether the generated _stub_ class will be abstract (e.g. if you're using inheritance)
+* `isCrossRef` Whether this is a cross-reference table (or "junction" table) for a [many-to-many relationship](../documentation/04-relationships.html#manytomany_relationships)
 * `phpNamingMethod` the naming method to use. Defaults to `underscore`, which transforms the table name into a CamelCase phpName.
 * `baseClass` allows you to specify a class that the generated Propel objects should extend (in place of `propel.om.BaseObject`).
 * `basePeer` instructs Propel to use a different SQL-generating `BasePeer` class (or sub-class of `BasePeer`).
