@@ -349,6 +349,31 @@ Dumped files will be written in the fixtures directory: `app/propel/fixtures/` w
 is a timestamp.
 Once done, you will be able to load this files by using the `propel:fixtures:load` command.
 
+#### Self Referencing Fixtures
+
+In order to make use of several behaviors, such as the `VersionableBehavior` you can self-reference fixtures.
+
+A valid _YAML fixtures file_ is:
+
+{% highlight yaml %}
+\Blog\Post:
+     Post1_V1:
+         title: My title
+         content: tba
+     Post1_V2:
+         id: Post1_V1
+         title: My title
+         content: This is my first post.
+\Blog\Comment:
+    Comment_1:
+        post_id: Post1_V1
+        content: Awesome post!
+{% endhighlight %}
+
+This fixtures will first insert a `Post` object with the data of `Post1_V1`.
+Afterwards the `Post1_V2` will be read and the reference to the previous post `Post1_V1` on the `PrimaryKey` column (`id`) will result in an `UPDATE` operation.
+
+Assuming you had the `VersionableBehavior` active, this would insert *1* `Post` with *2* `PostVersion` entries.
 
 ### Graphviz
 
