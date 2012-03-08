@@ -378,7 +378,8 @@ EOF;
 		$this->assertEquals(0, ArchivableTest10ArchiveQuery::create()->count());
 	}
 
-  public function testArchiveSetArchivedAtToTheCurrentTime() {
+  public function testArchiveSetArchivedAtToTheCurrentTime()
+  {
     $a = new ArchivableTest10();
     $a->setTitle('foo');
     $a->save();
