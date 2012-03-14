@@ -99,7 +99,9 @@ echo $book->getTitle(); // 'War And Peace'
 BookQuery::disableSoftDelete();
 BookQuery::create()->delete();
 // Alternatively, use forceDelete()
-BookQuery::create()->forceDelete();
+BookQuery::create()->filterByTitle('%Lo%')->forceDelete();
+// To remove all use
+BookQuery::create()->forceDeleteAll();
 {% endhighlight %}
 
 ## Parameters ##
