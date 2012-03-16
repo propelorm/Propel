@@ -261,12 +261,12 @@ EXCEPTION
 	*/
 	public function doExplainPlan(PropelPDO $con, $query) {
 		if ($query instanceof ModelCriteria) {
-		    $params = array();
-		    $dbMap = Propel::getDatabaseMap($query->getDbName());
-		    $sql = BasePeer::createSelectSql($query, $params);
-		    $sql = 'EXPLAIN ' . $sql;
+			$params = array();
+			$dbMap = Propel::getDatabaseMap($query->getDbName());
+			$sql = BasePeer::createSelectSql($query, $params);
+			$sql = 'EXPLAIN ' . $sql;
 		} else {
-		    $sql = 'EXPLAIN ' . $query;
+			$sql = 'EXPLAIN ' . $query;
 		}
 
 		$stmt = $con->prepare($sql);
