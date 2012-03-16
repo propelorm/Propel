@@ -39,10 +39,10 @@ class ExplainPlanTest extends BookstoreTestBase
 		$this->assertEquals($explain[0]['possible_keys'], 'book_FI_2', 'Line 1, possible_keys is equal to "book_FI_2"');
 		$this->assertEquals($explain[0]['key'], null, 'Line 1, key is equal to "NULL"');
 
-		$this->assertEquals($explain[1]['select_type'], 'SIMPLE', 'Line 1, select_type is equal to "SIMPLE"');
-		$this->assertEquals($explain[1]['table'], 'author', 'Line 1, table is equal to "author"');
-		$this->assertEquals($explain[1]['type'], 'eq_ref', 'Line 1, type is equal to "eq_ref"');
-		$this->assertEquals($explain[1]['possible_keys'], 'PRIMARY', 'Line 1, possible_keys is equal to "PRIMARY"');
-		$this->assertEquals($explain[1]['key'], 'PRIMARY', 'Line 1, key is equal to "PRIMARY"');
+		$this->assertEquals($explain[1]['select_type'], 'SIMPLE', 'Line 2, select_type is equal to "SIMPLE"');
+		$this->assertEquals($explain[1]['table'], 'author', 'Line 2, table is equal to "author"');
+		$this->assertEquals($explain[1]['type'], 'eq_ref', 'Line 2, type is equal to "eq_ref"');
+		$this->assertEquals($explain[1]['possible_keys'], 'PRIMARY', 'Line 2, possible_keys is equal to "PRIMARY"');
+		$this->assertEquals($explain[1]['key'], 'PRIMARY', 'Line 2, key is equal to "PRIMARY"');
 	}
 }
