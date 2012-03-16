@@ -250,4 +250,23 @@ EXCEPTION
 
 		return $params;
 	}
+
+	/**
+	* Do Explain Plan for criteria
+	*
+	* @param PropelPDO $con propel connection
+	* @param ModelCriteria $query query
+	* @throws PropelException
+	* @return PDOStatement A PDO statement executed using the connection, ready to be fetched
+	*/
+	public function doExplainPlan(PropelPDO $con, ModelCriteria $query) {
+		$dbMap = Propel::getDatabaseMap($query->getDbName());
+		$params = array();
+		$sql = BasePeer::createSelectSql($query, $params);
+		$sql = 'EXPLAIN ' . $sql;
+		$stmt = $con->prepare($sql);
+		$this->bindValues($stmt, $params, $dbMap);
+		$stmt->execute();
+		return $stmt;
+	}
 }
