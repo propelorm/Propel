@@ -384,24 +384,6 @@ You can generate **Graphviz** file for your project by using the following comma
 It will write files in `app/propel/graph/`.
 
 
-### Database
-
-You can create a **database**:
-
-    php app/console propel:database:create [--connection[=""]]
-
-As usual, `--connection` allows to specify a connection.
-
-
-You can drop a **database**:
-
-    php app/console propel:database:drop [--connection[=""]] [--force]
-
-As usual, `--connection` allows to specify a connection.
-
-Note that the `--force` option is needed to actually execute the SQL statements.
-
-
 ### Database ###
 
 You can create a **database**:
