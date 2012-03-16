@@ -582,7 +582,7 @@ abstract class DBAdapter
 	}
 
 	/**
-	* Do Explain Plan for criteria
+	* Do Explain Plan for query object or query string
 	*
 	* @param PropelPDO $con propel connection
 	* @param ModelCriteria|string $query query the criteria or the query string
