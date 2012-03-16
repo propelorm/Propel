@@ -20,7 +20,7 @@ require_once dirname(__FILE__) . '/../../../tools/helpers/bookstore/BookstoreDat
  */
 class ExplainPlanTest extends BookstoreTestBase
 {
-	public function testMysqlExplain()
+	public function testExplainPlanFromObject()
 	{
 		BookstoreDataPopulator::depopulate($this->con);
 		BookstoreDataPopulator::populate($this->con);
@@ -52,4 +52,36 @@ class ExplainPlanTest extends BookstoreTestBase
 			$this->markTestSkipped('Cannot test explain plan on adapter ' . get_class($db));
 		}
 	}
+
+	public function testExplainPlanFromString()
+	{
+		BookstoreDataPopulator::depopulate($this->con);
+		BookstoreDataPopulator::populate($this->con);
+
+		$db = Propel::getDb(BookPeer::DATABASE_NAME);
+
+		$query = 'SELECT book.TITLE AS Title FROM book INNER JOIN author ON (book.AUTHOR_ID=author.ID) WHERE author.FIRST_NAME = \'Neal\'';
+		$stmt = $db->doExplainPlan($this->con, $query);
+		$explain = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+		if ($db instanceof DBMySQL) {
+			$this->assertEquals(sizeof($explain), 2, 'Explain plan return two lines');
+
+			// explain can change sometime, test can't be strict
+			$this->assertTrue(!empty($explain[0]['select_type']), 'Line 1, select_type is equal to "SIMPLE"');
+			$this->assertTrue(!empty($explain[0]['table']), 'Line 1, table is equal to "book"');
+			$this->assertTrue(!empty($explain[0]['type']), 'Line 1, type is equal to "ALL"');
+			$this->assertTrue(!empty($explain[0]['possible_keys']), 'Line 1, possible_keys is equal to "book_FI_2"');
+
+			$this->assertTrue(!empty($explain[1]['select_type']), 'Line 2, select_type is equal to "SIMPLE"');
+			$this->assertTrue(!empty($explain[1]['table']), 'Line 2, table is equal to "author"');
+			$this->assertTrue(!empty($explain[1]['type']), 'Line 2, type is equal to "eq_ref"');
+			$this->assertTrue(!empty($explain[1]['possible_keys']), 'Line 2, possible_keys is equal to "PRIMARY"');
+		} elseif($db instanceof DBOracle) {
+			$this->assertTrue(sizeof($explain) > 2, 'Explain plan return more than 2 lines');
+		} else {
+			$this->markTestSkipped('Cannot test explain plan on adapter ' . get_class($db));
+		}
+	}
+
 }
