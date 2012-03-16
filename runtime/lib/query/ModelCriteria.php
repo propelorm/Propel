@@ -2174,7 +2174,7 @@ class ModelCriteria extends Criteria
 	public function explain($con = null)
 	{
 		if ($con === null) {
-			$con = Propel::getConnection($this->getDbName(), Propel::CONNECTION_READ);
+			$con = Propel::getConnection($this->getDbName());
 		}
 		$this->basePreSelect($con);
 
