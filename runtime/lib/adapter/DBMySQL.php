@@ -259,7 +259,8 @@ EXCEPTION
 	* @throws PropelException
 	* @return PDOStatement A PDO statement executed using the connection, ready to be fetched
 	*/
-	public function doExplainPlan(PropelPDO $con, $query) {
+	public function doExplainPlan(PropelPDO $con, $query)
+	{
 		if ($query instanceof ModelCriteria) {
 			$params = array();
 			$dbMap = Propel::getDatabaseMap($query->getDbName());
@@ -272,7 +273,7 @@ EXCEPTION
 		$stmt = $con->prepare($sql);
 
 		if ($query instanceof ModelCriteria) {
-		    $this->bindValues($stmt, $params, $dbMap);
+			$this->bindValues($stmt, $params, $dbMap);
 		}
 
 		$stmt->execute();

@@ -589,7 +589,8 @@ abstract class DBAdapter
 	* @throws PropelException if explain plan is not implemented for adapter
 	* @return PDOStatement A PDO statement executed using the connection, ready to be fetched
 	*/
-	public function doExplainPlan(PropelPDO $con, $query) {
+	public function doExplainPlan(PropelPDO $con, $query)
+	{
 		throw new PropelException("Explain plan is not implemented for this adapter");
 	}
 }
