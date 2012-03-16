@@ -25,24 +25,31 @@ class ExplainPlanTest extends BookstoreTestBase
 		BookstoreDataPopulator::depopulate($this->con);
 		BookstoreDataPopulator::populate($this->con);
 
+		$db = Propel::getDb(BookPeer::DATABASE_NAME);
+
 		$c = new ModelCriteria('bookstore', 'Book');
 		$c->join('Book.Author');
 		$c->where('Author.FirstName = ?', 'Neal');
 		$c->select('Title');
 		$explain = $c->explain($this->con);
 
-		$this->assertEquals(sizeof($explain), 2, 'Explain plan return two lines');
+		if ($db instanceof DBMySQL) {
+			$this->assertEquals(sizeof($explain), 2, 'Explain plan return two lines');
 
-		$this->assertEquals($explain[0]['select_type'], 'SIMPLE', 'Line 1, select_type is equal to "SIMPLE"');
-		$this->assertEquals($explain[0]['table'], 'book', 'Line 1, table is equal to "book"');
-		$this->assertEquals($explain[0]['type'], 'ALL', 'Line 1, type is equal to "ALL"');
-		$this->assertEquals($explain[0]['possible_keys'], 'book_FI_2', 'Line 1, possible_keys is equal to "book_FI_2"');
-		$this->assertEquals($explain[0]['key'], null, 'Line 1, key is equal to "NULL"');
+			// explain can change sometime, test can't be strict
+			$this->assertTrue(!empty($explain[0]['select_type']), 'Line 1, select_type is equal to "SIMPLE"');
+			$this->assertTrue(!empty($explain[0]['table']), 'Line 1, table is equal to "book"');
+			$this->assertTrue(!empty($explain[0]['type']), 'Line 1, type is equal to "ALL"');
+			$this->assertTrue(!empty($explain[0]['possible_keys']), 'Line 1, possible_keys is equal to "book_FI_2"');
 
-		$this->assertEquals($explain[1]['select_type'], 'SIMPLE', 'Line 2, select_type is equal to "SIMPLE"');
-		$this->assertEquals($explain[1]['table'], 'author', 'Line 2, table is equal to "author"');
-		$this->assertEquals($explain[1]['type'], 'eq_ref', 'Line 2, type is equal to "eq_ref"');
-		$this->assertEquals($explain[1]['possible_keys'], 'PRIMARY', 'Line 2, possible_keys is equal to "PRIMARY"');
-		$this->assertEquals($explain[1]['key'], 'PRIMARY', 'Line 2, key is equal to "PRIMARY"');
+			$this->assertTrue(!empty($explain[1]['select_type']), 'Line 2, select_type is equal to "SIMPLE"');
+			$this->assertTrue(!empty($explain[1]['table']), 'Line 2, table is equal to "author"');
+			$this->assertTrue(!empty($explain[1]['type']), 'Line 2, type is equal to "eq_ref"');
+			$this->assertTrue(!empty($explain[1]['possible_keys']), 'Line 2, possible_keys is equal to "PRIMARY"');
+		} elseif($db instanceof DBOracle) {
+			$this->assertTrue(sizeof($explain) > 2, 'Explain plan return more than 2 lines');
+		} else {
+			$this->markTestSkipped('Cannot test explain plan on adapter ' . get_class($db));
+		}
 	}
 }
