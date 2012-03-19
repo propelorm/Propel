@@ -277,6 +277,7 @@ EXCEPTION
 		}
 
 		$stmt->execute();
+
 		return $stmt;
 	}
 }
