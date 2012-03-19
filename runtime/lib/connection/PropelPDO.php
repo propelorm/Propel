@@ -339,8 +339,8 @@ class PropelPDO extends PDO
 				$this->cachePreparedStatements = $value;
 				break;
 			case self::PROPEL_ATTR_CONNECTION_NAME:
-			    $this->connectionName = $value;
-			    break;
+				$this->connectionName = $value;
+				break;
 			default:
 				parent::setAttribute($attribute, $value);
 		}
@@ -360,9 +360,9 @@ class PropelPDO extends PDO
 			case self::PROPEL_ATTR_CACHE_PREPARES:
 				return $this->cachePreparedStatements;
 				break;
-		    case self::PROPEL_ATTR_CONNECTION_NAME:
-			    return $this->connectionName;
-			    break;
+			case self::PROPEL_ATTR_CONNECTION_NAME:
+				return $this->connectionName;
+				break;
 			default:
 				return parent::getAttribute($attribute);
 		}
@@ -743,8 +743,8 @@ class PropelPDO extends PDO
 					break;
 
 				case 'connection':
-				    $value = $this->connectionName;
-				    break;
+					$value = $this->connectionName;
+					break;
 
 				default:
 					$value = 'n/a';

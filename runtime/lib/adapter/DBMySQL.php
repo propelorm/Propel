@@ -252,13 +252,13 @@ EXCEPTION
 	}
 
 	/**
-	* Do Explain Plan for query object or query string
-	*
-	* @param PropelPDO $con propel connection
-	* @param ModelCriteria|string $query query the criteria or the query string
-	* @throws PropelException
-	* @return PDOStatement A PDO statement executed using the connection, ready to be fetched
-	*/
+	 * Do Explain Plan for query object or query string
+	 *
+	 * @param PropelPDO $con propel connection
+	 * @param ModelCriteria|string $query query the criteria or the query string
+	 * @throws PropelException
+	 * @return PDOStatement A PDO statement executed using the connection, ready to be fetched
+	 */
 	public function doExplainPlan(PropelPDO $con, $query)
 	{
 		if ($query instanceof ModelCriteria) {
