@@ -37,15 +37,15 @@ class ExplainPlanTest extends BookstoreTestBase
 			$this->assertEquals(sizeof($explain), 2, 'Explain plan return two lines');
 
 			// explain can change sometime, test can't be strict
-			$this->assertTrue(!empty($explain[0]['select_type']), 'Line 1, select_type is equal to "SIMPLE"');
-			$this->assertTrue(!empty($explain[0]['table']), 'Line 1, table is equal to "book"');
-			$this->assertTrue(!empty($explain[0]['type']), 'Line 1, type is equal to "ALL"');
-			$this->assertTrue(!empty($explain[0]['possible_keys']), 'Line 1, possible_keys is equal to "book_FI_2"');
+			$this->assertArrayHasKey('select_type',$explain[0], 'Line 1, select_type key exist');
+			$this->assertArrayHasKey('table',$explain[0], 'Line 1, table key exist');
+			$this->assertArrayHasKey('type',$explain[0], 'Line 1, type key exist');
+			$this->assertArrayHasKey('possible_keys',$explain[0], 'Line 1, possible_keys key exist');
 
-			$this->assertTrue(!empty($explain[1]['select_type']), 'Line 2, select_type is equal to "SIMPLE"');
-			$this->assertTrue(!empty($explain[1]['table']), 'Line 2, table is equal to "author"');
-			$this->assertTrue(!empty($explain[1]['type']), 'Line 2, type is equal to "eq_ref"');
-			$this->assertTrue(!empty($explain[1]['possible_keys']), 'Line 2, possible_keys is equal to "PRIMARY"');
+			$this->assertArrayHasKey('select_type',$explain[1], 'Line 2, select_type key exist');
+			$this->assertArrayHasKey('table',$explain[1], 'Line 2, table key exist');
+			$this->assertArrayHasKey('type',$explain[1], 'Line 2, type key exist');
+			$this->assertArrayHasKey('possible_keys',$explain[1], 'Line 2, possible_keys key exist');
 		} elseif($db instanceof DBOracle) {
 			$this->assertTrue(sizeof($explain) > 2, 'Explain plan return more than 2 lines');
 		} else {
@@ -68,20 +68,19 @@ class ExplainPlanTest extends BookstoreTestBase
 			$this->assertEquals(sizeof($explain), 2, 'Explain plan return two lines');
 
 			// explain can change sometime, test can't be strict
-			$this->assertTrue(!empty($explain[0]['select_type']), 'Line 1, select_type is equal to "SIMPLE"');
-			$this->assertTrue(!empty($explain[0]['table']), 'Line 1, table is equal to "book"');
-			$this->assertTrue(!empty($explain[0]['type']), 'Line 1, type is equal to "ALL"');
-			$this->assertTrue(!empty($explain[0]['possible_keys']), 'Line 1, possible_keys is equal to "book_FI_2"');
+			$this->assertArrayHasKey('select_type',$explain[0], 'Line 1, select_type key exist');
+			$this->assertArrayHasKey('table',$explain[0], 'Line 1, table key exist');
+			$this->assertArrayHasKey('type',$explain[0], 'Line 1, type key exist');
+			$this->assertArrayHasKey('possible_keys',$explain[0], 'Line 1, possible_keys key exist');
 
-			$this->assertTrue(!empty($explain[1]['select_type']), 'Line 2, select_type is equal to "SIMPLE"');
-			$this->assertTrue(!empty($explain[1]['table']), 'Line 2, table is equal to "author"');
-			$this->assertTrue(!empty($explain[1]['type']), 'Line 2, type is equal to "eq_ref"');
-			$this->assertTrue(!empty($explain[1]['possible_keys']), 'Line 2, possible_keys is equal to "PRIMARY"');
+			$this->assertArrayHasKey('select_type',$explain[1], 'Line 2, select_type key exist');
+			$this->assertArrayHasKey('table',$explain[1], 'Line 2, table key exist');
+			$this->assertArrayHasKey('type',$explain[1], 'Line 2, type key exist');
+			$this->assertArrayHasKey('possible_keys',$explain[1], 'Line 2, possible_keys key exist');
 		} elseif($db instanceof DBOracle) {
 			$this->assertTrue(sizeof($explain) > 2, 'Explain plan return more than 2 lines');
 		} else {
 			$this->markTestSkipped('Cannot test explain plan on adapter ' . get_class($db));
 		}
 	}
-
 }
