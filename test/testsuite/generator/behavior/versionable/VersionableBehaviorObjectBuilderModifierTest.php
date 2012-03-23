@@ -110,6 +110,11 @@ EOF;
 			<table name="VersionableBehaviorTest8">
 				<column name="alter_id" primaryKey="true" type="INTEGER" autoIncrement="true" />
 				<column name="FooBar" type="VARCHAR" size="100" />
+				<column name="class_key" type="INTEGER" required="true" default="1" inheritance="single">
+					<inheritance key="1" class="VersionableBehaviorTest8" />
+					<inheritance key="2" class="VersionableBehaviorTest8Foo" extends="VersionableBehaviorTest8" />
+					<inheritance key="3" class="VersionableBehaviorTest8Bar" extends="VersionableBehaviorTest8Foo" />
+				</column>
 				<behavior name="versionable" />
 			</table>
 
@@ -747,4 +752,15 @@ EOF;
 		$b1->save();
 	}
 
+  public function testWithInheritance()
+  {
+		$b1 = new VersionableBehaviorTest8Foo();
+		$b1->save();
+
+		$b1->setFoobar('name');
+		$b1->save();
+
+		$object = $b1->getOneVersion($b1->getVersion());
+		$this->assertTrue($object instanceof Versionablebehaviortest8Version);
+  }
 }
