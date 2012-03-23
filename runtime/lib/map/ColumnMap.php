@@ -336,6 +336,8 @@ class ColumnMap
 
   /**
    * Get the RelationMap object for this foreign key
+   *
+   * @return RelationMap
    */
   public function getRelation()
   {
@@ -481,7 +483,7 @@ class ColumnMap
     if (false !== ($pos = strrpos($name, '.'))) {
       $name = substr($name, $pos + 1);
     }
-    $name = strtoupper($name);
+    $name = ($name);
     return $name;
   }
 

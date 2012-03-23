@@ -155,6 +155,8 @@ class PropelSQLTask extends AbstractPropelDataModelTask
 				$absPath = $outFile->getAbsolutePath();
 				if ($this->getGeneratorConfig()->getBuildProperty('disableIdentifierQuoting')) {
 					$platform->setIdentifierQuoting(false);
+				}else{
+					$platform->setIdentifierQuoting(true);
 				}
 				$this->log('Using ' . get_class($platform), Project::MSG_VERBOSE);
 				$ddl = $platform->getAddTablesDDL($database);

@@ -90,7 +90,7 @@ class QueryBuilder extends OMBuilder
 		// magic orderBy() methods, for IDE completion
 		foreach ($this->getTable()->getColumns() as $column) {
 			$script .= "
- * @method     $queryClass orderBy" . $column->getPhpName() . "(\$order = Criteria::ASC) Order by the " . $column->getName() . " column";
+ * @method     $queryClass orderBy" . $column->getPhpName() . "() orderBy" . $column->getPhpName() . "(\$order = Criteria::ASC) Order by the " . $column->getName() . " column";
 		}
 		$script .= "
  *";
@@ -98,15 +98,15 @@ class QueryBuilder extends OMBuilder
 		// magic groupBy() methods, for IDE completion
 		foreach ($this->getTable()->getColumns() as $column) {
 			$script .= "
- * @method     $queryClass groupBy" . $column->getPhpName() . "() Group by the " . $column->getName() . " column";
+ * @method     $queryClass groupBy" . $column->getPhpName() . "() groupBy" . $column->getPhpName() . "() Group by the " . $column->getName() . " column";
 		}
 
 		// override the signature of ModelCriteria::left-, right- and innerJoin to specify the class of the returned object, for IDE completion
 		$script .= "
  *
- * @method     $queryClass leftJoin(\$relation) Adds a LEFT JOIN clause to the query
- * @method     $queryClass rightJoin(\$relation) Adds a RIGHT JOIN clause to the query
- * @method     $queryClass innerJoin(\$relation) Adds a INNER JOIN clause to the query
+ * @method     $queryClass leftJoin() leftJoin(\$relation) Adds a LEFT JOIN clause to the query
+ * @method     $queryClass rightJoin() rightJoin(\$relation) Adds a RIGHT JOIN clause to the query
+ * @method     $queryClass innerJoin() innerJoin(\$relation) Adds a INNER JOIN clause to the query
  *";
 
 		// magic XXXjoinYYY() methods, for IDE completion
@@ -114,37 +114,37 @@ class QueryBuilder extends OMBuilder
 			$relationName = $this->getFKPhpNameAffix($fk);
 
 			$script .= "
- * @method     $queryClass leftJoin" . $relationName . "(\$relationAlias = null) Adds a LEFT JOIN clause to the query using the " . $relationName . " relation
- * @method     $queryClass rightJoin" . $relationName . "(\$relationAlias = null) Adds a RIGHT JOIN clause to the query using the " . $relationName . " relation
- * @method     $queryClass innerJoin" . $relationName . "(\$relationAlias = null) Adds a INNER JOIN clause to the query using the " . $relationName . " relation
+ * @method     $queryClass leftJoin" . $relationName . "() leftJoin" . $relationName . "(\$relationAlias = null) Adds a LEFT JOIN clause to the query using the " . $relationName . " relation
+ * @method     $queryClass rightJoin" . $relationName . "() rightJoin" . $relationName . "(\$relationAlias = null) Adds a RIGHT JOIN clause to the query using the " . $relationName . " relation
+ * @method     $queryClass innerJoin" . $relationName . "() innerJoin" . $relationName . "(\$relationAlias = null) Adds a INNER JOIN clause to the query using the " . $relationName . " relation
  *";
 		}
 		foreach ($this->getTable()->getReferrers() as $refFK) {
 			$relationName = $this->getRefFKPhpNameAffix($refFK);
 
 			$script .= "
- * @method     $queryClass leftJoin" . $relationName . "(\$relationAlias = null) Adds a LEFT JOIN clause to the query using the " . $relationName . " relation
- * @method     $queryClass rightJoin" . $relationName . "(\$relationAlias = null) Adds a RIGHT JOIN clause to the query using the " . $relationName . " relation
- * @method     $queryClass innerJoin" . $relationName . "(\$relationAlias = null) Adds a INNER JOIN clause to the query using the " . $relationName . " relation
+ * @method     $queryClass leftJoin" . $relationName . "() leftJoin" . $relationName . "(\$relationAlias = null) Adds a LEFT JOIN clause to the query using the " . $relationName . " relation
+ * @method     $queryClass rightJoin" . $relationName . "() rightJoin" . $relationName . "(\$relationAlias = null) Adds a RIGHT JOIN clause to the query using the " . $relationName . " relation
+ * @method     $queryClass innerJoin" . $relationName . "() innerJoin" . $relationName . "(\$relationAlias = null) Adds a INNER JOIN clause to the query using the " . $relationName . " relation
  *";
 		}
 
 		// override the signature of ModelCriteria::findOne() to specify the class of the returned object, for IDE completion
 		$script .= "
- * @method     $modelClass findOne(PropelPDO \$con = null) Return the first $modelClass matching the query
- * @method     $modelClass findOneOrCreate(PropelPDO \$con = null) Return the first $modelClass matching the query, or a new $modelClass object populated from the query conditions when no match is found
+ * @method     $modelClass findOne() findOne(PropelPDO \$con = null) Return the first $modelClass matching the query
+ * @method     $modelClass findOneOrCreate() findOneOrCreate(PropelPDO \$con = null) Return the first $modelClass matching the query, or a new $modelClass object populated from the query conditions when no match is found
  *";
 
 		// magic findBy() methods, for IDE completion
 		foreach ($this->getTable()->getColumns() as $column) {
 			$script .= "
- * @method     $modelClass findOneBy" . $column->getPhpName() . "(" . $column->getPhpType() . " \$" . $column->getName() . ") Return the first $modelClass filtered by the " . $column->getName() . " column";
+ * @method     $modelClass findOneBy" . $column->getPhpName() . "() findOneBy" . $column->getPhpName() . "(" . $column->getPhpType() . " \$" . $column->getName() . ") Return the first $modelClass filtered by the " . $column->getName() . " column";
 		}
 		$script .= "
  *";
 		foreach ($this->getTable()->getColumns() as $column) {
 			$script .= "
- * @method     array findBy" . $column->getPhpName() . "(" . $column->getPhpType() . " \$" . $column->getName() . ") Return $modelClass objects filtered by the " . $column->getName() . " column";
+ * @method     PropelCollection findBy" . $column->getPhpName() . "() findBy" . $column->getPhpName() . "(" . $column->getPhpType() . " \$" . $column->getName() . ") Return $modelClass objects filtered by the " . $column->getName() . " column";
 		}
 
 		$script .= "
@@ -438,12 +438,12 @@ abstract class ".$this->getClassname()." extends " . $parentClass . "
 		$selectColumns = array();
 		foreach ($table->getColumns() as $column) {
 			if (!$column->isLazyLoad()) {
-				$selectColumns []= $platform->quoteIdentifier(strtoupper($column->getName()));
+				$selectColumns []= $platform->quoteIdentifier($column->getName());
 			}
 		}
 		$conditions = array();
 		foreach ($table->getPrimaryKey() as $index => $column) {
-			$conditions []= sprintf('%s = :p%d', $platform->quoteIdentifier(strtoupper($column->getName())), $index);
+			$conditions []= sprintf('%s = :p%d', $platform->quoteIdentifier($column->getName()), $index);
 		}
 		$query = sprintf(
 			'SELECT %s FROM %s WHERE %s',

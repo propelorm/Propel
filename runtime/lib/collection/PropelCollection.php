@@ -12,15 +12,15 @@
  * Class for iterating over a list of Propel elements
  * The collection keys must be integers - no associative array accepted
  *
- * @method     PropelCollection fromXML(string $data) Populate the collection from an XML string
- * @method     PropelCollection fromYAML(string $data) Populate the collection from a YAML string
- * @method     PropelCollection fromJSON(string $data) Populate the collection from a JSON string
- * @method     PropelCollection fromCSV(string $data) Populate the collection from a CSV string
+ * @method     PropelCollection fromXML() fromXML(string $data) Populate the collection from an XML string
+ * @method     PropelCollection fromYAML() fromYAML(string $data) Populate the collection from a YAML string
+ * @method     PropelCollection fromJSON() fromJSON(string $data) Populate the collection from a JSON string
+ * @method     PropelCollection fromCSV() fromCSV(string $data) Populate the collection from a CSV string
  *
- * @method     string toXML(boolean $usePrefix, boolean $includeLazyLoadColumns) Export the collection to an XML string
- * @method     string toYAML(boolean $usePrefix, boolean $includeLazyLoadColumns) Export the collection to a YAML string
- * @method     string toJSON(boolean $usePrefix, boolean $includeLazyLoadColumns) Export the collection to a JSON string
- * @method     string toCSV(boolean $usePrefix, boolean $includeLazyLoadColumns) Export the collection to a CSV string
+ * @method     string toXML() toXML(boolean $usePrefix, boolean $includeLazyLoadColumns) Export the collection to an XML string
+ * @method     string toYAML( toYAML(boolean $usePrefix, boolean $includeLazyLoadColumns) Export the collection to a YAML string
+ * @method     string toJSON() toJSON(boolean $usePrefix, boolean $includeLazyLoadColumns) Export the collection to a JSON string
+ * @method     string toCSV() toCSV(boolean $usePrefix, boolean $includeLazyLoadColumns) Export the collection to a CSV string
  *
  * @author     Francois Zaninotto
  * @package    propel.runtime.collection
