@@ -2163,4 +2163,34 @@ class ModelCriteria extends Criteria
 			$this->formatter = clone $this->formatter;
 		}
 	}
+
+	/**
+	 * Make explain plan of the query
+	 *
+	 * @param PropelPDO $con propel connection
+	 * @throws PropelException on error
+	 * @return array array of the explain plan
+	 */
+	public function explain($con = null)
+	{
+		if ($con === null) {
+			$con = Propel::getConnection($this->getDbName());
+		}
+		$this->basePreSelect($con);
+
+		// check that the columns of the main class are already added (if this is the primary ModelCriteria)
+		if (!$this->hasSelectClause() && !$this->getPrimaryCriteria()) {
+			$this->addSelfSelectColumns();
+		}
+		$this->configureSelectColumns();
+
+		$db = Propel::getDB($this->getDbName());
+		try {
+			$stmt = $db->doExplainPlan($con, $this);
+			return $stmt->fetchAll(PDO::FETCH_ASSOC);
+		} catch (Exception $e) {
+			Propel::log($e->getMessage(), Propel::LOG_ERR);
+			throw new PropelException('Unable to execute query explain plan', $e);
+		}
+	}
 }

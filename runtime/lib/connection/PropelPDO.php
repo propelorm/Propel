@@ -35,6 +35,11 @@ class PropelPDO extends PDO
 	 */
 	const PROPEL_ATTR_CACHE_PREPARES = -1;
 
+	/**
+	 * Attribute to use to set the connection name usefull for explains
+	 */
+	const PROPEL_ATTR_CONNECTION_NAME = -2;
+
 	const DEFAULT_SLOW_THRESHOLD        = 0.1;
 	const DEFAULT_ONLYSLOW_ENABLED      = false;
 
@@ -105,6 +110,13 @@ class PropelPDO extends PDO
 	 * @var       PropelConfiguration
 	 */
 	protected $configuration;
+
+	/**
+	 * The connection name
+	 *
+	 * @var string
+	 */
+	protected $connectionName;
 
 	/**
 	 * The default value for runtime config item "debugpdo.logging.methods".
@@ -326,6 +338,9 @@ class PropelPDO extends PDO
 			case self::PROPEL_ATTR_CACHE_PREPARES:
 				$this->cachePreparedStatements = $value;
 				break;
+			case self::PROPEL_ATTR_CONNECTION_NAME:
+				$this->connectionName = $value;
+				break;
 			default:
 				parent::setAttribute($attribute, $value);
 		}
@@ -344,6 +359,9 @@ class PropelPDO extends PDO
 		switch($attribute) {
 			case self::PROPEL_ATTR_CACHE_PREPARES:
 				return $this->cachePreparedStatements;
+				break;
+			case self::PROPEL_ATTR_CONNECTION_NAME:
+				return $this->connectionName;
 				break;
 			default:
 				return parent::getAttribute($attribute);
@@ -722,6 +740,10 @@ class PropelPDO extends PDO
 
 				case 'method':
 					$value = str_pad($methodName, $this->getLoggingConfig('details.method.pad', 28), ' ', STR_PAD_RIGHT);
+					break;
+
+				case 'connection':
+					$value = $this->connectionName;
 					break;
 
 				default:

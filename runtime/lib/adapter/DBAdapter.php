@@ -580,4 +580,17 @@ abstract class DBAdapter
 
 		return $stmt->bindValue($parameter, $value, $cMap->getPdoType());
 	}
+
+	/**
+	 * Do Explain Plan for query object or query string
+	 *
+	 * @param PropelPDO $con propel connection
+	 * @param ModelCriteria|string $query query the criteria or the query string
+	 * @throws PropelException if explain plan is not implemented for adapter
+	 * @return PDOStatement A PDO statement executed using the connection, ready to be fetched
+	 */
+	public function doExplainPlan(PropelPDO $con, $query)
+	{
+		throw new PropelException("Explain plan is not implemented for this adapter");
+	}
 }
