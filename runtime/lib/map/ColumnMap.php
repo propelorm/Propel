@@ -336,8 +336,6 @@ class ColumnMap
 
   /**
    * Get the RelationMap object for this foreign key
-   *
-   * @return RelationMap
    */
   public function getRelation()
   {

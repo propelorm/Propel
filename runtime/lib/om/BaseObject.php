@@ -12,14 +12,14 @@
  * This class contains attributes and methods that are used by all
  * business objects within the system.
  *
- * @method     BaseObject fromXML() fromXML(string $data) Populate the object from an XML string
- * @method     BaseObject fromYAML() fromYAML(string $data) Populate the object from a YAML string
- * @method     BaseObject fromJSON() fromJSON(string $data) Populate the object from a JSON string
- * @method     BaseObject fromCSV() fromCSV(string $data) Populate the object from a CSV string
- * @method     string toXML() toXML(boolean $includeLazyLoadColumns) Export the object to an XML string
- * @method     string toYAML() toYAML(boolean $includeLazyLoadColumns) Export the object to a YAML string
- * @method     string toJSON() toJSON(boolean $includeLazyLoadColumns) Export the object to a JSON string
- * @method     string toCSV() toCSV(boolean $includeLazyLoadColumns) Export the object to a CSV string
+ * @method     BaseObject fromXML(string $data) Populate the object from an XML string
+ * @method     BaseObject fromYAML(string $data) Populate the object from a YAML string
+ * @method     BaseObject fromJSON(string $data) Populate the object from a JSON string
+ * @method     BaseObject fromCSV(string $data) Populate the object from a CSV string
+ * @method     string toXML(boolean $includeLazyLoadColumns) Export the object to an XML string
+ * @method     string toYAML(boolean $includeLazyLoadColumns) Export the object to a YAML string
+ * @method     string toJSON(boolean $includeLazyLoadColumns) Export the object to a JSON string
+ * @method     string toCSV(boolean $includeLazyLoadColumns) Export the object to a CSV string
  *
  * @author     Hans Lellelid <hans@xmpl.org> (Propel)
  * @author     Frank Y. Kim <frank.kim@clearink.com> (Torque)

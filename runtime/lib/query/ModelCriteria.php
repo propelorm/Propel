@@ -17,9 +17,9 @@
  *
  * magic methods:
  *
- * @method     ModelCriteria leftJoin() leftJoin($relation) Adds a LEFT JOIN clause to the query
- * @method     ModelCriteria rightJoin() rightJoin($relation) Adds a RIGHT JOIN clause to the query
- * @method     ModelCriteria innerJoin() innerJoin($relation) Adds a INNER JOIN clause to the query
+ * @method     ModelCriteria leftJoin($relation) Adds a LEFT JOIN clause to the query
+ * @method     ModelCriteria rightJoin($relation) Adds a RIGHT JOIN clause to the query
+ * @method     ModelCriteria innerJoin($relation) Adds a INNER JOIN clause to the query
  *
  * @author     François Zaninotto
  * @version    $Revision$
