@@ -253,7 +253,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
 		foreach ($this->getTable()->getColumns() as $col) {
 			$script .= "
 	/** the column name for the " . $col->getName() ." field */
-	const ".$this->getColumnName($col) ." = '" . $this->getTable()->getName() . ".".($col->getName())."';
+	const ".$this->getColumnName($col) ." = '" . $this->getTable()->getName() . ".".$col->getName()."';
 ";
 		} // foreach
 	}
