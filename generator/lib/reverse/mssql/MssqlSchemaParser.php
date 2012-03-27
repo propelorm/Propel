@@ -236,14 +236,16 @@ class MssqlSchemaParser extends BaseSchemaParser
 	}
 
   /**
-   * according to the identifier definition, we have to clean simple quote ('), double quotes (") or brackets ([])
-   * around the identifier name returns by mssql
+   * according to the identifier definition, we have to clean simple quote (') around the identifier name
+   * returns by mssql
    * @see http://msdn.microsoft.com/library/ms175874.aspx
-   * @param $str string
+   *
+   * @param string $identifier
    * @return string
    */
-  public function cleanDelimitedIdentifiers( $str ) {
-    return preg_replace( '/^\'(.*)\'$/U', '$1', $str );
+  protected function cleanDelimitedIdentifiers($identifier)
+  {
+    return preg_replace('/^\'(.*)\'$/U', '$1', $identifier);
   }
 
 }

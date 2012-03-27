@@ -22,40 +22,48 @@ class MssqlSchemaParserTest extends PHPUnit_Framework_TestCase
 {
   public function testCleanDelimitedIdentifiers()
   {
-    $parser = new MssqlSchemaParser(null);
+    $parser = new TestableMssqlSchemaParser(null);
 
     $expected = 'this is a tablename';
 
-    $tested = $parser->cleanDelimitedIdentifiers( '\''.$expected.'\'' );
+    $tested = $parser->cleanDelimitedIdentifiers('\''.$expected.'\'');
     $this->assertEquals($expected, $tested);
 
-    $tested = $parser->cleanDelimitedIdentifiers( '\''.$expected );
+    $tested = $parser->cleanDelimitedIdentifiers('\''.$expected);
     $this->assertEquals('\''.$expected, $tested);
 
-    $tested = $parser->cleanDelimitedIdentifiers( $expected.'\'' );
+    $tested = $parser->cleanDelimitedIdentifiers($expected.'\'');
     $this->assertEquals($expected.'\'', $tested);
 
     $expected = 'this is a tabl\'ename';
 
-    $tested = $parser->cleanDelimitedIdentifiers( '\''.$expected.'\'' );
+    $tested = $parser->cleanDelimitedIdentifiers('\''.$expected.'\'');
     $this->assertEquals($expected, $tested);
 
-    $tested = $parser->cleanDelimitedIdentifiers( '\''.$expected );
+    $tested = $parser->cleanDelimitedIdentifiers('\''.$expected);
     $this->assertEquals('\''.$expected, $tested);
 
-    $tested = $parser->cleanDelimitedIdentifiers( $expected.'\'' );
+    $tested = $parser->cleanDelimitedIdentifiers($expected.'\'');
     $this->assertEquals($expected.'\'', $tested);
 
     $expected = 'this is a\'tabl\'ename';
 
-    $tested = $parser->cleanDelimitedIdentifiers( '\''.$expected.'\'' );
+    $tested = $parser->cleanDelimitedIdentifiers('\''.$expected.'\'');
     $this->assertEquals($expected, $tested);
 
-    $tested = $parser->cleanDelimitedIdentifiers( '\''.$expected );
+    $tested = $parser->cleanDelimitedIdentifiers('\''.$expected);
     $this->assertEquals('\''.$expected, $tested);
 
-    $tested = $parser->cleanDelimitedIdentifiers( $expected.'\'' );
+    $tested = $parser->cleanDelimitedIdentifiers($expected.'\'');
     $this->assertEquals($expected.'\'', $tested);
 
+  }
+}
+
+class TestableMssqlSchemaParser extends MssqlSchemaParser
+{
+  public function cleanDelimitedIdentifiers($identifier)
+  {
+    return parent::cleanDelimitedIdentifiers($identifier);
   }
 }
