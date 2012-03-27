@@ -483,7 +483,6 @@ class ColumnMap
     if (false !== ($pos = strrpos($name, '.'))) {
       $name = substr($name, $pos + 1);
     }
-    $name = ($name);
     return $name;
   }
 
