@@ -236,4 +236,64 @@ class DBOracle extends DBAdapter
 
 		return $stmt->bindValue($parameter, $value, $cMap->getPdoType());
 	}
+
+	/**
+	 * Do Explain Plan for query object or query string
+	 *
+	 * @param PropelPDO $con propel connection
+	 * @param ModelCriteria|string $query query the criteria or the query string
+	 * @throws PropelException
+	 * @return PDOStatement A PDO statement executed using the connection, ready to be fetched
+	 */
+	public function doExplainPlan(PropelPDO $con, $query)
+	{
+		$con->beginTransaction();
+		if ($query instanceof ModelCriteria) {
+			$params = array();
+			$dbMap = Propel::getDatabaseMap($query->getDbName());
+			$sql = BasePeer::createSelectSql($query, $params);
+		} else {
+			$sql = $query;
+		}
+		// unique id for the query string
+		$uniqueId = uniqid('Propel', true);
+
+		$stmt = $con->prepare($this->getExplainPlanQuery($sql, $uniqueId));
+
+		if ($query instanceof ModelCriteria) {
+			$this->bindValues($stmt, $params, $dbMap);
+		}
+
+		$stmt->execute();
+		// explain plan is save in a table, data must be commit
+		$con->commit();
+
+		$stmt = $con->prepare($this->getExplainPlanReadQuery($uniqueId));
+		$stmt->execute();
+		return $stmt;
+	}
+
+	/**
+	 * Explain Plan compute query getter
+	 *
+	 * @param string $query query to explain
+	 * @param string $uniqueId query unique id
+	 */
+	public function getExplainPlanQuery($query, $uniqueId)
+	{
+		return sprintf('EXPLAIN PLAN SET STATEMENT_ID = \'%s\' FOR %s', $uniqueId, $query);
+	}
+
+	/**
+	 * Explain Plan read query
+	 *
+	 * @param string $uniqueId
+	 * @return string query unique id
+	 */
+	public function getExplainPlanReadQuery($uniqueId)
+	{
+		return sprintf('SELECT LEVEL, OPERATION, OPTIONS, COST, CARDINALITY, BYTES
+FROM PLAN_TABLE CONNECT BY PRIOR ID = PARENT_ID AND PRIOR STATEMENT_ID = STATEMENT_ID
+START WITH ID = 0 AND STATEMENT_ID = \'%s\' ORDER BY ID', $uniqueId);
+	}
 }
