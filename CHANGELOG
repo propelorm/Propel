@@ -1,5 +1,88 @@
 # Changelog Of The Propel 1.6 Branch #
 
+## 2012-03-27: Version 1.6.5 ##
+
+cd69910 Preparing the 1.6.5 release
+7b799e3 Fixed composer autoloading based on @grEvenX work
+46c3f86 Merge pull request #317 from fzaninotto/fix_model_pager
+14b9ac1 Merge pull request #319 from K-Phoen/feature-versionable-utility-methods
+45e5c3e Merge pull request #315 from ddalmais/feat-explain-plan
+4e72771 Merge pull request #324 from K-Phoen/fix-versioning-inheritance
+9f80f8b Fix: versioning tables with inheritance
+7769218 Add: some usefull methods to Versionable objects
+45f2924 Fix PropelModelPager::getLastPage() return type.
+4cb3e5e Fix CS
+4c8d9ac Use assertArrayHasKey instead of assertTrue
+2e74a91 Fix indentation and useless blank line
+aeeb66d Fix text formatting
+929080d Add unit test on explain plan compute from text query
+0469a2c Format DBMysql code
+460b90f Make ExplainPlanTest independent from Adapter
+377baf9 Add unit test on getExplainPlanQuery
+2420c3e Add DBOracle doExplainPlan function
+d54388a Remove forced database read connection Oracle must write explain plan in PLAN_TABLE
+e4c3de1 Fix phpdoc function title
+f62cba4 Enable to get the connection name in log
+a8c55fd Enable doExplainPlan to take a binded query
+00bcc96 Fix text in ExplainPlanTest
+2f6a4fa Add explain plan unit test on mysql bookstore
+9f16429 Add explain function use adapter specific doExplainPlan function
+f0c8673 Add specific Mysql doExplainPlan function
+03dda95 Add doExplainPlan on DBAdapter Return PropelException Used to return Exception in adapter without override of doExplainPlan function
+b7669e3 Merge pull request #314 from K-Phoen/fix-is-versionning-necessary-fk
+eb303e5 Fix: some isVersionningNecessary() calls can cause fatal errors
+356947a Merge pull request #310 from akalyaev/master
+38738e6 fixed code style (Refs #309)
+3231a76 Fixed propel-gen. Closes #180
+8168f9d Added phpunit.xml.dist file
+769dbf9 fixed ArchivableBehavior archived_at (Refs #309)
+45f418b Marked PGSQL test skipped
+43e4ae7 Fixed reset_tests.sh script
+865511a [gh-152] Revert change that was made to postgres schema parsing that causes regressions and has no tests. Add tests for my case. I do not understand the case that the person who introduced the bug was trying to solve.
+5ebefc3 Fix #282 versionable behavior FK in generated object classes Fix #282 by replacing foreign key references with PrimaryKey
+14a1702 Merge pull request #298 from Langwhich/master
+841448e Fix MySQL quote issue for table options. Closes #301
+2923a3b Merge pull request #291 from fzaninotto/remove_class_default
+ea41817 Remove remaining BasePeer::CLASS_DEFAULT constant.
+9d0251f Merge pull request #297 from vworldat/patch-1
+82894e7 Merge pull request #299 from havvg/master
+292fc7a add test for multiple HAVING conditions
+41f605a Fixes SQL diff command when there is a custom migration table name defined
+f0ac2e9 `<parameter />` tags inside behaviors are optional. The current schema fails when including a behavior like `<behavior name="auto_add_pk" />`.
+0eacc54 Merge pull request #295 from fzaninotto/versionable_namespace
+1f46f36 Add missing namespace declarations in versionable behavior.
+3d5dc3c Merge pull request #287 from fzaninotto/findoneorcreate_exception
+f033016 Merge pull request #288 from fzaninotto/select_paginate
+f2d1cce Merge pull request #289 from fzaninotto/archivable_namespace
+e9051d4 Merge pull request #290 from fzaninotto/diff_with_migrations
+e0c16e2 Remove BasePeer::CLASS_DEFAULT constant.
+0b34a67 Update diff task to fail when uncommitted migrations are found.
+34bd8d6 Add missing namespace declaration in archivable behavior.
+f216a1a Add unit tests for paginate() used together with select()
+891e332 Update the exception thrown by findOneOrCreate() when used with a join.
+209e34d Merge pull request #279 from grandbora/fixSelectWithPeerConstant
+2f9c987 fixed and tested
+5850dce correct way of checking if a formatter was set
+7afba56 code standard
+b4727af fixing issue #248 allowing the use of custom PropelFormatter with select
+49416d3 Fixed CS/trailing whitespaces
+a8145ce Extended the clear method of the generated Active Record objects so that when dealing with object/array columns, the _unserialized fields will be cleared as well.
+3ddd790 Fixed test showing a warning of undefined key offsets because numerically indexed arrays after cast to objects cannot be accessed by numeric property.
+33acfaa Added failing tests for object and array type columns, caused by object reuse via the PropelOnDemandFormatter.
+af6994e Merge pull request #276 from havvg/patch-1
+84df995 add test for class targets build
+a9d972e make class targets selectable
+e95a5d4 Merge pull request #268 from cedriclombardot/fix-count-with-select-from-select
+ae7bdfc Merge pull request #270 from cedriclombardot/fix-issue-206
+e3f5081 Fix cs
+46dffc8 Fix cs for testSubQueryCount()
+8cc0cb3 Merge pull request #269 from jaugustin/patch-1
+f23575d Fix findPkSimple() uses wrong key for InstancePool (QueryBuilder) #206
+0383d9c Provide unit test for doCount with subqueries
+bdb2e32 this fix an issue with the propelorm/propelbundle#62
+7025b10 Mark as complex queries look like SELECT * FROM (SELECT * FROM book) as b to fix bug in doCount()
+8184e26 Bumped version to 1.6.5-dev
+
 ## 2012-01-16: Version 1.6.4 ##
 
 [f8fdf43] Preparing the 1.6.4 release
