@@ -72,7 +72,7 @@ The simplest way to retrieve a row from the database, is to use the generated `f
 <?php
 $q = new AuthorQuery();
 $firstAuthor = $q->findPK(1);
-// now $firstBook is an Author object, or NULL if no match was found.
+// now $firstAuthor is an Author object, or NULL if no match was found.
 {% endhighlight %}
 
 This issues a simple SELECT SQL query. For instance, for MySQL:
