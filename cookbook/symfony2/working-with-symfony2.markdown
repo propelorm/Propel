@@ -71,7 +71,38 @@ Add the following lines to your deps file (located in the root of the Symfony pr
 Update your vendor directory with
 
     php bin/vendors install
-    
+
+### via Composer
+
+Edit your composer.json
+
+Add 
+
+{% highlight js %}
+{
+    "name": "symfony/framework-standard-edition",
+    "autoload": {
+        "psr-0": { "": "src/" }
+    },
+    "require": {
+        // ....
+        "propel/propel-bundle": "0.3",
+        "propel/propel1": "1.6.5",
+        "pear-phing/phing": "2.4.9"
+    },
+	"repositories": {
+        "phing": {
+            "type": "pear",
+            "url": "http://pear.phing.info"
+        }
+    }
+    // ...
+}
+{% endhighlight %}
+
+Run `php composer.phar update`
+
+
 ## Register your Bundle
 
 Register this bundle in the `AppKernel` class:
