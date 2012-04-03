@@ -74,9 +74,7 @@ Update your vendor directory with
 
 ### via Composer
 
-Edit your composer.json
-
-Add 
+Add the following lines to your `composer.json` file:
 
 {% highlight js %}
 {
@@ -100,7 +98,7 @@ Add
 }
 {% endhighlight %}
 
-Run `php composer.phar update`
+Then, run `php composer.phar update`. You can get composer at [http://getcomposer.org/](http://getcomposer.org/).
 
 
 ## Register your Bundle
