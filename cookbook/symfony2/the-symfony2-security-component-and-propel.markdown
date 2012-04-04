@@ -61,7 +61,7 @@ The _proxy class_ is designed as following:
 <?php
 // src/Acme/SecuredBundle/Proxy/User.php
 
-namespace Acme\SecuredBundle\Proxy\User;
+namespace Acme\SecuredBundle\Proxy;
 
 use Symfony\Component\Security\Core\User\UserInterface;
 
