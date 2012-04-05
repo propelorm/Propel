@@ -78,27 +78,24 @@ Add the following lines to your `composer.json` file:
 
 {% highlight js %}
 {
-    "name": "symfony/framework-standard-edition",
-    "autoload": {
-        "psr-0": { "": "src/" }
-    },
-    "require": {
-        // ....
-        "propel/propel-bundle": "0.3",
-        "propel/propel1": "1.6.5",
-        "pear-phing/phing": "2.4.9"
-    },
-	"repositories": {
-        "phing": {
-            "type": "pear",
-            "url": "http://pear.phing.info"
-        }
-    }
+  "name": "symfony/framework-standard-edition",
+  // ...
+  "require": {
     // ...
+    "propel/propel-bundle": "dev-master",
+  },
+	"repositories": {
+    "phing": {
+      "type": "pear",
+      "url": "http://pear.phing.info"
+    }
+  }
+  // ...
 }
 {% endhighlight %}
 
 Then, run `php composer.phar update`. You can get composer at [http://getcomposer.org/](http://getcomposer.org/).
+If you wonder why you need to add the _Phing_ repository, read [this documentation](http://getcomposer.org/doc/faqs/why-can%27t-composer-load-repositories-recursively.md).
 
 
 ## Register your Bundle
