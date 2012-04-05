@@ -84,7 +84,7 @@ Add the following lines to your `composer.json` file:
     // ...
     "propel/propel-bundle": "dev-master",
   },
-	"repositories": {
+  "repositories": {
     "phing": {
       "type": "pear",
       "url": "http://pear.phing.info"
