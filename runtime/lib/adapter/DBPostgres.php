@@ -199,4 +199,43 @@ class DBPostgres extends DBAdapter
 		// e.g. 'database.table alias' should be escaped as '"database"."table" "alias"'
 		return '"' . strtr($table, array('.' => '"."', ' ' => '" "')) . '"';
 	}
+
+  /**
+   * Do Explain Plan for query object or query string
+   *
+   * @param PropelPDO $con propel connection
+   * @param ModelCriteria|string $query query the criteria or the query string
+   * @throws PropelException
+   * @return PDOStatement A PDO statement executed using the connection, ready to be fetched
+   */
+  public function doExplainPlan(PropelPDO $con, $query)
+  {
+    if ($query instanceof ModelCriteria) {
+      $params = array();
+      $dbMap = Propel::getDatabaseMap($query->getDbName());
+      $sql = BasePeer::createSelectSql($query, $params);
+    } else {
+      $sql = $query;
+    }
+
+    $stmt = $con->prepare($this->getExplainPlanQuery($sql));
+
+    if ($query instanceof ModelCriteria) {
+      $this->bindValues($stmt, $params, $dbMap);
+    }
+
+    $stmt->execute();
+
+    return $stmt;
+  }
+
+  /**
+   * Explain Plan compute query getter
+   *
+   * @param string $query query to explain
+   */
+  public function getExplainPlanQuery($query)
+  {
+    return 'EXPLAIN ' . $query;
+  }
 }
