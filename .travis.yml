@@ -9,7 +9,7 @@ env:
 
 before_script:
   # MySQL
-  - sh -c "if [ '$DB' = 'mysql' ]; then mysql -e 'create database test; create schema bookstore_schemas; create schema contest; create schema second_hand_books;'; fi"
+  - sh -c "if [ '$DB' = 'mysql' ]; then mysql -e 'create database test; create schema bookstore_schemas; create schema contest; create schema second_hand_books; create database reverse_bookstore;'; fi"
 
   # Composer
   - wget http://getcomposer.org/composer.phar
