@@ -84,12 +84,12 @@ Add the following lines to your `composer.json` file:
     // ...
     "propel/propel-bundle": "dev-master",
   },
-  "repositories": {
-    "phing": {
-      "type": "pear",
-      "url": "http://pear.phing.info"
+    "repositories": {
+      "phing": {
+        "type": "pear",
+        "url": "http://pear.phing.info"
+      }
     }
-  }
   // ...
 }
 {% endhighlight %}
@@ -326,7 +326,7 @@ You can define which connection to use:
 
 You can load your own fixtures by using the following command:
 
-    php app/console propel:fixtures:load [-d|--dir[="..."]] [--xml] [--sql] [--yml] [--connection[="..."]]
+    php app/console propel:fixtures:load [-d|--dir[="..."]] [--xml] [--sql] [--yml] [--connection[="..."]] [bundle]
 
 As usual, `--connection` allows to specify a connection.
 
@@ -366,6 +366,11 @@ A valid _YAML fixtures file_ is:
          ObjectId: o1
          Description: Hello world !
 {% endhighlight %}
+
+You can load all fixtures files from a given _bundle_:
+
+    > php app/console propel:fixtures:load @MySuperBundle
+
 
 You can dump data into YAML fixtures file by using this command:
 
