@@ -58,7 +58,7 @@ if [ -z "$PROPEL_GEN_HOME" ] ; then
 
 fi
 
-if [ -d "vendor/pear-phing/phing" ] ; then
+if [ -d "vendor/phing/phing" ] ; then
     export PHING_COMMAND="$PROPEL_GEN_HOME/bin/phing.php"
 fi
 
