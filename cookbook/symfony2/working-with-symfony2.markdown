@@ -74,28 +74,24 @@ Update your vendor directory with
 
 ### via Composer
 
-Add the following lines to your `composer.json` file:
+Add the following line to your `composer.json` file:
 
 {% highlight js %}
 {
-  "name": "symfony/framework-standard-edition",
-  // ...
-  "require": {
+    "name": "symfony/framework-standard-edition",
     // ...
-    "propel/propel-bundle": "dev-master",
-  },
-    "repositories": {
-      "phing": {
-        "type": "pear",
-        "url": "http://pear.phing.info"
-      }
+    "require": {
+        // ...
+        "propel/propel-bundle": "dev-master",
     }
-  // ...
+    // ...
 }
 {% endhighlight %}
 
-Then, run `php composer.phar update`. You can get composer at [http://getcomposer.org/](http://getcomposer.org/).
-If you wonder why you need to add the _Phing_ repository, read [this documentation](http://getcomposer.org/doc/faqs/why-can%27t-composer-load-repositories-recursively.md).
+Then, run `php composer.phar install` or `php composer.phar update`.
+You can get composer at [http://getcomposer.org/](http://getcomposer.org/).
+
+You can use a stable version of the bundle by writing `0.*` instead of `dev-master`.
 
 
 ## Register your Bundle
