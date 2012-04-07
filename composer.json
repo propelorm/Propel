@@ -14,13 +14,7 @@
   },
   "require": {
     "php": ">=5.2.4",
-    "pear-phing/phing": "2.4.9"
-  },
-  "repositories": {
-    "phing": {
-      "type": "pear",
-      "url": "http://pear.phing.info"
-    }
+    "phing/phing": "2.4.*"
   },
   "extra": {
     "branch-alias": {
