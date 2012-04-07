@@ -190,7 +190,7 @@ class ModelCriteriaTest extends BookstoreTestBase
 	public function testConditionCustomOperator()
 	{
 		$c = new ModelCriteria('bookstore', 'Book');
-    $c->withColumn('SUBSTRING(Book.Title, 1, 4)', 'title_start');
+		$c->withColumn('SUBSTRING(Book.Title, 1, 4)', 'title_start');
 		$c->condition('cond1', 'Book.Title <> ?', 'foo');
 		$c->condition('cond2', 'title_start like ?', '%bar%', PDO::PARAM_STR);
 		$c->combine(array('cond1', 'cond2'), 'or');
@@ -1513,7 +1513,7 @@ class ModelCriteriaTest extends BookstoreTestBase
 		$book = BookQuery::create('b')
 			->filterByPrice(125)
 			->useAuthorQuery()
-				->filterByFirstName('Leo')
+			->filterByFirstName('Leo')
 			->endUse()
 			->findOneOrCreate();
 	}
@@ -2100,14 +2100,14 @@ class ModelCriteriaTest extends BookstoreTestBase
 		$c = new ModelCriteria('bookstore', 'Author');
 		$testAuthor = $c->findOne();
 		$q = BookQuery::create()
-		  ->findByAuthor($testAuthor);
+			->findByAuthor($testAuthor);
 		$expectedSQL = "SELECT book.ID, book.TITLE, book.ISBN, book.PRICE, book.PUBLISHER_ID, book.AUTHOR_ID FROM `book` WHERE book.AUTHOR_ID=" . $testAuthor->getId();
 		$this->assertEquals($expectedSQL, $con->getLastExecutedQuery(), 'findByXXX($value) is turned into findBy(XXX, $value)');
 
 		$c = new ModelCriteria('bookstore', 'Author');
 		$testAuthor = $c->findOne();
 		$q = BookQuery::create()
-		  ->findByAuthorAndISBN($testAuthor, 1234);
+			->findByAuthorAndISBN($testAuthor, 1234);
 		$expectedSQL = "SELECT book.ID, book.TITLE, book.ISBN, book.PRICE, book.PUBLISHER_ID, book.AUTHOR_ID FROM `book` WHERE book.AUTHOR_ID=" . $testAuthor->getId() . " AND book.ISBN=1234";
 		$this->assertEquals($expectedSQL, $con->getLastExecutedQuery(), 'findByXXXAndYYY($value) is turned into findBy(array(XXX, YYY), $value)');
 	}
@@ -2432,6 +2432,40 @@ class ModelCriteriaTest extends BookstoreTestBase
 		$bookQuery2 = clone $bookQuery1;
 		$bookQuery2->select(array('ISBN', 'Price'));
 		$this->assertEquals(array('Id', 'Title'), $bookQuery1->getSelect());
+	}
+
+	public function testOrderByWithInsensitiveCase()
+	{
+		$sql = 'SELECT  FROM  ORDER BY book.TITLE ASC';
+		$params = array();
+
+		$c = new ModelCriteria('bookstore', 'Book');
+		$c->orderBy('Book.title');
+		$this->assertCriteriaTranslation($c, $sql, $params);
+
+		$c = new ModelCriteria('bookstore', 'Book');
+		$c->orderBy('Book.TiTle');
+		$this->assertCriteriaTranslation($c, $sql, $params);
+
+		$c = new ModelCriteria('bookstore', 'Book');
+		$c->orderBy('Book.Title');
+		$this->assertCriteriaTranslation($c, $sql, $params);
+
+		$c = new ModelCriteria('bookstore', 'Book');
+		$c->orderBy('Book.TITLE');
+		$this->assertCriteriaTranslation($c, $sql, $params);
+
+		$c = new ModelCriteria('bookstore', 'Book');
+		$c->orderBy('title');
+		$this->assertCriteriaTranslation($c, $sql, $params);
+
+		$c = new ModelCriteria('bookstore', 'Book');
+		$c->orderBy('Title');
+		$this->assertCriteriaTranslation($c, $sql, $params);
+
+		$c = new ModelCriteria('bookstore', 'Book');
+		$c->orderBy('TITLE');
+		$this->assertCriteriaTranslation($c, $sql, $params);
 	}
 }
 

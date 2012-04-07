@@ -1957,6 +1957,10 @@ class ModelCriteria extends Criteria
 		} elseif (isset($this->asColumns[$phpName])) {
 			// aliased column
 			return array(null, $phpName);
+		} elseif ($tableMap->hasColumnByInsensitiveCase($phpName)) {
+			$column = $tableMap->getColumnByInsensitiveCase($phpName);
+			$realColumnName = $column->getFullyQualifiedName();
+			return array($column, $realColumnName);
 		} elseif ($failSilently) {
 			return array(null, null);
 		} else {
