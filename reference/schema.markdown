@@ -193,6 +193,7 @@ According to the schema, `name` is the only required attribute.  Also, the `idMe
 * `valueSet` The list of enumerated values accepted on an ENUM column. The list contains 255 values at most, separated by commas.
 * `lazyLoad` A lazy-loaded column is not fetched from the database by model queries. Only the generated getter method for such a column issues a query to the database. Useful for large column types (such as CLOB and BLOB).
 * `primaryString` A column defined as primary string serves as default value for a `__toString()` method in the generated Propel object.
+* `description` For adding a description to the column. In SQL the `description` is referred as `comment`
 
 >**Tip**<br />For performance reasons, it is often a good idea to set BLOB and CLOB columns as lazyLoaded. A resultset containing one of more very large columns takes time to transit between the database and the PHP server, so you want to make sure this only happen when you actually need it.
 
