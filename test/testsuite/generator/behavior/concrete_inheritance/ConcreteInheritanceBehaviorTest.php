@@ -172,6 +172,20 @@ class ConcreteInheritanceBehaviorTest extends BookstoreTestBase
 		$this->assertTrue($content->isNew(), 'getParentOrCreate() returns a new instance of the parent class if the object is new');
 		$this->assertEquals('ConcreteArticle', $content->getDescendantClass(), 'getParentOrCreate() correctly sets the descendant_class of the parent object');
 	}
+	
+	public function testGetParentOrCreateNewWithPK()
+	{
+		ConcreteContentQuery::create()->deleteAll();
+		ConcreteArticleQuery::create()->deleteAll();
+		$article = new ConcreteArticle();
+		$article->setId(5);
+		$content = $article->getParentOrCreate();
+		$this->assertEquals(5, $article->getId(), 'getParentOrCreate() keeps manually set pk');
+		$this->assertTrue($content instanceof ConcreteContent, 'getParentOrCreate() returns an instance of the parent class');
+		$this->assertTrue($content->isNew(), 'getParentOrCreate() returns a new instance of the parent class if the object is new');
+		$this->assertEquals(5,$content->getId(), 'getParentOrCreate() returns a instance of the parent class with pk set');
+		$this->assertEquals('ConcreteArticle', $content->getDescendantClass(), 'getParentOrCreate() correctly sets the descendant_class of the parent object');
+	}
 
 	public function testGetParentOrCreateExisting()
 	{
@@ -225,6 +239,19 @@ class ConcreteInheritanceBehaviorTest extends BookstoreTestBase
 		$id = $article->getId();
     $article->delete();
     $this->assertNull(ConcreteContentQuery::create()->findPk($id), 'delete() removes the parent record as well');
+	}
+	
+	public function testSetPKOnNewObject()
+	{
+		ConcreteContentQuery::create()->deleteAll();
+		ConcreteArticleQuery::create()->deleteAll();
+		$article = new ConcreteArticle();
+		$article->setId(2);
+		$article->save();
+		$this->assertEquals(2, $article->getId(), 'getParentOrCreate() keeps manually set pk after save');
+		$this->assertEquals(1, ConcreteContentQuery::create()->count(), 'getParentOrCreate() creates a parent entry');
+		$articledb = ConcreteArticleQuery::create()->findOneById(2);
+		$this->assertEquals(2, $articledb->getId(), 'getParentOrCreate() keeps manually set pk after save and reload from db');
 	}
 
 }

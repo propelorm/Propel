@@ -6,7 +6,7 @@
 		<column name="name" type="VARCHAR" size="100" primaryString="true" />
 	</table>
 
-	<table name="concrete_content">
+	<table name="concrete_content" allowPkInsert="true">
 		<column name="id" required="true" primaryKey="true" autoIncrement="true" type="INTEGER" />
 		<column name="title" type="VARCHAR" size="100" primaryString="true" />
 		<column name="category_id" required="false" type="INTEGER" />

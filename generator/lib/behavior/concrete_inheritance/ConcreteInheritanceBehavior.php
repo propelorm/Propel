@@ -205,7 +205,13 @@ public function getParentOrCreate(\$con = null)
 		\$parent->set" . $this->getParentTable()->getColumn($this->getParameter('descendant_column'))->getPhpName() . "('" . $this->builder->getStubObjectBuilder()->getClassname() . "');
 		return \$parent;
 	} else {
-		return " . $this->builder->getNewStubQueryBuilder($parentTable)->getClassname() . "::create()->findPk(\$this->getPrimaryKey(), \$con);
+		\$parent = " . $this->builder->getNewStubQueryBuilder($parentTable)->getClassname() . "::create()->findPk(\$this->getPrimaryKey(), \$con);
+		if ( \$parent === null ) {
+			\$parent = new " . $parentClass . "();
+			\$parent->setPrimaryKey(\$this->getPrimaryKey());
+			\$parent->set" . $this->getParentTable()->getColumn($this->getParameter('descendant_column'))->getPhpName() . "('" . $this->builder->getStubObjectBuilder()->getClassname() . "');
+		}
+		return \$parent;
 	}
 }
 ";
