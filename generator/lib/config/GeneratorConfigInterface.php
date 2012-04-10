@@ -9,7 +9,6 @@
  */
 
 /**
- *
  * @package      propel.generator.config
  */
 interface GeneratorConfigInterface
@@ -21,14 +20,14 @@ interface GeneratorConfigInterface
 	 * @param      string $type The type of builder ('ddl', 'sql', etc.)
 	 * @return     DataModelBuilder
 	 */
-	public function getConfiguredBuilder(Table $table, $type);
+	function getConfiguredBuilder(Table $table, $type);
 
 	/**
 	* Gets a configured Pluralizer class.
 	*
 	* @return     Pluralizer
 	*/
-	public function getConfiguredPluralizer();
+	function getConfiguredPluralizer();
 
 	/**
 	 * Gets a specific propel (renamed) property from the build.
@@ -36,7 +35,7 @@ interface GeneratorConfigInterface
 	 * @param      string $name
 	 * @return     mixed
 	 */
-	public function getBuildProperty($name);
+	function getBuildProperty($name);
 
 	/**
 	 * Sets a specific propel (renamed) property from the build.
@@ -44,6 +43,15 @@ interface GeneratorConfigInterface
 	 * @param      string $name
 	 * @param      mixed $value
 	 */
-	public function setBuildProperty($name, $value);
+	function setBuildProperty($name, $value);
 
+	/**
+	 * Creates and configures a new Platform class.
+	 */
+	function getConfiguredPlatform(PDO $con = null, $database = null);
+
+	/**
+	 * Gets a configured behavior class
+	 */
+	function getConfiguredBehavior($name);
 }

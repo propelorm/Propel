@@ -70,9 +70,9 @@ class XmlToAppData
 	/**
 	 * Set the AppData generator configuration
 	 *
-	 * @param GeneratorConfig $generatorConfig
+	 * @param GeneratorConfigInterface $generatorConfig
 	 */
-	public function setGeneratorConfig(GeneratorConfig $generatorConfig)
+	public function setGeneratorConfig(GeneratorConfigInterface $generatorConfig)
 	{
 		$this->app->setGeneratorConfig($generatorConfig);
 	}

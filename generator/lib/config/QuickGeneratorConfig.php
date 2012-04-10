@@ -10,6 +10,7 @@
 
 require_once dirname(__FILE__) . '/GeneratorConfig.php';
 require_once dirname(__FILE__) . '/GeneratorConfigInterface.php';
+require_once dirname(__FILE__) . '/../platform/DefaultPlatform.php';
 
 /**
  *
@@ -38,6 +39,8 @@ class QuickGeneratorConfig implements GeneratorConfigInterface
 	);
 
 	protected $buildProperties = array();
+
+	private $generatorConfig = null;
 
 	public function __construct()
 	{
@@ -145,4 +148,31 @@ class QuickGeneratorConfig implements GeneratorConfigInterface
 		$this->buildProperties[$name] = $value;
 	}
 
+	/**
+	 * {@inheritdoc}
+	 */
+	public function getConfiguredPlatform(PDO $con = null, $database = null)
+	{
+		return new DefaultPlatform($con);
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function getConfiguredBehavior($name)
+	{
+		$this->initGeneratorConfig();
+
+		return $this->generatorConfig->getConfiguredBehavior($name);
+	}
+
+	private function initGeneratorConfig()
+	{
+		if (null === $this->generatorConfig) {
+			$this->generatorConfig = new GeneratorConfig();
+			foreach ($this->buildProperties as $key => $value) {
+				$this->generatorConfig->setBuildProperty($key, $value);
+			}
+		}
+	}
 }

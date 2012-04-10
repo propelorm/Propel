@@ -89,9 +89,9 @@ class AppData
 	/**
 	 * Set the generator configuration
 	 *
-	 * @param GeneratorConfig $generatorConfig
+	 * @param GeneratorConfigInterface $generatorConfig
 	 */
-	public function setGeneratorConfig(GeneratorConfig $generatorConfig)
+	public function setGeneratorConfig(GeneratorConfigInterface $generatorConfig)
 	{
 		$this->generatorConfig = $generatorConfig;
 	}
