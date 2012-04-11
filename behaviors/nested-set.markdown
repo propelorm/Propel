@@ -97,7 +97,7 @@ $s2:World
 $s3:Europe
 */
 // now move the "Europe" section directly under root, after "Business"
-$s2->moveToFirstChildOf($s4);
+$s3->moveToFirstChildOf($s4);
 /* The tree is modified as follows:
     $s1:Home
     |        \
