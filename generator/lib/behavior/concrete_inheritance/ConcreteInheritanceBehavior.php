@@ -197,22 +197,26 @@ class ConcreteInheritanceBehavior extends Behavior
  */
 public function getParentOrCreate(\$con = null)
 {
-	if (\$this->isNew() && \$this->isPrimaryKeyNull()) {
-		//this prevent issue with deep copy & save parent object
-		if (null === (\$parent = \$this->get". $parentClass . "(\$con))) {
-			\$parent = new " . $parentClass . "();
-		}
-		\$parent->set" . $this->getParentTable()->getColumn($this->getParameter('descendant_column'))->getPhpName() . "('" . $this->builder->getStubObjectBuilder()->getClassname() . "');
-		return \$parent;
-	} else {
-		\$parent = " . $this->builder->getNewStubQueryBuilder($parentTable)->getClassname() . "::create()->findPk(\$this->getPrimaryKey(), \$con);
-		if ( \$parent === null ) {
-			\$parent = new " . $parentClass . "();
-			\$parent->setPrimaryKey(\$this->getPrimaryKey());
+	if (\$this->isNew()) {
+		if (\$this->isPrimaryKeyNull()) {
+			//this prevent issue with deep copy & save parent object
+			if (null === (\$parent = \$this->get". $parentClass . "(\$con))) {
+				\$parent = new " . $parentClass . "();
+			}
 			\$parent->set" . $this->getParentTable()->getColumn($this->getParameter('descendant_column'))->getPhpName() . "('" . $this->builder->getStubObjectBuilder()->getClassname() . "');
+			return \$parent;
+		} else {
+			\$parent = " . $this->builder->getNewStubQueryBuilder($parentTable)->getClassname() . "::create()->findPk(\$this->getPrimaryKey(), \$con);
+			if (null === \$parent || null !== \$parent->getDescendantClass()) {
+				\$parent = new " . $parentClass . "();
+				\$parent->setPrimaryKey(\$this->getPrimaryKey());
+				\$parent->set" . $this->getParentTable()->getColumn($this->getParameter('descendant_column'))->getPhpName() . "('" . $this->builder->getStubObjectBuilder()->getClassname() . "');
+			}
+			return \$parent;
 		}
-		return \$parent;
 	}
+	
+	return " . $this->builder->getNewStubQueryBuilder($parentTable)->getClassname() . "::create()->findPk(\$this->getPrimaryKey(), \$con);
 }
 ";
 	}

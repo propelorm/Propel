@@ -253,5 +253,22 @@ class ConcreteInheritanceBehaviorTest extends BookstoreTestBase
 		$articledb = ConcreteArticleQuery::create()->findOneById(2);
 		$this->assertEquals(2, $articledb->getId(), 'getParentOrCreate() keeps manually set pk after save and reload from db');
 	}
+	
+	public function testSetPKOnNewObjectWithPkAlreadyInParentTable()
+	{
+		ConcreteContentQuery::create()->deleteAll();
+		ConcreteArticleQuery::create()->deleteAll();
+		try {
+			$article = new ConcreteArticle();
+			$article->setId(4);
+			$article->save();
+			$article = new ConcreteArticle();
+			$article->setId(4);
+			$article->save();
+			$this->fail('getParentOrCreate() returns a new parent object on new child objects with pk set');
+		} catch (PropelException $e) {
+			$this->assertTrue(true, 'getParentOrCreate() returns a new parent object on new child objects with pk set');
+		}
+	}
 
 }
