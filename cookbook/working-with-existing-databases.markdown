@@ -42,10 +42,10 @@ propel.database.user = root
 > propel-gen . reverse
 {% endhighlight %}
 
-Or if create the `build.properties` file in a subdirectory called `properties`:
+Or if you create the `build.properties` file in a subdirectory called `config`:
 
 {% highlight bash %}
-> propel-gen properties reverse
+> propel-gen config reverse
 {% endhighlight %}
 
  4. Pay attention to any errors/warnings issued by Phing during the task execution and then examine the generated `schema.xml` file to make any corrections needed.
