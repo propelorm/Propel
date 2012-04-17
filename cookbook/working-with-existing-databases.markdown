@@ -39,7 +39,13 @@ propel.database.user = root
  3. Run the `reverse` task to generate the `schema.xml`:
 
 {% highlight bash %}
-> propel-gen reverse
+> propel-gen . reverse
+{% endhighlight %}
+
+Or if create the `build.properties` file in a subdirectory called `properties`:
+
+{% highlight bash %}
+> propel-gen properties reverse
 {% endhighlight %}
 
  4. Pay attention to any errors/warnings issued by Phing during the task execution and then examine the generated `schema.xml` file to make any corrections needed.
