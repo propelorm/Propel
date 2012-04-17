@@ -154,6 +154,14 @@ propel.dateTimeClass = DateTime
 propel.defaultTimeStampFormat =
 propel.defaultTimeFormat =
 propel.defaultDateFormat =
+
+# A better Pluralizer
+propel.builder.pluralizer.class = builder.util.StandardEnglishPluralizer
+
+# MySQL config
+# propel.mysql.tableType = InnoDB
+
+# Behaviors come below
 {% endhighlight %}
 
 ## Sample Configuration
