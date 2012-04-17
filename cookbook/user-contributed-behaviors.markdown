@@ -24,7 +24,7 @@ Here is a list of Propel behaviors contributed by users. Feel free to use them o
 
 * [sfNestedCommentPlugin](https://github.com/nibsirahsieu/sfNestedCommentPlugin) A behavior for propel 1.5 and symfony to enabled the model(s) to be commentable.
 
-* [sfPropelActAsBlameableBehaviorPlugin](https://github.com/ArnaudD/sfPropelActAsBlameableBehaviorPlugin) Symfony plugin for Propel 1.5 to autofill created_by, updated_by and deleted_by columns
+* [sfPropelActAsBlameableBehaviorPlugin](https://github.com/ArnaudD/sfPropelActAsBlameableBehaviorPlugin) Symfony plugin for Propel 1.5 to autofill created_by, updated_by and deleted_by columns?-.
 
 * [sfPropelLuceneableBehaviorPlugin](https://github.com/nibsirahsieu/sfPropelLuceneableBehaviorPlugin) A behavior for propel 1.6 and symfony 1.4 to enabled the model(s) to be searchable.
 
@@ -39,3 +39,5 @@ Here is a list of Propel behaviors contributed by users. Feel free to use them o
 ## Symfony2 2.x Behaviors ##
 
 * [PropelEventBundle](https://bitbucket.org/glorpen/glorpenpropeleventbundle) Add a way of using Symfony2 DIC in Propel model classes through events.
+
+* [TaggableBehaviorBundle](https://bitbucket.org/glorpen/taggablebehaviorbundle) A behavior and a widget for propel 1.6 and Symfony2 to tag your objects.
