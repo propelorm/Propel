@@ -20,6 +20,9 @@ Here is a list of Propel behaviors contributed by users. Feel free to use them o
 
 * [AuditableBehavior](https://github.com/Carpe-Hora/AuditableBehavior) Audit your objects activity.
 
+* [TypehintableBehavior](https://github.com/willdurand/TypehintableBehavior) Insane Propel behavior that helps you to be compliant with third-party interfaces by adding type hint to generated methods.
+
+
 ## symfony 1.x Behaviors ##
 
 * [sfNestedCommentPlugin](https://github.com/nibsirahsieu/sfNestedCommentPlugin) A behavior for propel 1.5 and symfony to enabled the model(s) to be commentable.
@@ -35,6 +38,7 @@ Here is a list of Propel behaviors contributed by users. Feel free to use them o
 * [sfPropelORMRatableBehaviorPlugin](https://bitbucket.org/matteosister/sfpropelormratablebehaviorplugin)  A behavior for propel 1.6 and symfony 1.4.x to rate your objects.
 
 * [sfContextBehavior](https://github.com/Carpe-Hora/sfContextBehavior) A behavior for propel 1.6 and symfony 1.x redering object context aware.
+
 
 ## Symfony2 2.x Behaviors ##
 
