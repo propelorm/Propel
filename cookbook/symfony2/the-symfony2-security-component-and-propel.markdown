@@ -11,13 +11,29 @@ If you've started to play with the awesome Symfony2 Security Component, you'll k
 to retrieve your users. Symfony2, and the PropelBundle provide a `propel` provider, so you just need to add the following
 configuration to your `security.yml` file:
 
-``` yaml
+{% highlight yaml %}
+# app/config/security.yml
 providers:
     main:
         propel:
             class: My\AwesomeBundle\Model\User
             property: username
-```
+{% endhighlight %}
+
+Your `User` class have to implement the [`UserInterface`](https://github.com/symfony/symfony/blob/master/src/Symfony/Component/Security/Core/User/UserInterface.php):
+
+{% highlight php %}
+<?php
+// src/My/AwesomeBundle/Model/User.php
+
+use Symfony\Component\Security\Core\User\UserInterface;
+
+class User extends BaseUser implements UserInterface
+{
+}
+{% endhighlight %}
+
+That's all!
 
 
 ## ACL implementation ##

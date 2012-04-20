@@ -542,9 +542,11 @@ If you want to remove parts of a schema, you only need to add an empty schema fi
 The `PropelBundle` provides a model-based implementation of the Security components' interfaces.
 To make use of this `AuditableAclProvider` you only need to change your security configuration.
 
-    security:
-        acl:
-            provider: propel.security.acl.provider
+{% highlight yaml %}
+security:
+    acl:
+        provider: propel.security.acl.provider
+{% endhighlight %}
 
 This will switch the provider to be the `AuditableAclProvider` of the `PropelBundle`.
 
@@ -558,13 +560,15 @@ If you already got an ACL database, the schema of the `PropelBundle` is compatib
 
 In case you want to use a different database for your ACL than your business model, you only need to configure this service.
 
-    services:
-        propel.security.acl.connection:
-            class: PropelPDO
-            factory_class: Propel
-            factory_method: getConnection
-            arguments:
-                - "acl"
+{% highlight yaml %}
+services:
+    propel.security.acl.connection:
+        class: PropelPDO
+        factory_class: Propel
+        factory_method: getConnection
+        arguments:
+            - "acl"
+{% endhighlight %}
 
 The `PropelBundle` looks for this service, and if given uses the provided connection for all ACL related operations.
 The given argument (`acl` in the example) is the name of the connection to use, as defined in your runtime configuration.
