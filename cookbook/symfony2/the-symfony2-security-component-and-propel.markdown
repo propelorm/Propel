@@ -5,7 +5,7 @@ title: The Symfony2 Security Component And Propel
 
 # The Symfony2 Security Component And Propel #
 
->**Warning:** This documentation is for Symfony2 2.1. If you are using Symfony2 2.0.x, please follow [this documentation](https://github.com/propelorm/propelorm.github.com/blob/d1dbefdd6346f36e72d3349934ef2768ebe1a0c8/cookbook/symfony2/the-symfony2-security-component-and-propel.markdown).
+>**Warning:**<br />This documentation is for Symfony2 2.1. If you are using Symfony2 2.0.x, please follow [this documentation](https://github.com/propelorm/propelorm.github.com/blob/d1dbefdd6346f36e72d3349934ef2768ebe1a0c8/cookbook/symfony2/the-symfony2-security-component-and-propel.markdown).
 
 If you've started to play with the awesome Symfony2 Security Component, you'll know that you can configure a **provider**
 to retrieve your users. Symfony2, and the PropelBundle provide a `propel` provider, so you just need to add the following
