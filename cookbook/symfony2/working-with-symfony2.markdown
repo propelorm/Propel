@@ -38,11 +38,11 @@ Checkout Propel and Phing in the `vendor` directory:
 
     svn checkout http://svn.github.com/propelorm/Propel.git vendor/propel
 
-    svn checkout http://svn.phing.info/tags/2.4.6/ vendor/phing
+    svn checkout http://svn.phing.info/tags/2.4.12/ vendor/phing
 
-Instead of using svn, you can clone the unofficial Git repositories:
+Instead of using svn, you can clone the Git repositories:
 
-    git submodule add https://github.com/Xosofox/phing vendor/phing
+    git submodule add https://github.com/phingofficial/phing.git vendor/phing
 
     git submodule add https://github.com/propelorm/Propel.git vendor/propel
 
@@ -58,7 +58,7 @@ Add the following lines to your deps file (located in the root of the Symfony pr
         target=/bundles/Propel/PropelBundle
         version=origin/2.0
     [phing]
-        git=https://github.com/Xosofox/phing
+        git=https://github.com/phingofficial/phing.git
     [propel]
         git=https://github.com/propelorm/Propel.git
 
@@ -68,10 +68,10 @@ Add the following lines to your deps file (located in the root of the Symfony pr
         git=https://github.com/propelorm/PropelBundle.git
         target=/bundles/Propel/PropelBundle
     [phing]
-        git=https://github.com/Xosofox/phing
+        git=https://github.com/phingofficial/phing.git
     [propel]
         git=https://github.com/propelorm/Propel.git
-    
+
 Update your vendor directory with
 
     php bin/vendors install
@@ -121,7 +121,7 @@ public function registerBundles()
 }
 {% endhighlight %}
 
-Don't forget to register the PropelBundle namespace in `app/autoload.php`:
+Don't forget to register the PropelBundle namespace in `app/autoload.php` if you are not using Composer:
 
 {% highlight php %}
 <?php
@@ -130,6 +130,7 @@ $loader->registerNamespaces(array(
     ...
 
     'Propel' => __DIR__.'/../vendor/bundles',
+    'Phing'  => __DIR__.'/../vendor/phing/classes/phing',
 ));
 {% endhighlight %}
 
