@@ -89,7 +89,7 @@ A basic configuration looks like:
 
 {% highlight javascript %}
 {
-    "name": "willdurand/propel-my-behavior",
+    "name": "willdurand/propel-myawesome-behavior",
     "description": "A nice description.",
     "keywords": [ "propel", "behavior" ],
     "license": "MIT",
