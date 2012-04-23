@@ -10,5 +10,10 @@ layout: base
 <script type="text/javascript">
     $(document).ready(function(){
         $('.toc').tableOfContents(null, { startLevel: 2 });
+        $("h2, h3, h4, h5, h6").each(function () {
+            var _id = $(this).attr('id'),
+            _anchor = '<a href="#' + _id + '" class="anchor_link">¶</a>';
+            $(this).append(_anchor);
+        });
     });
 </script>
