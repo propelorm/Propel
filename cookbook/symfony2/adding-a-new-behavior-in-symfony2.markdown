@@ -17,22 +17,35 @@ Assuming you want to use the [GeocodableBehavior](https://github.com/willdurand/
 {% highlight bash %}
 [GeocodableBehavior]
     git=http://github.com/willdurand/GeocodableBehavior.git
-    target=/propel-behaviors/GeocodableBehavior
+    target=/willdurand/propel-geocodable-behavior
 {% endhighlight %}
 
 If you are using Git submodules, then run:
 
 {% highlight bash %}
-git submodule add http://github.com/willdurand/GeocodableBehavior.git vendor/propel-behaviors/GeocodableBehavior
+git submodule add http://github.com/willdurand/GeocodableBehavior.git vendor/willdurand/propel-geocodable-behavior
 {% endhighlight %}
 
->**Tip**<br />If there is no available Git repository for a behavior, just copy it to `vendor/propel-behaviors/TheBehavior`. It's up to you to version it or not.
+If you are using [Composer](http://getcomposer.org), then just require the behavior in your `composer.json`:
+
+{% highlight javascript %}
+{
+    "require": {
+        // ...
+        "willdurand/propel-geocodable-behavior": "dev-master"
+    }
+}
+{% endhighlight %}
+
+And run, `php composer.php update`.
+
+>**Tip**<br />If there is no available Git repository for a behavior, just copy it to `vendor/propel-thebehavior-behavior`. It's up to you to version it or not.
 
 Now, you just need to register the new behavior by adding the following line in `app/config/propel.ini`:
 
 {% highlight ini %}
 # app/config/propel.ini
-propel.behavior.GeocodableBehavior.class = vendor.propel-behaviors.GeocodableBehavior.src.GeocodableBehavior
+propel.behavior.GeocodableBehavior.class = vendor.propel-geocodable-behavior.src.GeocodableBehavior
 {% endhighlight %}
 
 You're done!
