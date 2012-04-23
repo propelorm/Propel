@@ -430,3 +430,5 @@ These are the basics of behavior writing: implement one of the methods documente
 As for the `AggregateColumnBehavior`, the job is not finished. The [blog post](http://propel.posterous.com/getting-to-know-propel-15-keeping-an-aggregat) emphasized the need for hooks in the Query class, and these are not yet implemented in the above code. Besides, the  post kept quiet about one use case that left the aggregate column not up to date (when a question is detached from a poll without deleting it). Lastly, the parameters required for this behavior are currently a bit verbose, especially concerning the need to define the foreign table and the foreign key - this could be simplified thanks to the knowledge of the object model that behaviors have.
 
 All this is left to the reader as an exercise. Fortunately, the final behavior is part of the Propel core behaviors, so the [aggregate_column documentation](../behaviors/aggregate-column) and the code are all ready to help you to further understand the power of Propel's behavior system.
+
+You can also read [how to test your behaviors](testing-your-behaviors.html).

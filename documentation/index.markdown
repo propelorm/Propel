@@ -72,6 +72,7 @@ You can also look at [user contributed behaviors](../cookbook/user-contributed-b
 ### Extending Propel ###
 
 * [Writing A Behavior](../cookbook/writing-behavior.html) How to write a custom behavior to reuse model code horizontally.
+* [Testing Your Behaviors](../cookbook/testing-yout-behaviors.html) How to unit test your behaviors.
 
 ### Working with symfony 1.4 ###
 
