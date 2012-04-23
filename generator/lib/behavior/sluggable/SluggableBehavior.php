@@ -19,67 +19,67 @@
 class SluggableBehavior extends Behavior
 {
     // default parameters value
-    protected $parameters = array(
-        'slug_column'     => 'slug',
-        'slug_pattern'    => '',
-        'replace_pattern' => '/\W+/', // Tip: use '/[^\\pL\\d]+/u' instead if you're in PHP5.3
-        'replacement'     => '-',
-        'separator'       => '-',
-        'permanent'       => 'false',
-        'scope_column'		=> ''
-    );
+	protected $parameters = array(
+		'slug_column'     => 'slug',
+		'slug_pattern'    => '',
+		'replace_pattern' => '/\W+/', // Tip: use '/[^\\pL\\d]+/u' instead if you're in PHP5.3
+		'replacement'     => '-',
+		'separator'       => '-',
+		'permanent'       => 'false',
+		'scope_column'		=> ''
+	);
 
-    /**
-     * Add the slug_column to the current table
-     */
-    public function modifyTable()
-    {
-        if (!$this->getTable()->containsColumn($this->getParameter('slug_column'))) {
-            $this->getTable()->addColumn(array(
-                'name' => $this->getParameter('slug_column'),
-                'type' => 'VARCHAR',
-                'size' => 255
-            ));
-            // add a unique to column
-            $unique = new Unique($this->getColumnForParameter('slug_column'));
-            $unique->setName($this->getTable()->getCommonName() . '_slug');
-            $unique->addColumn($this->getTable()->getColumn($this->getParameter('slug_column')));
-            if ($this->getParameter('scope_column')) {
-                $unique->addColumn($this->getTable()->getColumn($this->getParameter('scope_column')));
-            }
-            $this->getTable()->addUnique($unique);
-        }
-    }
+	/**
+	 * Add the slug_column to the current table
+	 */
+	public function modifyTable()
+	{
+		if(!$this->getTable()->containsColumn($this->getParameter('slug_column'))) {
+			$this->getTable()->addColumn(array(
+				'name' => $this->getParameter('slug_column'),
+				'type' => 'VARCHAR',
+				'size' => 255
+			));
+			// add a unique to column
+			$unique = new Unique($this->getColumnForParameter('slug_column'));
+			$unique->setName($this->getTable()->getCommonName() . '_slug');
+			$unique->addColumn($this->getTable()->getColumn($this->getParameter('slug_column')));
+			if($this->getParameter('scope_column')) {
+				$unique->addColumn($this->getTable()->getColumn($this->getParameter('scope_column')));
+			}
+			$this->getTable()->addUnique($unique);
+		}
+	}
 
-    /**
-     * Get the getter of the column of the behavior
-     *
-     * @return string The related getter, e.g. 'getSlug'
-     */
-    protected function getColumnGetter()
-    {
-        return 'get' . $this->getColumnForParameter('slug_column')->getPhpName();
-    }
+	/**
+	 * Get the getter of the column of the behavior
+	 *
+	 * @return string The related getter, e.g. 'getSlug'
+	 */
+	protected function getColumnGetter()
+	{
+		return 'get' . $this->getColumnForParameter('slug_column')->getPhpName();
+	}
 
-    /**
-     * Get the setter of the column of the behavior
-     *
-     * @return string The related setter, e.g. 'setSlug'
-     */
-    protected function getColumnSetter()
-    {
-        return 'set' . $this->getColumnForParameter('slug_column')->getPhpName();
-    }
+	/**
+	 * Get the setter of the column of the behavior
+	 *
+	 * @return string The related setter, e.g. 'setSlug'
+	 */
+	protected function getColumnSetter()
+	{
+		return 'set' . $this->getColumnForParameter('slug_column')->getPhpName();
+	}
 
-    /**
-     * Add code in ObjectBuilder::preSave
-     *
-     * @return string The code to put at the hook
-     */
-    public function preSave($builder)
-    {
-        $const = $builder->getColumnConstant($this->getColumnForParameter('slug_column'));
-        $script = "
+	/**
+	 * Add code in ObjectBuilder::preSave
+	 *
+	 * @return string The code to put at the hook
+	 */
+	public function preSave($builder)
+	{
+		$const = $builder->getColumnConstant($this->getColumnForParameter('slug_column'));
+		$script = "
 if (\$this->isColumnModified($const) && \$this->{$this->getColumnGetter()}()) {
     \$this->{$this->getColumnSetter()}(\$this->makeSlugUnique(\$this->{$this->getColumnGetter()}()));";
         if ($this->getParameter('permanent') == 'true') {
