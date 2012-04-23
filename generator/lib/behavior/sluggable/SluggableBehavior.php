@@ -18,7 +18,7 @@
  */
 class SluggableBehavior extends Behavior
 {
-    // default parameters value
+	// default parameters value
 	protected $parameters = array(
 		'slug_column'     => 'slug',
 		'slug_pattern'    => '',
@@ -44,8 +44,9 @@ class SluggableBehavior extends Behavior
 			$unique = new Unique($this->getColumnForParameter('slug_column'));
 			$unique->setName($this->getTable()->getCommonName() . '_slug');
 			$unique->addColumn($this->getTable()->getColumn($this->getParameter('slug_column')));
-			if($this->getParameter('scope_column')) {
-				$unique->addColumn($this->getTable()->getColumn($this->getParameter('scope_column')));
+
+            if ($this->getParameter('scope_column')) {
+                $unique->addColumn($this->getTable()->getColumn($this->getParameter('scope_column')));
 			}
 			$this->getTable()->addUnique($unique);
 		}
