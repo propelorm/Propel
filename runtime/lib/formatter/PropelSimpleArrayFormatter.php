@@ -17,48 +17,55 @@
  * @version    $Revision$
  * @package    propel.runtime.formatter
  */
-class PropelSimpleArrayFormatter extends PropelFormatter {
+class PropelSimpleArrayFormatter extends PropelFormatter
+{
 	protected $collectionName = 'PropelArrayCollection';
 
-	public function format(PDOStatement $stmt) {
-		$this->checkInit ();
+	public function format(PDOStatement $stmt)
+	{
+		$this->checkInit();
 		if ($class = $this->collectionName) {
 			$collection = new $class();
-			$collection->setModel ($this->class );
-			$collection->setFormatter ($this);
+			$collection->setModel($this->class);
+			$collection->setFormatter($this);
 		} else {
 			$collection = array();
 		}
-		if ($this->isWithOneToMany () && $this->hasLimit) {
+		if ($this->isWithOneToMany() && $this->hasLimit) {
 			throw new PropelException('Cannot use limit() in conjunction with with() on a one-to-many relationship. Please remove the with() call, or the limit() call.');
 		}
-		while ($row = $stmt->fetch (PDO::FETCH_NUM)) {
-			if ($rowArray = $this->getStructuredArrayFromRow ($row)) {
+		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+			if (false !== $rowArray = $this->getStructuredArrayFromRow($row)) {
 				$collection[] = $rowArray;
 			}
 		}
-		$stmt->closeCursor ();
+		$stmt->closeCursor();
+
 		return $collection;
 	}
 
-	public function formatOne(PDOStatement $stmt) {
-		$this->checkInit ();
+	public function formatOne(PDOStatement $stmt)
+	{
+		$this->checkInit();
 		$result = null;
-		while ($row = $stmt->fetch (PDO::FETCH_NUM)) {
-			if ($rowArray = $this->getStructuredArrayFromRow ($row)) {
+		while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
+			if (false !== $rowArray = $this->getStructuredArrayFromRow($row)) {
 				$result = $rowArray;
 			}
 		}
-		$stmt->closeCursor ();
+		$stmt->closeCursor();
+
 		return $result;
 	}
 
-	public function isObjectFormatter() {
+	public function isObjectFormatter()
+	{
 		return false;
 	}
 
-	public function getStructuredArrayFromRow($row) {
-		$columnNames = array_keys($this->getAsColumns ());
+	public function getStructuredArrayFromRow($row)
+	{
+		$columnNames = array_keys($this->getAsColumns());
 		if (count($columnNames) > 1 && count($row) > 1) {
 			$finalRow = array();
 			foreach ($row as $index => $value) {
@@ -67,6 +74,7 @@ class PropelSimpleArrayFormatter extends PropelFormatter {
 		} else {
 			$finalRow = $row[0];
 		}
+
 		return $finalRow;
 	}
 }
