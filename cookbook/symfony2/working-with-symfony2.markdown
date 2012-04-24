@@ -24,7 +24,7 @@ It currently supports:
  * Schema Inheritance.
  * Symfony2 ACL.
 
->**Important**<br />The `master` branch follows the Symfony2 `master` branch, and uses the _Propel Bridge_. If you want to use the bundle with a Symfony2 _version 2.x.x_ (actually, a version which is not _2.1_ or above), please use the `2.0` branch.
+>**Important**<br />The `1.1` branch follows the Symfony2 `master` branch, and uses the _Propel Bridge_. If you want to use the bundle with a Symfony2 _version 2.x.x_ (actually, a version which is not _2.1_ or above), please use the `1.0` branch. For more information, read the [PropelBundle Branching Model](https://github.com/propelorm/PropelBundle/wiki).
 
 ## Installation
 
@@ -56,7 +56,7 @@ Add the following lines to your deps file (located in the root of the Symfony pr
     [PropelBundle]
         git=https://github.com/propelorm/PropelBundle.git
         target=/bundles/Propel/PropelBundle
-        version=origin/2.0
+        version=origin/1.0
     [phing]
         git=https://github.com/phingofficial/phing.git
     [propel]
@@ -67,6 +67,7 @@ Add the following lines to your deps file (located in the root of the Symfony pr
     [PropelBundle]
         git=https://github.com/propelorm/PropelBundle.git
         target=/bundles/Propel/PropelBundle
+        version=origin/1.1
     [phing]
         git=https://github.com/phingofficial/phing.git
     [propel]
@@ -86,7 +87,7 @@ Add the following line to your `composer.json` file:
     // ...
     "require": {
         // ...
-        "propel/propel-bundle": "dev-master",
+        "propel/propel-bundle": "1.1.*",
     }
     // ...
 }
@@ -95,7 +96,7 @@ Add the following line to your `composer.json` file:
 Then, run `php composer.phar install` or `php composer.phar update`.
 You can get composer at [http://getcomposer.org/](http://getcomposer.org/).
 
-You can use a stable version of the bundle by writing `0.*` instead of `dev-master`.
+If you want to use Symfony2 2.0.x, just use the `1.0.*` constraint.
 
 
 ## Register your Bundle
@@ -114,7 +115,7 @@ public function registerBundles()
         // PropelBundle
         new Propel\PropelBundle\PropelBundle(),
         // register your bundles
-        new Sensio\HelloBundle\HelloBundle(),
+        new Acme\HelloBundle\HelloBundle(),
     );
 
     ...
@@ -239,11 +240,11 @@ propel:
 
 ### Sample Schema
 
-Place the following schema in `src/Sensio/HelloBundle/Resources/config/schema.xml` :
+Place the following schema in `src/Acme/HelloBundle/Resources/config/schema.xml` :
 
 {% highlight xml %}
 <?xml version="1.0" encoding="UTF-8"?>
-<database name="default" namespace="Sensio\HelloBundle\Model" defaultIdMethod="native">
+<database name="default" namespace="Acme\HelloBundle\Model" defaultIdMethod="native">
 
     <table name="book">
         <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
@@ -294,7 +295,7 @@ class HelloController extends Controller
 {
     public function indexAction($name)
     {
-        $author = new \Sensio\HelloBundle\Model\Author();
+        $author = new \Acme\HelloBundle\Model\Author();
         $author->setFirstName($name);
         $author->save();
 
