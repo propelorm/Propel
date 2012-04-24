@@ -120,7 +120,7 @@ class AggregateColumnBehavior extends Behavior
 {
   // ...
 
-  public function objectMethods()
+  public function objectMethods($builder)
   {
     return $this->addUpdateAggregateColumn();
   }
