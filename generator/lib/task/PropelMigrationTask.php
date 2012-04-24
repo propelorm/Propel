@@ -84,6 +84,11 @@ class PropelMigrationTask extends BasePropelMigrationTask
 					count($statements),
 					$datasource
 				));
+			}
+
+			// migrations for datasources have passed - update the timestamp
+			// for all datasources
+			foreach ($manager->getConnections() as $datasource => $connection) {
 				$manager->updateLatestMigrationTimestamp($datasource, $timestamp);
 				$this->log(sprintf(
 					'Updated latest migration date to %d for datasource "%s"',
