@@ -122,9 +122,7 @@ class AggregateColumnBehavior extends Behavior
 
   public function objectMethods()
   {
-    $script = _;
-    $script .= $this->addUpdateAggregateColumn();
-    return $script;
+    return $this->addUpdateAggregateColumn();
   }
 
   protected function addUpdateAggregateColumn()
