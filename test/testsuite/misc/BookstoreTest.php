@@ -808,6 +808,31 @@ class BookstoreTest extends BookstoreEmptyTestBase
 		$relCount = $blc2->countBookListRels();
 	 	$this->assertEquals(1, $relCount, 'BookClubList 2 has 1 BookListRel');
 
+		// Test collection setter for cross reference with custom relation names for the FK's.
+
+		$booksCollection = BookQuery::create()->setLimit(4)->find();
+
+		$blc3 = new BookClubList();
+		$blc3->setFavoriteBooks($booksCollection);
+		$blc3->save();
+
+		$blc3->reload(true);
+
+	 	$this->assertEquals(4, $blc3->countBookListFavorites(), "BookClubList has 4 favorites");
+
+		// Test set collection with less values, removing the missing and skipping the existing to prevent duplicate key.
+
+		$booksCollection = BookQuery::create()->setLimit(2)->find();
+
+		$blc3->reload(true);
+
+		$blc3->setFavoriteBooks($booksCollection);
+		$blc3->save();
+
+		$blc3->reload(true);
+
+	 	$this->assertEquals(2, $blc3->countBookListFavorites(), "BookClubList has 2 favorites after setting new collection");
+
 		// Cleanup (tests DELETE)
 		// ----------------------
 
@@ -858,6 +883,7 @@ class BookstoreTest extends BookstoreEmptyTestBase
 		$scholastic->delete();
 		$blc1->delete();
 		$blc2->delete();
+		$blc3->delete();
 
 		$this->assertEquals(array(), AuthorPeer::doSelect(new Criteria()), 'no records in [author] table');
 		$this->assertEquals(array(), PublisherPeer::doSelect(new Criteria()), 'no records in [publisher] table');
@@ -866,5 +892,6 @@ class BookstoreTest extends BookstoreEmptyTestBase
 		$this->assertEquals(array(), MediaPeer::doSelect(new Criteria()), 'no records in [media] table');
 		$this->assertEquals(array(), BookClubListPeer::doSelect(new Criteria()), 'no records in [book_club_list] table');
 		$this->assertEquals(array(), BookListRelPeer::doSelect(new Criteria()), 'no records in [book_x_list] table');
+		$this->assertEquals(array(), BookListFavoritePeer::doSelect(new Criteria()), 'no records in [book_club_list_favorite_books] table');
 	}
 }
