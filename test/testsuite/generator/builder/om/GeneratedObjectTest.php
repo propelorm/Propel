@@ -9,6 +9,7 @@
  */
 
 require_once dirname(__FILE__) . '/../../../../tools/helpers/bookstore/BookstoreTestBase.php';
+require_once dirname(__FILE__) . '/../../../../../generator/lib/util/PropelQuickBuilder.php';
 
 /**
  * Tests the generated Object classes.
@@ -1313,6 +1314,32 @@ EOF;
 		$this->assertEquals(1, BookQuery::create()->count());
 		$this->assertEquals(1, $author->nbCallPreSave);
 	}
+
+    /**
+     * @expectedException PropelException
+     */
+    public function testDoInsert()
+    {
+        if (!class_exists('Unexistent')) {
+            $schema = <<<EOF
+<database name="a-database">
+    <table name="unexistent">
+		<column name="id" required="true" primaryKey="true" autoIncrement="true" type="INTEGER" />
+        <column name="name" type="VARCHAR" />
+    </table>
+</database>
+EOF;
+            $builder = new PropelQuickBuilder();
+            $builder->setSchema($schema);
+            $builder->buildClasses();
+        }
+
+        $object = new Unexistent();
+        $object->setName('Foo');
+        $object->save();
+
+        $this->fail('Should not be called');
+    }
 }
 
 class CountableAuthor extends Author
