@@ -119,7 +119,7 @@ You may not need a new version each time an object is created or modified. If yo
 <?php
 class Book extends BaseBook
 {
-  public function isVersioningNecessary()
+  public function isVersioningNecessary($con = null)
   {
     return $this->getISBN() !== null && parent::isVersioningNecessary();
   }
