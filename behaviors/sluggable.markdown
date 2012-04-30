@@ -49,7 +49,7 @@ $p = PostQuery::create()->findOneBySlug('hello-world');
 
 ## Parameters ##
 
-By default, the behavior adds one columns to the model. If this column is already described in the schema, the behavior detects it and doesn't add it a second time. The behavior parameters allow you to use custom patterns for the slug composition. The following schema illustrates a complete customization of the behavior:
+By default, the behavior adds one column to the model. If this column is already described in the schema, the behavior detects it and doesn't add it a second time. The behavior parameters allow you to use custom patterns for the slug composition. The following schema illustrates a complete customization of the behavior:
 
 {% highlight xml %}
 <table name="post">
