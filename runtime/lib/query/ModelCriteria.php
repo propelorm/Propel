@@ -1176,15 +1176,72 @@ class ModelCriteria extends Criteria
 	 */
 	public function findOneOrCreate($con = null)
 	{
-		if ($this->joins) {
-			throw new PropelException('findOneOrCreate() cannot be used on a query with a join, because Propel cannot transform a SQL JOIN into a subquery. You should split the query in two queries to avoid joins.');
-		}
 		if (!$ret = $this->findOne($con)) {
 			$class = $this->getModelName();
 			$obj = new $class();
+			$peer = $obj::PEER;
+
+			$foreignValues = array();
+			$foreignSetter = array();
 			foreach ($this->keys() as $key) {
+				/*
+				 * When calling findOneOrCreate on queries containing JOINs or alike,
+				 * there are columns that do not belong to this model.
+				 *
+				 * However they may be a relation that would uniquely resolve into a new object of this model.
+				 * Let's see if we can actually resolve it.
+				 */
+				if (!in_array($key, $peer::getFieldNames(BasePeer::TYPE_COLNAME))) {
+					$found = false;
+
+					list($relationName, $columnName) = explode('.', $key);
+					foreach ($peer::getTableMap()->getRelations() as $eachRelation) {
+						if ($relationName == $eachRelation->getForeignTable()->getName()) {
+							$foreignClassName = $eachRelation->getForeignTable()->getClassname();
+							$foreignSetter[$foreignClassName] = 'set'.$eachRelation->getForeignTable()->getPhpName();
+
+							if ($eachRelation->getForeignTable()->containsColumn($columnName)) {
+								if (!isset($foreignValues[$foreignClassName])) {
+									$foreignValues[$foreignClassName] = array();
+								}
+
+								$foreignValues[$foreignClassName][$columnName] = $this->getValue($key);
+
+								// We found the column on a relation, so skip further checks.
+								$found = true;
+								break;
+							}
+						}
+					}
+
+					// We throw the exception so the database is not queried at all.
+					if (!$found) {
+						throw new PropelException(sprintf('Could not resolve column name "%s" while creating new object of class "%s".', $key, $class));
+					}
+
+					continue;
+				}
+
 				$obj->setByName($key, $this->getValue($key), BasePeer::TYPE_COLNAME);
 			}
+
+			foreach ($foreignValues as $foreignClass => $foreignColumns) {
+				$fkPeer = constant($foreignClass.'::PEER');
+				$fkQuery = call_user_func(array($foreignClass.'Query', 'create'));
+
+				foreach ($foreignColumns as $columnName => $value) {
+					$colName = $fkPeer::translateFieldName($columnName, BasePeer::TYPE_RAW_COLNAME, BasePeer::TYPE_PHPNAME);
+					call_user_func_array(array($fkQuery, 'filterBy'), array($colName, $value));
+				}
+
+				$relatedObj = $fkQuery->find();
+				if (1 != count($relatedObj)) {
+					throw new PropelException(sprintf('Could not uniquely resolve relation "%s" while creating new object of class "%s"', $foreignClass, $class));
+				}
+
+				call_user_func(array($obj, $foreignSetter[$foreignClass]), $relatedObj[0]);
+			}
+
 			$ret = $this->getFormatter()->formatRecord($obj);
 		}
 		return $ret;
