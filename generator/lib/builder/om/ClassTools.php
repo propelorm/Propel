@@ -25,11 +25,12 @@ class ClassTools
 	 */
 	public static function classname($qualifiedName)
 	{
-		$pos = strrpos($qualifiedName, '.');
-		if ($pos === false) {
-			return $qualifiedName;  // there is no '.' in the qualifed name
-		} else {
+		if (false !== $pos = strrpos($qualifiedName, '.')) {
 			return substr($qualifiedName, $pos + 1); // start just after '.'
+		} elseif (false !== $pos = strrpos($qualifiedName, '\\')) {
+			return substr($qualifiedName, $pos + 1);
+		} else {
+			return $qualifiedName;  // there is no '.' in the qualifed name
 		}
 	}
 

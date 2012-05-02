@@ -184,7 +184,7 @@ class PropelQuickBuilder
 		}
 
 		if ($table->getInterface()) {
-			$script .= $this->getConfig()->getConfiguredBuilder('interface', $target)->build();
+			$script .= $this->getConfig()->getConfiguredBuilder($table, 'interface')->build();
 		}
 
 		if ($table->treeMode()) {
