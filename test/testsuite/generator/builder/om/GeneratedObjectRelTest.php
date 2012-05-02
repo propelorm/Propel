@@ -646,6 +646,71 @@ class GeneratedObjectRelTest extends BookstoreEmptyTestBase
 
 		$this->assertEquals(1, BookClubListQuery::create()->count());
 		$this->assertEquals(2, BookListRelQuery::create()->count());
+		// ensure we have valid "association" objects
+		$this->assertEquals(1, BookListRelQuery::create()
+			->filterByBookClubList($bookClubList)
+			->filterByBook($books[0])
+			->count()
+		);
+		$this->assertEquals(1, BookListRelQuery::create()
+			->filterByBookClubList($bookClubList)
+			->filterByBook($books[1])
+			->count()
+		);
 		$this->assertEquals(4, BookQuery::create()->count());
 	}
+
+	public function testSetterCollectionWithManyToManyModifiedByReferenceWithANewObject()
+	{
+		// Ensure no data
+		BookQuery::create()->deleteAll();
+		BookClubListQuery::create()->deleteAll();
+		BookListRelQuery::create()->deleteAll();
+
+		$book = new Book();
+		$book->setTitle('foo');
+
+		// The object is "new"
+		$this->assertTrue($book->isNew());
+
+		$bookClubList = new BookClubList();
+		$books = $bookClubList->getBooks();
+		// Add the object by reference
+		$books[] = $book;
+
+		$bookClubList->setBooks($books);
+		$bookClubList->save();
+
+		$this->assertEquals(1, BookQuery::create()->count());
+		$this->assertEquals(1, BookListRelQuery::create()->count());
+		$this->assertEquals(1, BookClubListQuery::create()->count());
+	}
+
+	public function testSetterCollectionWithManyToManyModifiedByReferenceWithAnExistingObject()
+	{
+		// Ensure no data
+		BookQuery::create()->deleteAll();
+		BookClubListQuery::create()->deleteAll();
+		BookListRelQuery::create()->deleteAll();
+
+		$book = new Book();
+		$book->setTitle('foo');
+		$book->save();
+
+		// The object isn't "new"
+		$this->assertFalse($book->isNew());
+
+		$bookClubList = new BookClubList();
+		$books = $bookClubList->getBooks();
+		// Add the object by reference
+		$books[] = $book;
+
+		$bookClubList->setBooks($books);
+		$bookClubList->save();
+
+		$this->assertEquals(1, BookQuery::create()->count());
+		$this->assertEquals(1, BookListRelQuery::create()->count());
+		$this->assertEquals(1, BookClubListQuery::create()->count());
+	}
+
 }
