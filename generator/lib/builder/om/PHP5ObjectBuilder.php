@@ -42,6 +42,16 @@ class PHP5ObjectBuilder extends ObjectBuilder
 		}
 	}
 
+    /**
+     * Returns default key type. if not presented in configuration default will be 'TYPE_PHPNAME'
+     * @return string
+     */
+    public function getDefaultKeyType()
+    {
+        $defaultKeyType = $this->getBuildProperty('defaultKeyType') ? $this->getBuildProperty('defaultKeyType') : 'phpName';
+        return "TYPE_".strtoupper($defaultKeyType);
+    }
+
 	/**
 	 * Returns the name of the current class being built.
 	 * @return     string
@@ -2111,7 +2121,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
 		$hasFks = count($fks) > 0 || count($referrers) > 0;
 		$objectClassName = $this->getObjectClassname();
 		$pkGetter = $this->getTable()->hasCompositePrimaryKey() ? 'serialize($this->getPrimaryKey())' : '$this->getPrimaryKey()';
-		$defaultKeyType = "TYPE_".strtoupper($this->getBuildProperty('defaultKeyType'));
+		$defaultKeyType = $this->getDefaultKeyType();
         $script .= "
 	/**
 	 * Exports the object as an array.
@@ -2200,7 +2210,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
 	 * @see        addGetByName
 	 **/
 	protected function addGetByNameComment(&$script) {
-        $defaultKeyType = "TYPE_".strtoupper($this->getBuildProperty('defaultKeyType'));
+        $defaultKeyType = $this->getDefaultKeyType();
 		$script .= "
 	/**
 	 * Retrieves a field from the object by name passed in as a string.
@@ -2220,7 +2230,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
 	 * @see        addGetByName
 	 **/
 	protected function addGetByNameOpen(&$script) {
-        $defaultKeyType = "TYPE_".strtoupper($this->getBuildProperty('defaultKeyType'));
+        $defaultKeyType = $this->getDefaultKeyType();
 		$script .= "
 	public function getByName(\$name, \$type = BasePeer::$defaultKeyType)
 	{";
@@ -2327,7 +2337,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
 	protected function addSetByName(&$script)
 	{
 		$table = $this->getTable();
-        $defaultKeyType = "TYPE_".strtoupper($this->getBuildProperty('defaultKeyType'));
+        $defaultKeyType = $this->getDefaultKeyType();
 		$script .= "
 	/**
 	 * Sets a field from the object by name passed in as a string.
@@ -2398,7 +2408,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
 
 	protected function addFromArray(&$script)
 	{
-        $defaultKeyType = "TYPE_".strtoupper($this->getBuildProperty('defaultKeyType'));
+        $defaultKeyType = $this->getDefaultKeyType();
 		$table = $this->getTable();
 		$script .= "
 	/**

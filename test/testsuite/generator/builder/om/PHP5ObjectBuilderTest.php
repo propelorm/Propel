@@ -7,7 +7,6 @@
  *
  * @license    MIT License
  */
-
 require_once dirname(__FILE__) . '/../../../../../generator/lib/builder/om/PHP5ObjectBuilder.php';
 require_once dirname(__FILE__) . '/../../../../../generator/lib/platform/MysqlPlatform.php';
 require_once dirname(__FILE__) . '/../../../../../generator/lib/model/Table.php';
@@ -61,7 +60,10 @@ class PHP5ObjectBuilderTest extends PHPUnit_Framework_TestCase
 		$this->assertEquals($value, $this->builder->getDefaultValueString($column));
 	}
 
-
+    public function testGetDefaultKeyType()
+    {
+        $this->assertEquals('TYPE_PHPNAME', $this->builder->getDefaultKeyType());
+    }
 }
 
 class TestablePHP5ObjectBuilder extends PHP5ObjectBuilder
