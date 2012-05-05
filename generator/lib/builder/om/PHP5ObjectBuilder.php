@@ -3751,11 +3751,26 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
 		$lowerSingleRelatedName = $this->getFKPhpNameAffix($crossFK, $plural = false);
 		$lowerSingleRelatedName[0] = strtolower($lowerSingleRelatedName[0]);
 
+		$middelFks = $refFK->getTable()->getForeignKeys();
+		$isFirstPk = ($middelFks[0]->getForeignTableCommonName() == $this->getTable()->getCommonName());
+
 		$script .= "
 			if (\$this->{$lowerRelatedName}ScheduledForDeletion !== null) {
 				if (!\$this->{$lowerRelatedName}ScheduledForDeletion->isEmpty()) {
+					\$pks = array();
+					\$pk = \$this->getPrimaryKey();
+					foreach (\$this->{$lowerRelatedName}ScheduledForDeletion->getPrimaryKeys(false) as \$remotePk) {";
+		if ($isFirstPk) {
+			$script .= "
+						\$pks[] = array(\$pk, \$remotePk);";
+		} else {
+			$script .= "
+						\$pks[] = array(\$remotePk, \$pk);";
+		}
+		$script .= "
+					}
 					$queryClassName::create()
-						->filterByPrimaryKeys(\$this->{$lowerRelatedName}ScheduledForDeletion->getPrimaryKeys(false))
+						->filterByPrimaryKeys(\$pks)
 						->delete(\$con);
 					\$this->{$lowerRelatedName}ScheduledForDeletion = null;
 				}
