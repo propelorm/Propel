@@ -738,7 +738,6 @@ class GeneratedObjectRelTest extends BookstoreEmptyTestBase
 
 	public function testRemoveObjectStoredInDBFromCollection()
 	{
-		Propel::disableInstancePooling();
 		BookQuery::create()->deleteAll();
 		BookClubListQuery::create()->deleteAll();
 
