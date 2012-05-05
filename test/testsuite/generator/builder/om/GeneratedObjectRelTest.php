@@ -713,4 +713,59 @@ class GeneratedObjectRelTest extends BookstoreEmptyTestBase
 		$this->assertEquals(1, BookClubListQuery::create()->count());
 	}
 
+	public function testRemoveObjectFromCollection()
+	{
+		$list = new BookClubList();
+		$list->setGroupLeader('Archimedes Q. Porter');
+
+		$list2 = new BookClubList();
+		$list2->setGroupLeader('FooBar group');
+		// No save ...
+
+		$book = new Book();
+		$book->setTitle( "Jungle Expedition Handbook" );
+		$book->setISBN('TEST');
+		// No save ...
+		$this->assertCount(0, $book->getBookClubLists(), 'No BookClubList');
+
+		$book->addBookClubList($list);
+		$book->addBookClubList($list2);
+		$this->assertCount(2, $book->getBookClubLists(), 'Two BookClubList');
+
+		$book->removeBookClubList($list);
+		$this->assertCount(1, $book->getBookClubLists(), 'One BookClubList has been remove');
+	}
+
+	public function testRemoveObjectStoredInDBFromCollection()
+	{
+		Propel::disableInstancePooling();
+		BookQuery::create()->deleteAll();
+		BookClubListQuery::create()->deleteAll();
+
+		$list = new BookClubList();
+		$list->setGroupLeader('Archimedes Q. Porter');
+
+		$list2 = new BookClubList();
+		$list2->setGroupLeader('FooBar group');
+		// No save ...
+
+		$book = new Book();
+		$book->setTitle( "Jungle Expedition Handbook" );
+		$book->setISBN('TEST');
+		$book->addBookClubList($list);
+		$book->addBookClubList($list2);
+		$book->save();
+
+		$this->assertEquals(2, BookClubListQuery::create()->count(), 'Two BookClubList');
+		$this->assertEquals(2, BookListRelQuery::create()->count(), 'Two BookClubList');
+
+		$book->removeBookClubList($list);
+		$this->assertEquals(2, BookListRelQuery::create()->count(), 'still Two BookClubList in db before save()');
+		$this->assertCount(1, $book->getBookClubLists(), 'One BookClubList has been remove');
+		$book->save();
+
+		$this->assertCount(1, $book->getBookClubLists(), 'One BookClubList has been remove');
+		$this->assertEquals(1, BookListRelQuery::create()->count(), 'One BookClubList has been remove');
+	}
+
 }

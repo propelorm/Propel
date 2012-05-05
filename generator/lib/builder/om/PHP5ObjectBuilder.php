@@ -3828,6 +3828,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
 			$this->addCrossFKCount($script, $refFK, $crossFK);
 			$this->addCrossFKAdd($script, $refFK, $crossFK);
 			$this->addCrossFKDoAdd($script, $refFK, $crossFK);
+			$this->addCrossFKRemove($script, $refFK, $crossFK);
 		}
 	}
 
@@ -4083,6 +4084,52 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
 		{$foreignObjectName} = new {$className}();
 		{$foreignObjectName}->set{$relatedObjectClassName}(\${$lowerRelatedObjectClassName});
 		\$this->add{$className}({$foreignObjectName});
+	}
+";
+	}
+
+	/**
+	 * Adds the method that remove an object from the referrer fkey collection.
+	 * @param      string $script The script will be modified in this method.
+	 */
+	protected function addCrossFKRemove(&$script, ForeignKey $refFK, ForeignKey $crossFK)
+	{
+		$relCol = $this->getFKPhpNameAffix($crossFK, $plural = true);
+		$collName = 'coll' . $relCol;
+
+		$tblFK = $refFK->getTable();
+
+		$joinedTableObjectBuilder = $this->getNewObjectBuilder($refFK->getTable());
+		$className = $joinedTableObjectBuilder->getObjectClassname();
+
+		$M2MScheduledForDeletion = lcfirst($relCol) . "ScheduledForDeletion";
+
+		$crossObjectName = '$' . $crossFK->getForeignTable()->getStudlyPhpName();
+		$crossObjectClassName = $this->getNewObjectBuilder($crossFK->getForeignTable())->getObjectClassname();
+
+		$relatedObjectClassName = $this->getFKPhpNameAffix($crossFK, $plural = false);
+
+		$script .= "
+	/**
+	 * Remove a {$crossObjectClassName} object to this object
+	 * through the {$tblFK->getName()} cross reference table.
+	 *
+	 * @param      {$crossObjectClassName} {$crossObjectName} The $className object to relate
+	 * @return     void
+	 */
+	public function remove{$relatedObjectClassName}($crossObjectClassName $crossObjectName)
+	{
+		if (\$this->{$collName} === null) {
+			\$this->init{$relCol}();
+		}
+		if (\$this->{$collName}->contains({$crossObjectName})) {
+			\$this->{$collName}->remove(\$this->{$collName}->search({$crossObjectName}));
+			if (null === \$this->{$M2MScheduledForDeletion}) {
+				\$this->{$M2MScheduledForDeletion} = clone \$this->{$collName};
+				\$this->{$M2MScheduledForDeletion}->clear();
+			}
+			\$this->{$M2MScheduledForDeletion}[]= {$crossObjectName};
+		}
 	}
 ";
 	}
