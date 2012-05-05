@@ -3935,18 +3935,8 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
 		$relatedNamePlural = $this->getFKPhpNameAffix($crossFK, $plural = true);
 		$relatedName = $this->getFKPhpNameAffix($crossFK, $plural = false);
 		$relatedObjectClassName = $this->getNewStubObjectBuilder($crossFK->getForeignTable())->getClassname();
-		$selfRelationName = $this->getFKPhpNameAffix($refFK, $plural = false);
-		$crossRefQueryClassName = $this->getRefFKPhpNameAffix($refFK, $plural = false);
 		$crossRefTableName = $crossFK->getTableName();
 		$collName = $this->getCrossFKVarName($crossFK);
-		$joinedTableObjectBuilder = $this->getNewObjectBuilder($refFK->getTable());
-		$className = $joinedTableObjectBuilder->getObjectClassname();
-
-		// No lcfirst() in PHP < 5.3
-		$lowerClassName = $className;
-		$lowerClassName[0] = strtolower($lowerClassName[0]);
-
-		$crossRefObjectClassName = '$' . $lowerClassName;
 
 		// No lcfirst() in PHP < 5.3
 		$inputCollection = $relatedNamePlural;
@@ -3955,9 +3945,6 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
 		// No lcfirst() in PHP < 5.3
 		$inputCollectionEntry = $this->getFKPhpNameAffix($crossFK, $plural = false);
 		$inputCollectionEntry[0] = strtolower($inputCollectionEntry[0]);
-
-		$relCol = $this->getRefFKPhpNameAffix($refFK, $plural = true);
-		$relColVarName = $this->getRefFKCollVarName($crossFK);
 
 		$script .= "
 	/**
@@ -3971,34 +3958,14 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
 	 */
 	public function set{$relatedNamePlural}(PropelCollection \${$inputCollection}, PropelPDO \$con = null)
 	{
-		{$crossRefObjectClassName}s = {$crossRefQueryClassName}Query::create()
-			->filterBy{$relatedName}(\${$inputCollection})
-			->filterBy{$selfRelationName}(\$this)
-			->find(\$con);
+		\$this->clear{$relatedNamePlural}();
+		\$current{$relatedNamePlural} = \$this->get{$relatedNamePlural}();
 
-		\$current{$relCol} = \$this->get{$relCol}();
-
-		\$this->{$inputCollection}ScheduledForDeletion = \$current{$relCol}->diff({$crossRefObjectClassName}s);
-		\$this->{$relColVarName} = {$crossRefObjectClassName}s;
+		\$this->{$inputCollection}ScheduledForDeletion = \$current{$relatedNamePlural}->diff(\${$inputCollection});
 
 		foreach (\${$inputCollection} as \${$inputCollectionEntry}) {
-			// Skip objects that are already in the current collection.
-			\$isInCurrent = false;
-			foreach (\$current{$relCol} as {$crossRefObjectClassName}) {
-				if ({$crossRefObjectClassName}->get{$relatedName}() == \${$inputCollectionEntry}) {
-					\$isInCurrent = true;
-					break;
-				}
-			}
-			if (\$isInCurrent) {
-				continue;
-			}
-
-			// Fix issue with collection modified by reference
-			if (\${$inputCollectionEntry}->isNew()) {
+			if (!\$current{$relatedNamePlural}->contains(\${$inputCollectionEntry})) {
 				\$this->doAdd{$relatedName}(\${$inputCollectionEntry});
-			} else {
-				\$this->add{$relatedName}(\${$inputCollectionEntry});
 			}
 		}
 
