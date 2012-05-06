@@ -189,8 +189,7 @@ For every table in the database, Propel creates 3 PHP classes:
 
 Propel uses the `phpName` attribute of each table as the base for the PHP class names.
 
-All these classes are empty, but they inherit from `Base` classes that you will find under the `om/` directory:
-
+All these classes are empty, but they inherit from `Base` classes that you will find under the `om/` directory. For instance, if we follow our previous example with the book, the file `/path/to/bookstore/build/classes/bookstore/Book.php` could looks like this :
 {% highlight php %}
 <?php
 
