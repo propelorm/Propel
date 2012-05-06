@@ -42,10 +42,10 @@ $s4->insertAsNextSiblingOf($s2); // insert the node in the tree
 $s4->save();
 /* The sections are now stored in the database as a tree:
     $s1:Home
-    |       \
-$s2:World  $s4:Business
     |
-$s3:Europe
+$s2:World
+    |     \
+$s3:Europe  $s4:Business
 */
 {% endhighlight %}
 
