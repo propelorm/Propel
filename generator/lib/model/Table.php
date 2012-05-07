@@ -498,7 +498,7 @@ class Table extends ScopedElement implements IDMethod
 		foreach ($this->getForeignKeys() as $foreignKey) {
 			$localColumns = $foreignKey->getLocalColumnObjects();
 			$localColumnsHash = $this->getColumnList($localColumns);
-			if (!array_key_exists($localColumnsHash, $_indices)) {
+			if (!empty($localColumnsHash) && !array_key_exists($localColumnsHash, $_indices)) {
 				// no matching index defined in the schema, so we have to create one. MySQL needs indices on any columns that serve as foreign keys. these are not auto-created prior to 4.1.2
 				$index = new Index();
 				$index->setName(substr_replace($foreignKey->getName(), 'FI_',  strrpos($foreignKey->getName(), 'FK_'), 3));
