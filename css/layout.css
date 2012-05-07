@@ -9,10 +9,11 @@ a:hover, a:focus {
 
 .topmenu a.link {
     padding: 12px;
+    padding-bottom: 11px;
 }
 
 .topmenu a.link:hover {
-    background-color: #edbc1c;
+    background-color: #ebb71c;
     color: #fff;
 }
 
