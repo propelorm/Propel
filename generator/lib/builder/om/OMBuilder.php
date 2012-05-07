@@ -242,8 +242,17 @@ abstract class OMBuilder extends DataModelBuilder
 		foreach ($declaredClasses as $namespace => $classes) {
 			sort($classes);
 			foreach ($classes as $class) {
-				$script .= sprintf("use %s\\%s;
+				/** 
+				 * If the class' name starts with a backslash "\"" we assume it's a FQCN we are dealing with
+				 * and we don't prefix the class' name with the namespace
+				 */
+				if ('\\' === $class[0]) {
+					$script .= sprintf("use %s;
+", substr($class, 1));
+				} else {
+					$script .= sprintf("use %s\\%s;
 ", $namespace, $class);
+				}
 			}
 		}
 		return $script;
