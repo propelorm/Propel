@@ -964,13 +964,14 @@ abstract class ".$this->getClassname()." extends " . $parentClass . "
 		if (!$fk->isComposite()) {
 			$localColumnConstant = $this->getColumnConstant($fk->getLocalColumn());
 			$foreignColumnName = $fk->getForeignColumn()->getPhpName();
+            $foreignKeyColumn = $fk->getForeignTable()->hasCompositePrimaryKey() ? $foreignColumnName : 'PrimaryKey';
 			$script .= "
 		} elseif ($objectName instanceof PropelCollection) {
 			if (null === \$comparison) {
 				\$comparison = Criteria::IN;
 			}
 			return \$this
-				->addUsingAlias($localColumnConstant, {$objectName}->toKeyValue('PrimaryKey', '$foreignColumnName'), \$comparison);";
+				->addUsingAlias($localColumnConstant, {$objectName}->toKeyValue('$foreignKeyColumn', '$foreignColumnName'), \$comparison);";
 		}
 		$script .= "
 		} else {";
