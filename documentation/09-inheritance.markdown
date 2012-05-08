@@ -176,7 +176,7 @@ Using the previous schema, here is how you create a `Basketballer` and set his s
 
 {% highlight php %}
 <?php
-basketballer = new Basketballer();
+$basketballer = new Basketballer();
 $basketballer->setPoints(101);
 $basketballer->setFieldGoals(47);
 $basketballer->setThreePointsFieldGoals(7);
