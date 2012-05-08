@@ -6,13 +6,13 @@ Propel is an open-source Object-Relational Mapping (ORM) for PHP5.
 
 # A quick tour of the features #
 
-Propel has some nice features you should know about :
+Propel has some nice features you should know about:
 
  - It's a fast and easy way to manage you database.
- - It provides command line tools for generate code (well documented with an IDE-friendly syntax).
- - It's very flexible : you can simply extend Propel.
- - It uses PDO (PHP Data Object) so it allows you to use the RDBMS you want (MySQL, SQLite, PostgreSQL, Oracle and MSSQL are supported).
- - Propel is an open-source projet which is [well documented](http://propelorm.org/documentation/).
+ - It provides command line tools for generating code (well documented with an IDE-friendly syntax).
+ - It's very flexible: you can simply extend Propel.
+ - It uses PDO (PHP Data Objects) so it allows your to use the RDBMS you want (MySQL, SQLite, PostgreSQL, Oracle and MSSQL are supported).
+ - Propel is an open-source project which is [well documented](http://propelorm.org/documentation/).
 
 ## Installation ##
 
@@ -21,4 +21,4 @@ Read the [Propel documentation](http://www.propelorm.org/).
 
 ## License ##
 
-Propel is an open-source project released under the MIT liense. See the `LICENSE` file for more informations.
+Propel is an open-source project released under the MIT license. See the `LICENSE` file for more information.
