@@ -147,4 +147,37 @@ EOF;
 		}
 		$this->assertNotEquals($tags[0], $tags[1]);
 	}
+
+	public function testHydrateOverwritePreviousValues()
+	{
+		$schema = <<<EOF
+<database name="generated_object_complex_type_test_with_constructor">
+	<table name="complex_column_type_entity_with_constructor">
+		<column name="id" primaryKey="true" type="INTEGER" autoIncrement="true" />
+		<column name="tags" type="ARRAY" />
+	</table>
+</database>
+EOF;
+		$builder = new PropelQuickBuilder();
+		$builder->setSchema($schema);
+		$builder->setClassTargets(array('tablemap', 'peer', 'object', 'query', 'peerstub', 'querystub'));
+		$builder->build();
+
+		require_once dirname(__FILE__) . '/fixtures/ComplexColumnTypeEntityWithConstructor.php';
+		Propel::disableInstancePooling(); // need to be disabled to test the hydrate() method
+
+		$obj = new ComplexColumnTypeEntityWithConstructor();
+		$this->assertEquals(array('foo', 'bar'), $obj->getTags());
+
+		$obj->setTags(array('baz'));
+		$this->assertEquals(array('baz'), $obj->getTags());
+
+		$obj->save();
+
+		$obj = ComplexColumnTypeEntityWithConstructorQuery::create()
+			->findOne();
+		$this->assertEquals(array('baz'), $obj->getTags());
+
+		Propel::enableInstancePooling();
+	}
 }
