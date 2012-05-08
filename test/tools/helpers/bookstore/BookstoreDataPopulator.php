@@ -201,6 +201,37 @@ class BookstoreDataPopulator
 		$summary->setSummary("Harry Potter does some amazing magic!");
 		$summary->save();
 
+		// Add release_pool and record_label
+		$acuna = new RecordLabel();
+		$acuna->setAbbr('acuna');
+		$acuna->setName('Acunadeep');
+		$acuna->save();
+
+		$fade = new RecordLabel();
+		$fade->setAbbr('fade');
+		$fade->setName('Fade Records');
+		$fade->save();
+
+		$pool = new ReleasePool();
+		$pool->setName('D.Chmelyuk - Revert Me Back');
+		$pool->setRecordLabel($acuna);
+		$pool->save();
+
+		$pool = new ReleasePool();
+		$pool->setName('VIF & Lola Palmer - Dreamer');
+		$pool->setRecordLabel($acuna);
+		$pool->save();
+
+		$pool = new ReleasePool();
+		$pool->setName('Lola Palmer - Do You Belong To Me');
+		$pool->setRecordLabel($acuna);
+		$pool->save();
+
+		$pool = new ReleasePool();
+		$pool->setName('Chris Forties - Despegue (foem.info Runners Up Remixes)');
+		$pool->setRecordLabel($fade);
+		$pool->save();
+
 		$con->commit();
 	}
 
