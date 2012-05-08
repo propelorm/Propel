@@ -42,16 +42,6 @@ class PHP5ObjectBuilder extends ObjectBuilder
 		}
 	}
 
-    /**
-     * Returns default key type. if not presented in configuration default will be 'TYPE_PHPNAME'
-     * @return string
-     */
-    public function getDefaultKeyType()
-    {
-        $defaultKeyType = $this->getBuildProperty('defaultKeyType') ? $this->getBuildProperty('defaultKeyType') : 'phpName';
-        return "TYPE_".strtoupper($defaultKeyType);
-    }
-
 	/**
 	 * Returns the name of the current class being built.
 	 * @return     string
@@ -1932,14 +1922,9 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
 				} elseif ($col->isPhpPrimitiveType()) {
 					$script .= "
 			\$this->$clo = (\$row[\$startcol + $n] !== null) ? (".$col->getPhpType().") \$row[\$startcol + $n] : null;";
-				} elseif ($col->getType() === PropelTypes::OBJECT) {
+				} elseif ($col->getType() == PropelTypes::OBJECT) {
 					$script .= "
 			\$this->$clo = \$row[\$startcol + $n];";
-				} elseif ($col->getType() === PropelTypes::PHP_ARRAY) {
-					$cloUnserialized = $clo . '_unserialized';
-					$script .= "
-			\$this->$clo = \$row[\$startcol + $n];
-			\$this->$cloUnserialized = null;";
 				} elseif ($col->isPhpObjectType()) {
 					$script .= "
 			\$this->$clo = (\$row[\$startcol + $n] !== null) ? new ".$col->getPhpType()."(\$row[\$startcol + $n]) : null;";
@@ -2126,8 +2111,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
 		$hasFks = count($fks) > 0 || count($referrers) > 0;
 		$objectClassName = $this->getObjectClassname();
 		$pkGetter = $this->getTable()->hasCompositePrimaryKey() ? 'serialize($this->getPrimaryKey())' : '$this->getPrimaryKey()';
-		$defaultKeyType = $this->getDefaultKeyType();
-        $script .= "
+		$script .= "
 	/**
 	 * Exports the object as an array.
 	 *
@@ -2136,7 +2120,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
 	 *
 	 * @param     string  \$keyType (optional) One of the class type constants BasePeer::TYPE_PHPNAME, BasePeer::TYPE_STUDLYPHPNAME,
 	 *                    BasePeer::TYPE_COLNAME, BasePeer::TYPE_FIELDNAME, BasePeer::TYPE_NUM.
-	 *                    Defaults to BasePeer::$defaultKeyType.
+	 *                    Defaults to BasePeer::TYPE_PHPNAME.
 	 * @param     boolean \$includeLazyLoadColumns (optional) Whether to include lazy loaded columns. Defaults to TRUE.
 	 * @param     array \$alreadyDumpedObjects List of objects to skip to avoid recursion";
 		if ($hasFks) {
@@ -2147,7 +2131,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
 	 *
 	 * @return    array an associative array containing the field names (as keys) and field values
 	 */
-	public function toArray(\$keyType = BasePeer::$defaultKeyType, \$includeLazyLoadColumns = true, \$alreadyDumpedObjects = array()" . ($hasFks ? ", \$includeForeignObjects = false" : '') . ")
+	public function toArray(\$keyType = BasePeer::TYPE_PHPNAME, \$includeLazyLoadColumns = true, \$alreadyDumpedObjects = array()" . ($hasFks ? ", \$includeForeignObjects = false" : '') . ")
 	{
 		if (isset(\$alreadyDumpedObjects['$objectClassName'][$pkGetter])) {
 			return '*RECURSION*';
@@ -2215,7 +2199,6 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
 	 * @see        addGetByName
 	 **/
 	protected function addGetByNameComment(&$script) {
-        $defaultKeyType = $this->getDefaultKeyType();
 		$script .= "
 	/**
 	 * Retrieves a field from the object by name passed in as a string.
@@ -2223,8 +2206,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
 	 * @param      string \$name name
 	 * @param      string \$type The type of fieldname the \$name is of:
 	 *                     one of the class type constants BasePeer::TYPE_PHPNAME, BasePeer::TYPE_STUDLYPHPNAME
-	 *                     BasePeer::TYPE_COLNAME, BasePeer::TYPE_FIELDNAME, BasePeer::TYPE_NUM.
-	 *                     Defaults to BasePeer::$defaultKeyType
+	 *                     BasePeer::TYPE_COLNAME, BasePeer::TYPE_FIELDNAME, BasePeer::TYPE_NUM
 	 * @return     mixed Value of field.
 	 */";
 	}
@@ -2235,9 +2217,8 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
 	 * @see        addGetByName
 	 **/
 	protected function addGetByNameOpen(&$script) {
-        $defaultKeyType = $this->getDefaultKeyType();
 		$script .= "
-	public function getByName(\$name, \$type = BasePeer::$defaultKeyType)
+	public function getByName(\$name, \$type = BasePeer::TYPE_PHPNAME)
 	{";
 	}
 
@@ -2342,7 +2323,6 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
 	protected function addSetByName(&$script)
 	{
 		$table = $this->getTable();
-        $defaultKeyType = $this->getDefaultKeyType();
 		$script .= "
 	/**
 	 * Sets a field from the object by name passed in as a string.
@@ -2351,11 +2331,10 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
 	 * @param      mixed \$value field value
 	 * @param      string \$type The type of fieldname the \$name is of:
 	 *                     one of the class type constants BasePeer::TYPE_PHPNAME, BasePeer::TYPE_STUDLYPHPNAME
-	 *                     BasePeer::TYPE_COLNAME, BasePeer::TYPE_FIELDNAME, BasePeer::TYPE_NUM.
-	 *                     Defaults to BasePeer::$defaultKeyType
+	 *                     BasePeer::TYPE_COLNAME, BasePeer::TYPE_FIELDNAME, BasePeer::TYPE_NUM
 	 * @return     void
 	 */
-	public function setByName(\$name, \$value, \$type = BasePeer::$defaultKeyType)
+	public function setByName(\$name, \$value, \$type = BasePeer::TYPE_PHPNAME)
 	{
 		\$pos = ".$this->getPeerClassname()."::translateFieldName(\$name, \$type, BasePeer::TYPE_NUM);
 		return \$this->setByPosition(\$pos, \$value);
@@ -2413,7 +2392,6 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
 
 	protected function addFromArray(&$script)
 	{
-        $defaultKeyType = $this->getDefaultKeyType();
 		$table = $this->getTable();
 		$script .= "
 	/**
@@ -2427,19 +2405,18 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
 	 * You can specify the key type of the array by additionally passing one
 	 * of the class type constants BasePeer::TYPE_PHPNAME, BasePeer::TYPE_STUDLYPHPNAME,
 	 * BasePeer::TYPE_COLNAME, BasePeer::TYPE_FIELDNAME, BasePeer::TYPE_NUM.
-	 * The default key type is the column's BasePeer::$defaultKeyType
+	 * The default key type is the column's phpname (e.g. 'AuthorId')
 	 *
 	 * @param      array  \$arr     An array to populate the object from.
 	 * @param      string \$keyType The type of keys the array uses.
 	 * @return     void
 	 */
-	public function fromArray(\$arr, \$keyType = BasePeer::$defaultKeyType)
+	public function fromArray(\$arr, \$keyType = BasePeer::TYPE_PHPNAME)
 	{
 		\$keys = ".$this->getPeerClassname()."::getFieldNames(\$keyType);
 ";
 		foreach ($table->getColumns() as $num => $col) {
 			$cfc = $col->getPhpName();
-            //TODO: remove. not used
 			$cptype = $col->getPhpType();
 			$script .= "
 		if (array_key_exists(\$keys[$num], \$arr)) \$this->set$cfc(\$arr[\$keys[$num]]);";
