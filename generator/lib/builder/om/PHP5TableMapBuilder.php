@@ -303,8 +303,8 @@ class ".$this->getClassname()." extends TableMap
 			list($refFK, $crossFK) = $fkList;
 			$relationName = $this->getFKPhpNameAffix($crossFK);
 			$pluralName = "'" . $this->getFKPhpNameAffix($crossFK, true) . "'";
-			$onDelete = $fkey->hasOnDelete() ? "'" . $fkey->getOnDelete() . "'" : 'null';
-			$onUpdate = $fkey->hasOnUpdate() ? "'" . $fkey->getOnUpdate() . "'" : 'null';
+			$onDelete = $crossFK->hasOnDelete() ? "'" . $crossFK->getOnDelete() . "'" : 'null';
+			$onUpdate = $crossFK->hasOnUpdate() ? "'" . $crossFK->getOnUpdate() . "'" : 'null';
 			$script .= "
 		\$this->addRelation('$relationName', '" . addslashes($this->getNewStubObjectBuilder($crossFK->getForeignTable())->getFullyQualifiedClassname()) . "', RelationMap::MANY_TO_MANY, array(), $onDelete, $onUpdate, $pluralName);";
 		}
