@@ -753,31 +753,6 @@ class GeneratedObjectTest extends BookstoreTestBase
 		$this->assertEquals('Don Juan', $arr1[BookPeer::TITLE], 'toArray() returns an associative array representation of the object');
 	}
 
-    public function testToArrayKeyTypePreDefined()
-    {
-        $schema = <<<EOF
-<database name="test">
-    <table name="test_key_type_table">
-        <column name="id_key_type" required="true" primaryKey="true" autoIncrement="true" type="INTEGER" />
-        <column name="name_key_type" type="VARCHAR" />
-    </table>
-</database>
-EOF;
-        $builder = new PropelQuickBuilder();
-        $builder->setSchema($schema);
-        $builder->getConfig()->setBuildProperty('defaultKeyType', 'studlyPhpName');
-        $builder->buildClasses();
-
-        $expectedKeys = array(
-            'idKeyType',
-            'nameKeyType',
-        );
-
-        $object = new TestKeyTypeTable();
-
-        $this->assertEquals($expectedKeys, array_keys($object->toArray()), 'toArray() returns an associative array with pre-defined key type in properties.');
-    }
-
 	/**
 	 * Test regexp validator for ticket:542
 	 * @link       http://propel.phpdb.org/trac/ticket/542
