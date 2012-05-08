@@ -3332,6 +3332,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
 				$this->addRefFKCount($script, $refFK);
 				$this->addRefFKAdd($script, $refFK);
 				$this->addRefFKDoAdd($script, $refFK);
+				$this->addRefFKRemove($script, $refFK);
 				$this->addRefFKGetJoinMethods($script, $refFK);
 			}
 		}
@@ -3639,6 +3640,47 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
 	}
 
 	/**
+	 * @param		string &$script The script will be modified in this method.
+	 * @param		ForeignKey $refFK
+	 * @param		ForeignKey $crossFK
+	 */
+	protected function addRefFKRemove(&$script, $refFK)
+	{
+		$relatedName = $this->getRefFKPhpNameAffix($refFK, $plural = true);
+		$relatedObjectClassName = $this->getRefFKPhpNameAffix($refFK, $plural = false);
+
+		// No lcfirst() in PHP < 5.3
+		$inputCollection = $relatedName . 'ScheduleForDeletion';
+		$inputCollection[0] = strtolower($inputCollection[0]);
+
+		// lcfirst() doesn't exist in PHP < 5.3
+		$lowerRelatedObjectClassName = $relatedObjectClassName;
+		$lowerRelatedObjectClassName[0] = strtolower($lowerRelatedObjectClassName[0]);
+
+		$collName = $this->getRefFKCollVarName($refFK);
+		$relCol   = $this->getFKPhpNameAffix($refFK, $plural = false);
+
+		$script .= "
+	/**
+	 * @param	{$relatedObjectClassName} \${$lowerRelatedObjectClassName} The $lowerRelatedObjectClassName object to remove.
+	 */
+	protected function remove{$relatedObjectClassName}(\${$lowerRelatedObjectClassName})
+	{
+		\$this->init{$relatedName}(false);
+		if (\$this->{$collName}->contains(\${$lowerRelatedObjectClassName})) {
+			\$this->{$collName}->remove(\$this->{$collName}->search(\${$lowerRelatedObjectClassName}));
+			if (null === \$this->{$inputCollection}) {
+				\$this->{$inputCollection} = clone \$this->{$collName};
+				\$this->{$inputCollection}->clear();
+			}
+			\$this->{$inputCollection}[]= \${$lowerRelatedObjectClassName};
+			\${$lowerRelatedObjectClassName}->set{$relCol}(null);
+		}
+	}
+";
+	}
+
+	/**
 	 * Adds the method that gets a one-to-one related referrer fkey.
 	 * This is for one-to-one relationship special case.
 	 * @param      string &$script The script will be modified in this method.
@@ -3797,12 +3839,25 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
 
 		$queryClassName = $this->getNewStubQueryBuilder($refFK->getTable())->getClassname();
 
+		$localColumn = $refFK->getLocalColumn();
+
+
 		$script .= "
 			if (\$this->{$lowerRelatedName}ScheduledForDeletion !== null) {
-				if (!\$this->{$lowerRelatedName}ScheduledForDeletion->isEmpty()) {
+				if (!\$this->{$lowerRelatedName}ScheduledForDeletion->isEmpty()) {";
+		if (!$refFK->isComposite() && !$localColumn->isNotNull()) {
+		    $script .= "
+		            foreach (\$this->{$lowerRelatedName}ScheduledForDeletion as \${$lowerSingleRelatedName}) {
+		                // need to save related object because we set the relation to null
+		                \${$lowerSingleRelatedName}->save(\$con);
+		            }";
+		} else {
+		    $script .= "
 					$queryClassName::create()
 						->filterByPrimaryKeys(\$this->{$lowerRelatedName}ScheduledForDeletion->getPrimaryKeys(false))
-						->delete(\$con);
+						->delete(\$con);";
+		}
+		$script .= "
 					\$this->{$lowerRelatedName}ScheduledForDeletion = null;
 				}
 			}
@@ -4119,9 +4174,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
 	 */
 	public function remove{$relatedObjectClassName}($crossObjectClassName $crossObjectName)
 	{
-		if (\$this->{$collName} === null) {
-			\$this->init{$relCol}();
-		}
+		\$this->init{$relCol}(false);
 		if (\$this->{$collName}->contains({$crossObjectName})) {
 			\$this->{$collName}->remove(\$this->{$collName}->search({$crossObjectName}));
 			if (null === \$this->{$M2MScheduledForDeletion}) {
