@@ -652,7 +652,7 @@ class QueryBuilderTest extends BookstoreTestBase
 		$this->assertEquals($q2, $q1, 'filterByFk() accepts a collection and results to an IN query');
 	}
 
-		public function testFilterByRefFk()
+	public function testFilterByRefFk()
 	{
 		$this->assertTrue(method_exists('BookQuery', 'filterByReview'), 'QueryBuilder adds filterByRefFk() methods');
 		$this->assertTrue(method_exists('BookQuery', 'filterByMedia'), 'QueryBuilder adds filterByRefFk() methods for all fkeys');
@@ -684,6 +684,31 @@ class QueryBuilderTest extends BookstoreTestBase
 		$q = AuthorQuery::create()->filterByBook($testBook, Criteria::NOT_EQUAL);
 		$q1 = AuthorQuery::create()->add(AuthorPeer::ID, $testBook->getAuthorId(), Criteria::NOT_EQUAL);
 		$this->assertEquals($q1, $q, 'filterByRefFk() accepts an optional comparison operator');
+	}
+
+	public function testFilterByRelationNameCompositePk()
+	{
+		BookstoreDataPopulator::depopulate();
+		BookstoreDataPopulator::populate();
+
+		$testLabel = RecordLabelQuery::create()
+			->limit(2)
+			->find($this->con);
+
+		$testRelease = ReleasePoolQuery::create()
+			->addJoin(ReleasePoolPeer::RECORD_LABEL_ID, RecordLabelPeer::ID)
+			->filterByRecordLabel($testLabel)
+			->find($this->con);
+		$q1 = $this->con->getLastExecutedQuery();
+
+		$releasePool = ReleasePoolQuery::create()
+			->addJoin(ReleasePoolPeer::RECORD_LABEL_ID, RecordLabelPeer::ID)
+			->add(ReleasePoolPeer::RECORD_LABEL_ID, $testLabel->toKeyValue('Id', 'Id'), Criteria::IN)
+			->find($this->con);
+		$q2 = $this->con->getLastExecutedQuery();
+
+		$this->assertEquals($q2, $q1, 'filterBy{RelationName}() only accepts arguments of type {RelationName} or PropelCollection');
+		$this->assertEquals($releasePool, $testRelease);
 	}
 
 	public function testFilterByRefFkCompositeKey()
