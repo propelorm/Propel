@@ -8,12 +8,12 @@
  * @license    MIT License
  */
 
-require_once 'AggregateColumnRelationBehavior.php';
+//require_once 'AggregateColumnRelationBehaviorBuilder.php';
 
 /**
  * Keeps an aggregate column updated with related table
  *
- * @author     François Zaninotto
+ * @author     François Zaninotto, Jose F. D'Silva (jose.dsilva@bombayworks.se)
  * @version    $Revision$
  * @package    propel.generator.behavior.aggregate_column
  */
@@ -24,12 +24,14 @@ class AggregateColumnRelationBehavior extends Behavior
 	protected $parameters = array(
 		'foreign_table' => '',
 		'update_method' => '',
+		'foreign_aggregate_column' => '',
 	);
 
 	public function postSave($builder)
 	{
 		$relationName = $this->getRelationName($builder);
-		return "\$this->updateRelated{$relationName}(\$con);";
+		$aggregateColumn = $this->getParameter('foreign_aggregate_column');
+		return "\$this->updateRelated{$relationName}For{$aggregateColumn}(\$con);";
 	}
 
 	// no need for a postDelete() hook, since delete() uses Query::delete(),
@@ -38,7 +40,8 @@ class AggregateColumnRelationBehavior extends Behavior
 	public function objectAttributes($builder)
 	{
 		$relationName = $this->getRelationName($builder);
-		return "protected \$old{$relationName};
+		$aggregateColumn = $this->getParameter('foreign_aggregate_column');
+		return "protected \$old{$relationName}For{$aggregateColumn};
 ";
 	}
 
@@ -50,9 +53,11 @@ class AggregateColumnRelationBehavior extends Behavior
 	protected function addObjectUpdateRelated($builder)
 	{
 		$relationName = $this->getRelationName($builder);
+		$aggregateColumn = $this->getParameter('foreign_aggregate_column');
 		$updateMethodName = $this->getParameter('update_method');
 		return $this->renderTemplate('objectUpdateRelated', array(
 			'relationName'     => $relationName,
+			'aggregateColumn'	 => $aggregateColumn,
 			'variableName'     => self::lcfirst($relationName),
 			'updateMethodName' => $this->getParameter('update_method'),
 		));
@@ -61,13 +66,14 @@ class AggregateColumnRelationBehavior extends Behavior
 	public function objectFilter(&$script, $builder)
 	{
 		$relationName = $this->getRelationName($builder);
+		$aggregateColumn = $this->getParameter('foreign_aggregate_column');
 		$relatedClass = $this->getForeignTable()->getPhpName();
 		$search = "	public function set{$relationName}({$relatedClass} \$v = null)
 	{";
 		$replace = $search . "
 		// aggregate_column_relation behavior
 		if (null !== \$this->a{$relationName} && \$v !== \$this->a{$relationName}) {
-			\$this->old{$relationName} = \$this->a{$relationName};
+			\$this->old{$relationName}For{$aggregateColumn} = \$this->a{$relationName};
 		}";
 		$script = str_replace($search, $replace, $script);
 	}
@@ -85,7 +91,8 @@ class AggregateColumnRelationBehavior extends Behavior
 	protected function getFindRelated($builder)
 	{
 		$relationName = $this->getRelationName($builder);
-		return "\$this->findRelated{$relationName}s(\$con);";
+		$aggregateColumn = $this->getParameter('foreign_aggregate_column');
+		return "\$this->findRelated{$relationName}s{$aggregateColumn}(\$con);";
 	}
 
 	public function postUpdateQuery($builder)
@@ -101,7 +108,8 @@ class AggregateColumnRelationBehavior extends Behavior
 	protected function getUpdateRelated($builder)
 	{
 		$relationName = $this->getRelationName($builder);
-		return "\$this->updateRelated{$relationName}s(\$con);";
+		$aggregateColumn = $this->getParameter('foreign_aggregate_column');
+		return "\$this->updateRelated{$relationName}s{$aggregateColumn}(\$con);";
 	}
 
 	public function queryMethods($builder)
@@ -119,9 +127,11 @@ class AggregateColumnRelationBehavior extends Behavior
 		$foreignQueryBuilder = $builder->getNewStubQueryBuilder($foreignKey->getForeignTable());
 		$builder->declareClass($foreignQueryBuilder->getFullyQualifiedClassname());
 		$relationName = $this->getRelationName($builder);
+		$aggregateColumn = $this->getParameter('foreign_aggregate_column');
 		return $this->renderTemplate('queryFindRelated', array(
 			'foreignTable'     => $this->getForeignTable(),
 			'relationName'     => $relationName,
+			'aggregateColumn'  => $aggregateColumn,
 			'variableName'     => self::lcfirst($relationName),
 			'foreignQueryName' => $foreignQueryBuilder->getClassname(),
 			'refRelationName'  => $builder->getRefFKPhpNameAffix($foreignKey),
@@ -131,8 +141,10 @@ class AggregateColumnRelationBehavior extends Behavior
 	protected function addQueryUpdateRelated($builder)
 	{
 		$relationName = $this->getRelationName($builder);
+		$aggregateColumn = $this->getParameter('foreign_aggregate_column');
 		return $this->renderTemplate('queryUpdateRelated', array(
 			'relationName'     => $relationName,
+			'aggregateColumn'  => $aggregateColumn,
 			'variableName'     => self::lcfirst($relationName),
 			'updateMethodName' => $this->getParameter('update_method'),
 		));
