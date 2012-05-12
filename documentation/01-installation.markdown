@@ -87,7 +87,13 @@ The script should output a welcome message, followed by a 'BUILD FAILED' message
 
 {% highlight bash %}
 cd myproject
-ln -s vendor/propel/generator/bin/propel-gen propel-gen
+ln -s vendor/propel/generator/bin/propel-gen propel-gen # Make a symlink to the propel generator file
+{% endhighlight %}
+
+Or edit your ~/.bashrc or ~/.zshrc file with :
+{% highlight bash %}
+... Your default configuration, aliases, etc.
+export PATH=$PATH:/path/to/propel/bin
 {% endhighlight %}
 
 At this point, Propel should be setup and ready to use. You can follow the steps in the [Build Guide](02-buildtime.html) to try it out.
