@@ -91,7 +91,7 @@ class SortableBehaviorObjectBuilderModifier
 			return "// if scope has changed and rank was not modified (if yes, assuming superior action)
 // insert object to the end of new scope and cleanup old one
 if (\$this->isColumnModified({$this->peerClassname}::SCOPE_COL) && !\$this->isColumnModified({$this->peerClassname}::SORTABLE_RANK)) {
-	{$this->peerClassname}::shiftRank(-1, \$this->getSortableRank() + 1, null, \$this->old_scope, \$con);
+	{$this->peerClassname}::shiftRank(-1, \$this->getSortableRank() + 1, null, \$this->oldScope, \$con);
 	\$this->insertAtBottom(\$con);
 }
 ";
@@ -123,7 +123,7 @@ protected \$sortableQueries = array();
  * The old scope value.
  * @var        int
  */
-protected \$old_scope;
+protected \$oldScope;
 ";
 		}
 
@@ -167,7 +167,7 @@ protected \$old_scope;
 			$search = "if (\$this->{$this->getColumnAttribute('scope_column')} !== \$v) {";
 			$replace = $search . "
 			// sortable behavior
-			\$this->old_scope = \$this->{$this->getColumnGetter('scope_column')}();
+			\$this->oldScope = \$this->{$this->getColumnGetter('scope_column')}();
 ";
 			$script = str_replace($search, $replace, $script);
 		}
