@@ -37,6 +37,7 @@ class ArchivableBehaviorObjectBuilderModifier
 		if (!$this->behavior->hasArchiveClass()) {
 			$builder->declareClassFromBuilder($builder->getNewStubQueryBuilder($this->behavior->getArchiveTable()));
 		}
+
 		$script = '';
 		if ($this->behavior->isArchiveOnInsert()) {
 			$script .= "protected \$archiveOnInsert = true;
@@ -82,10 +83,10 @@ class ArchivableBehaviorObjectBuilderModifier
 	}
 
 	/**
-	 * Using preDelete rather than postDelete to allow user to retrieve 
+	 * Using preDelete rather than postDelete to allow user to retrieve
 	 * related records and archive them before cascade deletion.
 	 *
-	 * The actual deletion is made by the query object, so the AR class must tell 
+	 * The actual deletion is made by the query object, so the AR class must tell
 	 * the query class to enable or disable archiveOnDelete.
 	 *
 	 * @return string the PHP code to be added to the builder
@@ -106,6 +107,15 @@ class ArchivableBehaviorObjectBuilderModifier
 	public function objectMethods($builder)
 	{
 		$this->builder = $builder;
+
+		if ($this->behavior->hasArchiveClass()) {
+			$this->builder->declareClass($this->behavior->getParameter('archive_class'));
+		} else {
+			$this->builder->declareClassFromBuilder(
+				$builder->getNewStubObjectBuilder($this->behavior->getArchiveTable())
+			);
+		}
+
 		$script = '';
 		$script .= $this->addGetArchive($builder);
 		$script .= $this->addArchive($builder);
@@ -193,5 +203,4 @@ class ArchivableBehaviorObjectBuilderModifier
 			'objectClassname' => $this->builder->getObjectClassname(),
 		));
 	}
-
 }
