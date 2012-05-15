@@ -69,7 +69,7 @@ class XmlToAppDataTest extends PHPUnit_Framework_TestCase
 		$database = $appData->getDatabase();
 		$table = $database->getTable('bar');
 		$expectedTable = <<<EOF
-<table name="bar" phpName="Bar" idMethod="native" readOnly="false" reloadOnInsert="false" reloadOnUpdate="false" abstract="false">
+<table name="bar" phpName="Bar" idMethod="native" skipSql="false" readOnly="false" reloadOnInsert="false" reloadOnUpdate="false" abstract="false">
   <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
 </table>
 EOF;
@@ -84,7 +84,7 @@ EOF;
 		$expectedAppData = <<<EOF
 <app-data>
 <database name="foo" defaultIdMethod="native" defaultPhpNamingMethod="underscore" defaultTranslateMethod="none">
-  <table name="bar" phpName="Bar" idMethod="native" readOnly="false" reloadOnInsert="false" reloadOnUpdate="false" abstract="false">
+  <table name="bar" phpName="Bar" idMethod="native" skipSql="false" readOnly="false" reloadOnInsert="false" reloadOnUpdate="false" abstract="false">
     <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
   </table>
 </database>
@@ -101,10 +101,10 @@ EOF;
 		$expectedAppData = <<<EOF
 <app-data>
 <database name="foo" defaultIdMethod="native" defaultPhpNamingMethod="underscore" defaultTranslateMethod="none">
-  <table name="bar1" phpName="Bar1" idMethod="native" readOnly="false" reloadOnInsert="false" reloadOnUpdate="false" abstract="false">
+  <table name="bar1" phpName="Bar1" idMethod="native" skipSql="false" readOnly="false" reloadOnInsert="false" reloadOnUpdate="false" abstract="false">
     <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
   </table>
-  <table name="bar2" phpName="Bar2" idMethod="native" readOnly="false" reloadOnInsert="false" reloadOnUpdate="false" forReferenceOnly="true" abstract="false">
+  <table name="bar2" phpName="Bar2" idMethod="native" skipSql="false" readOnly="false" reloadOnInsert="false" reloadOnUpdate="false" forReferenceOnly="true" abstract="false">
     <column name="id" phpName="Id" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
   </table>
 </database>
