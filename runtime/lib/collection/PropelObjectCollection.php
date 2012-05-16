@@ -271,6 +271,7 @@ class PropelObjectCollection extends PropelCollection
 				$mainObj = $object->$getMethod();  // instance pool is used here to avoid a query
 				$mainObj->$addMethod($object);
 			}
+			$relatedObjects->clearIterator();
 		} elseif ($relationMap->getType() == RelationMap::MANY_TO_ONE) {
 			// nothing to do; the instance pool will catch all calls to getRelatedObject()
 			// and return the object in memory
