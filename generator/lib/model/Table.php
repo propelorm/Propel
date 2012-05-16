@@ -1698,7 +1698,7 @@ class Table extends ScopedElement implements IDMethod
 		}
 
 		if ($this->skipSql !== null) {
-			$tableNode->setAttribute('idMethod', var_export($this->skipSql, true));
+			$tableNode->setAttribute('skipSql', var_export($this->skipSql, true));
 		}
 
 		if ($this->readOnly !== null) {
