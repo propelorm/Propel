@@ -88,18 +88,16 @@ class ColumnMapTest extends BookstoreTestBase
   public function testGetForeignKey()
   {
     $this->assertFalse($this->cmap->isForeignKey(), 'foreignKey is false by default');
-    try
-    {
+    try {
       $this->cmap->getRelatedTable();
       $this->fail('getRelatedTable throws an exception when called on a column with no foreign key');
-    } catch(PropelException $e) {
+    } catch (PropelException $e) {
       $this->assertTrue(true, 'getRelatedTable throws an exception when called on a column with no foreign key');
     }
-    try
-    {
+    try {
       $this->cmap->getRelatedColumn();
       $this->fail('getRelatedColumn throws an exception when called on a column with no foreign key');
-    } catch(PropelException $e) {
+    } catch (PropelException $e) {
       $this->assertTrue(true, 'getRelatedColumn throws an exception when called on a column with no foreign key');
     }
     $relatedTmap = $this->dmap->addTable('foo2');

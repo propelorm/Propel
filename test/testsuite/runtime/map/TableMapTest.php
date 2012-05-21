@@ -56,8 +56,7 @@ class TableMapTest extends PHPUnit_Framework_TestCase
   {
     $tmap = new TableMap();
     $properties = array('name', 'phpName', 'className', 'package');
-    foreach ($properties as $property)
-    {
+    foreach ($properties as $property) {
       $getter = 'get' . ucfirst($property);
       $setter = 'set' . ucfirst($property);
       $this->assertNull($tmap->$getter(), "A new relation has no $property");
@@ -81,28 +80,25 @@ class TableMapTest extends PHPUnit_Framework_TestCase
   {
     $column = $this->tmap->addColumn('BAR', 'Bar', 'INTEGER');
     $this->assertEquals($column, $this->tmap->getColumn('BAR'), 'getColumn returns a ColumnMap according to a column name');
-    try
-    {
+    try {
       $this->tmap->getColumn('FOO');
       $this->fail('getColumn throws an exception when called on an inexistent column');
-    } catch(PropelException $e) {}
+    } catch (PropelException $e) {}
     $this->assertEquals($column, $this->tmap->getColumn('foo.bar'), 'getColumn accepts a denormalized column name');
-    try
-    {
+    try {
       $this->tmap->getColumn('foo.bar', false);
       $this->fail('getColumn accepts a $normalize parameter to skip name normalization');
-    } catch(PropelException $e) {}
+    } catch (PropelException $e) {}
   }
 
   public function testGetColumnByPhpName()
   {
     $column = $this->tmap->addColumn('BAR_BAZ', 'BarBaz', 'INTEGER');
     $this->assertEquals($column, $this->tmap->getColumnByPhpName('BarBaz'), 'getColumnByPhpName() returns a ColumnMap according to a column phpName');
-    try
-    {
+    try {
       $this->tmap->getColumn('Foo');
       $this->fail('getColumnByPhpName() throws an exception when called on an inexistent column');
-    } catch(PropelException $e) {}
+    } catch (PropelException $e) {}
   }
 
   public function testGetColumns()
@@ -168,9 +164,9 @@ class TableMapTest extends PHPUnit_Framework_TestCase
     $this->assertEquals($expected, $this->tmap->getForeignKeys(), 'getForeignKeys() returns an array of the table foreign keys');
   }
 
-	/**
-	 * @expectedException PropelException
-	 */
+    /**
+     * @expectedException PropelException
+     */
   public function testLoadWrongRelations()
   {
     $this->tmap->getRelation('Bar');

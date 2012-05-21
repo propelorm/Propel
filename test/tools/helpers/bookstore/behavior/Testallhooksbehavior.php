@@ -14,37 +14,37 @@ class TestAllHooksBehavior extends Behavior
 
   public function getTableModifier()
   {
-    if (is_null($this->tableModifier))
-    {
+    if (is_null($this->tableModifier)) {
       $this->tableModifier = new TestAllHooksTableModifier($this);
     }
+
     return $this->tableModifier;
   }
 
   public function getObjectBuilderModifier()
   {
-    if (is_null($this->objectBuilderModifier))
-    {
+    if (is_null($this->objectBuilderModifier)) {
       $this->objectBuilderModifier = new TestAllHooksObjectBuilderModifier($this);
     }
+
     return $this->objectBuilderModifier;
   }
 
   public function getPeerBuilderModifier()
   {
-    if (is_null($this->peerBuilderModifier))
-    {
+    if (is_null($this->peerBuilderModifier)) {
       $this->peerBuilderModifier = new TestAllHooksPeerBuilderModifier($this);
     }
+
     return $this->peerBuilderModifier;
   }
 
   public function getQueryBuilderModifier()
   {
-    if (is_null($this->queryBuilderModifier))
-    {
+    if (is_null($this->queryBuilderModifier)) {
       $this->queryBuilderModifier = new TestAllHooksQueryBuilderModifier($this);
     }
+
     return $this->queryBuilderModifier;
   }
 }
@@ -122,7 +122,7 @@ class TestAllHooksObjectBuilderModifier
 
   public function objectCall($builder)
   {
-  	return 'if ($name == "foo") return "bar";';
+      return 'if ($name == "foo") return "bar";';
   }
 
   public function objectFilter(&$string, $builder)
@@ -156,28 +156,28 @@ class TestAllHooksPeerBuilderModifier
 
 class TestAllHooksQueryBuilderModifier
 {
-	public function preSelectQuery($builder)
-	{
-		return '// foo';
-	}
+    public function preSelectQuery($builder)
+    {
+        return '// foo';
+    }
 
-	public function preDeleteQuery($builder)
-	{
-		return '// foo';
-	}
+    public function preDeleteQuery($builder)
+    {
+        return '// foo';
+    }
 
-	public function postDeleteQuery($builder)
-	{
-		return '// foo';
-	}
+    public function postDeleteQuery($builder)
+    {
+        return '// foo';
+    }
 
-	public function preUpdateQuery($builder)
-	{
-		return '// foo';
-	}
+    public function preUpdateQuery($builder)
+    {
+        return '// foo';
+    }
 
-	public function postUpdateQuery($builder)
-	{
-		return '// foo';
-	}
+    public function postUpdateQuery($builder)
+    {
+        return '// foo';
+    }
 }
