@@ -2,8 +2,6 @@
 layout: home
 ---
 
-# Welcome to the Propel Website! #
-
 ![Propel logo](./images/propel-logo.png)
 
 ### What? ###
