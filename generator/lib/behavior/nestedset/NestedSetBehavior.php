@@ -22,10 +22,10 @@ class NestedSetBehavior extends Behavior
 {
 	// default parameters value
 	protected $parameters = array(
-		'left_column'		 => 'tree_left',
+		'left_column'	 => 'tree_left',
 		'right_column'	 => 'tree_right',
 		'level_column'	 => 'tree_level',
-		'use_scope'			 => 'false',
+		'use_scope'		 => 'false',
 		'scope_column'	 => 'tree_scope',
 		'method_proxies' => 'false'
 	);
@@ -55,7 +55,7 @@ class NestedSetBehavior extends Behavior
 				'type' => 'INTEGER'
 			));
 		}
-		if ($this->getParameter('use_scope') == 'true' &&
+		if ($this->getParameter('use_scope') === 'true' &&
 			 !$this->getTable()->containsColumn($this->getParameter('scope_column'))) {
 			$this->getTable()->addColumn(array(
 				'name' => $this->getParameter('scope_column'),
