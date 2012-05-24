@@ -20,6 +20,7 @@
 class PropelOnDemandFormatter extends PropelObjectFormatter
 {
     protected $collectionName = 'PropelOnDemandCollection';
+
     protected $isSingleTableInheritance = false;
 
     public function init(ModelCriteria $criteria)
@@ -54,7 +55,7 @@ class PropelOnDemandFormatter extends PropelObjectFormatter
      *
      * @return BaseObject
      */
-    public function getAllObjectsFromRow($row)
+    public function getAllObjectsFromRow($row, $obj = null)
     {
         $col = 0;
         // main object

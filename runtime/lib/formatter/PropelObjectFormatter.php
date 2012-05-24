@@ -35,9 +35,19 @@ class PropelObjectFormatter extends PropelFormatter
                 throw new PropelException('Cannot use limit() in conjunction with with() on a one-to-many relationship. Please remove the with() call, or the limit() call.');
             }
             $pks = array();
+            $objectsByPks = array();
             while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
                 $object = $this->getAllObjectsFromRow($row);
-                $pk = $object->getPrimaryKey();
+                $pk		= $object->getPrimaryKey();
+
+                if (false === Propel::isInstancePoolingEnabled()) {
+                    if (isset($objectsByPks[$pk])) {
+                        $object = $this->getAllObjectsFromRow($row, $objectsByPks[$pk]);
+                    }
+
+                    $objectsByPks[$pk] = $object;
+                }
+
                 if (!in_array($pk, $pks)) {
                     $collection[] = $object;
                     $pks[] = $pk;
@@ -59,7 +69,7 @@ class PropelObjectFormatter extends PropelFormatter
         $this->checkInit();
         $result = null;
         while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-            $result = $this->getAllObjectsFromRow($row);
+            $result = $this->getAllObjectsFromRow($row, $result);
         }
         $stmt->closeCursor();
 
@@ -79,12 +89,17 @@ class PropelObjectFormatter extends PropelFormatter
      *  @param    array  $row associative array indexed by column number,
      *                   as returned by PDOStatement::fetch(PDO::FETCH_NUM)
      *
-     * @return BaseObject
+     * @return    BaseObject
      */
-    public function getAllObjectsFromRow($row)
+    public function getAllObjectsFromRow($row, $obj = null)
     {
-        // main object
-        list($obj, $col) = call_user_func(array($this->peer, 'populateObject'), $row);
+        if (null === $obj) {
+            // get the main object
+            list($obj, $col) = call_user_func(array($this->peer, 'populateObject'), $row);
+        } else {
+            // don't get $obj
+            list($null, $col) = call_user_func(array($this->peer, 'populateObject'), $row);
+        }
 
         // related objects added using with()
         foreach ($this->getWith() as $modelWith) {
@@ -126,5 +141,4 @@ class PropelObjectFormatter extends PropelFormatter
 
         return $obj;
     }
-
 }

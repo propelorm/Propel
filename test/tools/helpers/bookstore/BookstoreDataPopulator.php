@@ -22,7 +22,7 @@ define('_LOB_SAMPLE_FILE_PATH', dirname(__FILE__) . '/../../../etc/lob');
 class BookstoreDataPopulator
 {
 
-    public static function populate($con = null)
+    public static function populate($con = null, $loadMoreBooks = false)
     {
         if ($con === null) {
             $con = Propel::getConnection(BookPeer::DATABASE_NAME);
@@ -109,6 +109,16 @@ class BookstoreDataPopulator
         $td->setPublisher($vintage);
         $td->save($con);
         $td_id = $td->getId();
+
+        if ($loadMoreBooks) {
+            $td2 = new Book();
+            $td2->setISBN("067972575Y");
+            $td2->setTitle("The Tin Drum 2");
+            $td2->setPrice(23.99);
+            $td2->setAuthor($grass);
+            $td2->save($con);
+            $td2_id = $td2->getId();
+        }
 
         $r1 = new Review();
         $r1->setBook($phoenix);

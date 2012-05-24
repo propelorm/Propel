@@ -22,7 +22,8 @@ class PropelObjectFormatterTest extends BookstoreEmptyTestBase
     protected function setUp()
     {
         parent::setUp();
-        BookstoreDataPopulator::populate();
+
+        BookstoreDataPopulator::populate(null, true);
     }
 
     public function testFormatNoCriteria()
@@ -46,7 +47,7 @@ class PropelObjectFormatterTest extends BookstoreEmptyTestBase
         $formatter->setClass('Book');
         $books = $formatter->format($stmt);
         $this->assertTrue($books instanceof PropelObjectCollection);
-        $this->assertEquals(4, $books->count());
+        $this->assertEquals(5, $books->count());
     }
 
     public function testFormatManyResults()
@@ -59,7 +60,7 @@ class PropelObjectFormatterTest extends BookstoreEmptyTestBase
         $books = $formatter->format($stmt);
 
         $this->assertTrue($books instanceof PropelCollection, 'PropelObjectFormatter::format() returns a PropelCollection');
-        $this->assertEquals(4, count($books), 'PropelObjectFormatter::format() returns as many rows as the results in the query');
+        $this->assertEquals(5, count($books), 'PropelObjectFormatter::format() returns as many rows as the results in the query');
         foreach ($books as $book) {
             $this->assertTrue($book instanceof Book, 'PropelObjectFormatter::format() returns an array of Model objects');
         }
@@ -132,4 +133,62 @@ class PropelObjectFormatterTest extends BookstoreEmptyTestBase
         $this->assertNull($book, 'PropelObjectFormatter::formatOne() returns null when no result');
     }
 
+    public function testFormatOneWithRelatedObjects()
+    {
+        $con = Propel::getConnection(BookPeer::DATABASE_NAME);
+        $con->useDebug(false);
+        $con->useDebug(true);
+
+        $this->assertEquals(0, $con->getQueryCount());
+
+        $stmt = $con->query('SELECT * FROM author LEFT JOIN book ON (author.id = book.author_id) WHERE author.id = (SELECT author_id FROM book WHERE title = "The Tin Drum 2")');
+        $formatter = new PropelObjectFormatter();
+
+        $criteria  = new ModelCriteria('bookstore', 'Author');
+        $criteria->joinWith('Book');
+
+        $formatter->init($criteria);
+        $author = $formatter->formatOne($stmt);
+
+        $this->assertEquals(1, $con->getQueryCount());
+        $this->assertTrue($author instanceof Author, 'PropelObjectFormatter::formatOne() returns a model object');
+
+        $this->assertTrue($author->getBooks() instanceof PropelCollection);
+        $this->assertEquals(2, $author->countBooks());
+
+        $this->assertEquals(1, $con->getQueryCount());
+    }
+
+    public function testFormaWithRelatedObjects()
+    {
+        $con = Propel::getConnection(BookPeer::DATABASE_NAME);
+        $con->useDebug(false);
+        $con->useDebug(true);
+
+        $this->assertEquals(0, $con->getQueryCount());
+
+        $stmt = $con->query('SELECT * FROM author LEFT JOIN book ON (author.id = book.author_id)');
+        $formatter = new PropelObjectFormatter();
+
+        $criteria  = new ModelCriteria('bookstore', 'Author');
+        $criteria->joinWith('Book');
+
+        $formatter->init($criteria);
+        $authors = $formatter->format($stmt);
+
+        $this->assertEquals(1, $con->getQueryCount());
+        $this->assertTrue($authors instanceof PropelObjectCollection, 'PropelObjectFormatter::formatOne() returns a model object');
+
+        foreach ($authors as $author) {
+            $this->assertTrue($author->getBooks() instanceof PropelCollection);
+
+            if ('Grass' === $author->getLastName()) {
+                $this->assertEquals(2, $author->countBooks());
+            } else {
+                $this->assertEquals(1, $author->countBooks());
+            }
+        }
+
+        $this->assertEquals(1, $con->getQueryCount());
+    }
 }
