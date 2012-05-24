@@ -55,7 +55,7 @@ class PropelOnDemandFormatter extends PropelObjectFormatter
      *
      * @return BaseObject
      */
-    public function getAllObjectsFromRow($row, $obj = null)
+    public function getAllObjectsFromRow($row)
     {
         $col = 0;
         // main object

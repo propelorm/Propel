@@ -20,6 +20,8 @@ class PropelObjectFormatter extends PropelFormatter
 {
     protected $collectionName = 'PropelObjectCollection';
 
+    private $mainObject;
+
     public function format(PDOStatement $stmt)
     {
         $this->checkInit();
@@ -42,7 +44,8 @@ class PropelObjectFormatter extends PropelFormatter
 
                 if (false === Propel::isInstancePoolingEnabled()) {
                     if (isset($objectsByPks[$pk])) {
-                        $object = $this->getAllObjectsFromRow($row, $objectsByPks[$pk]);
+                        $this->mainObject = $objectsByPks[$pk];
+                        $object = $this->getAllObjectsFromRow($row);
                     }
 
                     $objectsByPks[$pk] = $object;
@@ -67,10 +70,13 @@ class PropelObjectFormatter extends PropelFormatter
     public function formatOne(PDOStatement $stmt)
     {
         $this->checkInit();
+
         $result = null;
         while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-            $result = $this->getAllObjectsFromRow($row, $result);
+            $result = $this->getAllObjectsFromRow($row);
+            $this->mainObject = $result;
         }
+
         $stmt->closeCursor();
 
         return $result;
@@ -91,14 +97,13 @@ class PropelObjectFormatter extends PropelFormatter
      *
      * @return    BaseObject
      */
-    public function getAllObjectsFromRow($row, $obj = null)
+    public function getAllObjectsFromRow($row)
     {
-        if (null === $obj) {
-            // get the main object
-            list($obj, $col) = call_user_func(array($this->peer, 'populateObject'), $row);
-        } else {
-            // don't get $obj
-            list($null, $col) = call_user_func(array($this->peer, 'populateObject'), $row);
+        // get the main object
+        list($obj, $col) = call_user_func(array($this->peer, 'populateObject'), $row);
+
+        if (null !== $this->mainObject) {
+            $obj = $this->mainObject;
         }
 
         // related objects added using with()
