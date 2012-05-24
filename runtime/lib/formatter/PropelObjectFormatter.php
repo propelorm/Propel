@@ -73,8 +73,8 @@ class PropelObjectFormatter extends PropelFormatter
 
         $result = null;
         while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-            $result = $this->getAllObjectsFromRow($row);
             $this->mainObject = $result;
+            $result = $this->getAllObjectsFromRow($row);
         }
 
         $stmt->closeCursor();
