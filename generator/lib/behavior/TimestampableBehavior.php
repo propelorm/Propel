@@ -35,11 +35,14 @@ class TimestampableBehavior extends Behavior
                 'type' => 'TIMESTAMP'
             ));
         }
-        if (!$this->getTable()->containsColumn($this->getParameter('update_column'))) {
-            $this->getTable()->addColumn(array(
-                'name' => $this->getParameter('update_column'),
-                'type' => 'TIMESTAMP'
-            ));
+
+        if ($this->withUpdatedAt()) {
+            if (!$this->getTable()->containsColumn($this->getParameter('update_column'))) {
+                $this->getTable()->addColumn(array(
+                    'name' => $this->getParameter('update_column'),
+                    'type' => 'TIMESTAMP'
+                ));
+            }
         }
     }
 
@@ -66,9 +69,11 @@ class TimestampableBehavior extends Behavior
      */
     public function preUpdate($builder)
     {
-        return "if (\$this->isModified() && !\$this->isColumnModified(" . $this->getColumnConstant('update_column', $builder) . ")) {
+        if ($this->withUpdatedAt()) {
+            return "if (\$this->isModified() && !\$this->isColumnModified(" . $this->getColumnConstant('update_column', $builder) . ")) {
     \$this->" . $this->getColumnSetter('update_column') . "(time());
 }";
+        }
     }
 
     /**
@@ -78,17 +83,24 @@ class TimestampableBehavior extends Behavior
      */
     public function preInsert($builder)
     {
-        return "if (!\$this->isColumnModified(" . $this->getColumnConstant('create_column', $builder) . ")) {
+        $script = "if (!\$this->isColumnModified(" . $this->getColumnConstant('create_column', $builder) . ")) {
     \$this->" . $this->getColumnSetter('create_column') . "(time());
-}
+}";
+
+        if ($this->withUpdatedAt()) {
+            $script .= "
 if (!\$this->isColumnModified(" . $this->getColumnConstant('update_column', $builder) . ")) {
     \$this->" . $this->getColumnSetter('update_column') . "(time());
 }";
+        }
+
+        return $script;
     }
 
     public function objectMethods($builder)
     {
-        return "
+        if ($this->withUpdatedAt()) {
+            return "
 /**
  * Mark the current object so that the update date doesn't get updated during next save
  *
@@ -101,15 +113,20 @@ public function keepUpdateDateUnchanged()
     return \$this;
 }
 ";
+        }
     }
 
     public function queryMethods($builder)
     {
-        $queryClassName = $builder->getStubQueryBuilder()->getClassname();
-        $updateColumnConstant = $this->getColumnConstant('update_column', $builder);
+        $script = '';
+
+        $queryClassName		  = $builder->getStubQueryBuilder()->getClassname();
         $createColumnConstant = $this->getColumnConstant('create_column', $builder);
 
-        return "
+        if ($this->withUpdatedAt()) {
+            $updateColumnConstant = $this->getColumnConstant('update_column', $builder);
+
+            $script .= "
 /**
  * Filter by the latest updated
  *
@@ -120,18 +137,6 @@ public function keepUpdateDateUnchanged()
 public function recentlyUpdated(\$nbDays = 7)
 {
     return \$this->addUsingAlias($updateColumnConstant, time() - \$nbDays * 24 * 60 * 60, Criteria::GREATER_EQUAL);
-}
-
-/**
- * Filter by the latest created
- *
- * @param      int \$nbDays Maximum age of in days
- *
- * @return     $queryClassName The current query, for fluid interface
- */
-public function recentlyCreated(\$nbDays = 7)
-{
-    return \$this->addUsingAlias($createColumnConstant, time() - \$nbDays * 24 * 60 * 60, Criteria::GREATER_EQUAL);
 }
 
 /**
@@ -153,6 +158,21 @@ public function firstUpdatedFirst()
 {
     return \$this->addAscendingOrderByColumn($updateColumnConstant);
 }
+";
+        }
+
+        $script .= "
+/**
+ * Filter by the latest created
+ *
+ * @param      int \$nbDays Maximum age of in days
+ *
+ * @return     $queryClassName The current query, for fluid interface
+ */
+public function recentlyCreated(\$nbDays = 7)
+{
+    return \$this->addUsingAlias($createColumnConstant, time() - \$nbDays * 24 * 60 * 60, Criteria::GREATER_EQUAL);
+}
 
 /**
  * Order by create date desc
@@ -172,7 +192,13 @@ public function lastCreatedFirst()
 public function firstCreatedFirst()
 {
     return \$this->addAscendingOrderByColumn($createColumnConstant);
-}
-";
+}";
+
+        return $script;
+    }
+
+    protected function withUpdatedAt()
+    {
+        return !$this->getTable()->hasBehavior('versionable');
     }
 }
