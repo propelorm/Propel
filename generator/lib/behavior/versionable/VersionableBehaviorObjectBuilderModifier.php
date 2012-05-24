@@ -623,7 +623,9 @@ public function compareVersions(\$fromVersionNumber, \$toVersionNumber, \$keys =
         $fks = $versionTable->getForeignKeysReferencingTable($this->table->getName());
         $relCol = $this->builder->getRefFKPhpNameAffix($fks[0], $plural = true);
         $versionGetter = 'get'.$relCol;
-        $versionPeer = $this->builder->getNewStubPeerBuilder($versionTable)->getClassname();
+        $versionPeerBuilder = $this->builder->getNewStubPeerBuilder($versionTable);
+        $this->builder->declareClassFromBuilder($versionPeerBuilder);
+        $versionPeer = $versionPeerBuilder->getClassname();
 
         $script .= <<<EOF
 /**
