@@ -3682,6 +3682,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
         $inputCollectionEntry[0] = strtolower($inputCollectionEntry[0]);
 
         $collName = $this->getRefFKCollVarName($refFK);
+        $relCol   = $this->getFKPhpNameAffix($refFK, $plural = false);
 
         $script .= "
     /**
@@ -3697,11 +3698,12 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
     {
         \$this->{$inputCollection}ScheduledForDeletion = \$this->get{$relatedName}(new Criteria(), \$con)->diff(\${$inputCollection});
 
+        foreach (\$this->{$inputCollection}ScheduledForDeletion as \${$inputCollectionEntry}Removed) {
+            \${$inputCollectionEntry}Removed->set{$relCol}(null);
+        }
+
+        \$this->{$collName} = null;
         foreach (\${$inputCollection} as \${$inputCollectionEntry}) {
-            // Fix issue with collection modified by reference
-            if (\${$inputCollectionEntry}->isNew()) {
-                \${$inputCollectionEntry}->set" . $this->getFKPhpNameAffix($refFK, $plural = false)."(\$this);
-            }
             \$this->add{$relatedObjectClassName}(\${$inputCollectionEntry});
         }
 
@@ -3764,7 +3766,6 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
      */
     public function remove{$relatedObjectClassName}(\${$lowerRelatedObjectClassName})
     {
-// 		\$this->init{$relatedName}(false);
         if (\$this->get{$relatedName}()->contains(\${$lowerRelatedObjectClassName})) {
             \$this->{$collName}->remove(\$this->{$collName}->search(\${$lowerRelatedObjectClassName}));
             if (null === \$this->{$inputCollection}) {
@@ -4273,8 +4274,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
      */
     public function remove{$relatedObjectClassName}($crossObjectClassName $crossObjectName)
     {
-        \$this->init{$relCol}(false);
-        if (\$this->{$collName}->contains({$crossObjectName})) {
+        if (\$this->get{$relCol}()->contains({$crossObjectName})) {
             \$this->{$collName}->remove(\$this->{$collName}->search({$crossObjectName}));
             if (null === \$this->{$M2MScheduledForDeletion}) {
                 \$this->{$M2MScheduledForDeletion} = clone \$this->{$collName};
