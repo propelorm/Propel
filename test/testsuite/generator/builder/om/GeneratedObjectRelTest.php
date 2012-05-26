@@ -766,4 +766,95 @@ class GeneratedObjectRelTest extends BookstoreEmptyTestBase
         $this->assertEquals(1, BookListRelQuery::create()->count(), 'One BookClubList has been remove');
     }
 
+    public function testRemoveObjectOneToMany()
+    {
+        BookQuery::create()->deleteAll();
+        AuthorQuery::create()->deleteAll();
+
+        $book = new Book();
+        $book->setTitle('Propel Book');
+
+        $book2 = new Book();
+        $book2->setTitle('Propel2 Book');
+
+        $author = new Author();
+        $author->setFirstName('François');
+        $author->setLastName('Z');
+
+        $author->addBook($book);
+        $author->addBook($book2);
+
+        $this->assertCount(2, $author->getBooks());
+
+        $author->removeBook($book);
+
+        $books = $author->getBooks();
+        $this->assertCount(1, $books);
+        $this->assertEquals('Propel2 Book', reset($books)->getTitle());
+
+        $author->save();
+        $book->save();
+        $book2->save();
+
+        $this->assertEquals(2, BookQuery::create()->count(), 'Two Book');
+        $this->assertEquals(1, AuthorQuery::create()->count(), 'One Author');
+        $this->assertEquals(1, BookQuery::create()->filterByAuthor($author)->count());
+
+        $author->addBook($book);
+        $author->save();
+
+        $this->assertEquals(2, BookQuery::create()->filterByAuthor($author)->count());
+
+        $author->removeBook($book2);
+        $author->save();
+
+        $this->assertEquals(1, BookQuery::create()->filterByAuthor($author)->count());
+        $this->assertEquals(2, BookQuery::create()->count(), 'Two Book because FK is not required so book is not delete when removed from author\'s book collection');
+    }
+
+    public function testRemoveObjectOneToManyWithFkRequired()
+    {
+        BookSummaryQuery::create()->deleteAll();
+        BookQuery::create()->deleteAll();
+
+        $bookSummary = new BookSummary();
+        $bookSummary->setSummary('summary Propel Book');
+
+        $bookSummary2 = new BookSummary();
+        $bookSummary2->setSummary('summary2 Propel Book');
+
+        $book = new Book();
+        $book->setTitle('Propel Book');
+
+        $book->addBookSummary($bookSummary);
+        $book->addBookSummary($bookSummary2);
+
+        $this->assertCount(2, $book->getBookSummarys());
+
+        $book->removeBookSummary($bookSummary);
+
+        $bookSummaries = $book->getBookSummarys();
+        $this->assertCount(1, $bookSummaries);
+        $this->assertEquals('summary2 Propel Book', reset($bookSummaries)->getSummary());
+
+        $book->save();
+        $bookSummary2->save();
+
+        $this->assertEquals(1, BookQuery::create()->count(), 'One Book');
+        $this->assertEquals(1, BookSummaryQuery::create()->count(), 'One Summary');
+        $this->assertEquals(1, BookSummaryQuery::create()->filterBySummarizedBook($book)->count());
+
+        $book->addBookSummary($bookSummary);
+        $bookSummary->save();
+        $book->save();
+
+        $this->assertEquals(2, BookSummaryQuery::create()->filterBySummarizedBook($book)->count());
+
+        $book->removeBookSummary($bookSummary2);
+        $book->save();
+
+        $this->assertEquals(1, BookSummaryQuery::create()->filterBySummarizedBook($book)->count());
+        $this->assertEquals(1, BookSummaryQuery::create()->count(), 'One Book summary because FK is required so book summary is deleted when book is saved');
+    }
+
 }

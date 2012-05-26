@@ -3750,7 +3750,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
         $relatedObjectClassName = $this->getRefFKPhpNameAffix($refFK, $plural = false);
 
         // No lcfirst() in PHP < 5.3
-        $inputCollection = $relatedName . 'ScheduleForDeletion';
+        $inputCollection = $relatedName . 'ScheduledForDeletion';
         $inputCollection[0] = strtolower($inputCollection[0]);
 
         // lcfirst() doesn't exist in PHP < 5.3
