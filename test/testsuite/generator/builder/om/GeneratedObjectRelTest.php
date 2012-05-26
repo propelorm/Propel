@@ -643,10 +643,6 @@ class GeneratedObjectRelTest extends BookstoreEmptyTestBase
         $this->assertEquals('bam', $books[0]->getTitle());
         $this->assertEquals('bom', $books[1]->getTitle());
 
-        $books = $bookClubList->getBooks();
-        $this->assertEquals('bam', $books[0]->getTitle());
-        $this->assertEquals('bom', $books[1]->getTitle());
-
         $this->assertEquals(1, BookClubListQuery::create()->count());
         $this->assertEquals(2, BookListRelQuery::create()->count());
         // ensure we have valid "association" objects
