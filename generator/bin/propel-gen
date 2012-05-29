@@ -58,8 +58,13 @@ if [ -z "$PROPEL_GEN_HOME" ] ; then
 
 fi
 
+# Composer install?
 if [ -d "vendor/phing/phing" ] ; then
-    export PHING_COMMAND="$PROPEL_GEN_HOME/bin/phing.php"
+    if [ -f "$PROPEL_GEN_HOME/bin/phing.php" ] ; then
+        export PHING_COMMAND="$PROPEL_GEN_HOME/bin/phing.php"
+    else
+        export PHING_COMMAND="$PROPEL_GEN_HOME/vendor/propel/propel1/generator/bin/phing.php"
+    fi
 fi
 
 if [ -z "$PHING_COMMAND" ] ; then
