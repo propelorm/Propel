@@ -236,10 +236,10 @@ public function isVersioningNecessary(\$con = null)
         foreach ($this->behavior->getVersionableFks() as $fk) {
             $fkGetter = $this->builder->getFKPhpNameAffix($fk, $plural = false);
             $script .= "
+
     if (null !== (\$object = \$this->get{$fkGetter}(\$con)) && \$object->isVersioningNecessary(\$con)) {
         return true;
-    }
-";
+    }";
         }
         foreach ($this->behavior->getVersionableReferrers() as $fk) {
             $fkGetter = $this->builder->getRefFKPhpNameAffix($fk, $plural = true);
@@ -256,6 +256,7 @@ public function isVersioningNecessary(\$con = null)
   \$this->alreadyInSave = false;
 ";
         }
+
         $script .= "
 
     return false;
@@ -280,12 +281,15 @@ public function addVersion(\$con = null)
     \$this->enforceVersion = false;
 
     \$version = new {$versionARClassname}();";
+
         foreach ($this->table->getColumns() as $col) {
             $script .= "
     \$version->set" . $col->getPhpName() . "(\$this->get" . $col->getPhpName() . "());";
         }
+
         $script .= "
     \$version->set{$this->table->getPhpName()}(\$this);";
+
         foreach ($this->behavior->getVersionableFks() as $fk) {
             $fkGetter = $this->builder->getFKPhpNameAffix($fk, $plural = false);
             $fkVersionColumnName = $fk->getLocalColumnName() . '_version';
@@ -295,6 +299,7 @@ public function addVersion(\$con = null)
         \$version->set{$fkVersionColumnPhpName}(\$related->getVersion());
     }";
         }
+
         foreach ($this->behavior->getVersionableReferrers() as $fk) {
             $fkGetter = $this->builder->getRefFKPhpNameAffix($fk, $plural = true);
             $idsColumn = $this->behavior->getReferrerIdsColumn($fk);
@@ -305,6 +310,18 @@ public function addVersion(\$con = null)
         \$version->set{$versionsColumn->getPhpName()}(array_values(\$relateds));
     }";
         }
+
+        foreach ($this->behavior->getVersionableCrossForeignKeys() as $fk) {
+            $fkGetter = $this->builder->getFKPhpNameAffix($fk, $plural = true);
+            $idsColumn = $this->behavior->getCrossForeignKeyIdsColumn($fk);
+            $versionsColumn = $this->behavior->getCrossForeignKeyVersionsColumn($fk);
+            $script .= "
+    if (\$relateds = \$this->get{$fkGetter}(\$con)->toKeyValue('PrimaryKey', 'Version')) {
+        \$version->set{$idsColumn->getPhpName()}(array_keys(\$relateds));
+        \$version->set{$versionsColumn->getPhpName()}(array_values(\$relateds));
+    }";
+        }
+
             $script .= "
     \$version->save(\$con);
 
