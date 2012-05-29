@@ -463,5 +463,4 @@ CREATE TABLE versionable_behavior_test_0_version
 EOF;
       $this->assertContains($expected, $builder->getSQL());
     }
-
 }
