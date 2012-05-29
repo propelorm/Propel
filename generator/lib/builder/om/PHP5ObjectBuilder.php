@@ -3428,6 +3428,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
                 $this->addRefFKCount($script, $refFK);
                 $this->addRefFKAdd($script, $refFK);
                 $this->addRefFKDoAdd($script, $refFK);
+                $this->addRefFKRemove($script, $refFK);
                 $this->addRefFKGetJoinMethods($script, $refFK);
             }
         }
@@ -3681,6 +3682,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
         $inputCollectionEntry[0] = strtolower($inputCollectionEntry[0]);
 
         $collName = $this->getRefFKCollVarName($refFK);
+        $relCol   = $this->getFKPhpNameAffix($refFK, $plural = false);
 
         $script .= "
     /**
@@ -3696,11 +3698,12 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
     {
         \$this->{$inputCollection}ScheduledForDeletion = \$this->get{$relatedName}(new Criteria(), \$con)->diff(\${$inputCollection});
 
+        foreach (\$this->{$inputCollection}ScheduledForDeletion as \${$inputCollectionEntry}Removed) {
+            \${$inputCollectionEntry}Removed->set{$relCol}(null);
+        }
+
+        \$this->{$collName} = null;
         foreach (\${$inputCollection} as \${$inputCollectionEntry}) {
-            // Fix issue with collection modified by reference
-            if (\${$inputCollectionEntry}->isNew()) {
-                \${$inputCollectionEntry}->set" . $this->getFKPhpNameAffix($refFK, $plural = false)."(\$this);
-            }
             \$this->add{$relatedObjectClassName}(\${$inputCollectionEntry});
         }
 
@@ -3732,6 +3735,46 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
     {
         \$this->{$collName}[]= \${$lowerRelatedObjectClassName};
         \${$lowerRelatedObjectClassName}->set" . $this->getFKPhpNameAffix($refFK, $plural = false)."(\$this);
+    }
+";
+    }
+
+    /**
+     * @param		string &$script The script will be modified in this method.
+     * @param ForeignKey $refFK
+     * @param ForeignKey $crossFK
+     */
+    protected function addRefFKRemove(&$script, $refFK)
+    {
+        $relatedName = $this->getRefFKPhpNameAffix($refFK, $plural = true);
+        $relatedObjectClassName = $this->getRefFKPhpNameAffix($refFK, $plural = false);
+
+        // No lcfirst() in PHP < 5.3
+        $inputCollection = $relatedName . 'ScheduledForDeletion';
+        $inputCollection[0] = strtolower($inputCollection[0]);
+
+        // lcfirst() doesn't exist in PHP < 5.3
+        $lowerRelatedObjectClassName = $relatedObjectClassName;
+        $lowerRelatedObjectClassName[0] = strtolower($lowerRelatedObjectClassName[0]);
+
+        $collName = $this->getRefFKCollVarName($refFK);
+        $relCol   = $this->getFKPhpNameAffix($refFK, $plural = false);
+
+        $script .= "
+    /**
+     * @param	{$relatedObjectClassName} \${$lowerRelatedObjectClassName} The $lowerRelatedObjectClassName object to remove.
+     */
+    public function remove{$relatedObjectClassName}(\${$lowerRelatedObjectClassName})
+    {
+        if (\$this->get{$relatedName}()->contains(\${$lowerRelatedObjectClassName})) {
+            \$this->{$collName}->remove(\$this->{$collName}->search(\${$lowerRelatedObjectClassName}));
+            if (null === \$this->{$inputCollection}) {
+                \$this->{$inputCollection} = clone \$this->{$collName};
+                \$this->{$inputCollection}->clear();
+            }
+            \$this->{$inputCollection}[]= \${$lowerRelatedObjectClassName};
+            \${$lowerRelatedObjectClassName}->set{$relCol}(null);
+        }
     }
 ";
     }
@@ -3849,11 +3892,26 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
         $lowerSingleRelatedName = $this->getFKPhpNameAffix($crossFK, $plural = false);
         $lowerSingleRelatedName[0] = strtolower($lowerSingleRelatedName[0]);
 
+        $middelFks = $refFK->getTable()->getForeignKeys();
+        $isFirstPk = ($middelFks[0]->getForeignTableCommonName() == $this->getTable()->getCommonName());
+
         $script .= "
             if (\$this->{$lowerRelatedName}ScheduledForDeletion !== null) {
                 if (!\$this->{$lowerRelatedName}ScheduledForDeletion->isEmpty()) {
+                    \$pks = array();
+                    \$pk = \$this->getPrimaryKey();
+                    foreach (\$this->{$lowerRelatedName}ScheduledForDeletion->getPrimaryKeys(false) as \$remotePk) {";
+        if ($isFirstPk) {
+            $script .= "
+                        \$pks[] = array(\$pk, \$remotePk);";
+        } else {
+            $script .= "
+                        \$pks[] = array(\$remotePk, \$pk);";
+        }
+        $script .= "
+                    }
                     $queryClassName::create()
-                        ->filterByPrimaryKeys(\$this->{$lowerRelatedName}ScheduledForDeletion->getPrimaryKeys(false))
+                        ->filterByPrimaryKeys(\$pks)
                         ->delete(\$con);
                     \$this->{$lowerRelatedName}ScheduledForDeletion = null;
                 }
@@ -3880,12 +3938,24 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
 
         $queryClassName = $this->getNewStubQueryBuilder($refFK->getTable())->getClassname();
 
+        $localColumn = $refFK->getLocalColumn();
+
         $script .= "
             if (\$this->{$lowerRelatedName}ScheduledForDeletion !== null) {
-                if (!\$this->{$lowerRelatedName}ScheduledForDeletion->isEmpty()) {
+                if (!\$this->{$lowerRelatedName}ScheduledForDeletion->isEmpty()) {";
+        if (!$refFK->isComposite() && !$localColumn->isNotNull()) {
+            $script .= "
+                    foreach (\$this->{$lowerRelatedName}ScheduledForDeletion as \${$lowerSingleRelatedName}) {
+                        // need to save related object because we set the relation to null
+                        \${$lowerSingleRelatedName}->save(\$con);
+                    }";
+        } else {
+            $script .= "
                     $queryClassName::create()
                         ->filterByPrimaryKeys(\$this->{$lowerRelatedName}ScheduledForDeletion->getPrimaryKeys(false))
-                        ->delete(\$con);
+                        ->delete(\$con);";
+        }
+        $script .= "
                     \$this->{$lowerRelatedName}ScheduledForDeletion = null;
                 }
             }
@@ -3911,6 +3981,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
             $this->addCrossFKCount($script, $refFK, $crossFK);
             $this->addCrossFKAdd($script, $refFK, $crossFK);
             $this->addCrossFKDoAdd($script, $refFK, $crossFK);
+            $this->addCrossFKRemove($script, $refFK, $crossFK);
         }
     }
 
@@ -4019,18 +4090,8 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
         $relatedNamePlural = $this->getFKPhpNameAffix($crossFK, $plural = true);
         $relatedName = $this->getFKPhpNameAffix($crossFK, $plural = false);
         $relatedObjectClassName = $this->getNewStubObjectBuilder($crossFK->getForeignTable())->getClassname();
-        $selfRelationName = $this->getFKPhpNameAffix($refFK, $plural = false);
-        $crossRefQueryClassName = $this->getRefFKPhpNameAffix($refFK, $plural = false);
         $crossRefTableName = $crossFK->getTableName();
         $collName = $this->getCrossFKVarName($crossFK);
-        $joinedTableObjectBuilder = $this->getNewObjectBuilder($refFK->getTable());
-        $className = $joinedTableObjectBuilder->getObjectClassname();
-
-        // No lcfirst() in PHP < 5.3
-        $lowerClassName = $className;
-        $lowerClassName[0] = strtolower($lowerClassName[0]);
-
-        $crossRefObjectClassName = '$' . $lowerClassName;
 
         // No lcfirst() in PHP < 5.3
         $inputCollection = $relatedNamePlural;
@@ -4039,9 +4100,6 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
         // No lcfirst() in PHP < 5.3
         $inputCollectionEntry = $this->getFKPhpNameAffix($crossFK, $plural = false);
         $inputCollectionEntry[0] = strtolower($inputCollectionEntry[0]);
-
-        $relCol = $this->getRefFKPhpNameAffix($refFK, $plural = true);
-        $relColVarName = $this->getRefFKCollVarName($crossFK);
 
         $script .= "
     /**
@@ -4055,34 +4113,14 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
      */
     public function set{$relatedNamePlural}(PropelCollection \${$inputCollection}, PropelPDO \$con = null)
     {
-        {$crossRefObjectClassName}s = {$crossRefQueryClassName}Query::create()
-            ->filterBy{$relatedName}(\${$inputCollection})
-            ->filterBy{$selfRelationName}(\$this)
-            ->find(\$con);
+        \$this->clear{$relatedNamePlural}();
+        \$current{$relatedNamePlural} = \$this->get{$relatedNamePlural}();
 
-        \$current{$relCol} = \$this->get{$relCol}();
-
-        \$this->{$inputCollection}ScheduledForDeletion = \$current{$relCol}->diff({$crossRefObjectClassName}s);
-        \$this->{$relColVarName} = {$crossRefObjectClassName}s;
+        \$this->{$inputCollection}ScheduledForDeletion = \$current{$relatedNamePlural}->diff(\${$inputCollection});
 
         foreach (\${$inputCollection} as \${$inputCollectionEntry}) {
-            // Skip objects that are already in the current collection.
-            \$isInCurrent = false;
-            foreach (\$current{$relCol} as {$crossRefObjectClassName}) {
-                if ({$crossRefObjectClassName}->get{$relatedName}() == \${$inputCollectionEntry}) {
-                    \$isInCurrent = true;
-                    break;
-                }
-            }
-            if (\$isInCurrent) {
-                continue;
-            }
-
-            // Fix issue with collection modified by reference
-            if (\${$inputCollectionEntry}->isNew()) {
+            if (!\$current{$relatedNamePlural}->contains(\${$inputCollectionEntry})) {
                 \$this->doAdd{$relatedName}(\${$inputCollectionEntry});
-            } else {
-                \$this->add{$relatedName}(\${$inputCollectionEntry});
             }
         }
 
@@ -4201,6 +4239,49 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
         {$foreignObjectName} = new {$className}();
         {$foreignObjectName}->set{$relatedObjectClassName}(\${$lowerRelatedObjectClassName});
         \$this->add{$className}({$foreignObjectName});
+    }
+";
+    }
+
+    /**
+     * Adds the method that remove an object from the referrer fkey collection.
+     * @param string $script The script will be modified in this method.
+     */
+    protected function addCrossFKRemove(&$script, ForeignKey $refFK, ForeignKey $crossFK)
+    {
+        $relCol = $this->getFKPhpNameAffix($crossFK, $plural = true);
+        $collName = 'coll' . $relCol;
+
+        $tblFK = $refFK->getTable();
+
+        $joinedTableObjectBuilder = $this->getNewObjectBuilder($refFK->getTable());
+        $className = $joinedTableObjectBuilder->getObjectClassname();
+
+        $M2MScheduledForDeletion = lcfirst($relCol) . "ScheduledForDeletion";
+
+        $crossObjectName = '$' . $crossFK->getForeignTable()->getStudlyPhpName();
+        $crossObjectClassName = $this->getNewObjectBuilder($crossFK->getForeignTable())->getObjectClassname();
+
+        $relatedObjectClassName = $this->getFKPhpNameAffix($crossFK, $plural = false);
+
+        $script .= "
+    /**
+     * Remove a {$crossObjectClassName} object to this object
+     * through the {$tblFK->getName()} cross reference table.
+     *
+     * @param      {$crossObjectClassName} {$crossObjectName} The $className object to relate
+     * @return void
+     */
+    public function remove{$relatedObjectClassName}($crossObjectClassName $crossObjectName)
+    {
+        if (\$this->get{$relCol}()->contains({$crossObjectName})) {
+            \$this->{$collName}->remove(\$this->{$collName}->search({$crossObjectName}));
+            if (null === \$this->{$M2MScheduledForDeletion}) {
+                \$this->{$M2MScheduledForDeletion} = clone \$this->{$collName};
+                \$this->{$M2MScheduledForDeletion}->clear();
+            }
+            \$this->{$M2MScheduledForDeletion}[]= {$crossObjectName};
+        }
     }
 ";
     }
