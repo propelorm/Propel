@@ -187,6 +187,23 @@ class VersionableBehavior extends Behavior
                 ));
             }
         }
+        foreach ($this->getVersionableCrossForeignKeys() as $fk) {
+            $fkTableName = $fk->getForeignTable()->getName();
+            $fkIdsColumnName = $fkTableName . '_ids';
+            if (!$versionTable->containsColumn($fkIdsColumnName)) {
+                $versionTable->addColumn(array(
+                    'name'    => $fkIdsColumnName,
+                    'type'    => 'ARRAY'
+                ));
+            }
+            $fkVersionsColumnName = $fkTableName . '_versions';
+            if (!$versionTable->containsColumn($fkVersionsColumnName)) {
+                $versionTable->addColumn(array(
+                    'name'    => $fkVersionsColumnName,
+                    'type'    => 'ARRAY'
+                ));
+            }
+        }
     }
 
     public function getVersionTable()
@@ -213,6 +230,22 @@ class VersionableBehavior extends Behavior
         return $versionableFKs;
     }
 
+    public function getVersionableCrossForeignKeys($withRefFks = false)
+    {
+        $versionableFks = array();
+        if ($this->getTable()->hasCrossForeignKeys()) {
+            foreach ($this->getTable()->getCrossFks() as $fkList) {
+                list($refFk, $crossFk) = $fkList;
+
+                if ($crossFk->getForeignTable()->hasBehavior($this->getName()) && ! $crossFk->isComposite()) {
+                    $versionableFks[] = $withRefFks ? $fkList : $crossFk;
+                }
+            }
+        }
+
+        return $versionableFks;
+    }
+
     public function getVersionableReferrers()
     {
         $versionableReferrers = array();
@@ -235,9 +268,25 @@ class VersionableBehavior extends Behavior
         return $this->versionTable->getColumn($fkIdsColumnName);
     }
 
+    public function getCrossForeignKeyIdsColumn(ForeignKey $fk)
+    {
+        $fkTableName = $fk->getForeignTable()->getName();
+        $fkIdsColumnName = $fkTableName . '_ids';
+
+        return $this->versionTable->getColumn($fkIdsColumnName);
+    }
+
     public function getReferrerVersionsColumn(ForeignKey $fk)
     {
         $fkTableName = $fk->getTable()->getName();
+        $fkIdsColumnName = $fkTableName . '_versions';
+
+        return $this->versionTable->getColumn($fkIdsColumnName);
+    }
+
+    public function getCrossForeignKeyVersionsColumn(ForeignKey $fk)
+    {
+        $fkTableName = $fk->getForeignTable()->getName();
         $fkIdsColumnName = $fkTableName . '_versions';
 
         return $this->versionTable->getColumn($fkIdsColumnName);
