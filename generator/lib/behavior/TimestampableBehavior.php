@@ -20,8 +20,9 @@ class TimestampableBehavior extends Behavior
 {
     // default parameters value
     protected $parameters = array(
-        'create_column' => 'created_at',
-        'update_column' => 'updated_at'
+        'create_column'      => 'created_at',
+        'update_column'      => 'updated_at',
+        'disable_updated_at' => 'false',
     );
 
     /**
@@ -199,6 +200,6 @@ public function firstCreatedFirst()
 
     protected function withUpdatedAt()
     {
-        return !$this->getTable()->hasBehavior('versionable');
+        return 'true' !== $this->getParameter('disable_updated_at');
     }
 }

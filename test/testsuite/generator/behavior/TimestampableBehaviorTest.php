@@ -1,7 +1,6 @@
 <?php
 
 /*
- *	$Id$
  * This file is part of the Propel package.
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -10,6 +9,10 @@
  */
 
 require_once dirname(__FILE__) . '/../../../tools/helpers/bookstore/BookstoreTestBase.php';
+require_once dirname(__FILE__) . '/../../../../generator/lib/config/GeneratorConfig.php';
+require_once dirname(__FILE__) . '/../../../../generator/lib/model/Behavior.php';
+require_once dirname(__FILE__) . '/../../../../generator/lib/behavior/TimestampableBehavior.php';
+require_once dirname(__FILE__) . '/../../../../generator/lib/util/PropelQuickBuilder.php';
 
 /**
  * Tests for TimestampableBehavior class
@@ -213,4 +216,32 @@ class TimestampableBehaviorTest extends BookstoreTestBase
         $this->assertEquals('CreatedAt9', $t->getTitle(), 'firstCreatedFirst() returns the element with oldest create date first');
     }
 
+    public function testDisableUpdatedAt()
+    {
+        $schema = <<<EOF
+<database name="timestampable_database">
+    <table name="table_without_updated_at">
+        <column name="id" type="INTEGER" primaryKey="true" />
+
+        <behavior name="timestampable">
+            <parameter name="disable_updated_at" value="true" />
+        </behavior>
+    </table>
+</database>
+EOF;
+
+        $builder = new PropelQuickBuilder();
+        $builder->setSchema($schema);
+        $builder->build();
+
+        $this->assertTrue(method_exists('TableWithoutUpdatedAt', 'getCreatedAt'));
+        $this->assertTrue(method_exists('TableWithoutUpdatedAt', 'setCreatedAt'));
+        $this->assertFalse(method_exists('TableWithoutUpdatedAt', 'getUpdatedAt'));
+        $this->assertFalse(method_exists('TableWithoutUpdatedAt', 'setUpdatedAt'));
+
+        $obj = new TableWithoutUpdatedAt();
+        $this->assertNull($obj->getCreatedAt());
+        $this->assertEquals(1, $obj->save());
+        $this->assertNotNull($obj->getCreatedAt());
+    }
 }
