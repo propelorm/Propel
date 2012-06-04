@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<database name="bookstore-selfreferring" defaultIdMethod="native" package="selfreferring">
+
+  <table name="self_referring">
+    <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
+    <column name="related_id" type="integer" required="false" />
+    <foreign-key foreignTable="self_referring" onDelete="set null">
+      <reference local="related_id" foreign="id" />
+    </foreign-key>
+    <column name="name" type="varchar" required="true" size="255" />
+  </table>
+
+</database>
