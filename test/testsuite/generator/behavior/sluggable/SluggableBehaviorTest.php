@@ -255,6 +255,45 @@ class SluggableBehaviorTest extends BookstoreTestBase
         $t = Table14Query::create()->findOneBySlug('/foo/hello-world/bar');
         $this->assertEquals($t1, $t, 'findOneBySlug() returns a single object matching the slug');
     }
+
+    public function testUniqueViolationWithoutScope()
+    {
+        TableWithScopeQuery::create()->deleteAll();
+        $t = new TableWithScope();
+        $t->setTitle('Hello, World');
+        $t->save();
+        $this->assertEquals('hello-world', $t->getSlug());
+
+        try {
+            $t = new TableWithScope();
+            $t->setTitle('Hello, World');
+            $t->save();
+
+            $this->fail('Exception expected');
+        } catch (Exception $e) {
+            $this->assertTrue(true, 'Exception successfully thrown');
+        }
+    }
+
+    public function testNoUniqueViolationWithScope()
+    {
+        TableWithScopeQuery::create()->deleteAll();
+        $t = new TableWithScope();
+        $t->setTitle('Hello, World');
+        $t->save();
+        $this->assertEquals('hello-world', $t->getSlug());
+
+        try {
+            $t = new TableWithScope();
+            $t->setTitle('Hello, World');
+            $t->setScope(1);
+            $t->save();
+
+            $this->assertEquals('hello-world', $t->getSlug());
+        } catch (Exception $e) {
+            $this->fail($e->getMessage());
+        }
+    }
 }
 
 class TestableTable13 extends Table13

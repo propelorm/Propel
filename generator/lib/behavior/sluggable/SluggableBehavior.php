@@ -268,22 +268,28 @@ protected static function limitSlugSize(\$slug, \$incrementReservedSpace = 3)
  */
 protected function makeSlugUnique(\$slug, \$separator = '" . $this->getParameter('separator') ."', \$increment = 0)
 {
-    \$slug2 = empty(\$increment) ? \$slug : \$slug . \$separator . \$increment;
-    \$slugAlreadyExists = " . $this->builder->getStubQueryBuilder()->getClassname() . "::create()
-        ->filterBySlug(\$slug2)
-        ->prune(\$this)";
-        // watch out: some of the columns may be hidden by the soft_delete behavior
-        if ($this->table->hasBehavior('soft_delete')) {
-            $script .= "
-        ->includeDeleted()";
-        }
-        $script .= "
-        ->count();
-    if (\$slugAlreadyExists) {
-        return \$this->makeSlugUnique(\$slug, \$separator, ++\$increment);
-    } else {
-        return \$slug2;
-    }
+	\$slug2 = empty(\$increment) ? \$slug : \$slug . \$separator . \$increment;
+	\$slugAlreadyExists = " . $this->builder->getStubQueryBuilder()->getClassname() . "::create()
+		->filterBySlug(\$slug2)
+		->prune(\$this)";
+
+		if($this->getParameter('scope_column')) {
+			$getter = 'get' . $this->getColumnForParameter('scope_column')->getPhpName();
+			$script .="
+			->filterBy('{$this->getColumnForParameter('scope_column')->getPhpName()}', \$this->{$getter}())";
+		}
+		// watch out: some of the columns may be hidden by the soft_delete behavior
+		if ($this->table->hasBehavior('soft_delete')) {
+			$script .= "
+		->includeDeleted()";
+		}
+		$script .= "
+		->count();
+	if (\$slugAlreadyExists) {
+		return \$this->makeSlugUnique(\$slug, \$separator, ++\$increment);
+	} else {
+		return \$slug2;
+	}
 }
 ";
     }
