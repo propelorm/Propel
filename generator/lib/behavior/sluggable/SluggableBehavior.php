@@ -270,6 +270,12 @@ protected function makeSlugUnique(\$slug, \$separator = '" . $this->getParameter
 	\$slugAlreadyExists = " . $this->builder->getStubQueryBuilder()->getClassname() . "::create()
 		->filterBySlug(\$slug2)
 		->prune(\$this)";
+
+		if($this->getParameter('scope_column')) {
+			$getter = 'get' . $this->getColumnForParameter('scope_column')->getPhpName();
+			$script .="
+			->filterBy('{$this->getColumnForParameter('scope_column')->getPhpName()}', \$this->{$getter}())";
+		}
 		// watch out: some of the columns may be hidden by the soft_delete behavior
 		if ($this->table->hasBehavior('soft_delete')) {
 			$script .= "
