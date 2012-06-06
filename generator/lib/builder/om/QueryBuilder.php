@@ -167,7 +167,7 @@ abstract class ".$this->getClassname()." extends " . $parentClass . "
     protected function addClassBody(&$script)
     {
         // namespaces
-        $this->declareClasses('ModelCriteria', 'Criteria', 'ModelJoin');
+        $this->declareClasses('ModelCriteria', 'Criteria', 'ModelJoin', 'Exception');
         $this->declareClassFromBuilder($this->getStubQueryBuilder());
         $this->declareClassFromBuilder($this->getStubPeerBuilder());
 
@@ -936,7 +936,7 @@ abstract class ".$this->getClassname()." extends " . $parentClass . "
      */
     protected function addFilterByFk(&$script, $fk)
     {
-        $this->declareClasses('PropelCollection', 'PropelException');
+        $this->declareClasses('PropelObjectCollection', 'PropelCollection', 'PropelException');
         $table = $this->getTable();
         $queryClass = $this->getStubQueryBuilder()->getClassname();
         $fkTable = $this->getForeignTable($fk);
@@ -954,7 +954,7 @@ abstract class ".$this->getClassname()." extends " . $parentClass . "
      * @param   $fkPhpName $objectName The related object to use as filter";
         } else {
             $script .= "
-     * @param   $fkPhpName|PropelCollection $objectName The related object(s) to use as filter";
+     * @param   $fkPhpName|PropelObjectCollection $objectName The related object(s) to use as filter";
         }
         $script .= "
      * @param     string \$comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
@@ -977,7 +977,7 @@ abstract class ".$this->getClassname()." extends " . $parentClass . "
             $foreignColumnName = $fk->getForeignColumn()->getPhpName();
             $keyColumn = $fk->getForeignTable()->hasCompositePrimaryKey() ? $foreignColumnName : 'PrimaryKey';
             $script .= "
-        } elseif ($objectName instanceof PropelCollection) {
+        } elseif ($objectName instanceof PropelObjectCollection) {
             if (null === \$comparison) {
                 \$comparison = Criteria::IN;
             }
@@ -1006,7 +1006,7 @@ abstract class ".$this->getClassname()." extends " . $parentClass . "
      */
     protected function addFilterByRefFk(&$script, $fk)
     {
-        $this->declareClasses('PropelCollection', 'PropelException');
+        $this->declareClasses('PropelObjectCollection', 'PropelCollection', 'PropelException');
         $table = $this->getTable();
         $queryClass = $this->getStubQueryBuilder()->getClassname();
         $fkTable = $this->getTable()->getDatabase()->getTable($fk->getTableName());
@@ -1019,7 +1019,7 @@ abstract class ".$this->getClassname()." extends " . $parentClass . "
     /**
      * Filter the query by a related $fkPhpName object
      *
-     * @param   $fkPhpName $objectName  the related object to use as filter
+     * @param   $fkPhpName|PropelObjectCollection $objectName  the related object to use as filter
      * @param     string \$comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
      * @return   $queryClass The current query, for fluid interface
@@ -1037,7 +1037,7 @@ abstract class ".$this->getClassname()." extends " . $parentClass . "
         $script .= ";";
         if (!$fk->isComposite()) {
             $script .= "
-        } elseif ($objectName instanceof PropelCollection) {
+        } elseif ($objectName instanceof PropelObjectCollection) {
             return \$this
                 ->use{$relationName}Query()
                 ->filterByPrimaryKeys({$objectName}->getPrimaryKeys())
