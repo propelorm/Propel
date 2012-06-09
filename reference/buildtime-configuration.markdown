@@ -244,7 +244,7 @@ propel.defaultDateFormat = { %x }|string
 propel.project.dir = {current_path}|string
 
 # The directory where Propel expects to find the XML configuration files.
-propel.conf.dir # ${propel.project.dir}
+propel.conf.dir = ${propel.project.dir}
 # The XML configuration file names
 propel.runtime.conf.file = runtime-conf.xml
 propel.buildtime.conf.file = buildtime-conf.xml
