@@ -233,6 +233,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
      */
     protected function addClassBody(&$script)
     {
+        $this->declareClassFromBuilder($this->getStubObjectBuilder());
         $this->declareClassFromBuilder($this->getStubPeerBuilder());
         $this->declareClassFromBuilder($this->getStubQueryBuilder());
         $this->declareClasses('Propel', 'PropelException', 'PDO', 'PropelPDO', 'Criteria', 'BaseObject', 'Persistent', 'BasePeer', 'PropelCollection', 'PropelObjectCollection', 'Exception');
@@ -1090,7 +1091,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
      * @param      PropelPDO An optional PropelPDO connection to use for fetching this lazy-loaded column.";
         }
         $script .= "
-     * @return Boolean
+     * @return boolean
      */
     $visibility function has$singularPhpName(\$value";
         if ($col->isLazyLoad()) $script .= ", PropelPDO \$con = null";
@@ -3197,7 +3198,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
     /**
      * Get the associated $className object
      *
-     * @param      PropelPDO Optional Connection object.
+     * @param      PropelPDO \$con Optional Connection object.
      * @return                 $className The associated $className object.
      * @throws PropelException
      */
@@ -3353,7 +3354,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
      * @param      Criteria \$criteria optional Criteria object to narrow the query
      * @param      PropelPDO \$con optional connection object
      * @param      string \$join_behavior optional join type to use (defaults to $join_behavior)
-     * @return PropelCollection|array {$className}[] List of $className objects
+     * @return PropelObjectCollection|{$className}[] List of $className objects
      */
     public function get".$relCol."Join".$relCol2."(\$criteria = null, \$con = null, \$join_behavior = $join_behavior)
     {";
@@ -3397,7 +3398,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
         } else {
             $script .= "
     /**
-     * @var        array {$className}[] Collection to store aggregation of $className objects.
+     * @var        PropelObjectCollection|{$className}[] Collection to store aggregation of $className objects.
      */
     protected $".$this->getRefFKCollVarName($refFK).";
 ";
@@ -3643,7 +3644,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
      *
      * @param      Criteria \$criteria optional Criteria object to narrow the query
      * @param      PropelPDO \$con optional connection object
-     * @return PropelCollection|array {$className}[] List of $className objects
+     * @return PropelObjectCollection|{$className}[] List of $className objects
      * @throws PropelException
      */
     public function get$relCol(\$criteria = null, PropelPDO \$con = null)
@@ -3861,7 +3862,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
         $relatedName = $this->getFKPhpNameAffix($crossFK, $plural = true);
         $script .= "
     /**
-     * @var        array {$className}[] Collection to store aggregation of $className objects.
+     * @var        PropelObjectCollection|{$className}[] Collection to store aggregation of $className objects.
      */
     protected $" . $this->getCrossFKVarName($crossFK) . ";
 ";
@@ -3875,7 +3876,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
         $script .= "
     /**
      * An array of objects scheduled for deletion.
-     * @var		array
+     * @var		PropelObjectCollection
      */
     protected \${$fkName}ScheduledForDeletion = null;
 ";
@@ -4061,7 +4062,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
      * @param      Criteria \$criteria Optional query object to filter the query
      * @param      PropelPDO \$con Optional connection object
      *
-     * @return PropelCollection|array {$relatedObjectClassName}[] List of {$relatedObjectClassName} objects
+     * @return PropelObjectCollection|{$relatedObjectClassName}[] List of {$relatedObjectClassName} objects
      */
     public function get{$relatedName}(\$criteria = null, PropelPDO \$con = null)
     {
