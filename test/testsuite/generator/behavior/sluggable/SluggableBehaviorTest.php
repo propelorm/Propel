@@ -245,16 +245,55 @@ class SluggableBehaviorTest extends BookstoreTestBase
         $this->assertTrue(method_exists('Table13Query', 'findOneBySlug'), 'The generated query provides a findOneBySlug() method');
         $this->assertTrue(method_exists('Table14Query', 'findOneBySlug'), 'The generated query provides a findOneBySlug() method even if the slug column doesnt have the default name');
 
-        Table14Query::create()->deleteAll();
-        $t1 = new Table14();
-        $t1->setTitle('Hello, World');
-        $t1->save();
-        $t2 = new Table14();
-        $t2->setTitle('Hello, Cruel World');
-        $t2->save();
-        $t = Table14Query::create()->findOneBySlug('/foo/hello-world/bar');
-        $this->assertEquals($t1, $t, 'findOneBySlug() returns a single object matching the slug');
-    }
+		Table14Query::create()->deleteAll();
+		$t1 = new Table14();
+		$t1->setTitle('Hello, World');
+		$t1->save();
+		$t2 = new Table14();
+		$t2->setTitle('Hello, Cruel World');
+		$t2->save();
+		$t = Table14Query::create()->findOneBySlug('/foo/hello-world/bar');
+		$this->assertEquals($t1, $t, 'findOneBySlug() returns a single object matching the slug');
+	}
+
+	public function testUniqueViolationWithoutScope()
+	{
+	    TableWithScopeQuery::create()->deleteAll();
+	    $t = new TableWithScope();
+	    $t->setTitle('Hello, World');
+	    $t->save();
+	    $this->assertEquals('hello-world', $t->getSlug());
+
+	    try {
+	        $t = new TableWithScope();
+	        $t->setTitle('Hello, World');
+	        $t->save();
+
+	        $this->fail('Exception expected');
+	    } catch (Exception $e) {
+	       $this->assertTrue(true, 'Exception successfully thrown'); 
+	   }
+	}
+
+	public function testNoUniqueViolationWithScope()
+	{
+	    TableWithScopeQuery::create()->deleteAll();
+	    $t = new TableWithScope();
+	    $t->setTitle('Hello, World');
+	    $t->save();
+	    $this->assertEquals('hello-world', $t->getSlug());
+
+	    try {
+	        $t = new TableWithScope();
+	        $t->setTitle('Hello, World');
+	        $t->setScope(1);
+	        $t->save();
+
+	        $this->assertEquals('hello-world', $t->getSlug());
+	    } catch (Exception $e) {
+	        $this->fail($e->getMessage());
+	   }
+	}
 }
 
 class TestableTable13 extends Table13
