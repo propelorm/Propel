@@ -89,6 +89,29 @@ class VersionableBehaviorObjectBuilderModifierTest extends PHPUnit_Framework_Tes
             <reference local="tag_id" foreign="id" />
         </foreign-key>
     </table>
+
+    <table name="versionable_user">
+        <column name="id" primaryKey="true" type="INTEGER" autoIncrement="true" />
+        <column name="username" type="VARCHAR" size="255" />
+        <behavior name="versionable" />
+    </table>
+
+    <table name="versionable_group">
+        <column name="id" primaryKey="true" type="INTEGER" autoIncrement="true" />
+        <column name="name" type="VARCHAR" size="255" />
+    </table>
+
+    <table name="versionable_user_group" isCrossRef="true">
+        <column name="user_id" primaryKey="true" type="INTEGER" />
+        <column name="group_id" primaryKey="true" type="INTEGER" />
+
+        <foreign-key foreignTable="versionable_user">
+            <reference local="user_id" foreign="id" />
+        </foreign-key>
+        <foreign-key foreignTable="versionable_group">
+            <reference local="group_id" foreign="id" />
+        </foreign-key>
+    </table>
 </database>
 EOF;
             PropelQuickBuilder::buildSchema($schema);
@@ -948,5 +971,28 @@ EOF;
 
         $this->assertEquals(2, $post->getVersion());
         $this->assertEquals(array(), $post->getOneVersion(2)->getVersionableTagIds());
+    }
+
+    public function testManyToManyWithIsCrossRefOnlyOneHasVersionable()
+    {
+        $group = new VersionableGroup();
+        $group->setName('Awesome People');
+        $this->assertEquals(1, $group->save());
+
+        $user = new VersionableUser();
+        $user->setUsername('arthur-dent@marvin.net');
+        $this->assertEquals(1, $user->save());
+
+        $user->addVersionableGroup($group);
+        $this->assertTrue($user->isVersioningNecessary());
+        $this->assertGreaterThan(1, $user->save());
+        $this->assertEquals(2, $user->getVersion());
+        $this->assertEquals(array($group->getId()), $user->getOneVersion(2)->getVersionableGroupIds());
+
+        $user->removeVersionableGroup($group);
+        $this->assertTrue($user->isVersioningNecessary());
+        $this->assertGreaterThan(1, $user->save());
+        $this->assertEquals(3, $user->getVersion());
+        $this->assertEmpty($user->getOneVersion(3)->getVersionableGroupIds());
     }
 }
