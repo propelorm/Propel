@@ -65,9 +65,9 @@ class AggregateColumnRelationBehavior extends Behavior
     {
         $relationName = $this->getRelationName($builder);
         $relatedClass = $this->getForeignTable()->getPhpName();
-		$search = "public function set{$relationName}({$relatedClass} \$v = null)
+        $search = "public function set{$relationName}({$relatedClass} \$v = null)
     {";
-		$replace = $search . "
+        $replace = $search . "
         // aggregate_column_relation behavior
         if (null !== \$this->a{$relationName} && \$v !== \$this->a{$relationName}) {
             \$this->old{$relationName} = \$this->a{$relationName};

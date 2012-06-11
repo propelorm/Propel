@@ -242,7 +242,7 @@ class DefaultPlatform implements PropelPlatformInterface
         }
         $ret .= $this->getEndDDL();
 
-		return $ret;
+        return $ret;
     }
 
     /**
@@ -673,7 +673,7 @@ ALTER TABLE %s DROP CONSTRAINT %s;
 
         $ret .= $this->getEndDDL();
 
-		return $ret;
+        return $ret;
     }
 
     /**

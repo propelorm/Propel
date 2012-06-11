@@ -95,7 +95,7 @@ class PropelObjectFormatter extends PropelFormatter
      *  @param    array  $row associative array indexed by column number,
      *                   as returned by PDOStatement::fetch(PDO::FETCH_NUM)
      *
-     * @return    BaseObject
+     * @return BaseObject
      */
     public function getAllObjectsFromRow($row)
     {

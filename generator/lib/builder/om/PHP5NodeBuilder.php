@@ -263,7 +263,7 @@ abstract class ".$this->getClassname()." implements IteratorAggregate {
 
         \$itclass = ucfirst(strtolower(\$type)) . 'OrderNodeIterator';
 
-    require_once('propel/om/' . \$itclass . '.php');
+    require_once 'propel/om/'. \$itclass . '.php');
 
         return new \$itclass(\$this, \$opts);
     }
