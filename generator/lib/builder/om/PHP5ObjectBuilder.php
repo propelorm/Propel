@@ -3426,6 +3426,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
      * @var        PropelObjectCollection|{$className}[] Collection to store aggregation of $className objects.
      */
     protected $".$this->getRefFKCollVarName($refFK).";
+    protected $".$this->getRefFKCollVarName($refFK)."Partial;
 ";
         }
     }
@@ -3511,6 +3512,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
     public function clear$relCol()
     {
         \$this->$collName = null; // important to set this to NULL since that means it is uninitialized
+        \$this->{$collName}Partial = null;
     }
 ";
     } // addRefererClear()
@@ -3579,6 +3581,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
     {
         if (\$this->$collName === null) {
             \$this->init".$this->getRefFKPhpNameAffix($refFK, $plural = true)."();
+            \$this->{$collName}Partial = true;
         }
         if (!\$this->{$collName}->contains(\$l)) { // only add it if the **same** object is not already associated
             \$this->doAdd" . $this->getRefFKPhpNameAffix($refFK, $plural = false)  . "(\$l);
@@ -3619,10 +3622,14 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
      */
     public function count$relCol(Criteria \$criteria = null, \$distinct = false, PropelPDO \$con = null)
     {
-        if (null === \$this->$collName || null !== \$criteria) {
+        \$partial = \$this->{$collName}Partial && !\$this->isNew();
+        if (null === \$this->$collName || null !== \$criteria || \$partial) {
             if (\$this->isNew() && null === \$this->$collName) {
                 return 0;
             } else {
+                if(\$partial && !\$criteria) {
+                    return count(\$this->get$relCol());
+                }
                 \$query = $fkQueryClassname::create(null, \$criteria);
                 if (\$distinct) {
                     \$query->distinct();
@@ -3674,7 +3681,8 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
      */
     public function get$relCol(\$criteria = null, PropelPDO \$con = null)
     {
-        if (null === \$this->$collName || null !== \$criteria) {
+        \$partial = \$this->{$collName}Partial && !\$this->isNew();
+        if (null === \$this->$collName || null !== \$criteria  || \$partial) {
             if (\$this->isNew() && null === \$this->$collName) {
                 // return empty collection
                 \$this->init".$this->getRefFKPhpNameAffix($refFK, $plural = true)."();
@@ -3685,7 +3693,17 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
                 if (null !== \$criteria) {
                     return \$$collName;
                 }
+
+                if(\$partial) {
+                    foreach(\$this->$collName as \$obj) {
+                        if(\$obj->isNew()) {
+                            \${$collName}[] = \$obj;
+                        }
+                    }
+                }
+
                 \$this->$collName = \$$collName;
+                \$this->{$collName}Partial = false;
             }
         }
 
@@ -3734,6 +3752,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
         }
 
         \$this->{$collName} = \${$inputCollection};
+        \$this->{$collName}Partial = false;
     }
 ";
     }
@@ -4033,6 +4052,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
     public function clear$relCol()
     {
         \$this->$collName = null; // important to set this to NULL since that means it is uninitialized
+        \$this->{$collName}Partial = null;
     }
 ";
     } // addRefererClear()
