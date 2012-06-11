@@ -295,7 +295,6 @@ public function getPrevious(PropelPDO \$con = null)
     protected function addInsertAtRank(&$script)
     {
         $useScope = $this->behavior->useScope();
-        $peerClassname = $this->peerClassname;
         $script .= "
 /**
  * Insert at specified rank
@@ -326,7 +325,7 @@ public function insertAtRank(\$rank, PropelPDO \$con = null)
     if (\$rank != \$maxRank + 1) {
         // Keep the list modification query for the save() transaction
         \$this->sortableQueries []= array(
-            'callable'  => array('$peerClassname', 'shiftRank'),
+            'callable'  => array(self::PEER, 'shiftRank'),
             'arguments' => array(1, \$rank, null, " . ($useScope ? "\$this->{$this->getColumnGetter('scope_column')}()" : '') . ")
         );
     }
@@ -597,7 +596,6 @@ public function moveToBottom(PropelPDO \$con = null)
     protected function addRemoveFromList(&$script)
     {
         $useScope = $this->behavior->useScope();
-        $peerClassname = $this->peerClassname;
         $script .= "
 /**
  * Removes the current object from the list.
@@ -609,7 +607,7 @@ public function removeFromList()
 {
     // Keep the list modification query for the save() transaction
     \$this->sortableQueries []= array(
-        'callable'  => array('$peerClassname', 'shiftRank'),
+        'callable'  => array(self::PEER, 'shiftRank'),
         'arguments' => array(-1, \$this->{$this->getColumnGetter()}() + 1, null" . ($useScope ? ", \$this->{$this->getColumnGetter('scope_column')}()" : '') . ")
     );
     // remove the object from the list
