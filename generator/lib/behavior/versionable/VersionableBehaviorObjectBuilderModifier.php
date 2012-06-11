@@ -115,6 +115,26 @@ class VersionableBehaviorObjectBuilderModifier
         }
     }
 
+    public function objectAttributes($builder)
+    {
+        $script = '';
+
+        $this->addEnforceVersionAttribute($script);
+
+        return $script;
+    }
+
+    protected function addEnforceVersionAttribute(&$script)
+    {
+        $script .= "
+
+/**
+ * @var bool
+ */
+protected \$enforceVersion = false;
+        ";
+    }
+
     public function objectMethods($builder)
     {
         $this->setBuilder($builder);
@@ -123,6 +143,7 @@ class VersionableBehaviorObjectBuilderModifier
             $this->addVersionSetter($script);
             $this->addVersionGetter($script);
         }
+        $this->addEnforceVersioning($script);
         $this->addIsVersioningNecessary($script);
         $this->addAddVersion($script);
         $this->addToVersion($script);
@@ -170,6 +191,24 @@ public function getVersion()
 ";
     }
 
+    protected function addEnforceVersioning(&$script)
+    {
+        $objectClass = $this->builder->getStubObjectBuilder()->getClassname();
+        $script .= "
+/**
+ * Enforce a new Version of this object upon next save.
+ *
+ * @return {$objectClass}
+ */
+public function enforceVersioning()
+{
+    \$this->enforceVersion = true;
+
+    return \$this;
+}
+        ";
+    }
+
     protected function addIsVersioningNecessary(&$script)
     {
         $peerClass = $this->builder->getStubPeerBuilder()->getClassname();
@@ -184,6 +223,11 @@ public function isVersioningNecessary(\$con = null)
     if (\$this->alreadyInSave) {
         return false;
     }
+
+    if (\$this->enforceVersion) {
+        return true;
+    }
+
     if ({$peerClass}::isVersioningEnabled() && (\$this->isNew() || \$this->isModified() || \$this->isDeleted())) {
         return true;
     }";
@@ -231,6 +275,8 @@ public function isVersioningNecessary(\$con = null)
  */
 public function addVersion(\$con = null)
 {
+    \$this->enforceVersion = false;
+
     \$version = new {$versionARClassname}();";
         foreach ($this->table->getColumns() as $col) {
             $script .= "
