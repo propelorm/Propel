@@ -270,8 +270,8 @@ class SluggableBehaviorTest extends BookstoreTestBase
 
             $this->fail('Exception expected');
         } catch (Exception $e) {
-            $this->assertTrue(true, 'Exception successfully thrown');
-        }
+           $this->assertTrue(true, 'Exception successfully thrown');
+       }
     }
 
     public function testNoUniqueViolationWithScope()
