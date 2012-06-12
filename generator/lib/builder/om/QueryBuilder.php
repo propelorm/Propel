@@ -308,7 +308,7 @@ abstract class ".$this->getClassname()." extends " . $parentClass . "
      * Returns a new " . $classname . " object.
      *
      * @param     string \$modelAlias The alias of a model in the query
-     * @param     Criteria \$criteria Optional Criteria to build the query from
+     * @param     $classname|Criteria \$criteria Optional Criteria to build the query from
      *
      * @return " . $classname . "
      */";
@@ -360,6 +360,7 @@ abstract class ".$this->getClassname()." extends " . $parentClass . "
 
     protected function addFindPk(&$script)
     {
+        $pkDescription = '';
         $class = $this->getObjectClassname();
         $peerClassname = $this->getPeerClassname();
         $table = $this->getTable();
@@ -376,7 +377,9 @@ abstract class ".$this->getClassname()." extends " . $parentClass . "
             foreach ($pks as $col) {
                 $colNames[]= '$' . $col->getName();
             }
-            $pkType = 'array['. join($colNames, ', ') . ']';
+            $pkType = 'array';
+            $pkDescription = "
+                         A Primary key composition: ".'['. join($colNames, ', ') . ']';
             $script .= "
      * <code>
      * \$obj = \$c->findPk(array(" . join($examplePk, ', ') . "), \$con);";
@@ -389,10 +392,10 @@ abstract class ".$this->getClassname()." extends " . $parentClass . "
         $script .= "
      * </code>
      *
-     * @param " . $pkType . " \$key Primary key to use for the query
+     * @param " . $pkType . " \$key Primary key to use for the query $pkDescription
      * @param     PropelPDO \$con an optional connection object
      *
-     * @return   $class|array|mixed the result, formatted by the current formatter
+     * @return   $class|{$class}[]|mixed the result, formatted by the current formatter
      */
     public function findPk(\$key, \$con = null)
     {
@@ -435,7 +438,7 @@ abstract class ".$this->getClassname()." extends " . $parentClass . "
         $peerClassname = $this->getPeerClassname();
         $ARClassname = $this->getObjectClassname();
         $this->declareClassFromBuilder($this->getStubObjectBuilder());
-        $this->declareClasses('PDO');
+        $this->declareClasses('PDO', 'PropelException', 'PropelObjectCollection');
         $selectColumns = array();
         foreach ($table->getColumns() as $column) {
             if (!$column->isLazyLoad()) {
@@ -470,6 +473,7 @@ abstract class ".$this->getClassname()." extends " . $parentClass . "
      * @param     PropelPDO \$con A connection object
      *
      * @return   $ARClassname A model object, or null if the key is not found
+     * @throws   PropelException
      */
     protected function findPkSimple(\$key, \$con)
     {
@@ -521,7 +525,7 @@ abstract class ".$this->getClassname()." extends " . $parentClass . "
     {
         $table = $this->getTable();
         $pks = $table->getPrimaryKey();
-        $class = $class = $this->getStubObjectBuilder()->getClassname();
+        $class = $this->getStubObjectBuilder()->getClassname();
         $this->declareClasses('PropelPDO');
         $script .= "
     /**
@@ -530,7 +534,7 @@ abstract class ".$this->getClassname()." extends " . $parentClass . "
      * @param     mixed \$key Primary key to use for the query
      * @param     PropelPDO \$con A connection object
      *
-     * @return " . $class . "|array|mixed the result, formatted by the current formatter
+     * @return " . $class . "|{$class}[]|mixed the result, formatted by the current formatter
      */
     protected function findPkComplex(\$key, \$con)
     {
@@ -555,6 +559,7 @@ abstract class ".$this->getClassname()." extends " . $parentClass . "
         $table = $this->getTable();
         $pks = $table->getPrimaryKey();
         $count = count($pks);
+        $class = $this->getStubObjectBuilder()->getClassname();
         $script .= "
     /**
      * Find objects by primary key
@@ -571,7 +576,7 @@ abstract class ".$this->getClassname()." extends " . $parentClass . "
      * @param     array \$keys Primary keys to use for the query
      * @param     PropelPDO \$con an optional connection object
      *
-     * @return PropelObjectCollection|array|mixed the list of results, formatted by the current formatter
+     * @return PropelObjectCollection|{$class}[]|mixed the list of results, formatted by the current formatter
      */
     public function findPks(\$keys, \$con = null)
     {
@@ -770,7 +775,15 @@ abstract class ".$this->getClassname()." extends " . $parentClass . "
         $script .= "
      * @param     string \$comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
-     * @return " . $this->getStubQueryBuilder()->getClassname() . " The current query, for fluid interface
+     * @return " . $this->getStubQueryBuilder()->getClassname() . " The current query, for fluid interface";
+
+
+        if ($col->getType() == PropelTypes::ENUM) {
+            $script .= "
+     * @throws    PropelException - if the value is not accepted by the enum.";
+        }
+
+        $script .= "
      */
     public function filterBy$colPhpName(\$$variableName = null, \$comparison = null)
     {";
@@ -960,6 +973,7 @@ abstract class ".$this->getClassname()." extends " . $parentClass . "
      * @param     string \$comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
      * @return   $queryClass The current query, for fluid interface
+     * @throws   PropelException - if the provided filter is invalid.
      */
     public function filterBy$relationName($objectName, \$comparison = null)
     {
@@ -1023,6 +1037,7 @@ abstract class ".$this->getClassname()." extends " . $parentClass . "
      * @param     string \$comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
      * @return   $queryClass The current query, for fluid interface
+     * @throws   PropelException - if the provided filter is invalid.
      */
     public function filterBy$relationName($objectName, \$comparison = null)
     {
@@ -1197,6 +1212,7 @@ abstract class ".$this->getClassname()." extends " . $parentClass . "
         $foreignTable = $crossFK->getForeignTable();
         $fkPhpName =  $foreignTable->getPhpName();
         $crossTableName = $crossRefTable->getName();
+        $this->declareClassFromBuilder($this->getNewStubObjectBuilder($foreignTable));
         $relName = $this->getFKPhpNameAffix($crossFK, $plural = false);
         $objectName = '$' . $foreignTable->getStudlyPhpName();
         $relationName = $this->getRefFKPhpNameAffix($refFK, $plural = false);

@@ -1038,7 +1038,20 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
      */
     protected function addEnumAccessor(&$script, Column $col)
     {
-        $this->addDefaultAccessorComment($script, $col);
+        $clo = strtolower($col->getName());
+        $script .= "
+    /**
+     * Get the [$clo] column value.
+     * ".$col->getDescription();
+        if ($col->isLazyLoad()) {
+            $script .= "
+     * @param      PropelPDO \$con An optional PropelPDO connection to use for fetching this lazy-loaded column.";
+        }
+        $script .= "
+     * @return   ".$col->getPhpType()."
+     * @throws PropelException - if the stored enum key is unknown.
+     */";
+
         $this->addDefaultAccessorOpen($script, $col);
         $this->addEnumAccessorBody($script, $col);
         $this->addDefaultAccessorClose($script, $col);
@@ -1088,7 +1101,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
      * ".$col->getDescription();
         if ($col->isLazyLoad()) {
             $script .= "
-     * @param      PropelPDO An optional PropelPDO connection to use for fetching this lazy-loaded column.";
+     * @param      PropelPDO \$con An optional PropelPDO connection to use for fetching this lazy-loaded column.";
         }
         $script .= "
      * @return boolean
@@ -1134,7 +1147,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
      * ".$col->getDescription();
         if ($col->isLazyLoad()) {
             $script .= "
-     * @param      PropelPDO An optional PropelPDO connection to use for fetching this lazy-loaded column.";
+     * @param      PropelPDO \$con An optional PropelPDO connection to use for fetching this lazy-loaded column.";
         }
         $script .= "
      * @return   ".$col->getPhpType()."
@@ -1223,7 +1236,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
      * the [$clo] column, since it is not populated by
      * the hydrate() method.
      *
-     * @param      \$con PropelPDO (optional) The PropelPDO connection to use.
+     * @param  PropelPDO \$con (optional) The PropelPDO connection to use.
      * @return void
      * @throws PropelException - any underlying error will be wrapped and re-thrown.
      */";
@@ -1638,7 +1651,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
      * ".$col->getDescription();
         if ($col->isLazyLoad()) {
             $script .= "
-     * @param      PropelPDO An optional PropelPDO connection to use for fetching this lazy-loaded column.";
+     * @param      PropelPDO \$con An optional PropelPDO connection to use for fetching this lazy-loaded column.";
         }
         $script .= "
      * @return   ".$this->getObjectClassname()." The current object (for fluent API support)
@@ -1676,7 +1689,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
      * ".$col->getDescription();
         if ($col->isLazyLoad()) {
             $script .= "
-     * @param      PropelPDO An optional PropelPDO connection to use for fetching this lazy-loaded column.";
+     * @param      PropelPDO \$con An optional PropelPDO connection to use for fetching this lazy-loaded column.";
         }
         $script .= "
      * @return   ".$this->getObjectClassname()." The current object (for fluent API support)
@@ -1710,7 +1723,17 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
     protected function addEnumMutator(&$script, Column $col)
     {
         $clo = strtolower($col->getName());
-        $this->addMutatorOpen($script, $col);
+
+        $script .= "
+    /**
+     * Set the value of [$clo] column.
+     * ".$col->getDescription()."
+     * @param      ".$col->getPhpType()." \$v new value
+     * @return   ".$this->getObjectClassname()." The current object (for fluent API support)
+     * @throws   PropelException - if the value is not accepted by this enum.
+     */";
+        $this->addMutatorOpenOpen($script, $col);
+        $this->addMutatorOpenBody($script, $col);
 
         $script .= "
         if (\$v !== null) {
@@ -2424,7 +2447,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
     {
         \$pos = ".$this->getPeerClassname()."::translateFieldName(\$name, \$type, BasePeer::TYPE_NUM);
 
-        return \$this->setByPosition(\$pos, \$value);
+        \$this->setByPosition(\$pos, \$value);
     }
 ";
     }
@@ -2541,6 +2564,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
      * @param      PropelPDO \$con
      * @return void
      * @throws PropelException
+     * @throws Exception
      * @see        BaseObject::setDeleted()
      * @see        BaseObject::isDeleted()
      */";
@@ -3455,7 +3479,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
                 $relCol = $this->getRefFKPhpNameAffix($refFK, $plural = true);
                 $script .= "
         if ('$relationName' == \$relationName) {
-            return \$this->init$relCol();
+            \$this->init$relCol();
         }";
             }
         }
@@ -4778,6 +4802,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
         $script .= "
      * @return int             The number of rows affected by this insert/update and any referring fk objects' save() operations.
      * @throws PropelException
+     * @throws Exception
      * @see        doSave()
      */";
     }
