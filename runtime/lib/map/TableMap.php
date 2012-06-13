@@ -646,7 +646,7 @@ class TableMap
     /**
      * Gets the ColumnMap for the primary string column.
      *
-     * @return ColumnMap|bool The primary key column, false if none given.
+     * @return ColumnMap|null The primary string column, null if none given.
      */
     public function getPrimaryStringColumn()
     {
@@ -656,7 +656,7 @@ class TableMap
             }
         }
 
-        return false;
+        return null;
     }
 
     // Deprecated methods and attributres, to be removed
