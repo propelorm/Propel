@@ -66,6 +66,7 @@ class PropelOMTask extends AbstractPropelDataModelTask
      * @param OMBuilder $builder
      * @param boolean   $overwrite Whether to overwrite existing files with te new ones (default is YES).
      * @todo       -cPropelOMTask Consider refactoring build() method into AbstractPropelDataModelTask (would need to be more generic).
+     * @return int
      */
     protected function build(OMBuilder $builder, $overwrite = true)
     {

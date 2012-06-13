@@ -304,6 +304,8 @@ class RelationMap
    * Gets the symmetrical relation
    *
    * @return    RelationMap
+   *
+   * @throws PropelException
    */
   public function getSymmetricalRelation()
   {
@@ -313,5 +315,7 @@ class RelationMap
               return $relation;
           }
       }
+
+      throw new PropelException('The relation could not be resolved.');
   }
 }

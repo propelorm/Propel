@@ -789,6 +789,8 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
      * Adds the PHP code to return a instance pool key for the passed-in primary key variable names.
      *
      * @param array $pkphp An array of PHP var names / method calls representing complete pk.
+     *
+     * @return string
      */
     public function getInstancePoolKeySnippet($pkphp)
     {
@@ -1841,7 +1843,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
             }
 
             foreach (\$cols as \$colName) {
-                if (\$tableMap->containsColumn(\$colName)) {
+                if (\$tableMap->hasColumn(\$colName)) {
                     \$get = 'get' . \$tableMap->getColumn(\$colName)->getPhpName();
                     \$columns[\$colName] = \$obj->\$get();
                 }

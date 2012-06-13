@@ -100,6 +100,8 @@ class DBPostgres extends DBAdapter
      * @param string $name
      *
      * @return integer
+     *
+     * @throws PropelException
      */
     public function getId(PDO $con, $name = null)
     {
@@ -233,6 +235,8 @@ class DBPostgres extends DBAdapter
    * Explain Plan compute query getter
    *
    * @param string $query query to explain
+   *
+   * @return string
    */
   public function getExplainPlanQuery($query)
   {

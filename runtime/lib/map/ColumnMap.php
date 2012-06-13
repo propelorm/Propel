@@ -336,6 +336,8 @@ class ColumnMap
 
   /**
    * Get the RelationMap object for this foreign key
+   *
+   * @return RelationMap|null
    */
   public function getRelation()
   {
@@ -456,6 +458,7 @@ class ColumnMap
    * Performs DB-specific ignore case, but only if the column type necessitates it.
    * @param      string $str The expression we want to apply the ignore case formatting to (e.g. the column name).
    * @param      DBAdapter $db
+   * @return string
    */
   public function ignoreCase($str, DBAdapter $db)
   {

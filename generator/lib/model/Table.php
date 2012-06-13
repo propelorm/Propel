@@ -674,8 +674,9 @@ class Table extends ScopedElement implements IDMethod
      * A utility function to create a new column from attrib and add it to this
      * table.
      *
-     * @param      $coldata xml attributes or Column class for the column to add
-     * @return the added column
+     * @param  Column|string $coldata xml attributes or Column class for the column to add
+     * @return Column the added column
+     * @throws EngineException
      */
     public function addColumn($data)
     {
@@ -711,6 +712,7 @@ class Table extends ScopedElement implements IDMethod
     /**
      * Removed a column from the table
      * @param Column|string $col the column to remove
+     * @throws EngineException
      */
     public function removeColumn($col)
     {

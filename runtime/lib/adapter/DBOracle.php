@@ -279,6 +279,8 @@ class DBOracle extends DBAdapter
      *
      * @param string $query    query to explain
      * @param string $uniqueId query unique id
+     *
+     * @return string
      */
     public function getExplainPlanQuery($query, $uniqueId)
     {

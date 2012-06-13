@@ -130,6 +130,7 @@ class PHP5ObjectBuilder extends ObjectBuilder
      * Returns the type-casted and stringified default value for the specified Column.
      * This only works for scalar default values currently.
      * @return string The default value or 'NULL' if there is none.
+     * @throws EngineException
      */
     protected function getDefaultValueString(Column $col)
     {

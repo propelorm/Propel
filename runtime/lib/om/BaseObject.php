@@ -281,6 +281,8 @@ abstract class BaseObject
      * Get the value of a virtual column in this object
      *
      * @return mixed
+     *
+     * @throws PropelException
      */
     public function getVirtualColumn($name)
     {
@@ -382,6 +384,8 @@ abstract class BaseObject
      * @param mixed  $params
      *
      * @return array|string
+     *
+     * @throws PropelException
      */
     public function __call($name, $params)
     {

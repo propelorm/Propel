@@ -140,6 +140,7 @@ abstract class XMLElement
    *
    * @param  string $bname behavior name, e.g. 'timestampable'
    * @return string        behavior class name, e.g. 'TimestampableBehavior'
+   * @throws InvalidArgumentException
    */
   public function getConfiguredBehavior($bname)
   {

@@ -317,7 +317,7 @@ class TableMap
      */
     public function addConfiguredColumn($cmap)
     {
-        $this->columns[ $cmap->getColumnName() ] = $cmap;
+        $this->columns[ $cmap->getName() ] = $cmap;
 
         return $cmap;
     }
@@ -646,7 +646,7 @@ class TableMap
     /**
      * Gets the ColumnMap for the primary string column.
      *
-     * @return ColumnMap
+     * @return ColumnMap|bool The primary key column, false if none given.
      */
     public function getPrimaryStringColumn()
     {
@@ -655,6 +655,8 @@ class TableMap
                 return $column;
             }
         }
+
+        return false;
     }
 
     // Deprecated methods and attributres, to be removed

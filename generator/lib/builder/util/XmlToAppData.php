@@ -101,6 +101,7 @@ class XmlToAppData
      * @param  string  $xmlString The input string to parse.
      * @param  string  $xmlFile   The input file name.
      * @return AppData populated by <code>xmlFile</code>.
+     * @throws Exception
      */
     public function parseString($xmlString, $xmlFile = null)
     {
@@ -138,6 +139,8 @@ class XmlToAppData
      * @param string $rawName The qualified name (with prefix), or the empty string if
      *		 qualified names are not available.
      * @param string $attributes The specified or defaulted attributes
+     *
+     * @throws SchemaException
      */
     public function startElement($parser, $name, $attributes)
     {

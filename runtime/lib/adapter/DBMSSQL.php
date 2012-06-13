@@ -137,6 +137,9 @@ class DBMSSQL extends DBAdapter
      * @param integer $limit
      *
      * @return void
+     *
+     * @throws PropelException
+     * @throws Exception
      */
     public function applyLimit(&$sql, $offset, $limit)
     {

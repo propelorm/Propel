@@ -558,6 +558,8 @@ class BasePeer
      * @param string $dbName    The name of the database
      * @param string $tableName The name of the table
      * @param array  $columns   Array of column names as key and column values as value.
+     *
+     * @return ValidationFailed[]|bool A list of validation failures, true if valid.
      */
     public static function doValidate($dbName, $tableName, $columns)
     {
@@ -565,7 +567,7 @@ class BasePeer
         $tableMap = $dbMap->getTable($tableName);
         $failureMap = array(); // map of ValidationFailed objects
         foreach ($columns as $colName => $colValue) {
-            if ($tableMap->containsColumn($colName)) {
+            if ($tableMap->hasColumn($colName)) {
                 $col = $tableMap->getColumn($colName);
                 foreach ($col->getValidators() as $validatorMap) {
                     $validator = BasePeer::getValidator($validatorMap->getClass());
@@ -869,7 +871,7 @@ class BasePeer
      * imports and caches it.
      *
      * @param  string    $classname The dot-path name of class (e.g. myapp.propel.MyValidator)
-     * @return Validator object or null if not able to instantiate validator class (and error will be logged in this case)
+     * @return Validator|null object or null if not able to instantiate validator class (and error will be logged in this case)
      */
     public static function getValidator($classname)
     {
@@ -885,6 +887,8 @@ class BasePeer
         } catch (Exception $e) {
             Propel::log("BasePeer::getValidator(): failed trying to instantiate " . $classname . ": ".$e->getMessage(), Propel::LOG_ERR);
         }
+
+        return null;
     }
 
 }

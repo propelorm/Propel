@@ -555,6 +555,7 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
     /**
      * Adds the method that fetches fkey-related (referencing) objects but also joins in data from another table.
      * @param      string &$script The script will be modified in this method.
+     * @throws EngineException
      */
     protected function addRefFKGetJoinMethods(&$script, ForeignKey $refFK)
     {
