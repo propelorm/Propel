@@ -339,7 +339,7 @@ class Criteria implements IteratorAggregate
      * Returns the column name associated with an alias (AS-column).
      *
      * @param  string $alias
-     * @return string|bool $string The name if found, false otherwise.
+     * @return string|null $string The name if found, null otherwise.
      */
     public function getColumnForAs($as)
     {
@@ -347,7 +347,7 @@ class Criteria implements IteratorAggregate
             return $this->asColumns[$as];
         }
 
-        return false;
+        return null;
     }
 
     /**
@@ -394,7 +394,7 @@ class Criteria implements IteratorAggregate
      * Returns the table name associated with an alias.
      *
      * @param  string $alias
-     * @return string|false $string The name if given, false otherwise.
+     * @return string|null $string The name if given, null otherwise.
      */
     public function getTableForAlias($alias)
     {
@@ -402,7 +402,7 @@ class Criteria implements IteratorAggregate
             return $this->aliases[$alias];
         }
 
-        return false;
+        return null;
     }
 
     /**
