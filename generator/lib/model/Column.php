@@ -113,6 +113,8 @@ class Column extends XMLElement
      * @param			 columns Either a list of <code>Column</code> objects, or
      * a list of <code>String</code> objects with column names.
      * @deprecated Use the Platform::getColumnListDDL() method instead
+     *
+     * @return string
      */
     public static function makeList($columns, PropelPlatformInterface $platform)
     {
@@ -533,7 +535,9 @@ class Column extends XMLElement
     /**
      * Adds a new inheritance definition to the inheritance list and set the
      * parent column of the inheritance to the current column
-     * @param mixed $inhdata Inheritance or XML data.
+     * @param Inheritance|string $inhdata Inheritance or XML data.
+     *
+     * @return Inheritance
      */
     public function addInheritance($inhdata)
     {
@@ -1115,7 +1119,9 @@ class Column extends XMLElement
     /**
      * Set a string that will give this column a default value.
      *
-     * @param ColumnDefaultValue|scalar column default value
+     * @param ColumnDefaultValue|int|float|bool|string column default value
+     *
+     * @return Column
      */
     public function setDefaultValue($def)
     {
@@ -1168,6 +1174,7 @@ class Column extends XMLElement
     /**
      * Gets the auto-increment string.
      * @return string
+     * @throws EngineException
      */
     public function getAutoIncrementString()
     {

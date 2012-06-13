@@ -125,6 +125,7 @@ class PropelDataSQLTask extends AbstractPropelDataModelTask
      *
      * @return void
      * @throws Exception If there is an error parsing the data xml.
+     * @throws BuildException
      */
     public function main()
     {

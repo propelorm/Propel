@@ -209,6 +209,8 @@ class PropelCollection extends ArrayObject implements Serializable
      *
      * @param  mixed $key
      * @return mixed The element
+     *
+     * @throws PropelException
      */
     public function get($key)
     {
@@ -287,6 +289,8 @@ class PropelCollection extends ArrayObject implements Serializable
      *
      * @param  mixed $key
      * @return mixed The removed element
+     *
+     * @throws PropelException
      */
     public function remove($key)
     {
@@ -367,6 +371,8 @@ class PropelCollection extends ArrayObject implements Serializable
 
     /**
      * @param string $data
+     *
+     * @return void
      */
     public function unserialize($data)
     {
@@ -439,6 +445,8 @@ class PropelCollection extends ArrayObject implements Serializable
      * Get the peer class of the elements in the collection
      *
      * @return string Name of the Propel peer class stored in the collection
+     *
+     * @throws PropelException
      */
     public function getPeerClass()
     {
@@ -539,6 +547,8 @@ class PropelCollection extends ArrayObject implements Serializable
      * @param mixed  $params
      *
      * @return array|string
+     *
+     * @throws PropelException
      */
     public function __call($name, $params)
     {

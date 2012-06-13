@@ -114,6 +114,8 @@ class VendorInfo extends XMLElement
      * Whether parameter exists.
      *
      * @param string $name
+     *
+     * @return bool
      */
     public function hasParameter($name)
     {

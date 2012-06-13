@@ -163,6 +163,7 @@ class DefaultPlatform implements PropelPlatformInterface
      *
      * @param  string $propelType the Propel type name.
      * @return Domain The db specific domain.
+     * @throws EngineException
      */
     public function getDomainForType($propelType)
     {

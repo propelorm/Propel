@@ -415,8 +415,8 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
      *                      One of the class type constants BasePeer::TYPE_PHPNAME, BasePeer::TYPE_STUDLYPHPNAME
      *                      BasePeer::TYPE_COLNAME, BasePeer::TYPE_FIELDNAME, BasePeer::TYPE_NUM
      * @return array A list of field names
+     * @throws PropelException - if the type is not valid.
      */
-
     public static function getFieldNames(\$type = BasePeer::TYPE_PHPNAME)
     {
         if (!array_key_exists(\$type, self::\$fieldNames)) {
@@ -462,7 +462,6 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
     protected function addGetValueSets(&$script)
     {
         $this->declareClassFromBuilder($this->getTableMapBuilder());
-        $callingClass = $this->getStubPeerBuilder()->getClassname();
         $script .= "
     /**
      * Gets the list of values for all ENUM columns
@@ -485,6 +484,9 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
         $script .= "
     /**
      * Gets the list of values for an ENUM column
+     *
+     * @param string \$colname The ENUM column name.
+     *
      * @return array list of possible values for the column
      */
     public static function getValueSet(\$colname)
@@ -787,6 +789,8 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
      * Adds the PHP code to return a instance pool key for the passed-in primary key variable names.
      *
      * @param array $pkphp An array of PHP var names / method calls representing complete pk.
+     *
+     * @return string
      */
     public function getInstancePoolKeySnippet($pkphp)
     {
@@ -864,6 +868,9 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
      * from the cache in order to prevent returning objects that no longer exist.
      *
      * @param      mixed \$value A ".$this->getObjectClassname()." object or a primary key value.
+     *
+     * @return void
+     * @throws PropelException - if the value is invalid.
      */
     public static function removeInstanceFromPool(\$value)
     {";
@@ -1446,6 +1453,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
      *
      * @param      PropelPDO \$con the connection to use
      * @return int The number of affected rows (if supported by underlying database driver).
+     * @throws PropelException
      */
     public static function doDeleteAll(PropelPDO \$con = null)
     {
@@ -1835,7 +1843,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
             }
 
             foreach (\$cols as \$colName) {
-                if (\$tableMap->containsColumn(\$colName)) {
+                if (\$tableMap->hasColumn(\$colName)) {
                     \$get = 'get' . \$tableMap->getColumn(\$colName)->getPhpName();
                     \$columns[\$colName] = \$obj->\$get();
                 }
@@ -1912,6 +1920,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
      *
      * @param      array \$pks List of primary keys
      * @param      PropelPDO \$con the connection to use
+     * @return " .$this->getObjectClassname(). "[]
      * @throws PropelException Any exceptions caught during processing will be
      *		 rethrown wrapped into a PropelException.
      */

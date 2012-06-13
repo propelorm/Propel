@@ -282,6 +282,8 @@ class PropelSQLExec extends Task
      * @param array  $statements list of SQL statements (strings) to be executed
      *
      * @return integer the number of successful statements
+     *
+     * @throws BuildException
      */
     protected function insertDatabaseSqlFiles($database, $statements)
     {

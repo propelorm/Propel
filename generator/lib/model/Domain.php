@@ -265,6 +265,7 @@ class Domain extends XMLElement
      * Gets the default value, type-casted for use in PHP OM.
      * @return mixed
      * @see        getDefaultValue()
+     * @throws EngineException
      */
     public function getPhpDefaultValue()
     {

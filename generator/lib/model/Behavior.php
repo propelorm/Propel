@@ -197,6 +197,8 @@ class Behavior extends XMLElement
      * @param string $templateDir The name of the template subdirectory
      *
      * @return string The rendered template
+     *
+     * @throws InvalidArgumentException
      */
     public function renderTemplate($filename, $vars = array(), $templateDir = '/templates/')
     {

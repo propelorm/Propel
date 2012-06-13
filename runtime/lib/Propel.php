@@ -843,6 +843,8 @@ class Propel
      *
      * @param  string $class dot-path to clas (e.g. path.to.my.ClassName).
      * @return string unqualified classname
+     *
+     * @throws PropelException
      */
     public static function importClass($path)
     {

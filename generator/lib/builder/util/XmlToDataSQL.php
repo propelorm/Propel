@@ -108,6 +108,7 @@ class XmlToDataSQL extends AbstractHandler
      *
      * @param PhingFile $xmlFile
      * @param Writer    $out
+     * @throws BuildException
      */
     public function transform(PhingFile $xmlFile, Writer $out)
     {

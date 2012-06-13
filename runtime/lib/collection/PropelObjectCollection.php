@@ -21,6 +21,8 @@ class PropelObjectCollection extends PropelCollection
      * Save all the elements in the collection
      *
      * @param PropelPDO $con
+     *
+     * @throws PropelException
      */
     public function save($con = null)
     {
@@ -47,6 +49,8 @@ class PropelObjectCollection extends PropelCollection
      * Delete all the elements in the collection
      *
      * @param PropelPDO $con
+     *
+     * @throws PropelException
      */
     public function delete($con = null)
     {
@@ -234,6 +238,8 @@ class PropelObjectCollection extends PropelCollection
      * @param PropelPDO $con      Optional connection object
      *
      * @return PropelObjectCollection The list of related objects
+     *
+     * @throws PropelException
      */
     public function populateRelation($relation, $criteria = null, $con = null)
     {
