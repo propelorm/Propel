@@ -30,7 +30,7 @@ The best way to submit a patch is to make a Pull Request on GitHub. First, you s
 Assuming you are in your local Propel project:
 
 {% highlight bash %}
-> git checkout -b master fix-my-patch
+> git checkout -b fix-my-patch master
 {% endhighlight %}
 
 Now you can write your patch in this branch. Don't forget to provide unit tests with your fix to prove both the bug and the patch.
