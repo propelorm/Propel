@@ -227,27 +227,29 @@ class PropelSQLParser
                 $isAfterBackslash = false;
             }
 
-            // FIXME: since we're iterating char by char, we can use only 1-char delimiters
-            if(preg_match('/^DELIMITER (.+)$/i', ltrim($parsedString), $matches)){
+            if (!$isInString) {
+                // FIXME: since we're iterating char by char, we can use only 1-char delimiters
+                if (preg_match('/^DELIMITER (.+)$/i', ltrim($parsedString), $matches)) {
 
-              // check if delimiter has more than 1 char
-              if(trim($this->sql[$this->pos])){
-                throw new Exception("Delimiters with more than 1 character are not supported! (yet?)");
-              }
+                    // check if delimiter has more than 1 char
+                    if(trim($this->sql[$this->pos])){
+                        throw new Exception("Delimiters with more than 1 character are not supported! (yet?)");
+                    }
 
-              $parsedString = ''; // remove DELIMITER from string because it's a command-line keyword only
-              $this->originalDelimiter = $this->delimiter; // save original delimiter
-              $this->delimiter = $matches[1]; // set new delimiter
+                    $parsedString = ''; // remove DELIMITER from string because it's a command-line keyword only
+                    $this->originalDelimiter = $this->delimiter; // save original delimiter
+                    $this->delimiter = $matches[1]; // set new delimiter
 
-              // original delimiter is back so return current sql
-              if($this->delimiter == $this->originalDelimiter){
-                return trim($parsedString);
-              }
-            }
+                    // original delimiter is back so return current sql
+                    if ($this->delimiter == $this->originalDelimiter) {
+                        return trim($parsedString);
+                    }
+                }
 
-            // check for end of statement
-            if (!$isInString && $char == $this->delimiter) {
-                return trim($parsedString);
+                // check for end of statement
+                if ($char == $this->delimiter) {
+                    return trim($parsedString);
+                }
             }
 
             $parsedString .= $char;
