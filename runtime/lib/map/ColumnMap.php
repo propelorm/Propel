@@ -105,7 +105,7 @@ class ColumnMap
   {
     return $this->table->getName();
   }
-  
+
   /**
    * Get the table name + column name.
    *
@@ -126,7 +126,7 @@ class ColumnMap
   {
     $this->phpName = $phpName;
   }
-  
+
   /**
    * Get the name of a column.
    *
@@ -136,7 +136,7 @@ class ColumnMap
   {
     return $this->phpName;
   }
-  
+
   /**
    * Set the Propel type of this column.
    *
@@ -147,7 +147,7 @@ class ColumnMap
   {
     $this->type = $type;
   }
-  
+
   /**
    * Get the Propel type of this column.
    *
@@ -187,7 +187,7 @@ class ColumnMap
   {
     return ($this->type == PropelColumnTypes::TIMESTAMP || $this->type == PropelColumnTypes::DATE || $this->type == PropelColumnTypes::TIME || $this->type == PropelColumnTypes::BU_DATE  || $this->type == PropelColumnTypes::BU_TIMESTAMP);
   }
-  
+
   /**
    * Whether this is a DATE/TIME/TIMESTAMP column that is post-epoch (1970).
    *
@@ -230,7 +230,7 @@ class ColumnMap
   {
     $this->size = $size;
   }
-  
+
   /**
    * Get the size of this column.
    *
@@ -251,7 +251,7 @@ class ColumnMap
   {
     $this->pk = $pk;
   }
-  
+
   /**
    * Is this column a primary key?
    *
@@ -272,7 +272,7 @@ class ColumnMap
   {
     $this->notNull = $nn;
   }
-  
+
   /**
    * Is null value allowed ?
    *
@@ -292,7 +292,7 @@ class ColumnMap
   {
     $this->defaultValue = $defaultValue;
   }
-  
+
   /**
    * Gets the default value for this column.
    * @return     mixed String or NULL
@@ -333,17 +333,15 @@ class ColumnMap
       return false;
     }
   }
-  
+
   /**
    * Get the RelationMap object for this foreign key
    */
   public function getRelation()
   {
     if(!$this->relatedTableName) return null;
-    foreach ($this->getTable()->getRelations() as $name => $relation)
-    {
-      if($relation->getType() == RelationMap::MANY_TO_ONE)
-      {
+    foreach ($this->getTable()->getRelations() as $name => $relation) {
+      if ($relation->getType() == RelationMap::MANY_TO_ONE) {
         if ($relation->getForeignTable()->getName() == $this->getRelatedTableName()
          && array_key_exists($this->getFullyQualifiedName(), $relation->getColumnMappings()))
         {
@@ -352,7 +350,7 @@ class ColumnMap
       }
     }
   }
-  
+
   /**
    * Get the table.column that this column is related to.
    *
@@ -382,7 +380,7 @@ class ColumnMap
   {
     return $this->relatedColumnName;
   }
-  
+
   /**
    * Get the TableMap object that this column is related to.
    *
@@ -397,7 +395,7 @@ class ColumnMap
       throw new PropelException("Cannot fetch RelatedTable for column with no foreign key: " . $this->columnName);
     }
   }
-  
+
   /**
    * Get the TableMap object that this column is related to.
    *
@@ -423,7 +421,7 @@ class ColumnMap
   {
     return $this->validators;
   }
-  
+
   /**
    * Set the valueSet of this column (only valid for ENUM columns).
    *
@@ -433,7 +431,7 @@ class ColumnMap
   {
     $this->valueSet = $values;
   }
-  
+
   /**
    * Get the valueSet of this column (only valid for ENUM columns).
    *
@@ -443,17 +441,17 @@ class ColumnMap
   {
     return $this->valueSet;
   }
-  
+
   public function isInValueSet($value)
   {
     return in_array($value, $this->valueSet);
   }
-  
+
   public function getValueSetKey($value)
   {
     return array_search($value, $this->valueSet);
   }
-  
+
   /**
    * Performs DB-specific ignore case, but only if the column type necessitates it.
    * @param      string $str The expression we want to apply the ignore case formatting to (e.g. the column name).
@@ -467,7 +465,7 @@ class ColumnMap
       return $str;
     }
   }
-  
+
   /**
    * Normalizes the column name, removing table prefix and uppercasing.
    *
@@ -482,9 +480,10 @@ class ColumnMap
       $name = substr($name, $pos + 1);
     }
     $name = strtoupper($name);
+
     return $name;
   }
-  
+
   /**
    * Set this column to be a primaryString column.
    *
@@ -506,7 +505,7 @@ class ColumnMap
   }
 
   // deprecated methods
-  
+
   /**
    * Gets column name
    * @deprecated Use getName() instead

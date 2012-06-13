@@ -8,7 +8,6 @@
  * @license    MIT License
  */
 
-require_once 'PHPUnit/Framework.php';
 require_once dirname(__FILE__) . '/../../../../generator/lib/builder/util/XmlToAppData.php';
 
 /**
@@ -18,18 +17,19 @@ require_once dirname(__FILE__) . '/../../../../generator/lib/builder/util/XmlToA
 abstract class PlatformTestBase extends PHPUnit_Framework_TestCase
 {
 
-	abstract protected function getPlatform();
+    abstract protected function getPlatform();
 
-	protected function getDatabaseFromSchema($schema)
-	{
-		$xtad = new XmlToAppData($this->getPlatform());
-		$appData = $xtad->parseString($schema);
-		return $appData->getDatabase();
-	}
-	
-	protected function getTableFromSchema($schema, $tableName = 'foo')
-	{
-		return $this->getDatabaseFromSchema($schema)->getTable($tableName);
-	}
-	
+    protected function getDatabaseFromSchema($schema)
+    {
+        $xtad = new XmlToAppData($this->getPlatform());
+        $appData = $xtad->parseString($schema);
+
+        return $appData->getDatabase();
+    }
+
+    protected function getTableFromSchema($schema, $tableName = 'foo')
+    {
+        return $this->getDatabaseFromSchema($schema)->getTable($tableName);
+    }
+
 }

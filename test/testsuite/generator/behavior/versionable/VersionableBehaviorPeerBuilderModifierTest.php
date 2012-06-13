@@ -9,7 +9,6 @@
  * @license    MIT License
  */
 
-require_once 'PHPUnit/Framework.php';
 require_once dirname(__FILE__) . '/../../../../../generator/lib/util/PropelQuickBuilder.php';
 require_once dirname(__FILE__) . '/../../../../../generator/lib/behavior/versionable/VersionableBehavior.php';
 require_once dirname(__FILE__) . '/../../../../../runtime/lib/Propel.php';
@@ -24,29 +23,29 @@ require_once dirname(__FILE__) . '/../../../../../runtime/lib/Propel.php';
 class VersionableBehaviorPeerBuilderModifierTest extends PHPUnit_Framework_TestCase
 {
 
-	public function setUp()
-	{
-		if (!class_exists('VersionableBehaviorTest10')) {
-			$schema = <<<EOF
+    public function setUp()
+    {
+        if (!class_exists('VersionableBehaviorTest10')) {
+            $schema = <<<EOF
 <database name="versionable_behavior_test_10">
-	<table name="versionable_behavior_test_10">
-		<column name="id" primaryKey="true" type="INTEGER" autoIncrement="true" />
-		<column name="bar" type="INTEGER" />
-		<behavior name="versionable" />
-	</table>
+    <table name="versionable_behavior_test_10">
+        <column name="id" primaryKey="true" type="INTEGER" autoIncrement="true" />
+        <column name="bar" type="INTEGER" />
+        <behavior name="versionable" />
+    </table>
 </database>>
 EOF;
-			PropelQuickBuilder::buildSchema($schema);
-		}
-	}
+            PropelQuickBuilder::buildSchema($schema);
+        }
+    }
 
-	public function testIsVersioningEnabled()
-	{
-		$this->assertTrue(VersionableBehaviorTest10Peer::isVersioningEnabled());
-		VersionableBehaviorTest10Peer::disableVersioning();
-		$this->assertFalse(VersionableBehaviorTest10Peer::isVersioningEnabled());
-		VersionableBehaviorTest10Peer::enableVersioning();
-		$this->assertTrue(VersionableBehaviorTest10Peer::isVersioningEnabled());
-	}
+    public function testIsVersioningEnabled()
+    {
+        $this->assertTrue(VersionableBehaviorTest10Peer::isVersioningEnabled());
+        VersionableBehaviorTest10Peer::disableVersioning();
+        $this->assertFalse(VersionableBehaviorTest10Peer::isVersioningEnabled());
+        VersionableBehaviorTest10Peer::enableVersioning();
+        $this->assertTrue(VersionableBehaviorTest10Peer::isVersioningEnabled());
+    }
 
 }

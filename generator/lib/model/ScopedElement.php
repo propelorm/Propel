@@ -19,123 +19,123 @@ require_once dirname(__FILE__) . '/XMLElement.php';
  */
 abstract class ScopedElement extends XMLElement
 {
-	/**
-	 * The package for the generated OM.
-	 *
-	 * @var       string
-	 */
-	protected $pkg;
-	
-	/**
-	 * Whether the package was automatically overridden.
-	 * If propel.schema.autoPackage or propel.namespace.AutoPackage is true.
-	 */
-	protected $pkgOverridden = false;
+    /**
+     * The package for the generated OM.
+     *
+     * @var       string
+     */
+    protected $pkg;
 
-	/**
-	 * Namespace for the generated OM.
-	 *
-	 * @var       string
-	 */
-	protected $namespace;
+    /**
+     * Whether the package was automatically overridden.
+     * If propel.schema.autoPackage or propel.namespace.AutoPackage is true.
+     */
+    protected $pkgOverridden = false;
 
-	/**
-	 * Schema this element belongs to.
-	 *
-	 * @var       string
-	 */
-	protected $schema;
+    /**
+     * Namespace for the generated OM.
+     *
+     * @var       string
+     */
+    protected $namespace;
 
-	/**
-	 * retrieves a build property.
-	 *
-	 * @param unknown_type $name
-	 */
-	abstract protected function getBuildProperty($name);
+    /**
+     * Schema this element belongs to.
+     *
+     * @var       string
+     */
+    protected $schema;
 
-	/**
-	 * Sets up the Rule object based on the attributes that were passed to loadFromXML().
-	 * @see       parent::loadFromXML()
-	 */
-	protected function setupObject()
-	{
-		$this->setPackage($this->getAttribute("package", $this->pkg));
-		$this->setSchema($this->getAttribute("schema", $this->schema));
-		$this->setNamespace($this->getAttribute("namespace", $this->namespace));
-	}
+    /**
+     * retrieves a build property.
+     *
+     * @param unknown_type $name
+     */
+    abstract protected function getBuildProperty($name);
 
-	/**
-	 * Get the value of the namespace.
-	 * @return     value of namespace.
-	 */
-	public function getNamespace()
-	{
-		return $this->namespace;
-	}
+    /**
+     * Sets up the Rule object based on the attributes that were passed to loadFromXML().
+     * @see       parent::loadFromXML()
+     */
+    protected function setupObject()
+    {
+        $this->setPackage($this->getAttribute("package", $this->pkg));
+        $this->setSchema($this->getAttribute("schema", $this->schema));
+        $this->setNamespace($this->getAttribute("namespace", $this->namespace));
+    }
 
-	/**
-	 * Set the value of the namespace.
-	 * @param      v  Value to assign to namespace.
-	 */
-	public function setNamespace($v)
-	{
-		if ($v == $this->namespace) {
-			return;
-		}
-		$this->namespace = $v;
-		if ($v && (!$this->pkg || $this->pkgOverridden) && $this->getBuildProperty('namespaceAutoPackage')) {
-			$this->pkg = str_replace('\\', '.', $v);
-			$this->pkgOverridden = true;
-		}
-	}
+    /**
+     * Get the value of the namespace.
+     * @return value of namespace.
+     */
+    public function getNamespace()
+    {
+        return $this->namespace;
+    }
 
-	/**
-	 * Get the value of package.
-	 * @return     value of package.
-	 */
-	public function getPackage()
-	{
-		return $this->pkg;
-	}
+    /**
+     * Set the value of the namespace.
+     * @param      v  Value to assign to namespace.
+     */
+    public function setNamespace($v)
+    {
+        if ($v == $this->namespace) {
+            return;
+        }
+        $this->namespace = $v;
+        if ($v && (!$this->pkg || $this->pkgOverridden) && $this->getBuildProperty('namespaceAutoPackage')) {
+            $this->pkg = str_replace('\\', '.', $v);
+            $this->pkgOverridden = true;
+        }
+    }
 
-	/**
-	 * Set the value of package.
-	 * @param      v  Value to assign to package.
-	 */
-	public function setPackage($v)
-	{
-		if ($v == $this->pkg) {
-			return;
-		}
-		$this->pkg = $v;
-		$this->pkgOverridden = false;
-	}
+    /**
+     * Get the value of package.
+     * @return value of package.
+     */
+    public function getPackage()
+    {
+        return $this->pkg;
+    }
 
-	/**
-	 * Get the value of schema.
-	 * @return     value of schema.
-	 */
-	public function getSchema()
-	{
-		return $this->schema;
-	}
+    /**
+     * Set the value of package.
+     * @param      v  Value to assign to package.
+     */
+    public function setPackage($v)
+    {
+        if ($v == $this->pkg) {
+            return;
+        }
+        $this->pkg = $v;
+        $this->pkgOverridden = false;
+    }
 
-	/**
-	 * Set the value of schema.
-	 * @param      v  Value to assign to schema.
-	 */
-	public function setSchema($v)
-	{
-		if ($v == $this->schema) {
-			return;
-		}
-		$this->schema = $v;
-		if ($v && !$this->pkg && $this->getBuildProperty('schemaAutoPackage')) {
-			$this->pkg = $v;
-			$this->pkgOverridden = true;
-		}
-		if ($v && !$this->namespace && $this->getBuildProperty('schemaAutoNamespace')) {
-			$this->namespace = $v;
-		}
-	}
+    /**
+     * Get the value of schema.
+     * @return value of schema.
+     */
+    public function getSchema()
+    {
+        return $this->schema;
+    }
+
+    /**
+     * Set the value of schema.
+     * @param      v  Value to assign to schema.
+     */
+    public function setSchema($v)
+    {
+        if ($v == $this->schema) {
+            return;
+        }
+        $this->schema = $v;
+        if ($v && !$this->pkg && $this->getBuildProperty('schemaAutoPackage')) {
+            $this->pkg = $v;
+            $this->pkgOverridden = true;
+        }
+        if ($v && !$this->namespace && $this->getBuildProperty('schemaAutoNamespace')) {
+            $this->namespace = $v;
+        }
+    }
 }

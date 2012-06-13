@@ -7,7 +7,7 @@
  *
  * @license    MIT License
  */
- 
+
 /**
  * Allows translation of text columns through transparent one-to-many relationship.
  * Modifier for the peer builder.
@@ -18,20 +18,20 @@
  */
 class I18nBehaviorPeerBuilderModifier
 {
-	protected $behavior;
-	
-	public function __construct($behavior)
-	{
-		$this->behavior = $behavior;
-	}
+    protected $behavior;
 
-	public function staticConstants()
-	{
-		return "
+    public function __construct($behavior)
+    {
+        $this->behavior = $behavior;
+    }
+
+    public function staticConstants()
+    {
+        return "
 /**
  * The default locale to use for translations
  * @var        string
  */
 const DEFAULT_LOCALE = '{$this->behavior->getDefaultLocale()}';";
-	}
+    }
 }

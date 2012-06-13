@@ -6,11 +6,11 @@
  * file that was distributed with this source code.
  *
  * @license    MIT License
- */ 
+ */
 
 require_once 'AddClassBehaviorBuilder.php';
 
 class AddClassBehavior extends Behavior
 {
-	protected $additionalBuilders = array('AddClassBehaviorBuilder');
+    protected $additionalBuilders = array('AddClassBehaviorBuilder');
 }

@@ -1,7 +1,7 @@
 
 /**
  * Use the I18n relation query object
- * 
+ *
  * @see       useQuery()
  *
  * @param     string $locale Locale to use for the join condition, e.g. 'fr_FR'
@@ -12,7 +12,7 @@
  */
 public function useI18nQuery($locale = '<?php echo $defaultLocale ?>', $relationAlias = null, $joinType = Criteria::LEFT_JOIN)
 {
-	return $this
-		->joinI18n($locale, $relationAlias, $joinType)
-		->useQuery($relationAlias ? $relationAlias : '<?php echo $i18nRelationName ?>', '<?php echo $namespacedQueryClass ?>');
+    return $this
+        ->joinI18n($locale, $relationAlias, $joinType)
+        ->useQuery($relationAlias ? $relationAlias : '<?php echo $i18nRelationName ?>', '<?php echo $namespacedQueryClass ?>');
 }

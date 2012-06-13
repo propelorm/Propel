@@ -8,7 +8,6 @@
  * @license    MIT License
  */
 
-require_once 'PHPUnit/Framework.php';
 require_once dirname(__FILE__) . '/../../../../runtime/lib/map/ColumnMap.php';
 require_once dirname(__FILE__) . '/../../../../runtime/lib/map/RelationMap.php';
 require_once dirname(__FILE__) . '/../../../../runtime/lib/map/TableMap.php';
@@ -22,7 +21,7 @@ require_once dirname(__FILE__) . '/../../../../runtime/lib/exception/PropelExcep
  * @version    $Id$
  * @package    runtime.map
  */
-class TableMapTest extends PHPUnit_Framework_TestCase 
+class TableMapTest extends PHPUnit_Framework_TestCase
 {
   protected $databaseMap;
 
@@ -52,13 +51,12 @@ class TableMapTest extends PHPUnit_Framework_TestCase
       $this->fail('A table map can be instanciated with no parameters');
     }
   }
-  
+
   public function testProperties()
   {
     $tmap = new TableMap();
     $properties = array('name', 'phpName', 'className', 'package');
-    foreach ($properties as $property)
-    {
+    foreach ($properties as $property) {
       $getter = 'get' . ucfirst($property);
       $setter = 'set' . ucfirst($property);
       $this->assertNull($tmap->$getter(), "A new relation has no $property");
@@ -66,7 +64,7 @@ class TableMapTest extends PHPUnit_Framework_TestCase
       $this->assertEquals('foo_value', $tmap->$getter(), "The $property is set by setType()");
     }
   }
-  
+
   public function testHasColumn()
   {
     $this->assertFalse($this->tmap->hasColumn('BAR'), 'hascolumn() returns false when the column is not in the table map');
@@ -77,35 +75,32 @@ class TableMapTest extends PHPUnit_Framework_TestCase
     $this->assertTrue($this->tmap->hasColumn('BAR', false), 'hascolumn() accepts a $normalize parameter to skip name normalization');
     $this->assertTrue($this->tmap->hasColumn($column), 'hascolumn() accepts a ColumnMap object as parameter');
   }
-  
+
   public function testGetColumn()
   {
     $column = $this->tmap->addColumn('BAR', 'Bar', 'INTEGER');
     $this->assertEquals($column, $this->tmap->getColumn('BAR'), 'getColumn returns a ColumnMap according to a column name');
-    try
-    {
+    try {
       $this->tmap->getColumn('FOO');
       $this->fail('getColumn throws an exception when called on an inexistent column');
-    } catch(PropelException $e) {}
+    } catch (PropelException $e) {}
     $this->assertEquals($column, $this->tmap->getColumn('foo.bar'), 'getColumn accepts a denormalized column name');
-    try
-    {
+    try {
       $this->tmap->getColumn('foo.bar', false);
       $this->fail('getColumn accepts a $normalize parameter to skip name normalization');
-    } catch(PropelException $e) {}
+    } catch (PropelException $e) {}
   }
 
   public function testGetColumnByPhpName()
   {
     $column = $this->tmap->addColumn('BAR_BAZ', 'BarBaz', 'INTEGER');
     $this->assertEquals($column, $this->tmap->getColumnByPhpName('BarBaz'), 'getColumnByPhpName() returns a ColumnMap according to a column phpName');
-    try
-    {
+    try {
       $this->tmap->getColumn('Foo');
       $this->fail('getColumnByPhpName() throws an exception when called on an inexistent column');
-    } catch(PropelException $e) {}
+    } catch (PropelException $e) {}
   }
-  
+
   public function testGetColumns()
   {
     $this->assertEquals(array(), $this->tmap->getColumns(), 'getColumns returns an empty array when no columns were added');
@@ -113,7 +108,7 @@ class TableMapTest extends PHPUnit_Framework_TestCase
     $column2 = $this->tmap->addColumn('BAZ', 'Baz', 'INTEGER');
     $this->assertEquals(array('BAR' => $column1, 'BAZ' => $column2), $this->tmap->getColumns(), 'getColumns returns the columns indexed by name');
   }
-  
+
   public function testAddPrimaryKey()
   {
     $column1 = $this->tmap->addPrimaryKey('BAR', 'Bar', 'INTEGER');
@@ -127,7 +122,7 @@ class TableMapTest extends PHPUnit_Framework_TestCase
     $column5 = $this->tmap->addForeignPrimaryKey('BAZZZZ', 'Bazzzz', 'INTEGER', 'table1', 'column1');
     $this->assertTrue($column5->isPrimaryKey(), 'Columns added by way of addForeignPrimaryKey() are primary keys');
   }
-  
+
   public function testGetPrimaryKeyColumns()
   {
     $this->assertEquals(array(), $this->tmap->getPrimaryKeyColumns(), 'getPrimaryKeyColumns() returns an empty array by default');
@@ -136,7 +131,7 @@ class TableMapTest extends PHPUnit_Framework_TestCase
     $expected = array($column1, $column3);
     $this->assertEquals($expected, $this->tmap->getPrimaryKeyColumns(), 'getPrimaryKeyColumns() returns an  array of the table primary keys');
   }
-  
+
   public function testGetPrimaryKeys()
   {
     $this->assertEquals(array(), $this->tmap->getPrimaryKeys(), 'getPrimaryKeys() returns an empty array by default');
@@ -145,7 +140,7 @@ class TableMapTest extends PHPUnit_Framework_TestCase
     $expected = array('BAR' => $column1, 'BAZZ' => $column3);
     $this->assertEquals($expected, $this->tmap->getPrimaryKeys(), 'getPrimaryKeys() returns an array of the table primary keys');
   }
-  
+
   public function testAddForeignKey()
   {
     $column1 = $this->tmap->addForeignKey('BAR', 'Bar', 'INTEGER', 'Table1', 'column1');
@@ -159,7 +154,7 @@ class TableMapTest extends PHPUnit_Framework_TestCase
     $column5 = $this->tmap->addForeignPrimaryKey('BAZZZZ', 'Bazzzz', 'INTEGER', 'table1', 'column1');
     $this->assertTrue($column5->isForeignKey(), 'Columns added by way of addForeignPrimaryKey() are foreign keys');
   }
-  
+
   public function testGetForeignKeys()
   {
     $this->assertEquals(array(), $this->tmap->getForeignKeys(), 'getForeignKeys() returns an empty array by default');
@@ -169,14 +164,14 @@ class TableMapTest extends PHPUnit_Framework_TestCase
     $this->assertEquals($expected, $this->tmap->getForeignKeys(), 'getForeignKeys() returns an array of the table foreign keys');
   }
 
-	/**
-	 * @expectedException PropelException
-	 */
+    /**
+     * @expectedException PropelException
+     */
   public function testLoadWrongRelations()
   {
     $this->tmap->getRelation('Bar');
   }
-  
+
   public function testLazyLoadRelations()
   {
     $foreigntmap = new BarTableMap();
@@ -186,7 +181,7 @@ class TableMapTest extends PHPUnit_Framework_TestCase
     $rmap = $localtmap->getRelation('Bar');
     $this->assertEquals($rmap, $localtmap->rmap, 'getRelation() returns the relations lazy loaded by buildRelations()');
   }
-  
+
   public function testAddRelation()
   {
     $foreigntmap1 = new TableMap('bar');
@@ -206,7 +201,7 @@ class TableMapTest extends PHPUnit_Framework_TestCase
     $this->assertEquals($this->rmap2->getForeignTable(), $this->tmap, 'adding a relation with HAS_MANY sets the foreign table to the current table');
     $this->assertEquals($this->rmap2->getLocalTable(), $foreigntmap2, 'adding a relation with HAS_MANY sets the local table according to the name given');
     $this->assertEquals(RelationMap::ONE_TO_MANY, $this->rmap2->getType(), 'adding a relation with HAS_MANY sets the foreign table type accordingly');
-    
+
     $expectedRelations = array('Bar' => $this->rmap1, 'Bazz' => $this->rmap2);
     $this->assertEquals($expectedRelations, $this->tmap->getRelations(), 'getRelations() returns an associative array of all the relations');
   }
@@ -219,7 +214,7 @@ class TableMapTest extends PHPUnit_Framework_TestCase
     $column = $this->tmap->addColumn('FOO', 'Foo', 'VARCHAR');
     $this->assertFalse($this->tmap->hasPrimaryStringColumn(), 'hasPrimaryStringColumn() returns false when no pkStr column is set.');
     $this->assertNull($this->tmap->getPrimaryStringColumn(), 'getPrimaryStringColumn() returns null when no pkStr column is set.');
-    
+
     $column = $this->tmap->addColumn('PKSTR', 'pkStr', 'VARCHAR');
     $column->setPrimaryString(true);
     $this->assertTrue($this->tmap->hasPrimaryStringColumn(), 'hasPrimaryStringColumn() returns true after adding pkStr column.');
@@ -235,7 +230,7 @@ class TableMapTest extends PHPUnit_Framework_TestCase
     $column->setType('VARCHAR');
     $column->setPrimaryString(true);
     $this->tmap->addConfiguredColumn($column);
-    
+
     $this->assertTrue($this->tmap->hasPrimaryStringColumn(), 'hasPrimaryStringColumn() returns true after adding pkStr column.');
     $this->assertEquals($column, $this->tmap->getPrimaryStringColumn(), 'getPrimaryStringColumn() returns correct column.');
   }
@@ -251,7 +246,7 @@ class TableMapTest extends PHPUnit_Framework_TestCase
     $this->assertEquals('BAR', $tmap->normalizeColName('BAR'), 'normalizeColName leaves normalized column names unchanged');
     $this->assertEquals('BAR_BAZ', $tmap->normalizeColName('foo.bar_baz'), 'normalizeColName can do all the above at the same time');
   }
-  
+
   // deprecated method
   public function testContainsColumn()
   {
@@ -263,7 +258,7 @@ class TableMapTest extends PHPUnit_Framework_TestCase
     $this->assertTrue($this->tmap->containsColumn('BAR', false), 'containsColumn accepts a $normalize parameter to skip name normalization');
     $this->assertTrue($this->tmap->containsColumn($column), 'containsColumn accepts a ColumnMap object as parameter');
   }
-  
+
   // deprecated methods
   public function testPrefix()
   {
@@ -292,7 +287,7 @@ class TestableTableMap extends TableMap
   {
     return parent::removePrefix($data);
   }
-  
+
   public function normalizeColName($name)
   {
     return parent::normalizeColName($name);

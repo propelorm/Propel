@@ -140,7 +140,7 @@ PHP class or method name.
   name CDATA #IMPLIED
 >
 
-<!ELEMENT behavior (parameter+)>
+<!ELEMENT behavior (parameter*)>
 <!ATTLIST behavior
   name CDATA #IMPLIED
 >

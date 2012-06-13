@@ -85,6 +85,9 @@
  * - debugpdo.logging.details.method.pad (default: 28)
  *   How much horizontal space to reserve for the method name on a log line
  *
+ * - debugpdo.logging.connection (default: false)
+ *   Add connectionName in log used for explains
+ *
  * The order in which the logging details are enabled is significant, since it determines the order in
  * which they will appear in the log file.
  *
@@ -104,8 +107,8 @@
  */
 class DebugPDO extends PropelPDO
 {
-	/**
-	 * @var       boolean
-	 */
-	public $useDebug = true;
+    /**
+     * @var       boolean
+     */
+    public $useDebug = true;
 }

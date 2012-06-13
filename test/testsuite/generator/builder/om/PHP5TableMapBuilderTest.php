@@ -17,16 +17,16 @@ require_once dirname(__FILE__) . '/../../../../tools/helpers/bookstore/Bookstore
  * @version    $Id$
  * @package    generator.builder.om
  */
-class PHP5TableMapBuilderTest extends BookstoreTestBase 
+class PHP5TableMapBuilderTest extends BookstoreTestBase
 {
   protected $databaseMap;
 
   protected function setUp()
   {
-  	parent::setUp();
+      parent::setUp();
     $this->databaseMap = Propel::getDatabaseMap('bookstore');
   }
-  
+
   public function testColumnDefaultValue()
   {
     $table = $this->databaseMap->getTableByPhpName('BookstoreEmployeeAccount');
@@ -41,9 +41,9 @@ class PHP5TableMapBuilderTest extends BookstoreTestBase
   public function testRelationCount()
   {
     $bookTable = $this->databaseMap->getTableByPhpName('Book');
-    $this->assertEquals(10, count($bookTable->getRelations()), 'The map builder creates relations for both incoming and outgoing keys');
+    $this->assertEquals(12, count($bookTable->getRelations()), 'The map builder creates relations for both incoming and outgoing keys');
   }
-  
+
   public function testSimpleRelationName()
   {
     $bookTable = $this->databaseMap->getTableByPhpName('Book');
@@ -64,7 +64,7 @@ class PHP5TableMapBuilderTest extends BookstoreTestBase
     $this->assertTrue($essayTable->hasRelation('AuthorRelatedByFirstAuthor'), 'The map builder creates relations based on the foreign table name and the foreign key');
     $this->assertTrue($essayTable->hasRelation('AuthorRelatedBySecondAuthor'), 'The map builder creates relations based on the foreign table name and the foreign key');
   }
-  
+
   public function testRelationDirectionManyToOne()
   {
     $bookTable = $this->databaseMap->getTableByPhpName('Book');
@@ -94,7 +94,7 @@ class PHP5TableMapBuilderTest extends BookstoreTestBase
     $bookTable = $this->databaseMap->getTableByPhpName('Book');
     $this->assertEquals(RelationMap::MANY_TO_MANY, $bookTable->getRelation('BookClubList')->getType(), 'The map builder creates MANY_TO_MANY relations for every cross key');
   }
-  
+
   public function testRelationsColumns()
   {
     $bookTable = $this->databaseMap->getTableByPhpName('Book');
@@ -114,13 +114,13 @@ class PHP5TableMapBuilderTest extends BookstoreTestBase
     $expectedMapping = array();
     $this->assertEquals($expectedMapping, $bookTable->getRelation('BookClubList')->getColumnMappings(), 'The map builder provides no column mapping for many-to-many relationships');
   }
-  
+
   public function testRelationOnDelete()
   {
     $bookTable = $this->databaseMap->getTableByPhpName('Book');
     $this->assertEquals('SET NULL', $bookTable->getRelation('Publisher')->getOnDelete(), 'The map builder adds columns with the correct onDelete');
   }
-  
+
   public function testRelationOnUpdate()
   {
     $bookTable = $this->databaseMap->getTableByPhpName('Book');
@@ -133,23 +133,31 @@ class PHP5TableMapBuilderTest extends BookstoreTestBase
     $bookTable = $this->databaseMap->getTableByPhpName('Book');
     $this->assertEquals($bookTable->getBehaviors(), array(), 'getBehaviors() returns an empty array when no behaviors are registered');
     $tmap = Propel::getDatabaseMap(Table1Peer::DATABASE_NAME)->getTable(Table1Peer::TABLE_NAME);
-    $expectedBehaviorParams = array('timestampable' => array('create_column' => 'created_on', 'update_column' => 'updated_on'));
+    $expectedBehaviorParams = array('timestampable' => array('create_column' => 'created_on', 'update_column' => 'updated_on', 'disable_updated_at' => 'false'));
     $this->assertEquals($tmap->getBehaviors(), $expectedBehaviorParams, 'The map builder creates a getBehaviors() method to retrieve behaviors parameters when behaviors are registered');
   }
 
- 	public function testSingleTableInheritance()
-	{
-		$bookTable = $this->databaseMap->getTableByPhpName('Book');
-		$this->assertFalse($bookTable->isSingleTableInheritance(), 'isSingleTabkeInheritance() returns false by default');
+     public function testSingleTableInheritance()
+    {
+        $bookTable = $this->databaseMap->getTableByPhpName('Book');
+        $this->assertFalse($bookTable->isSingleTableInheritance(), 'isSingleTabkeInheritance() returns false by default');
 
-		$empTable = $this->databaseMap->getTableByPhpName('BookstoreEmployee');
-		$this->assertTrue($empTable->isSingleTableInheritance(), 'isSingleTabkeInheritance() returns true for tables using single table inheritance');
-	}
+        $empTable = $this->databaseMap->getTableByPhpName('BookstoreEmployee');
+        $this->assertTrue($empTable->isSingleTableInheritance(), 'isSingleTabkeInheritance() returns true for tables using single table inheritance');
+    }
 
-	public function testPrimaryString()
-	{
-		$bookTable = $this->databaseMap->getTableByPhpName('Book');
-		$this->assertTrue($bookTable->hasPrimaryStringColumn(), 'The map builder adds primaryString columns.');
-		$this->assertEquals($bookTable->getColumn('TITLE'), $bookTable->getPrimaryStringColumn(), 'The map builder maps the correct column as primaryString.');
-	}
+    public function testPrimaryString()
+    {
+        $bookTable = $this->databaseMap->getTableByPhpName('Book');
+        $this->assertTrue($bookTable->hasPrimaryStringColumn(), 'The map builder adds primaryString columns.');
+        $this->assertEquals($bookTable->getColumn('TITLE'), $bookTable->getPrimaryStringColumn(), 'The map builder maps the correct column as primaryString.');
+    }
+
+    public function testIsCrossRef()
+    {
+        $bookTable = $this->databaseMap->getTableByPhpName('Book');
+        $this->assertFalse($bookTable->isCrossRef(), 'The map builder add isCrossRef information "false"');
+        $BookListRelTable = $this->databaseMap->getTableByPhpName('BookListRel');
+        $this->assertTrue($BookListRelTable->isCrossRef(), 'The map builder add isCrossRef information "true"');
+    }
 }
