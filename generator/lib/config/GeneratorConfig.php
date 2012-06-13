@@ -149,7 +149,7 @@ class GeneratorConfig implements GeneratorConfigInterface
     /**
      * Creates and configures a new Platform class.
      *
-     * @param  PDO      $con
+     * @param  PDO            $con
      * @return Platform
      * @throws BuildException
      */
@@ -178,7 +178,7 @@ class GeneratorConfig implements GeneratorConfigInterface
 
     /**
      * Creates and configures a new SchemaParser class for specified platform.
-     * @param  PDO          $con
+     * @param  PDO            $con
      * @return SchemaParser
      * @throws BuildException
      */

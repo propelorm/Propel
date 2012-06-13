@@ -777,10 +777,9 @@ abstract class ".$this->getClassname()." extends " . $parentClass . "
      *
      * @return " . $this->getStubQueryBuilder()->getClassname() . " The current query, for fluid interface";
 
-
         if ($col->getType() == PropelTypes::ENUM) {
             $script .= "
-     * @throws    PropelException - if the value is not accepted by the enum.";
+     * @throws PropelException - if the value is not accepted by the enum.";
         }
 
         $script .= "

@@ -870,7 +870,7 @@ class BasePeer
      * This function searches for the given validator $name under propel/validator/$name.php,
      * imports and caches it.
      *
-     * @param  string    $classname The dot-path name of class (e.g. myapp.propel.MyValidator)
+     * @param  string         $classname The dot-path name of class (e.g. myapp.propel.MyValidator)
      * @return Validator|null object or null if not able to instantiate validator class (and error will be logged in this case)
      */
     public static function getValidator($classname)

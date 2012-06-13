@@ -1730,8 +1730,8 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
      * Set the value of [$clo] column.
      * ".$col->getDescription()."
      * @param      ".$col->getPhpType()." \$v new value
-     * @return   ".$this->getObjectClassname()." The current object (for fluent API support)
-     * @throws   PropelException - if the value is not accepted by this enum.
+     * @return                 ".$this->getObjectClassname()." The current object (for fluent API support)
+     * @throws PropelException - if the value is not accepted by this enum.
      */";
         $this->addMutatorOpenOpen($script, $col);
         $this->addMutatorOpenBody($script, $col);

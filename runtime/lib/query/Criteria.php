@@ -338,7 +338,7 @@ class Criteria implements IteratorAggregate
     /**
      * Returns the column name associated with an alias (AS-column).
      *
-     * @param  string $alias
+     * @param  string      $alias
      * @return string|null $string The name if found, null otherwise.
      */
     public function getColumnForAs($as)
@@ -393,7 +393,7 @@ class Criteria implements IteratorAggregate
     /**
      * Returns the table name associated with an alias.
      *
-     * @param  string $alias
+     * @param  string      $alias
      * @return string|null $string The name if given, null otherwise.
      */
     public function getTableForAlias($alias)
@@ -1391,8 +1391,8 @@ class Criteria implements IteratorAggregate
     /**
      * Remove an object from the criteria.
      *
-     * @param  string $key A string with the key to be removed.
-     * @return mixed|null  The removed value, null if not set.
+     * @param  string     $key A string with the key to be removed.
+     * @return mixed|null The removed value, null if not set.
      */
     public function remove($key)
     {
@@ -1649,11 +1649,11 @@ class Criteria implements IteratorAggregate
             // $comparison is a PDO::PARAM_* constant value
             // something like $c->add('foo like ?', '%bar%', PDO::PARAM_STR);
             return new Criterion($this, $p1, $value, Criteria::RAW, $comparison);
-        } else {
-            // $comparison is one of Criteria's constants
-            // something like $c->add(BookPeer::TITLE, 'War%', Criteria::LIKE);
-            return new Criterion($this, $p1, $value, $comparison);
         }
+
+        // $comparison is one of Criteria's constants
+        // something like $c->add(BookPeer::TITLE, 'War%', Criteria::LIKE);
+        return new Criterion($this, $p1, $value, $comparison);
     }
 
     /**

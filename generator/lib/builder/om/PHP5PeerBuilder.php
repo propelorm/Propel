@@ -414,7 +414,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
      * @param      string \$type The type of fieldnames to return:
      *                      One of the class type constants BasePeer::TYPE_PHPNAME, BasePeer::TYPE_STUDLYPHPNAME
      *                      BasePeer::TYPE_COLNAME, BasePeer::TYPE_FIELDNAME, BasePeer::TYPE_NUM
-     * @return array A list of field names
+     * @return array           A list of field names
      * @throws PropelException - if the type is not valid.
      */
     public static function getFieldNames(\$type = BasePeer::TYPE_PHPNAME)
@@ -1453,7 +1453,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
      * Deletes all rows from the ".$table->getName()." table.
      *
      * @param      PropelPDO \$con the connection to use
-     * @return int The number of affected rows (if supported by underlying database driver).
+     * @return int             The number of affected rows (if supported by underlying database driver).
      * @throws PropelException
      */
     public static function doDeleteAll(PropelPDO \$con = null)

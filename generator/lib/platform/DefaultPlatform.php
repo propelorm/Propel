@@ -161,8 +161,8 @@ class DefaultPlatform implements PropelPlatformInterface
     /**
      * Returns the db specific domain for a propelType.
      *
-     * @param  string $propelType the Propel type name.
-     * @return Domain The db specific domain.
+     * @param  string          $propelType the Propel type name.
+     * @return Domain          The db specific domain.
      * @throws EngineException
      */
     public function getDomainForType($propelType)

@@ -60,7 +60,7 @@ abstract class BasePropelMigrationTask extends Task
     /**
      * [REQUIRED] Set the output directory. It will be
      * created if it doesn't exist.
-     * @param  PhingFile $outputDirectory
+     * @param  PhingFile      $outputDirectory
      * @return void
      * @throws BuildException
      */

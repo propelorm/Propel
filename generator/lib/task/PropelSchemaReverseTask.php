@@ -275,7 +275,7 @@ class PropelSchemaReverseTask extends PDOTask
     /**
      * Sets set validator bitfield from a comma-separated list of "validator bit" names.
      *
-     * @param  string $v The comma-separated list of which validators to add.
+     * @param  string         $v The comma-separated list of which validators to add.
      * @return void
      * @throws BuildException
      */
