@@ -153,6 +153,7 @@ class PgsqlSchemaParser extends BaseSchemaParser
      * @param Table  $table   The Table model class to add columns to.
      * @param int    $oid     The table OID
      * @param string $version The database version.
+     * @throws EngineException
      */
     protected function addColumns(Table $table, $oid, $version)
     {

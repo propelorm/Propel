@@ -143,6 +143,8 @@ class PropelCSVParser extends PropelParser
                 return true;
             }
         }
+
+        return false;
     }
 
     /**

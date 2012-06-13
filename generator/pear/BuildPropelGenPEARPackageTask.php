@@ -109,6 +109,7 @@ class BuildPropelGenPEARPackageTask extends MatchingTask
     /**
      * Main entry point.
      * @return void
+     * @throws BuildException
      */
     public function main()
     {

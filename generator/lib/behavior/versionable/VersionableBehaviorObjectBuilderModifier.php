@@ -216,6 +216,8 @@ public function enforceVersioning()
 /**
  * Checks whether the current state must be recorded as a version
  *
+ * @param PropelPDO \$con An optional PropelPDO connection to use.
+ *
  * @return  boolean
  */
 public function isVersioningNecessary(\$con = null)
@@ -322,6 +324,7 @@ public function addVersion(\$con = null)
  * @param   PropelPDO \$con the connection to use
  *
  * @return  {$ARclassName} The current object (for fluent API support)
+ * @throws  PropelException - if no object with the given version can be found.
  */
 public function toVersion(\$versionNumber, \$con = null)
 {
@@ -473,7 +476,7 @@ public function getLastVersionNumber(\$con = null)
  *
  * @param   PropelPDO \$con the connection to use
  *
- * @return  Boolean
+ * @return  boolean
  */
 public function isLastVersion(\$con = null)
 {
@@ -677,10 +680,13 @@ public function compareVersions(\$fromVersionNumber, \$toVersionNumber, \$keys =
 /**
  * retrieve the last \$number versions.
  *
- * @param Integer \$number the number of record to return.
- * @return PropelCollection|array {$versionARClassname}[] List of {$versionARClassname} objects
+ * @param integer \$number the number of record to return.
+ * @param {$this->getVersionQueryClassName()}|Criteria \$criteria Additional criteria to filter.
+ * @param PropelPDO \$con An optional connection to use.
+ *
+ * @return PropelCollection|{$versionARClassname}[] List of {$versionARClassname} objects
  */
-public function getLastVersions(\$number = 10, \$criteria = null, \$con = null)
+public function getLastVersions(\$number = 10, \$criteria = null, PropelPDO \$con = null)
 {
     \$criteria = {$this->getVersionQueryClassName()}::create(null, \$criteria);
     \$criteria->addDescendingOrderByColumn({$versionPeer}::VERSION);

@@ -247,6 +247,8 @@ class PropelPDO extends PDO
      * transaction nesting level.
      *
      * @return boolean
+     *
+     * @throws PropelException
      */
     public function commit()
     {
@@ -332,6 +334,8 @@ class PropelPDO extends PDO
      *
      * @param integer $attribute The attribute to set (e.g. PropelPDO::PROPEL_ATTR_CACHE_PREPARES).
      * @param mixed   $value     The attribute value.
+     *
+     * @return void
      */
     public function setAttribute($attribute, $value)
     {
@@ -647,6 +651,8 @@ class PropelPDO extends PDO
      * Returns a snapshot of the current values of some functions useful in debugging.
      *
      * @return array
+     *
+     * @throws PropelException
      */
     public function getDebugSnapshot()
     {

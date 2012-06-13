@@ -149,6 +149,8 @@ class ModelCriteria extends Criteria
      *
      * @param  string|PropelFormatter $formatter a formatter class name, or a formatter instance
      * @return ModelCriteria          The current object, for fluid interface
+     *
+     * @throws PropelException
      */
     public function setFormatter($formatter)
     {
@@ -360,6 +362,8 @@ class ModelCriteria extends Criteria
      * @param string $order      The sorting order. Criteria::ASC by default, also accepts Criteria::DESC
      *
      * @return ModelCriteria The current object, for fluid interface
+     *
+     * @throws PropelException
      */
     public function orderBy($columnName, $order = Criteria::ASC)
     {
@@ -411,6 +415,8 @@ class ModelCriteria extends Criteria
      * @param string $class The class name or alias
      *
      * @return ModelCriteria The current object, for fluid interface
+     *
+     * @throws PropelException
      */
     public function groupByClass($class)
     {
@@ -498,6 +504,8 @@ class ModelCriteria extends Criteria
      * @param mixed $columnArray A list of column names (e.g. array('Title', 'Category.Name', 'c.Content')) or a single column name (e.g. 'Name')
      *
      * @return ModelCriteria The current object, for fluid interface
+     *
+     * @throws PropelException
      */
     public function select($columnArray)
     {
@@ -616,6 +624,8 @@ class ModelCriteria extends Criteria
      * @param string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
      *
      * @return ModelCriteria The current object, for fluid interface
+     *
+     * @throws PropelException
      */
     public function join($relation, $joinType = Criteria::INNER_JOIN)
     {
@@ -681,6 +691,8 @@ class ModelCriteria extends Criteria
      * @param string $operator The operator to use to add the condition. Defaults to 'AND'
      *
      * @return ModelCriteria The current object, for fluid interface
+     *
+     * @throws PropelException
      */
     public function addJoinCondition($name, $clause, $value = null, $operator = null, $bindingType = null)
     {
@@ -713,6 +725,8 @@ class ModelCriteria extends Criteria
      * @param mixed  $condition A Criterion object, or a condition name
      *
      * @return ModelCriteria The current object, for fluid interface
+     *
+     * @throws PropelException
      */
     public function setJoinCondition($name, $condition)
     {
@@ -792,6 +806,8 @@ class ModelCriteria extends Criteria
      * @param string $relation Relation to use for the join
      *
      * @return ModelCriteria The current object, for fluid interface
+     *
+     * @throws PropelException
      */
     public function with($relation)
     {
@@ -887,6 +903,8 @@ class ModelCriteria extends Criteria
      * @param string $secondCriteriaClass Classname for the ModelCriteria to be used
      *
      * @return ModelCriteria The secondary criteria object
+     *
+     * @throws PropelException
      */
     public function useQuery($relationName, $secondaryCriteriaClass = null)
     {
@@ -1178,6 +1196,8 @@ class ModelCriteria extends Criteria
      * @param PropelPDO $con an optional connection object
      *
      * @return mixed the result, formatted by the current formatter
+     *
+     * @throws PropelException
      */
     public function findOneOrCreate($con = null)
     {
@@ -1248,6 +1268,8 @@ class ModelCriteria extends Criteria
      * @param PropelPDO $con  an optional connection object
      *
      * @return mixed the list of results, formatted by the current formatter
+     *
+     * @throws PropelException
      */
     public function findPks($keys, $con = null)
     {
@@ -1277,6 +1299,8 @@ class ModelCriteria extends Criteria
      * @param PropelPDO $con A connection object
      *
      * @return PDOStatement A PDO statement executed using the connection, ready to be fetched
+     *
+     * @throws PropelException
      */
     protected function doSelect($con)
     {
@@ -1527,6 +1551,8 @@ class ModelCriteria extends Criteria
      * @param PropelPDO $con an optional connection object
      *
      * @return integer the number of deleted rows
+     *
+     * @throws PropelException
      */
     public function delete($con = null)
     {
@@ -1578,6 +1604,8 @@ class ModelCriteria extends Criteria
      * @param PropelPDO $con an optional connection object
      *
      * @return integer the number of deleted rows
+     *
+     * @throws PropelException
      */
     public function deleteAll($con = null)
     {
@@ -1597,8 +1625,6 @@ class ModelCriteria extends Criteria
             $con->rollBack();
             throw $e;
         }
-
-        return $affectedRows;
     }
 
     /**
@@ -1658,6 +1684,8 @@ class ModelCriteria extends Criteria
     * @param      boolean $forceIndividualSaves If false (default), the resulting call is a BasePeer::doUpdate(), ortherwise it is a series of save() calls on all the found objects
     *
     * @return     Integer Number of updated rows
+    *
+    * @throws PropelException
     */
     public function update($values, $con = null, $forceIndividualSaves = false)
     {
@@ -1758,6 +1786,8 @@ class ModelCriteria extends Criteria
      * @param mixed  $value  A value for the condition
      *
      * @return Criterion a Criterion or ModelCriterion object
+     *
+     * @throws PropelException
      */
     protected function getCriterionForClause($clause, $value, $bindingType = null)
     {
@@ -1927,6 +1957,8 @@ class ModelCriteria extends Criteria
      * @param string $phpName String representing the column name in a pseudo SQL clause, e.g. 'Book.Title'
      *
      * @return array List($columnMap, $realColumnName)
+     *
+     * @throws PropelException
      */
     protected function getColumnFromName($phpName, $failSilently = true)
     {
@@ -1985,6 +2017,8 @@ class ModelCriteria extends Criteria
      * Special case for subquery columns
      *
      * @return array List($columnMap, $realColumnName)
+     *
+     * @throws PropelException
      */
     protected function getColumnFromSubQuery($class, $phpName, $failSilently = true)
     {
@@ -2014,6 +2048,8 @@ class ModelCriteria extends Criteria
      * @param string $columnName the Column phpName, without the table name
      *
      * @return string the fully qualified column name
+     *
+     * @throws PropelException
      */
     protected function getRealColumnName($columnName)
     {

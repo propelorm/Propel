@@ -53,6 +53,8 @@ abstract class PropelParser
      * @param string $path Path to the file to load
      *
      * @return string The file content processed by PHP
+     *
+     * @throws PropelException
      */
     public function load($path)
     {
@@ -71,6 +73,8 @@ abstract class PropelParser
      *
      * @param string $data The file content
      * @param string $path Path of the file to create
+     *
+     * @return int|null If path given, the written bytes, null otherwise.
      */
     public function dump($data, $path = null)
     {
@@ -87,6 +91,8 @@ abstract class PropelParser
      * @param string $type Parser type, amon 'XML', 'YAML', 'JSON', and 'CSV'
      *
      * @return PropelParser A PropelParser subclass instance
+     *
+     * @throws PropelException
      */
     public static function getParser($type = 'XML')
     {

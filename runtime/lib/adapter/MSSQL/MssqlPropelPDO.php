@@ -46,6 +46,8 @@ class MssqlPropelPDO extends PropelPDO
      * the PDO driver for MSSQL does not support transactions.
      *
      * @return integer
+     *
+     * @throws PropelException
      */
     public function commit()
     {

@@ -22,6 +22,8 @@ class PropelArrayCollection extends PropelCollection
      * Save all the elements in the collection
      *
      * @param PropelPDO $con
+     *
+     * @throws PropelException
      */
     public function save($con = null)
     {
@@ -50,6 +52,8 @@ class PropelArrayCollection extends PropelCollection
      * Delete all the elements in the collection
      *
      * @param PropelPDO $con
+     *
+     * @throws PropelException
      */
     public function delete($con = null)
     {

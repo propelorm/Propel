@@ -43,6 +43,8 @@ class PropelDateTime extends DateTime
      * @param string       $dateTimeClass The class of the object to create, defaults to DateTime
      *
      * @return mixed null, or an instance of $dateTimeClass
+     *
+     * @throws PropelException
      */
     public static function newInstance($value, DateTimeZone $timeZone = null, $dateTimeClass = 'DateTime')
     {
