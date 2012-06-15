@@ -240,13 +240,16 @@ The audit log abilities need to be enabled in the schema as well:
 * `void save()`: Adds a new version to the object version history and increments the `version` property
 * `void delete()`: Deletes the object version history
 * `boolean isVersioningNecessary(PropelPDO $con = null)`: Checks whether a new version needs to be saved
+* `void enforceVersioning()`: Enforces a new version of the object upon next save
 * `BaseObject toVersion(integer $version_number)`: Populates the properties of the current object with values from the requested version. Beware that saving the object afterwards will create a new version (and not update the previous version).
 * `integer getLastVersionNumber(PropelPDO $con)`: Queries the database for the highest version number recorded for this object
 * `boolean isLastVersion()`: Returns true if the current object is the last available version
 * `Version addVersion(PropelPDO $con)`: Creates a new Version record and saves it. To be used when isVersioningNecessary() is false. Beware that it doesn't take care of incrementinhg the version number of the main object, and that the main object must be saved prior to calling this method.
 * `array getAllVersions(PropelPDO $con)`: Returns all Version objects related to the main object in a collection
+* `array getLastVersions($number, $criteria, $con)`: Retrieves the last $number versions
 * `Version getOneVersion(integer $versionNumber PropelPDO $con)`: Returns a given version object
 * `array compareVersions(integer $version1, integer $version2)`: Returns an array of differences showing which parts of a resource changed between two versions
+* `compareVersion(integer $versionNumber, string $keys, PropelPDO $con, array $ignoredColumns)`: Compares the current object with another of its version
 * `BaseObject populateFromVersion(Version $version, PropelPDO $con)`: Populates an ActiveRecord object based on a Version object
 * `BaseObject setVersionCreatedBy(string $createdBy)`: Defines the author name for the revision
 * `string getVersionCreatedBy()`: Gets the author name for the revision
