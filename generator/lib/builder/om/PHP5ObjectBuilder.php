@@ -3449,6 +3449,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
                 $this->addPKRefFKSet($script, $refFK);
             } else {
                 $this->addRefFKClear($script, $refFK);
+                $this->addRefFKPartial($script, $refFK);
                 $this->addRefFKInit($script, $refFK);
                 $this->addRefFKGet($script, $refFK);
                 $this->addRefFKSet($script, $refFK);
@@ -3516,6 +3517,29 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
     }
 ";
     } // addRefererClear()
+
+    /**
+     * Adds the method that clears the referrer fkey collection.
+     * @param      string &$script The script will be modified in this method.
+     */
+    protected function addRefFKPartial(&$script, ForeignKey $refFK)
+    {
+        $relCol = $this->getRefFKPhpNameAffix($refFK, $plural = true);
+        $collName = $this->getRefFKCollVarName($refFK);
+
+        $script .= "
+    /**
+     * reset is the $collName collection loaded partially
+     *
+     * @return void
+     */
+    public function resetPartial{$relCol}(\$v = true)
+    {
+        \$this->{$collName}Partial = \$v;
+    }
+";
+    } // addRefFKPartial()
+
 
     /**
      * Adds the method that initializes the referrer fkey collection.
@@ -3694,7 +3718,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
                     return \$$collName;
                 }
 
-                if(\$partial) {
+                if(\$partial && \$this->$collName) {
                     foreach(\$this->$collName as \$obj) {
                         if(\$obj->isNew()) {
                             \${$collName}[] = \$obj;
