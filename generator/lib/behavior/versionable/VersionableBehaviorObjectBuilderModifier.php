@@ -434,6 +434,8 @@ public function populateFromVersion(\$version, \$con = null, &\$loadedObjects = 
             }
             \$this->add{$fkPhpName}(\$related);
         }
+
+        \$this->resetPartial{$fkPhpNames}(false);
     }";
         }
         $script .= "
