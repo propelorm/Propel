@@ -124,7 +124,7 @@ That way users will only be able to instanciate `Essay` or `Comic` books, but no
 
 ## Class Table Inheritance ##
 
-Class Table Inheritance uses one table per class in the inheritance structure ; each table stores only the columns it doesn't inherits from its parent.
+Class Table Inheritance uses one table per class in the inheritance structure ; each table stores only the columns it doesn't inherit from its parent.
 Propel doesn't offer class table inheritance per se, however it provides a behavior called `delegate`, which offers the same functionality.
 
 ### Schema Definition ###
