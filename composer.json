@@ -11,9 +11,6 @@
       "homepage": "http://www.willdurand.fr"
     }
   ],
-  "autoload": {
-    "classmap": ["runtime/lib/"]
-  },
   "require": {
     "php": ">=5.2.4"
   }

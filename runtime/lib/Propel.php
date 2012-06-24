@@ -673,7 +673,6 @@ class Propel
 		try {
 			$con = new $classname($dsn, $user, $password, $driver_options);
 			$con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-			$con->setAttribute(PropelPDO::PROPEL_ATTR_CONNECTION_NAME, $name);
 		} catch (PDOException $e) {
 			throw new PropelException("Unable to open PDO connection", $e);
 		}

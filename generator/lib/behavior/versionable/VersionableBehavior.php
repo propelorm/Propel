@@ -126,7 +126,6 @@ class VersionableBehavior extends Behavior
 			// copy all the columns
 			foreach ($table->getColumns() as $column) {
 				$columnInVersionTable = clone $column;
-				$columnInVersionTable->clearInheritanceList();
 				if ($columnInVersionTable->hasReferrers()) {
 					$columnInVersionTable->clearReferrers();
 				}

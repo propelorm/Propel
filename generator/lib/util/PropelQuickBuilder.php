@@ -169,15 +169,14 @@ class PropelQuickBuilder
 			if ($col->isEnumeratedClasses()) {
 				foreach ($col->getChildren() as $child) {
 					if ($child->getAncestor()) {
-						$builder = $this->getConfig()->getConfiguredBuilder($table, 'queryinheritance');
+						$builder = $this->getConfig()->getConfiguredBuilder('queryinheritance', $target);
 						$builder->setChild($child);
 						$script .= $builder->build();
-
-						foreach (array('objectmultiextend', 'queryinheritancestub') as $target) {
-							$builder = $this->getConfig()->getConfiguredBuilder($table, $target);
-							$builder->setChild($child);
-							$script .= $builder->build();
-						}
+					}
+					foreach (array('objectmultiextend', 'queryinheritancestub') as $target) {
+						$builder = $this->getConfig()->getConfiguredBuilder($table, $target);
+						$builder->setChild($child);
+						$script .= $builder->build();
 					}
 				}
 			}
