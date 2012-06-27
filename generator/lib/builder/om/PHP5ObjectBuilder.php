@@ -165,6 +165,8 @@ class PHP5ObjectBuilder extends ObjectBuilder
             $defaultValue = var_export($val, true);
         } elseif ($col->isPhpObjectType()) {
             $defaultValue = 'new '.$col->getPhpType().'(' . var_export($val, true) . ')';
+        } elseif ($col->isPhpArrayType()) {
+            $defaultValue = var_export($val, true);
         } else {
             throw new EngineException("Cannot get default value string for " . $col->getFullyQualifiedName());
         }

@@ -271,16 +271,21 @@ class Domain extends XMLElement
     {
         if ($this->defaultValue === null) {
             return null;
-        } else {
-            if ($this->defaultValue->isExpression()) {
-                throw new EngineException("Cannot get PHP version of default value for default value EXPRESSION.");
-            }
-            if ($this->propelType === PropelTypes::BOOLEAN || $this->propelType === PropelTypes::BOOLEAN_EMU) {
-                return $this->booleanValue($this->defaultValue->getValue());
-            } else {
-                return $this->defaultValue->getValue();
-            }
         }
+
+        if ($this->defaultValue->isExpression()) {
+            throw new EngineException("Cannot get PHP version of default value for default value EXPRESSION.");
+        }
+
+        if ($this->propelType === PropelTypes::BOOLEAN || $this->propelType === PropelTypes::BOOLEAN_EMU) {
+            return $this->booleanValue($this->defaultValue->getValue());
+        }
+
+        if (PropelTypes::PHP_ARRAY === $this->propelType) {
+            return $this->getDefaultValueForArray($this->defaultValue->getValue());
+        }
+
+        return $this->defaultValue->getValue();
     }
 
     /**

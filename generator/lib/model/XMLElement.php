@@ -91,6 +91,27 @@ abstract class XMLElement
         }
     }
 
+    protected function getDefaultValueForArray($stringValue)
+    {
+        $stringValue = trim($stringValue);
+
+        if (empty($stringValue)) {
+            return null;
+        }
+
+        $values = array();
+        foreach (explode(',', $stringValue) as $v) {
+            $values[] = trim($v);
+        }
+
+        $value = implode($values, ' | ');
+        if (empty($value) || ' | ' === $value) {
+            return null;
+        }
+
+        return sprintf('||%s||', $value);
+    }
+
     /**
      * Appends DOM elements to represent this object in XML.
      * @param DOMNode $node

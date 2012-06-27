@@ -935,6 +935,15 @@ class Column extends XMLElement
     }
 
     /**
+     * Utility method to know whether column is an array column.
+     * @return boolean
+     */
+    public function isPhpArrayType()
+    {
+        return PropelTypes::isPhpArrayType($this->getType());
+    }
+
+    /**
      * Utility method to know whether column is an ENUM column.
      * @return boolean
      */
