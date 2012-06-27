@@ -141,7 +141,9 @@ Propel looks in the database for a serialized version of the object passed as pa
 
 ## ARRAY Columns ##
 
-An `ARRAY` column can store a simple PHP array in the database (nested arrays and associative arrays are not accepted). The column setter serializes the array, which is later stored to the database as a string. The column getter unserializes the string and returns the array. Therefore, for the end user, the column contains an array.
+An `ARRAY` column can store a simple PHP array in the database (nested arrays and associative arrays are not accepted).
+The column setter serializes the array, which is later stored to the database as a string.
+The column getter unserializes the string and returns the array. Therefore, for the end user, the column contains an array.
 
 ### Getting and Setting ARRAY Values ###
 
@@ -163,7 +165,8 @@ print_r($book->getTags()); // array('novel', 'romantic')
 
 ### Retrieving Records based on ARRAY Values ###
 
-Propel doesn't use `serialize()` to transform the array into a string. Instead, it uses a special serialization function, that makes it possible to search for values of `ARRAY` columns.
+Propel doesn't use `serialize()` to transform the array into a string.
+Instead, it uses a special serialization function, that makes it possible to search for values of `ARRAY` columns.
 
 {% highlight php %}
 <?php
@@ -190,5 +193,14 @@ $books = BookQuery::create()
 {% endhighlight %}
 
 >**Tip**<br />Filters on array columns translate to SQL as LIKE conditions. That means that the resulting query often requires a full table scan, and is not suited for large tables.
+
+### Using default values ###
+
+You may want to add default values to your `ARRAY` column, Propel 1.6.6, and upper allows to use the `defaultValue` 
+attribute in your XML schema to set a list of values as comma separated values:
+
+```xml
+<column name="my_array_column" type="ARRAY" defaultValue="foo,bar" />
+```
 
 _Warning_: Only generated Query classes (through generated `filterByXXX()` methods) and `ModelCriteria` (through `where()`, and `condition()`) allow conditions on `ENUM`, `OBJECT`, and `ARRAY` columns. `Criteria` alone (through `add()`, `addAnd()`, and `addOr()`) does not support conditions on such columns.
