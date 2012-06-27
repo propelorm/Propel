@@ -199,8 +199,8 @@ $books = BookQuery::create()
 You may want to add default values to your `ARRAY` column, Propel 1.6.6, and upper allows to use the `defaultValue` 
 attribute in your XML schema to set a list of values as comma separated values:
 
-```xml
+{% highlight xml %}
 <column name="my_array_column" type="ARRAY" defaultValue="foo,bar" />
-```
+{% endhighlight %}
 
 _Warning_: Only generated Query classes (through generated `filterByXXX()` methods) and `ModelCriteria` (through `where()`, and `condition()`) allow conditions on `ENUM`, `OBJECT`, and `ARRAY` columns. `Criteria` alone (through `add()`, `addAnd()`, and `addOr()`) does not support conditions on such columns.
