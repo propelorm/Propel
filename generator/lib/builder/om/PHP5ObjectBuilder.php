@@ -3716,7 +3716,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
                     ->find(\$con);
                 if (null !== \$criteria) {
                     if (false !== \$this->{$collName}Partial && count(\$$collName)) {
-                      \$this->init".$this->getRefFKPhpNameAffix($refFK, $plural = true)."();
+                      \$this->init".$this->getRefFKPhpNameAffix($refFK, $plural = true)."(false);
 
                       foreach(\$$collName as \$obj) {
                         if (false == \$this->{$collName}->contains(\$obj)) {

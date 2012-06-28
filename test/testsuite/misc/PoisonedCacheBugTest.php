@@ -142,4 +142,25 @@ class PoisonedCacheBugTest extends BookstoreTestBase
 
         $this->assertFalse($books[0]->isModified());
     }
+
+    public function testSavingParentSavesRelatedObjectsIncludingNew()
+    {
+        $author = AuthorPeer::retrieveByPK($this->author->getId());
+
+        // add new object before fetching old books
+        $b3 = new Book();
+        $author->addBook($b3);
+
+        $c = new Criteria();
+        $c->add(BookPeer::ID, $this->books[0]->getId());
+
+        $books = $author->getBooks($c);
+        $books[0]->setTitle('Update to a book');
+
+        $author->save();
+
+        $this->assertEquals(3, $author->countBooks());
+        $this->assertFalse($b3->isModified());
+        $this->assertFalse($books[0]->isModified());
+    }
 }
