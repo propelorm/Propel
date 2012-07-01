@@ -155,6 +155,13 @@ class AggregateColumnRelationBehavior extends Behavior
         $foreignTable = $this->getForeignTable();
         // let's infer the relation from the foreign table
         $fks = $this->getTable()->getForeignKeysReferencingTable($foreignTable->getName());
+        if (!$fks) {
+            foreach ($foreignTable->getBehaviors() as $behavior) {
+                if ($behavior->getName() != 'concrete_inheritance') continue;
+                $fks = $this->getTable()->getForeignKeysReferencingTable($behavior->getParentTable()->getName());
+                if ($fks) break;
+            }
+        }
         // FIXME doesn't work when more than one fk to the same table
         return array_shift($fks);
     }

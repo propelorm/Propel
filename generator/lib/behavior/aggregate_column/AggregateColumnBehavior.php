@@ -120,7 +120,15 @@ class AggregateColumnBehavior extends Behavior
         // let's infer the relation from the foreign table
         $fks = $foreignTable->getForeignKeysReferencingTable($this->getTable()->getName());
         if (!$fks) {
-            throw new InvalidArgumentException(sprintf('You must define a foreign key to the \'%s\' table in the \'%s\' table to enable the \'aggregate_column\' behavior', $this->getTable()->getName(), $foreignTable->getName()));
+            foreach ($this->getTable()->getBehaviors() as $behavior) {
+                if ($behavior->getName() != 'concrete_inheritance') continue;
+                $fks = $foreignTable->getForeignKeysReferencingTable($behavior->getParentTable()->getName());
+                if ($fks) break;
+            }
+            
+            if (!$fks) {
+                throw new InvalidArgumentException(sprintf('You must define a foreign key to the \'%s\' table in the \'%s\' table to enable the \'aggregate_column\' behavior', $this->getTable()->getName(), $foreignTable->getName()));
+            }
         }
         // FIXME doesn't work when more than one fk to the same table
         return array_shift($fks);

@@ -35,6 +35,8 @@ class ConcreteInheritanceBehavior extends Behavior
     {
         $table = $this->getTable();
         $parentTable = $this->getParentTable();
+        $parentHasAPk = false;
+        $samePkNameWarn = false;
 
         if ($this->isCopyData()) {
             // tell the parent table that it has a descendant
@@ -47,6 +49,18 @@ class ConcreteInheritanceBehavior extends Behavior
                 $parentBehavior->getTableModifier()->modifyTable();
                 $parentBehavior->setTableModified(true);
             }
+        } else {
+            /* The parent could have again a parent,
+             * so we need to modify it, so that the
+             * grand-parents columns are inherited
+             * by this table.
+             */
+            if ($parentTable->hasBehavior('concrete_inheritance')) {
+                $parentBehavior = $parentTable->getBehavior('concrete_inheritance');
+                // The parent table's behavior modifyTable() must be executed before this one
+                $parentBehavior->getTableModifier()->modifyTable();
+                $parentBehavior->setTableModified(true);
+            }
         }
 
         // Add the columns of the parent table
@@ -55,6 +69,7 @@ class ConcreteInheritanceBehavior extends Behavior
                 continue;
             }
             if ($table->containsColumn($column->getName())) {
+                $samePkNameWarn |= $column->isPrimaryKey();
                 continue;
             }
             $copiedColumn = clone $column;
@@ -63,6 +78,7 @@ class ConcreteInheritanceBehavior extends Behavior
             }
             $table->addColumn($copiedColumn);
             if ($column->isPrimaryKey() && $this->isCopyData()) {
+                $parentHasAPk = true;
                 $fk = new ForeignKey();
                 $fk->setForeignTableCommonName($column->getTable()->getCommonName());
                 $fk->setForeignSchemaName($column->getTable()->getSchema());
@@ -71,6 +87,23 @@ class ConcreteInheritanceBehavior extends Behavior
                 $fk->addReference($copiedColumn, $column);
                 $fk->isParentChild = true;
                 $table->addForeignKey($fk);
+            }
+        }
+
+        if (!$parentHasAPk && $this->isCopyData()) {
+            if (!$samePkNameWarn) {
+                throw new SchemaException(sprintf(
+                        "The parent table '%s' has no primary key, which could be applied as foreign key to '%s'!",
+                        $parentTable->getName(), $table->getName()
+                    ));
+            } else {
+                throw new SchemaException(sprintf(
+                        "The parent table '%s' has a primary key, "
+                        ."but it has the same as the primary key from '%s'."
+                        ." Rename any of both to make concrete_inheritace behavior"
+                        ." with flag 'copy_data_to_parent' possible!",
+                        $parentTable->getName(), $table->getName()
+                    ));
             }
         }
 
@@ -114,7 +147,7 @@ class ConcreteInheritanceBehavior extends Behavior
 
     }
 
-    protected function getParentTable()
+    public function getParentTable()
     {
         $database = $this->getTable()->getDatabase();
         $tableName = $database->getTablePrefix() . $this->getParameter('extends');
