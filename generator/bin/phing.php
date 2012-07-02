@@ -11,16 +11,6 @@
 // Set any INI options for PHP
 // ---------------------------
 
-$dirname = dirname(__FILE__);
-foreach (array($dirname . '/../../', $dirname . '/../../../../../') as $dir) {
-    if (file_exists($file = realpath($dir) . '/vendor/autoload.php')) {
-        set_include_path(get_include_path() . PATH_SEPARATOR . $dir . '/vendor/phing/phing/classes');
-        require_once $file;
-
-        break;
-    }
-}
-
 /* set classpath */
 if (getenv('PHP_CLASSPATH')) {
     if (!defined('PHP_CLASSPATH')) {
