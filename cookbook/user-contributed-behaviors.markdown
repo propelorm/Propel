@@ -24,6 +24,14 @@ Here is a list of Propel behaviors contributed by users. Feel free to use them o
 
 * [PropelListenerBehavior](https://github.com/gossi/propel-listener-behavior) Add listeners to propel generated objects.
 
+* [EventDispatcherBehavior](https://github.com/willdurand/EventDispatcherBehavior) Integrates the Symfony2 EventDispatcher component in your Model classes.
+
+* [StateMachineBehavior](https://github.com/willdurand/StateMachineBehavior) Adds a finite state machine to your model.
+
+* [PublishableBehavior](https://github.com/willdurand/PublishableBehavior) Designed to quickly add publish/unpublish features to your model.
+
+* [TypehintableBehavior](https://github.com/willdurand/TypehintableBehavior) Insane Propel behavior that helps you to be compliant with third-party interfaces by adding type hint to generated methods.
+
 
 ## symfony 1.x Behaviors ##
 
