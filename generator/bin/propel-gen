@@ -18,12 +18,19 @@ if [ -z "$PROPEL_GEN_HOME" ] ; then
         PROPEL_GEN_HOME="${HOME}/usr/propel/generator"
     fi
 
-    if [ -d "`pwd`/vendor/propel/propel1" ] ; then
-        PROPEL_GEN_HOME="`pwd`/vendor/propel/propel1/generator"
-    fi
+    ## resolve links - the script name may be a link to phing's home
+    SOURCE="${BASH_SOURCE[0]}"
+    PRG="$( dirname "$SOURCE" )"
+    while [ -h "$SOURCE" ]
+    do
+        SOURCE="$(readlink "$SOURCE")"
+        [[ $SOURCE != /* ]] && SOURCE="$PRG/$SOURCE"
+        PRG="$( cd -P "$( dirname "$SOURCE"  )" && pwd )"
+    done
+    PRG="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
 
-    if [ -d "`pwd`/generator" ] ; then
-        PROPEL_GEN_HOME="`pwd`/generator"
+    if [ -d "`dirname $PRG`" ] ; then
+        PROPEL_GEN_HOME="`dirname $PRG`"
     fi
 
     export PROPEL_GEN_HOME
