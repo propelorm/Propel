@@ -30,8 +30,6 @@ Here is a list of Propel behaviors contributed by users. Feel free to use them o
 
 * [PublishableBehavior](https://github.com/willdurand/PublishableBehavior) Designed to quickly add publish/unpublish features to your model.
 
-* [TypehintableBehavior](https://github.com/willdurand/TypehintableBehavior) Insane Propel behavior that helps you to be compliant with third-party interfaces by adding type hint to generated methods.
-
 
 ## symfony 1.x Behaviors ##
 
