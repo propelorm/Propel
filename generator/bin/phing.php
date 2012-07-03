@@ -12,11 +12,13 @@
 // ---------------------------
 
 $dirname = dirname(__FILE__);
+$autolaoded = false;
 foreach (array($dirname . '/../../', $dirname . '/../../../../../') as $dir) {
     if (file_exists($file = realpath($dir) . '/vendor/autoload.php')) {
-        set_include_path(get_include_path() . PATH_SEPARATOR . $dir . '/vendor/phing/phing/classes');
-        require_once $file;
+        set_include_path($dir . '/vendor/phing/phing/classes' . PATH_SEPARATOR . get_include_path() );
+        include_once $file;
 
+        $autoloaded = true;
         break;
     }
 }
