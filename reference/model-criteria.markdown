@@ -133,7 +133,7 @@ $books = BookQuery::create()
   ->find();
 // example Query generated for a MySQL database
 $query = 'SELECT book.* from `book`
-WHERE book.PUBLISHED_AT < :p1; // :p1 => 1291065396
+WHERE book.PUBLISHED_AT <= :p1; // :p1 => 1291065396
 {% endhighlight %}
 
  * for ENUM columns, `filterByXXX()` accepts one of the values defined in the `valueSet` attribute in the schema.
