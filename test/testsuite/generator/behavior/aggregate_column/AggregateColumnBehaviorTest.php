@@ -206,7 +206,6 @@ class AggregateColumnBehaviorTest extends BookstoreTestBase
     {
         AggregateCommentQuery::create()->deleteAll($this->con);
         AggregatePostQuery::create()->deleteAll($this->con);
-        $post1->countComputeCall = 0;
 
         $post1 = new TestablePost();
         $comment = new AggregateComment();
