@@ -313,6 +313,8 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
 
         $this->addPrimaryString($script);
 
+        $this->addIsAlreadyInSave($script);
+
         // apply behaviors
         $this->applyBehaviorModifier('objectMethods', $script, "	");
 
@@ -5471,5 +5473,20 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
     }
 ";
         }
+    }
+
+    protected function addIsAlreadyInSave(&$script)
+    {
+        $script .= "
+    /**
+     * return true is the object is in saving state
+     *
+     * @return boolean
+     */
+    public function isAlreadyInSave()
+    {
+        return \$this->alreadyInSave;
+    }
+";
     }
 } // PHP5ObjectBuilder
