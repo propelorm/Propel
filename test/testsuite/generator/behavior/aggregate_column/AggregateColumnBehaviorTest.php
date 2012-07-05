@@ -20,7 +20,6 @@ require_once dirname(__FILE__) . '/../../../../tools/helpers/bookstore/Bookstore
  */
 class AggregateColumnBehaviorTest extends BookstoreTestBase
 {
-
     public function testParameters()
     {
         $postTable = AggregatePostPeer::getTableMap();
@@ -179,6 +178,71 @@ class AggregateColumnBehaviorTest extends BookstoreTestBase
         $this->assertEquals(1, $post2->getNbComments(), 'Replacing a relation changes the related object aggregate column');
     }
 
+    public function testAddMultipleComments()
+    {
+        AggregateCommentQuery::create()->deleteAll($this->con);
+        AggregatePostQuery::create()->deleteAll($this->con);
+
+        $post1 = new AggregatePost();
+
+        $comment = new AggregateComment();
+        $comment->setAggregatePost($post1);
+
+        $comment2 = new AggregateComment();
+        $comment2->setAggregatePost($post1);
+
+        $comment3 = new AggregateComment();
+        $comment3->setAggregatePost($post1);
+
+        $this->assertNull($post1->getNbComments(), 'The post start with null aggregate column');
+
+        $post1->save($this->con);
+
+        $this->assertEquals(3, $post1->getNbComments(), 'the post has 3 comments');
+    }
+
+
+    public function testQueryCountOnUpdate()
+    {
+        AggregateCommentQuery::create()->deleteAll($this->con);
+        AggregatePostQuery::create()->deleteAll($this->con);
+
+        $post1 = new TestablePost();
+        $comment = new AggregateComment();
+        $comment->setAggregatePost($post1);
+        $comment2 = new AggregateComment();
+        $comment2->setAggregatePost($post1);
+        $comment3 = new AggregateComment();
+        $comment3->setAggregatePost($post1);
+        $post1->save($this->con);
+        $this->assertEquals(3, $post1->getNbComments(), 'the post has 3 comments');
+        $this->assertEquals(2, $post1->countComputeCall, 'Only two call to count nbComment');
+
+        $post1->countComputeCall = 0;
+
+        $comment4 = new AggregateComment();
+        $comment4->setAggregatePost($post1);
+        $comment4->save($this->con);
+
+        $this->assertEquals(4, $post1->getNbComments(), 'the post has 4 comments');
+        $this->assertEquals(2, $post1->countComputeCall, 'Only two call to count nbComment');
+
+        $post1->countComputeCall = 0;
+
+        $comment5 = new AggregateComment();
+        $comment5->setAggregatePost($post1);
+        $post1->save($this->con);
+
+        $this->assertEquals(5, $post1->getNbComments(), 'the post has 5 comments');
+        $this->assertEquals(2, $post1->countComputeCall, 'Only two call to count nbComment');
+
+        $post1->countComputeCall = 0;
+        $post1->save($this->con);
+
+        $this->assertEquals(5, $post1->getNbComments(), 'the post has 5 comments');
+        $this->assertEquals(1, $post1->countComputeCall, 'Only one call to count nbComment');
+    }
+
     protected function populatePoll()
     {
         AggregateItemQuery::create()->deleteAll($this->con);
@@ -196,6 +260,7 @@ class AggregateColumnBehaviorTest extends BookstoreTestBase
 
         return array($poll, $item1, $item2);
     }
+
 
 }
 
@@ -231,6 +296,21 @@ class TestableComment extends AggregateComment
             $con->rollBack();
             throw $e;
         }
+    }
+
+}
+
+class TestablePost extends AggregatePost
+{
+    public $countComputeCall = 0;
+    /**
+    * @param PropelPDO $con
+    * @return string
+    */
+    public function computeNbComments(PropelPDO $con)
+    {
+        $this->countComputeCall++;
+        return parent::computeNbComments($con);
     }
 
 }
