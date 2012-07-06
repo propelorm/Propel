@@ -52,7 +52,7 @@ This will switch the provider to be the `AuditableAclProvider` of the `PropelBun
 The auditing of this provider is set to a sensible default. It will audit all ACL failures but no success by default.
 If you also want to audit successful authorizations, you need to update the auditing of the given ACL accordingly.
 
-After adding the provider, you only need to run the `propel:init-acl` command in order to get the model generated.
+After adding the provider, you only need to run the `propel:acl:init` command in order to get the model generated.
 If you already got an ACL database, the schema of the `PropelBundle` is compatible with the default schema of Symfony2.
 
 ### Separate database connection for ACL ###
