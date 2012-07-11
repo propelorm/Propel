@@ -294,7 +294,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
      * holds an array of fieldnames
      *
      * first dimension keys are the type constants
-     * e.g. self::\$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
+     * e.g. ".$this->getPeerClassname()."::\$fieldNames[".$this->getPeerClassname()."::TYPE_PHPNAME][0] = 'Id'
      */
     protected static \$fieldNames = array (
         BasePeer::TYPE_PHPNAME => array (";
@@ -309,7 +309,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
         $script .= "),
         BasePeer::TYPE_COLNAME => array (";
         foreach ($tableColumns as $col) {
-            $script .= $this->getColumnConstant($col, 'self').", ";
+            $script .= $this->getColumnConstant($col, $this->getPeerClassname()).", ";
         }
         $script .= "),
         BasePeer::TYPE_RAW_COLNAME => array (";
@@ -342,7 +342,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
      * holds an array of keys for quick access to the fieldnames array
      *
      * first dimension keys are the type constants
-     * e.g. self::\$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
+     * e.g. ".$this->getPeerClassname()."::\$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
      */
     protected static \$fieldKeys = array (
         BasePeer::TYPE_PHPNAME => array (";
@@ -357,7 +357,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
         $script .= "),
         BasePeer::TYPE_COLNAME => array (";
         foreach ($tableColumns as $num => $col) {
-            $script .= $this->getColumnConstant($col, 'self')." => $num, ";
+            $script .= $this->getColumnConstant($col, $this->getPeerClassname())." => $num, ";
         }
         $script .= "),
         BasePeer::TYPE_RAW_COLNAME => array (";
@@ -391,7 +391,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
         foreach ($this->getTable()->getColumns() as $col) {
             if ($col->isEnumType()) {
                 $script .= "
-        self::" . $this->getColumnName($col) ." => array(
+        ".$this->getPeerClassname()."::" . $this->getColumnName($col) ." => array(
 ";
                 foreach ($col->getValueSet() as $value) {
                     $script .= "			" . $this->getStubPeerBuilder()->getClassname() . '::' . $this->getColumnName($col) . '_' . $this->getEnumValueConstant($value) . ",
@@ -419,11 +419,11 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
      */
     public static function getFieldNames(\$type = BasePeer::TYPE_PHPNAME)
     {
-        if (!array_key_exists(\$type, self::\$fieldNames)) {
+        if (!array_key_exists(\$type, ".$this->getPeerClassname()."::\$fieldNames)) {
             throw new PropelException('Method getFieldNames() expects the parameter \$type to be one of the class constants BasePeer::TYPE_PHPNAME, BasePeer::TYPE_STUDLYPHPNAME, BasePeer::TYPE_COLNAME, BasePeer::TYPE_FIELDNAME, BasePeer::TYPE_NUM. ' . \$type . ' was given.');
         }
 
-        return self::\$fieldNames[\$type];
+        return ".$this->getPeerClassname()."::\$fieldNames[\$type];
     }
 ";
 
@@ -444,10 +444,10 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
      */
     public static function translateFieldName(\$name, \$fromType, \$toType)
     {
-        \$toNames = self::getFieldNames(\$toType);
-        \$key = isset(self::\$fieldKeys[\$fromType][\$name]) ? self::\$fieldKeys[\$fromType][\$name] : null;
+        \$toNames = ".$this->getPeerClassname()."::getFieldNames(\$toType);
+        \$key = isset(".$this->getPeerClassname()."::\$fieldKeys[\$fromType][\$name]) ? ".$this->getPeerClassname()."::\$fieldKeys[\$fromType][\$name] : null;
         if (\$key === null) {
-            throw new PropelException(\"'\$name' could not be found in the field names of type '\$fromType'. These are: \" . print_r(self::\$fieldKeys[\$fromType], true));
+            throw new PropelException(\"'\$name' could not be found in the field names of type '\$fromType'. These are: \" . print_r(".$this->getPeerClassname()."::\$fieldKeys[\$fromType], true));
         }
 
         return \$toNames[\$key];
@@ -492,7 +492,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
      */
     public static function getValueSet(\$colname)
     {
-        \$valueSets = self::getValueSets();
+        \$valueSets = ".$this->getPeerClassname()."::getValueSets();
 
         return \$valueSets[\$colname];
     }
@@ -666,7 +666,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
         }
 
         \$criteria->clearOrderByColumns(); // ORDER BY won't ever affect the count
-        \$criteria->setDbName(self::DATABASE_NAME); // Set the correct dbName
+        \$criteria->setDbName(".$this->getPeerClassname()."::DATABASE_NAME); // Set the correct dbName
 
         if (\$con === null) {
             \$con = Propel::getConnection(".$this->getPeerClassname()."::DATABASE_NAME, Propel::CONNECTION_READ);
@@ -774,7 +774,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
         }
 
         // Set the correct dbName
-        \$criteria->setDbName(self::DATABASE_NAME);";
+        \$criteria->setDbName(".$this->getPeerClassname()."::DATABASE_NAME);";
         // apply behaviors
         if ($this->hasBehaviorModifier('preSelect')) {
       $this->applyBehaviorModifier('preSelect', $script);
@@ -846,7 +846,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
                 \$key = ".$this->getInstancePoolKeySnippet($php).";";
         $script .= "
             } // if key === null
-            self::\$instances[\$key] = \$obj;
+            ".$this->getPeerClassname()."::\$instances[\$key] = \$obj;
         }
     }
 ";
@@ -909,7 +909,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
                 throw \$e;
             }
 
-            unset(self::\$instances[\$key]);
+            unset(".$this->getPeerClassname()."::\$instances[\$key]);
         }
     } // removeInstanceFromPool()
 ";
@@ -929,7 +929,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
      */
     public static function clearInstancePool()
     {
-        self::\$instances = array();
+        ".$this->getPeerClassname()."::\$instances = array();
     }
     ";
     }
@@ -997,8 +997,8 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
     public static function getInstanceFromPool(\$key)
     {
         if (Propel::isInstancePoolingEnabled()) {
-            if (isset(self::\$instances[\$key])) {
-                return self::\$instances[\$key];
+            if (isset(".$this->getPeerClassname()."::\$instances[\$key])) {
+                return ".$this->getPeerClassname()."::\$instances[\$key];
             }
         }
 
@@ -1246,8 +1246,8 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
 ";
             foreach ($col->getChildren() as $child) {
                 $script .= "
-                case self::CLASSKEY_".strtoupper($child->getKey()).":
-                    \$omClass = self::CLASSNAME_".strtoupper($child->getKey()).";
+                case ".$this->getPeerClassname()."::CLASSKEY_".strtoupper($child->getKey()).":
+                    \$omClass = ".$this->getPeerClassname()."::CLASSNAME_".strtoupper($child->getKey()).";
                     break;
 ";
             } /* foreach */
@@ -1367,7 +1367,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
         $script .= "
 
         // Set the correct dbName
-        \$criteria->setDbName(self::DATABASE_NAME);
+        \$criteria->setDbName(".$this->getPeerClassname()."::DATABASE_NAME);
 
         try {
             // use transaction because \$criteria could contain info
@@ -1408,7 +1408,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
             \$con = Propel::getConnection(".$this->getPeerClassname()."::DATABASE_NAME, Propel::CONNECTION_WRITE);
         }
 
-        \$selectCriteria = new Criteria(self::DATABASE_NAME);
+        \$selectCriteria = new Criteria(".$this->getPeerClassname()."::DATABASE_NAME);
 
         if (\$values instanceof Criteria) {
             \$criteria = clone \$values; // rename for clarity
@@ -1434,7 +1434,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
         }
 
         // set the correct dbName
-        \$criteria->setDbName(self::DATABASE_NAME);
+        \$criteria->setDbName(".$this->getPeerClassname()."::DATABASE_NAME);
 
         return {$this->basePeerClassname}::doUpdate(\$selectCriteria, \$criteria, \$con);
     }
@@ -1548,7 +1548,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
         $script .= "
         } else { // it's a primary key, or an array of pks";
         $script .= "
-            \$criteria = new Criteria(self::DATABASE_NAME);";
+            \$criteria = new Criteria(".$this->getPeerClassname()."::DATABASE_NAME);";
 
         if (count($table->getPrimaryKey()) === 1) {
             $pkey = $table->getPrimaryKey();
@@ -1597,7 +1597,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
         }
 
         // Set the correct dbName
-        \$criteria->setDbName(self::DATABASE_NAME);
+        \$criteria->setDbName(".$this->getPeerClassname()."::DATABASE_NAME);
 
         \$affectedRows = 0; // initialize var to track total num of affected rows
 
@@ -2017,7 +2017,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
      */
     public static function getTableMap()
     {
-        return Propel::getDatabaseMap(self::DATABASE_NAME)->getTable(self::TABLE_NAME);
+        return Propel::getDatabaseMap(".$this->getPeerClassname()."::DATABASE_NAME)->getTable(".$this->getPeerClassname()."::TABLE_NAME);
     }
 ";
     }
@@ -2159,7 +2159,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
 
         // Set the correct dbName if it has not been overridden
         if (\$criteria->getDbName() == Propel::getDefaultDB()) {
-            \$criteria->setDbName(self::DATABASE_NAME);
+            \$criteria->setDbName(".$this->getPeerClassname()."::DATABASE_NAME);
         }
 
         ".$this->getPeerClassname()."::addSelectColumns(\$criteria);
@@ -2308,7 +2308,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
         \$criteria->clearOrderByColumns(); // ORDER BY won't ever affect the count
 
         // Set the correct dbName
-        \$criteria->setDbName(self::DATABASE_NAME);
+        \$criteria->setDbName(".$this->getPeerClassname()."::DATABASE_NAME);
 
         if (\$con === null) {
             \$con = Propel::getConnection(".$this->getPeerClassname()."::DATABASE_NAME, Propel::CONNECTION_READ);
@@ -2367,7 +2367,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
 
         // Set the correct dbName if it has not been overridden
         if (\$criteria->getDbName() == Propel::getDefaultDB()) {
-            \$criteria->setDbName(self::DATABASE_NAME);
+            \$criteria->setDbName(".$this->getPeerClassname()."::DATABASE_NAME);
         }
 
         ".$this->getPeerClassname()."::addSelectColumns(\$criteria);
@@ -2551,7 +2551,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
         \$criteria->clearOrderByColumns(); // ORDER BY won't ever affect the count
 
         // Set the correct dbName
-        \$criteria->setDbName(self::DATABASE_NAME);
+        \$criteria->setDbName(".$this->getPeerClassname()."::DATABASE_NAME);
 
         if (\$con === null) {
             \$con = Propel::getConnection(".$this->getPeerClassname()."::DATABASE_NAME, Propel::CONNECTION_READ);
@@ -2635,7 +2635,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
         // \$criteria->getDbName() will return the same object if not set to another value
         // so == check is okay and faster
         if (\$criteria->getDbName() == Propel::getDefaultDB()) {
-            \$criteria->setDbName(self::DATABASE_NAME);
+            \$criteria->setDbName(".$this->getPeerClassname()."::DATABASE_NAME);
         }
 
         ".$this->getPeerClassname()."::addSelectColumns(\$criteria);
@@ -2835,7 +2835,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
         \$criteria->clearOrderByColumns(); // ORDER BY should not affect count
 
         // Set the correct dbName
-        \$criteria->setDbName(self::DATABASE_NAME);
+        \$criteria->setDbName(".$this->getPeerClassname()."::DATABASE_NAME);
 
         if (\$con === null) {
             \$con = Propel::getConnection(".$this->getPeerClassname()."::DATABASE_NAME, Propel::CONNECTION_READ);
