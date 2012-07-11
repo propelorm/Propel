@@ -4268,7 +4268,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
     {
         {$foreignObjectName} = new {$className}();
         {$foreignObjectName}->set{$relatedObjectClassName}(\${$lowerRelatedObjectClassName});
-        \$this->add{$className}({$foreignObjectName});
+        \$this->add{$this->getRefFKPhpNameAffix($refFK, $plural = false)}({$foreignObjectName});
     }
 ";
     }
