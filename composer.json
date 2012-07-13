@@ -10,8 +10,9 @@
     "homepage": "http://www.willdurand.fr"
   }],
   "autoload": {
-    "classmap": ["runtime/lib/", "generator/lib"]
+      "classmap": ["runtime/lib", "generator/lib"]
   },
+  "include-path": ["runtime/lib", "generator/lib"],
   "require": {
     "php": ">=5.2.4",
     "phing/phing": ">=2.4.12,2.4.*"
