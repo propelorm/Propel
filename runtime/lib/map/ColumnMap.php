@@ -392,7 +392,7 @@ class ColumnMap
   public function getRelatedTable()
   {
     if ($this->relatedTableName) {
-      return $this->table->getDatabaseMap()->getTable($this->relatedTableName);
+      return $this->getRelation()->getForeignTable();
     } else {
       throw new PropelException("Cannot fetch RelatedTable for column with no foreign key: " . $this->columnName);
     }
