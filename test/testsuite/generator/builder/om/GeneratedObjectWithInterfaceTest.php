@@ -21,6 +21,11 @@ class GeneratedObjectWithInterfaceTest extends PHPUnit_Framework_TestCase
         <column name="id" required="true" primaryKey="true" autoIncrement="true" type="INTEGER" />
         <column name="name" type="VARCHAR" />
     </table>
+
+    <table name="my_class_without_interface">
+        <column name="id" required="true" primaryKey="true" autoIncrement="true" type="INTEGER" />
+        <column name="name" type="VARCHAR" />
+    </table>
 </database>
 EOF;
             $builder = new PropelQuickBuilder();
@@ -32,5 +37,10 @@ EOF;
     public function testClassHasInterface()
     {
         $this->assertInstanceOf('Foo\MyInterface', new \Foo\MyClassWithInterface());
+    }
+
+    public function testClassHasDefaultInterface()
+    {
+        $this->assertInstanceOf('Persistent', new \Foo\MyClassWithoutInterface());
     }
 }
