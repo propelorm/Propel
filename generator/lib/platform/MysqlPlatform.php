@@ -15,6 +15,7 @@ require_once dirname(__FILE__) . '/DefaultPlatform.php';
  *
  * @author     Hans Lellelid <hans@xmpl.org> (Propel)
  * @author     Martin Poeschl <mpoeschl@marmot.at> (Torque)
+ * @author     Lee Leathers <leeleathers@gmail.com>
  * @version    $Revision$
  * @package    propel.generator.platform
  */
@@ -576,6 +577,60 @@ ALTER TABLE %s CHANGE %s %s;
         }
 
         return $ret;
+    }
+
+    public function getAddColumnDDLBits(Column $column)
+    {
+        $pattern = "ADD %s %s";
+
+        $tableColumns = $column->getTable()->getColumns();
+
+        //default to add to top if the before-column cannot be found
+        $insertPositionDDL = "FIRST"; 
+        foreach($tableColumns as $i => $tableColumn) {
+            //we found the column, use the column before it, if its not the first
+            if ($tableColumn->getName() == $column->getName()) {
+                //we have a column that is not the first column
+                if ($i>0) { 
+                    $insertPositionDDL = "AFTER ".$this->quoteIdentifier($tableColumns[$i-1]->getName());
+                }
+                break;
+            }
+        }
+
+        return sprintf($pattern,
+            $this->getColumnDDL($column),
+            $insertPositionDDL
+        );
+    }
+
+    /**
+     * Builds the DDL SQL to add a list of columns
+     *
+     * @return     string
+     */
+    public function getAddColumnsDDL($columns)
+    {
+        $lines=array();
+        $tableName = null;
+        foreach ($columns as $column) {
+            if (null === $tableName) {
+                $tableName = $column->getTable()->getName();
+            }
+            $lines[] = $this->getAddColumnDDLBits($column);
+        }
+    
+        $pattern = "
+ALTER TABLE %s
+    %s;
+";
+
+        $sep = ",
+    ";
+        return sprintf($pattern,
+            $this->quoteIdentifier($tableName),
+            implode($sep, $lines)
+        );
     }
 
     /**
