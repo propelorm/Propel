@@ -222,6 +222,8 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
             } else {
                 $this->declareClassFromBuilder($this->getInterfaceBuilder());
             }
+        } elseif ($interface = ClassTools::getInterface($table)) {
+            $script .= "implements " . ClassTools::classname($interface);
         }
 
         $script .= "
