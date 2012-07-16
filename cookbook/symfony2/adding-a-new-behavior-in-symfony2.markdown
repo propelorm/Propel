@@ -41,11 +41,4 @@ And run, `php composer.php update`.
 
 >**Tip**<br />If there is no available Git repository for a behavior, just copy it to `vendor/propel-thebehavior-behavior`. It's up to you to version it or not.
 
-Now, you just need to register the new behavior by adding the following line in `app/config/propel.ini`:
-
-{% highlight ini %}
-# app/config/propel.ini
-propel.behavior.GeocodableBehavior.class = vendor.propel-geocodable-behavior.src.GeocodableBehavior
-{% endhighlight %}
-
 You're done!
