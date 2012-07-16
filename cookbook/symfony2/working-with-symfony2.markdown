@@ -516,7 +516,7 @@ Awesome\Post:
 If you use [Faker](https://github.com/fzaninotto/Faker) with its [Symfony2 integration](https://github.com/willdurand/BazingaFakerBundle),
 then the PropelBundle offers a facility to use the Faker generator in your YAML files:
 
-{% highlight yml %}
+{% highlight yaml %}
 Acme\DemoBundle\Model\Book:
     Book1:
         name:        "Awesome Feature"
