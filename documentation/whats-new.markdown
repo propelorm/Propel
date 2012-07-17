@@ -486,7 +486,7 @@ If you need to bind a variable to the condition, set the variable as last parame
 <?php
 $authors = AuthorQuery::create()
   ->join('Author.Book')
-  ->addJoinCondition('Book', 'Book.Title LIKE ?', 'War%')
+  ->addJoinCondition('Book', 'Book.Title LIKE ?', 'War%', null, PDO::PARAM_STR)
   ->find();
 // SELECT * FROM author
 // INNER JOIN book ON (author.ID=book.AUTHOR_ID AND book.TITLE LIKE 'War%');
