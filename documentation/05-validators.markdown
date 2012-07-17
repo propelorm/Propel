@@ -44,7 +44,7 @@ if ($objUser->validate()) {
 }
 {% endhighlight %}
 
-`validate()` returns a boolean. If the validation failed, you can access the array  `ValidationFailed` objects by way of the `getValidationFailures()` method. Each `ValidationFailed` instance gives access to the column, the messagen and the validator that caused the failure.
+`validate()` returns a boolean. If the validation failed, you can access the array  `ValidationFailed` objects by way of the `getValidationFailures()` method. Each `ValidationFailed` instance gives access to the column, the message and the validator that caused the failure.
 
 ## Core Validators ##
 
@@ -56,7 +56,7 @@ The `MatchValidator` is used to run a regular expression of choice against the c
 
 {% highlight xml %}
 <validator column="username">
-  <!-- allow strings that match the email adress pattern -->
+  <!-- allow strings that match the email address pattern -->
   <rule
     name="match"
     value="/^([a-zA-Z0-9])+([\.a-zA-Z0-9_-])*@([a-zA-Z0-9])+(\.[a-zA-Z0-9_-]+)+$/"
@@ -81,7 +81,7 @@ Opposite of `MatchValidator`, this validator returns false if the regex returns 
 
 ### MaxLengthValidator ###
 
-When you want to limit the size of the string to be inserted in a column, use the `MaxLengthValidator`. Internally, it uses `strlen()` to get the length of the string. For instance, some database completely ignore the lentgh of `LONGVARCHAR` columns; you can enforce it using a validator:
+When you want to limit the size of the string to be inserted in a column, use the `MaxLengthValidator`. Internally, it uses `strlen()` to get the length of the string. For instance, some database completely ignore the length of `LONGVARCHAR` columns; you can enforce it using a validator:
 
 {% highlight xml %}
 <column name="comment" type="LONGVARCHAR" required="true" />
