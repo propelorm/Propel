@@ -43,7 +43,7 @@ $stmt->bind(':p1', time() - 30 * 24 * 60 * 60, PDO::PARAM_INT);
 $res = $stmt->execute();
 {% endhighlight %}
 
-The final `find()` doesn't just execute the SQL query above, it also instanciates `Book` objects and populates them with the results of the query. Eventually, it returns a `PropelCollection` object with these `Book` objects inside. For the sake of clarity, you can consider this collection object as an array. In fact, you can use it as if it were a true PHP array and iterate over the result list the usual way:
+The final `find()` doesn't just execute the SQL query above, it also instantiates `Book` objects and populates them with the results of the query. Eventually, it returns a `PropelCollection` object with these `Book` objects inside. For the sake of clarity, you can consider this collection object as an array. In fact, you can use it as if it were a true PHP array and iterate over the result list the usual way:
 
 {% highlight php %}
 <?php
@@ -940,7 +940,7 @@ $books = $query
   ->find();
 {% endhighlight %}
 
-The `ModelCriteria` class offers a neat way to keep your code to a minimum in such occasions. It provides `_if()` and `_endif()` methods allowing for inline conditions. Using thses methods, the previous query can be written as follows:
+The `ModelCriteria` class offers a neat way to keep your code to a minimum in such occasions. It provides `_if()` and `_endif()` methods allowing for inline conditions. Using theses methods, the previous query can be written as follows:
 
 {% highlight php %}
 <?php
@@ -1246,7 +1246,7 @@ $q = new frontendBookQuery();
 $books = $q->find();
 {% endhighlight %}
 
->**Tip**<br />Due to late static binding issues in PHP 5.2, you cannot use the `create()` factory on an inherited query - unless you override it yoursel in the descendant class. Alternatively, Propel offers a global query factory named `PropelQuery`:
+>**Tip**<br />Due to late static binding issues in PHP 5.2, you cannot use the `create()` factory on an inherited query - unless you override it yourself in the descendant class. Alternatively, Propel offers a global query factory named `PropelQuery`:
 
 {% highlight php %}
 <?php
