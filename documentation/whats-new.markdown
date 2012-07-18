@@ -203,7 +203,7 @@ echo $item->getName(); // 'Four micro-ondes'
 
 **Tip**: The big advantage of Propel behaviors is that they use code generation. Even though it's only a proxy method to the `ItemI18n` class, `Item::getName()` has all the phpDoc required to make your IDE happy.
 
-This new behavior also adds special capabiliies to the Query objects. The most interesting allows you to execute less queries when you need to query for an Item and one of its translations - which is common to display a list of items in the locale of the user:
+This new behavior also adds special capabilities to the Query objects. The most interesting allows you to execute less queries when you need to query for an Item and one of its translations - which is common to display a list of items in the locale of the user:
 
 {% highlight php %}
 <?php
