@@ -857,4 +857,13 @@ class GeneratedObjectRelTest extends BookstoreEmptyTestBase
         $this->assertEquals(1, BookSummaryQuery::create()->count(), 'One Book summary because FK is required so book summary is deleted when book is saved');
     }
 
+    public function testRefPhpNameCrossMany()
+    {
+        $book = new Book();
+        $bookClubList = new BookClubList();
+        $bookClubList->addFavoriteBookRelated($book);
+
+        $this->assertCount(1, $bookClubList->getFavoriteBookRelateds(), 'there should be one book in the bookClubList');
+    }
+
 }
