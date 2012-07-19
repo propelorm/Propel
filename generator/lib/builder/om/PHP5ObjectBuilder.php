@@ -4314,6 +4314,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
 
         $joinedTableObjectBuilder = $this->getNewObjectBuilder($refFK->getTable());
         $className = $joinedTableObjectBuilder->getObjectClassname();
+        $refKObjectClassName = $this->getRefFKPhpNameAffix($refFK, $plural = false);
 
         $tblFK = $refFK->getTable();
         $foreignObjectName = '$' . $tblFK->getStudlyPhpName();
@@ -4326,7 +4327,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
     {
         {$foreignObjectName} = new {$className}();
         {$foreignObjectName}->set{$relatedObjectClassName}(\${$lowerRelatedObjectClassName});
-        \$this->add{$className}({$foreignObjectName});
+        \$this->add{$refKObjectClassName}({$foreignObjectName});
     }
 ";
     }
