@@ -39,9 +39,9 @@ class PropelParserTest extends PHPUnit_Framework_TestCase
         $fixtureFile = dirname(__FILE__) . '/fixtures/test_data.xml';
         $parser = PropelParser::getParser('XML');
         $content = $parser->load($fixtureFile);
+        $eol = PHP_EOL;
         $expectedContent = <<<EOF
-<?xml version="1.0" encoding="UTF-8"?>
-<foo>
+<?xml version="1.0" encoding="UTF-8"?>{$eol}<foo>
   <bar prop="0"/>
   <bar prop="1"/>
 </foo>
