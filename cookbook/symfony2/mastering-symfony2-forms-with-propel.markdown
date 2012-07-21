@@ -51,7 +51,7 @@ class BookType extends AbstractType
         $builder->add('isbn');
     }
 
-    public function getDefaultOptions(array $options)
+    public function getDefaultOptions()
     {
         return array(
             'data_class' => 'Acme\LibraryBundle\Model\Book',
@@ -186,7 +186,7 @@ class BookType extends AbstractType
         $builder->add('author', new AuthorType());
     }
 
-    public function getDefaultOptions(array $options)
+    public function getDefaultOptions()
     {
         return array(
             'data_class' => 'Acme\LibraryBundle\Model\Book',
@@ -219,7 +219,7 @@ class AuthorType extends AbstractType
         $builder->add('last_name');
     }
 
-    public function getDefaultOptions(array $options)
+    public function getDefaultOptions()
     {
         return array(
             'data_class' => 'Acme\LibraryBundle\Model\Author',
@@ -266,7 +266,7 @@ class AuthorType extends AbstractType
         ));
     }
 
-    public function getDefaultOptions(array $options)
+    public function getDefaultOptions()
     {
         return array(
             'data_class' => 'Acme\LibraryBundle\Model\Author',
@@ -299,7 +299,7 @@ class BookType extends AbstractType
         $builder->add('isbn');
     }
 
-    public function getDefaultOptions(array $options)
+    public function getDefaultOptions()
     {
         return array(
             'data_class' => 'Acme\LibraryBundle\Model\Book',
@@ -372,7 +372,7 @@ class BookClubListType extends AbstractType
         ));
     }
 
-    public function getDefaultOptions(array $options)
+    public function getDefaultOptions()
     {
         return array(
             'data_class' => 'Acme\LibraryBundle\Model\BookClubList',
@@ -425,7 +425,7 @@ class BookType extends AbstractType
         ));
     }
 
-    public function getDefaultOptions(array $options)
+    public function getDefaultOptions()
     {
         return array(
             'data_class' => 'Acme\LibraryBundle\Model\Book',
