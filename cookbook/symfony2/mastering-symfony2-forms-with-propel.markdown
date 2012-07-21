@@ -41,11 +41,11 @@ our books. For the moment, just ignore the relation with `Author` objects.
 namespace Acme\LibraryBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\FormBuilderInterface;
 
 class BookType extends AbstractType
 {
-    public function buildForm(FormBuilder $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('title');
         $builder->add('isbn');
@@ -174,11 +174,11 @@ A `Book` has an `Author`, this is a **One-To-Many** relation. Let's modifing you
 namespace Acme\LibraryBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\FormBuilderInterface;
 
 class BookType extends AbstractType
 {
-    public function buildForm(FormBuilder $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('title');
         $builder->add('isbn');
@@ -209,11 +209,11 @@ You now have to write an `AuthorType` to reflect the new requirements:
 namespace Acme\LibraryBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\FormBuilderInterface;
 
 class AuthorType extends AbstractType
 {
-    public function buildForm(FormBuilder $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('first_name');
         $builder->add('last_name');
@@ -250,11 +250,11 @@ But you could have the following use case: to add books to an author. The main t
 namespace Acme\LibraryBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\FormBuilderInterface;
 
 class AuthorType extends AbstractType
 {
-    public function buildForm(FormBuilder $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('first_name');
         $builder->add('last_name');
@@ -289,11 +289,11 @@ You'll also need to refactor your `BookType`:
 namespace Acme\LibraryBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\FormBuilderInterface;
 
 class BookType extends AbstractType
 {
-    public function buildForm(FormBuilder $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('title');
         $builder->add('isbn');
@@ -355,11 +355,11 @@ You now have `BookClubList` and `BookListRel` objects. Let's create a `BookClubL
 namespace Acme\LibraryBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\FormBuilderInterface;
 
 class BookClubListType extends AbstractType
 {
-    public function buildForm(FormBuilder $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('group_leader');
         $builder->add('theme');
@@ -410,11 +410,11 @@ If you want to select existing authors when you create new books, you'll have to
 namespace Acme\LibraryBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\FormBuilderInterface;
 
 class BookType extends AbstractType
 {
-    public function buildForm(FormBuilder $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('title');
         $builder->add('isbn');
