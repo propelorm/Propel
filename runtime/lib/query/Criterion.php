@@ -331,6 +331,8 @@ class Criterion
      *
      * @param      string &$sb The string that will receive the Prepared Statement
      * @param array $params A list to which Prepared Statement parameters will be appended
+     *
+     * @throws PropelException
      */
     protected function appendRawToPs(&$sb, array &$params)
     {
@@ -411,6 +413,8 @@ class Criterion
      *
      * @param      string &$sb The string that will receive the Prepared Statement
      * @param array $params A list to which Prepared Statement parameters will be appended
+     *
+     * @throws PropelException
      */
     protected function appendBasicToPs(&$sb, array &$params)
     {

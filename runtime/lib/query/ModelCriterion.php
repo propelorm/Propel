@@ -154,6 +154,8 @@ class ModelCriterion extends Criterion
      *
      * @param      string &$sb The string that will receive the Prepared Statement
      * @param array $params A list to which Prepared Statement parameters will be appended
+     *
+     * @throws PropelException
      */
     public function appendModelClauseSeveralToPs(&$sb, array &$params)
     {
@@ -202,6 +204,8 @@ class ModelCriterion extends Criterion
      *
      * @param      string &$sb The string that will receive the Prepared Statement
      * @param array $params A list to which Prepared Statement parameters will be appended
+     *
+     * @throws PropelException
      */
     protected function appendModelClauseRawToPs(&$sb, array &$params)
     {

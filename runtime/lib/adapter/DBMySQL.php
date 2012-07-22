@@ -204,6 +204,8 @@ class DBMySQL extends DBAdapter
      *
      * @param  array $params
      * @return array
+     *
+     * @throws PropelException
      */
     public function prepareParams($params)
     {

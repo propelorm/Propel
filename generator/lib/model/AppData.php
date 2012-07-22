@@ -211,7 +211,9 @@ class AppData
      * Add a database to the list and sets the AppData property to this
      * AppData
      *
-     * @param      db the database to add
+     * @param Datebase|string $db the database to add
+     *
+     * @return Database
      */
     public function addDatabase($db)
     {
@@ -253,6 +255,8 @@ class AppData
      * Merge other appData objects into this object
      *
      * @param array[AppData] $ads
+     *
+     * @throws Exception
      */
     public function joinAppDatas($ads)
     {

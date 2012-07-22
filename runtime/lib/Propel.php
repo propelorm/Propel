@@ -30,7 +30,7 @@ class Propel
     /**
      * The Propel version.
      */
-    const VERSION = '1.6.6-dev';
+    const VERSION = '1.6.7-dev';
 
     /**
      * A constant for <code>default</code>.
@@ -843,6 +843,8 @@ class Propel
      *
      * @param  string $class dot-path to clas (e.g. path.to.my.ClassName).
      * @return string unqualified classname
+     *
+     * @throws PropelException
      */
     public static function importClass($path)
     {

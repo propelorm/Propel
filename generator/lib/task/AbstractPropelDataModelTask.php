@@ -258,9 +258,9 @@ abstract class AbstractPropelDataModelTask extends Task
     /**
      * [REQUIRED] Set the output directory. It will be
      * created if it doesn't exist.
-     * @param  PhingFile $outputDirectory
+     * @param  PhingFile      $outputDirectory
      * @return void
-     * @throws Exception
+     * @throws BuildException
      */
     public function setOutputDirectory(PhingFile $outputDirectory)
     {
@@ -344,9 +344,9 @@ abstract class AbstractPropelDataModelTask extends Task
 
     /**
      * Maps the passed in name to a new filename & returns resolved File object.
-     * @param  string        $from
-     * @return PhingFile     Resolved File object.
-     * @throws BuilException - if no Mapper element se
+     * @param  string         $from
+     * @return PhingFile      Resolved File object.
+     * @throws BuildException - if no Mapper element se
      *                          - if unable to map new filename.
      */
     protected function getMappedFile($from)
@@ -401,6 +401,8 @@ abstract class AbstractPropelDataModelTask extends Task
     /**
      * Gets all matching XML schema files and loads them into data models for class.
      * @return void
+     * @throws EngineException
+     * @throws BuildException
      */
     protected function loadDataModels()
     {

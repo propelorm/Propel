@@ -90,6 +90,8 @@ class PropelOnDemandCollection extends PropelCollection
      * Does not empty the collection before adding the data from the array
      *
      * @param array $arr
+     *
+     * @throws PropelException
      */
     public function fromArray($arr)
     {
@@ -169,6 +171,8 @@ class PropelOnDemandCollection extends PropelCollection
     /**
      * @throws PropelException
      * @param  string          $data
+     *
+     * @return void
      */
     public function unserialize($data)
     {

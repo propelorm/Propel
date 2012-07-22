@@ -165,8 +165,12 @@ abstract class OMBuilder extends DataModelBuilder
     {
         $pkg = $this->getPackage();
 
-        if (strpos($pkg, '/') !== false) {
+        if (false !== strpos($pkg, '/')) {
             return preg_replace('#\.(map|om)$#', '/\1', $pkg);
+        }
+
+        if ('.' === substr($pkg, 0, 1)) {
+            $pkg = substr($pkg, 1);
         }
 
         return strtr($pkg, '.', '/');
@@ -295,6 +299,8 @@ abstract class OMBuilder extends DataModelBuilder
      * @param string $classname The Peer classname to use.
      *
      * @return string If $classname is provided, then will return $classname::COLUMN_NAME; if not, then the peername is looked up for current table to yield $currTablePeer::COLUMN_NAME.
+     *
+     * @throws Exception
      */
     public function getColumnConstant($col, $classname = null)
     {
@@ -397,6 +403,8 @@ abstract class OMBuilder extends DataModelBuilder
      * will be appended.
      *
      * @return string
+     *
+     * @throws Exception
      */
     protected static function getRelatedBySuffix(ForeignKey $fk)
     {

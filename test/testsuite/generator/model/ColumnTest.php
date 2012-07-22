@@ -200,4 +200,12 @@ EOF;
         $this->assertTrue($column->hasPlatform());
     }
 
+    public function testIsPhpArrayType()
+    {
+        $column = new Column();
+        $this->assertFalse($column->isPhpArrayType());
+
+        $column->setType(PropelTypes::PHP_ARRAY);
+        $this->assertTrue($column->isPhpArrayType());
+    }
 }

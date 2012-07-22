@@ -12,6 +12,7 @@
  *               Set to true (default) to use less memory.
  *
  * @return     int the number of archived objects
+ * @throws     PropelException
  */
 public function archive($con = null, $useLittleMemory = true)
 {

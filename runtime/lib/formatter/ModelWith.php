@@ -25,6 +25,7 @@ class ModelWith
     protected $relationName = '';
     protected $relationMethod = '';
     protected $initMethod = '';
+    protected $resetPartialMethod = '';
     protected $leftPhpName;
     protected $rightPhpName;
 
@@ -54,6 +55,7 @@ class ModelWith
             $this->relationName = $relation->getPluralName();
             $this->relationMethod = 'add' . $relationName;
             $this->initMethod = 'init' . $this->relationName;
+            $this->resetPartialMethod = 'resetPartial' . $this->relationName;
         } else {
             $this->relationName = $relationName;
             $this->relationMethod = 'set' . $relationName;
@@ -144,6 +146,16 @@ class ModelWith
     public function getInitMethod()
     {
         return $this->initMethod;
+    }
+
+    public function setResetPartialMethod($resetPartialMethod)
+    {
+        $this->resetPartialMethod = $resetPartialMethod;
+    }
+
+    public function getResetPartialMethod()
+    {
+        return $this->resetPartialMethod;
     }
 
     public function setLeftPhpName($leftPhpName)
