@@ -42,6 +42,8 @@ class PropelAutoloader
      * Register PropelAutoloader in spl autoloader.
      *
      * @return void
+     *
+     * @throws Exception
      */
     public static function register()
     {

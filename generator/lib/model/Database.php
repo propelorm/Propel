@@ -432,7 +432,9 @@ class Database extends ScopedElement
 
     /**
      * Adds Domain object from <domain> tag.
-     * @param      mixed XML attributes (array) or Domain object.
+     * @param Domain|string $data XML attributes (array) or Domain object.
+     *
+     * @return Domain
      */
     public function addDomain($data)
     {

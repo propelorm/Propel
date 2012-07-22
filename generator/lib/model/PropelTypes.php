@@ -365,10 +365,21 @@ class PropelTypes
      * Convenience method to indicate whether a passed-in PHP type is an object.
      *
      * @param  string  $phpType The PHP type to check
-     * @return boolean Whether the PHP type is a primitive (string, int, boolean, float)
+     * @return boolean
      */
     public static function isPhpObjectType($phpType)
     {
         return (!self::isPhpPrimitiveType($phpType) && !in_array($phpType, array("resource", "array")));
+    }
+
+    /**
+     * Convenience method to indicate whether a passed-in PHP type is an array.
+     *
+     * @param  string  $phpType The PHP type to check
+     * @return boolean
+     */
+    public static function isPhpArrayType($phpType)
+    {
+        return strtoupper($phpType) === self::PHP_ARRAY;
     }
 }

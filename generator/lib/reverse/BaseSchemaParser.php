@@ -209,6 +209,8 @@ abstract class BaseSchemaParser implements SchemaParser
      * Gets a new VendorInfo object for this platform with specified params.
      *
      * @param array $params
+     *
+     * @return VendorInfo
      */
     protected function getNewVendorInfoObject(array $params)
     {

@@ -139,4 +139,35 @@ class PropelObjectCollectionTest extends BookstoreTestBase
         $this->assertEquals(0, $author->countBooks());
         $this->assertEquals($count, $this->con->getQueryCount());
     }
+
+    public function testToKeyValue()
+    {
+        $author = new Author();
+        $author->setId(5678);
+        $author->setFirstName('George');
+        $author->setLastName('Byron');
+
+        $book = new Book();
+        $book->setId(9012);
+        $book->setTitle('Don Juan');
+        $book->setISBN('0140422161');
+        $book->setPrice(12.99);
+        $book->setAuthor($author);
+
+        $coll = new PropelObjectCollection();
+        $coll->setModel('Book');
+        $coll->append($book);
+
+        $this->assertCount(1, $coll);
+
+        // This will call $book->getId()
+        $this->assertEquals(array(
+            9012 => 'Don Juan',
+        ), $coll->toKeyValue('Id', 'Title'));
+
+        // This will call: $book->getAuthor()->getBooks()->getFirst()->getId()
+        $this->assertEquals(array(
+            9012 => 'Don Juan',
+        ), $coll->toKeyValue(array('Author', 'Books', 'First', 'Id'), 'Title'));
+    }
 }

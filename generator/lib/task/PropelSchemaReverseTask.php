@@ -275,8 +275,9 @@ class PropelSchemaReverseTask extends PDOTask
     /**
      * Sets set validator bitfield from a comma-separated list of "validator bit" names.
      *
-     * @param  string $v The comma-separated list of which validators to add.
+     * @param  string         $v The comma-separated list of which validators to add.
      * @return void
+     * @throws BuildException
      */
     public function setAddValidators($v)
     {
@@ -476,6 +477,8 @@ class PropelSchemaReverseTask extends PDOTask
      * @param Column $column The column that is being validated.
      * @param string $type   The type (string) for validator (e.g. 'required').
      * @param mixed  $value  The value for the validator (if applicable)
+     *
+     * @return Rule
      */
     protected function getValidatorRule(Column $column, $type, $value = null)
     {
@@ -495,6 +498,8 @@ class PropelSchemaReverseTask extends PDOTask
      * @param Column $column
      * @param string $type
      * @param mixed  $value
+     *
+     * @return string
      */
     protected function getRuleMessage(Column $column, $type, $value)
     {

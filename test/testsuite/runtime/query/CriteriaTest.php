@@ -351,6 +351,24 @@ class CriteriaTest extends BookstoreTestBase
         Propel::setDB(null, $originalDB);
     }
 
+    public function testOrderByIgnoreCaseWithWhereClause()
+    {
+        $originalDB = Propel::getDB();
+        Propel::setDB(null, new DBMySQL());
+
+        $criteria = new Criteria();
+        $criteria->setIgnoreCase(true);
+        $criteria->addAscendingOrderByColumn(BookPeer::TITLE);
+        $criteria->add('book.TITLE', false);
+        BookPeer::addSelectColumns($criteria);
+        $params=array();
+        $sql = BasePeer::createSelectSql($criteria, $params);
+        $expectedSQL = 'SELECT book.ID, book.TITLE, book.ISBN, book.PRICE, book.PUBLISHER_ID, book.AUTHOR_ID, UPPER(book.TITLE) FROM `book` WHERE UPPER(book.TITLE)=UPPER(:p1) ORDER BY UPPER(book.TITLE) ASC';
+        $this->assertEquals($expectedSQL, $sql);
+
+        Propel::setDB(null, $originalDB);
+    }
+
     /**
      * Test that true is evaluated correctly.
      */

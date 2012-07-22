@@ -93,6 +93,7 @@ EOF;
             array('foo.bar/baz', 'foo.bar/baz'),
             array('foo.bar/baz.om', 'foo.bar/baz/om'),
             array('foo.bar/baz.map', 'foo.bar/baz/map'),
+            array('.om', 'om'),
         );
     }
 

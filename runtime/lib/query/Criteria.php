@@ -246,7 +246,7 @@ class Criteria implements IteratorAggregate
      * Creates a new instance with the default capacity which corresponds to
      * the specified database.
      *
-     * @param      dbName The dabase name.
+     * @param string $dbName The dabase name.
      */
     public function __construct($dbName = null)
     {
@@ -338,14 +338,16 @@ class Criteria implements IteratorAggregate
     /**
      * Returns the column name associated with an alias (AS-column).
      *
-     * @param  string $alias
-     * @return string $string
+     * @param  string      $alias
+     * @return string|null $string The name if found, null otherwise.
      */
     public function getColumnForAs($as)
     {
         if (isset($this->asColumns[$as])) {
             return $this->asColumns[$as];
         }
+
+        return null;
     }
 
     /**
@@ -391,14 +393,16 @@ class Criteria implements IteratorAggregate
     /**
      * Returns the table name associated with an alias.
      *
-     * @param  string $alias
-     * @return string $string
+     * @param  string      $alias
+     * @return string|null $string The name if given, null otherwise.
      */
     public function getTableForAlias($alias)
     {
         if (isset($this->aliases[$alias])) {
             return $this->aliases[$alias];
         }
+
+        return null;
     }
 
     /**
@@ -796,6 +800,10 @@ class Criteria implements IteratorAggregate
      * @param array  $criterions array of the name of the criterions to combine
      * @param string $operator   logical operator, either Criteria::LOGICAL_AND, or Criteria::LOGICAL_OR
      * @param string $name       optional name to combine the criterion later
+     *
+     * @return Criteria
+     *
+     * @throws PropelException
      */
     public function combine($criterions = array(), $operator = self::LOGICAL_AND, $name = null)
     {
@@ -1383,8 +1391,8 @@ class Criteria implements IteratorAggregate
     /**
      * Remove an object from the criteria.
      *
-     * @param  string $key A string with the key to be removed.
-     * @return mixed  The removed value.
+     * @param  string     $key A string with the key to be removed.
+     * @return mixed|null The removed value, null if not set.
      */
     public function remove($key)
     {
@@ -1397,6 +1405,8 @@ class Criteria implements IteratorAggregate
 
             return $removed;
         }
+
+        return null;
     }
 
     /**
@@ -1506,6 +1516,8 @@ class Criteria implements IteratorAggregate
      *            This parameter is deprecated, use _or() instead
      *
      * @return Criteria The current criteria object
+     *
+     * @throws PropelException
      */
     public function mergeWith(Criteria $criteria, $operator = null)
     {
@@ -1636,12 +1648,12 @@ class Criteria implements IteratorAggregate
         } elseif (is_int($comparison)) {
             // $comparison is a PDO::PARAM_* constant value
             // something like $c->add('foo like ?', '%bar%', PDO::PARAM_STR);
-            return new Criterion($this, $p1, $value, Criteria::RAW, $comparison);;
-        } else {
-            // $comparison is one of Criteria's constants
-            // something like $c->add(BookPeer::TITLE, 'War%', Criteria::LIKE);
-            return new Criterion($this, $p1, $value, $comparison);
+            return new Criterion($this, $p1, $value, Criteria::RAW, $comparison);
         }
+
+        // $comparison is one of Criteria's constants
+        // something like $c->add(BookPeer::TITLE, 'War%', Criteria::LIKE);
+        return new Criterion($this, $p1, $value, $comparison);
     }
 
     /**
@@ -1779,6 +1791,8 @@ class Criteria implements IteratorAggregate
      * @param bool $cond ignored
      *
      * @return PropelConditionalProxy|Criteria
+     *
+     * @throws PropelException
      */
     public function _elseif($cond)
     {
@@ -1794,6 +1808,8 @@ class Criteria implements IteratorAggregate
      * Allows for conditional statements in a fluid interface.
      *
      * @return PropelConditionalProxy|Criteria
+     *
+     * @throws PropelException
      */
     public function _else()
     {
@@ -1809,6 +1825,8 @@ class Criteria implements IteratorAggregate
      * Allows for conditional statements in a fluid interface.
      *
      * @return Criteria
+     *
+     * @throws PropelException
      */
     public function _endif()
     {

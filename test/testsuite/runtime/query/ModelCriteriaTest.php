@@ -2430,6 +2430,23 @@ class ModelCriteriaTest extends BookstoreTestBase
         $this->assertEquals(array('Id', 'Title'), $bookQuery1->getSelect());
     }
 
+    public function testSetIgnoreCaseWithWhereClause()
+    {
+        $q = BookQuery::create('b')
+            ->where('b.Title = ?', 'foo')
+            ->setIgnoreCase(true)
+            ->orderById()
+            ;
+
+        try {
+            $q->find();
+
+            $this->assertTrue(true);
+        } catch (Exception $e) {
+            $this->fail('Unexpected exception catched: ' . $e->getMessage());
+        }
+    }
+
     public function testOrderByWithInsensitiveCase()
     {
         $sql = 'SELECT  FROM  ORDER BY book.TITLE ASC';

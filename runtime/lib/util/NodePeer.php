@@ -20,8 +20,8 @@ interface NodePeer
     /**
      * Creates the supplied node as the root node.
      *
-     * @param  object $node Propel object for model
-     * @return object Inserted propel object for model
+     * @param  NodeObject $node Propel object for model
+     * @return object     Inserted propel object for model
      */
     public static function createRoot(NodeObject $node);
 

@@ -108,6 +108,14 @@ class AggregateColumnBehavior extends Behavior
         ));
     }
 
+    public function postSave($builder)
+    {
+        return $this->renderTemplate('objectPostSave', array(
+                'column'     => $this->getColumn(),
+                'columnRefk' => $builder->getRefFKCollVarName($this->getForeignKey())
+        ));
+    }
+
     protected function getForeignTable()
     {
         $database = $this->getTable()->getDatabase();

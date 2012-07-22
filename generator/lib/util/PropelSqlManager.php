@@ -190,6 +190,10 @@ class PropelSqlManager
 
     /**
      * @param string $datasource A datasource name.
+     *
+     * @return bool
+     *
+     * @throws PDOException
      */
     public function insertSql($datasource = null)
     {
@@ -261,8 +265,9 @@ class PropelSqlManager
     /**
      * Returns an array of properties as key/value pairs from an input file.
      *
-     * @param  string $file A file properties.
-     * @return array  An array of properties as key/value pairs.
+     * @param  string    $file A file properties.
+     * @return array     An array of properties as key/value pairs.
+     * @throws Exception
      */
     protected function getProperties($file)
     {

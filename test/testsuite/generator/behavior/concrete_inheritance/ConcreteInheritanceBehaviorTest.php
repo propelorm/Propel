@@ -50,6 +50,25 @@ EOF;
 
             PropelQuickBuilder::buildSchema($schema);
         }
+        if (!class_exists('ConcretePageQuery')) {
+            $schema = <<<EOF
+<database name="concrete_page">
+  <table name="tab_concrete_page" phpName="ConcretePage">
+    <column name="id" type="integer" primaryKey="true" autoIncrement="true"/>
+    <column name="category_id" type="INTEGER" required="false" />
+    <column name="content" type="longvarchar" required="true" />
+  </table>
+  <table name="tab_concrete_subpage" phpName="ConcreteSubPage">
+    <column name="paragraph" type="integer" required="true" />
+    <behavior name="concrete_inheritance">
+      <parameter name="extends" value="tab_concrete_page" />
+    </behavior>
+  </table>
+</database>
+EOF;
+
+            PropelQuickBuilder::buildSchema($schema);
+        }
     }
 
     public function testParentBehavior()
@@ -315,6 +334,12 @@ EOF;
         } catch (PropelException $e) {
             $this->assertTrue(true, 'SetPk fails when allowPkInsert is false');
         }
+    }
+
+    public function testTranslateFieldNameWithPhpName()
+    {
+        $this->assertEquals('id', ConcreteSubPagePeer::translateFieldName('tab_concrete_subpage.ID', BasePeer::TYPE_COLNAME, BasePeer::TYPE_FIELDNAME));
+        $this->assertEquals('id', ConcretePagePeer::translateFieldName('tab_concrete_page.ID', BasePeer::TYPE_COLNAME, BasePeer::TYPE_FIELDNAME));
     }
 
 }
