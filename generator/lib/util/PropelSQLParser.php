@@ -228,11 +228,11 @@ class PropelSQLParser
             }
 
             if (!$isInString) {
-                // FIXME: since we're iterating char by char, we can use only 1-char delimiters
+                // FIXME: add support for multi character delimiters
                 if (preg_match('/DELIMITER (.+)$/i', $parsedString, $matches)) {
                     // check if 2nd character after delimiter exists and is a new line
                     if ($char && $char != "\n") {
-                        throw new PropelException("Delimiters with more than 1 character are not supported! (yet?)");
+                        throw new PropelException("Delimiters with more than 1 character are not supported yet.");
                     }
 
                     // remove DELIMITER from string because it's a command-line keyword only
