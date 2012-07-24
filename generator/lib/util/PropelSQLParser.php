@@ -200,8 +200,8 @@ class PropelSQLParser
         $isInString = false;
         $stringQuotes = '';
         $parsedString = '';
-        while ($this->pos < $this->len) {
-            $char = $this->sql[$this->pos];
+        while ($this->pos <= $this->len) {
+            $char = isset($this->sql[$this->pos]) ? $this->sql[$this->pos] : '';
 
             // check flags for strings or escaper
             switch ($char) {
@@ -229,20 +229,20 @@ class PropelSQLParser
 
             if (!$isInString) {
                 // FIXME: since we're iterating char by char, we can use only 1-char delimiters
-                if (preg_match('/^DELIMITER (.+)$/i', ltrim($parsedString), $matches)) {
-
-                    // check if delimiter has more than 1 char
-                    if(trim($this->sql[$this->pos])){
-                        throw new Exception("Delimiters with more than 1 character are not supported! (yet?)");
+                if (preg_match('/DELIMITER (.+)$/i', $parsedString, $matches)) {
+                    // check if 2nd character after delimiter exists and is a new line
+                    if ($char && $char != "\n") {
+                        throw new PropelException("Delimiters with more than 1 character are not supported! (yet?)");
                     }
 
-                    $parsedString = ''; // remove DELIMITER from string because it's a command-line keyword only
-                    $this->originalDelimiter = $this->delimiter; // save original delimiter
+                    // remove DELIMITER from string because it's a command-line keyword only
+                    $parsedString = trim(str_replace($matches[0], '', $parsedString));
+                    $this->prevDelimiter = $this->delimiter; // save previous delimiter
                     $this->delimiter = $matches[1]; // set new delimiter
 
-                    // original delimiter is back so return current sql
-                    if ($this->delimiter == $this->originalDelimiter) {
-                        return trim($parsedString);
+                    // delimiter has changed so return current sql if any
+                    if ($matches[1] != $this->prevDelimiter && $parsedString) {
+                        return $parsedString;
                     }
                 }
 
