@@ -228,7 +228,7 @@ class PropelSQLParser
             }
 
             if (!$isInString) {
-                // FIXME: add support for multi character delimiters
+                // TODO: add support for multi character delimiters
                 if (preg_match('/DELIMITER (.+)$/i', $parsedString, $matches)) {
                     // check if 2nd character after delimiter exists and is a new line
                     if ($char && $char != "\n") {
