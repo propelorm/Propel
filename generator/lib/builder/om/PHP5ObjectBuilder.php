@@ -129,7 +129,7 @@ class PHP5ObjectBuilder extends ObjectBuilder
     /**
      * Returns the type-casted and stringified default value for the specified Column.
      * This only works for scalar default values currently.
-     * @return string The default value or 'NULL' if there is none.
+     * @return string The default value or 'null' if there is none.
      * @throws EngineException
      */
     protected function getDefaultValueString(Column $col)
@@ -144,7 +144,7 @@ class PHP5ObjectBuilder extends ObjectBuilder
             try {
                 if (!($this->getPlatform() instanceof MysqlPlatform &&
                 ($val === '0000-00-00 00:00:00' || $val === '0000-00-00'))) {
-                    // while technically this is not a default value of NULL,
+                    // while technically this is not a default value of null,
                     // this seems to be closest in meaning.
                     $defDt = new DateTime($val);
                     $defaultValue = var_export($defDt->format($fmt), true);
@@ -480,7 +480,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
         $script .= "
     /**
      * Whether the lazy-loaded \$$clo value has been loaded from database.
-     * This is necessary to avoid repeated lookups if \$$clo column is NULL in the db.
+     * This is necessary to avoid repeated lookups if \$$clo column is null in the db.
      * @var        boolean
      */";
     }
@@ -797,13 +797,13 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
         $script .= "
      *
      * @param      string \$format The date/time format string (either date()-style or strftime()-style).
-     *							If format is NULL, then the raw ".($useDateTime ? 'DateTime object' : 'unix timestamp integer')." will be returned.";
+     *							If format is null, then the raw ".($useDateTime ? 'DateTime object' : 'unix timestamp integer')." will be returned.";
         if ($useDateTime) {
             $script .= "
-     * @return mixed Formatted date/time value as string or $dateTimeClass object (if format is NULL), NULL if column is NULL" .($handleMysqlDate ? ', and 0 if column value is ' . $mysqlInvalidDateString : '');
+     * @return mixed Formatted date/time value as string or $dateTimeClass object (if format is null), null if column is null" .($handleMysqlDate ? ', and 0 if column value is ' . $mysqlInvalidDateString : '');
         } else {
             $script .= "
-     * @return mixed Formatted date/time value as string or (integer) unix timestamp (if format is NULL), NULL if column is NULL".($handleMysqlDate ? ', and 0 if column value is ' . $mysqlInvalidDateString : '');
+     * @return mixed Formatted date/time value as string or (integer) unix timestamp (if format is null), null if column is null".($handleMysqlDate ? ', and 0 if column value is ' . $mysqlInvalidDateString : '');
         }
         $script .= "
      * @throws PropelException - if unable to parse/validate the date/time value.
@@ -913,7 +913,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
         if ($handleMysqlDate) {
             $script .= "
         if (\$this->$clo === '$mysqlInvalidDateString') {
-            // while technically this is not a default value of NULL,
+            // while technically this is not a default value of null,
             // this seems to be closest in meaning.
             return null;
         } else {
@@ -1599,7 +1599,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
      * Sets the value of [$clo] column to a normalized version of the date/time value specified.
      * ".$col->getDescription()."
      * @param      mixed \$v string, integer (timestamp), or DateTime value.
-     *               Empty strings are treated as NULL.
+     *               Empty strings are treated as null.
      * @return   ".$this->getObjectClassname()." The current object (for fluent API support)
      */";
     }
@@ -2897,7 +2897,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
     {
         $script .= "
     /**
-     * Returns NULL since this table doesn't have a primary key.
+     * Returns null since this table doesn't have a primary key.
      * This method exists only for BC and is deprecated!
      * @return null
      */
@@ -3526,7 +3526,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
      */
     public function clear$relCol()
     {
-        \$this->$collName = null; // important to set this to NULL since that means it is uninitialized
+        \$this->$collName = null; // important to set this to null since that means it is uninitialized
         \$this->{$collName}Partial = null;
     }
 ";
@@ -4101,7 +4101,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
      */
     public function clear$relCol()
     {
-        \$this->$collName = null; // important to set this to NULL since that means it is uninitialized
+        \$this->$collName = null; // important to set this to null since that means it is uninitialized
         \$this->{$collName}Partial = null;
     }
 ";

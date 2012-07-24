@@ -991,7 +991,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
      * a multi-column primary key, a serialize()d version of the primary key will be returned.
      *
      * @param      string \$key The key (@see getPrimaryKeyHash()) for this instance.
-     * @return   ".$this->getObjectClassname()." Found object or NULL if 1) no instance exists for specified key or 2) instance pooling has been disabled.
+     * @return   ".$this->getObjectClassname()." Found object or null if 1) no instance exists for specified key or 2) instance pooling has been disabled.
      * @see        getPrimaryKeyHash()
      */
     public static function getInstanceFromPool(\$key)
@@ -1022,7 +1022,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
      *
      * @param      array \$row PropelPDO resultset row.
      * @param      int \$startcol The 0-based offset for reading from the resultset row.
-     * @return string A string version of PK or NULL if the components of primary key in result array are all null.
+     * @return string A string version of PK or null if the components of primary key in result array are all null.
      */
     public static function getPrimaryKeyHashFromRow(\$row, \$startcol = 0)
     {";
@@ -1044,7 +1044,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
         }
 
         $script .= "
-        // If the PK cannot be derived from the row, return NULL.
+        // If the PK cannot be derived from the row, return null.
         if (".implode(' && ', $cond).") {
             return null;
         }
@@ -1785,7 +1785,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . " {
                     $columnNamesF = $fk->getLocalColumns();
                     $columnNamesL = $fk->getForeignColumns(); // should be same num as foreign
                     $script .= "
-            // set fkey col in related $fkClassName rows to NULL
+            // set fkey col in related $fkClassName rows to null
             \$selectCriteria = new Criteria(".$this->getPeerClassname()."::DATABASE_NAME);
             \$updateValues = new Criteria(".$this->getPeerClassname()."::DATABASE_NAME);";
 
