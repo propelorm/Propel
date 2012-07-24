@@ -200,8 +200,8 @@ class PropelSQLParser
         $isInString = false;
         $stringQuotes = '';
         $parsedString = '';
-        while ($this->pos < $this->len) {
-            $char = $this->sql[$this->pos];
+        while ($this->pos <= $this->len) {
+            $char = isset($this->sql[$this->pos]) ? $this->sql[$this->pos] : '';
 
             // check flags for strings or escaper
             switch ($char) {
@@ -227,9 +227,29 @@ class PropelSQLParser
                 $isAfterBackslash = false;
             }
 
-            // check for end of statement
-            if (!$isInString && $char == $this->delimiter) {
-                return trim($parsedString);
+            if (!$isInString) {
+                // TODO: add support for multi character delimiters
+                if (preg_match('/DELIMITER (.+)$/i', $parsedString, $matches)) {
+                    // check if 2nd character after delimiter exists and is a new line
+                    if ($char && $char != "\n") {
+                        throw new PropelException("Delimiters with more than 1 character are not supported yet.");
+                    }
+
+                    // remove DELIMITER from string because it's a command-line keyword only
+                    $parsedString = trim(str_replace($matches[0], '', $parsedString));
+                    $this->prevDelimiter = $this->delimiter; // save previous delimiter
+                    $this->delimiter = $matches[1]; // set new delimiter
+
+                    // delimiter has changed so return current sql if any
+                    if ($matches[1] != $this->prevDelimiter && $parsedString) {
+                        return $parsedString;
+                    }
+                }
+
+                // check for end of statement
+                if ($char == $this->delimiter) {
+                    return trim($parsedString);
+                }
             }
 
             $parsedString .= $char;
