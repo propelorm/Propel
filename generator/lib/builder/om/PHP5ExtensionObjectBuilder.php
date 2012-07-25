@@ -104,8 +104,7 @@ require '".$requiredClassFilePath."';
 
         $script .= "
 ".($table->isAbstract() ? "abstract " : "")."class ".$this->getClassname()." extends $baseClassname
-{
-";
+{";
     }
 
     /**
