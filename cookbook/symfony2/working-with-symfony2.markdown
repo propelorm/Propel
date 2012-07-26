@@ -605,6 +605,23 @@ public function myAction(Post $post)
 }
 {% endhighlight %}
 
+**New** with last version of `SensioFrameworkExtraBundle`, 
+you can ommit the `class` parameter if your controller parameter is typed, 
+this is usefull when you need to set extra `options`.
+
+{% highlight php %}
+<?php
+use BlogBundle\Model\Post;
+
+/**
+ * @ParamConverter("post")
+ */
+public function myAction(Post $post)
+{
+}
+{% endhighlight %}
+
+
 ### Exclude some parameters ###
 
 You can exclude some attributes from being used by the converter:
