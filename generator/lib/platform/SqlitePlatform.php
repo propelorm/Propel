@@ -44,7 +44,7 @@ class SqlitePlatform extends DefaultPlatform
      */
     public function getAutoIncrement()
     {
-        return "PRIMARY KEY";
+        return "PRIMARY KEY AUTOINCREMENT";
     }
 
     public function getMaxColumnNameLength()
@@ -64,7 +64,19 @@ class SqlitePlatform extends DefaultPlatform
 
         if ($table->hasPrimaryKey()) {
           $pk = $table->getPrimaryKey();
-          if (count($pk) > 1 || !$pk[0]->isAutoIncrement()) {
+          $has_autoincrement = false;
+          foreach ($pk as $column) {
+            if ($column->isAutoIncrement()) {
+              $has_autoincrement = true;
+              break;
+            }
+          }
+          if ($has_autoincrement) {
+            // we will convert the primary keys into unices for composite primary key cases,
+            // because autoincrement already have the primary keyword,
+            // and sqlite doesnt allow multiple primary key declaration in column and at the end of table ddl
+            $lines[] = sprintf('UNIQUE (%s)' , $this->getColumnListDDL($pk));
+          } else {
             $lines[] = $this->getPrimaryKeyDDL($table);
           }
         }
