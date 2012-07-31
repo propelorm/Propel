@@ -35,7 +35,9 @@ fi
 DIRS=`ls $FIXTURES_DIR`
 
 for dir in $DIRS ; do
-    rebuild $dir
+    if [ "$dir" != "reverse" ] && [ "$dir" != "generator" ]; then
+        rebuild $dir
+    fi
 done
 
 # Special case for reverse fixtures
