@@ -16,7 +16,6 @@
  */
 class PropelObjectCollection extends PropelCollection
 {
-
     /**
      * Save all the elements in the collection
      *
@@ -316,5 +315,44 @@ class PropelObjectCollection extends PropelCollection
         }
 
         return $relatedObjects;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function search($element)
+    {
+        if ($element instanceof BaseObject) {
+            if (null !== $elt = $this->getIdenticalObject($element)) {
+                $element = $elt;
+            }
+        }
+
+        return parent::search($element);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function contains($element)
+    {
+        if ($element instanceof BaseObject) {
+            if (null !== $elt = $this->getIdenticalObject($element)) {
+                $element = $elt;
+            }
+        }
+
+        return parent::contains($element);
+    }
+
+    private function getIdenticalObject(BaseObject $object)
+    {
+        foreach ($this as $obj) {
+            if ($obj instanceof BaseObject && $obj->hashCode() === $object->hashCode()) {
+                return $obj;
+            }
+        }
+
+        return null;
     }
 }
