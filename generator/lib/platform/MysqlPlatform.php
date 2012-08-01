@@ -50,7 +50,7 @@ class MysqlPlatform extends DefaultPlatform
         $this->setSchemaDomainMapping(new Domain(PropelTypes::ENUM, "TINYINT"));
     }
 
-    public function setGeneratorConfig(GeneratorConfig $generatorConfig)
+    public function setGeneratorConfig(GeneratorConfigInterface $generatorConfig)
     {
         if ($defaultTableEngine = $generatorConfig->getBuildProperty('mysqlTableType')) {
             $this->defaultTableEngine = $defaultTableEngine;
@@ -586,12 +586,12 @@ ALTER TABLE %s CHANGE %s %s;
         $tableColumns = $column->getTable()->getColumns();
 
         //default to add to top if the before-column cannot be found
-        $insertPositionDDL = "FIRST"; 
+        $insertPositionDDL = "FIRST";
         foreach($tableColumns as $i => $tableColumn) {
             //we found the column, use the column before it, if its not the first
             if ($tableColumn->getName() == $column->getName()) {
                 //we have a column that is not the first column
-                if ($i>0) { 
+                if ($i>0) {
                     $insertPositionDDL = "AFTER ".$this->quoteIdentifier($tableColumns[$i-1]->getName());
                 }
                 break;
@@ -619,7 +619,7 @@ ALTER TABLE %s CHANGE %s %s;
             }
             $lines[] = $this->getAddColumnDDLBits($column);
         }
-    
+
         $pattern = "
 ALTER TABLE %s
     %s;
