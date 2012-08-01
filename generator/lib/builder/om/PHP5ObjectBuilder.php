@@ -3628,7 +3628,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
             \$this->init".$this->getRefFKPhpNameAffix($refFK, $plural = true)."();
             \$this->{$collName}Partial = true;
         }
-        if (!\$this->{$collName}->contains(\$l)) { // only add it if the **same** object is not already associated
+        if (!in_array(\$l, \$this->{$collName}->getArrayCopy(), true)) { // only add it if the **same** object is not already associated
             \$this->doAdd" . $this->getRefFKPhpNameAffix($refFK, $plural = false)  . "(\$l);
         }
 
