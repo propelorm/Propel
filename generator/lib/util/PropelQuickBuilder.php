@@ -118,8 +118,6 @@ class PropelQuickBuilder
             $xtad->setGeneratorConfig($this->getConfig());
 
             $this->database = $xtad->parseString($this->schema)->getDatabase();
-            // force the current platform
-            $this->database->setPlatform($this->getPlatform());
         }
 
         return $this->database;

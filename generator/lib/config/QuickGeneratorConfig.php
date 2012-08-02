@@ -10,7 +10,7 @@
 
 require_once dirname(__FILE__) . '/GeneratorConfig.php';
 require_once dirname(__FILE__) . '/GeneratorConfigInterface.php';
-require_once dirname(__FILE__) . '/../platform/DefaultPlatform.php';
+require_once dirname(__FILE__) . '/../platform/SqlitePlatform.php';
 
 /**
  *
@@ -156,7 +156,7 @@ class QuickGeneratorConfig implements GeneratorConfigInterface
      */
     public function getConfiguredPlatform(PDO $con = null, $database = null)
     {
-        return new DefaultPlatform($con);
+        return new SqlitePlatform($con);
     }
 
     /**
