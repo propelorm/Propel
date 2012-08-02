@@ -405,7 +405,7 @@ class PropelCollectionTest extends BookstoreTestBase
         $result = $col1->diff($col2);
 
         $this->assertInstanceOf('PropelCollection', $result);
-        $this->assertEquals(1, count($result));
+        $this->assertCount(1, $result);
         $this->assertSame($b1, $result[0]);
     }
 
