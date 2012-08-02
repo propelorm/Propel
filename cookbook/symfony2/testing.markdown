@@ -28,7 +28,7 @@ Test Client](http://symfony.com/doc/current/book/testing.html#working-with-the-t
 in the Symfony2 documentation, relies on this **test** environment.
 
 
-## The `test` Environment ##
+## The Test Environment ##
 
 The `config_test.yml` file is where you have to put specific configuration for
 testing purpose. For example, you can setup a new database for your tests like
@@ -99,9 +99,26 @@ Basically, for each test class, it will build everthing before to execute test
 methods. By using this class, you just need to run `phpunit` in your project to
 run all tests, including functional tests that rely on a database.
 
+{% highlight %}
+<?php
+
+namespace Acme\DemoBundle\Tests\Controller;
+
+class DefaultControllerTest extends WebTestCase
+{
+    // Your tests
+}
+{% endhighlight %}
+
 You can run more commands, like the `propel:fixtures:load` command. It's up to
 you. You now have all keys to automatically run functional tests with Propel
 inside.
+
+{% highlight php %}
+<?php
+
+self::runCommand('propel:fixtures:lad @AcmeDemoBundle --yml');
+{% endhighlight %}
 
 If you want to write unit tests for your Model classes for some reasons, you can
 follow the same principle in your own `TestCase` class.
