@@ -62,6 +62,8 @@ title: The Cookbook
 
 * [Adding A New Behavior In Symfony2](symfony2/adding-a-new-behavior-in-symfony2.html)
 
+* [Testing](symfony2/testing.html)
+
 
 ### Working with Silex ###
 

@@ -87,6 +87,7 @@ You can also look at [user contributed behaviors](../cookbook/user-contributed-b
 * [Mastering Symfony2 Forms With Propel](../cookbook/symfony2/mastering-symfony2-forms-with-propel.html)
 * [The Symfony2 Security Component And Propel](../cookbook/symfony2/the-symfony2-security-component-and-propel.html)
 * [Adding A New Behavior In Symfony2](../cookbook/symfony2/adding-a-new-behavior-in-symfony2.html)
+* [Testing](../cookbook/symfony2/testing.html)
 
 ### Working with Silex ###
 
