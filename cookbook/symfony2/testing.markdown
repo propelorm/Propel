@@ -22,10 +22,10 @@ which provides great features for your functional test classes. This is the
 class you need when you want to do black box testing. Then again, this is
 explained in the [Testing chapter - Functional
 tests](http://symfony.com/doc/current/book/testing.html#functional-tests).
-Moreover, Symfony2 comes with multiple environments, like **dev**, **prod** but
-also **test**. The Symfony2 Client, detailled in the section [Working with the
+Moreover, Symfony2 comes with multiple environments, like `dev`, `prod` but
+also `test`. The Symfony2 Client, detailled in the section [Working with the
 Test Client](http://symfony.com/doc/current/book/testing.html#working-with-the-test-client)
-in the Symfony2 documentation, relies on this **test** environment.
+in the Symfony2 documentation, relies on this `test` environment.
 
 
 ## The Test Environment ##
@@ -97,7 +97,9 @@ class WebTestCase extends BaseWebTestCase
 
 Basically, for each test class, it will build everthing before to execute test
 methods. By using this class, you just need to run `phpunit` in your project to
-run all tests, including functional tests that rely on a database.
+run all tests, including functional tests that rely on a database. In other
+words, it's setup your application in `test` environment, just like you would do
+in production.
 
 {% highlight %}
 <?php
@@ -173,4 +175,6 @@ class TestCase extends \PHPUnit_Framework_TestCase
 {% endhighlight %}
 
 Having both `WebTestCase` and `TestCase` classes allow you to write Propel aware
-tests in your application. You don't need anything else.
+tests in your application. You don't need anything else. You can read the [PHPUnit
+documentation](http://www.phpunit.de/manual/current/en/) for more information on
+assertions.
