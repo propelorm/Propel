@@ -54,4 +54,6 @@ Here is a list of Propel behaviors contributed by users. Feel free to use them o
 
 * [PropelEventBundle](https://bitbucket.org/glorpen/glorpenpropeleventbundle) Add a way of using Symfony2 DIC in Propel model classes through events.
 
-* [TaggableBehaviorBundle](https://bitbucket.org/glorpen/taggablebehaviorbundle) A behavior and a widget for propel 1.6 and Symfony2 to tag your objects.
+* [TaggableBehaviorBundle](https://bitbucket.org/glorpen/taggablebehaviorbundle) A behavior and a widget for propel 1.6 and Symfony2.0 to tag your objects.
+
+* [TaggableBehaviorBundle](https://github.com/vbardales/PropelTaggableBehaviorBundle.git) A behavior for propel 1.6 and Symfony2.1 to tag your objects, supporting i18n.
