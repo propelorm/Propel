@@ -368,6 +368,22 @@ EOF;
 EOF;
         $builder = new PropelQuickBuilder();
         $builder->setSchema($schema);
+
+        // checks id in base table
+        $table = $builder->getDatabase()->getTable('i18n_behavior_test_0');
+        $this->assertTrue($table->hasColumn('id'));
+
+        // checks id in i18n table
+        $i18nTable = $builder->getDatabase()->getTable('i18n_behavior_test_0_i18n');
+        $this->assertTrue($i18nTable->hasColumn('custom_id'));
+
+        // checks foreign key
+        $fkList = $i18nTable->getColumnForeignKeys('custom_id');
+        $this->assertEquals(count($fkList), 1);
+        $fk = array_pop($fkList);
+        $this->assertEquals($fk->getForeignTableName(), 'i18n_behavior_test_0');
+        $this->assertEquals($fk->getForeignColumnNames(), 'id');
+
         $expected = <<<EOF
 -----------------------------------------------------------------------
 -- i18n_behavior_test_0_i18n
