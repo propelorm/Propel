@@ -178,3 +178,25 @@ Having both `WebTestCase` and `TestCase` classes allow you to write Propel aware
 tests in your application. You don't need anything else. You can read the [PHPUnit
 documentation](http://www.phpunit.de/manual/current/en/) for more information on
 assertions.
+
+
+## Travis-CI ##
+
+Once you have a decent test suite, you may want to use
+[Travis-CI](travis-ci.org). Here is a standard configuration for Symfony2
+projects:
+
+{% highlight yaml %}
+language: php
+
+php:
+    - 5.3
+    - 5.4
+
+before_script:
+    - curl -s http://getcomposer.org/installer | php -- --quiet
+    - php composer.phar install
+    - php app/console propel:database:create --env=test
+
+script: phpunit
+{% endhighlight %}
