@@ -119,7 +119,7 @@ inside.
 {% highlight php %}
 <?php
 
-self::runCommand('propel:fixtures:lad @AcmeDemoBundle --yml');
+self::runCommand('propel:fixtures:load @AcmeDemoBundle --yml');
 {% endhighlight %}
 
 If you want to write unit tests for your Model classes for some reasons, you can
