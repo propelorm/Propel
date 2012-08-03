@@ -468,4 +468,20 @@ EOF;
         $table3 = $db->getTable("table_is_cross_ref_false");
         $this->assertFalse($table3->getIsCrossRef());
     }
+    
+    public function testPrefixDoesntAffectPhpName () {
+        $xmlToAppData = new XmlToAppData();
+        $schema = <<<EOF
+<database name="test1" tablePrefix="pf_">
+  <table name="table1">
+    <column name="id" type="INTEGER" primaryKey="true" />
+  </table>
+</database>
+EOF;
+        $appData = $xmlToAppData->parseString($schema); 
+        
+        $table = $appData->getDatabase('test1')->getTable('pf_table1');
+        
+        $this->assertEquals('Table1', $table->getPhpName());
+    }
 }

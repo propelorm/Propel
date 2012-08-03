@@ -83,11 +83,18 @@ class Table extends ScopedElement implements IDMethod
     private $idMethodParameters = array();
 
     /**
-     * Table name.
+     * Table name (with prefix if it has one).
      *
      * @var       string
      */
     private $commonName;
+    
+    /**
+     * Table name without prefix.  Only used for phpName generation.
+     * 
+     * @var       string
+     */
+    private $nonPrefixedName;
 
     /**
      * Table description.
@@ -302,6 +309,7 @@ class Table extends ScopedElement implements IDMethod
     public function __construct($name = null)
     {
         $this->commonName = $name;
+        $this->nonPrefixedName = $name;
     }
 
     /**
@@ -312,9 +320,9 @@ class Table extends ScopedElement implements IDMethod
     private function getStdSeparatedName()
     {
         if ($this->schema && $this->getBuildProperty('schemaAutoPrefix')) {
-            return $this->schema . NameGenerator::STD_SEPARATOR_CHAR . $this->getCommonName();
+            return $this->schema . NameGenerator::STD_SEPARATOR_CHAR . $this->nonPrefixedName;
         } else {
-            return $this->getCommonName();
+            return $this->nonPrefixedName;
         }
     }
 
@@ -326,6 +334,7 @@ class Table extends ScopedElement implements IDMethod
     {
         parent::setupObject();
         $this->commonName = $this->getDatabase()->getTablePrefix() . $this->getAttribute("name");
+        $this->nonPrefixedName = $this->getAttribute('name');
 
         // retrieves the method for converting from specified name to a PHP name.
         $this->phpNamingMethod = $this->getAttribute("phpNamingMethod", $this->getDatabase()->getDefaultPhpNamingMethod());
