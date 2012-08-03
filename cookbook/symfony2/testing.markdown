@@ -101,7 +101,7 @@ run all tests, including functional tests that rely on a database. In other
 words, it's setup your application in `test` environment, just like you would do
 in production.
 
-{% highlight %}
+{% highlight php%}
 <?php
 
 namespace Acme\DemoBundle\Tests\Controller;
