@@ -1312,7 +1312,9 @@ abstract class ".$this->getClassname(). $extendingPeerClass . "
      * This method must be overridden by the stub subclass, because
      * ".$this->getObjectClassname()." is declared abstract in the schema.
      */
-    abstract public static function getOMClass();
+    public static function getOMClass() {
+        throw new \\LogicException(\"You can't get OMClass for an abstract Peer class.\");
+    }
 ";
     }
 
