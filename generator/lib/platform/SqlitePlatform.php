@@ -167,5 +167,4 @@ DROP TABLE IF EXISTS " . $this->quoteIdentifier($table->getName()) . ";
     {
         return false;
     }
-
 }

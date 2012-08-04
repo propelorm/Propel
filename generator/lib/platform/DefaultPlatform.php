@@ -72,9 +72,9 @@ class DefaultPlatform implements PropelPlatformInterface
     /**
      * Sets the GeneratorConfig to use in the parsing.
      *
-     * @param GeneratorConfig $config
+     * @param GeneratorConfigInterface $config
      */
-    public function setGeneratorConfig(GeneratorConfig $config)
+    public function setGeneratorConfig(GeneratorConfigInterface $config)
     {
         // do nothing by default
     }
@@ -322,23 +322,26 @@ DROP TABLE " . $this->quoteIdentifier($table->getName()) . ";
      */
     public function getColumnDDL(Column $col)
     {
-        $domain = $col->getDomain();
-
-        $ddl = array($this->quoteIdentifier($col->getName()));
+        $domain  = $col->getDomain();
+        $ddl     = array($this->quoteIdentifier($col->getName()));
         $sqlType = $domain->getSqlType();
+
         if ($this->hasSize($sqlType) && $col->isDefaultSqlType($this)) {
-            $ddl []= $sqlType . $domain->printSize();
+            $ddl[] = $sqlType . $domain->printSize();
         } else {
-            $ddl []= $sqlType;
+            $ddl[] = $sqlType;
         }
+
         if ($default = $this->getColumnDefaultValueDDL($col)) {
-            $ddl []= $default;
+            $ddl[] = $default;
         }
+
         if ($notNull = $this->getNullString($col->isNotNull())) {
-            $ddl []= $notNull;
+            $ddl[] = $notNull;
         }
+
         if ($autoIncrement = $col->getAutoIncrementString()) {
-            $ddl []= $autoIncrement;
+            $ddl[] = $autoIncrement;
         }
 
         return implode(' ', $ddl);

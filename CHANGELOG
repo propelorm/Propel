@@ -1,5 +1,49 @@
 # Changelog Of The Propel 1.6 Branch #
 
+## 2012-07-30: Version 1.6.7 ##
+
+38cfc9e Update generator/build.properties-sample
+f90dfa9 fix for issue 425
+74ee4e1 fix for issue 425
+88e21e6 Avoid blank line in object stub class
+8709d3a Fix tests
+cefc9ef More CS fixes
+e1e1078 Fix doc blocks
+29c9db3 Fix NULL => null
+3c1717b Improve code generation to follow PSR recommendations
+6bae0ca Changed FIXME to TODO
+bfef0d7 Changed comments
+5e9dfc1 PropelSQLParser with delimiter and fixed tests
+39d7958 fix for issue 425
+9667675 SQL Parser Delimiter Tests
+8cafbd6 Merge remote-tracking branch 'upstream/master' into delimiter-trigger-parser
+5522fbf fix test to pass on platform with EOF != \n
+cad1ac6 fix test 2 new relations added to book ;) for issue #421
+a9097da this fix issue #409 thank to toaotc for the patch
+2ca7067 add test to prove issue #409
+e84c67c add chaining in PropelObjectCollection::toKeyValue
+5dd5394 Revert "Fix platform loading" as it breaks multiple builds using the runtime config
+55fef69 Fix regression that removed Persistent interfaces in base classes
+d87e9a5 Add test that prove a regression
+7c7a608 Fix composer config
+c476e50 Add generator classes to the classmap
+0d1515d Added column positioning ability to mysql migration
+66e7a59 fixes translateFieldname and concrete inheritance
+3c891ed add test to show the inheritance issue with php5.4
+66f91c9 Fix platform loading
+2874edb fix call on a non object ;)
+790b3e4 [aggregate_column behavior] computeCall call reduced from n+1 to 1 or 2 fix #403, add computeCall on main object save() add isAlreadyInSave(),
+ddd028c add test to prove to much query on aggregate_column behavior
+c36fc7f Add back previous include but change the order of the include path
+c107e8e Issue #388: Fix propel-gen path issues Fixes an issue with the check for the propel-gen home-path in propel-gen script Fixes an issue with classes being redeclared because of custom include in phing.php (code is not there in the phing.php version from phing itself)
+9731032 Fix collection cache overriding existing one when related object are fetched with criteria
+f371602 Fix data loss where parent object won't save related objects when fetched with criteria
+3a3ad2c Fixed Versionable Object Modifier not to reload object collection after populateFromVersion
+dde4460 Fix joining related object
+abc7fc8 Change ObjectBuilder to reload related objects when collection is partially loaded
+05b7e1d Fixed possible bug
+5d9517a Improved SQLParser to work with triggers in additional .sql files
+
 ## 2012-07-02: Version 1.6.6 ##
 
 17edd0f Prepare 1.6.6 release

@@ -47,11 +47,11 @@ interface PropelPlatformInterface
     public function getConnection();
 
     /**
-     * Sets the GeneratorConfig which contains any generator build properties.
+     * Sets the GeneratorConfigInterface which contains any generator build properties.
      *
-     * @param GeneratorConfig $config
+     * @param GeneratorConfigInterface $config
      */
-    public function setGeneratorConfig(GeneratorConfig $config);
+    public function setGeneratorConfig(GeneratorConfigInterface $config);
 
     /**
      * Returns the short name of the database type that this platform represents.

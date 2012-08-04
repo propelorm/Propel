@@ -61,10 +61,10 @@ class XmlToAppData
      */
     public function __construct(PropelPlatformInterface $defaultPlatform = null, $defaultPackage = null, $encoding = 'iso-8859-1')
     {
-        $this->app = new AppData($defaultPlatform);
+        $this->app            = new AppData($defaultPlatform);
         $this->defaultPackage = $defaultPackage;
-        $this->firstPass = true;
-        $this->encoding = $encoding;
+        $this->firstPass      = true;
+        $this->encoding       = $encoding;
     }
 
     /**

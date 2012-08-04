@@ -258,10 +258,10 @@ EOF;
 </database>
 EOF;
         PropelQuickBuilder::buildSchema($schema);
-        $main = new FooTestTablePrefixSameDatabaseMain();
+        $main = new TestTablePrefixSameDatabaseMain();
         $main->setSubtitle('bar');
-        $delegate = $main->getFooTestTablePrefixSameDatabaseDelegate();
-        $this->assertInstanceOf('FooTestTablePrefixSameDatabaseDelegate', $delegate);
+        $delegate = $main->getTestTablePrefixSameDatabaseDelegate();
+        $this->assertInstanceOf('TestTablePrefixSameDatabaseDelegate', $delegate);
         $this->assertTrue($delegate->isNew());
         $this->assertEquals('bar', $delegate->getSubtitle());
         $this->assertEquals('bar', $main->getSubtitle());
