@@ -42,6 +42,7 @@ namespace Acme\LibraryBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class BookType extends AbstractType
 {
@@ -51,9 +52,9 @@ class BookType extends AbstractType
         $builder->add('isbn');
     }
 
-    public function getDefaultOptions()
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        return array(
+        $resolver->setDefaults(array(
             'data_class' => 'Acme\LibraryBundle\Model\Book',
         );
     }
@@ -175,6 +176,7 @@ namespace Acme\LibraryBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class BookType extends AbstractType
 {
@@ -186,9 +188,9 @@ class BookType extends AbstractType
         $builder->add('author', new AuthorType());
     }
 
-    public function getDefaultOptions()
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        return array(
+        $resolver->setDefaults(array(
             'data_class' => 'Acme\LibraryBundle\Model\Book',
         );
     }
@@ -210,6 +212,7 @@ namespace Acme\LibraryBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class AuthorType extends AbstractType
 {
@@ -219,9 +222,9 @@ class AuthorType extends AbstractType
         $builder->add('last_name');
     }
 
-    public function getDefaultOptions()
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        return array(
+        $resolver->setDefaults(array(
             'data_class' => 'Acme\LibraryBundle\Model\Author',
         );
     }
@@ -251,6 +254,7 @@ namespace Acme\LibraryBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class AuthorType extends AbstractType
 {
@@ -266,9 +270,9 @@ class AuthorType extends AbstractType
         ));
     }
 
-    public function getDefaultOptions()
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        return array(
+        $resolver->setDefaults(array(
             'data_class' => 'Acme\LibraryBundle\Model\Author',
         );
     }
@@ -290,6 +294,7 @@ namespace Acme\LibraryBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class BookType extends AbstractType
 {
@@ -299,9 +304,9 @@ class BookType extends AbstractType
         $builder->add('isbn');
     }
 
-    public function getDefaultOptions()
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        return array(
+        $resolver->setDefaults(array(
             'data_class' => 'Acme\LibraryBundle\Model\Book',
         );
     }
@@ -356,6 +361,7 @@ namespace Acme\LibraryBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class BookClubListType extends AbstractType
 {
@@ -372,9 +378,9 @@ class BookClubListType extends AbstractType
         ));
     }
 
-    public function getDefaultOptions()
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        return array(
+        $resolver->setDefaults(array(
             'data_class' => 'Acme\LibraryBundle\Model\BookClubList',
         );
     }
@@ -411,6 +417,7 @@ namespace Acme\LibraryBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class BookType extends AbstractType
 {
@@ -425,9 +432,9 @@ class BookType extends AbstractType
         ));
     }
 
-    public function getDefaultOptions()
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        return array(
+        $resolver->setDefaults(array(
             'data_class' => 'Acme\LibraryBundle\Model\Book',
         );
     }
