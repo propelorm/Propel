@@ -173,6 +173,10 @@ class Propel
         'DBOracle'            => 'adapter/DBOracle.php',
         'DBPostgres'          => 'adapter/DBPostgres.php',
         'DBSQLite'            => 'adapter/DBSQLite.php',
+        'SqlitePropelPDO'     => 'adapter/SQLite/SqlitePropelPDO.php',
+        'SqliteDebugPDO'      => 'adapter/SQLite/SqliteDebugPDO.php',
+        'SqlitePropelPDOStatement' => 'adapter/SQLite/SqlitePropelPDOStatement.php',
+        'SqliteDebugPDOStatement' => 'adapter/SQLite/SqliteDebugPDOStatement.php',
         'DBSybase'            => 'adapter/DBSybase.php',
         'DBSQLSRV'            => 'adapter/DBSQLSRV.php',
 

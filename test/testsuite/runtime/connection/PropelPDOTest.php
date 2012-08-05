@@ -310,9 +310,15 @@ class PropelPDOTest extends PHPUnit_Framework_TestCase
     {
         $con = Propel::getConnection(BookPeer::DATABASE_NAME);
         $con->useDebug(false);
-        $this->assertEquals(array('PDOStatement'), $con->getAttribute(PDO::ATTR_STATEMENT_CLASS), 'Statement is PDOStatement when debug is false');
+        $stmt_class = $con->getAttribute(PDO::ATTR_STATEMENT_CLASS);
+        if ($stmt_class[0] != 'PDOStatement' && $stmt_class[0] != 'SQLitePropelPDOStatement' ) {
+            $this->fail('Statement is PDOStatement or SQLitePropelPDOStatement when debug is false');
+        }
         $con->useDebug(true);
-        $this->assertEquals(array('DebugPDOStatement', array($con)), $con->getAttribute(PDO::ATTR_STATEMENT_CLASS), 'statement is DebugPDOStament when debug is true');
+        $stmt_class = $con->getAttribute(PDO::ATTR_STATEMENT_CLASS);
+        if ($stmt_class[0] != 'DebugPDOStatement' && $stmt_class[0] != 'SQLiteDebugPDOStatement' ) {
+            $this->fail('Statement is DebugPDOStatement or SQLiteDebugPDOStatement when debug is true');
+        }
     }
 
     public function testDebugLatestQuery()

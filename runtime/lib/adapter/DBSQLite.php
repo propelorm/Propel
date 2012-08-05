@@ -17,6 +17,25 @@
  */
 class DBSQLite extends DBAdapter
 {
+    /**
+     * Prepare connection parameters.
+     *
+     * @param  array $params
+     * @return array
+     *
+     * @throws PropelException
+     */
+    public function prepareParams($params)
+    {
+        $params = parent::prepareParams($params);
+
+        if (isset($params['classname']) && $params['classname'] == 'DebugPDO') {
+            $params['classname'] = 'SqliteDebugPDO';
+        } else {
+            $params['classname'] = 'SqlitePropelPDO';
+        }
+        return $params;
+    }
 
     /**
      * For SQLite this method has no effect, since SQLite doesn't support specifying a character

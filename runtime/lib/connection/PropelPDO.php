@@ -127,6 +127,7 @@ class PropelPDO extends PDO
         'PropelPDO::exec',
         'PropelPDO::query',
         'DebugPDOStatement::execute',
+        'SqliteDebugPDOStatement::execute',
     );
 
     /**
