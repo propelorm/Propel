@@ -111,15 +111,38 @@ class DBSQLite extends DBAdapter
     }
 
     /**
-     * @see        DBAdapter::quoteIdentifier()
+     * @see       DBAdapter::quoteIdentifier()
      *
      * @param  string $text
      * @return string
      */
     public function quoteIdentifier($text)
     {
-        return '[' . $text . ']';
+        return '`' . $text . '`';
     }
+
+    /**
+     * @see       DBAdapter::quoteIdentifierTable()
+     *
+     * @param  string $table
+     * @return string
+     */
+    public function quoteIdentifierTable($table)
+    {
+        // e.g. 'database.table alias' should be escaped as '`database`.`table` `alias`'
+        return '`' . strtr($table, array('.' => '`.`', ' ' => '` `')) . '`';
+    }
+
+    /**
+     * @see       DBAdapter::useQuoteIdentifier()
+     *
+     * @return boolean
+     */
+    public function useQuoteIdentifier()
+    {
+        return true;
+    }
+
 
     /**
      * @see        DBAdapter::applyLimit()
@@ -131,9 +154,9 @@ class DBSQLite extends DBAdapter
     public function applyLimit(&$sql, $offset, $limit)
     {
         if ( $limit > 0 ) {
-            $sql .= " LIMIT " . $limit . ($offset > 0 ? " OFFSET " . $offset : "");
+            $sql .= " LIMIT " . ($offset > 0 ? $offset . ", " : "") . $limit;
         } elseif ( $offset > 0 ) {
-            $sql .= " LIMIT -1 OFFSET " . $offset;
+            $sql .= " LIMIT " . $offset . ", 18446744073709551615";
         }
     }
 
@@ -144,5 +167,35 @@ class DBSQLite extends DBAdapter
     public function random($seed = NULL)
     {
         return 'random()';
+    }
+    
+    /**
+     * Do Explain Plan for query object or query string
+     *
+     * @param  PropelPDO            $con   propel connection
+     * @param  ModelCriteria|string $query query the criteria or the query string
+     * @throws PropelException
+     * @return PDOStatement         A PDO statement executed using the connection, ready to be fetched
+     */
+    public function doExplainPlan(PropelPDO $con, $query)
+    {
+        if ($query instanceof ModelCriteria) {
+            $params = array();
+            $dbMap = Propel::getDatabaseMap($query->getDbName());
+            $sql = BasePeer::createSelectSql($query, $params);
+            $sql = 'EXPLAIN ' . $sql;
+        } else {
+            $sql = 'EXPLAIN ' . $query;
+        }
+
+        $stmt = $con->prepare($sql);
+
+        if ($query instanceof ModelCriteria) {
+            $this->bindValues($stmt, $params, $dbMap);
+        }
+
+        $stmt->execute();
+
+        return $stmt;
     }
 }
