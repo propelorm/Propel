@@ -4361,7 +4361,10 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
         $joinedTableObjectBuilder = $this->getNewObjectBuilder($refFK->getTable());
         $className = $joinedTableObjectBuilder->getObjectClassname();
 
-        $M2MScheduledForDeletion = lcfirst($relCol) . "ScheduledForDeletion";
+        $lowerRelCol    = $relCol;
+        $lowerRelCol[0] = strtolower($lowerRelCol[0]);
+
+        $M2MScheduledForDeletion = $lowerRelCol . "ScheduledForDeletion";
 
         $crossObjectName = '$' . $crossFK->getForeignTable()->getStudlyPhpName();
         $crossObjectClassName = $this->getNewObjectBuilder($crossFK->getForeignTable())->getObjectClassname();
