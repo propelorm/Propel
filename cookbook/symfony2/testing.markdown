@@ -148,7 +148,6 @@ class TestCase extends \PHPUnit_Framework_TestCase
 
         if (null === self::$application) {
             self::runCommand('propel:build --insert-sql');
-            FixturesLoader::load();
         }
     }
 
