@@ -383,7 +383,7 @@
 		<xs:attribute name="phpType" type="php_type" use="optional">
 			<xs:annotation>
 				<xs:documentation xml:lang="en">
-					PHP type for te column in PHP code. This column's setter uses type casting with the set php_type; besides, generated phpDoc in the model classes use this attribute for code completion.
+					PHP type for the column in PHP code. This column's setter uses type casting with the set php_type; besides, generated phpDoc in the model classes use this attribute for code completion.
 				</xs:documentation>
 			</xs:annotation>
 		</xs:attribute>
