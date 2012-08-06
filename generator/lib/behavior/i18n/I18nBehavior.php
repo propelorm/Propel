@@ -28,6 +28,7 @@ class I18nBehavior extends Behavior
         'i18n_table'    => '%TABLE%_i18n',
         'i18n_phpname'  => '%PHPNAME%I18n',
         'i18n_columns'  => '',
+        'i18n_pk_name'  => null,
         'locale_column' => 'locale',
         'default_locale' => null,
         'locale_alias'  => '',
@@ -91,9 +92,13 @@ class I18nBehavior extends Behavior
         if (count($pks) > 1) {
             throw new EngineException('The i18n behavior does not support tables with composite primary keys');
         }
+        $i18nPkName = $this->getParameter('i18n_pk_name');
         foreach ($pks as $column) {
             if (!$i18nTable->hasColumn($column->getName())) {
                 $column = clone $column;
+                if (!empty($i18nPkName)) {
+                    $column->setName($i18nPkName);
+                }
                 $column->setAutoIncrement(false);
                 $i18nTable->addColumn($column);
             }
@@ -108,7 +113,10 @@ class I18nBehavior extends Behavior
         $fk->setOnDelete(ForeignKey::CASCADE);
         $fk->setOnUpdate(ForeignKey::NONE);
         foreach ($pks as $column) {
-            $fk->addReference($column->getName(), $column->getName());
+            $fk->addReference(
+                empty($i18nPkName) ? $column->getName() : $i18nPkName,
+                $column->getName()
+            );
         }
         $i18nTable->addForeignKey($fk);
     }

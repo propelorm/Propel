@@ -350,4 +350,55 @@ EOF;
         $this->assertContains($expected, $builder->getSQL());
     }
 
+    /**
+     * tests if i18n_pk_name options sets the right pk name in i18n table
+     */
+    public function testModifyTableUseCustomPkName()
+    {
+        $schema = <<<EOF
+<database name="i18n_behavior_test_0">
+    <table name="i18n_behavior_test_0">
+        <column name="id" primaryKey="true" type="INTEGER" autoIncrement="true" />
+        <behavior name="i18n">
+            <parameter name="default_locale" value="fr_FR" />
+            <parameter name="i18n_pk_name" value="custom_id" />
+        </behavior>
+    </table>
+</database>
+EOF;
+        $builder = new PropelQuickBuilder();
+        $builder->setSchema($schema);
+
+        // checks id in base table
+        $table = $builder->getDatabase()->getTable('i18n_behavior_test_0');
+        $this->assertTrue($table->hasColumn('id'));
+
+        // checks id in i18n table
+        $i18nTable = $builder->getDatabase()->getTable('i18n_behavior_test_0_i18n');
+        $this->assertTrue($i18nTable->hasColumn('custom_id'));
+
+        // checks foreign key
+        $fkList = $i18nTable->getColumnForeignKeys('custom_id');
+        $this->assertEquals(count($fkList), 1);
+        $fk = array_pop($fkList);
+        $this->assertEquals($fk->getForeignTableName(), 'i18n_behavior_test_0');
+        $this->assertEquals($fk->getForeignColumnNames(), 'id');
+
+        $expected = <<<EOF
+-----------------------------------------------------------------------
+-- i18n_behavior_test_0_i18n
+-----------------------------------------------------------------------
+
+DROP TABLE IF EXISTS i18n_behavior_test_0_i18n;
+
+CREATE TABLE i18n_behavior_test_0_i18n
+(
+    custom_id INTEGER NOT NULL,
+    locale VARCHAR(5) DEFAULT 'fr_FR' NOT NULL,
+    PRIMARY KEY (custom_id,locale)
+);
+EOF;
+        $this->assertContains($expected, $builder->getSQL());
+    }
+
 }
