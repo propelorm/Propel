@@ -182,7 +182,7 @@ assertions.
 ## Travis-CI ##
 
 Once you have a decent test suite, you may want to use
-[Travis-CI](travis-ci.org). Here is a standard configuration for Symfony2
+[Travis-CI](http://travis-ci.org). Here is a standard configuration for Symfony2
 projects:
 
 {% highlight yaml %}
