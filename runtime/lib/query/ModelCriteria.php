@@ -2247,4 +2247,13 @@ class ModelCriteria extends Criteria
             throw new PropelException('Unable to execute query explain plan', $e);
         }
     }
+
+    /**
+     * @param PropelPDO $con = null
+     * @return boolean
+     */
+    public function exists($con = null)
+    {
+        return 0 !== $this->count($con);
+    }
 }
