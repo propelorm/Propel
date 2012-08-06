@@ -401,4 +401,28 @@ EOF;
         $this->assertContains($expected, $builder->getSQL());
     }
 
+
+    public function testTableWithPrefix()
+    {
+        $schema = <<<EOF
+<database name="default" tablePrefix="plop_">
+    <table name="group">
+        <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true" />
+        <column name="title" type="varchar" primaryString="true" size="255" />
+
+        <behavior name="i18n">
+            <parameter name="i18n_columns" value="title" />
+            <parameter name="locale_column" value="locale" />
+        </behavior>
+    </table>
+</database>
+EOF;
+
+        $builder = new PropelQuickBuilder();
+        $builder->setSchema($schema);
+
+        $this->assertTrue($builder->getDatabase()->hasTable('plop_group'));
+        $this->assertFalse($builder->getDatabase()->hasTable('plop_plop_group_i18n'));
+        $this->assertTrue($builder->getDatabase()->hasTable('plop_group_i18n'));
+    }
 }

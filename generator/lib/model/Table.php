@@ -88,10 +88,10 @@ class Table extends ScopedElement implements IDMethod
      * @var       string
      */
     private $commonName;
-    
+
     /**
      * Table name without prefix.  Only used for phpName generation.
-     * 
+     *
      * @var       string
      */
     private $nonPrefixedName;
@@ -1975,5 +1975,13 @@ class Table extends ScopedElement implements IDMethod
     public function hasCrossForeignKeys()
     {
         return (count($this->getCrossFks()) !== 0);
+    }
+
+    /**
+     * @return string
+     */
+    public function getNonPrefixedName()
+    {
+        return $this->nonPrefixedName;
     }
 }
