@@ -30,6 +30,8 @@ Here is a list of Propel behaviors contributed by users. Feel free to use them o
 
 * [PublishableBehavior](https://github.com/willdurand/PublishableBehavior) Designed to quickly add publish/unpublish features to your model.
 
+* [MultipleAggregateColumnBehavior](https://github.com/natecj/PropelMultipleAggregateColumnBehavior) A replacement to aggregate_column behavior that allows multiple aggregate columns on a single table.
+
 
 ## symfony 1.x Behaviors ##
 
