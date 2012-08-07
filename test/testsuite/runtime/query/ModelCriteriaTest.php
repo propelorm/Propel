@@ -2480,6 +2480,19 @@ class ModelCriteriaTest extends BookstoreTestBase
         $c->orderBy('TITLE');
         $this->assertCriteriaTranslation($c, $sql, $params);
     }
+
+    public function testExists()
+    {
+        $c = new ModelCriteria('bookstore', 'Book', 'b');
+        $this->assertTrue($c->exists());
+    }
+
+    public function testExistsWithNonExistentCondition()
+    {
+        $c = new ModelCriteria('bookstore', 'Book', 'b');
+        $c->where('b.Title = ?', 'jenexistepas');
+        $this->assertFalse($c->exists());
+    }
 }
 
 class TestableModelCriteria extends ModelCriteria
