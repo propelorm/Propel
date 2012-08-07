@@ -232,7 +232,12 @@ class Column extends XMLElement
             }
 
             if ($this->getAttribute('valueSet', null) !== null) {
-                $valueSet = explode(',', $this->getAttribute("valueSet"));
+                if (version_compare(PHP_VERSION, '5.3.0', '>=')) {
+                    $valueSet = str_getcsv($this->getAttribute("valueSet"));
+                } else {
+                    // unfortunately, no good fallback for PHP 5.2
+                    $valueSet = explode(',', $this->getAttribute("valueSet"));
+                }
                 $valueSet = array_map('trim', $valueSet);
                 $this->valueSet = $valueSet;
             }

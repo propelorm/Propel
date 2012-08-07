@@ -208,4 +208,24 @@ EOF;
         $column->setType(PropelTypes::PHP_ARRAY);
         $this->assertTrue($column->isPhpArrayType());
     }
+
+    public function testCommaInEnumValueSet()
+    {
+        $column     = new Column();
+        $table      = new Table();
+        $database   = new Database();
+        $platform   = new DefaultPlatform();
+
+        $table->addColumn($column);
+        $database->addTable($table);
+        $database->setPlatform($platform);
+
+        $column->loadFromXML(array('valueSet' => 'Foo, Bar, "Foo, Bar"'));
+        $valueSet = $column->getValueSet();
+
+        $this->assertCount(3, $valueSet);
+        $this->assertEquals('Foo', $valueSet[0]);
+        $this->assertEquals('Bar', $valueSet[1]);
+        $this->assertEquals('Foo, Bar', $valueSet[2]);
+    }
 }
