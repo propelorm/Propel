@@ -43,9 +43,13 @@ class NestedSetBehaviorObjectBuilderModifier
     protected function setBuilder($builder)
     {
         $this->builder = $builder;
+
         $this->objectClassname = $builder->getStubObjectBuilder()->getClassname();
-        $this->queryClassname = $builder->getStubQueryBuilder()->getClassname();
-        $this->peerClassname = $builder->getStubPeerBuilder()->getClassname();
+        $this->queryClassname  = $builder->getStubQueryBuilder()->getClassname();
+        $this->peerClassname   = $builder->getStubPeerBuilder()->getClassname();
+
+        $this->builder->declareClass($builder->getStubObjectBuilder()->getFullyQualifiedClassname());
+        $this->builder->declareClass($builder->getStubQueryBuilder()->getFullyQualifiedClassname());
     }
 
     /*
