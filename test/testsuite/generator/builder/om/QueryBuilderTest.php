@@ -128,6 +128,12 @@ class QueryBuilderTest extends BookstoreTestBase
         $this->assertEquals('BaseTable4Query', $method->getDeclaringClass()->getName(), 'BaseQuery overrides findPk()');
     }
 
+    public function testFindOneById()
+    {
+        $method = new ReflectionMethod('Table4Query', 'findOneById');
+        $this->assertEquals('BaseTable4Query', $method->getDeclaringClass()->getName(), 'BaseQuery overrides findOneById()');
+    }
+
     public function testFindPkReturnsCorrectObjectForSimplePrimaryKey()
     {
         $b = new Book();
@@ -196,6 +202,21 @@ class QueryBuilderTest extends BookstoreTestBase
         $count = $this->con->getQueryCount();
 
         $book = BookQuery::create()->findPk($b->getId(), $this->con);
+        $this->assertEquals($b, $book);
+        $this->assertEquals($count, $this->con->getQueryCount());
+    }
+
+    public function testFindOneByIdAddsObjectToInstancePool()
+    {
+        $b = new Book();
+        $b->setTitle('foo');
+        $b->save($this->con);
+        BookPeer::clearInstancePool();
+
+        BookQuery::create()->findOneById($b->getId(), $this->con);
+        $count = $this->con->getQueryCount();
+
+        $book = BookQuery::create()->findOneById($b->getId(), $this->con);
         $this->assertEquals($b, $book);
         $this->assertEquals($count, $this->con->getQueryCount());
     }
