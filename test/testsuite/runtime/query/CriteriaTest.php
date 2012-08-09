@@ -334,6 +334,55 @@ class CriteriaTest extends BookstoreTestBase
         Propel::setDB(null, $originalDB);
     }
 
+    public function testOrderByAscending()
+    {
+        $originalDB = Propel::getDB();
+        Propel::setDB(null, new DBMySQL());
+
+        $criteria = new Criteria();
+        $criteria->addOrderByColumn(BookPeer::TITLE, Criteria::ASC);
+        BookPeer::addSelectColumns($criteria);
+        $params=array();
+        $sql = BasePeer::createSelectSql($criteria, $params);
+        $expectedSQL = 'SELECT book.ID, book.TITLE, book.ISBN, book.PRICE, book.PUBLISHER_ID, book.AUTHOR_ID FROM `book` ORDER BY book.TITLE ASC';
+        $this->assertEquals($expectedSQL, $sql);
+
+        Propel::setDB(null, $originalDB);
+    }
+
+    public function testOrderByDescending()
+    {
+        $originalDB = Propel::getDB();
+        Propel::setDB(null, new DBMySQL());
+
+        $criteria = new Criteria();
+        $criteria->addOrderByColumn(BookPeer::TITLE, Criteria::DESC);
+        BookPeer::addSelectColumns($criteria);
+        $params=array();
+        $sql = BasePeer::createSelectSql($criteria, $params);
+        $expectedSQL = 'SELECT book.ID, book.TITLE, book.ISBN, book.PRICE, book.PUBLISHER_ID, book.AUTHOR_ID FROM `book` ORDER BY book.TITLE DESC';
+        $this->assertEquals($expectedSQL, $sql);
+
+        Propel::setDB(null, $originalDB);
+    }
+
+    public function testOrderByFailed()
+    {
+        $originalDB = Propel::getDB();
+        Propel::setDB(null, new DBMySQL());
+        try {
+            $criteria = new Criteria();
+            $criteria->addOrderByColumn(BookPeer::TITLE, 'incorrect direction');
+            BookPeer::addSelectColumns($criteria);
+            $params=array();
+            $sql = BasePeer::createSelectSql($criteria, $params);
+        } catch (PropelException $e) {
+            return;
+        }
+
+        $this->fail("PropelException must be thrown when direction is incorrect");
+    }
+
     public function testOrderByIgnoreCase()
     {
         $originalDB = Propel::getDB();

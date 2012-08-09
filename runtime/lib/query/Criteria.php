@@ -1309,6 +1309,28 @@ class Criteria implements IteratorAggregate
     }
 
     /**
+     * Add order by column name
+    *
+     * @param  string          $name      The name of the column to order by
+     * @param  string          $direction The direction to order by
+     * @return A               modified Criteria object
+     * @throws PropelException if the direction is incorrect
+     */
+    public function addOrderByColumn($name, $direction)
+    {
+        switch ($direction) {
+            case self::ASC:
+                return $this->addAscendingOrderByColumn($name);
+                break;
+            case self::DESC:
+                return $this->addDescendingOrderByColumn($name);
+                break;
+            default:
+                throw new PropelException('Order direction must be \Criteria::ASC or \Criteria::DESC');
+        }
+    }
+
+    /**
      * Add order by column name, explicitly specifying ascending.
      *
      * @param  string $name The name of the column to order by.
