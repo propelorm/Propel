@@ -186,6 +186,7 @@ abstract class ".$this->getClassname()." extends " . $parentClass . "
         $this->addConstructor($script);
         $this->addFactory($script);
         $this->addFindPk($script);
+        $this->addFindOneByPk($script);
         $this->addFindPkSimple($script);
         $this->addFindPkComplex($script);
         $this->addFindPks($script);
@@ -439,6 +440,34 @@ abstract class ".$this->getClassname()." extends " . $parentClass . "
             return \$this->findPkSimple(\$key, \$con);
         }
     }
+";
+    }
+
+    protected function addFindOneByPk(&$script)
+    {
+        $table = $this->getTable();
+        if ($table->hasCompositePrimaryKey()) {
+            return;
+        }
+
+        $pk = $table->getPrimaryKey();
+        $column = $pk[0]->getPhpName();
+        $ARClassname = $this->getObjectClassname();
+
+        $script .= "
+    /**
+     * Alias of findPk to use instance pooling
+     *
+     * @param     mixed \$key Primary key to use for the query
+     * @param     PropelPDO \$con A connection object
+     *
+     * @return   $ARClassname A model object, or null if the key is not found
+     * @throws   PropelException
+     */
+     public function findOneBy{$column}(\$key, \$con = null)
+     {
+        return \$this->findPk(\$key, \$con);
+     }
 ";
     }
 
