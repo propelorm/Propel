@@ -75,13 +75,21 @@ class ModelCriteriaHooksTest extends BookstoreTestBase
         $c = new ModelCriteriaWithPostDeleteHook('bookstore', 'Book', 'b');
         $c->where('b.Id = ?', $book->getId());
         $nbBooks = $c->delete($this->con);
-        $this->assertEquals(1, $this->con->lastAffectedRows, 'postDelete() is called after delete()');
+        if (method_exists(new BookPeer, 'doOnDeleteCascade')) {
+            $this->assertEquals(5, $this->con->lastAffectedRows, 'postDelete() is called after delete()');
+        } else {
+            $this->assertEquals(1, $this->con->lastAffectedRows, 'postDelete() is called after delete()');
+        }
 
         $this->con->lastAffectedRows = 0;
 
         $c = new ModelCriteriaWithPostDeleteHook('bookstore', 'Book');
         $nbBooks = $c->deleteAll($this->con);
-        $this->assertEquals(3, $this->con->lastAffectedRows, 'postDelete() is called after deleteAll()');
+        if (method_exists(new BookPeer, 'doOnDeleteCascade')) {
+            $this->assertEquals(5, $this->con->lastAffectedRows, 'postDelete() is called after delete()');
+        } else {
+            $this->assertEquals(3, $this->con->lastAffectedRows, 'postDelete() is called after delete()');
+        }
     }
 
     public function testPreAndPostDelete()

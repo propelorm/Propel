@@ -381,7 +381,12 @@ class PropelPDOTest extends PHPUnit_Framework_TestCase
         $books = BookPeer::doSelect($c, $con);
         $this->assertEquals(1, $con->getQueryCount(), 'PropelPDO updates the query count when useLogging is true');
 
-        BookPeer::doDeleteAll($con);
+        if (method_exists(new BookPeer, 'doOnDeleteCascade')) {
+            $sql = 'DELETE FROM book WHERE 1=1';
+            $con->exec($sql);
+        } else {
+            BookPeer::doDeleteAll($con);
+        }
         $this->assertEquals(2, $con->getQueryCount(), 'PropelPDO updates the query count on delete operations');
 
         $sql = 'DELETE FROM book WHERE 1=1';

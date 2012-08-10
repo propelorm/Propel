@@ -1789,7 +1789,11 @@ class ModelCriteriaTest extends BookstoreTestBase
         $c->where('b.Title = ?', 'Don Juan');
         $nbBooks = $c->delete();
         $this->assertTrue(is_int($nbBooks), 'delete() returns an integer');
-        $this->assertEquals(1, $nbBooks, 'delete() returns the number of the deleted rows');
+        if (method_exists(new BookPeer, 'doOnDeleteCascade')) {
+            $this->assertEquals(2, $nbBooks, 'delete() returns the number of the deleted rows');
+        } else {
+            $this->assertEquals(1, $nbBooks, 'delete() returns the number of the deleted rows');
+        }
 
         $c = new ModelCriteria('bookstore', 'Book');
         $nbBooks = $c->count();
@@ -1823,7 +1827,11 @@ class ModelCriteriaTest extends BookstoreTestBase
         $c = new ModelCriteria('bookstore', 'Book');
         $nbBooks = $c->deleteAll();
         $this->assertTrue(is_int($nbBooks), 'deleteAll() returns an integer');
-        $this->assertEquals(4, $nbBooks, 'deleteAll() returns the number of deleted rows');
+        if (method_exists(new BookPeer, 'doOnDeleteCascade')) {
+            $this->assertEquals(10, $nbBooks, 'delete() returns the number of the deleted rows');
+        } else {
+            $this->assertEquals(4, $nbBooks, 'delete() returns the number of the deleted rows');
+        }
 
         BookstoreDataPopulator::depopulate();
         BookstoreDataPopulator::populate();
@@ -1831,7 +1839,11 @@ class ModelCriteriaTest extends BookstoreTestBase
         $c = new ModelCriteria('bookstore', 'Book', 'b');
         $c->where('b.Title = ?', 'Don Juan');
         $nbBooks = $c->deleteAll();
-        $this->assertEquals(4, $nbBooks, 'deleteAll() ignores conditions on the criteria');
+        if (method_exists(new BookPeer, 'doOnDeleteCascade')) {
+            $this->assertEquals(10, $nbBooks, 'deleteAll() ignores conditions on the criteria');
+        } else {
+            $this->assertEquals(4, $nbBooks, 'deleteAll() ignores conditions on the criteria');
+        }
     }
 
     public function testUpdate()
