@@ -17,7 +17,13 @@
  */
 class DBSQLite extends DBAdapter
 {
-    /**
+    public $useQuote;
+
+    public function __construct() {
+        $useQuote = true;
+    }
+
+   /**
      * Prepare connection parameters.
      *
      * @param  array $params
@@ -140,7 +146,7 @@ class DBSQLite extends DBAdapter
      */
     public function useQuoteIdentifier()
     {
-        return true;
+        return $this->useQuote;
     }
 
 

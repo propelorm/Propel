@@ -20,7 +20,18 @@ require_once dirname(__FILE__) . '/../../../tools/helpers/bookstore/BookstoreTes
 class BasePeerExceptionsTest extends BookstoreTestBase
 {
 
-    public function testDoSelect()
+   protected function setUp()
+   {
+     parent::setUp();
+
+     //make sure quote is enabled for the reference strings in this tests
+     $db = Propel::getDb(BookPeer::DATABASE_NAME);
+     if ($db instanceof DBSQLite) {
+        $db->useQuote = true;
+     }
+   }
+
+   public function testDoSelect()
     {
         try {
             $c = new Criteria();

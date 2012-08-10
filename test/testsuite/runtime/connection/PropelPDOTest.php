@@ -18,6 +18,17 @@ require_once dirname(__FILE__) . '/../../../tools/helpers/bookstore/BookstoreTes
 class PropelPDOTest extends PHPUnit_Framework_TestCase
 {
 
+   protected function setUp()
+   {
+     parent::setUp();
+
+     //make sure quote is enabled for the reference strings in this tests
+     $db = Propel::getDb(BookPeer::DATABASE_NAME);
+     if ($db instanceof DBSQLite) {
+        $db->useQuote = true;
+     }
+   }
+
     public function testSetAttribute()
     {
         $con = Propel::getConnection(BookPeer::DATABASE_NAME);

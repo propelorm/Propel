@@ -42,12 +42,17 @@ class CriteriaCombineTest extends BaseTestCase
     parent::setUp();
     $this->c = new Criteria();
     $this->savedAdapter = Propel::getDB(null);
-    Propel::setDB(null, new DBSQLite());
+    $sqliteAdapter = new DBSQLite();
+    $sqliteAdapter->useQuote = false;
+    Propel::setDB(null, $sqliteAdapter);
   }
 
   protected function tearDown()
   {
     Propel::setDB(null, $this->savedAdapter);
+    if ($this->savedAdapter instanceof DBSQLite) {
+        $this->savedAdapter->useQuote = true;
+    }
     parent::tearDown();
   }
 

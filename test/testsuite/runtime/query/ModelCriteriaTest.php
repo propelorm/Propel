@@ -24,6 +24,11 @@ class ModelCriteriaTest extends BookstoreTestBase
         parent::setUp();
         $con = Propel::getConnection(BookPeer::DATABASE_NAME);
         $con->useDebug();
+        //make sure quote is enabled for the reference strings in this tests
+        $db = Propel::getDb(BookPeer::DATABASE_NAME);
+        if ($db instanceof DBSQLite) {
+            $db->useQuote = true;
+        }
     }
 
     protected function assertCriteriaTranslation($criteria, $expectedSql, $expectedParams, $message = '')
