@@ -42,7 +42,7 @@
 				<adapter>sqlite</adapter>
 				<!-- Connection DSN.  See PEAR DSN format for other supported parameters. -->
 				<connection>
-					<dsn>sqlite:/var/tmp/test.db</dsn>
+					<dsn>sqlite:/var/tmp/unittest-propel-bookstore-packaged.db</dsn>
 				</connection>
 			</datasource>
 			<datasource id="bookstore-log">
@@ -50,7 +50,7 @@
 				<adapter>sqlite</adapter>
 				<!-- Connection DSN.  See PEAR DSN format for other supported parameters. -->
 				<connection>
-					<dsn>sqlite:/var/tmp/test.db</dsn>
+					<dsn>sqlite:/var/tmp/unittest-propel-bookstore-packaged.db</dsn>
 				</connection>
 			</datasource>
 		</datasources>

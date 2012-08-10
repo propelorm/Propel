@@ -16,6 +16,13 @@ In order to run the tests, you must install PHPUnit:
 
 == Configure the Database to be Used in the Tests ==
 
+Sqlite is configured by default. In order to run the tests, execute ./reset_tests.sh,
+then execute phpunit on a testsuite directory. The runtime testsuite directory is fully
+compatible with sqlite, exept the fact that you can have database locks when executing
+the tests all at once.
+
+For further configuration (mysql), read the rest of the documentation
+
 You must configure both the generator and the runtime connection settings.
 {{{
 // in test/fixtures/bookstore/build.properties

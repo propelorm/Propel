@@ -43,9 +43,7 @@
 				<!-- Connection DSN.  See PEAR DSN format for other supported parameters. -->
 				<connection>
 					<phptype>sqlite</phptype>
-					<dsn>sqlite:/var/tmp/treetest.db</dsn>
-					<username></username>
-					<password></password>
+					<dsn>sqlite:/var/tmp/unittest-propel-treetest.db</dsn>
 				</connection>
 			</datasource>
 		</datasources>
