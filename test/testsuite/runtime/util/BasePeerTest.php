@@ -72,7 +72,7 @@ class BasePeerTest extends BookstoreTestBase
         try {
             $count = BasePeer::doCount($c, $con);
         } catch (Exception $e) {
-            $this->fail('doCount() cannot deal with a criteria selecting duplicate column names ');
+            $this->fail('doCount() cannot deal with a criteria selecting duplicate column names : '.$e->getMessage());
         }
     }
 
@@ -268,6 +268,11 @@ class BasePeerTest extends BookstoreTestBase
 
     public function testDoDeleteTableAlias()
     {
+        $db = Propel::getDb(BookPeer::DATABASE_NAME);
+        if ($db instanceof DBSQLite) {
+            $this->markTestSkipped('Delete using alias is not supported with sqlite');
+        }
+
         $con = Propel::getConnection();
         $c = new Criteria(BookPeer::DATABASE_NAME);
         $c->addAlias('b', BookPeer::TABLE_NAME);

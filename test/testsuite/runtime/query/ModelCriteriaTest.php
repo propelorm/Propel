@@ -323,6 +323,10 @@ class ModelCriteriaTest extends BookstoreTestBase
 
     public function testWhereTypeValue()
     {
+        $db = Propel::getDb(BookPeer::DATABASE_NAME);
+        if ($db instanceof DBSQLite) {
+            $this->markTestSkipped('LOCATE not implemented in sqlite');
+        }
         $c = new ModelCriteria('bookstore', 'Book', 'b');
         $c->where('LOCATE(\'foo\', b.Title) = ?', true, PDO::PARAM_BOOL);
 
@@ -458,6 +462,11 @@ class ModelCriteriaTest extends BookstoreTestBase
 
     public function testHavingWithColumn()
     {
+        $db = Propel::getDb(BookPeer::DATABASE_NAME);
+        if ($db instanceof DBSQLite) {
+            $this->markTestSkipped('LOCATE not implemented in sqlite');
+        }
+
         $c = new ModelCriteria('bookstore', 'Book');
         $c->withColumn('SUBSTRING(Book.Title, 1, 4)', 'title_start');
         $c->having('title_start = ?', 'foo', PDO::PARAM_STR);
@@ -1802,6 +1811,11 @@ class ModelCriteriaTest extends BookstoreTestBase
 
     public function testDeleteUsingTableAlias()
     {
+        $db = Propel::getDb(BookPeer::DATABASE_NAME);
+        if ($db instanceof DBSQLite) {
+            $this->markTestSkipped('Delete using alias is not supported with sqlite');
+        }
+
         $con = Propel::getConnection(BookPeer::DATABASE_NAME);
 
         $c = new ModelCriteria('bookstore', 'Book');
@@ -1881,6 +1895,11 @@ class ModelCriteriaTest extends BookstoreTestBase
 
     public function testUpdateUsingTableAlias()
     {
+        $db = Propel::getDb(BookPeer::DATABASE_NAME);
+        if ($db instanceof DBSQLite) {
+            $this->markTestSkipped('Update using alias is not supported with sqlite');
+        }
+
         $con = Propel::getConnection(BookPeer::DATABASE_NAME);
 
         $c = new ModelCriteria('bookstore', 'Book');
@@ -1995,19 +2014,25 @@ class ModelCriteriaTest extends BookstoreTestBase
         $expectedSQL = "SELECT book.ID, book.TITLE, book.ISBN, book.PRICE, book.PUBLISHER_ID, book.AUTHOR_ID FROM `book` INNER JOIN `author` `a` ON (book.AUTHOR_ID=a.ID) WHERE a.FIRST_NAME = 'Leo' LIMIT 1";
         $this->assertEquals($expectedSQL, $con->getLastExecutedQuery(), 'innerJoinX() is turned into join($x, Criteria::INNER_JOIN)');
 
-        $c = new ModelCriteria('bookstore', 'Book', 'b');
-        $c->rightJoin('b.Author a');
-        $c->where('a.FirstName = ?', 'Leo');
-        $books = $c->findOne($con);
-        $expectedSQL = "SELECT book.ID, book.TITLE, book.ISBN, book.PRICE, book.PUBLISHER_ID, book.AUTHOR_ID FROM `book` RIGHT JOIN `author` `a` ON (book.AUTHOR_ID=a.ID) WHERE a.FIRST_NAME = 'Leo' LIMIT 1";
-        $this->assertEquals($expectedSQL, $con->getLastExecutedQuery(), 'rightJoin($x) is turned into join($x, Criteria::RIGHT_JOIN)');
+        $db = Propel::getDb(BookPeer::DATABASE_NAME);
+        if ($db instanceof DBSQLite) {
+            //dont do the test : RIGHT and FULL OUTER JOINs are not currently supported
+        } else {
+            $c = new ModelCriteria('bookstore', 'Book', 'b');
+            $c->rightJoin('b.Author a');
+            $c->where('a.FirstName = ?', 'Leo');
+            $books = $c->findOne($con);
+            $expectedSQL = "SELECT book.ID, book.TITLE, book.ISBN, book.PRICE, book.PUBLISHER_ID, book.AUTHOR_ID FROM `book` RIGHT JOIN `author` `a` ON (book.AUTHOR_ID=a.ID) WHERE a.FIRST_NAME = 'Leo' LIMIT 1";
+            $this->assertEquals($expectedSQL, $con->getLastExecutedQuery(), 'rightJoin($x) is turned into join($x, Criteria::RIGHT_JOIN)');
 
-        $books = BookQuery::create()
-            ->rightJoinAuthor('a')
-            ->where('a.FirstName = ?', 'Leo')
-            ->findOne($con);
-        $expectedSQL = "SELECT book.ID, book.TITLE, book.ISBN, book.PRICE, book.PUBLISHER_ID, book.AUTHOR_ID FROM `book` RIGHT JOIN `author` `a` ON (book.AUTHOR_ID=a.ID) WHERE a.FIRST_NAME = 'Leo' LIMIT 1";
-        $this->assertEquals($expectedSQL, $con->getLastExecutedQuery(), 'rightJoinX() is turned into join($x, Criteria::RIGHT_JOIN)');
+            $books = BookQuery::create()
+                ->rightJoinAuthor('a')
+                ->where('a.FirstName = ?', 'Leo')
+                ->findOne($con);
+            $expectedSQL = "SELECT book.ID, book.TITLE, book.ISBN, book.PRICE, book.PUBLISHER_ID, book.AUTHOR_ID FROM `book` RIGHT JOIN `author` `a` ON (book.AUTHOR_ID=a.ID) WHERE a.FIRST_NAME = 'Leo' LIMIT 1";
+            $this->assertEquals($expectedSQL, $con->getLastExecutedQuery(), 'rightJoinX() is turned into join($x, Criteria::RIGHT_JOIN)');
+        }
+
 
         $books = BookQuery::create()
             ->leftJoinAuthor()

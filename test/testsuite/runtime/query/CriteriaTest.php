@@ -929,6 +929,11 @@ class CriteriaTest extends BookstoreTestBase
 
     public function testHaving()
     {
+        $db = Propel::getDb(BookPeer::DATABASE_NAME);
+        if ($db instanceof DBSQLite) {
+            $this->markTestSkipped('a GROUP BY clause is required before HAVING');
+        }
+
         $c = new Criteria();
         $c->addSelectColumn(BookPeer::TITLE);
         $c->addAsColumn('isb_n', BookPeer::ISBN);
@@ -959,6 +964,11 @@ class CriteriaTest extends BookstoreTestBase
 
     public function testHavingRaw()
     {
+        $db = Propel::getDb(BookPeer::DATABASE_NAME);
+        if ($db instanceof DBSQLite) {
+            $this->markTestSkipped('a GROUP BY clause is required before HAVING');
+        }
+
         $c = new Criteria();
         $c->addSelectColumn(BookPeer::TITLE);
         $c->addAsColumn("isb_n", BookPeer::ISBN);
