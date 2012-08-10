@@ -803,7 +803,14 @@ class Propel
     public static function close()
     {
         foreach (self::$connectionMap as $idx => $cons) {
-            // Propel::log("Closing connections for " . $idx, Propel::LOG_DEBUG);
+            foreach ($cons as $id => $connection) {
+                $connection->forceRollBack();
+                $connection->clearStatementCache();
+                $connection->setAttribute(PDO::ATTR_STATEMENT_CLASS, array('PDOStatement'));
+                unset($cons[$id]);
+            }
+
+            // Propel::log("Closing connetions for " . $idx, Propel::LOG_DEBUG);
             unset(self::$connectionMap[$idx]);
         }
     }
