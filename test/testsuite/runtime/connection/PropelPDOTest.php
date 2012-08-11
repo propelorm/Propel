@@ -291,6 +291,7 @@ class PropelPDOTest extends PHPUnit_Framework_TestCase
     public function testLatestQueryMoreThanTenArgs()
     {
         $con = Propel::getConnection(BookPeer::DATABASE_NAME);
+        $con->useDebug();
         $c = new Criteria();
         $c->add(BookPeer::ID, array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1), Criteria::IN);
         $books = BookPeer::doSelect($c, $con);

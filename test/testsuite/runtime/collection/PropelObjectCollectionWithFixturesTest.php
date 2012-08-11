@@ -65,8 +65,8 @@ class PropelObjectCollectionWithFixturesTest extends BookstoreEmptyTestBase
         $author->setLastName('Austen');
         $author->save();
         $books = array(
-            array('Title' => 'Mansfield Park', 'AuthorId' => $author->getId()),
-            array('Title' => 'Pride And PRejudice', 'AuthorId' => $author->getId())
+            array('Title' => 'Mansfield Park', 'ISBN' => 'barIsbn', 'AuthorId' => $author->getId()),
+            array('Title' => 'Pride And PRejudice', 'ISBN' => 'fooIsbn',  'AuthorId' => $author->getId())
         );
         $col = new PropelObjectCollection();
         $col->setModel('Book');
@@ -207,6 +207,7 @@ class PropelObjectCollectionWithFixturesTest extends BookstoreEmptyTestBase
         AuthorPeer::clearInstancePool();
         BookPeer::clearInstancePool();
         $authors = AuthorQuery::create()->find($this->con);
+        $this->con->useDebug();
         $count = $this->con->getQueryCount();
         $books = $authors->populateRelation('Book', null, $this->con);
         foreach ($authors as $author) {
@@ -220,6 +221,7 @@ class PropelObjectCollectionWithFixturesTest extends BookstoreEmptyTestBase
     public function testPopulateRelationManyToOne()
     {
         $con = Propel::getConnection();
+        $con->useDebug();
         AuthorPeer::clearInstancePool();
         BookPeer::clearInstancePool();
         $books = BookQuery::create()->find($con);

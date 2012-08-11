@@ -222,6 +222,7 @@ class SubQueryTest extends BookstoreTestBase
 
     public function testSubQueryCount()
     {
+        Propel::getConnection()->useDebug();
         $subCriteria = new BookQuery();
 
         $c = new BookQuery();

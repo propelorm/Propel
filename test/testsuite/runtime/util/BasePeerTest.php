@@ -9,6 +9,7 @@
  */
 
 require_once dirname(__FILE__) . '/../../../tools/helpers/bookstore/BookstoreTestBase.php';
+require_once dirname(__FILE__) . '/../../../tools/helpers/bookstore/BookstoreDataPopulator.php';
 
 /**
  * Tests the BasePeer classes.
@@ -246,6 +247,7 @@ class BasePeerTest extends BookstoreTestBase
     public function testDoDeleteSimpleCondition()
     {
         $con = Propel::getConnection();
+        $con->useDebug();
         $c = new Criteria(BookPeer::DATABASE_NAME);
         $c->add(BookPeer::TITLE, 'War And Peace');
         BasePeer::doDelete($c, $con);
@@ -337,6 +339,8 @@ class BasePeerTest extends BookstoreTestBase
     public function testIneffectualUpdateUsingBookObject()
     {
         $con = Propel::getConnection(BookPeer::DATABASE_NAME);
+        BookstoreDataPopulator::depopulate($con);
+        BookstoreDataPopulator::populate($con);        
         $c = new Criteria();
         $book = BookPeer::doSelectOne($c, $con);
         $count = $con->getQueryCount();

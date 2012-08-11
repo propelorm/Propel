@@ -814,6 +814,7 @@ class BookstoreTest extends BookstoreEmptyTestBase
 
         $blc3 = new BookClubList();
         $blc3->setFavoriteBooks($booksCollection);
+        $blc3->setGroupLeader('leader test');
         $blc3->save();
 
         $blc3->reload(true);

@@ -35,10 +35,12 @@ class PoisonedCacheBugTest extends BookstoreTestBase
 
         $b1 = new Book();
         $b1->setTitle("The Hitchhikers Guide To The Galaxy");
+        $b1->setISBN('test1');
         $a->addBook($b1);
 
         $b2 = new Book();
         $b2->setTitle("The Restaurant At The End Of The Universe");
+        $b2->setISBN('test');
         $a->addBook($b2);
         
         $a->save();
@@ -149,6 +151,8 @@ class PoisonedCacheBugTest extends BookstoreTestBase
 
         // add new object before fetching old books
         $b3 = new Book();
+        $b3->setISBN("isbn test");
+        $b3->setTitle("title test");
         $author->addBook($b3);
 
         $c = new Criteria();

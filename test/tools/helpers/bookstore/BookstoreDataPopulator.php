@@ -165,7 +165,7 @@ class BookstoreDataPopulator
         $blc1->addBookListRel($brel1);
         $blc1->addBookListRel($brel2);
 
-        $blc1->save();
+        $blc1->save($con);
 
         $bemp1 = new BookstoreEmployee();
         $bemp1->setName("John");
@@ -209,38 +209,38 @@ class BookstoreDataPopulator
         $summary = new BookSummary();
         $summary->setSummarizedBook($phoenix);
         $summary->setSummary("Harry Potter does some amazing magic!");
-        $summary->save();
+        $summary->save($con);
 
         // Add release_pool and record_label
         $acuna = new RecordLabel();
         $acuna->setAbbr('acuna');
         $acuna->setName('Acunadeep');
-        $acuna->save();
+        $acuna->save($con);
 
         $fade = new RecordLabel();
         $fade->setAbbr('fade');
         $fade->setName('Fade Records');
-        $fade->save();
+        $fade->save($con);
 
         $pool = new ReleasePool();
         $pool->setName('D.Chmelyuk - Revert Me Back');
         $pool->setRecordLabel($acuna);
-        $pool->save();
+        $pool->save($con);
 
         $pool = new ReleasePool();
         $pool->setName('VIF & Lola Palmer - Dreamer');
         $pool->setRecordLabel($acuna);
-        $pool->save();
+        $pool->save($con);
 
         $pool = new ReleasePool();
         $pool->setName('Lola Palmer - Do You Belong To Me');
         $pool->setRecordLabel($acuna);
-        $pool->save();
+        $pool->save($con);
 
         $pool = new ReleasePool();
         $pool->setName('Chris Forties - Despegue (foem.info Runners Up Remixes)');
         $pool->setRecordLabel($fade);
-        $pool->save();
+        $pool->save($con);
 
         $con->commit();
     }

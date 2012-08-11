@@ -108,6 +108,7 @@ class PropelObjectFormatterWithTest extends BookstoreEmptyTestBase
         // save a book with no author
         $b = new Book();
         $b->setTitle('Foo');
+        $b->setISBN('bar');
         $b->save();
         $c = new ModelCriteria('bookstore', 'Book');
         $c->where('Book.Title = ?', 'Foo');
@@ -126,11 +127,14 @@ class PropelObjectFormatterWithTest extends BookstoreEmptyTestBase
         // non-empty relation
         $a1 = new Author();
         $a1->setFirstName('Foo');
+        $a1->setLastName('Bar');
         $b1 = new Book();
         $b1->setTitle('Foo1');
+        $b1->setISBN('bar');
         $a1->addBook($b1);
         $b2 = new Book();
         $b2->setTitle('Foo2');
+        $b2->setISBN('bar2');
         $a1->addBook($b2);
         $a1->save();
         $con = Propel::getConnection(BookPeer::DATABASE_NAME);
@@ -145,6 +149,7 @@ class PropelObjectFormatterWithTest extends BookstoreEmptyTestBase
         // empty relation
         $a2 = new Author();
         $a2->setFirstName('Bar');
+        $a2->setLastName('BarName');
         $a2->save();
         $author = AuthorQuery::create()
             ->filterByFirstName('Bar')
@@ -178,9 +183,11 @@ class PropelObjectFormatterWithTest extends BookstoreEmptyTestBase
         EssayPeer::doDeleteAll();
         $auth1 = new Author();
         $auth1->setFirstName('John');
+        $auth1->setLastName('Adams');
         $auth1->save();
         $auth2 = new Author();
         $auth2->setFirstName('Jack');
+        $auth2->setLastName('Vince');
         $auth2->save();
         $essay = new Essay();
         $essay->setTitle('Foo');
@@ -317,18 +324,23 @@ class PropelObjectFormatterWithTest extends BookstoreEmptyTestBase
     {
         $author1 = new Author();
         $author1->setFirstName('AA');
+        $author1->setLastName('AAL');
         $author2 = new Author();
         $author2->setFirstName('BB');
+        $author2->setLastName('BBL');
         $book1 = new Book();
         $book1->setTitle('Aaa');
+        $book1->setISBN('Bar');
         $book1->setAuthor($author1);
         $book1->save();
         $book2 = new Book();
         $book2->setTitle('Bbb');
+        $book2->setISBN('Bar2');
         $book2->setAuthor($author2);
         $book2->save();
         $book3 = new Book();
         $book3->setTitle('Ccc');
+        $book3->setISBN('Bar3');
         $book3->setAuthor($author1);
         $book3->save();
         $authors = AuthorQuery::create()
@@ -389,6 +401,8 @@ class PropelObjectFormatterWithTest extends BookstoreEmptyTestBase
         AuthorPeer::clearInstancePool();
         ReviewPeer::clearInstancePool();
         $review = new Review();
+        $review->setReviewedBy('foo');
+        $review->setRecommended(true);
         $review->save($this->con);
         $c = new ModelCriteria('bookstore', 'Review');
         $c->leftJoinWith('Review.Book');

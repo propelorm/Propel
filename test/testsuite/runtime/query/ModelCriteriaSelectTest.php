@@ -40,6 +40,7 @@ class ModelCriteriaSelectTest extends BookstoreTestBase
 
     public function testSelectStringNoResult()
     {
+        $this->con->useDebug();
         $c = new ModelCriteria('bookstore', 'Book');
         $c->where('Book.Title = ?', 'kdjfhlkdsh');
         $c->select('Title');

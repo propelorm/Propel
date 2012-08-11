@@ -20,6 +20,12 @@ require_once dirname(__FILE__) . '/../../../tools/helpers/bookstore/BookstoreDat
  */
 class ModelCriteriaTest extends BookstoreTestBase
 {
+    public function setUp() {
+        parent::setUp();
+        $con = Propel::getConnection(BookPeer::DATABASE_NAME);
+        $con->useDebug();
+    }
+
     protected function assertCriteriaTranslation($criteria, $expectedSql, $expectedParams, $message = '')
     {
         $params = array();
@@ -1490,6 +1496,7 @@ class ModelCriteriaTest extends BookstoreTestBase
         $book = new Book();
         $book->setTitle('foo');
         $book->setPrice(125);
+        $book->setISBN('isbntest');
         $book->save();
         $book = BookQuery::create('b')
             ->where('b.Title = ?', 'foo')
@@ -1531,6 +1538,8 @@ class ModelCriteriaTest extends BookstoreTestBase
         BookQuery::create()->deleteAll($con);
         $book = new Book();
         $book->setPrice(125);
+        $book->setTitle('none');
+        $book->setISBN('isbntest');
         $book->save($con);
         $count = $con->getQueryCount();
         $book = BookQuery::create('b')
