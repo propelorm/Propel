@@ -84,7 +84,7 @@ class SortableBehaviorObjectBuilderModifier
 ";
     }
 
-    public function preDelete($builder)
+    public function preUpdate($builder)
     {
         if ($this->behavior->useScope()) {
         $this->setBuilder($builder);
