@@ -1,5 +1,135 @@
 # Changelog Of The Propel 1.6 Branch #
 
+## 2012-07-30: Version 1.6.7 ##
+
+38cfc9e Update generator/build.properties-sample
+f90dfa9 fix for issue 425
+74ee4e1 fix for issue 425
+88e21e6 Avoid blank line in object stub class
+8709d3a Fix tests
+cefc9ef More CS fixes
+e1e1078 Fix doc blocks
+29c9db3 Fix NULL => null
+3c1717b Improve code generation to follow PSR recommendations
+6bae0ca Changed FIXME to TODO
+bfef0d7 Changed comments
+5e9dfc1 PropelSQLParser with delimiter and fixed tests
+39d7958 fix for issue 425
+9667675 SQL Parser Delimiter Tests
+8cafbd6 Merge remote-tracking branch 'upstream/master' into delimiter-trigger-parser
+5522fbf fix test to pass on platform with EOF != \n
+cad1ac6 fix test 2 new relations added to book ;) for issue #421
+a9097da this fix issue #409 thank to toaotc for the patch
+2ca7067 add test to prove issue #409
+e84c67c add chaining in PropelObjectCollection::toKeyValue
+5dd5394 Revert "Fix platform loading" as it breaks multiple builds using the runtime config
+55fef69 Fix regression that removed Persistent interfaces in base classes
+d87e9a5 Add test that prove a regression
+7c7a608 Fix composer config
+c476e50 Add generator classes to the classmap
+0d1515d Added column positioning ability to mysql migration
+66e7a59 fixes translateFieldname and concrete inheritance
+3c891ed add test to show the inheritance issue with php5.4
+66f91c9 Fix platform loading
+2874edb fix call on a non object ;)
+790b3e4 [aggregate_column behavior] computeCall call reduced from n+1 to 1 or 2 fix #403, add computeCall on main object save() add isAlreadyInSave(),
+ddd028c add test to prove to much query on aggregate_column behavior
+c36fc7f Add back previous include but change the order of the include path
+c107e8e Issue #388: Fix propel-gen path issues Fixes an issue with the check for the propel-gen home-path in propel-gen script Fixes an issue with classes being redeclared because of custom include in phing.php (code is not there in the phing.php version from phing itself)
+9731032 Fix collection cache overriding existing one when related object are fetched with criteria
+f371602 Fix data loss where parent object won't save related objects when fetched with criteria
+3a3ad2c Fixed Versionable Object Modifier not to reload object collection after populateFromVersion
+dde4460 Fix joining related object
+abc7fc8 Change ObjectBuilder to reload related objects when collection is partially loaded
+05b7e1d Fixed possible bug
+5d9517a Improved SQLParser to work with triggers in additional .sql files
+
+## 2012-07-02: Version 1.6.6 ##
+
+17edd0f Prepare 1.6.6 release
+f15d36d Added defaultValue support for type ARRAY
+3fc74cc Added tests for setIgnoreCase() method
+b03569a Fixed package path if no parent package found
+ec4ea3d [NestedSet] Fixed CS
+b100492 Fixed small memory leak. Closes #358
+efb2b4a Added limit to phing version. It's now >= 2.4.12, but just for 2.4.* versions.
+1f74be0 Better composer constraint, fixes #387
+da1e6ce Fixed bin scripts
+b41b746 Cosmetic changes
+62fd2bf fix regressions introduced in 841d477db7
+841d477 add @throws and @return where missing
+94aae82 fix several generated phpDoc, missing declarations
+66f9eda Fixed CS for sluggable behavior
+e76f854 add sluggable scope schema
+a0e7463 add test for sluggable with scope and alter make unique in behavior to include scope
+ec0a762 added support for scope_column
+3b34b07 add test for sluggable with scope and alter make unique in behavior to include scope
+dd1ce76 tweak for proper php format
+f32733f added support for scope_column
+a051a60 Fixed CS
+ca773b3 fix several phpDoc and type hints
+0661d18 fix #378 change  for self::PEER
+70e572b add enforceVersioning
+3b15493 Fixed propel-gen script
+3849529 [Timestampable] Maded 'updated_at' column optional using a parameter. Fixes #370
+ee711c7 Added bin-info in the composer Added bin-feature as described on http://getcomposer.org/doc/articles/vendor-bins.md
+88b8b48 fix remove one-to-many, add test for one-to-mmany
+a5d3096 fix rebase code duplication
+a1f26b5 fix setter one-to-many schedule for deletion, fix remove many-to-many
+b1f993a fix CS
+d57ae1e fix-m2m-schedule-for-deletion
+f511569 [Runtime] Avoided possibility issue
+e074ecf [Runtime] Avoided BC break
+f9ae6da [Runtime] Fixed PropelObjectFormatter for 1-N relations thanks to @fabeat
+d636134 [Versionable] Added missing use statement
+1c5c378 Fixed bad indentation
+56025fa [Timestampable] Disabled update_at column if versionable is used on the same table. Closes #362
+afad075 Fixed CS according to PSR-1, and PSR-2
+afd35b4 [test] [generator] fixed test suite for XmlToAppData class.
+1b3389c [test] [generator] fixed test suite according to last changes in previous commit.
+ddde376 [generator] fixed the skipSql attribute value when exported to XML.
+2710aa6 Fixed composer autoloading
+9016436 [Archivable] Fixed file format (unix instead of dos), fixed issue with namespaces
+8b9449a fix: Illegal offset type in /propel/runtime/lib/collection/PropelObjectCollection.php line 222
+84d4c66 fix a wrong var name  => , close #350
+4f637d8 Adjusted last commit
+c614915 Fix some typo (thanks to havvg and willdurand)
+76e5eca Fixed ARRAY columns in hydrate() method
+4db2d79 Add a little set of features in the README.md
+c0af4bd Added new schema for setPk tests
+da9bad3 line back.
+5615f71 unit tests for pre-defined key type
+f209122 new method `getDefaultKeyType` for PHP5ObjectBuilder provided. checks if `defaultKeyType` parameter provided. if not returns `TYPE_PHPNAME` by default. unit test for `getDefaultKeyType`
+359cd80 added default key type for object builder. could be re-defined in project configuration. default key name is 'phpName'
+f747823 Fixed Table::setInterface(), Table::getInterface() usages
+1fd5b18 Added test to prove #318
+108a0b7 added cross ref table to schema and code to BookstoreTest to test patched cross ref setter
+2097c08 Updates to PropelMigrationTask to better handle multiple datasources.
+84b49eb patched addCrossFKSet: use cross FK related name and check if object in current collection
+c3e9bbd Added test to prove #321
+e388798 Fixed SimpleArrayFormatter. Closes #338
+d15c389 Fixed problem when pk already exists on parent table
+3d68575 [Generator] Added more methods to the GeneratorConfigInterface, allowed to load behaviors from a QuickGeneratorConfig instance
+db47b84 Fixed setting PK on child objects of concrete-inheritance
+d6506a5 Fixed propel-gen
+bfa9f14 [Runtime] [ModelCriteria] Allowed insensitive case for column names
+94d8c3f [Generator/Tests] Updated paths
+ee23c82 [composer] Used phing/phing 2.4.12
+678676a Add: support for EXPLAIN queries in postgres
+8280f6e Fixed license, added a README
+21bdf18 [Tests] Fixed db settings
+64a5f40 Added bootstrap.php file for phpunit
+58c4861 Fixed travis-ci setup
+44b6d26 [Tests] [Fixtures] Fixed default database settings
+2b0d0a9 Updated gitignore
+8927b97 Added travis-ci file
+39d0a88 Added a way to autoload Phing classes using composer
+ee007fa Added branch alias to composer.json
+21ceeeb Updated the composer.json file
+60b4c05 create version when deleting many-to-many refs
+22fec05 cs corrections
+eac4262 fix #320 reverse engineering : select tablename can returns quoted name on mssql
+
 ## 2012-03-27: Version 1.6.5 ##
 
 cd69910 Preparing the 1.6.5 release

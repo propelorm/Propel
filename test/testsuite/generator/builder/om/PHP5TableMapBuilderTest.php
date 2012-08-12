@@ -23,7 +23,7 @@ class PHP5TableMapBuilderTest extends BookstoreTestBase
 
   protected function setUp()
   {
-  	parent::setUp();
+      parent::setUp();
     $this->databaseMap = Propel::getDatabaseMap('bookstore');
   }
 
@@ -41,7 +41,7 @@ class PHP5TableMapBuilderTest extends BookstoreTestBase
   public function testRelationCount()
   {
     $bookTable = $this->databaseMap->getTableByPhpName('Book');
-    $this->assertEquals(12, count($bookTable->getRelations()), 'The map builder creates relations for both incoming and outgoing keys');
+    $this->assertEquals(14, count($bookTable->getRelations()), 'The map builder creates relations for both incoming and outgoing keys');
   }
 
   public function testSimpleRelationName()
@@ -133,31 +133,31 @@ class PHP5TableMapBuilderTest extends BookstoreTestBase
     $bookTable = $this->databaseMap->getTableByPhpName('Book');
     $this->assertEquals($bookTable->getBehaviors(), array(), 'getBehaviors() returns an empty array when no behaviors are registered');
     $tmap = Propel::getDatabaseMap(Table1Peer::DATABASE_NAME)->getTable(Table1Peer::TABLE_NAME);
-    $expectedBehaviorParams = array('timestampable' => array('create_column' => 'created_on', 'update_column' => 'updated_on'));
+    $expectedBehaviorParams = array('timestampable' => array('create_column' => 'created_on', 'update_column' => 'updated_on', 'disable_updated_at' => 'false'));
     $this->assertEquals($tmap->getBehaviors(), $expectedBehaviorParams, 'The map builder creates a getBehaviors() method to retrieve behaviors parameters when behaviors are registered');
   }
 
- 	public function testSingleTableInheritance()
-	{
-		$bookTable = $this->databaseMap->getTableByPhpName('Book');
-		$this->assertFalse($bookTable->isSingleTableInheritance(), 'isSingleTabkeInheritance() returns false by default');
+     public function testSingleTableInheritance()
+    {
+        $bookTable = $this->databaseMap->getTableByPhpName('Book');
+        $this->assertFalse($bookTable->isSingleTableInheritance(), 'isSingleTabkeInheritance() returns false by default');
 
-		$empTable = $this->databaseMap->getTableByPhpName('BookstoreEmployee');
-		$this->assertTrue($empTable->isSingleTableInheritance(), 'isSingleTabkeInheritance() returns true for tables using single table inheritance');
-	}
+        $empTable = $this->databaseMap->getTableByPhpName('BookstoreEmployee');
+        $this->assertTrue($empTable->isSingleTableInheritance(), 'isSingleTabkeInheritance() returns true for tables using single table inheritance');
+    }
 
-	public function testPrimaryString()
-	{
-		$bookTable = $this->databaseMap->getTableByPhpName('Book');
-		$this->assertTrue($bookTable->hasPrimaryStringColumn(), 'The map builder adds primaryString columns.');
-		$this->assertEquals($bookTable->getColumn('TITLE'), $bookTable->getPrimaryStringColumn(), 'The map builder maps the correct column as primaryString.');
-	}
+    public function testPrimaryString()
+    {
+        $bookTable = $this->databaseMap->getTableByPhpName('Book');
+        $this->assertTrue($bookTable->hasPrimaryStringColumn(), 'The map builder adds primaryString columns.');
+        $this->assertEquals($bookTable->getColumn('TITLE'), $bookTable->getPrimaryStringColumn(), 'The map builder maps the correct column as primaryString.');
+    }
 
-	public function testIsCrossRef()
-	{
-		$bookTable = $this->databaseMap->getTableByPhpName('Book');
-		$this->assertFalse($bookTable->isCrossRef(), 'The map builder add isCrossRef information "false"');
-		$BookListRelTable = $this->databaseMap->getTableByPhpName('BookListRel');
-		$this->assertTrue($BookListRelTable->isCrossRef(), 'The map builder add isCrossRef information "true"');
-	}
+    public function testIsCrossRef()
+    {
+        $bookTable = $this->databaseMap->getTableByPhpName('Book');
+        $this->assertFalse($bookTable->isCrossRef(), 'The map builder add isCrossRef information "false"');
+        $BookListRelTable = $this->databaseMap->getTableByPhpName('BookListRel');
+        $this->assertTrue($BookListRelTable->isCrossRef(), 'The map builder add isCrossRef information "true"');
+    }
 }

@@ -21,14 +21,14 @@ require_once dirname(__FILE__) . '/../../../../tools/helpers/bookstore/Bookstore
 class SortableBehaviorTest extends BookstoreTestBase
 {
 
-	public function testParameters()
-	{
-		$table11 = Table11Peer::getTableMap();
-		$this->assertEquals(count($table11->getColumns()), 3, 'Sortable adds one columns by default');
-		$this->assertTrue(method_exists('Table11', 'getRank'), 'Sortable adds a rank column by default');
-		$table12 = Table12Peer::getTableMap();
-		$this->assertEquals(count($table12->getColumns()), 4, 'Sortable does not add a column when it already exists');
-		$this->assertTrue(method_exists('Table12', 'getPosition'), 'Sortable allows customization of rank_column name');
-	}
+    public function testParameters()
+    {
+        $table11 = Table11Peer::getTableMap();
+        $this->assertEquals(count($table11->getColumns()), 3, 'Sortable adds one columns by default');
+        $this->assertTrue(method_exists('Table11', 'getRank'), 'Sortable adds a rank column by default');
+        $table12 = Table12Peer::getTableMap();
+        $this->assertEquals(count($table12->getColumns()), 4, 'Sortable does not add a column when it already exists');
+        $this->assertTrue(method_exists('Table12', 'getPosition'), 'Sortable allows customization of rank_column name');
+    }
 
 }

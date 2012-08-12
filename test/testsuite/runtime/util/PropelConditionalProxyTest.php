@@ -33,7 +33,6 @@ class PropelConditionalProxyTest extends BaseTestCase
 
     $this->assertEquals($p->_else(), $p, '_else returns fluid interface');
 
-
     $criteria = new ProxyTestCriteria();
 
     $p = new TestPropelConditionalProxy($criteria, true);
@@ -92,22 +91,22 @@ class TestPropelConditionalProxy extends PropelConditionalProxy
 
 class ProxyTestCriteria extends Criteria
 {
-	protected $test = false;
+    protected $test = false;
 
-	public function test()
-	{
-		$this->test = true;
+    public function test()
+    {
+        $this->test = true;
 
-		return $this;
-	}
+        return $this;
+    }
 
-	public function dummy()
-	{
-		return $this;
-	}
+    public function dummy()
+    {
+        return $this;
+    }
 
-	public function getTest()
-	{
-		return $this->test;
-	}
+    public function getTest()
+    {
+        return $this->test;
+    }
 }

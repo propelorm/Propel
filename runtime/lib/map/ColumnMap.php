@@ -336,14 +336,14 @@ class ColumnMap
 
   /**
    * Get the RelationMap object for this foreign key
+   *
+   * @return RelationMap|null
    */
   public function getRelation()
   {
     if(!$this->relatedTableName) return null;
-    foreach ($this->getTable()->getRelations() as $name => $relation)
-    {
-      if($relation->getType() == RelationMap::MANY_TO_ONE)
-      {
+    foreach ($this->getTable()->getRelations() as $name => $relation) {
+      if ($relation->getType() == RelationMap::MANY_TO_ONE) {
         if ($relation->getForeignTable()->getName() == $this->getRelatedTableName()
          && array_key_exists($this->getFullyQualifiedName(), $relation->getColumnMappings()))
         {
@@ -458,6 +458,7 @@ class ColumnMap
    * Performs DB-specific ignore case, but only if the column type necessitates it.
    * @param      string $str The expression we want to apply the ignore case formatting to (e.g. the column name).
    * @param      DBAdapter $db
+   * @return string
    */
   public function ignoreCase($str, DBAdapter $db)
   {
@@ -482,6 +483,7 @@ class ColumnMap
       $name = substr($name, $pos + 1);
     }
     $name = strtoupper($name);
+
     return $name;
   }
 

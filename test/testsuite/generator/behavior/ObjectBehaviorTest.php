@@ -139,8 +139,8 @@ class ObjectBehaviorTest extends BookstoreTestBase
 
   public function testObjectCall()
   {
-  	$t = new Table3();
-  	$this->assertEquals('bar', $t->foo(), 'objectCall hook is called when building the magic __call()');
+      $t = new Table3();
+      $this->assertEquals('bar', $t->foo(), 'objectCall hook is called when building the magic __call()');
   }
 
   public function testObjectFilter()
