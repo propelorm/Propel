@@ -103,6 +103,7 @@ if (\$this->isColumnModified({$this->peerClassname}::SCOPE_COL) && !\$this->isCo
     {
         $useScope = $this->behavior->useScope();
         $this->setBuilder($builder);
+
         return "
 {$this->peerClassname}::shiftRank(-1, \$this->{$this->getColumnGetter()}() + 1, null, " . ($useScope ? "\$this->{$this->getColumnGetter('scope_column')}(), " : '') . "\$con);
 {$this->peerClassname}::clearInstancePool();
