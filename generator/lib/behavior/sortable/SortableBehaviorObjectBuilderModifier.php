@@ -359,7 +359,7 @@ public function insertAtRank(\$rank, PropelPDO \$con = null)
     if (\$rank != \$maxRank + 1) {
         // Keep the list modification query for the save() transaction
         \$this->sortableQueries []= array(
-            'callable'  => array('$peerClassname', 'shiftRank'),
+            'callable'  => array(self::PEER, 'shiftRank'),
             'arguments' => array(1, \$rank, null, " . ($useScope ? "\$this->{$this->getColumnGetter('scope_column')}()" : '') . ")
         );
     }
@@ -647,7 +647,7 @@ public function removeFromList(PropelPDO \$con = null)
 {
     // Keep the list modification query for the save() transaction
     \$this->sortableQueries []= array(
-        'callable'  => array('$peerClassname', 'shiftRank'),
+        'callable'  => array(self::PEER, 'shiftRank'),
         'arguments' => array(-1, \$this->{$this->getColumnGetter()}() + 1, null" . ($useScope ? ", \$this->{$this->getColumnGetter('scope_column')}()" : '') . ")
     );
     // remove the object from the list
