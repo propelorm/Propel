@@ -1,5 +1,27 @@
 # Changelog Of The Propel 1.6 Branch #
 
+## 2012-??-??: Version 1.6.8 ##
+
+737bb3 Make findOneById to be an alias of findPk
+6e21f54 Ignore composer.phar
+6eb19ea Fix #281
+7b30873 Fix #348
+e443b61 Fix #436
+754adbf Add new termination method: exists()
+363fce3 Remove lcfirst() for BC purpose. Fixes #415
+da3288c Fix #424
+f9e3c77 Fix i18n behavior with table prefix. Fixes #423
+ddf5b70 Fix #433
+56c13d7 Fix typo in the database.xsd file
+ebcdff1 Updated the Table class to not use the schema prefix as part of the phpName. Fixes issue #5. Changed DelegateBehaviorTest to not us
+0f95b75 adds tests for i18n_pk_name option, checking columns names and fk building throught table and i19n.
+1c99e1d adds a test for i18n_pk_name schema option
+fc153d0 add a new option for customizing the i18n table pk column name
+6d31fa6 Fix QuickBuilder, QuickGenerator
+c73221f Adjust fix for #425
+945efa3 Fix PropelObjectCollection to use the right approach during search()/contains()
+54e559f Added optional condition to AggregateColumn behavior
+
 ## 2012-07-30: Version 1.6.7 ##
 
 38cfc9e Update generator/build.properties-sample
