@@ -264,9 +264,9 @@ protected static function limitSlugSize(\$slug, \$incrementReservedSpace = 3)
 /**
  * Get the slug, ensuring its uniqueness
  *
- * @param    string \$slug			the slug to check
+ * @param	string \$slug			the slug to check
  * @param	string \$separator the separator used by slug
- * @param	int    \$alreadyExists false for the first try, true for the second, and take the high count + 1
+ * @param	boolean    \$alreadyExists false for the first try, true for the second, and take the high count + 1
  * @return string						the unique slug
  */
 protected function makeSlugUnique(\$slug, \$separator = '" . $this->getParameter('separator') ."', \$alreadyExists = false)
