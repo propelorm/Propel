@@ -266,7 +266,7 @@ protected static function limitSlugSize(\$slug, \$incrementReservedSpace = 3)
  *
  * @param	string \$slug			the slug to check
  * @param	string \$separator the separator used by slug
- * @param	boolean    \$alreadyExists false for the first try, true for the second, and take the high count + 1
+ * @param	int    \$alreadyExists false for the first try, true for the second, and take the high count + 1
  * @return string						the unique slug
  */
 protected function makeSlugUnique(\$slug, \$separator = '" . $this->getParameter('separator') ."', \$alreadyExists = false)
@@ -279,7 +279,8 @@ protected function makeSlugUnique(\$slug, \$separator = '" . $this->getParameter
     }
 	
     \$count = " . $this->builder->getStubQueryBuilder()->getClassname() . "::create()
-        ->filterBySlug(\$slug2 . '%')";
+        ->filterBySlug(\$alreadyExists ? \$slug2 . '%' : \$slug2)
+        ->prune(\$this)";
 
         if ($this->getParameter('scope_column')) {
             $getter = 'get' . $this->getColumnForParameter('scope_column')->getPhpName();
