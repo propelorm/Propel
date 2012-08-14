@@ -260,20 +260,26 @@ protected static function limitSlugSize(\$slug, \$incrementReservedSpace = 3)
     {
         $script .= "
 
+
 /**
  * Get the slug, ensuring its uniqueness
  *
- * @param	string \$slug			the slug to check
+ * @param    string \$slug			the slug to check
  * @param	string \$separator the separator used by slug
- * @param	int    \$increment the count of occurences of the slug
+ * @param	int    \$alreadyExists false for the first try, true for the second, and take the high count + 1
  * @return string						the unique slug
  */
-protected function makeSlugUnique(\$slug, \$separator = '" . $this->getParameter('separator') ."', \$increment = 0)
+protected function makeSlugUnique(\$slug, \$separator = '" . $this->getParameter('separator') ."', \$alreadyExists = false)
 {
-    \$slug2 = empty(\$increment) ? \$slug : \$slug . \$separator . \$increment;
-    \$slugAlreadyExists = " . $this->builder->getStubQueryBuilder()->getClassname() . "::create()
-        ->filterBySlug(\$slug2)
-        ->prune(\$this)";
+    if (!\$alreadyExists) {
+        \$slug2 = \$slug;
+    }
+    else {
+        \$slug2 = \$slug . \$separator;
+    }
+	
+    \$count = " . $this->builder->getStubQueryBuilder()->getClassname() . "::create()
+        ->filterBySlug(\$slug2 . '%')";
 
         if ($this->getParameter('scope_column')) {
             $getter = 'get' . $this->getColumnForParameter('scope_column')->getPhpName();
@@ -286,12 +292,16 @@ protected function makeSlugUnique(\$slug, \$separator = '" . $this->getParameter
         ->includeDeleted()";
         }
         $script .= "
-        ->count();
-    if (\$slugAlreadyExists) {
-        return \$this->makeSlugUnique(\$slug, \$separator, ++\$increment);
-    } else {
+    ->count();
+	
+    if (!\$alreadyExists && \$count > 0) {
+        return \$this->makeSlugUnique(\$slug, \$separator, true);
+    }
+    elseif (!\$alreadyExists && \$count == 0) {
         return \$slug2;
     }
+	
+    return \$slug2 . (\$count + 1);
 }
 ";
     }
