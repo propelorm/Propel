@@ -181,6 +181,8 @@ You can see how the indentation of the method calls provide a clear explanation 
 
 Databases typically use a cross-reference table, or junction table, to materialize the relationship. For instance, if the `user` and `group` tables are related by a many-to-many relationship, this happens through the rows of a `user_group` table. To inform Propel about the many-to-many relationship, set the `isCrossRef` attribute of the cross reference table to true:
 
+>**Warning**<br />Use only `isCrossRef` with a middle table that is design the same way as the example (user_group), two foreign keys that are also primary keys. If you use a different schema for the middle table, use it at your own risk
+
 {% highlight xml %}
 <table name="user">
   <column name="id" type="INTEGER" primaryKey="true" autoIncrement="true"/>
