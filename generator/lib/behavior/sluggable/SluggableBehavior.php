@@ -288,7 +288,7 @@ protected function makeSlugUnique(\$slug, \$separator = '" . $this->getParameter
         
         \$count = " . $this->builder->getStubQueryBuilder()->getClassname() . "::create()
             ->filterBySlug(\$this->$getter())
-        ->findPks(\$this->getPrimaryKeys());
+        ->findPks(\$this->getPrimaryKey());
 		
         if (1 == \$count) {
             return $getter();
