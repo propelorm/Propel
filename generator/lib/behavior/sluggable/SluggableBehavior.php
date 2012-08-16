@@ -80,20 +80,26 @@ class SluggableBehavior extends Behavior
     {
         $const = $builder->getColumnConstant($this->getColumnForParameter('slug_column'));
         $script = "
-if (\$this->isColumnModified($const) && \$this->{$this->getColumnGetter()}()) {
-    \$this->{$this->getColumnSetter()}(\$this->makeSlugUnique(\$this->{$this->getColumnGetter()}()));";
-        if ($this->getParameter('permanent') == 'true') {
-            $script .= "
+if (\$this->isColumnModified($const)";
+		$pattern = $this->getParameter('slug_pattern');
+		if ($pattern && $this->getParameter('permanent') == 'false') {
+			$script .= " || ";
+			$count = preg_match_all('{[a-zA-Z]+}', $pattern, $matches, PREG_PATTERN_ORDER);
+			
+			foreach ($matches[0] as $key => $match) {
+				$column = $this->getTable()->getColumn($this->underscore($match));
+				if (null == $column) {
+					throw new \InvalidArgumentException('The pattern ' . $match . ' is invalid ! Please use PASCAL naming.');
+				}
+				$columnConst = $builder->getColumnConstant($column);
+				$script .= "\$this->isColumnModified($columnConst)" . ($key < $count - 1 ? " || " : "");
+			}
+		}
+        $script .= " && \$this->{$this->getColumnGetter()}()) {
+    \$this->{$this->getColumnSetter()}(\$this->makeSlugUnique(\$this->{$this->getColumnGetter()}()));
 } elseif (!\$this->{$this->getColumnGetter()}()) {
     \$this->{$this->getColumnSetter()}(\$this->createSlug());
 }";
-        } else {
-            $script .= "
-} else {
-    \$this->{$this->getColumnSetter()}(\$this->createSlug());
-}";
-        }
-
         return $script;
     }
 
@@ -260,7 +266,6 @@ protected static function limitSlugSize(\$slug, \$incrementReservedSpace = 3)
     {
         $script .= "
 
-
 /**
  * Get the slug, ensuring its uniqueness
  *
@@ -275,7 +280,22 @@ protected function makeSlugUnique(\$slug, \$separator = '" . $this->getParameter
         \$slug2 = \$slug;
     }
     else {
-        \$slug2 = \$slug . \$separator;
+        \$slug2 = \$slug . \$separator;";
+		
+		if (null == $this->getParameter('slug_pattern')) {
+			$getter = $this->getColumnGetter();
+		    $script .= "
+        
+        \$count = " . $this->builder->getStubQueryBuilder()->getClassname() . "::create()
+            ->filterBySlug(\$this->$getter())
+        ->findPks(\$this->getPrimaryKeys());
+		
+        if (1 == \$count) {
+            return $getter();
+        }";
+		}
+		
+		$script .= "
     }
 	
     \$count = " . $this->builder->getStubQueryBuilder()->getClassname() . "::create()
@@ -354,4 +374,13 @@ public function findOneBySlug(\$slug, \$con = null)
 ";
     }
 
+	/**
+	 * @param string $string
+	 * 
+	 * @return string
+	 */
+	protected function underscore($string)
+	{
+		return strtolower(preg_replace(array('/([A-Z]+)([A-Z][a-z])/', '/([a-z\d])([A-Z])/'), array('\\1_\\2', '\\1_\\2'), strtr($string, '_', '.')));
+	}
 }
