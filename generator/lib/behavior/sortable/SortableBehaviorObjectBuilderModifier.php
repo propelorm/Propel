@@ -91,8 +91,8 @@ class SortableBehaviorObjectBuilderModifier
 
         return "// if scope has changed and rank was not modified (if yes, assuming superior action)
 // insert object to the end of new scope and cleanup old one
-if (\$this->isColumnModified({$this->peerClassname}::SCOPE_COL) && !\$this->isColumnModified({$this->peerClassname}::SORTABLE_RANK)) {
-    {$this->peerClassname}::shiftRank(-1, \$this->getSortableRank() + 1, null, \$this->oldScope, \$con);
+if (\$this->isColumnModified({$this->peerClassname}::SCOPE_COL) && !\$this->isColumnModified({$this->peerClassname}::RANK_COL)) {
+    {$this->peerClassname}::shiftRank(-1, \$this->{$this->getColumnGetter()}() + 1, null, \$this->oldScope, \$con);
     \$this->insertAtBottom(\$con);
 }
 ";
@@ -636,7 +636,7 @@ public function moveToBottom(PropelPDO \$con = null)
         $useScope = $this->behavior->useScope();
         $script .= "
 /**
- * Removes the current object from the list.
+ * Removes the current object from the list".($useScope ? ' (moves it to the null scope)' : '').".
  * The modifications are not persisted until the object is saved.
  *
  * @param     PropelPDO \$con optional connection
@@ -644,7 +644,19 @@ public function moveToBottom(PropelPDO \$con = null)
  * @return    {$this->objectClassname} the current object
  */
 public function removeFromList(PropelPDO \$con = null)
-{
+{";
+        if ($useScope) {
+          $script .= "
+    // check if object is already removed
+    if (\$this->{$this->getColumnGetter('scope_column')}() === null) {
+        throw new PropelException('Object is already removed (has null scope)');
+    }
+
+    // move the object to the end of null scope
+    \$this->{$this->getColumnSetter('scope_column')}(null);
+//    \$this->insertAtBottom(\$con);";
+        } else {
+        $script .= "
     // Keep the list modification query for the save() transaction
     \$this->sortableQueries []= array(
         'callable'  => array(self::PEER, 'shiftRank'),
@@ -652,9 +664,6 @@ public function removeFromList(PropelPDO \$con = null)
     );
     // remove the object from the list
     \$this->{$this->getColumnSetter('rank_column')}(null);";
-        if ($useScope) {
-        $script .= "
-    \$this->insertAtBottom(\$con);";
         }
         $script .= "
 
