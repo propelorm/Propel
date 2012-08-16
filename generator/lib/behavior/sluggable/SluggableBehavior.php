@@ -79,11 +79,11 @@ class SluggableBehavior extends Behavior
     public function preSave($builder)
     {
         $const = $builder->getColumnConstant($this->getColumnForParameter('slug_column'));
-        $script = "
-if (\$this->isColumnModified($const)";
 		$pattern = $this->getParameter('slug_pattern');
-		if ($pattern && $this->getParameter('permanent') == 'false') {
-			$script .= " || ";
+		
+		if ($pattern && $this->getParameter('permanent') != 'true') {
+			$script = "
+if ((\$this->isColumnModified($const) || ";
 			$count = preg_match_all('{[a-zA-Z]+}', $pattern, $matches, PREG_PATTERN_ORDER);
 			
 			foreach ($matches[0] as $key => $match) {
@@ -94,12 +94,28 @@ if (\$this->isColumnModified($const)";
 				$columnConst = $builder->getColumnConstant($column);
 				$script .= "\$this->isColumnModified($columnConst)" . ($key < $count - 1 ? " || " : "");
 			}
+			
+			$script .= ") && \$this->{$this->getColumnGetter()}()) {";
 		}
-        $script .= " && \$this->{$this->getColumnGetter()}()) {
-    \$this->{$this->getColumnSetter()}(\$this->makeSlugUnique(\$this->{$this->getColumnGetter()}()));
+		else {
+			$script .= "if (\$this->isColumnModified($const) && \$this->{$this->getColumnGetter()}()) {";
+		}
+		
+		$script .= "
+    \$this->{$this->getColumnSetter()}(\$this->makeSlugUnique(\$this->{$this->getColumnGetter()}()));";
+	
+	if (null == $pattern && $this->getParameter('permanent') != 'true') {
+		$script .= "
+} else {
+    \$this->{$this->getColumnSetter()}(\$this->createSlug());
+}";
+	}
+	else {
+		$script .= "
 } elseif (!\$this->{$this->getColumnGetter()}()) {
     \$this->{$this->getColumnSetter()}(\$this->createSlug());
 }";
+	}
         return $script;
     }
 
@@ -292,7 +308,7 @@ protected function makeSlugUnique(\$slug, \$separator = '" . $this->getParameter
         ->count();
 		
         if (1 == \$count) {
-            return $getter();
+            return \$this->$getter();
         }";
 		}
 		
