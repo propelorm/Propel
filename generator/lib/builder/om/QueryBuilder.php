@@ -143,6 +143,11 @@ class QueryBuilder extends OMBuilder
 
         // magic findBy() methods, for IDE completion
         foreach ($this->getTable()->getColumns() as $column) {
+            // skip "findPk" alias method
+            if (!$this->getTable()->hasCompositePrimaryKey() && $column->isPrimaryKey()) {
+                continue;
+            }
+
             $script .= "
  * @method $modelClass findOneBy" . $column->getPhpName() . "(" . $column->getPhpType() . " \$" . $column->getName() . ") Return the first $modelClass filtered by the " . $column->getName() . " column";
         }
