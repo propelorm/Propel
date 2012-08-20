@@ -42,6 +42,7 @@ class SortableBehaviorPeerBuilderModifierWithScopeTest extends BookstoreSortable
         Table12Peer::doDeleteAll();
         $this->assertNull(Table12Peer::getMaxRank(1), 'getMaxRank() returns null for empty tables');
     }
+
     public function testRetrieveByRank()
     {
         $t = Table12Peer::retrieveByRank(5, 1);
@@ -94,21 +95,25 @@ class SortableBehaviorPeerBuilderModifierWithScopeTest extends BookstoreSortable
 
     public function testRetrieveList()
     {
+      $this->assertEquals(4, count(Table12Peer::retrieveList(null)), 'retrieveList() returns the list of objects in the scope');
       $this->assertEquals(4, count(Table12Peer::retrieveList(1)), 'retrieveList() returns the list of objects in the scope');
       $this->assertEquals(2, count(Table12Peer::retrieveList(2)), 'retrieveList() returns the list of objects in the scope');
     }
 
     public function testCountList()
     {
+      $this->assertEquals(4, Table12Peer::countList(null), 'countList() returns the list of objects in the scope');
       $this->assertEquals(4, Table12Peer::countList(1), 'countList() returns the list of objects in the scope');
       $this->assertEquals(2, Table12Peer::countList(2), 'countList() returns the list of objects in the scope');
     }
 
     public function testDeleteList()
     {
-        $this->assertEquals(4, Table12Peer::deleteList(1), 'deleteList() returns the list of objects in the scope');
+        $this->assertEquals(4, Table12Peer::deleteList(null), 'deleteList() returns the list of deleted objects in the scope');
+        $this->assertEquals(6, Table12Peer::doCount(new Criteria()), 'deleteList() deletes the objects in the scope');
+        $this->assertEquals(4, Table12Peer::deleteList(1), 'deleteList() returns the list of deleted objects in the scope');
         $this->assertEquals(2, Table12Peer::doCount(new Criteria()), 'deleteList() deletes the objects in the scope');
-        $this->assertEquals(2, Table12Peer::deleteList(2), 'deleteList() returns the list of objects in the scope');
+        $this->assertEquals(2, Table12Peer::deleteList(2), 'deleteList() returns the list of deleted objects in the scope');
         $this->assertEquals(0, Table12Peer::doCount(new Criteria()), 'deleteList() deletes the objects in the scope');
     }
 }
