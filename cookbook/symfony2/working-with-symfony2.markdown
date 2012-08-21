@@ -166,6 +166,8 @@ propel:
         dsn:                  %database_driver%:host=%database_host%;dbname=%database_name%;charset=UTF8
         options:              {}
         attributes:           {}
+
+#define the parameters in app/config/parameters.yml
 {% endhighlight %}
 
 
