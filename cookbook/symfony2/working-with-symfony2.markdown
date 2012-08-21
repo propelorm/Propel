@@ -158,6 +158,7 @@ The recommended way to fill in these information is to use parameters:
 
 {% highlight yaml %}
 # app/config/config*.yml
+# define the parameters in app/config/parameters.yml
 propel:
     dbal:
         driver:               %database_driver%
@@ -166,8 +167,6 @@ propel:
         dsn:                  %database_driver%:host=%database_host%;dbname=%database_name%;charset=UTF8
         options:              {}
         attributes:           {}
-
-#define the parameters in app/config/parameters.yml
 {% endhighlight %}
 
 
