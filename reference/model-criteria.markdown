@@ -762,7 +762,7 @@ $book = BookQuery::create()
 $author = $book->getAuthor();  // Same result, with no supplementary query
 {% endhighlight %}
 
-Since the call to `with()` adds the columns of the related object to the SELECT part of the query, and uses these columns to populate the related object, that means that `joinWith()` is slower and consumes more memory that `join()`. So use it only when you actually need the related objects afterwards.
+Since the call to `with()` adds the columns of the related object to the SELECT part of the query, and uses these columns to populate the related object, that means that `joinWith()` is slower and consumes more memory than `join()`. So use it only when you actually need the related objects afterwards.
 
 `with()` and `joinWith()` are not limited to immediate relationships. As a matter of fact, just like you can chain `join()` calls, you can chain `joinWith()` calls to populate a chain of objects:
 
