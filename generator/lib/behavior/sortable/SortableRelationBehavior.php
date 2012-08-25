@@ -67,15 +67,8 @@ class SortableRelationBehavior extends Behavior
 
     protected function addObjectMoveRelatedToNullScope(&$script)
     {
-        $database = $this->getTable()->getDatabase();
-        $tableName = $database->getTablePrefix() . $this->getParameter('foreign_table');
-        $peer = $this->builder->getNewStubPeerBuilder($this->getForeignTable())->getClassname();
-
-        $maxSql = sprintf('SELECT MAX(%s) FROM %s WHERE %s IS NULL',
-            $this->getForeignColumnForParameter('foreign_rank_column')->getName(),
-            $database->getPlatform()->quoteIdentifier($tableName),
-            $this->getForeignColumnForParameter('foreign_scope_column')->getFullyQualifiedName()
-        );
+        $peerClass = $this->builder->getNewStubPeerBuilder($this->getForeignTable())->getClassname();
+        $queryClass = $this->builder->getNewStubQueryBuilder($this->getForeignTable())->getClassname();
 
         $script .= "
 /**
@@ -85,14 +78,11 @@ class SortableRelationBehavior extends Behavior
 public function {$this->getObjectMoveRelatedToNullScopeMethodName()}(PropelPDO \$con = null)
 {
     if (\$con === null) {
-        \$con = Propel::getConnection($peer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+        \$con = Propel::getConnection($peerClass::DATABASE_NAME, Propel::CONNECTION_WRITE);
     }
 
-    \$stmt = \$con->prepare('$maxSql');
-    \$stmt->execute();
-    \$maxRank = (int)\$stmt->fetchColumn();
-
-    $peer::shiftRank(\$maxRank, null, null, \$this->getPrimaryKey(), \$con);
+    \$maxRank = $queryClass::create()->getMaxRank(\$this->getPrimaryKey(), \$con);
+    $peerClass::shiftRank(\$maxRank, null, null, \$this->getPrimaryKey(), \$con);
 }
 ";
 

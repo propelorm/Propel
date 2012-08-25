@@ -15,6 +15,7 @@ require_once dirname(__FILE__) . '/../../../../tools/helpers/bookstore/behavior/
  * Tests for SortableBehavior class
  *
  * @author		Massimiliano Arione
+ * @author		rozwell
  * @version		$Revision$
  * @package		generator.behavior.sortable
  */

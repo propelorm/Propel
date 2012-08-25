@@ -13,6 +13,7 @@
  *
  * @author     François Zaninotto
  * @author     heltem <heltem@o2php.com>
+ * @author     rozwell
  * @package    propel.generator.behavior.sortable
  */
 class SortableBehaviorPeerBuilderModifier
@@ -350,7 +351,7 @@ public static function shiftRank(\$delta, \$first = null, \$last = null, " . ($u
         \$whereCriteria->add($peerClassname::RANK_COL, \$first, Criteria::GREATER_EQUAL);
     }
     if (null !== \$last) {
-        \$whereCriteria->add($peerClassname::RANK_COL, \$last, Criteria::LESS_EQUAL);
+        \$whereCriteria->addAnd($peerClassname::RANK_COL, \$last, Criteria::LESS_EQUAL);
     }";
         if ($useScope) {
             $script .= "
