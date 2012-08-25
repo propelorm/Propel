@@ -38,22 +38,23 @@ class SortableBehavior extends Behavior
      */
     public function modifyTable()
     {
-        if (!$this->getTable()->containsColumn($this->getParameter('rank_column'))) {
-            $this->getTable()->addColumn(array(
+        $table = $this->getTable();
+
+        if (!$table->containsColumn($this->getParameter('rank_column'))) {
+            $table->addColumn(array(
                 'name' => $this->getParameter('rank_column'),
                 'type' => 'INTEGER'
             ));
         }
         if ($this->useScope() &&
-             !$this->getTable()->containsColumn($this->getParameter('scope_column'))) {
-            $this->getTable()->addColumn(array(
+             !$table->containsColumn($this->getParameter('scope_column'))) {
+            $table->addColumn(array(
                 'name' => $this->getParameter('scope_column'),
                 'type' => 'INTEGER'
             ));
         }
 
         if ($this->useScope()) {
-            $table = $this->getTable();
             $keys = $table->getColumnForeignKeys($this->getParameter('scope_column'));
             foreach ($keys as $key) {
                 if ($key->isForeignPrimaryKey() && $key->getOnDelete() == ForeignKey::SETNULL) {

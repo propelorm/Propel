@@ -69,16 +69,11 @@ class SortableRelationBehavior extends Behavior
     {
         $database = $this->getTable()->getDatabase();
         $tableName = $database->getTablePrefix() . $this->getParameter('foreign_table');
+        $peer = $this->builder->getNewStubPeerBuilder($this->getForeignTable())->getClassname();
 
         $maxSql = sprintf('SELECT MAX(%s) FROM %s WHERE %s IS NULL',
             $this->getForeignColumnForParameter('foreign_rank_column')->getName(),
             $database->getPlatform()->quoteIdentifier($tableName),
-            $this->getForeignColumnForParameter('foreign_scope_column')->getFullyQualifiedName()
-        );
-        $updateSql = sprintf('UPDATE %s SET %s = %s+:p1 WHERE %s = :p2',
-            $database->getPlatform()->quoteIdentifier($tableName),
-            $this->getForeignColumnForParameter('foreign_rank_column')->getName(),
-            $this->getForeignColumnForParameter('foreign_rank_column')->getName(),
             $this->getForeignColumnForParameter('foreign_scope_column')->getFullyQualifiedName()
         );
 
@@ -87,16 +82,17 @@ class SortableRelationBehavior extends Behavior
  * Moves related {$this->getRelatedClassPluralForm()} to null scope
  * @param PropelPDO \$con A connection object
  */
-public function {$this->getObjectMoveRelatedToNullScopeMethodName()}(PropelPDO \$con)
+public function {$this->getObjectMoveRelatedToNullScopeMethodName()}(PropelPDO \$con = null)
 {
+    if (\$con === null) {
+        \$con = Propel::getConnection($peer::DATABASE_NAME, Propel::CONNECTION_WRITE);
+    }
+
     \$stmt = \$con->prepare('$maxSql');
     \$stmt->execute();
     \$maxRank = (int)\$stmt->fetchColumn();
 
-    \$stmt = \$con->prepare('$updateSql');
-    \$stmt->bindValue(':p1', \$maxRank);
-    \$stmt->bindValue(':p2', \$this->getPrimaryKey());
-    \$stmt->execute();
+    $peer::shiftRank(\$maxRank, null, null, \$this->getPrimaryKey(), \$con);
 }
 ";
 
