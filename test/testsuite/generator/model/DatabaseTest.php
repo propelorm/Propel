@@ -128,4 +128,19 @@ class DatabaseTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('Bar', $t1->getNamespace());
     }
 
+    public function testAddTableWithSameNameOnDifferentSchema()
+    {
+        $db = new Database();
+        $db->setPlatform(new SchemaPlatform());
+
+        $t1 = new Table('t1');
+        $db->addTable($t1);
+        $this->assertEquals('t1', $t1->getName());
+
+        $t1b = new Table('t1');
+        $t1b->setSchema('bis');
+        $db->addTable($t1b);
+        $this->assertEquals('bis.t1', $t1b->getName());
+    }
+
 }
