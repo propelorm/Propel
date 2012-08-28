@@ -1,4 +1,4 @@
-  <?php
+<?php
 
 /*
  *	$Id: TableTest.php 1965 2010-09-21 17:44:12Z francois $
