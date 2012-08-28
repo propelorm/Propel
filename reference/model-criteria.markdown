@@ -39,7 +39,7 @@ Propel uses the column name in conjunction with the schema to determine the colu
 <?php
 // $con is a PDO instance
 $stmt = $con->prepare($query);
-$stmt->bind(':p1', time() - 30 * 24 * 60 * 60, PDO::PARAM_INT);
+$stmt->bindParam(':p1', time() - 30 * 24 * 60 * 60, PDO::PARAM_INT);
 $res = $stmt->execute();
 {% endhighlight %}
 
