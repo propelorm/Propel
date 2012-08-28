@@ -207,7 +207,7 @@ To link a column to another table use the following syntax:
   [foreignSchema = "/TheOtherTableSQLSchema/"]
   [name = "/Name for this foreign key/"]
   [phpName = "/Name for the foreign object in methods generated in this class/"]
-  [refPhpName = "/Name for this object in methods generated in the foreign class/"]
+  [fkRefPhpName = "/Name for this object in methods generated in the foreign class/"]
   [onDelete = "cascade|setnull|restrict|none"]
   [onUpdate = "cascade|setnull|restrict|none"]
   [skipSql = "true|false"]
