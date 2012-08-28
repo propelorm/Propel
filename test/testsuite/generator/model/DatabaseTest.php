@@ -1,4 +1,4 @@
-<?php
+  <?php
 
 /*
  *	$Id: TableTest.php 1965 2010-09-21 17:44:12Z francois $
@@ -126,6 +126,21 @@ class DatabaseTest extends PHPUnit_Framework_TestCase
         $t1->setNamespace('\\Bar');
         $db->addTable($t1);
         $this->assertEquals('Bar', $t1->getNamespace());
+    }
+
+    public function testAddTableWithSameNameOnDifferentSchema()
+    {
+        $db = new Database();
+        $db->setPlatform(new SchemaPlatform());
+
+        $t1 = new Table('t1');
+        $db->addTable($t1);
+        $this->assertEquals('t1', $t1->getName());
+
+        $t1b = new Table('t1');
+        $t1b->setSchema('bis');
+        $db->addTable($t1b);
+        $this->assertEquals('bis.t1', $t1b->getName());
     }
 
 }
