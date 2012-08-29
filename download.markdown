@@ -27,7 +27,7 @@ Or add it as a submodule:
 > svn co http://svn.github.com/propelorm/Propel.git
 {% endhighlight %}
 
->**Warning**<br />SVN is no more the default Source Code Management since 2011.
+>**Warning**<br />SVN is no longer the default Source Code Management since 2011.
 
 ## PEAR Installer ##
 
