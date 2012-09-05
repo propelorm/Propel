@@ -170,6 +170,14 @@ class GeneratedObjectRelTest extends BookstoreEmptyTestBase
         $this->assertEquals(1, count($books), 'getCrossRefFK() accepts a query as first parameter');
     }
 
+    public function testOneToManyGetter()
+    {
+        BookstoreDataPopulator::populate(null, true);
+        $author = AuthorQuery::create()->findOneByLastName('Grass');
+        $books = $author->getBooks(new Criteria());
+        $this->assertNotNull($books->getCurrent(), 'getRelCol() initialize the internal iterator at the beginning');
+    }
+
     public function testManyToManyCounterExists()
     {
         $this->assertTrue(method_exists('BookClubList', 'countBooks'), 'Object generator correcly adds counter for the crossRefFk');
