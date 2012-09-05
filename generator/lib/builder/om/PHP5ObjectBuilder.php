@@ -3771,6 +3771,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
                       \$this->{$collName}Partial = true;
                     }
 
+                    \$$collName"."->getInternalIterator()->rewind();
                     return \$$collName;
                 }
 
