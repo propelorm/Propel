@@ -379,10 +379,10 @@ class Database extends ScopedElement
     {
         if ($data instanceof Table) {
             $tbl = $data; // alias
+            $tbl->setDatabase($this);
             if (isset($this->tablesByName[$tbl->getName()])) {
                 throw new EngineException(sprintf('Table "%s" declared twice', $tbl->getName()));
             }
-            $tbl->setDatabase($this);
             if ($tbl->getSchema() === null) {
                 $tbl->setSchema($this->getSchema());
             }
