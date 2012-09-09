@@ -450,7 +450,7 @@ You'll obtain the following result:
 
 ![](./images/many_to_many_form_with_existing_objects.png)
 
->**Information**<br />The `ModelType` is part of the [`PropelBundle`](http://github.com/propelorm/PropelBundle.git).
+>**Information**<br />The `ModelType` is part of the [`Symfony Propel Bridge`](https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Propel1/).
 
 ## Validation ##
 
