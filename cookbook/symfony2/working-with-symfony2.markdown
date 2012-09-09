@@ -583,6 +583,9 @@ You just need to put the right _Annotation_ on top of your controller:
 {% highlight php %}
 <?php
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+[...]
+
 /**
  * @ParamConverter("post", class="BlogBundle\Model\Post")
  */
