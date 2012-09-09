@@ -454,7 +454,7 @@ You'll obtain the following result:
 
 ## Validation ##
 
-Using Propel in a Symfony2 project avoid you to use validation through annotation, or at least in a convenient way.
+Using Propel in a Symfony2 project lacks a convenient way to use validation through annotation.
 Instead you have to use classic validation process, using a validation (in yml, xml or php format) file.
 
 In order to use this type of validation you must configure your application.
