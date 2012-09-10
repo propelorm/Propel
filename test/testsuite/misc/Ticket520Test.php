@@ -91,10 +91,12 @@ class Ticket520Test extends BookstoreTestBase
 
         $b1 = new Book();
         $b1->setTitle("The Hitchhikers Guide To The Galaxy");
+        $b1->setIsbn('14');
         $a->addBook($b1);
 
         $b2 = new Book();
         $b2->setTitle("The Restaurant At The End Of The Universe");
+        $b2->setIsbn('124');
         $a->addBook($b2);
 
         $c = new Criteria();
@@ -117,6 +119,7 @@ class Ticket520Test extends BookstoreTestBase
 
         $b1 = new Book();
         $b1->setTitle("The Hitchhikers Guide To The Galaxy");
+        $b1->setIsbn('13245');
         $a->addBook($b1);
 
         $books = $a->getBooks();
@@ -170,6 +173,7 @@ class Ticket520Test extends BookstoreTestBase
 
         $b1 = new Book();
         $b1->setTitle("The Hitchhikers Guide To The Galaxy");
+        $b1->setIsbn('12435');
         $a->addBook($b1);
 
         /* Like testAddNewObjectAfterSaveWithPoisonedCache, but this time

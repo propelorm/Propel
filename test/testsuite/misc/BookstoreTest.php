@@ -813,6 +813,7 @@ class BookstoreTest extends BookstoreEmptyTestBase
         $booksCollection = BookQuery::create()->setLimit(4)->find();
 
         $blc3 = new BookClubList();
+        $blc3->setGroupLeader('Something');
         $blc3->setFavoriteBooks($booksCollection);
         $blc3->save();
 

@@ -24,25 +24,27 @@ class PoisonedCacheBugTest extends BookstoreTestBase
      * @var Book[]
      */
     private $books;
-    
+
     public function setUp()
     {
         parent::setUp();
-        
+
         $a = new Author();
         $a->setFirstName("Douglas");
         $a->setLastName("Adams");
 
         $b1 = new Book();
         $b1->setTitle("The Hitchhikers Guide To The Galaxy");
+        $b1->setIsbn('1145');
         $a->addBook($b1);
 
         $b2 = new Book();
         $b2->setTitle("The Restaurant At The End Of The Universe");
+        $b2->setIsbn('1245');
         $a->addBook($b2);
-        
+
         $a->save();
-        
+
         $this->author = $a;
         $this->books = array($b1, $b2);
 
@@ -51,7 +53,7 @@ class PoisonedCacheBugTest extends BookstoreTestBase
         // Clear author instance pool so the object would be fetched from the database
         AuthorPeer::clearInstancePool();
     }
-    
+
     public function testSetUp()
     {
         $this->assertTrue(Propel::isInstancePoolingEnabled());
@@ -104,7 +106,7 @@ class PoisonedCacheBugTest extends BookstoreTestBase
     public function testAddingABook()
     {
         $author = AuthorPeer::retrieveByPK($this->author->getId());
-        
+
         $c1 = new Book();
         $c1->setTitle("ORM 101");
         $author->addBook($c1);
@@ -149,6 +151,8 @@ class PoisonedCacheBugTest extends BookstoreTestBase
 
         // add new object before fetching old books
         $b3 = new Book();
+        $b3->setIsbn('124');
+        $b3->setTitle('Title');
         $author->addBook($b3);
 
         $c = new Criteria();
