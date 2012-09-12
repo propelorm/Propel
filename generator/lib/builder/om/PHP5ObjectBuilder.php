@@ -4522,7 +4522,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
                 $varName = $this->getPKRefFKVarName($refFK);
                 $script .= "
             if (\$this->$varName !== null) {
-                if (!\$this->{$varName}->isDeleted()) {
+                if (!\$this->{$varName}->isDeleted() && (\$this->{$varName}->isNew() || \$this->{$varName}->isModified())) {
                         \$affectedRows += \$this->{$varName}->save(\$con);
                 }
             }
@@ -4532,7 +4532,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
                 $script .= "
             if (\$this->$collName !== null) {
                 foreach (\$this->$collName as \$referrerFK) {
-                    if (!\$referrerFK->isDeleted()) {
+                    if (!\$referrerFK->isDeleted() && (\$referrerFK->isNew() || \$referrerFK->isModified())) {
                         \$affectedRows += \$referrerFK->save(\$con);
                     }
                 }
