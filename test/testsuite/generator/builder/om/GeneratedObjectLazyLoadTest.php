@@ -77,4 +77,20 @@ EOF;
         $this->assertEquals('hello', $obj2->getBaz($con));
         $this->assertEquals($count + 1, $con->getQueryCount());
     }
+
+    public function testLazyLoadedColumnsMayBeUnsetWithoutLoading()
+    {
+        $con = Propel::getconnection(LazyLoadActiveRecordPeer::DATABASE_NAME);
+        $con->useDebug(true);
+        $obj = new LazyLoadActiveRecord();
+        $obj->setBar('hello');
+        $obj->save($con);
+        LazyLoadActiveRecordPeer::clearInstancePool();
+        $obj2 = LazyLoadActiveRecordQuery::create()->findPk($obj->getId(), $con);
+        $obj2->setBar(null);
+        $obj2->save();
+        LazyLoadActiveRecordPeer::clearInstancePool();
+        $obj3 = LazyLoadActiveRecordQuery::create()->findPk($obj->getId(), $con);
+        $this->assertNull($obj3->getBar());
+    }
 }

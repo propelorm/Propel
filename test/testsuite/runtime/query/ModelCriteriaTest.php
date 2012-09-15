@@ -1490,6 +1490,7 @@ class ModelCriteriaTest extends BookstoreTestBase
         $book = new Book();
         $book->setTitle('foo');
         $book->setPrice(125);
+        $book->setIsbn('1235');
         $book->save();
         $book = BookQuery::create('b')
             ->where('b.Title = ?', 'foo')
@@ -1531,6 +1532,8 @@ class ModelCriteriaTest extends BookstoreTestBase
         BookQuery::create()->deleteAll($con);
         $book = new Book();
         $book->setPrice(125);
+        $book->setTitle('Title');
+        $book->setIsbn('1245');
         $book->save($con);
         $count = $con->getQueryCount();
         $book = BookQuery::create('b')

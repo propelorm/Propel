@@ -1417,6 +1417,11 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
         $cfc = $col->getPhpName();
         if ($col->isLazyLoad()) {
             $script .= "
+        // Allow unsetting the lazy loaded column even when its not loaded.
+        if (!\$this->".$clo."_isLoaded && \$v === null) {
+            \$this->modifiedColumns[] = ".$this->getColumnConstant($col).";
+        }
+
         // explicitly set the is-loaded flag to true for this lazy load col;
         // it doesn't matter if the value is actually set or not (logic below) as
         // any attempt to set the value means that no db lookup should be performed

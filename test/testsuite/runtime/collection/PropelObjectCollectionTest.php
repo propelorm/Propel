@@ -67,7 +67,9 @@ class PropelObjectCollectionTest extends BookstoreTestBase
         for ($i=0; $i < 4; $i++) {
             $book = new Book();
             $book->setTitle('Title' . $i);
+            $book->setIsbn('124' . $i);
             $book->save($this->con);
+
             $books []= $book;
         }
 
@@ -127,6 +129,7 @@ class PropelObjectCollectionTest extends BookstoreTestBase
     {
         $author = new Author();
         $author->setLastName('I who never wrote');
+        $author->setFirstName('Foo');
         $author->save($this->con);
         AuthorPeer::clearInstancePool();
         BookPeer::clearInstancePool();
@@ -227,6 +230,7 @@ class PropelObjectCollectionTest extends BookstoreTestBase
         $col = new PropelObjectCollection();
         $b1  = new Book();
         $b1->setTitle('Bar');
+        $b1->setIsbn('1224');
         $b1->save();
 
         $b2  = clone $b1;
@@ -244,6 +248,7 @@ class PropelObjectCollectionTest extends BookstoreTestBase
         $col = new PropelObjectCollection();
         $b1  = new Book();
         $b1->setTitle('Bar');
+        $b1->setIsbn('1234');
         $b1->save();
 
         $b2  = clone $b1;
