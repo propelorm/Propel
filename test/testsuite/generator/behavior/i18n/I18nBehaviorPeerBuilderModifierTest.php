@@ -39,7 +39,7 @@ class I18nBehaviorPeerBuilderModifierTest extends PHPUnit_Framework_TestCase
 </database>
 EOF;
         PropelQuickBuilder::buildSchema($schema);
-        $this->assertEquals('en_EN', I18nBehaviorTest01Peer::DEFAULT_LOCALE);
+        $this->assertEquals('en_US', I18nBehaviorTest01Peer::DEFAULT_LOCALE);
         $this->assertEquals('fr_FR', I18nBehaviorTest02Peer::DEFAULT_LOCALE);
     }
 
