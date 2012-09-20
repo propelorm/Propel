@@ -142,7 +142,7 @@ class PropelArrayCollection extends PropelCollection
      *
      * @return array
      */
-    public function toArray($keyColumn = null, $usePrefix = false)
+    public function toArray($keyColumn = null, $usePrefix = false, $keyType = BasePeer::TYPE_PHPNAME, $includeLazyLoadColumns = true, $alreadyDumpedObjects = array())
     {
         $ret = array();
         foreach ($this as $key => $element) {
