@@ -7,7 +7,7 @@ title: Migrations
 
 During the life of a project, the Model seldom stays the same. New tables arise, and existing tables often need modifications (a new column, a new index, another foreign key...). Updating the database structure accordingly, while preserving existing data, is a common concern. Propel provides a set of tools to allow the _migration_ of database structure and data with ease.
 
->**Tip**<br />Propel only supports migrations in MySQL for now.
+>**Tip**<br />Propel only supports migrations in MySQL and PostgreSQL for now.
 
 ## Migration Workflow ##
 
