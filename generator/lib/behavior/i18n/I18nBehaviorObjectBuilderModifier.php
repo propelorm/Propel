@@ -116,6 +116,7 @@ class I18nBehaviorObjectBuilderModifier
             'localeColumnName' => $this->behavior->getLocaleColumn()->getPhpName(),
             'i18nQueryName'    => $this->builder->getNewStubQueryBuilder($i18nTable)->getClassname(),
             'i18nSetterMethod' => $this->builder->getRefFKPhpNameAffix($fk, $plural = false),
+            'isCompositePrimaryKey' => $this->behavior->getTable()->hasCompositePrimaryKey(),
         ));
     }
 
@@ -130,6 +131,7 @@ class I18nBehaviorObjectBuilderModifier
             'i18nQueryName'    => $this->builder->getNewStubQueryBuilder($i18nTable)->getClassname(),
             'i18nCollection'   => $this->builder->getRefFKCollVarName($fk),
             'localeColumnName' => $this->behavior->getLocaleColumn()->getPhpName(),
+            'isCompositePrimaryKey' => $this->behavior->getTable()->hasCompositePrimaryKey(),
         ));
     }
 

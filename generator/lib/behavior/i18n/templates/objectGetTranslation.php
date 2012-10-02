@@ -1,4 +1,3 @@
-
 /**
  * Returns the current translation for a given locale
  *
@@ -23,9 +22,17 @@ public function getTranslation($locale = '<?php echo $defaultLocale ?>', PropelP
             $translation = new <?php echo $i18nTablePhpName ?>();
             $translation->set<?php echo $localeColumnName ?>($locale);
         } else {
+<?php if ($isCompositePrimaryKey): ?>
+            $pk = $this->getPrimaryKey();
+            $pk[] = $locale;
+            $translation = <?php echo $i18nQueryName ?>::create()
+                ->filterByPrimaryKey($pk)
+                ->findOneOrCreate($con);
+<?php else: ?>
             $translation = <?php echo $i18nQueryName ?>::create()
                 ->filterByPrimaryKey(array($this->getPrimaryKey(), $locale))
                 ->findOneOrCreate($con);
+<?php endif; ?>
             $this->currentTranslations[$locale] = $translation;
         }
         $this->add<?php echo $i18nSetterMethod ?>($translation);

@@ -1,4 +1,3 @@
-
 /**
  * Remove the translation for a given locale
  *
@@ -10,9 +9,17 @@
 public function removeTranslation($locale = '<?php echo $defaultLocale ?>', PropelPDO $con = null)
 {
     if (!$this->isNew()) {
+<?php if ($isCompositePrimaryKey): ?>
+        $pk = $this->getPrimaryKey();
+        $pk[] = $locale;
+        <?php echo $i18nQueryName ?>::create()
+            ->filterByPrimaryKey($pk)
+            ->delete($con);
+<?php else: ?>
         <?php echo $i18nQueryName ?>::create()
             ->filterByPrimaryKey(array($this->getPrimaryKey(), $locale))
             ->delete($con);
+<?php endif; ?>
     }
     if (isset($this->currentTranslations[$locale])) {
         unset($this->currentTranslations[$locale]);
