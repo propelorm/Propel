@@ -522,7 +522,7 @@ Acme\DemoBundle\Model\Book:
 {% endhighlight %}
 
 The aim of this feature is to be able to mix both real and fake data in the same file. Fake data is interesting to quickly
-add data to your application, but most of the time you need to rely on real data. Integrate Faker in your YAML files
+add data to your application, but most of the time you need to rely on real data. Integrating Faker in with your YAML files
 allows you to write strong fixtures efficiently.
 
 
