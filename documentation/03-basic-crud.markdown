@@ -259,11 +259,11 @@ foreach ($authorPager as $author) {
   echo $author->getFirstName();
 }
 // A pager object gives more information
-echo $pager->getNbResults();   // total number of results if not paginated
-echo $pager->haveToPaginate(); // return true if the total number of results exceeds the maximum per page
-echo $pager->getFirstIndex();  // index of the first result in the page
-echo $pager->getLastIndex();   // index of the last result in the page
-$links = $pager->getLinks(5);  // array of page numbers around the current page; useful to display pagination controls
+echo $authorPager->getNbResults();   // total number of results if not paginated
+echo $authorPager->haveToPaginate(); // return true if the total number of results exceeds the maximum per page
+echo $authorPager->getFirstIndex();  // index of the first result in the page
+echo $authorPager->getLastIndex();   // index of the last result in the page
+$links = $authorPager->getLinks(5);  // array of page numbers around the current page; useful to display pagination controls
 {% endhighlight %}
 
 ## Collections And On-Demand Hydration ##
