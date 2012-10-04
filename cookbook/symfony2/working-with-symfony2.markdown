@@ -4,7 +4,7 @@ title: Working With Symfony2 (Introduction)
 ---
 # Working with Symfony2 - Introduction #
 
-If you are interested to work with Propel2 with Symfony2, you should consider to use the [PropelBundle](https://github.com/propelorm/PropelBundle).
+If you are interested to work with Propel2 with Symfony2, you should consider using the [PropelBundle](https://github.com/propelorm/PropelBundle).
 
 ## Installation ##
 
@@ -19,7 +19,7 @@ The recommended way to install this bundle is to rely on [Composer](http://getco
 }
 {% endhighlight %}
 
-Otherwise you can use Git, SVN, Git submodules, or the Symfony vendor management (deps file):
+Alternatively, you can use Git, SVN, Git submodules, or the Symfony vendor management (deps file):
 
 Clone this bundle in the `vendor/bundles/Propel` directory:
 
@@ -87,7 +87,7 @@ To insert SQL statements, use the `propel:sql:insert` command:
 
 Note that the `--force` option is needed to actually execute the SQL statements.
 
-Congratulation! You're done, just use the Model classes as any other class in Symfony2:
+Congratulations! You're done; just use the Model classes as any other class in Symfony2:
 
 {% highlight php %}
 <?php
@@ -355,14 +355,14 @@ You can create a **database**:
 
     > php app/console propel:database:create [--connection[=""]]
 
-As usual, `--connection` allows to specify a connection.
+As usual, `--connection` allows you to specify a connection.
 
 
 You can drop a **database**:
 
     > php app/console propel:database:drop [--connection[=""]] [--force]
 
-As usual, `--connection` allows to specify a connection.
+As usual, `--connection` allows you to specify a connection.
 
 Note that the `--force` option is needed to actually execute the SQL statements.
 
@@ -521,9 +521,9 @@ Acme\DemoBundle\Model\Book:
         description: <?php $faker('text', 500); ?>
 {% endhighlight %}
 
-The aim of this feature is to be able to mix real, and fake data in the same file. Fake data are interesting to quickly
-add data to your application, but most of the time you need to rely on real data. To integrate Faker in the YAML files
-allows to write strong fixtures efficiently.
+The aim of this feature is to be able to mix both real and fake data in the same file. Fake data is interesting to quickly
+add data to your application, but most of the time you need to rely on real data. Integrate Faker in your YAML files
+allows you to write strong fixtures efficiently.
 
 
 ## Dumping data ##
@@ -607,8 +607,8 @@ public function myAction(Post $post)
 {% endhighlight %}
 
 **New** with last version of `SensioFrameworkExtraBundle`, 
-you can ommit the `class` parameter if your controller parameter is typed, 
-this is usefull when you need to set extra `options`.
+you can omit the `class` parameter if your controller parameter is typed, 
+this is useful when you need to set extra `options`.
 
 {% highlight php %}
 <?php
