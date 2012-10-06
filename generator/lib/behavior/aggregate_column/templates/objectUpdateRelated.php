@@ -4,7 +4,7 @@
  *
  * @param PropelPDO $con A connection object
  */
-protected function updateRelated<?php echo $relationName ?>(PropelPDO $con)
+protected function updateRelated<?php echo $relationName ?>By<?php echo $relatedColumnPhpName ?>(PropelPDO $con)
 {
     if ($<?php echo $variableName ?> = $this->get<?php echo $relationName ?>()) {
         if (!$<?php echo $variableName ?>->isAlreadyInSave()) {
