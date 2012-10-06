@@ -1110,9 +1110,9 @@ class Table extends ScopedElement implements IDMethod
     public function getEarlyBehaviors()
     {
         $behaviors = array();
-        foreach ($this->behaviors as $name => $behavior) {
+        foreach ($this->behaviors as $behavior) {
             if ($behavior->isEarly()) {
-                $behaviors[$name] = $behavior;
+                $behaviors[$behavior->getName()] = $behavior;
             }
         }
 
