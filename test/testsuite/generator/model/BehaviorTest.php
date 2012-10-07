@@ -142,7 +142,7 @@ EOF;
 EOF;
         $appData = $xmlToAppData->parseString($schema);
         $table = $appData->getDatabase('test1')->getTable('table1');
-        $this->assertTrue(array_key_exists('timestampable', $table->getBehaviors()), 'A database behavior is automatically copied to all its table');
+        $this->assertTrue($table->hasBehavior('timestampable'), 'A database behavior is automatically copied to all its table');
     }
 
   public function testGetColumnForParameter()
