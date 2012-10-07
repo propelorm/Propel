@@ -3254,7 +3254,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
      * @return $className The associated $className object.
      * @throws PropelException
      */
-    public function get".$this->getFKPhpNameAffix($fk, $plural = false)."(PropelPDO \$con = null)
+    public function get".$this->getFKPhpNameAffix($fk, $plural = false)."(PropelPDO \$con = null, \$doQuery)
     {";
         $script .= "
         if (\$this->$varName === null && ($conditional) && \$doQuery) {";
