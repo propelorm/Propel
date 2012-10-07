@@ -3250,13 +3250,14 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
      * Get the associated $className object
      *
      * @param PropelPDO \$con Optional Connection object.
+     * @param \$doQuery Executes a query to get the object if required
      * @return $className The associated $className object.
      * @throws PropelException
      */
     public function get".$this->getFKPhpNameAffix($fk, $plural = false)."(PropelPDO \$con = null)
     {";
         $script .= "
-        if (\$this->$varName === null && ($conditional)) {";
+        if (\$this->$varName === null && ($conditional) && \$doQuery) {";
         if ($useRetrieveByPk) {
             $script .= "
             \$this->$varName = ".$fkQueryBuilder->getClassname()."::create()->findPk($localColumns, \$con);";
@@ -3952,7 +3953,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
         \$this->$varName = \$v;
 
         // Make sure that that the passed-in $className isn't already associated with this object
-        if (\$v !== null && \$v->get".$this->getFKPhpNameAffix($refFK, $plural = false)."() === null) {
+        if (\$v !== null && \$v->get".$this->getFKPhpNameAffix($refFK, $plural = false)."(null, false) === null) {
             \$v->set".$this->getFKPhpNameAffix($refFK, $plural = false)."(\$this);
         }
 
