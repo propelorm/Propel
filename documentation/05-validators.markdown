@@ -32,7 +32,7 @@ At runtime, you can validate an instance of the model by calling the `validate()
 <?php
 $user = new User();
 $user->setUsername("foo"); // only 3 in length, which is too short...
-if ($objUser->validate()) {
+if ($user->validate()) {
   // no validation errors, so the data can be persisted
   $user->save();
 } else {
