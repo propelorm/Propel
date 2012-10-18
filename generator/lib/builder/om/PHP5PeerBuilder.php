@@ -806,11 +806,11 @@ abstract class ".$this->getClassname(). $extendingPeerClass . "
             $script .= "serialize(array(";
             $i = 0;
             foreach ($pkphp as $pkvar) {
-                $script .= ($i++ ? ', ' : '') . "(string) $pkvar";
+                $script .= ($i++ ? ', ' : '') . $pkvar;
             }
             $script .= "))";
         } else {
-            $script .= "(string) " . $pkphp[0];
+            $script .= $pkphp[0];
         }
 
         return $script;
