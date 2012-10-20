@@ -293,6 +293,22 @@ class SluggableBehaviorTest extends BookstoreTestBase
             $this->fail($e->getMessage());
         }
     }
+
+    public function testNumberOfQueriesForMakeUniqSlug()
+    {
+        Table13Query::create()->deleteAll();
+        $con = Propel::getConnection(Table13Peer::DATABASE_NAME);
+
+        for ($i=0; $i < 5; $i++) {
+            $nbQuery = $con->getQueryCount();
+
+            $t = new Table13();
+            $t->setTitle('Hello, World');
+            $t->save($con);
+
+            $this->assertLessThanOrEqual(4, $con->getQueryCount() - $nbQuery, 'no more than 4 query to get a slug when it already exist');
+        }
+    }
 }
 
 class TestableTable13 extends Table13
