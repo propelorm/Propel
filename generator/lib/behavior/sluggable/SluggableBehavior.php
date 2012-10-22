@@ -80,21 +80,43 @@ class SluggableBehavior extends Behavior
     public function preSave($builder)
     {
         $const = $builder->getColumnConstant($this->getColumnForParameter('slug_column'));
-        $script = "
-if (\$this->isColumnModified($const) && \$this->{$this->getColumnGetter()}()) {
+		$pattern = $this->getParameter('slug_pattern');
+		
+		if ($pattern && $this->getParameter('permanent') != 'true') {
+			$script = "
+if ((\$this->isColumnModified($const) || ";
+			$count = preg_match_all('{[a-zA-Z]+}', $pattern, $matches, PREG_PATTERN_ORDER);
+			
+			foreach ($matches[0] as $key => $match) {
+				$column = $this->getTable()->getColumn($this->underscore($match));
+				if (null == $column) {
+					throw new \InvalidArgumentException('The pattern ' . $match . ' is invalid ! Please use PASCAL naming.');
+				}
+				$columnConst = $builder->getColumnConstant($column);
+				$script .= "\$this->isColumnModified($columnConst)" . ($key < $count - 1 ? " || " : "");
+			}
+			
+			$script .= ") && \$this->{$this->getColumnGetter()}()) {";
+		}
+		else {
+			$script .= "if (\$this->isColumnModified($const) && \$this->{$this->getColumnGetter()}()) {";
+		}
+		
+		$script .= "
     \$this->{$this->getColumnSetter()}(\$this->makeSlugUnique(\$this->{$this->getColumnGetter()}()));";
-        if ($this->getParameter('permanent') == 'true') {
-            $script .= "
-} elseif (!\$this->{$this->getColumnGetter()}()) {
-    \$this->{$this->getColumnSetter()}(\$this->createSlug());
-}";
-        } else {
-            $script .= "
+	
+	if (null == $pattern && $this->getParameter('permanent') != 'true') {
+		$script .= "
 } else {
     \$this->{$this->getColumnSetter()}(\$this->createSlug());
 }";
-        }
-
+	}
+	else {
+		$script .= "
+} elseif (!\$this->{$this->getColumnGetter()}()) {
+    \$this->{$this->getColumnSetter()}(\$this->createSlug());
+}";
+	}
         return $script;
     }
 
@@ -266,14 +288,36 @@ protected static function limitSlugSize(\$slug, \$incrementReservedSpace = 3)
  *
  * @param	string \$slug			the slug to check
  * @param	string \$separator the separator used by slug
- * @param	int    \$increment the count of occurences of the slug
+ * @param	int    \$alreadyExists false for the first try, true for the second, and take the high count + 1
  * @return string						the unique slug
  */
-protected function makeSlugUnique(\$slug, \$separator = '" . $this->getParameter('separator') ."', \$increment = 0)
+protected function makeSlugUnique(\$slug, \$separator = '" . $this->getParameter('separator') ."', \$alreadyExists = false)
 {
-    \$slug2 = empty(\$increment) ? \$slug : \$slug . \$separator . \$increment;
-    \$slugAlreadyExists = " . $this->builder->getStubQueryBuilder()->getClassname() . "::create()
-        ->filterBySlug(\$slug2)
+    if (!\$alreadyExists) {
+        \$slug2 = \$slug;
+    }
+    else {
+        \$slug2 = \$slug . \$separator;";
+		
+		if (null == $this->getParameter('slug_pattern')) {
+			$getter = $this->getColumnGetter();
+		    $script .= "
+        
+        \$count = " . $this->builder->getStubQueryBuilder()->getClassname() . "::create()
+            ->filterBySlug(\$this->$getter())
+			->filterByPrimaryKey(\$this->getPrimaryKey())
+        ->count();
+		
+        if (1 == \$count) {
+            return \$this->$getter();
+        }";
+		}
+		
+		$script .= "
+    }
+	
+    \$count = " . $this->builder->getStubQueryBuilder()->getClassname() . "::create()
+        ->filterBySlug(\$alreadyExists ? \$slug2 . '%' : \$slug2)
         ->prune(\$this)";
 
         if ($this->getParameter('scope_column')) {
@@ -287,12 +331,16 @@ protected function makeSlugUnique(\$slug, \$separator = '" . $this->getParameter
         ->includeDeleted()";
         }
         $script .= "
-        ->count();
-    if (\$slugAlreadyExists) {
-        return \$this->makeSlugUnique(\$slug, \$separator, ++\$increment);
-    } else {
+    ->count();
+	
+    if (!\$alreadyExists && \$count > 0) {
+        return \$this->makeSlugUnique(\$slug, \$separator, true);
+    }
+    elseif (!\$alreadyExists && \$count == 0) {
         return \$slug2;
     }
+	
+    return \$slug2 . (\$count + 1);
 }
 ";
     }
@@ -344,4 +392,13 @@ public function findOneBySlug(\$slug, \$con = null)
 ";
     }
 
+	/**
+	 * @param string $string
+	 * 
+	 * @return string
+	 */
+	protected function underscore($string)
+	{
+		return strtolower(preg_replace(array('/([A-Z]+)([A-Z][a-z])/', '/([a-z\d])([A-Z])/'), array('\\1_\\2', '\\1_\\2'), strtr($string, '_', '.')));
+	}
 }
