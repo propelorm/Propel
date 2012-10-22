@@ -192,9 +192,14 @@ class PHP5ObjectBuilder extends ObjectBuilder
         $table = $this->getTable();
         $tableName = $table->getName();
         $tableDesc = $table->getDescription();
-        $interface = $this->getInterface();
         $parentClass = $this->getBehaviorContent('parentClass');
         $parentClass = (null !== $parentClass) ? $parentClass : ClassTools::classname($this->getBaseClass());
+
+        if (false === strpos($this->getBaseClass(), '.')) {
+            $this->declareClass($this->getBaseClass());
+        } else {
+            $this->declareClass($parentClass);
+        }
 
         if ($this->getBuildProperty('addClassLevelComment')) {
             $script .= "
@@ -247,7 +252,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
         $this->declareClassFromBuilder($this->getStubQueryBuilder());
         $this->declareClasses(
             'Propel', 'PropelException', 'PDO', 'PropelPDO', 'Criteria',
-            'BaseObject', 'Persistent', 'BasePeer', 'PropelCollection',
+            'Persistent', 'BasePeer', 'PropelCollection',
             'PropelObjectCollection', 'Exception'
         );
 
