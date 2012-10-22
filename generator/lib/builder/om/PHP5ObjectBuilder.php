@@ -4442,75 +4442,77 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
         \$affectedRows = 0; // initialize var to track total num of affected rows
         if (!\$this->alreadyInSave) {
             \$this->alreadyInSave = true;
+
+            try {
 ";
         if ($reloadOnInsert || $reloadOnUpdate) {
             $script .= "
-            \$reloadObject = false;
+                \$reloadObject = false;
 ";
         }
 
         if (count($table->getForeignKeys())) {
 
             $script .= "
-            // We call the save method on the following object(s) if they
-            // were passed to this object by their coresponding set
-            // method.  This object relates to these object(s) by a
-            // foreign key reference.
+                // We call the save method on the following object(s) if they
+                // were passed to this object by their coresponding set
+                // method.  This object relates to these object(s) by a
+                // foreign key reference.
 ";
 
             foreach ($table->getForeignKeys() as $fk) {
                 $aVarName = $this->getFKVarName($fk);
                 $script .= "
-            if (\$this->$aVarName !== null) {
-                if (\$this->" . $aVarName . "->isModified() || \$this->" . $aVarName . "->isNew()) {
-                    \$affectedRows += \$this->" . $aVarName . "->save(\$con);
+                if (\$this->$aVarName !== null) {
+                    if (\$this->" . $aVarName . "->isModified() || \$this->" . $aVarName . "->isNew()) {
+                        \$affectedRows += \$this->" . $aVarName . "->save(\$con);
+                    }
+                    \$this->set".$this->getFKPhpNameAffix($fk, $plural = false)."(\$this->$aVarName);
                 }
-                \$this->set".$this->getFKPhpNameAffix($fk, $plural = false)."(\$this->$aVarName);
-            }
 ";
             } // foreach foreign k
         } // if (count(foreign keys))
 
         $script .= "
-            if (\$this->isNew() || \$this->isModified()) {
-                // persist changes
-                if (\$this->isNew()) {
-                    \$this->doInsert(\$con);";
+                if (\$this->isNew() || \$this->isModified()) {
+                    // persist changes
+                    if (\$this->isNew()) {
+                        \$this->doInsert(\$con);";
         if ($reloadOnInsert) {
             $script .= "
-                    if (!\$skipReload) {
-                        \$reloadObject = true;
-                    }";
+                        if (!\$skipReload) {
+                            \$reloadObject = true;
+                        }";
         }
         $script .= "
-                } else {
-                    \$this->doUpdate(\$con);";
+                    } else {
+                        \$this->doUpdate(\$con);";
         if ($reloadOnUpdate) {
             $script .= "
-                    if (!\$skipReload) {
-                        \$reloadObject = true;
-                    }";
+                        if (!\$skipReload) {
+                            \$reloadObject = true;
+                        }";
         }
         $script .= "
-                }
-                \$affectedRows += 1;";
+                    }
+                    \$affectedRows += 1;";
 
         // We need to rewind any LOB columns
         foreach ($table->getColumns() as $col) {
             $clo = strtolower($col->getName());
             if ($col->isLobType()) {
                 $script .= "
-                // Rewind the $clo LOB column, since PDO does not rewind after inserting value.
-                if (\$this->$clo !== null && is_resource(\$this->$clo)) {
-                    rewind(\$this->$clo);
-                }
+                    // Rewind the $clo LOB column, since PDO does not rewind after inserting value.
+                    if (\$this->$clo !== null && is_resource(\$this->$clo)) {
+                        rewind(\$this->$clo);
+                    }
 ";
             }
         }
 
         $script .= "
-                \$this->resetModified();
-            }
+                    \$this->resetModified();
+                }
 ";
 
         if ($table->hasCrossForeignKeys()) {
@@ -4526,29 +4528,34 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
             if ($refFK->isLocalPrimaryKey()) {
                 $varName = $this->getPKRefFKVarName($refFK);
                 $script .= "
-            if (\$this->$varName !== null) {
-                if (!\$this->{$varName}->isDeleted()) {
+                if (\$this->$varName !== null) {
+                    if (!\$this->{$varName}->isDeleted()) {
                         \$affectedRows += \$this->{$varName}->save(\$con);
+                    }
                 }
-            }
 ";
             } else {
                 $collName = $this->getRefFKCollVarName($refFK);
                 $script .= "
-            if (\$this->$collName !== null) {
-                foreach (\$this->$collName as \$referrerFK) {
-                    if (!\$referrerFK->isDeleted()) {
-                        \$affectedRows += \$referrerFK->save(\$con);
+                if (\$this->$collName !== null) {
+                    foreach (\$this->$collName as \$referrerFK) {
+                        if (!\$referrerFK->isDeleted()) {
+                            \$affectedRows += \$referrerFK->save(\$con);
+                        }
                     }
                 }
-            }
 ";
             } // if refFK->isLocalPrimaryKey()
 
         } /* foreach getReferrers() */
 
         $script .= "
-            \$this->alreadyInSave = false;
+                \$this->alreadyInSave = false;
+
+            } catch (Exception \$e) {
+                \$this->alreadyInSave = false;
+                throw \$e;
+            }
 ";
         if ($reloadOnInsert || $reloadOnUpdate) {
             $script .= "
