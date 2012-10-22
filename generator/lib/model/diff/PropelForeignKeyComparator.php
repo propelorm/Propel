@@ -62,11 +62,22 @@ class PropelForeignKeyComparator
             return true;
         }
 
-        // compare on
-        if ($fromFk->normalizeFKey($fromFk->getOnUpdate()) != $toFk->normalizeFKey($toFk->getOnUpdate())) {
+
+        /*
+         * Compare onDelete and onUpdate:
+         *
+         * "RESTRICT" and its synonym "NO ACTION" is default and is not being reported explicitly.
+         */
+        $equalBehavior = array('', 'RESTRICT', 'NO ACTION');
+
+        $fromOnUpdate = strtoupper($fromFk->normalizeFKey($fromFk->getOnUpdate()));
+        $toOnUpdate = strtoupper($toFk->normalizeFKey($toFk->getOnUpdate()));
+        if ((in_array($fromOnUpdate, $equalBehavior) && !in_array($toOnUpdate, $equalBehavior)) || (!in_array($fromOnUpdate, $equalBehavior) && in_array($toOnUpdate, $equalBehavior))) {
             return true;
         }
-        if ($fromFk->normalizeFKey($fromFk->getOnDelete()) != $toFk->normalizeFKey($toFk->getOnDelete())) {
+        $fromOnDelete = strtoupper($fromFk->normalizeFKey($fromFk->getOnDelete()));
+        $toOnDelete = strtoupper($toFk->normalizeFKey($toFk->getOnDelete()));
+        if ((in_array($fromOnDelete, $equalBehavior) && !in_array($toOnDelete, $equalBehavior)) || (!in_array($fromOnDelete, $equalBehavior) && in_array($toOnDelete, $equalBehavior))) {
             return true;
         }
 
