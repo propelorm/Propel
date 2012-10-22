@@ -822,7 +822,7 @@ class Criteria implements IteratorAggregate
             $firstCriterion->$operatorMethod($criterion);
         }
         if ($name === null) {
-            $this->add($firstCriterion, null, null);
+            $this->addAnd($firstCriterion, null, null);
         } else {
             $this->addCond($name, $firstCriterion, null, null);
         }
