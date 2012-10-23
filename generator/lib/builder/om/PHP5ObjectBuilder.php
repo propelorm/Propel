@@ -193,12 +193,14 @@ class PHP5ObjectBuilder extends ObjectBuilder
         $tableName = $table->getName();
         $tableDesc = $table->getDescription();
         $parentClass = $this->getBehaviorContent('parentClass');
-        $parentClass = (null !== $parentClass) ? $parentClass : ClassTools::classname($this->getBaseClass());
+        if (null === $parentClass) {
+            $parentClass = ClassTools::classname($this->getBaseClass());
 
-        if (false === strpos($this->getBaseClass(), '.')) {
-            $this->declareClass($this->getBaseClass());
-        } else {
-            $this->declareClass($parentClass);
+            if (false === strpos($this->getBaseClass(), '.')) {
+                $this->declareClass($this->getBaseClass());
+            } else {
+                $this->declareClass($parentClass);
+            }
         }
 
         if ($this->getBuildProperty('addClassLevelComment')) {
