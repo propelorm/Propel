@@ -806,11 +806,11 @@ abstract class ".$this->getClassname(). $extendingPeerClass . "
             $script .= "serialize(array(";
             $i = 0;
             foreach ($pkphp as $pkvar) {
-                $script .= ($i++ ? ', ' : '') . "(string) $pkvar";
+                $script .= ($i++ ? ', ' : '') . "(string) ((" . $pkvar . " instanceof \DateTime) ? " . $pkvar . "->format('U') : " . $pkvar . ")";
             }
             $script .= "))";
         } else {
-            $script .= "(string) " . $pkphp[0];
+            $script .= ($i++ ? ', ' : '') . "(string) ((" . $pkphp[0] . " instanceof \DateTime) ? " . $pkphp[0] . "->format('U') : " . $pkphp[0] . ")";
         }
 
         return $script;
