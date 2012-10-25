@@ -2065,7 +2065,11 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
             if (\$rehydrate) {
                 \$this->ensureConsistency();
             }
+            \$this->postHydrate(\$row, \$startcol, \$rehydrate);";
+        
+        $this->applyBehaviorModifier('postHydrate', $script, "            ");
 
+        $script .= "
             return \$startcol + $n; // $n = ".$this->getPeerClassname()."::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception \$e) {

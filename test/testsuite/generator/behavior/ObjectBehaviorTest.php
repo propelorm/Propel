@@ -129,6 +129,16 @@ class ObjectBehaviorTest extends BookstoreTestBase
     $this->assertEquals($t->postDeleteBuilder, 'PHP5ObjectBuilder', 'postDelete hook is called with the object builder as parameter');
     $this->assertFalse($t->postDeleteIsBeforeDelete, 'postDelete hook is called before deletion');
   }
+  
+  public function testPostHydrate()
+  {
+    $t = new Table3();
+    $t->postHydrate = 0;
+    $t->hydrate(array(1, 'Title', 'Test'));
+    $this->assertEquals($t->postHydrate, 1, 'postHydrate hook is called on object hydration');
+    $this->assertEquals($t->postHydrateBuilder, 'PHP5ObjectBuilder', 'postHydrate hook is called with the object builder as parameter');
+    $this->assertTrue($t->postHydrateIsAfterHydrate, 'postHydrate hook is called after hydrate');
+  }
 
   public function testObjectMethods()
   {
