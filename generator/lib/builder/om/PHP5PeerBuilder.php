@@ -810,7 +810,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . "
             }
             $script .= "))";
         } else {
-            $script .= ($i++ ? ', ' : '') . "(string) ((" . $pkphp[0] . " instanceof \DateTime) ? " . $pkphp[0] . "->format('r') : " . $pkphp[0] . ")";
+            $script .= "(string) ((" . $pkphp[0] . " instanceof \DateTime) ? " . $pkphp[0] . "->format('r') : " . $pkphp[0] . ")";
         }
 
         return $script;
