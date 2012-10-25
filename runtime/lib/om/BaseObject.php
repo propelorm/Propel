@@ -208,6 +208,14 @@ abstract class BaseObject
     }
 
     /**
+     * Code to be run after deleting the object in database
+     * @param PropelPDO $con
+     */
+    public function postHydrate($row, $startcol = 0, $rehydrate = false)
+    {
+    }
+    
+    /**
      * Sets the modified state for the object to be false.
      * @param      string $col If supplied, only the specified column is reset.
      * @return     void
