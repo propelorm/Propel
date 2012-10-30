@@ -432,7 +432,7 @@ For complex models showing a large number of tables, database administrators oft
   <table name="book" schema="bookstore">
     <column name="id" required="true" primaryKey="true" autoIncrement="true" type="INTEGER" />
     <column name="title" type="VARCHAR" required="true" />
-    <column name="author_id" type="INTGER" />
+    <column name="author_id" type="INTEGER" />
     <foreign-key foreignTable="author" foreignSchema="people" onDelete="setnull" onUpdate="cascade">
       <reference local="author_id" foreign="id" />
     </foreign-key>
