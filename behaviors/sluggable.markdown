@@ -63,6 +63,7 @@ By default, the behavior adds one column to the model. If this column is already
     <parameter name="replacement" value="-" />
     <parameter name="separator" value="/" />
     <parameter name="permanent" value="true" />
+    <parameter name="scope_column" value="" />
   </behavior>
 </table>
 {% endhighlight %}
