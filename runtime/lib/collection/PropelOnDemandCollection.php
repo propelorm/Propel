@@ -208,7 +208,7 @@ class PropelOnDemandCollection extends PropelCollection
     /**
      * {@inheritdoc}
      */
-    public function exportTo($parser, $usePrefix = true, $includeLazyLoadColumns = true)
+    public function exportTo($parser, $usePrefix = true, $keyType = BasePeer::TYPE_PHPNAME, $includeLazyLoadColumns = true)
     {
         throw new PropelException('A PropelOnDemandCollection cannot be exported.');
     }
