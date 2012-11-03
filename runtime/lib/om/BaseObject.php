@@ -16,10 +16,10 @@
  * @method     BaseObject fromYAML(string $data) Populate the object from a YAML string
  * @method     BaseObject fromJSON(string $data) Populate the object from a JSON string
  * @method     BaseObject fromCSV(string $data) Populate the object from a CSV string
- * @method     string toXML(boolean $includeLazyLoadColumns) Export the object to an XML string
- * @method     string toYAML(boolean $includeLazyLoadColumns) Export the object to a YAML string
- * @method     string toJSON(boolean $includeLazyLoadColumns) Export the object to a JSON string
- * @method     string toCSV(boolean $includeLazyLoadColumns) Export the object to a CSV string
+ * @method     string toXML(string $columnsNameType = BasePeer::TYPE_PHPNAME, boolean $includeLazyLoadColumns = true) Export the object to an XML string
+ * @method     string toYAML(string $columnsNameType = BasePeer::TYPE_PHPNAME, boolean $includeLazyLoadColumns = true) Export the object to a YAML string
+ * @method     string toJSON(string $columnsNameType = BasePeer::TYPE_PHPNAME, boolean $includeLazyLoadColumns = true) Export the object to a JSON string
+ * @method     string toCSV(string $columnsNameType = BasePeer::TYPE_PHPNAME, boolean $includeLazyLoadColumns = true) Export the object to a CSV string
  *
  * @author     Hans Lellelid <hans@xmpl.org> (Propel)
  * @author     Frank Y. Kim <frank.kim@clearink.com> (Torque)
@@ -366,16 +366,17 @@ abstract class BaseObject
      * </code>
      *
      * @param  mixed   $parser                 A PropelParser instance, or a format name ('XML', 'YAML', 'JSON', 'CSV')
+     * @param  string $columnsNameType (optional) Type of columns names e.g. authorId, author_id or book.AUTHOR_ID etc.
      * @param  boolean $includeLazyLoadColumns (optional) Whether to include lazy load(ed) columns. Defaults to TRUE.
      * @return string  The exported data
      */
-    public function exportTo($parser, $includeLazyLoadColumns = true)
+    public function exportTo($parser, $columnsNameType = BasePeer::TYPE_PHPNAME, $includeLazyLoadColumns = true)
     {
         if (!$parser instanceof PropelParser) {
             $parser = PropelParser::getParser($parser);
         }
 
-        return $parser->fromArray($this->toArray(BasePeer::TYPE_PHPNAME, $includeLazyLoadColumns, array(), true));
+        return $parser->fromArray($this->toArray($columnsNameType, $includeLazyLoadColumns, array(), true));
     }
 
     /**
@@ -419,9 +420,8 @@ abstract class BaseObject
             return $this->importFrom($matches[1], reset($params));
         }
         if (preg_match('/^to(\w+)$/', $name, $matches)) {
-            $includeLazyLoadColumns = isset($params[0]) ? $params[0] : true;
-
-            return $this->exportTo($matches[1], $includeLazyLoadColumns);
+            array_unshift($params, $matches[1]);
+            return call_user_func_array(array($this, 'exportTo'), $params);
         }
         throw new PropelException('Call to undefined method: ' . $name);
     }
