@@ -244,7 +244,7 @@ The audit log abilities need to be enabled in the schema as well:
 * `BaseObject toVersion(integer $version_number)`: Populates the properties of the current object with values from the requested version. Beware that saving the object afterwards will create a new version (and not update the previous version).
 * `integer getLastVersionNumber(PropelPDO $con)`: Queries the database for the highest version number recorded for this object
 * `boolean isLastVersion()`: Returns true if the current object is the last available version
-* `Version addVersion(PropelPDO $con)`: Creates a new Version record and saves it. To be used when isVersioningNecessary() is false. Beware that it doesn't take care of incrementinhg the version number of the main object, and that the main object must be saved prior to calling this method.
+* `Version addVersion(PropelPDO $con)`: Creates a new Version record and saves it. To be used when isVersioningNecessary() is false. Beware that it doesn't take care of incrementing the version number of the main object, and that the main object must be saved prior to calling this method.
 * `array getAllVersions(PropelPDO $con)`: Returns all Version objects related to the main object in a collection
 * `array getLastVersions($number, $criteria, $con)`: Retrieves the last $number versions
 * `Version getOneVersion(integer $versionNumber PropelPDO $con)`: Returns a given version object
