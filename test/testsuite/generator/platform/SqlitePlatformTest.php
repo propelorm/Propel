@@ -71,31 +71,31 @@ class SqlitePlatformTest extends PlatformTestProvider
 -- book
 -----------------------------------------------------------------------
 
-DROP TABLE IF EXISTS book;
+DROP TABLE IF EXISTS [book];
 
-CREATE TABLE book
+CREATE TABLE [book]
 (
-    id INTEGER NOT NULL PRIMARY KEY,
-    title VARCHAR(255) NOT NULL,
-    author_id INTEGER
+    [id] INTEGER NOT NULL PRIMARY KEY,
+    [title] VARCHAR(255) NOT NULL,
+    [author_id] INTEGER
 );
 
-CREATE INDEX book_I_1 ON book (title);
+CREATE INDEX [book_I_1] ON [book] ([title]);
 
 -- SQLite does not support foreign keys; this is just for reference
--- FOREIGN KEY (author_id) REFERENCES author (id)
+-- FOREIGN KEY ([author_id]) REFERENCES author ([id])
 
 -----------------------------------------------------------------------
 -- author
 -----------------------------------------------------------------------
 
-DROP TABLE IF EXISTS author;
+DROP TABLE IF EXISTS [author];
 
-CREATE TABLE author
+CREATE TABLE [author]
 (
-    id INTEGER NOT NULL PRIMARY KEY,
-    first_name VARCHAR(100),
-    last_name VARCHAR(100)
+    [id] INTEGER NOT NULL PRIMARY KEY,
+    [first_name] VARCHAR(100),
+    [last_name] VARCHAR(100)
 );
 
 EOF;
@@ -120,10 +120,10 @@ EOF;
         $table = $this->getTableFromSchema($schema);
         $expected = "
 -- This is foo table
-CREATE TABLE foo
+CREATE TABLE [foo]
 (
-    id INTEGER NOT NULL PRIMARY KEY,
-    bar VARCHAR(255) NOT NULL
+    [id] INTEGER NOT NULL PRIMARY KEY,
+    [bar] VARCHAR(255) NOT NULL
 );
 ";
         $this->assertEquals($expected, $this->getPlatform()->getAddTableDDL($table));
@@ -137,11 +137,11 @@ CREATE TABLE foo
         $table = $this->getTableFromSchema($schema);
         $expected = "
 -- This is foo table
-CREATE TABLE foo
+CREATE TABLE [foo]
 (
-    foo VARCHAR(255) NOT NULL,
-    bar VARCHAR(255) NOT NULL,
-    PRIMARY KEY (foo)
+    [foo] VARCHAR(255) NOT NULL,
+    [bar] VARCHAR(255) NOT NULL,
+    PRIMARY KEY ([foo])
 );
 ";
         $this->assertEquals($expected, $this->getPlatform()->getAddTableDDL($table));
@@ -154,12 +154,12 @@ CREATE TABLE foo
     {
         $table = $this->getTableFromSchema($schema);
         $expected = "
-CREATE TABLE foo
+CREATE TABLE [foo]
 (
-    foo INTEGER NOT NULL,
-    bar INTEGER NOT NULL,
-    baz VARCHAR(255) NOT NULL,
-    PRIMARY KEY (foo,bar)
+    [foo] INTEGER NOT NULL,
+    [bar] INTEGER NOT NULL,
+    [baz] VARCHAR(255) NOT NULL,
+    PRIMARY KEY ([foo],[bar])
 );
 ";
         $this->assertEquals($expected, $this->getPlatform()->getAddTableDDL($table));
@@ -172,11 +172,11 @@ CREATE TABLE foo
     {
         $table = $this->getTableFromSchema($schema);
         $expected = "
-CREATE TABLE foo
+CREATE TABLE [foo]
 (
-    id INTEGER NOT NULL PRIMARY KEY,
-    bar INTEGER,
-    UNIQUE (bar)
+    [id] INTEGER NOT NULL PRIMARY KEY,
+    [bar] INTEGER,
+    UNIQUE ([bar])
 );
 ";
         $this->assertEquals($expected, $this->getPlatform()->getAddTableDDL($table));
@@ -186,7 +186,7 @@ CREATE TABLE foo
     {
         $table = new Table('foo');
         $expected = "
-DROP TABLE IF EXISTS foo;
+DROP TABLE IF EXISTS [foo];
 ";
         $this->assertEquals($expected, $this->getPlatform()->getDropTableDDL($table));
     }
@@ -199,7 +199,8 @@ DROP TABLE IF EXISTS foo;
         $c->getDomain()->replaceSize(3);
         $c->setNotNull(true);
         $c->getDomain()->setDefaultValue(new ColumnDefaultValue(123, ColumnDefaultValue::TYPE_VALUE));
-        $expected = 'foo DOUBLE(3,2) DEFAULT 123 NOT NULL';
+
+        $expected = '[foo] DOUBLE(3,2) DEFAULT 123 NOT NULL';
         $this->assertEquals($expected, $this->getPlatform()->getColumnDDL($c));
     }
 
@@ -212,7 +213,8 @@ DROP TABLE IF EXISTS foo;
         $column->setNotNull(true);
         $column->getDomain()->setDefaultValue(new ColumnDefaultValue(123, ColumnDefaultValue::TYPE_VALUE));
         $column->getDomain()->replaceSqlType('DECIMAL(5,6)');
-        $expected = 'foo DECIMAL(5,6) DEFAULT 123 NOT NULL';
+
+        $expected = '[foo] DECIMAL(5,6) DEFAULT 123 NOT NULL';
         $this->assertEquals($expected, $this->getPlatform()->getColumnDDL($column));
     }
 
@@ -222,7 +224,8 @@ DROP TABLE IF EXISTS foo;
         $column = new Column('bar');
         $column->setPrimaryKey(true);
         $table->addColumn($column);
-        $expected = 'PRIMARY KEY (bar)';
+
+        $expected = 'PRIMARY KEY ([bar])';
         $this->assertEquals($expected, $this->getPlatform()->getPrimaryKeyDDL($table));
     }
 
@@ -235,7 +238,8 @@ DROP TABLE IF EXISTS foo;
         $column2 = new Column('bar2');
         $column2->setPrimaryKey(true);
         $table->addColumn($column2);
-        $expected = 'PRIMARY KEY (bar1,bar2)';
+
+        $expected = 'PRIMARY KEY ([bar1],[bar2])';
         $this->assertEquals($expected, $this->getPlatform()->getPrimaryKeyDDL($table));
     }
 
@@ -265,9 +269,9 @@ DROP TABLE IF EXISTS foo;
     public function testAddIndicesDDL($table)
     {
         $expected = "
-CREATE INDEX babar ON foo (bar1,bar2);
+CREATE INDEX [babar] ON [foo] ([bar1],[bar2]);
 
-CREATE INDEX foo_index ON foo (bar1);
+CREATE INDEX [foo_index] ON [foo] ([bar1]);
 ";
         $this->assertEquals($expected, $this->getPLatform()->getAddIndicesDDL($table));
     }
@@ -278,7 +282,7 @@ CREATE INDEX foo_index ON foo (bar1);
     public function testAddIndexDDL($index)
     {
         $expected = "
-CREATE INDEX babar ON foo (bar1,bar2);
+CREATE INDEX [babar] ON [foo] ([bar1],[bar2]);
 ";
         $this->assertEquals($expected, $this->getPLatform()->getAddIndexDDL($index));
     }
@@ -289,7 +293,7 @@ CREATE INDEX babar ON foo (bar1,bar2);
     public function testDropIndexDDL($index)
     {
         $expected = "
-DROP INDEX babar;
+DROP INDEX [babar];
 ";
         $this->assertEquals($expected, $this->getPLatform()->getDropIndexDDL($index));
     }
@@ -299,7 +303,7 @@ DROP INDEX babar;
      */
     public function testGetIndexDDL($index)
     {
-        $expected = 'INDEX babar (bar1,bar2)';
+        $expected = 'INDEX [babar] ([bar1],[bar2])';
         $this->assertEquals($expected, $this->getPLatform()->getIndexDDL($index));
     }
 
@@ -308,7 +312,7 @@ DROP INDEX babar;
      */
     public function testGetUniqueDDL($index)
     {
-        $expected = 'UNIQUE (bar1,bar2)';
+        $expected = 'UNIQUE ([bar1],[bar2])';
         $this->assertEquals($expected, $this->getPlatform()->getUniqueDDL($index));
     }
 
@@ -319,10 +323,10 @@ DROP INDEX babar;
     {
         $expected = "
 -- SQLite does not support foreign keys; this is just for reference
--- FOREIGN KEY (bar_id) REFERENCES bar (id)
+-- FOREIGN KEY ([bar_id]) REFERENCES bar ([id])
 
 -- SQLite does not support foreign keys; this is just for reference
--- FOREIGN KEY (baz_id) REFERENCES baz (id)
+-- FOREIGN KEY ([baz_id]) REFERENCES baz ([id])
 ";
         $this->assertEquals($expected, $this->getPLatform()->getAddForeignKeysDDL($table));
     }
@@ -334,7 +338,7 @@ DROP INDEX babar;
     {
         $expected = "
 -- SQLite does not support foreign keys; this is just for reference
--- FOREIGN KEY (bar_id) REFERENCES bar (id)
+-- FOREIGN KEY ([bar_id]) REFERENCES bar ([id])
 ";
         $this->assertEquals($expected, $this->getPLatform()->getAddForeignKeyDDL($fk));
     }
@@ -355,7 +359,7 @@ DROP INDEX babar;
     {
         $expected = "
 -- SQLite does not support foreign keys; this is just for reference
--- FOREIGN KEY (bar_id) REFERENCES bar (id)
+-- FOREIGN KEY ([bar_id]) REFERENCES bar ([id])
 ";
         $this->assertEquals($expected, $this->getPLatform()->getForeignKeyDDL($fk));
     }

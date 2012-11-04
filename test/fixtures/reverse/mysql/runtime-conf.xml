@@ -19,7 +19,7 @@
 					For MySQL and Oracle you must specify username + password separate from DSN:
 					-->
 					<user>root</user>
-					<password></password>
+					<password>root</password>
 				<options>
 						<option id="ATTR_PERSISTENT">false</option>
 					</options>
