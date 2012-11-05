@@ -159,5 +159,19 @@ class QueryBuilderInheritanceTest extends BookstoreTestBase
 
         Propel::enableInstancePooling();
     }
+
+    public function testFindOneOrCreateFunction()
+    {
+        $cashier1 = new BookstoreCashier();
+        $cashier1->save($this->con);
+
+        $cashier2 = BookstoreCashierQuery::create()->findOneOrCreate($this->con);
+        $this->assertInstanceOf('BookstoreCashier', $cashier2, 'findOneOrCreate return right object when find one : BookstoreCashier');
+
+        BookstoreCashierQuery::create()->deleteAll($this->con);
+
+        $cashier3 = BookstoreCashierQuery::create()->findOneOrCreate($this->con);
+        $this->assertInstanceOf('BookstoreCashier', $cashier3, 'findOneOrCreate return right object when create one : BookstoreCashier');
+    }
 }
 
