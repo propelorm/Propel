@@ -169,6 +169,7 @@ class "  .$this->getClassname() . " extends " . $baseClassname . " {
         $this->addPreUpdate($script);
         $this->addPreDelete($script);
         $this->addDoDeleteAll($script);
+        $this->addFindOneOrCreate($script);
     }
 
     /**
@@ -293,6 +294,46 @@ class "  .$this->getClassname() . " extends " . $baseClassname . " {
     {
         $script .= "
 } // " . $this->getClassname() . "
+";
+    }
+
+    /**
+     * Adds findOneOrCreate function for this object.
+     * @param unknown $script
+     */
+    protected function addFindOneOrCreate(&$script)
+    {
+        $child = $this->getChild();
+        $col = $child->getColumn();
+        $script .= "
+
+    /**
+     * Issue a SELECT ... LIMIT 1 query based on the current ModelCriteria
+     * and format the result with the current formatter
+     * By default, returns a model object
+     *
+     * @param PropelPDO \$con an optional connection object
+     *
+     * @return mixed the result, formatted by the current formatter
+     *
+     * @throws PropelException
+     */
+    public function findOneOrCreate(\$con = null)
+    {
+        if (\$this->joins) {
+            throw new PropelException('findOneOrCreate() cannot be used on a query with a join, because Propel cannot transform a SQL JOIN into a subquery. You should split the query in two queries to avoid joins.');
+        }
+        if (!\$ret = \$this->findOne(\$con)) {
+            \$class = ".$this->getPeerClassname() . "::CLASSNAME_" . strtoupper($child->getKey()) . ";
+            \$obj = new \$class;
+            foreach (\$this->keys() as \$key) {
+                \$obj->setByName(\$key, \$this->getValue(\$key), BasePeer::TYPE_COLNAME);
+            }
+            \$ret = \$this->getFormatter()->formatRecord(\$obj);
+        }
+
+        return \$ret;
+    }
 ";
     }
 
