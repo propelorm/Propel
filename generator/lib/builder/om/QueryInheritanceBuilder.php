@@ -312,7 +312,7 @@ class "  .$this->getClassname() . " extends " . $baseClassname . " {
      * and format the result with the current formatter
      * By default, returns a model object
      *
-     * @param PropelPDO \q$con an optional connection object
+     * @param PropelPDO \$con an optional connection object
      *
      * @return mixed the result, formatted by the current formatter
      *
