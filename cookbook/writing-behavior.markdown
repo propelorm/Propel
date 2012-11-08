@@ -318,7 +318,7 @@ Adding a behavior to a `Table` instance, as well as adding a `Parameter` to a `B
 
 ## Adding Code For Model Hooks ##
 
-The new `AggregateColumnRelationBehavior` is yet to write. It must implement a call to `PollQuestion::updateTotalNbVotes()` in the `postSave()` and `postDelete()` hooks.
+The new `AggregateColumnRelationBehavior` is not yet ready to write. It must implement a call to `PollQuestion::updateTotalNbVotes()` in the `postSave()` and `postDelete()` hooks.
 
 Adding code to hooks from a behavior is just like adding methods: add a method with the right hook name returning a code string, and the code will get appended at the right place. Unsurprisingly, the behavior hook methods for `postSave()` and `postDelete()` are called `postSave()` and `postDelete()`:
 
