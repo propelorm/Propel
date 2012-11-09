@@ -15,7 +15,7 @@
   "include-path": ["runtime/lib", "generator/lib"],
   "require": {
     "php": ">=5.2.4",
-    "phing/phing": ">=2.4.12,2.4.*"
+    "phing/phing": "2.4.12"
   },
   "extra": {
     "branch-alias": {
