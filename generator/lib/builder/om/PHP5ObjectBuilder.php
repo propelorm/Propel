@@ -192,9 +192,16 @@ class PHP5ObjectBuilder extends ObjectBuilder
         $table = $this->getTable();
         $tableName = $table->getName();
         $tableDesc = $table->getDescription();
-        $interface = $this->getInterface();
         $parentClass = $this->getBehaviorContent('parentClass');
-        $parentClass = (null !== $parentClass) ? $parentClass : ClassTools::classname($this->getBaseClass());
+        if (null === $parentClass) {
+            $parentClass = ClassTools::classname($this->getBaseClass());
+
+            if (false === strpos($this->getBaseClass(), '.')) {
+                $this->declareClass($this->getBaseClass());
+            } else {
+                $this->declareClass($parentClass);
+            }
+        }
 
         if ($this->getBuildProperty('addClassLevelComment')) {
             $script .= "
@@ -246,8 +253,8 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
         $this->declareClassFromBuilder($this->getStubPeerBuilder());
         $this->declareClassFromBuilder($this->getStubQueryBuilder());
         $this->declareClasses(
-            'Propel', 'PropelException', 'PDO', 'PropelPDO', 'Criteria',
-            'BaseObject', 'Persistent', 'BasePeer', 'PropelCollection',
+            'Propel', 'PropelException', 'PDO', 'PropelPDO', 'PropelQuery', 'Criteria',
+            'Persistent', 'BasePeer', 'PropelCollection',
             'PropelObjectCollection', 'Exception'
         );
 
@@ -2058,7 +2065,11 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
             if (\$rehydrate) {
                 \$this->ensureConsistency();
             }
+            \$this->postHydrate(\$row, \$startcol, \$rehydrate);";
 
+        $this->applyBehaviorModifier('postHydrate', $script, "            ");
+
+        $script .= "
             return \$startcol + $n; // $n = ".$this->getPeerClassname()."::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception \$e) {
@@ -3533,13 +3544,15 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
      * This does not modify the database; however, it will remove any associated objects, causing
      * them to be refetched by subsequent calls to accessor method.
      *
-     * @return void
+     * @return ".$this->getObjectClassname()." The current object (for fluent API support)
      * @see        add$relCol()
      */
     public function clear$relCol()
     {
         \$this->$collName = null; // important to set this to null since that means it is uninitialized
         \$this->{$collName}Partial = null;
+
+        return \$this;
     }
 ";
     } // addRefererClear()
@@ -3799,6 +3812,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
      *
      * @param PropelCollection \${$inputCollection} A Propel collection.
      * @param PropelPDO \$con Optional connection object
+     * @return ".$this->getObjectClassname()." The current object (for fluent API support)
      */
     public function set{$relatedName}(PropelCollection \${$inputCollection}, PropelPDO \$con = null)
     {
@@ -3815,6 +3829,8 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
 
         \$this->{$collName} = \${$inputCollection};
         \$this->{$collName}Partial = false;
+
+        return \$this;
     }
 ";
     }
@@ -3870,6 +3886,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
         $script .= "
     /**
      * @param	{$relatedObjectClassName} \${$lowerRelatedObjectClassName} The $lowerRelatedObjectClassName object to remove.
+     * @return ".$this->getObjectClassname()." The current object (for fluent API support)
      */
     public function remove{$relatedObjectClassName}(\${$lowerRelatedObjectClassName})
     {
@@ -3882,6 +3899,8 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
             \$this->{$inputCollection}[]= \${$lowerRelatedObjectClassName};
             \${$lowerRelatedObjectClassName}->set{$relCol}(null);
         }
+
+        return \$this;
     }
 ";
     }
@@ -4108,13 +4127,15 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
      * This does not modify the database; however, it will remove any associated objects, causing
      * them to be refetched by subsequent calls to accessor method.
      *
-     * @return void
+     * @return ".$this->getObjectClassname()." The current object (for fluent API support)
      * @see        add$relCol()
      */
     public function clear$relCol()
     {
         \$this->$collName = null; // important to set this to null since that means it is uninitialized
         \$this->{$collName}Partial = null;
+
+        return \$this;
     }
 ";
     } // addRefererClear()
@@ -4218,6 +4239,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
      *
      * @param PropelCollection \${$inputCollection} A Propel collection.
      * @param PropelPDO \$con Optional connection object
+     * @return ".$this->getObjectClassname()." The current object (for fluent API support)
      */
     public function set{$relatedNamePlural}(PropelCollection \${$inputCollection}, PropelPDO \$con = null)
     {
@@ -4233,6 +4255,8 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
         }
 
         \$this->$collName = \${$inputCollection};
+
+        return \$this;
     }
 ";
     }
@@ -4303,7 +4327,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
      * through the " . $tblFK->getName() . " cross reference table.
      *
      * @param  " .  $crossObjectClassName . " " . $crossObjectName . " The $className object to relate
-     * @return void
+     * @return ".$this->getObjectClassname()." The current object (for fluent API support)
      */
     public function add{$relatedObjectClassName}($crossObjectClassName $crossObjectName)
     {
@@ -4315,6 +4339,8 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
 
             \$this->" . $collName . "[]= " . $crossObjectName . ";
         }
+
+        return \$this;
     }
 ";
     }
@@ -4382,7 +4408,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
      * through the {$tblFK->getName()} cross reference table.
      *
      * @param {$crossObjectClassName} {$crossObjectName} The $className object to relate
-     * @return void
+     * @return ".$this->getObjectClassname()." The current object (for fluent API support)
      */
     public function remove{$relatedObjectClassName}($crossObjectClassName $crossObjectName)
     {
@@ -4394,6 +4420,8 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
             }
             \$this->{$M2MScheduledForDeletion}[]= {$crossObjectName};
         }
+
+        return \$this;
     }
 ";
     }

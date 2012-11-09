@@ -499,7 +499,7 @@ ALTER TABLE %s ALTER COLUMN %s;
 %s = \$row[0];";
         $script = sprintf($snippet,
             $connectionVariableName,
-            $this->quoteIdentifier($sequenceName),
+            $sequenceName,
             $columnValueMutator
         );
 

@@ -136,7 +136,7 @@ EOF;
     {
         $table = ArchivableTest1ArchivePeer::getTableMap();
         $this->assertTrue($table->hasColumn('id'));
-        $this->assertContains('id INTEGER NOT NULL,', self::$generatedSQL, 'copied columns are not autoincremented');
+        $this->assertContains('[id] INTEGER NOT NULL,', self::$generatedSQL, 'copied columns are not autoincremented');
         $this->assertTrue($table->hasColumn('title'));
         $this->assertTrue($table->hasColumn('age'));
         $this->assertTrue($table->hasColumn('foo_id'));
@@ -151,14 +151,16 @@ EOF;
     public function testCopiesIndices()
     {
         $table = ArchivableTest1ArchivePeer::getTableMap();
-        $expected = "CREATE INDEX archivable_test_1_archive_I_1 ON archivable_test_1_archive (title,age);";
+
+        $expected = "CREATE INDEX [archivable_test_1_archive_I_1] ON [archivable_test_1_archive] ([title],[age]);";
         $this->assertContains($expected, self::$generatedSQL);
     }
 
     public function testCopiesUniquesToIndices()
     {
         $table = ArchivableTest2ArchivePeer::getTableMap();
-        $expected = "CREATE INDEX my_old_archivable_test_3_I_1 ON my_old_archivable_test_3 (title);";
+
+        $expected = "CREATE INDEX [my_old_archivable_test_3_I_1] ON [my_old_archivable_test_3] ([title]);";
         $this->assertContains($expected, self::$generatedSQL);
     }
 

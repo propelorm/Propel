@@ -63,7 +63,7 @@ EOF;
         $sql = BasePeer::createSelectSQL($q, $params);
         $expectedSQL = 'SELECT  FROM i18n_behavior_test_11 LEFT JOIN i18n_behavior_test_11_i18n ON (i18n_behavior_test_11.ID=i18n_behavior_test_11_i18n.ID AND i18n_behavior_test_11_i18n.LOCALE = :p1)';
         $this->assertEquals($expectedSQL, $sql);
-        $this->assertEquals('en_EN', $params[0]['value']);
+        $this->assertEquals('en_US', $params[0]['value']);
     }
 
     public function testJoinI18nUsesLocaleInJoinCondition()
@@ -80,23 +80,23 @@ EOF;
     public function testJoinI18nAcceptsARelationAlias()
     {
         $q = I18nBehaviorTest11Query::create()
-            ->joinI18n('en_EN', 'I18n');
+            ->joinI18n('en_US', 'I18n');
         $params = array();
         $sql = BasePeer::createSelectSQL($q, $params);
         $expectedSQL = 'SELECT  FROM i18n_behavior_test_11 LEFT JOIN i18n_behavior_test_11_i18n I18n ON (i18n_behavior_test_11.ID=I18n.ID AND I18n.LOCALE = :p1)';
         $this->assertEquals($expectedSQL, $sql);
-        $this->assertEquals('en_EN', $params[0]['value']);
+        $this->assertEquals('en_US', $params[0]['value']);
     }
 
     public function testJoinI18nAcceptsAJoinType()
     {
         $q = I18nBehaviorTest11Query::create()
-            ->joinI18n('en_EN', null, Criteria::INNER_JOIN);
+            ->joinI18n('en_US', null, Criteria::INNER_JOIN);
         $params = array();
         $sql = BasePeer::createSelectSQL($q, $params);
         $expectedSQL = 'SELECT  FROM i18n_behavior_test_11 INNER JOIN i18n_behavior_test_11_i18n ON (i18n_behavior_test_11.ID=i18n_behavior_test_11_i18n.ID AND i18n_behavior_test_11_i18n.LOCALE = :p1)';
         $this->assertEquals($expectedSQL, $sql);
-        $this->assertEquals('en_EN', $params[0]['value']);
+        $this->assertEquals('en_US', $params[0]['value']);
     }
 
     public function testJoinI18nCreatesACorrectQuery()
@@ -161,7 +161,7 @@ EOF;
         $sql = BasePeer::createSelectSQL($q, $params);
         $expectedSQL = 'SELECT i18n_behavior_test_11.ID, i18n_behavior_test_11.FOO, i18n_behavior_test_11_i18n.ID, i18n_behavior_test_11_i18n.LOCALE, i18n_behavior_test_11_i18n.BAR FROM i18n_behavior_test_11 LEFT JOIN i18n_behavior_test_11_i18n ON (i18n_behavior_test_11.ID=i18n_behavior_test_11_i18n.ID AND i18n_behavior_test_11_i18n.LOCALE = :p1)';
         $this->assertEquals($expectedSQL, $sql);
-        $this->assertEquals('en_EN', $params[0]['value']);
+        $this->assertEquals('en_US', $params[0]['value']);
     }
 
     public function testJoinWithI18nDoesNotPruneResultsWithoutTranslation()
@@ -172,7 +172,7 @@ EOF;
         $o->setFoo(123);
         $o->save();
         $res = I18nBehaviorTest11Query::create()
-            ->joinWithI18n('en_EN')
+            ->joinWithI18n('en_US')
             ->findOne();
         $this->assertEquals($o, $res);
     }
@@ -185,7 +185,7 @@ EOF;
         $o->setFoo(123);
         $o->save();
         $res = I18nBehaviorTest11Query::create()
-            ->joinWithI18n('en_EN', Criteria::INNER_JOIN)
+            ->joinWithI18n('en_US', Criteria::INNER_JOIN)
             ->findOne();
         $this->assertNull($res);
     }
@@ -198,7 +198,7 @@ EOF;
         I18nBehaviorTest11I18nQuery::create()->deleteAll();
         $o = new I18nBehaviorTest11();
         $o->setFoo(123);
-        $o->setLocale('en_EN');
+        $o->setLocale('en_US');
         $o->setBar('hello');
         $o->setLocale('fr_FR');
         $o->setBar('bonjour');
@@ -206,10 +206,10 @@ EOF;
         I18nBehaviorTest11Peer::clearInstancePool();
         I18nBehaviorTest11I18nPeer::clearInstancePool();
         $o = I18nBehaviorTest11Query::create()
-            ->joinWithI18n('en_EN')
+            ->joinWithI18n('en_US')
             ->findOne($con);
         $count = $con->getQueryCount();
-        $translation = $o->getTranslation('en_EN', $con);
+        $translation = $o->getTranslation('en_US', $con);
         $this->assertEquals($count, $con->getQueryCount());
         $this->assertEquals('hello', $translation->getBar());
     }
@@ -220,15 +220,15 @@ EOF;
         I18nBehaviorTest11I18nQuery::create()->deleteAll();
         $o = new I18nBehaviorTest11();
         $o->setFoo(123);
-        $o->setLocale('en_EN');
+        $o->setLocale('en_US');
         $o->setBar('hello');
         $o->setLocale('fr_FR');
         $o->setBar('bonjour');
         $o->save();
         $o1 = I18nBehaviorTest11Query::create()
-            ->joinWithI18n('en_EN')
+            ->joinWithI18n('en_US')
             ->findOne();
-        $this->assertEquals('en_EN', $o1->getLocale());
+        $this->assertEquals('en_US', $o1->getLocale());
         $o2 = I18nBehaviorTest11Query::create()
             ->joinWithI18n('fr_FR')
             ->findOne();
@@ -238,7 +238,7 @@ EOF;
     public function testJoinWithI18nAndLimitDoesNotThrowException()
     {
         $res = I18nBehaviorTest11Query::create()
-            ->joinWithI18n('en_EN')
+            ->joinWithI18n('en_US')
             ->limit(2)
             ->find();
         $this->assertInstanceOf('PropelObjectCollection', $res);
@@ -250,7 +250,7 @@ EOF;
     // use case:
     // $o = new Object();
     // $t1 = new Translation();
-    // $o->setTranslation($t2, 'en_EN'); // this is what happens during joined hydration
+    // $o->setTranslation($t2, 'en_US'); // this is what happens during joined hydration
     // now the translation collection exists
     // $t2 = $o->getTranslation('fr_FR'); // we MUST issue a query here
     public function testJoinWithI18nDoesNotExecuteAdditionalQueryWhenNoTranslationIsFound()
@@ -263,10 +263,10 @@ EOF;
         $o = new I18nBehaviorTest11();
         $o->save();
         $o = I18nBehaviorTest11Query::create()
-            ->joinWithI18n('en_EN')
+            ->joinWithI18n('en_US')
             ->findOne($con);
         $count = $con->getQueryCount();
-        $translation = $o->getTranslation('en_EN', $con);
+        $translation = $o->getTranslation('en_US', $con);
         $this->assertEquals($count, $con->getQueryCount());
     }
 

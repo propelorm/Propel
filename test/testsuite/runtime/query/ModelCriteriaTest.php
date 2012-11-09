@@ -2496,6 +2496,29 @@ class ModelCriteriaTest extends BookstoreTestBase
         $c->where('b.Title = ?', 'jenexistepas');
         $this->assertFalse($c->exists());
     }
+
+    public function testCombineAndFilterBy()
+    {
+        $params = array();
+        $sql = "SELECT  FROM `book` WHERE ((book.TITLE LIKE :p1 OR book.ISBN LIKE :p2) AND book.TITLE LIKE :p3)";
+        $c = BookQuery::create()
+            ->condition('u1', 'book.TITLE LIKE ?', '%test1%')
+            ->condition('u2', 'book.ISBN LIKE ?', '%test2%')
+            ->combine(array('u1', 'u2'), 'or')
+            ->filterByTitle('%test3%');
+        $result = BasePeer::createSelectSql($c, $params);
+        $this->assertEquals($result, $sql);
+
+        $params = array();
+        $sql = "SELECT  FROM `book` WHERE (book.TITLE LIKE :p1 AND (book.TITLE LIKE :p2 OR book.ISBN LIKE :p3))";
+        $c = BookQuery::create()
+            ->filterByTitle('%test3%')
+            ->condition('u1', 'book.TITLE LIKE ?', '%test1%')
+            ->condition('u2', 'book.ISBN LIKE ?', '%test2%')
+            ->combine(array('u1', 'u2'), 'or');
+        $result = BasePeer::createSelectSql($c, $params);
+        $this->assertEquals($result, $sql);
+    }
 }
 
 class TestableModelCriteria extends ModelCriteria

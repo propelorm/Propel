@@ -42,13 +42,13 @@ EOF;
 -- i18n_behavior_test_0_i18n
 -----------------------------------------------------------------------
 
-DROP TABLE IF EXISTS i18n_behavior_test_0_i18n;
+DROP TABLE IF EXISTS [i18n_behavior_test_0_i18n];
 
-CREATE TABLE i18n_behavior_test_0_i18n
+CREATE TABLE [i18n_behavior_test_0_i18n]
 (
-    id INTEGER NOT NULL,
-    locale VARCHAR(5) DEFAULT 'fr_FR' NOT NULL,
-    PRIMARY KEY (id,locale)
+    [id] INTEGER NOT NULL,
+    [locale] VARCHAR(5) DEFAULT 'fr_FR' NOT NULL,
+    PRIMARY KEY ([id],[locale])
 );
 EOF;
         $this->assertContains($expected, $builder->getSQL());
@@ -76,13 +76,13 @@ EOF;
 -- i18n_behavior_test_0_i18n
 -----------------------------------------------------------------------
 
-DROP TABLE IF EXISTS i18n_behavior_test_0_i18n;
+DROP TABLE IF EXISTS [i18n_behavior_test_0_i18n];
 
-CREATE TABLE i18n_behavior_test_0_i18n
+CREATE TABLE [i18n_behavior_test_0_i18n]
 (
-    id INTEGER NOT NULL,
-    locale VARCHAR(5) DEFAULT 'pt_PT' NOT NULL,
-    PRIMARY KEY (id,locale)
+    [id] INTEGER NOT NULL,
+    [locale] VARCHAR(5) DEFAULT 'pt_PT' NOT NULL,
+    PRIMARY KEY ([id],[locale])
 );
 EOF;
         $this->assertContains($expected, $builder->getSQL());
@@ -111,7 +111,7 @@ EOF;
     </table>
     <table name="i18n_behavior_test_0_i18n">
         <column name="id" primaryKey="true" type="INTEGER" />
-        <column name="locale" primaryKey="true" type="VARCHAR" size="5" default="en_EN" />
+        <column name="locale" primaryKey="true" type="VARCHAR" size="5" default="en_US" />
         <column name="bar" type="VARCHAR" size="100" />
         <foreign-key foreignTable="i18n_behavior_test_0">
             <reference local="id" foreign="id" />
@@ -135,9 +135,9 @@ EOF;
 -- i18n_behavior_test_0_i18n
 -----------------------------------------------------------------------
 
-DROP TABLE IF EXISTS i18n_behavior_test_0_i18n;
+DROP TABLE IF EXISTS [i18n_behavior_test_0_i18n];
 
-CREATE TABLE i18n_behavior_test_0_i18n
+CREATE TABLE [i18n_behavior_test_0_i18n]
 EOF;
         $this->assertContains($expected, $builder->getSQL());
     }
@@ -150,7 +150,7 @@ EOF;
         $builder = new PropelQuickBuilder();
         $builder->setSchema($schema);
         $expected = <<<EOF
--- FOREIGN KEY (id) REFERENCES i18n_behavior_test_0 (id)
+-- FOREIGN KEY ([id]) REFERENCES i18n_behavior_test_0 ([id])
 EOF;
         $this->assertContains($expected, $builder->getSQL());
     }
@@ -163,10 +163,10 @@ EOF;
         $builder = new PropelQuickBuilder();
         $builder->setSchema($schema);
         $expected = <<<EOF
-CREATE TABLE i18n_behavior_test_0_i18n
+CREATE TABLE [i18n_behavior_test_0_i18n]
 (
-    id INTEGER NOT NULL,
-    locale VARCHAR(5) DEFAULT 'en_EN' NOT NULL,
+    [id] INTEGER NOT NULL,
+    [locale] VARCHAR(5) DEFAULT 'en_US' NOT NULL,
 EOF;
         $this->assertContains($expected, $builder->getSQL());
     }
@@ -179,12 +179,12 @@ EOF;
         $builder = new PropelQuickBuilder();
         $builder->setSchema($schema);
         $expected = <<<EOF
-CREATE TABLE i18n_behavior_test_0_i18n
+CREATE TABLE [i18n_behavior_test_0_i18n]
 (
-    id INTEGER NOT NULL,
-    locale VARCHAR(5) DEFAULT 'en_EN' NOT NULL,
-    bar VARCHAR(100),
-    PRIMARY KEY (id,locale)
+    [id] INTEGER NOT NULL,
+    [locale] VARCHAR(5) DEFAULT 'en_US' NOT NULL,
+    [bar] VARCHAR(100),
+    PRIMARY KEY ([id],[locale])
 );
 EOF;
         $this->assertContains($expected, $builder->getSQL());
@@ -198,10 +198,10 @@ EOF;
         $builder = new PropelQuickBuilder();
         $builder->setSchema($schema);
         $expected = <<<EOF
-CREATE TABLE i18n_behavior_test_0
+CREATE TABLE [i18n_behavior_test_0]
 (
-    id INTEGER NOT NULL PRIMARY KEY,
-    foo INTEGER
+    [id] INTEGER NOT NULL PRIMARY KEY,
+    [foo] INTEGER
 );
 EOF;
         $this->assertContains($expected, $builder->getSQL());
@@ -276,13 +276,13 @@ EOF;
 -- foo_table
 -----------------------------------------------------------------------
 
-DROP TABLE IF EXISTS foo_table;
+DROP TABLE IF EXISTS [foo_table];
 
-CREATE TABLE foo_table
+CREATE TABLE [foo_table]
 (
-    id INTEGER NOT NULL,
-    locale VARCHAR(5) DEFAULT 'en_EN' NOT NULL,
-    PRIMARY KEY (id,locale)
+    [id] INTEGER NOT NULL,
+    [locale] VARCHAR(5) DEFAULT 'en_US' NOT NULL,
+    PRIMARY KEY ([id],[locale])
 );
 EOF;
         $this->assertContains($expected, $builder->getSQL());
@@ -307,13 +307,13 @@ EOF;
 -- i18n_behavior_test_0_i18n
 -----------------------------------------------------------------------
 
-DROP TABLE IF EXISTS i18n_behavior_test_0_i18n;
+DROP TABLE IF EXISTS [i18n_behavior_test_0_i18n];
 
-CREATE TABLE i18n_behavior_test_0_i18n
+CREATE TABLE [i18n_behavior_test_0_i18n]
 (
-    id INTEGER NOT NULL,
-    culture VARCHAR(5) DEFAULT 'en_EN' NOT NULL,
-    PRIMARY KEY (id,culture)
+    [id] INTEGER NOT NULL,
+    [culture] VARCHAR(5) DEFAULT 'en_US' NOT NULL,
+    PRIMARY KEY ([id],[culture])
 );
 EOF;
         $this->assertContains($expected, $builder->getSQL());
@@ -338,13 +338,13 @@ EOF;
 -- i18n_behavior_test_0_i18n
 -----------------------------------------------------------------------
 
-DROP TABLE IF EXISTS i18n_behavior_test_0_i18n;
+DROP TABLE IF EXISTS [i18n_behavior_test_0_i18n];
 
-CREATE TABLE i18n_behavior_test_0_i18n
+CREATE TABLE [i18n_behavior_test_0_i18n]
 (
-    id INTEGER NOT NULL,
-    locale VARCHAR(5) DEFAULT 'fr_FR' NOT NULL,
-    PRIMARY KEY (id,locale)
+    [id] INTEGER NOT NULL,
+    [locale] VARCHAR(5) DEFAULT 'fr_FR' NOT NULL,
+    PRIMARY KEY ([id],[locale])
 );
 EOF;
         $this->assertContains($expected, $builder->getSQL());
@@ -382,20 +382,20 @@ EOF;
         $this->assertEquals(count($fkList), 1);
         $fk = array_pop($fkList);
         $this->assertEquals($fk->getForeignTableName(), 'i18n_behavior_test_0');
-        $this->assertEquals($fk->getForeignColumnNames(), 'id');
+        $this->assertEquals($fk->getForeignColumnNames(), '[id]');
 
         $expected = <<<EOF
 -----------------------------------------------------------------------
 -- i18n_behavior_test_0_i18n
 -----------------------------------------------------------------------
 
-DROP TABLE IF EXISTS i18n_behavior_test_0_i18n;
+DROP TABLE IF EXISTS [i18n_behavior_test_0_i18n];
 
-CREATE TABLE i18n_behavior_test_0_i18n
+CREATE TABLE [i18n_behavior_test_0_i18n]
 (
-    custom_id INTEGER NOT NULL,
-    locale VARCHAR(5) DEFAULT 'fr_FR' NOT NULL,
-    PRIMARY KEY (custom_id,locale)
+    [custom_id] INTEGER NOT NULL,
+    [locale] VARCHAR(5) DEFAULT 'fr_FR' NOT NULL,
+    PRIMARY KEY ([custom_id],[locale])
 );
 EOF;
         $this->assertContains($expected, $builder->getSQL());
