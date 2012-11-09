@@ -78,7 +78,9 @@ class SortableRelationBehavior extends Behavior
 public function {$this->getObjectMoveRelatedToNullScopeMethodName()}(PropelPDO \$con = null)
 {
     \$maxRank = $queryClass::create()->getMaxRank(\$this->getPrimaryKey(), \$con);
-    $peerClass::shiftRank(\$maxRank, null, null, \$this->getPrimaryKey(), \$con);
+    if (null !== \$maxRank) { // getMaxRank() returns null for empty tables
+        $peerClass::shiftRank(\$maxRank, null, null, \$this->getPrimaryKey(), \$con);
+    }
 }
 ";
 
