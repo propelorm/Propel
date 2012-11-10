@@ -118,7 +118,7 @@ class ColumnMapTest extends BookstoreTestBase
     $this->assertEquals($publisherColumn->getRelation(), $bookTable->getRelation('Publisher'), 'getRelation() returns the RelationMap object for this foreign key');
     $bookstoreTable = BookstoreEmployeePeer::getTableMap();
     $supervisorColumn = $bookstoreTable->getColumn('SUPERVISOR_ID');
-    $this->assertEquals($supervisorColumn->getRelation(), $supervisorColumn->getRelation('Supervisor'), 'getRelation() returns the RelationMap object even whit ha specific refPhpName');
+    $this->assertEquals($supervisorColumn->getRelation(), $supervisorColumn->getRelation('Supervisor'), 'getRelation() returns the RelationMap object even without specific refPhpName');
 
   }
 
