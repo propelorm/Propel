@@ -261,7 +261,7 @@ class BasePeerTest extends BookstoreTestBase
         $c->add(BookPeer::ID, 12);
         BasePeer::doDelete($c, $con);
         $expectedSQL = "DELETE FROM `book` WHERE book.TITLE='War And Peace' AND book.ID=12";
-        $this->assertEquals($expectedSQL, $con->getLastExecutedQuery(), 'doDelete() combines conditions in WHERE whith an AND');
+        $this->assertEquals($expectedSQL, $con->getLastExecutedQuery(), 'doDelete() combines conditions in WHERE with an AND');
     }
 
     public function testDoDeleteTableAlias()
