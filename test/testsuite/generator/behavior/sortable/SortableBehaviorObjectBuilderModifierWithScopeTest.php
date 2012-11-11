@@ -15,6 +15,7 @@ require_once dirname(__FILE__) . '/../../../../tools/helpers/bookstore/behavior/
  * Tests for SortableBehavior class
  *
  * @author		Massimiliano Arione
+ * @author		rozwell
  * @version		$Revision$
  * @package		generator.behavior.sortable
  */
@@ -55,6 +56,22 @@ class SortableBehaviorObjectBuilderModifierWithScopeTest extends BookstoreSortab
         $this->assertEquals(3, $t4->getRank(), 'Sortable rearrange subsequent rows on delete');
         $expected = array(1 => 'row5', 2 => 'row6');
         $this->assertEquals($expected, $this->getFixturesArrayWithScope(2), 'delete() leaves other suites unchanged');
+        $expected = array(1 => 'row7', 2 => 'row8', 3 => 'row9', 4 => 'row10');
+        $this->assertEquals($expected, $this->getFixturesArrayWithScope(), 'delete() leaves other suites unchanged');
+    }
+
+    public function testPreDeleteFkScope()
+    {
+        $this->populateFkScopeTable();
+
+        $t = Table11Peer::retrieveByRank(2);
+        $t->delete();
+        $expected = array(1 => 'row7', 2 => 'row8', 3 => 'row9', 4 => 'row4', 5 => 'row5', 6 => 'row6');
+        $this->assertEquals($expected, $this->getFixturesArrayWithFkScope(), 'delete() moves related objects to the end of null scope');
+
+        $s = Table11Peer::retrieveByRank(1);
+        $expected = array(1 => 'row1', 2 => 'row2', 3 => 'row3');
+        $this->assertEquals($expected, $this->getFixturesArrayWithFkScope($s->getId()), 'delete() leaves other suites unchanged');
     }
 
     public function testIsFirst()
