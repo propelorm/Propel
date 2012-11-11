@@ -11,12 +11,14 @@
 require_once dirname(__FILE__) . '/SortableBehaviorObjectBuilderModifier.php';
 require_once dirname(__FILE__) . '/SortableBehaviorQueryBuilderModifier.php';
 require_once dirname(__FILE__) . '/SortableBehaviorPeerBuilderModifier.php';
+require_once dirname(__FILE__) . '/SortableRelationBehavior.php';
 
 /**
  * Gives a model class the ability to be ordered
  * Uses one additional column storing the rank
  *
  * @author      Massimiliano Arione
+ * @author      rozwell
  * @version     $Revision$
  * @package     propel.generator.behavior.sortable
  */
@@ -36,18 +38,34 @@ class SortableBehavior extends Behavior
      */
     public function modifyTable()
     {
-        if (!$this->getTable()->containsColumn($this->getParameter('rank_column'))) {
-            $this->getTable()->addColumn(array(
+        $table = $this->getTable();
+
+        if (!$table->containsColumn($this->getParameter('rank_column'))) {
+            $table->addColumn(array(
                 'name' => $this->getParameter('rank_column'),
                 'type' => 'INTEGER'
             ));
         }
-        if ($this->getParameter('use_scope') == 'true' &&
-             !$this->getTable()->containsColumn($this->getParameter('scope_column'))) {
-            $this->getTable()->addColumn(array(
+        if ($this->useScope() &&
+             !$table->containsColumn($this->getParameter('scope_column'))) {
+            $table->addColumn(array(
                 'name' => $this->getParameter('scope_column'),
                 'type' => 'INTEGER'
             ));
+        }
+
+        if ($this->useScope()) {
+            $keys = $table->getColumnForeignKeys($this->getParameter('scope_column'));
+            foreach ($keys as $key) {
+                if ($key->isForeignPrimaryKey() && $key->getOnDelete() == ForeignKey::SETNULL) {
+                    $foreignTable = $key->getForeignTable();
+                    $relationBehavior = new SortableRelationBehavior();
+                    $relationBehavior->addParameter(array('name' => 'foreign_table', 'value' => $table->getName()));
+                    $relationBehavior->addParameter(array('name' => 'foreign_scope_column', 'value' => $this->getParameter('scope_column')));
+                    $relationBehavior->addParameter(array('name' => 'foreign_rank_column', 'value' => $this->getParameter('rank_column')));
+                    $foreignTable->addBehavior($relationBehavior);
+                }
+            }
         }
     }
 

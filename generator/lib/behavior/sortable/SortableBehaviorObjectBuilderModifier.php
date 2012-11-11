@@ -13,6 +13,7 @@
  *
  * @author     François Zaninotto
  * @author     heltem <heltem@o2php.com>
+ * @author     rozwell
  * @package    propel.generator.behavior.sortable
  */
 class SortableBehaviorObjectBuilderModifier
