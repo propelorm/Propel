@@ -113,7 +113,7 @@ You can override this method in the model class to customize the aggregate colum
 
 ## Additional Condition ##
 
-What if you use your own soft deletetion and want to calculate only comments which are not marked as deleted?
+What if you use your own soft deletion and want to calculate only comments which are not marked as deleted?
 It is possible to add a custom SQL condition:
 
 {% highlight xml %}
