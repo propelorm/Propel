@@ -9,7 +9,7 @@ The `delegate` behavior allows a model to delegate methods to one of its relatio
 
 ## Basic Usage ##
 
-In the `schema.xml`, use the `<behavior>` tag to add the `delegate` behavior to a table. In the `<parameters>` tag, specify the table that the current table delegates to as the `to` parameter:
+In the `schema.xml`, use the `<behavior>` tag to add the `delegate` behavior to a table. In the `<parameter>` tag, specify the table that the current table delegates to as the `to` parameter:
 
 {% highlight xml %}
 <table name="account">
