@@ -77,7 +77,7 @@ echo $s2->countChildren(); // 1
 echo $s2->hasSiblings(); // true
 {% endhighlight %}
 
-Each of the traversal and inspection methods result in a single database query, whatever the position of the node in the tree. This is because the information about the node position in the tree is stored in three columns of the model, named `tree_left`, `tree_left`, and `tree_level`. The value given to these columns is determined by the nested set algorithm, and it makes read queries much more effective than trees using a simple `parent_id` foreign key.
+Each of the traversal and inspection methods result in a single database query, whatever the position of the node in the tree. This is because the information about the node position in the tree is stored in three columns of the model, named `tree_left`, `tree_right`, and `tree_level`. The value given to these columns is determined by the nested set algorithm, and it makes read queries much more effective than trees using a simple `parent_id` foreign key.
 
 ## Manipulating Nodes ##
 
