@@ -260,4 +260,11 @@ class NamespaceTest extends PHPUnit_Framework_TestCase
         $this->assertNull($book);
     }
 
+    public function testFindOneOrCreateFunction()
+    {
+        \Foo\Bar\NamespacedBookstoreCashierQuery::create()->deleteAll();
+
+        $cashier = \Foo\Bar\NamespacedBookstoreCashierQuery::create()->findOneOrCreate();
+        $this->assertTrue($cashier instanceof \Foo\Bar\NamespacedBookstoreCashier, 'findOneOrCreate return right object when create one : NamespacedBookstoreCashier');
+    }
 }
