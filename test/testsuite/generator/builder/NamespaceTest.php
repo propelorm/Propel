@@ -266,5 +266,13 @@ class NamespaceTest extends PHPUnit_Framework_TestCase
 
         $cashier = \Foo\Bar\NamespacedBookstoreCashierQuery::create()->findOneOrCreate();
         $this->assertTrue($cashier instanceof \Foo\Bar\NamespacedBookstoreCashier, 'findOneOrCreate return right object when create one : NamespacedBookstoreCashier');
+
+        try {
+            $cashier = \Foo\Bar\NamespacedBookstoreCashierQuery::create()
+            ->joinSubordinate()
+            ->findOneOrCreate();
+        } catch (\PropelException $e) {
+            $this->assertEquals('findOneOrCreate() cannot be used on a query with a join, because Propel cannot transform a SQL JOIN into a subquery. You should split the query in two queries to avoid joins.', $e->getMessage());
+        }
     }
 }
