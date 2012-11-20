@@ -163,7 +163,7 @@ class "  .$this->getClassname() . " extends " . $baseClassname . " {
     protected function addClassBody(&$script)
     {
         $this->declareClassFromBuilder($this->getStubPeerBuilder());
-        $this->declareClasses('PropelPDO', 'Criteria', 'BasePeer');
+        $this->declareClasses('PropelPDO', 'Criteria', 'BasePeer', 'PropelException');
         $this->addFactory($script);
         $this->addPreSelect($script);
         $this->addPreUpdate($script);
