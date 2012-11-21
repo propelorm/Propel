@@ -575,9 +575,7 @@ abstract class OMBuilder extends DataModelBuilder
         $content = preg_replace('/[ \t]*$/m', '', $content);
 
         // indentation
-        $content = preg_replace_callback('/^([ \t]+)/m', function ($matches) use ($content) {
-            return str_replace("\t", '    ', $matches[0]);
-        }, $content);
+        $content = preg_replace_callback('/^([ \t]+)/m', array($this, 'fixTrailingWhitespaces'), $content);
 
         // line feed
         $content = str_replace("\r\n", "\n", $content);
@@ -604,5 +602,10 @@ abstract class OMBuilder extends DataModelBuilder
         }
 
         return $content;
+    }
+
+    public function fixTrailingWhitespaces($matches)
+    {
+        return str_replace("\t", '    ', $matches[0]);
     }
 }
