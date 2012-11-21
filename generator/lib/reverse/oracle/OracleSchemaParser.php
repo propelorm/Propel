@@ -276,4 +276,3 @@ class OracleSchemaParser extends BaseSchemaParser
     }
 
 }
-

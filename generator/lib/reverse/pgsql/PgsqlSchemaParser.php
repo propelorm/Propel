@@ -142,7 +142,6 @@ class PgsqlSchemaParser extends BaseSchemaParser
         }
 
         // TODO - Handle Sequences ...
-
         return count($tableWraps);
 
     }

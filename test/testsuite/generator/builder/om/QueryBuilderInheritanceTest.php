@@ -174,4 +174,3 @@ class QueryBuilderInheritanceTest extends BookstoreTestBase
         $this->assertInstanceOf('BookstoreCashier', $cashier3, 'findOneOrCreate return right object when create one : BookstoreCashier');
     }
 }
-

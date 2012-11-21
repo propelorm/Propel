@@ -372,4 +372,3 @@ class PropelSQLExec extends Task
     }
 
 }
-

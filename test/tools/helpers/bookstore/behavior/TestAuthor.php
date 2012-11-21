@@ -65,7 +65,7 @@ class TestAuthor extends Author
         parent::postDelete($con);
         $this->setLastName("Post-Deleted");
     }
-    
+
     public function postHydrate($row, $startcol = 0, $rehydrate = false)
     {
         parent::postHydrate($row, $startcol, $rehydrate);

@@ -114,7 +114,7 @@ class TestAllHooksObjectBuilderModifier
   {
     return '$this->postDelete = 1;$this->postDeleteIsBeforeDelete = isset(Table3Peer::$instances[$this->id]);$this->postDeleteBuilder="' . get_class($builder) . '";';
   }
-  
+
   public function postHydrate($builder)
   {
     return '$this->postHydrate = 1;$this->postHydrateIsAfterHydrate = isset($this->id);$this->postHydrateBuilder="' . get_class($builder) . '";';

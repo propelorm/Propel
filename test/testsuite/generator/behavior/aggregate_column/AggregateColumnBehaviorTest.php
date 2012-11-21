@@ -201,7 +201,6 @@ class AggregateColumnBehaviorTest extends BookstoreTestBase
         $this->assertEquals(3, $post1->getNbComments(), 'the post has 3 comments');
     }
 
-
     public function testQueryCountOnUpdate()
     {
         AggregateCommentQuery::create()->deleteAll($this->con);
@@ -261,7 +260,6 @@ class AggregateColumnBehaviorTest extends BookstoreTestBase
         return array($poll, $item1, $item2);
     }
 
-
 }
 
 class TestableComment extends AggregateComment
@@ -310,6 +308,7 @@ class TestablePost extends AggregatePost
     public function computeNbComments(PropelPDO $con)
     {
         $this->countComputeCall++;
+
         return parent::computeNbComments($con);
     }
 

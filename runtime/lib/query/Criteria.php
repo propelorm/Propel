@@ -1399,7 +1399,7 @@ class Criteria implements IteratorAggregate
         if ( isset ( $this->map[$key] ) ) {
             $removed = $this->map[$key];
             unset ( $this->map[$key] );
-            if ( $removed instanceof Criterion ) {
+            if ($removed instanceof Criterion) {
                 return $removed->getValue();
             }
 

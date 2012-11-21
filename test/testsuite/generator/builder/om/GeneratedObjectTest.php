@@ -1047,14 +1047,14 @@ EOF;
         $author->delete();
         $this->assertEquals("Post-Deleted", $author->getLastName());
     }
-    
+
     public function testPostHydrate()
     {
         $author = new TestAuthor();
         $author->hydrate(array(1, 'bogus', 'Lastname', 'bogus@mail.com', 21));
         $this->assertEquals("Post-Hydrated", $author->getLastName());
     }
-    
+
     public function testMagicVirtualColumnGetter()
     {
         $book = new Book();

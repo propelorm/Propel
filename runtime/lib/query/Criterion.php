@@ -182,7 +182,7 @@ class Criterion
     public function setDB(DBAdapter $v)
     {
         $this->db = $v;
-        foreach ( $this->clauses as $clause ) {
+        foreach ($this->clauses as $clause) {
             $clause->setDB($v);
         }
     }
@@ -512,7 +512,7 @@ class Criterion
             $h ^= crc32($this->column);
         }
 
-        foreach ( $this->clauses as $clause ) {
+        foreach ($this->clauses as $clause) {
             // TODO: i KNOW there is a php incompatibility with the following line
             // but i dont remember what it is, someone care to look it up and
             // replace it if it doesnt bother us?

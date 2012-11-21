@@ -411,4 +411,3 @@ class ModelCriteriaSelectTest extends BookstoreTestBase
         $this->assertEquals(array('Book.Id', 'Book.Title', 'Book.ISBN', 'Book.Price', 'Book.PublisherId', 'Book.AuthorId'), $c->getSelect());
     }
 }
-

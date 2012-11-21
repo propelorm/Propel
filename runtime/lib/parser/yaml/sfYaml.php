@@ -26,7 +26,7 @@ class sfYaml
    *
    * @param string $version The YAML specification version
    */
-  static public function setSpecVersion($version)
+  public static function setSpecVersion($version)
   {
     if (!in_array($version, array('1.1', '1.2'))) {
       throw new InvalidArgumentException(sprintf('Version %s of the YAML specifications is not supported', $version));
@@ -40,7 +40,7 @@ class sfYaml
    *
    * @return string The YAML specification version
    */
-  static public function getSpecVersion()
+  public static function getSpecVersion()
   {
     return self::$spec;
   }

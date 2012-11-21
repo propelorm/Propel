@@ -27,4 +27,3 @@ abstract class BaseTestCase extends PHPUnit_Framework_TestCase
     const DEBUG = false;
 
 }
-

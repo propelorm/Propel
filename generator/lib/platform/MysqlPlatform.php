@@ -587,7 +587,7 @@ ALTER TABLE %s CHANGE %s %s;
 
         //default to add to top if the before-column cannot be found
         $insertPositionDDL = "FIRST";
-        foreach($tableColumns as $i => $tableColumn) {
+        foreach ($tableColumns as $i => $tableColumn) {
             //we found the column, use the column before it, if its not the first
             if ($tableColumn->getName() == $column->getName()) {
                 //we have a column that is not the first column
@@ -607,7 +607,7 @@ ALTER TABLE %s CHANGE %s %s;
     /**
      * Builds the DDL SQL to add a list of columns
      *
-     * @return     string
+     * @return string
      */
     public function getAddColumnsDDL($columns)
     {
@@ -627,6 +627,7 @@ ALTER TABLE %s
 
         $sep = ",
     ";
+
         return sprintf($pattern,
             $this->quoteIdentifier($tableName),
             implode($sep, $lines)

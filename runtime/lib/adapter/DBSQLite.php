@@ -111,9 +111,9 @@ class DBSQLite extends DBAdapter
      */
     public function applyLimit(&$sql, $offset, $limit)
     {
-        if ( $limit > 0 ) {
+        if ($limit > 0) {
             $sql .= " LIMIT " . $limit . ($offset > 0 ? " OFFSET " . $offset : "");
-        } elseif ( $offset > 0 ) {
+        } elseif ($offset > 0) {
             $sql .= " LIMIT -1 OFFSET " . $offset;
         }
     }

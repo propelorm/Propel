@@ -124,9 +124,9 @@ class DBOracle extends DBAdapter
             . 'SELECT A.*, rownum AS PROPEL_ROWNUM FROM (' . $sql . ') A '
             . ') B WHERE ';
 
-        if ( $offset > 0 ) {
+        if ($offset > 0) {
             $sql .= ' B.PROPEL_ROWNUM > ' . $offset;
-            if ( $limit > 0 ) {
+            if ($limit > 0) {
                 $sql .= ' AND B.PROPEL_ROWNUM <= ' . ( $offset + $limit );
             }
         } else {

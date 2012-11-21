@@ -165,8 +165,8 @@ class PropelObjectCollection extends PropelCollection
      *   $res = $coll->toKeyValue(array('RelatedModel', 'Name'), 'Name');
      * </code>
      *
-     * @param string|array $keyColumn The name of the column, or a list of columns to call.
-     * @param string $valueColumn
+     * @param string|array $keyColumn   The name of the column, or a list of columns to call.
+     * @param string       $valueColumn
      *
      * @return array
      */
