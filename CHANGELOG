@@ -2,7 +2,51 @@
 
 ## 2012-??-??: Version 1.6.8 ##
 
-737bb3 Make findOneById to be an alias of findPk
+aaef084 Remove closure to ensure BC
+8ba821f fix CS
+a2ff295 Fix case sensitivity
+394beb5 Better output in tests
+269f088 Fix missing PropelException use declaration.
+5cfdf7c Fix findOneOrCreate with single inheritance and namespace
+21a1e03 sortable behavior: tests for FK scope column
+f860b20 sortable behavior: fixed rank shifting on delete when there are no related objects
+6966cd9 fix #500 update composer.json force phing 2.4.12
+22b7ef5 Fix a few typos
+8bba368 Fix wrong escape of $con
+d55ce56 Fix single inheritance class choise error when orbject is create by findOneOrCreate function
+54df08d Fix test files (password introduced by error)
+1bf96f2 Active identifier quoting by default, and fix it
+1eb07b8 Enable identifier quoting
+b9ce9a8 add more fluent FK api
+624b87b Fix a descendant_class attribute issue when used with concrete_inheritance and namespaces (issue #480)
+a9b91e5 fix duplicate use of parentClass from behaviors
+04e6a7c migrations don't report equal FK behavior
+3a93511 added unit test to prove the call order of combine and filterByXXX has influence on sql
+2b575ab allow baseClass values with namespaces
+e66636c Fix PropelCollection::toArray()
+66d3740 Replace locale en_EN by en_US. The locale en_EN is not a standard locale.
+28b61db Added postHydrate hook to PHP5OBjectBuilder and BaseObject
+09760d7 Fix test suite (safe mode)
+9ce1af4 Fix fixtures to avoid error (mysql safe mode)
+ecf2bc4 Fix travis setup
+2345aaa allow unsetting lazy load columns without loading
+b692286 Remove accidentaly added space
+725518f Fix the 'Table "t1" declared twice' when same table name are declared on different schema fix #311
+ed54050 sortable behavior: removed getting $con in moveRelatedObjectsToNullScope()
+4c369ba sortable behavior: changed moveRelatedObjectsToNullScope() to use already existing getMaxRank() method and fixed bug in shiftRank()
+1e16f2c sortable behavior: changed moveRelatedObjectsToNullScope() method to use improved shiftRank() method
+4c3cf04 sortable behavior: improved shiftRank() to not require $first node parameter
+924839c sortable behavior: when scope column is a FK and onDelete="setnull", removing related object now moves all objects to the end of null scope
+4ded2e5 skip findPk alias on "@method" generation in Query
+740d8ff fixed combine overwrite exiting criterions.
+3af6a72 sortable behavior: tests for new scope approach (includes fixed typo in SortableBehaviorObjectBuilderModifierWithScopeTest::testInsertAtRank())
+2efa390 sortable behavior: changed removeFromList() to work with new scope approach, little bugfix in preUpdate
+f9a0906 Don't try to filter table names.
+441f969 Update CHANGELOG
+7e169b3 Applied fix #378 change for self::PEER
+957b90a Readded blank line before return (accidentally removed while resolving merge conflicts)
+5b06917 Fixed typo in method names: preDelete => preUpdate
+737bb32 Make findOneById to be an alias of findPk
 6e21f54 Ignore composer.phar
 6eb19ea Fix #281
 7b30873 Fix #348
