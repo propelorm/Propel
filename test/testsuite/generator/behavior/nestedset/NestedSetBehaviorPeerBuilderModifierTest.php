@@ -22,9 +22,9 @@ class NestedSetBehaviorPeerBuilderModifierTest extends BookstoreNestedSetTestBas
 {
     public function testConstants()
     {
-        $this->assertEquals(Table9Peer::LEFT_COL, 'table9.TREE_LEFT', 'nested_set adds a LEFT_COL constant');
-        $this->assertEquals(Table9Peer::RIGHT_COL, 'table9.TREE_RIGHT', 'nested_set adds a RIGHT_COL constant');
-        $this->assertEquals(Table9Peer::LEVEL_COL, 'table9.TREE_LEVEL', 'nested_set adds a LEVEL_COL constant');
+        $this->assertEquals(Table9Peer::LEFT_COL, 'table9.tree_left', 'nested_set adds a LEFT_COL constant');
+        $this->assertEquals(Table9Peer::RIGHT_COL, 'table9.tree_right', 'nested_set adds a RIGHT_COL constant');
+        $this->assertEquals(Table9Peer::LEVEL_COL, 'table9.tree_level', 'nested_set adds a LEVEL_COL constant');
     }
 
     public function testRetrieveRoot()

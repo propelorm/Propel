@@ -70,7 +70,7 @@ class TableMapTest extends PHPUnit_Framework_TestCase
     $this->assertFalse($this->tmap->hasColumn('BAR'), 'hascolumn() returns false when the column is not in the table map');
     $column = $this->tmap->addColumn('BAR', 'Bar', 'INTEGER');
     $this->assertTrue($this->tmap->hasColumn('BAR'), 'hascolumn() returns true when the column is in the table map');
-    $this->assertTrue($this->tmap->hasColumn('foo.bar'), 'hascolumn() accepts a denormalized column name');
+    $this->assertTrue($this->tmap->hasColumn('foo.BAR'), 'hascolumn() accepts a denormalized column name');
     $this->assertFalse($this->tmap->hasColumn('foo.bar', false), 'hascolumn() accepts a $normalize parameter to skip name normalization');
     $this->assertTrue($this->tmap->hasColumn('BAR', false), 'hascolumn() accepts a $normalize parameter to skip name normalization');
     $this->assertTrue($this->tmap->hasColumn($column), 'hascolumn() accepts a ColumnMap object as parameter');
@@ -84,7 +84,7 @@ class TableMapTest extends PHPUnit_Framework_TestCase
       $this->tmap->getColumn('FOO');
       $this->fail('getColumn throws an exception when called on an inexistent column');
     } catch (PropelException $e) {}
-    $this->assertEquals($column, $this->tmap->getColumn('foo.bar'), 'getColumn accepts a denormalized column name');
+    $this->assertEquals($column, $this->tmap->getColumn('foo.BAR'), 'getColumn accepts a denormalized column name');
     try {
       $this->tmap->getColumn('foo.bar', false);
       $this->fail('getColumn accepts a $normalize parameter to skip name normalization');
@@ -240,11 +240,11 @@ class TableMapTest extends PHPUnit_Framework_TestCase
   {
     $tmap = new TestableTableMap();
     $this->assertEquals('', $tmap->normalizeColName(''), 'normalizeColName returns an empty string when passed an empty string');
-    $this->assertEquals('BAR', $tmap->normalizeColName('bar'), 'normalizeColName uppercases the input');
-    $this->assertEquals('BAR_BAZ', $tmap->normalizeColName('bar_baz'), 'normalizeColName does not mind underscores');
+    $this->assertEquals('bar', $tmap->normalizeColName('bar'), 'normalizeColName uppercases the input');
+    $this->assertEquals('bar_baz', $tmap->normalizeColName('bar_baz'), 'normalizeColName does not mind underscores');
     $this->assertEquals('BAR', $tmap->normalizeColName('FOO.BAR'), 'normalizeColName removes table prefix');
     $this->assertEquals('BAR', $tmap->normalizeColName('BAR'), 'normalizeColName leaves normalized column names unchanged');
-    $this->assertEquals('BAR_BAZ', $tmap->normalizeColName('foo.bar_baz'), 'normalizeColName can do all the above at the same time');
+    $this->assertEquals('bar_baz', $tmap->normalizeColName('foo.bar_baz'), 'normalizeColName can do all the above at the same time');
   }
 
   // deprecated method
@@ -253,7 +253,7 @@ class TableMapTest extends PHPUnit_Framework_TestCase
     $this->assertFalse($this->tmap->containsColumn('BAR'), 'containsColumn returns false when the column is not in the table map');
     $column = $this->tmap->addColumn('BAR', 'Bar', 'INTEGER');
     $this->assertTrue($this->tmap->containsColumn('BAR'), 'containsColumn returns true when the column is in the table map');
-    $this->assertTrue($this->tmap->containsColumn('foo.bar'), 'containsColumn accepts a denormalized column name');
+    $this->assertTrue($this->tmap->containsColumn('foo.BAR'), 'containsColumn accepts a denormalized column name');
     $this->assertFalse($this->tmap->containsColumn('foo.bar', false), 'containsColumn accepts a $normalize parameter to skip name normalization');
     $this->assertTrue($this->tmap->containsColumn('BAR', false), 'containsColumn accepts a $normalize parameter to skip name normalization');
     $this->assertTrue($this->tmap->containsColumn($column), 'containsColumn accepts a ColumnMap object as parameter');

@@ -32,10 +32,12 @@ class FieldnameRelatedTest extends PHPUnit_Framework_TestCase
     protected function setUp()
     {
         parent::setUp();
-        set_include_path(get_include_path() . PATH_SEPARATOR . "fixtures/bookstore/build/classes");
-        require_once 'bookstore/map/BookTableMap.php';
-        require_once 'bookstore/BookPeer.php';
-        require_once 'bookstore/Book.php';
+
+        require_once dirname(__FILE__) . '/../../fixtures/bookstore/build/classes/bookstore/map/BookTableMap.php';
+        require_once dirname(__FILE__) . '/../../fixtures/bookstore/build/classes/bookstore/om/BaseBookPeer.php';
+        require_once dirname(__FILE__) . '/../../fixtures/bookstore/build/classes/bookstore/BookPeer.php';
+        require_once dirname(__FILE__) . '/../../fixtures/bookstore/build/classes/bookstore/om/BaseBook.php';
+        require_once dirname(__FILE__) . '/../../fixtures/bookstore/build/classes/bookstore/Book.php';
     }
 
     /**
@@ -76,12 +78,12 @@ class FieldnameRelatedTest extends PHPUnit_Framework_TestCase
                 5 => 'authorId'
             ),
             BasePeer::TYPE_COLNAME => array(
-                0 => 'book.ID',
-                1 => 'book.TITLE',
-                2 => 'book.ISBN',
-                3 => 'book.PRICE',
-                4 => 'book.PUBLISHER_ID',
-                5 => 'book.AUTHOR_ID'
+                0 => 'book.id',
+                1 => 'book.title',
+                2 => 'book.isbn',
+                3 => 'book.price',
+                4 => 'book.publisher_id',
+                5 => 'book.author_id'
             ),
             BasePeer::TYPE_FIELDNAME => array(
                 0 => 'id',
@@ -127,7 +129,7 @@ class FieldnameRelatedTest extends PHPUnit_Framework_TestCase
         $expecteds = array (
             BasePeer::TYPE_PHPNAME => 'AuthorId',
             BasePeer::TYPE_STUDLYPHPNAME => 'authorId',
-            BasePeer::TYPE_COLNAME => 'book.AUTHOR_ID',
+            BasePeer::TYPE_COLNAME => 'book.author_id',
             BasePeer::TYPE_FIELDNAME => 'author_id',
             BasePeer::TYPE_NUM => 5,
         );
@@ -171,12 +173,12 @@ class FieldnameRelatedTest extends PHPUnit_Framework_TestCase
                 5 => 'authorId'
             ),
             BasePeer::TYPE_COLNAME => array(
-                0 => 'book.ID',
-                1 => 'book.TITLE',
-                2 => 'book.ISBN',
-                3 => 'book.PRICE',
-                4 => 'book.PUBLISHER_ID',
-                5 => 'book.AUTHOR_ID'
+                0 => 'book.id',
+                1 => 'book.title',
+                2 => 'book.isbn',
+                3 => 'book.price',
+                4 => 'book.publisher_id',
+                5 => 'book.author_id'
             ),
             BasePeer::TYPE_FIELDNAME => array(
                 0 => 'id',
@@ -222,7 +224,7 @@ class FieldnameRelatedTest extends PHPUnit_Framework_TestCase
         $expecteds = array (
             BasePeer::TYPE_PHPNAME => 'AuthorId',
             BasePeer::TYPE_STUDLYPHPNAME => 'authorId',
-            BasePeer::TYPE_COLNAME => 'book.AUTHOR_ID',
+            BasePeer::TYPE_COLNAME => 'book.author_id',
             BasePeer::TYPE_FIELDNAME => 'author_id',
             BasePeer::TYPE_NUM => 5,
         );
@@ -244,7 +246,7 @@ class FieldnameRelatedTest extends PHPUnit_Framework_TestCase
         $types = array(
             BasePeer::TYPE_PHPNAME => 'Title',
             BasePeer::TYPE_STUDLYPHPNAME => 'title',
-            BasePeer::TYPE_COLNAME => 'book.TITLE',
+            BasePeer::TYPE_COLNAME => 'book.title',
             BasePeer::TYPE_FIELDNAME => 'title',
             BasePeer::TYPE_NUM => 1
         );
@@ -268,7 +270,7 @@ class FieldnameRelatedTest extends PHPUnit_Framework_TestCase
         $types = array(
             BasePeer::TYPE_PHPNAME => 'Title',
             BasePeer::TYPE_STUDLYPHPNAME => 'title',
-            BasePeer::TYPE_COLNAME => 'book.TITLE',
+            BasePeer::TYPE_COLNAME => 'book.title',
             BasePeer::TYPE_FIELDNAME => 'title',
             BasePeer::TYPE_NUM => 1
         );
@@ -305,8 +307,8 @@ class FieldnameRelatedTest extends PHPUnit_Framework_TestCase
                 'iSBN' => '043935806X'
             ),
             BasePeer::TYPE_COLNAME => array (
-                'book.TITLE' => 'Harry Potter and the Order of the Phoenix',
-                'book.ISBN' => '043935806X'
+                'book.title' => 'Harry Potter and the Order of the Phoenix',
+                'book.isbn' => '043935806X'
             ),
             BasePeer::TYPE_FIELDNAME => array (
                 'title' => 'Harry Potter and the Order of the Phoenix',
@@ -365,8 +367,8 @@ class FieldnameRelatedTest extends PHPUnit_Framework_TestCase
                 'iSBN' => '043935806X'
             ),
             BasePeer::TYPE_COLNAME => array (
-                'book.TITLE' => 'Harry Potter and the Order of the Phoenix',
-                'book.ISBN' => '043935806X'
+                'book.title' => 'Harry Potter and the Order of the Phoenix',
+                'book.isbn' => '043935806X'
             ),
             BasePeer::TYPE_FIELDNAME => array (
                 'title' => 'Harry Potter and the Order of the Phoenix',

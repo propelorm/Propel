@@ -184,15 +184,15 @@ abstract class ".$this->getClassname()." extends ".$this->getPeerBuilder()->getC
 
         foreach ($table->getColumns() as $col) {
             if ($col->isNestedSetLeftKey()) {
-                $colname['left'] = $tableName . '.' . strtoupper($col->getName());
+                $colname['left'] = $tableName . '.' . $col->getName();
             }
 
             if ($col->isNestedSetRightKey()) {
-                $colname['right'] = $tableName . '.' . strtoupper($col->getName());
+                $colname['right'] = $tableName . '.' . $col->getName();
             }
 
             if ($col->isTreeScopeKey()) {
-                $colname['scope'] = $tableName . '.' . strtoupper($col->getName());
+                $colname['scope'] = $tableName . '.' . $col->getName();
             }
 
             if (3 == count($colname)) {

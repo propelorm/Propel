@@ -338,8 +338,8 @@ EOF;
 
     public function testTranslateFieldNameWithPhpName()
     {
-        $this->assertEquals('id', ConcreteSubPagePeer::translateFieldName('tab_concrete_subpage.ID', BasePeer::TYPE_COLNAME, BasePeer::TYPE_FIELDNAME));
-        $this->assertEquals('id', ConcretePagePeer::translateFieldName('tab_concrete_page.ID', BasePeer::TYPE_COLNAME, BasePeer::TYPE_FIELDNAME));
+        $this->assertEquals('id', ConcreteSubPagePeer::translateFieldName('tab_concrete_subpage.id', BasePeer::TYPE_COLNAME, BasePeer::TYPE_FIELDNAME));
+        $this->assertEquals('id', ConcretePagePeer::translateFieldName('tab_concrete_page.id', BasePeer::TYPE_COLNAME, BasePeer::TYPE_FIELDNAME));
     }
 
 }

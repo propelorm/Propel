@@ -294,7 +294,7 @@ class PropelPDOTest extends PHPUnit_Framework_TestCase
         $c = new Criteria();
         $c->add(BookPeer::ID, array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1), Criteria::IN);
         $books = BookPeer::doSelect($c, $con);
-        $expected = "SELECT book.ID, book.TITLE, book.ISBN, book.PRICE, book.PUBLISHER_ID, book.AUTHOR_ID FROM `book` WHERE book.ID IN (1,1,1,1,1,1,1,1,1,1,1,1)";
+        $expected = "SELECT book.id, book.title, book.isbn, book.price, book.publisher_id, book.author_id FROM `book` WHERE book.id IN (1,1,1,1,1,1,1,1,1,1,1,1)";
         $this->assertEquals($expected, $con->getLastExecutedQuery(), 'PropelPDO correctly replaces arguments in queries');
     }
 
@@ -329,7 +329,7 @@ class PropelPDOTest extends PHPUnit_Framework_TestCase
 
         $con->useDebug(true);
         $books = BookPeer::doSelect($c, $con);
-        $latestExecutedQuery = "SELECT book.ID, book.TITLE, book.ISBN, book.PRICE, book.PUBLISHER_ID, book.AUTHOR_ID FROM `book` WHERE book.TITLE LIKE 'Harry%s'";
+        $latestExecutedQuery = "SELECT book.id, book.title, book.isbn, book.price, book.publisher_id, book.author_id FROM `book` WHERE book.title LIKE 'Harry%s'";
         if (!Propel::getDB(BookPeer::DATABASE_NAME)->useQuoteIdentifier()) {
             $latestExecutedQuery = str_replace('`', '', $latestExecutedQuery);
         }
@@ -440,7 +440,7 @@ class PropelPDOTest extends PHPUnit_Framework_TestCase
         $c->add(BookPeer::TITLE, 'Harry%s', Criteria::LIKE);
 
         $books = BookPeer::doSelect($c, $con);
-        $latestExecutedQuery = "SELECT book.ID, book.TITLE, book.ISBN, book.PRICE, book.PUBLISHER_ID, book.AUTHOR_ID FROM `book` WHERE book.TITLE LIKE 'Harry%s'";
+        $latestExecutedQuery = "SELECT book.id, book.title, book.isbn, book.price, book.publisher_id, book.author_id FROM `book` WHERE book.title LIKE 'Harry%s'";
         $this->assertEquals('log: ' . $latestExecutedQuery, $testLog->latestMessage, 'PropelPDO logs queries and populates bound parameters in debug mode');
 
         BookPeer::doDeleteAll($con);

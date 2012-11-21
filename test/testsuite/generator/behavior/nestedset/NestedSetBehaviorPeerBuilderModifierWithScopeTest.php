@@ -22,10 +22,10 @@ class NestedSetBehaviorPeerBuilderModifierWithScopeTest extends BookstoreNestedS
 {
     public function testConstants()
     {
-        $this->assertEquals(Table10Peer::LEFT_COL, 'table10.MY_LEFT_COLUMN', 'nested_set adds a LEFT_COL constant using the custom left_column parameter');
-        $this->assertEquals(Table10Peer::RIGHT_COL, 'table10.MY_RIGHT_COLUMN', 'nested_set adds a RIGHT_COL constant using the custom right_column parameter');
-        $this->assertEquals(Table10Peer::LEVEL_COL, 'table10.MY_LEVEL_COLUMN', 'nested_set adds a LEVEL_COL constant using the custom level_column parameter');
-        $this->assertEquals(Table10Peer::SCOPE_COL, 'table10.MY_SCOPE_COLUMN', 'nested_set adds a SCOPE_COL constant when the use_scope parameter is true');
+        $this->assertEquals(Table10Peer::LEFT_COL, 'table10.my_left_column', 'nested_set adds a LEFT_COL constant using the custom left_column parameter');
+        $this->assertEquals(Table10Peer::RIGHT_COL, 'table10.my_right_column', 'nested_set adds a RIGHT_COL constant using the custom right_column parameter');
+        $this->assertEquals(Table10Peer::LEVEL_COL, 'table10.my_level_column', 'nested_set adds a LEVEL_COL constant using the custom level_column parameter');
+        $this->assertEquals(Table10Peer::SCOPE_COL, 'table10.my_scope_column', 'nested_set adds a SCOPE_COL constant when the use_scope parameter is true');
     }
 
     public function testRetrieveRoots()

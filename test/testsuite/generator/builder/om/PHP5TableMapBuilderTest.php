@@ -98,17 +98,17 @@ class PHP5TableMapBuilderTest extends BookstoreTestBase
   public function testRelationsColumns()
   {
     $bookTable = $this->databaseMap->getTableByPhpName('Book');
-    $expectedMapping = array('book.PUBLISHER_ID' => 'publisher.ID');
+    $expectedMapping = array('book.publisher_id' => 'publisher.id');
     $this->assertEquals($expectedMapping, $bookTable->getRelation('Publisher')->getColumnMappings(), 'The map builder adds columns in the correct order for foreign keys');
-    $expectedMapping = array('review.BOOK_ID' => 'book.ID');
+    $expectedMapping = array('review.book_id' => 'book.id');
     $this->assertEquals($expectedMapping, $bookTable->getRelation('Review')->getColumnMappings(), 'The map builder adds columns in the correct order for incoming foreign keys');
     $publisherTable = $this->databaseMap->getTableByPhpName('Publisher');
-    $expectedMapping = array('book.PUBLISHER_ID' => 'publisher.ID');
+    $expectedMapping = array('book.publisher_id' => 'publisher.id');
     $this->assertEquals($expectedMapping, $publisherTable->getRelation('Book')->getColumnMappings(), 'The map builder adds local columns where the foreign key lies');
     $rfTable = $this->databaseMap->getTableByPhpName('ReaderFavorite');
     $expectedMapping = array(
-      'reader_favorite.BOOK_ID'   => 'book_opinion.BOOK_ID',
-      'reader_favorite.READER_ID' => 'book_opinion.READER_ID'
+      'reader_favorite.book_id'   => 'book_opinion.book_id',
+      'reader_favorite.reader_id' => 'book_opinion.reader_id'
     );
     $this->assertEquals($expectedMapping, $rfTable->getRelation('BookOpinion')->getColumnMappings(), 'The map builder adds all columns for composite foreign keys');
     $expectedMapping = array();
@@ -150,7 +150,7 @@ class PHP5TableMapBuilderTest extends BookstoreTestBase
     {
         $bookTable = $this->databaseMap->getTableByPhpName('Book');
         $this->assertTrue($bookTable->hasPrimaryStringColumn(), 'The map builder adds primaryString columns.');
-        $this->assertEquals($bookTable->getColumn('TITLE'), $bookTable->getPrimaryStringColumn(), 'The map builder maps the correct column as primaryString.');
+        $this->assertEquals($bookTable->getColumn('title'), $bookTable->getPrimaryStringColumn(), 'The map builder maps the correct column as primaryString.');
     }
 
     public function testIsCrossRef()

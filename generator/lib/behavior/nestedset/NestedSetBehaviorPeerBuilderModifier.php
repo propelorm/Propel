@@ -42,7 +42,7 @@ class NestedSetBehaviorPeerBuilderModifier
 
     protected function getColumnConstant($name)
     {
-        return strtoupper($this->getColumn($name)->getName());
+        return $this->getColumn($name)->getName();
     }
 
     protected function getColumnPhpName($name)

@@ -28,7 +28,7 @@ class SortableBehaviorPeerBuilderModifierTest extends BookstoreSortableTestBase
 
     public function testStaticAttributes()
     {
-        $this->assertEquals(Table11Peer::RANK_COL, 'table11.SORTABLE_RANK');
+        $this->assertEquals(Table11Peer::RANK_COL, 'table11.sortable_rank');
     }
 
     public function testGetMaxRank()

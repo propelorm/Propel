@@ -257,8 +257,8 @@ abstract class ".$this->getClassname(). $extendingPeerClass . "
     {
         foreach ($this->getTable()->getColumns() as $col) {
             $script .= "
-    /** the column name for the " . strtoupper($col->getName()) ." field */
-    const ".$this->getColumnName($col) ." = '" . $this->getTable()->getName() . ".".strtoupper($col->getName())."';
+    /** the column name for the " . $col->getName() ." field */
+    const ".$this->getColumnName($col) ." = '" . $this->getTable()->getName() . ".".$col->getName()."';
 ";
         } // foreach
     }
@@ -272,7 +272,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . "
         foreach ($this->getTable()->getColumns() as $col) {
             if ($col->isEnumType()) {
                 $script .= "
-    /** The enumerated values for the " . strtoupper($col->getName()) . " field */";
+    /** The enumerated values for the " . $col->getName() . " field */";
                 foreach ($col->getValueSet() as $value) {
                     $script .= "
     const " . $this->getColumnName($col) . '_' . $this->getEnumValueConstant($value) . " = '" . $value . "';";
@@ -627,7 +627,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . "
         foreach ($this->getTable()->getColumns() as $col) {
             if (!$col->isLazyLoad()) {
                 $script .= "
-            \$criteria->addSelectColumn(\$alias . '." . $col->getConstantColumnName()."');";
+            \$criteria->addSelectColumn(\$alias . '." . $col->getName()."');";
             } // if !col->isLazyLoad
         } // foreach
         $script .= "

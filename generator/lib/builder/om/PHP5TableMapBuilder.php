@@ -197,7 +197,7 @@ class ".$this->getClassname()." extends TableMap
             $script .= "
         // columns";
         foreach ($table->getColumns() as $col) {
-            $cup=strtoupper($col->getName());
+            $cup=$col->getName();
             $cfc=$col->getPhpName();
             if (!$col->getSize()) {
                 $size = "null";
@@ -209,7 +209,7 @@ class ".$this->getClassname()." extends TableMap
                 if ($col->isForeignKey()) {
                     foreach ($col->getForeignKeys() as $fk) {
                         $script .= "
-        \$this->addForeignPrimaryKey('$cup', '$cfc', '".$col->getType()."' , '".$fk->getForeignTableName()."', '".strtoupper($fk->getMappedForeignColumn($col->getName()))."', ".($col->isNotNull() ? 'true' : 'false').", ".$size.", $default);";
+        \$this->addForeignPrimaryKey('$cup', '$cfc', '".$col->getType()."' , '".$fk->getForeignTableName()."', '".$fk->getMappedForeignColumn($col->getName())."', ".($col->isNotNull() ? 'true' : 'false').", ".$size.", $default);";
                     }
                 } else {
                     $script .= "
@@ -219,7 +219,7 @@ class ".$this->getClassname()." extends TableMap
                 if ($col->isForeignKey()) {
                     foreach ($col->getForeignKeys() as $fk) {
                         $script .= "
-        \$this->addForeignKey('$cup', '$cfc', '".$col->getType()."', '".$fk->getForeignTableName()."', '".strtoupper($fk->getMappedForeignColumn($col->getName()))."', ".($col->isNotNull() ? 'true' : 'false').", ".$size.", $default);";
+        \$this->addForeignKey('$cup', '$cfc', '".$col->getType()."', '".$fk->getForeignTableName()."', '".$fk->getMappedForeignColumn($col->getName())."', ".($col->isNotNull() ? 'true' : 'false').", ".$size.", $default);";
                     }
                 } else {
                     $script .= "
@@ -241,7 +241,7 @@ class ".$this->getClassname()." extends TableMap
         // validators";
         foreach ($table->getValidators() as $val) {
             $col = $val->getColumn();
-            $cup = strtoupper($col->getName());
+            $cup = $col->getName();
             foreach ($val->getRules() as $rule) {
                 if ($val->getTranslate() !== Validator::TRANSLATE_NONE) {
                     $script .= "

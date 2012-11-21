@@ -120,7 +120,7 @@ class BasePeerTest extends BookstoreTestBase
         $params = array();
         $sql = BasePeer::createSelectSql($c, $params);
 
-        $expectedSql = "SELECT book.ID, book.TITLE FROM book LEFT JOIN publisher ON (book.PUBLISHER_ID=publisher.ID), author WHERE book.AUTHOR_ID=author.ID";
+        $expectedSql = "SELECT book.id, book.title FROM book LEFT JOIN publisher ON (book.PUBLISHER_ID=publisher.id), author WHERE book.AUTHOR_ID=author.id";
         $this->assertEquals($expectedSql, $sql);
     }
 
@@ -135,7 +135,7 @@ class BasePeerTest extends BookstoreTestBase
         $c->addSelectColumn(BookPeer::ID);
         $c->addSelectColumn(BookPeer::TITLE);
         $c->addSelectColumn(PublisherPeer::NAME);
-        $c->addAsColumn('PublisherName','(SELECT MAX(publisher.NAME) FROM publisher WHERE publisher.ID = book.PUBLISHER_ID)');
+        $c->addAsColumn('PublisherName','(SELECT MAX(publisher.NAME) FROM publisher WHERE publisher.id = book.PUBLISHER_ID)');
 
         $c->addJoin(BookPeer::PUBLISHER_ID, PublisherPeer::ID, Criteria::LEFT_JOIN);
 
@@ -145,7 +145,7 @@ class BasePeerTest extends BookstoreTestBase
         $params = array();
         $sql = BasePeer::createSelectSql($c, $params);
 
-        $expectedSql = "SELECT TOP 20 book.ID, book.TITLE, publisher.NAME, (SELECT MAX(publisher.NAME) FROM publisher WHERE publisher.ID = book.PUBLISHER_ID) AS PublisherName FROM book LEFT JOIN publisher ON (book.PUBLISHER_ID=publisher.ID)";
+        $expectedSql = "SELECT TOP 20 book.id, book.title, publisher.NAME, (SELECT MAX(publisher.NAME) FROM publisher WHERE publisher.id = book.PUBLISHER_ID) AS PublisherName FROM book LEFT JOIN publisher ON (book.PUBLISHER_ID=publisher.id)";
         $this->assertEquals($expectedSql, $sql);
     }
 
@@ -160,14 +160,14 @@ class BasePeerTest extends BookstoreTestBase
         $c->addSelectColumn(BookPeer::ID);
         $c->addSelectColumn(BookPeer::TITLE);
         $c->addSelectColumn(PublisherPeer::NAME);
-        $c->addAsColumn('PublisherName','(SELECT MAX(publisher.NAME) FROM publisher WHERE publisher.ID = book.PUBLISHER_ID)');
+        $c->addAsColumn('PublisherName','(SELECT MAX(publisher.NAME) FROM publisher WHERE publisher.id = book.PUBLISHER_ID)');
         $c->addJoin(BookPeer::PUBLISHER_ID, PublisherPeer::ID, Criteria::LEFT_JOIN);
         $c->setOffset(20);
         $c->setLimit(20);
 
         $params = array();
 
-        $expectedSql = "SELECT [book.ID], [book.TITLE], [publisher.NAME], [PublisherName] FROM (SELECT ROW_NUMBER() OVER(ORDER BY book.ID) AS [RowNumber], book.ID AS [book.ID], book.TITLE AS [book.TITLE], publisher.NAME AS [publisher.NAME], (SELECT MAX(publisher.NAME) FROM publisher WHERE publisher.ID = book.PUBLISHER_ID) AS [PublisherName] FROM book LEFT JOIN publisher ON (book.PUBLISHER_ID=publisher.ID)) AS derivedb WHERE RowNumber BETWEEN 21 AND 40";
+        $expectedSql = "SELECT [book.id], [book.title], [publisher.NAME], [PublisherName] FROM (SELECT ROW_NUMBER() OVER(ORDER BY book.id) AS [RowNumber], book.id AS [book.id], book.title AS [book.title], publisher.NAME AS [publisher.NAME], (SELECT MAX(publisher.NAME) FROM publisher WHERE publisher.id = book.PUBLISHER_ID) AS [PublisherName] FROM book LEFT JOIN publisher ON (book.PUBLISHER_ID=publisher.id)) AS derivedb WHERE RowNumber BETWEEN 21 AND 40";
         $sql = BasePeer::createSelectSql($c, $params);
         $this->assertEquals($expectedSql, $sql);
     }
@@ -183,7 +183,7 @@ class BasePeerTest extends BookstoreTestBase
         $c->addSelectColumn(BookPeer::ID);
         $c->addSelectColumn(BookPeer::TITLE);
         $c->addSelectColumn(PublisherPeer::NAME);
-        $c->addAsColumn('PublisherName','(SELECT MAX(publisher.NAME) FROM publisher WHERE publisher.ID = book.PUBLISHER_ID)');
+        $c->addAsColumn('PublisherName','(SELECT MAX(publisher.NAME) FROM publisher WHERE publisher.id = book.PUBLISHER_ID)');
         $c->addJoin(BookPeer::PUBLISHER_ID, PublisherPeer::ID, Criteria::LEFT_JOIN);
         $c->addDescendingOrderByColumn('PublisherName');
         $c->setOffset(20);
@@ -191,7 +191,7 @@ class BasePeerTest extends BookstoreTestBase
 
         $params = array();
 
-        $expectedSql = "SELECT [book.ID], [book.TITLE], [publisher.NAME], [PublisherName] FROM (SELECT ROW_NUMBER() OVER(ORDER BY (SELECT MAX(publisher.NAME) FROM publisher WHERE publisher.ID = book.PUBLISHER_ID) DESC) AS [RowNumber], book.ID AS [book.ID], book.TITLE AS [book.TITLE], publisher.NAME AS [publisher.NAME], (SELECT MAX(publisher.NAME) FROM publisher WHERE publisher.ID = book.PUBLISHER_ID) AS [PublisherName] FROM book LEFT JOIN publisher ON (book.PUBLISHER_ID=publisher.ID)) AS derivedb WHERE RowNumber BETWEEN 21 AND 40";
+        $expectedSql = "SELECT [book.id], [book.title], [publisher.NAME], [PublisherName] FROM (SELECT ROW_NUMBER() OVER(ORDER BY (SELECT MAX(publisher.NAME) FROM publisher WHERE publisher.id = book.PUBLISHER_ID) DESC) AS [RowNumber], book.id AS [book.id], book.title AS [book.title], publisher.NAME AS [publisher.NAME], (SELECT MAX(publisher.NAME) FROM publisher WHERE publisher.id = book.PUBLISHER_ID) AS [PublisherName] FROM book LEFT JOIN publisher ON (book.PUBLISHER_ID=publisher.id)) AS derivedb WHERE RowNumber BETWEEN 21 AND 40";
         $sql = BasePeer::createSelectSql($c, $params);
         $this->assertEquals($expectedSql, $sql);
     }
@@ -207,7 +207,7 @@ class BasePeerTest extends BookstoreTestBase
         $c->addSelectColumn(BookPeer::ID);
         $c->addSelectColumn(BookPeer::TITLE);
         $c->addSelectColumn(PublisherPeer::NAME);
-        $c->addAsColumn('PublisherName','(SELECT MAX(publisher.NAME) FROM publisher WHERE publisher.ID = book.PUBLISHER_ID)');
+        $c->addAsColumn('PublisherName','(SELECT MAX(publisher.NAME) FROM publisher WHERE publisher.id = book.PUBLISHER_ID)');
         $c->addJoin(BookPeer::PUBLISHER_ID, PublisherPeer::ID, Criteria::LEFT_JOIN);
         $c->addDescendingOrderByColumn('PublisherName');
         $c->addAscendingOrderByColumn(BookPeer::TITLE);
@@ -216,7 +216,7 @@ class BasePeerTest extends BookstoreTestBase
 
         $params = array();
 
-        $expectedSql = "SELECT [book.ID], [book.TITLE], [publisher.NAME], [PublisherName] FROM (SELECT ROW_NUMBER() OVER(ORDER BY (SELECT MAX(publisher.NAME) FROM publisher WHERE publisher.ID = book.PUBLISHER_ID) DESC, book.TITLE ASC) AS [RowNumber], book.ID AS [book.ID], book.TITLE AS [book.TITLE], publisher.NAME AS [publisher.NAME], (SELECT MAX(publisher.NAME) FROM publisher WHERE publisher.ID = book.PUBLISHER_ID) AS [PublisherName] FROM book LEFT JOIN publisher ON (book.PUBLISHER_ID=publisher.ID)) AS derivedb WHERE RowNumber BETWEEN 21 AND 40";
+        $expectedSql = "SELECT [book.id], [book.title], [publisher.NAME], [PublisherName] FROM (SELECT ROW_NUMBER() OVER(ORDER BY (SELECT MAX(publisher.NAME) FROM publisher WHERE publisher.id = book.PUBLISHER_ID) DESC, book.title ASC) AS [RowNumber], book.id AS [book.id], book.title AS [book.title], publisher.NAME AS [publisher.NAME], (SELECT MAX(publisher.NAME) FROM publisher WHERE publisher.id = book.PUBLISHER_ID) AS [PublisherName] FROM book LEFT JOIN publisher ON (book.PUBLISHER_ID=publisher.id)) AS derivedb WHERE RowNumber BETWEEN 21 AND 40";
         $sql = BasePeer::createSelectSql($c, $params);
         $this->assertEquals($expectedSql, $sql);
     }
@@ -249,7 +249,7 @@ class BasePeerTest extends BookstoreTestBase
         $c = new Criteria(BookPeer::DATABASE_NAME);
         $c->add(BookPeer::TITLE, 'War And Peace');
         BasePeer::doDelete($c, $con);
-        $expectedSQL = "DELETE FROM `book` WHERE book.TITLE='War And Peace'";
+        $expectedSQL = "DELETE FROM `book` WHERE book.title='War And Peace'";
         $this->assertEquals($expectedSQL, $con->getLastExecutedQuery(), 'doDelete() translates a contition into a WHERE');
     }
 
@@ -260,7 +260,7 @@ class BasePeerTest extends BookstoreTestBase
         $c->add(BookPeer::TITLE, 'War And Peace');
         $c->add(BookPeer::ID, 12);
         BasePeer::doDelete($c, $con);
-        $expectedSQL = "DELETE FROM `book` WHERE book.TITLE='War And Peace' AND book.ID=12";
+        $expectedSQL = "DELETE FROM `book` WHERE book.title='War And Peace' AND book.id=12";
         $this->assertEquals($expectedSQL, $con->getLastExecutedQuery(), 'doDelete() combines conditions in WHERE with an AND');
     }
 
@@ -269,9 +269,9 @@ class BasePeerTest extends BookstoreTestBase
         $con = Propel::getConnection();
         $c = new Criteria(BookPeer::DATABASE_NAME);
         $c->addAlias('b', BookPeer::TABLE_NAME);
-        $c->add('b.TITLE', 'War And Peace');
+        $c->add('b.title', 'War And Peace');
         BasePeer::doDelete($c, $con);
-        $expectedSQL = "DELETE b FROM `book` AS b WHERE b.TITLE='War And Peace'";
+        $expectedSQL = "DELETE b FROM `book` AS b WHERE b.title='War And Peace'";
         $this->assertEquals($expectedSQL, $con->getLastExecutedQuery(), 'doDelete() accepts a Criteria with a table alias');
     }
 
@@ -287,7 +287,7 @@ class BasePeerTest extends BookstoreTestBase
         $c->add(BookPeer::TITLE, 'War And Peace');
         $c->add(AuthorPeer::FIRST_NAME, 'Leo');
         BasePeer::doDelete($c, $con);
-        $expectedSQL = "DELETE FROM `author` WHERE author.FIRST_NAME='Leo'";
+        $expectedSQL = "DELETE FROM `author` WHERE author.first_name='Leo'";
         $this->assertEquals($expectedSQL, $con->getLastExecutedQuery(), 'doDelete() issues two DELETE queries when passed conditions on two tables');
         $this->assertEquals($count + 2, $con->getQueryCount(), 'doDelete() issues two DELETE queries when passed conditions on two tables');
 
@@ -295,7 +295,7 @@ class BasePeerTest extends BookstoreTestBase
         $c->add(AuthorPeer::FIRST_NAME, 'Leo');
         $c->add(BookPeer::TITLE, 'War And Peace');
         BasePeer::doDelete($c, $con);
-        $expectedSQL = "DELETE FROM `book` WHERE book.TITLE='War And Peace'";
+        $expectedSQL = "DELETE FROM `book` WHERE book.title='War And Peace'";
         $this->assertEquals($expectedSQL, $con->getLastExecutedQuery(), 'doDelete() issues two DELETE queries when passed conditions on two tables');
         $this->assertEquals($count + 4, $con->getQueryCount(), 'doDelete() issues two DELETE queries when passed conditions on two tables');
     }
@@ -305,7 +305,7 @@ class BasePeerTest extends BookstoreTestBase
         $c = new Criteria();
         $c->setComment('Foo');
         $c->addSelectColumn(BookPeer::ID);
-        $expected = 'SELECT /* Foo */ book.ID FROM `book`';
+        $expected = 'SELECT /* Foo */ book.id FROM `book`';
         $params = array();
         $this->assertEquals($expected, BasePeer::createSelectSQL($c, $params), 'Criteria::setComment() adds a comment to select queries');
     }
@@ -319,7 +319,7 @@ class BasePeerTest extends BookstoreTestBase
         $c2->add(BookPeer::TITLE, 'Updated Title');
         $con = Propel::getConnection(BookPeer::DATABASE_NAME);
         BasePeer::doUpdate($c1, $c2, $con);
-        $expected = 'UPDATE /* Foo */ `book` SET `TITLE`=\'Updated Title\'';
+        $expected = 'UPDATE /* Foo */ `book` SET `title`=\'Updated Title\'';
         $this->assertEquals($expected, $con->getLastExecutedQuery(), 'Criteria::setComment() adds a comment to update queries');
     }
 
@@ -330,7 +330,7 @@ class BasePeerTest extends BookstoreTestBase
         $c->add(BookPeer::TITLE, 'War And Peace');
         $con = Propel::getConnection(BookPeer::DATABASE_NAME);
         BasePeer::doDelete($c, $con);
-        $expected = 'DELETE /* Foo */ FROM `book` WHERE book.TITLE=\'War And Peace\'';
+        $expected = 'DELETE /* Foo */ FROM `book` WHERE book.title=\'War And Peace\'';
         $this->assertEquals($expected, $con->getLastExecutedQuery(), 'Criteria::setComment() adds a comment to delete queries');
     }
 

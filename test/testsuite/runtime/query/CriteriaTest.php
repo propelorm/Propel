@@ -345,7 +345,7 @@ class CriteriaTest extends BookstoreTestBase
         BookPeer::addSelectColumns($criteria);
         $params=array();
         $sql = BasePeer::createSelectSql($criteria, $params);
-        $expectedSQL = 'SELECT book.ID, book.TITLE, book.ISBN, book.PRICE, book.PUBLISHER_ID, book.AUTHOR_ID, UPPER(book.TITLE) FROM `book` ORDER BY UPPER(book.TITLE) ASC';
+        $expectedSQL = 'SELECT book.id, book.title, book.isbn, book.price, book.publisher_id, book.author_id, UPPER(book.title) FROM `book` ORDER BY UPPER(book.title) ASC';
         $this->assertEquals($expectedSQL, $sql);
 
         Propel::setDB(null, $originalDB);
@@ -359,11 +359,11 @@ class CriteriaTest extends BookstoreTestBase
         $criteria = new Criteria();
         $criteria->setIgnoreCase(true);
         $criteria->addAscendingOrderByColumn(BookPeer::TITLE);
-        $criteria->add('book.TITLE', false);
+        $criteria->add('book.title', false);
         BookPeer::addSelectColumns($criteria);
         $params=array();
         $sql = BasePeer::createSelectSql($criteria, $params);
-        $expectedSQL = 'SELECT book.ID, book.TITLE, book.ISBN, book.PRICE, book.PUBLISHER_ID, book.AUTHOR_ID, UPPER(book.TITLE) FROM `book` WHERE UPPER(book.TITLE)=UPPER(:p1) ORDER BY UPPER(book.TITLE) ASC';
+        $expectedSQL = 'SELECT book.id, book.title, book.isbn, book.price, book.publisher_id, book.author_id, UPPER(book.title) FROM `book` WHERE UPPER(book.title)=UPPER(:p1) ORDER BY UPPER(book.title) ASC';
         $this->assertEquals($expectedSQL, $sql);
 
         Propel::setDB(null, $originalDB);
@@ -716,11 +716,11 @@ class CriteriaTest extends BookstoreTestBase
     {
         $c = new Criteria();
         $c->clearSelectColumns()->
-            addJoin("TABLE_A.FOO_ID", "TABLE_B.ID", Criteria::LEFT_JOIN)->
-            addJoin("TABLE_A.BAR_ID", "TABLE_C.ID")->
-            addSelectColumn("TABLE_A.ID");
+            addJoin("TABLE_A.FOO_ID", "TABLE_B.id", Criteria::LEFT_JOIN)->
+            addJoin("TABLE_A.BAR_ID", "TABLE_C.id")->
+            addSelectColumn("TABLE_A.id");
 
-        $expect = 'SELECT TABLE_A.ID FROM TABLE_A LEFT JOIN TABLE_B ON (TABLE_A.FOO_ID=TABLE_B.ID) INNER JOIN TABLE_C ON (TABLE_A.BAR_ID=TABLE_C.ID)';
+        $expect = 'SELECT TABLE_A.id FROM TABLE_A LEFT JOIN TABLE_B ON (TABLE_A.FOO_ID=TABLE_B.id) INNER JOIN TABLE_C ON (TABLE_A.BAR_ID=TABLE_C.id)';
         $params = array();
         $result = BasePeer::createSelectSql($c, $params);
         $this->assertEquals($expect, $result);
@@ -733,10 +733,10 @@ class CriteriaTest extends BookstoreTestBase
     {
         $c = new Criteria();
         $c->clearSelectColumns()->
-            addJoin(array('TABLE_A.FOO_ID'), array('TABLE_B.ID'), Criteria::LEFT_JOIN)->
-            addSelectColumn("TABLE_A.ID");
+            addJoin(array('TABLE_A.FOO_ID'), array('TABLE_B.id'), Criteria::LEFT_JOIN)->
+            addSelectColumn("TABLE_A.id");
 
-        $expect = 'SELECT TABLE_A.ID FROM TABLE_A LEFT JOIN TABLE_B ON TABLE_A.FOO_ID=TABLE_B.ID';
+        $expect = 'SELECT TABLE_A.id FROM TABLE_A LEFT JOIN TABLE_B ON TABLE_A.FOO_ID=TABLE_B.id';
         $params = array();
         $result = BasePeer::createSelectSql($c, $params);
         $this->assertEquals($expect, $result);
@@ -751,11 +751,11 @@ class CriteriaTest extends BookstoreTestBase
         $c->clearSelectColumns()->
             addJoin(
                 array('TABLE_A.FOO_ID', 'TABLE_A.BAR'),
-                array('TABLE_B.ID', 'TABLE_B.BAZ'),
+                array('TABLE_B.id', 'TABLE_B.BAZ'),
                 Criteria::LEFT_JOIN)->
-                addSelectColumn("TABLE_A.ID");
+                addSelectColumn("TABLE_A.id");
 
-        $expect = 'SELECT TABLE_A.ID FROM TABLE_A LEFT JOIN TABLE_B ON (TABLE_A.FOO_ID=TABLE_B.ID AND TABLE_A.BAR=TABLE_B.BAZ)';
+        $expect = 'SELECT TABLE_A.id FROM TABLE_A LEFT JOIN TABLE_B ON (TABLE_A.FOO_ID=TABLE_B.id AND TABLE_A.BAR=TABLE_B.BAZ)';
         $params = array();
         $result = BasePeer::createSelectSql($c, $params);
         $this->assertEquals($expect, $result);
@@ -772,12 +772,12 @@ class CriteriaTest extends BookstoreTestBase
         $c->
             clearSelectColumns()->
             addMultipleJoin(array(
-                array('TABLE_A.FOO_ID', 'TABLE_B.ID'),
+                array('TABLE_A.FOO_ID', 'TABLE_B.id'),
                 array('TABLE_A.BAR', 'TABLE_B.BAZ')))->
-                addSelectColumn("TABLE_A.ID");
+                addSelectColumn("TABLE_A.id");
 
-        $expect = 'SELECT TABLE_A.ID FROM TABLE_A INNER JOIN TABLE_B '
-            . 'ON (TABLE_A.FOO_ID=TABLE_B.ID AND TABLE_A.BAR=TABLE_B.BAZ)';
+        $expect = 'SELECT TABLE_A.id FROM TABLE_A INNER JOIN TABLE_B '
+            . 'ON (TABLE_A.FOO_ID=TABLE_B.id AND TABLE_A.BAR=TABLE_B.BAZ)';
         $params = array();
         $result = BasePeer::createSelectSql($c, $params);
         $this->assertEquals($expect, $result);
@@ -794,12 +794,12 @@ class CriteriaTest extends BookstoreTestBase
         $c->
             clearSelectColumns()->
             addMultipleJoin(array(
-                array('TABLE_A.FOO_ID', 'TABLE_B.ID'),
+                array('TABLE_A.FOO_ID', 'TABLE_B.id'),
                 array('TABLE_A.BAR', 3)))->
-                addSelectColumn("TABLE_A.ID");
+                addSelectColumn("TABLE_A.id");
 
-        $expect = 'SELECT TABLE_A.ID FROM TABLE_A INNER JOIN TABLE_B '
-            . 'ON (TABLE_A.FOO_ID=TABLE_B.ID AND TABLE_A.BAR=3)';
+        $expect = 'SELECT TABLE_A.id FROM TABLE_A INNER JOIN TABLE_B '
+            . 'ON (TABLE_A.FOO_ID=TABLE_B.id AND TABLE_A.BAR=3)';
         $params = array();
         $result = BasePeer::createSelectSql($c, $params);
         $this->assertEquals($expect, $result);
@@ -816,13 +816,13 @@ class CriteriaTest extends BookstoreTestBase
         $c->
             clearSelectColumns()->
             addMultipleJoin(array(
-                array('TABLE_A.FOO_ID', 'TABLE_B.ID'),
+                array('TABLE_A.FOO_ID', 'TABLE_B.id'),
                 array('TABLE_A.BAR', 'TABLE_B.BAZ')),
             Criteria::LEFT_JOIN)->
-            addSelectColumn("TABLE_A.ID");
+            addSelectColumn("TABLE_A.id");
 
-        $expect = 'SELECT TABLE_A.ID FROM TABLE_A '
-            . 'LEFT JOIN TABLE_B ON (TABLE_A.FOO_ID=TABLE_B.ID AND TABLE_A.BAR=TABLE_B.BAZ)';
+        $expect = 'SELECT TABLE_A.id FROM TABLE_A '
+            . 'LEFT JOIN TABLE_B ON (TABLE_A.FOO_ID=TABLE_B.id AND TABLE_A.BAR=TABLE_B.BAZ)';
         $params = array();
         $result = BasePeer::createSelectSql($c, $params);
         $this->assertEquals($expect, $result);
@@ -839,12 +839,12 @@ class CriteriaTest extends BookstoreTestBase
         $c->
             clearSelectColumns()->
             addMultipleJoin(array(
-                array('TABLE_A.FOO_ID', 'TABLE_B.ID', Criteria::GREATER_EQUAL),
+                array('TABLE_A.FOO_ID', 'TABLE_B.id', Criteria::GREATER_EQUAL),
                 array('TABLE_A.BAR', 'TABLE_B.BAZ', Criteria::LESS_THAN)))->
-                addSelectColumn("TABLE_A.ID");
+                addSelectColumn("TABLE_A.id");
 
-        $expect = 'SELECT TABLE_A.ID FROM TABLE_A INNER JOIN TABLE_B '
-            . 'ON (TABLE_A.FOO_ID>=TABLE_B.ID AND TABLE_A.BAR<TABLE_B.BAZ)';
+        $expect = 'SELECT TABLE_A.id FROM TABLE_A INNER JOIN TABLE_B '
+            . 'ON (TABLE_A.FOO_ID>=TABLE_B.id AND TABLE_A.BAR<TABLE_B.BAZ)';
         $params = array();
         $result = BasePeer::createSelectSql($c, $params);
         $this->assertEquals($expect, $result);
@@ -861,13 +861,13 @@ class CriteriaTest extends BookstoreTestBase
         $c->
             clearSelectColumns()->
             addMultipleJoin(array(
-                array('TABLE_A.FOO_ID', 'TABLE_B.ID', Criteria::GREATER_EQUAL),
+                array('TABLE_A.FOO_ID', 'TABLE_B.id', Criteria::GREATER_EQUAL),
                 array('TABLE_A.BAR', 'TABLE_B.BAZ', Criteria::LESS_THAN)),
             Criteria::LEFT_JOIN)->
-            addSelectColumn("TABLE_A.ID");
+            addSelectColumn("TABLE_A.id");
 
-        $expect = 'SELECT TABLE_A.ID FROM TABLE_A '
-            . 'LEFT JOIN TABLE_B ON (TABLE_A.FOO_ID>=TABLE_B.ID AND TABLE_A.BAR<TABLE_B.BAZ)';
+        $expect = 'SELECT TABLE_A.id FROM TABLE_A '
+            . 'LEFT JOIN TABLE_B ON (TABLE_A.FOO_ID>=TABLE_B.id AND TABLE_A.BAR<TABLE_B.BAZ)';
         $params = array();
         $result = BasePeer::createSelectSql($c, $params);
         $this->assertEquals($expect, $result);
@@ -934,12 +934,12 @@ class CriteriaTest extends BookstoreTestBase
         $c->addAsColumn('isb_n', BookPeer::ISBN);
         $crit = $c->getNewCriterion('isb_n', '1234567890123');
         $c->addHaving($crit);
-        $expected = 'SELECT book.TITLE, book.ISBN AS isb_n FROM book HAVING isb_n=:p1';
+        $expected = 'SELECT book.title, book.isbn AS isb_n FROM book HAVING isb_n=:p1';
         $params = array();
         $result = BasePeer::createSelectSql($c, $params);
         $this->assertEquals($expected, $result);
         BasePEer::doSelect($c, $this->con);
-        $expected = 'SELECT book.TITLE, book.ISBN AS isb_n FROM book HAVING isb_n=\'1234567890123\'';
+        $expected = 'SELECT book.title, book.isbn AS isb_n FROM book HAVING isb_n=\'1234567890123\'';
         $this->assertEquals($expected, $this->con->getLastExecutedQuery());
     }
 
@@ -951,7 +951,7 @@ class CriteriaTest extends BookstoreTestBase
         $crit = $c->getNewCriterion('isb_n', '1234567890123');
         $crit->addAnd($c->getNewCriterion(BookPeer::TITLE, 'Foobar'));
         $c->addHaving($crit);
-        $expected = 'SELECT book.TITLE, book.ISBN AS isb_n FROM book HAVING (isb_n=:p1 AND book.TITLE=:p2)';
+        $expected = 'SELECT book.title, book.isbn AS isb_n FROM book HAVING (isb_n=:p1 AND book.title=:p2)';
         $params = array();
         $result = BasePeer::createSelectSql($c, $params);
         $this->assertEquals($expected, $result);
@@ -963,12 +963,12 @@ class CriteriaTest extends BookstoreTestBase
         $c->addSelectColumn(BookPeer::TITLE);
         $c->addAsColumn("isb_n", BookPeer::ISBN);
         $c->addHaving('isb_n = ?', '1234567890123', PDO::PARAM_STR);
-        $expected = 'SELECT book.TITLE, book.ISBN AS isb_n FROM book HAVING isb_n = :p1';
+        $expected = 'SELECT book.title, book.isbn AS isb_n FROM book HAVING isb_n = :p1';
         $params = array();
         $result = BasePeer::createSelectSql($c, $params);
         $this->assertEquals($expected, $result);
         BasePEer::doSelect($c, $this->con);
-        $expected = 'SELECT book.TITLE, book.ISBN AS isb_n FROM book HAVING isb_n = \'1234567890123\'';
+        $expected = 'SELECT book.title, book.isbn AS isb_n FROM book HAVING isb_n = \'1234567890123\'';
         $this->assertEquals($expected, $this->con->getLastExecutedQuery());
     }
 
