@@ -931,12 +931,12 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
             // while technically this is not a default value of null,
             // this seems to be closest in meaning.
             return null;
-        } else {
-            try {
-                \$dt = new $dateTimeClass(\$this->$clo);
-            } catch (Exception \$x) {
-                throw new PropelException(\"Internally stored date/time/timestamp value could not be converted to $dateTimeClass: \" . var_export(\$this->$clo, true), \$x);
-            }
+        }
+
+        try {
+            \$dt = new $dateTimeClass(\$this->$clo);
+        } catch (Exception \$x) {
+            throw new PropelException(\"Internally stored date/time/timestamp value could not be converted to $dateTimeClass: \" . var_export(\$this->$clo, true), \$x);
         }
 ";
         } else {
@@ -962,11 +962,14 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
             return (int) \$dt->format('U');";
         }
         $script .= "
-        } elseif (strpos(\$format, '%') !== false) {
+        }
+
+        if (strpos(\$format, '%') !== false) {
             return strftime(\$format, \$dt->format('U'));
-        } else {
-            return \$dt->format(\$format);
-        }";
+        }
+
+        return \$dt->format(\$format);
+        ";
     }
 
     /**
@@ -3690,22 +3693,22 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
         if (null === \$this->$collName || null !== \$criteria || \$partial) {
             if (\$this->isNew() && null === \$this->$collName) {
                 return 0;
-            } else {
-                if(\$partial && !\$criteria) {
-                    return count(\$this->get$relCol());
-                }
-                \$query = $fkQueryClassname::create(null, \$criteria);
-                if (\$distinct) {
-                    \$query->distinct();
-                }
-
-                return \$query
-                    ->filterBy" . $this->getFKPhpNameAffix($refFK) . "(\$this)
-                    ->count(\$con);
             }
-        } else {
-            return count(\$this->$collName);
+
+            if(\$partial && !\$criteria) {
+                return count(\$this->get$relCol());
+            }
+            \$query = $fkQueryClassname::create(null, \$criteria);
+            if (\$distinct) {
+                \$query->distinct();
+            }
+
+            return \$query
+                ->filterBy" . $this->getFKPhpNameAffix($refFK) . "(\$this)
+                ->count(\$con);
         }
+
+        return count(\$this->$collName);
     }
 ";
     } // addRefererCount
@@ -5099,11 +5102,11 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
             \$this->validationFailures = array();
 
             return true;
-        } else {
-            \$this->validationFailures = \$res;
-
-            return false;
         }
+
+        \$this->validationFailures = \$res;
+
+        return false;
     }
 ";
     } // addValidate()
