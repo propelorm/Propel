@@ -112,4 +112,39 @@ EOF;
 EOF;
         $this->assertEquals($expectedAppData, $appData->toString());
     }
+
+    /**
+     * @dataProvider providePathsForIsAbsolutePath
+     */
+    public function testIsAbsolutePath($path, $expectedResult)
+    {
+        $xmlToAppData = new OpenedXmlToAppData();
+        $result = $xmlToAppData->isAbsolutePath($path);
+
+        $this->assertEquals($expectedResult, $result);
+    }
+
+    /**
+     * @return array
+     */
+    public function providePathsForIsAbsolutePath()
+    {
+        return array(
+            array('/var/lib', true),
+            array('c:\\\\var\\lib', true),
+            array('\\var\\lib', true),
+            array('var/lib', false),
+            array('../var/lib', false),
+            array('', false),
+            array(null, false)
+        );
+    }
+}
+
+class OpenedXmlToAppData extends XmlToAppData
+{
+    public function isAbsolutePath($file)
+    {
+        return parent::isAbsolutePath($file);
+    }
 }

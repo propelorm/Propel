@@ -25,7 +25,6 @@ require_once dirname(__FILE__) . '/../../exception/SchemaException.php';
  */
 class XmlToAppData
 {
-
     /** enables debug output */
     const DEBUG = false;
 
@@ -98,9 +97,9 @@ class XmlToAppData
      * Parses a XML input string and returns a newly created and
      * populated AppData structure.
      *
-     * @param  string  $xmlString The input string to parse.
-     * @param  string  $xmlFile   The input file name.
-     * @return AppData populated by <code>xmlFile</code>.
+     * @param  string    $xmlString The input string to parse.
+     * @param  string    $xmlFile   The input file name.
+     * @return AppData   populated by <code>xmlFile</code>.
      * @throws Exception
      */
     public function parseString($xmlString, $xmlFile = null)
@@ -178,7 +177,7 @@ class XmlToAppData
                         $this->isForReferenceOnly = ($isForRefOnly !== null ? (strtolower($isForRefOnly) === "true") : true); // defaults to TRUE
                     }
 
-                    if ($xmlFile{0} != '/') {
+                    if (!$this->isAbsolutePath($xmlFile)) {
                         $xmlFile = realpath(dirname($this->currentXmlFile) . DIRECTORY_SEPARATOR . $xmlFile);
                         if (!file_exists($xmlFile)) {
                             throw new SchemaException(sprintf('Unknown include external "%s"', $xmlFile));
@@ -404,5 +403,23 @@ class XmlToAppData
     protected function isAlreadyParsed($filePath)
     {
         return isset($this->schemasTagsStack[$filePath]);
+    }
+
+    /**
+     * See: https://github.com/symfony/symfony/blob/master/src/Symfony/Component/Filesystem/Filesystem.php#L379
+     */
+    protected function isAbsolutePath($file)
+    {
+        if (strspn($file, '/\\', 0, 1)
+            || (strlen($file) > 3 && ctype_alpha($file[0])
+            && substr($file, 1, 1) === ':'
+            && (strspn($file, '/\\', 2, 1))
+        )
+        || null !== parse_url($file, PHP_URL_SCHEME)
+        ) {
+            return true;
+        }
+
+        return false;
     }
 }
