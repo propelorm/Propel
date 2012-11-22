@@ -707,6 +707,17 @@ class ModelCriteriaTest extends BookstoreTestBase
         $this->assertEquals(1, count($books), 'join() issues a real JOIN query');
     }
 
+    public function testWhereWithJoinQuery()
+    {
+        $c = new ModelCriteria('bookstore', 'Book');
+        $c->addSelectColumn('*');
+        $c->join('Author');
+        $c->where('Author.Id = Book.PublisherId');
+
+        $sql = 'SELECT * FROM `book` INNER JOIN `author` ON (book.author_id=author.id) WHERE author.id = book.publisher_id';
+        $this->assertCriteriaTranslation($c, $sql, array());
+    }
+
     public function testJoinRelationName()
     {
         $c = new ModelCriteria('bookstore', 'BookstoreEmployee');
