@@ -1111,6 +1111,23 @@ class CriteriaTest extends BookstoreTestBase
         $this->assertEquals(1, $c->getLimit(), 'Limit is set by setLimit');
         $this->assertSame($c, $c2, 'setLimit() returns the current Criteria');
     }
+
+    public function testDistinct()
+    {
+        $c = new Criteria();
+        $c->addSelectColumn('*');
+
+        $c->add('TABLE.string', 'foo');
+        $c->setDistinct();
+
+        $c->add('TABLE.id', 10);
+        $c->setDistinct();
+
+        $params = array();
+        $result = BasePeer::createSelectSql($c, $params);
+
+        $this->assertEquals('SELECT DISTINCT * FROM TABLE WHERE TABLE.string=:p1 AND TABLE.id=:p2', $result);
+    }
 }
 
 class CriteriaForClearTest extends Criteria
@@ -1130,10 +1147,10 @@ class CriteriaForClearTest extends Criteria
         return $this->singleRecord;
     }
 
-  public function getUseTransaction()
-  {
-      return $this->useTransaction;
-  }
+    public function getUseTransaction()
+    {
+        return $this->useTransaction;
+    }
 
     public function getBlobFlag()
     {
