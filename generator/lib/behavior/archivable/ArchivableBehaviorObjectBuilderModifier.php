@@ -179,9 +179,42 @@ class ArchivableBehaviorObjectBuilderModifier
         return $this->behavior->renderTemplate('objectPopulateFromArchive', array(
             'archiveTablePhpName' => $this->behavior->getArchiveTablePhpName($builder),
             'usesAutoIncrement'   => $this->table->hasAutoIncrementPrimaryKey(),
+            'fakeAutoIncrementParameter' => $this->fakeAutoIncrementPrimaryKeyForConcreteInheritance(),
             'objectClassname'     => $this->builder->getObjectClassname(),
             'columns'             => $this->table->getColumns(),
         ));
+    }
+
+    /**
+     * Checks if the current table uses concrete_inheritance, and if it's parent
+     * has an auto-increment primary key. In this case, we need to define the
+     * populateFromArchive() method with the second parameter, in order to comply with
+     * php strict standards. The parameter is not used (PKs are inserted regardless if
+     * it is set to true or false).
+     *
+     * @return boolean
+     */
+    public function fakeAutoIncrementPrimaryKeyForConcreteInheritance()
+    {
+        if ($this->table->hasBehavior('concrete_inheritance'))
+        {
+            $concrete_inheritance_behavior = $this->table->getBehavior('concrete_inheritance');
+
+            $database = $this->table->getDatabase();
+            $tableName = $database->getTablePrefix() . $concrete_inheritance_behavior->getParameter('extends');
+
+            if ($database->getPlatform()->supportsSchemas() && $concrete_inheritance_behavior->getParameter('schema')) {
+                $tableName = $concrete_inheritance_behavior->getParameter('schema').'.'.$tableName;
+            }
+
+            if (( $parent_table = $database->getTable($tableName) ))
+            {
+                return $parent_table->hasBehavior('archivable')
+                    && $parent_table->hasAutoIncrementPrimaryKey();
+            }
+        }
+
+        return false;
     }
 
     /**
