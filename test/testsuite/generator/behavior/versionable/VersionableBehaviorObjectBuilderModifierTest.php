@@ -665,6 +665,14 @@ EOF;
 
         $this->assertEquals(2, $o->getVersion());
         $this->assertNull($o->getVersionComment());
+
+        $o->reload();
+        $o->setBar(456);
+        $o->setVersionComment('It is just fine.');
+        $o->save();
+
+        $this->assertEquals(3, $o->getVersion());
+        $this->assertEquals('It is just fine.', $o->getVersionComment());
     }
 
     public function testToVersionWorksWithComments()
