@@ -88,6 +88,15 @@ class VersionableBehaviorObjectBuilderModifier
         \$this->{$this->getColumnSetter('version_created_at_column')}(time());
     }";
         }
+
+        if ($this->behavior->getParameter('log_comment') == 'true') {
+            $col = $this->behavior->getTable()->getColumn($this->getParameter('version_comment_column'));
+            $script .= "
+    if (!\$this->isColumnModified({$this->builder->getColumnConstant($col)})) {
+        \$this->{$this->getColumnSetter('version_comment_column')}(null);
+    }";
+        }
+
         $script .= "
     \$createVersion = true; // for postSave hook
 }";
