@@ -658,6 +658,13 @@ EOF;
             ->filterByVersionableBehaviorTest4($o)
             ->findOne();
         $this->assertEquals('Because you deserve it', $version->getVersionComment());
+
+        $o->reload();
+        $o->setBar(123);
+        $o->save();
+
+        $this->assertEquals(2, $o->getVersion());
+        $this->assertNull($o->getVersionComment());
     }
 
     public function testToVersionWorksWithComments()
