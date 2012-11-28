@@ -332,11 +332,7 @@ class ".$this->getClassname()." extends TableMap
         return array(";
             foreach ($behaviors as $behavior) {
                 $script .= "
-            '{$behavior->getName()}' => array(";
-                foreach ($behavior->getParameters() as $key => $value) {
-                    $script .= "'$key' => '$value', ";
-                }
-                $script .= "),";
+            '{$behavior->getName()}' =>  ". var_export($behavior->getParameters(), true) . ",";
             }
             $script .= "
         );
