@@ -212,6 +212,16 @@ class ColumnMap
   }
 
   /**
+   * Whether this column is an integer
+   *
+   * @return boolean
+   */
+  public function isInteger()
+  {
+    return $this->type === PDO::PARAM_INT;
+  }
+
+  /**
    * Whether this column is a text column (varchar, char, longvarchar).
    * @return     boolean
    */
