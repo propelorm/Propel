@@ -682,6 +682,107 @@ class GeneratedObjectTest extends BookstoreTestBase
     }
 
     /**
+     * Test removing object when FK is part of the composite PK
+     */
+    public function testRemove_CompositePK()
+    {
+        BookReaderQuery::create()->deleteAll();
+        BookQuery::create()->deleteAll();
+        BookOpinionQuery::create()->deleteAll();
+
+        $br = new BookReader();
+        $br->setName("TestReader");
+        $br->save();
+
+        $b = new Book();
+        $b->setTitle("TestBook");
+        $b->setISBN("XX-XX-XX-XX");
+        $b->save();
+
+        $op = new BookOpinion();
+        $op->setBookReader($br);
+        $op->setBook($b);
+        $op->setRating(10);
+        $op->setRecommendToFriend(true);
+        $op->save();
+
+        $this->assertEquals(1, BookReaderQuery::create()->count(), '1 BookReader');
+        $this->assertEquals(1, BookQuery::create()->count(), '1 Book');
+        $this->assertEquals(1, BookOpinionQuery::create()->count(), '1 BookOpinion');
+
+        $b->removeBookOpinion($op);
+        $b->save();
+
+        $this->assertEquals(1, BookReaderQuery::create()->count(), '1 BookReader');
+        $this->assertEquals(1, BookQuery::create()->count(), '1 Book');
+        $this->assertEquals(0, BookOpinionQuery::create()->count(), '0 BookOpinion');
+    }
+    
+    /**
+     * Test moving a FK object from one object to another when the FK is part of the a composite PK
+     */
+    public function testMove_CompositePK() {
+        BookReaderQuery::create()->deleteAll();
+        BookQuery::create()->deleteAll();
+        BookOpinionQuery::create()->deleteAll();
+
+        $br = new BookReader();
+        $br->setName("TestReader");
+        $br->save();
+
+        $b = new Book();
+        $b->setTitle("TestBook");
+        $b->setISBN("XX-XX-XX-XX");
+        $b->save();
+
+        $op = new BookOpinion();
+        $op->setBookReader($br);
+        $op->setBook($b);
+        $op->setRating(10);
+        $op->setRecommendToFriend(true);
+        $op->save();
+
+        $this->assertEquals(1, BookReaderQuery::create()->count(), '1 BookReader');
+        $this->assertEquals(1, BookQuery::create()->count(), '1 Book');
+        $this->assertEquals(1, BookOpinionQuery::create()->count(), '1 BookOpinion');
+        
+        $br2 = new BookReader();
+        $br2->setName("TestReader2");
+        $br2->save();
+
+        $b2 = new Book();
+        $b2->setTitle("TestBook2");
+        $b2->setISBN("AA-BB-CC-DD");
+        $b2->save();
+
+        $op2 = new BookOpinion();
+        $op2->setBookReader($br2);
+        $op2->setBook($b2);
+        $op2->setRating(2);
+        $op2->setRecommendToFriend(false);
+        $op2->save();
+
+        $this->assertEquals(2, BookReaderQuery::create()->count(), '2 BookReader');
+        $this->assertEquals(2, BookQuery::create()->count(), '2 Book');
+        $this->assertEquals(2, BookOpinionQuery::create()->count(), '2 BookOpinion');
+
+        // will return a propelCollection
+        $pc = $b2->getBookOpinions();
+
+        // setting the opinion of book2 on book1 should deassociate the opinion from book2 and associate it with book1
+        // so after this, no opinions are on book2, the old opinion on book1 is deleted, and the old book2 opinion is now owned by book1
+        $b->setBookOpinions($pc);
+        $b->save();
+
+        $this->assertEquals(2, BookReaderQuery::create()->count(), '2 BookReader');
+        $this->assertEquals(2, BookQuery::create()->count(), '2 Book');
+        $this->assertEquals(1, BookOpinionQuery::create()->count(), '1 BookOpinion');
+
+        $this->assertEquals(1, BookQuery::create()->findPk($b->getPrimaryKey())->getBookOpinions()->count(), '1 BookOpinion');
+        $this->assertEquals(0, BookQuery::create()->findPk($b2->getPrimaryKey())->getBookOpinions()->count(), '0 BookOpinion');
+    }
+
+    /**
      *
      */
     public function testCopyConcretInheritance()

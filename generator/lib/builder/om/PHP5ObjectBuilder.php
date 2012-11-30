@@ -3822,7 +3822,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
     {
         \${$inputCollection}ToDelete = \$this->get{$relatedName}(new Criteria(), \$con)->diff(\${$inputCollection});
 
-        \$this->{$inputCollection}ScheduledForDeletion = clone \${$inputCollection}ToDelete;
+        \$this->{$inputCollection}ScheduledForDeletion = unserialize(serialize(\${$inputCollection}ToDelete));
 
         foreach (\${$inputCollection}ToDelete as \${$inputCollectionEntry}Removed) {
             \${$inputCollectionEntry}Removed->set{$relCol}(null);
@@ -3889,6 +3889,8 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
         $collName = $this->getRefFKCollVarName($refFK);
         $relCol   = $this->getFKPhpNameAffix($refFK, $plural = false);
 
+        $localColumn = $refFK->getLocalColumn();
+
         $script .= "
     /**
      * @param	{$relatedObjectClassName} \${$lowerRelatedObjectClassName} The $lowerRelatedObjectClassName object to remove.
@@ -3901,8 +3903,17 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
             if (null === \$this->{$inputCollection}) {
                 \$this->{$inputCollection} = clone \$this->{$collName};
                 \$this->{$inputCollection}->clear();
+            }";
+
+            if (!$refFK->isComposite() && !$localColumn->isNotNull()) {
+            $script .= "
+            \$this->{$inputCollection}[]= \${$lowerRelatedObjectClassName};";
+            } else {
+            $script .= "
+            \$this->{$inputCollection}[]= clone \${$lowerRelatedObjectClassName};";
             }
-            \$this->{$inputCollection}[]= clone \${$lowerRelatedObjectClassName};
+
+            $script .= "
             \${$lowerRelatedObjectClassName}->set{$relCol}(null);
         }
 
