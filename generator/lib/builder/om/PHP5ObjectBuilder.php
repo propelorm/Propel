@@ -3822,7 +3822,6 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
     {
         \${$inputCollection}ToDelete = \$this->get{$relatedName}(new Criteria(), \$con)->diff(\${$inputCollection});
 
-
         \$this->{$inputCollection}ScheduledForDeletion = unserialize(serialize(\${$inputCollection}ToDelete));
 
         foreach (\${$inputCollection}ToDelete as \${$inputCollectionEntry}Removed) {

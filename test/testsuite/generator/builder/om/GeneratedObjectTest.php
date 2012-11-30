@@ -681,7 +681,6 @@ class GeneratedObjectTest extends BookstoreTestBase
         $this->assertEquals($op->getBookId(), $opinions[0]->getBookId());
     }
 
-
     /**
      * Test removing object when FK is part of the composite PK
      */
