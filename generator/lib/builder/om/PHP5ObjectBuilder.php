@@ -3820,9 +3820,11 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
      */
     public function set{$relatedName}(PropelCollection \${$inputCollection}, PropelPDO \$con = null)
     {
-        \$this->{$inputCollection}ScheduledForDeletion = \$this->get{$relatedName}(new Criteria(), \$con)->diff(\${$inputCollection});
+        \${$inputCollection}ToDelete = \$this->get{$relatedName}(new Criteria(), \$con)->diff(\${$inputCollection});
 
-        foreach (\$this->{$inputCollection}ScheduledForDeletion as \${$inputCollectionEntry}Removed) {
+        \$this->{$inputCollection}ScheduledForDeletion = clone \${$inputCollection}ToDelete;
+
+        foreach (\${$inputCollection}ToDelete as \${$inputCollectionEntry}Removed) {
             \${$inputCollectionEntry}Removed->set{$relCol}(null);
         }
 
@@ -3900,7 +3902,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
                 \$this->{$inputCollection} = clone \$this->{$collName};
                 \$this->{$inputCollection}->clear();
             }
-            \$this->{$inputCollection}[]= \${$lowerRelatedObjectClassName};
+            \$this->{$inputCollection}[]= clone \${$lowerRelatedObjectClassName};
             \${$lowerRelatedObjectClassName}->set{$relCol}(null);
         }
 
