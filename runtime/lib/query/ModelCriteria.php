@@ -560,12 +560,17 @@ class ModelCriteria extends Criteria
 
         // Add requested columns which are not withColumns
         $columnNames = is_array($this->select) ? $this->select : array($this->select);
+        // temporary store columns Alias or withColumn
+        $asColumns = $this->getAsColumns();
+        $this->asColumns = array();
         foreach ($columnNames as $columnName) {
             // check if the column was added by a withColumn, if not add it
-            if (!array_key_exists($columnName, $this->getAsColumns())) {
+            if (!array_key_exists($columnName, $asColumns)) {
                 $column = $this->getColumnFromName($columnName);
                 // always put quotes around the columnName to be safe, we strip them in the formatter
                 $this->addAsColumn('"' . $columnName . '"', $column[1]);
+            } else {
+                $this->addAsColumn($columnName, $asColumns[$columnName]);
             }
         }
     }

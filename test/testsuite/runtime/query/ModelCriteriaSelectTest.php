@@ -363,6 +363,50 @@ class ModelCriteriaSelectTest extends BookstoreTestBase
         $this->assertEquals(serialize($rows->getData()), serialize($expectedRows), 'find() called after select(array) can cope with a column added with withColumn()');
     }
 
+    public function testSelectArrayWithColumnOrder()
+    {
+        BookstoreDataPopulator::depopulate($this->con);
+        BookstoreDataPopulator::populate($this->con);
+
+        $c = new ModelCriteria('bookstore', 'Book');
+        $c->join('Book.Author');
+        $c->withColumn('LOWER(Book.Title)', 'LowercaseTitle');
+        $c->withColumn('UPPER(Book.Title)', 'UppercaseTitle');
+        $c->select(array('Book.ISBN', 'LowercaseTitle', 'Book.Title', 'UppercaseTitle'));
+        $c->orderBy('Book.Title');
+        $rows = $c->find($this->con);
+        $expectedSQL = 'SELECT book.isbn AS "Book.ISBN", LOWER(book.title) AS LowercaseTitle, book.title AS "Book.Title", UPPER(book.title) AS UppercaseTitle FROM `book` INNER JOIN `author` ON (book.author_id=author.id) ORDER BY book.title ASC';
+        $this->assertEquals($expectedSQL, $this->con->getLastExecutedQuery(), 'find() called after select(array) can cope with a column added with withColumn()');
+
+        $expectedRows = array (
+                array (
+                        'Book.ISBN' => '0140422161',
+                        'LowercaseTitle' => 'don juan',
+                        'Book.Title' => 'Don Juan',
+                        'UppercaseTitle' => 'DON JUAN',
+                ),
+                array (
+                        'Book.ISBN' => '043935806X',
+                        'LowercaseTitle' => 'harry potter and the order of the phoenix',
+                        'Book.Title' => 'Harry Potter and the Order of the Phoenix',
+                        'UppercaseTitle' => 'HARRY POTTER AND THE ORDER OF THE PHOENIX',
+                ),
+                array (
+                        'Book.ISBN' => '0380977427',
+                        'LowercaseTitle' => 'quicksilver',
+                        'Book.Title' => 'Quicksilver',
+                        'UppercaseTitle' => 'QUICKSILVER',
+                ),
+                array (
+                        'Book.ISBN' => '067972575X',
+                        'LowercaseTitle' => 'the tin drum',
+                        'Book.Title' => 'The Tin Drum',
+                        'UppercaseTitle' => 'THE TIN DRUM',
+                ),
+        );
+        $this->assertEquals(serialize($rows->getData()), serialize($expectedRows), 'find() called after select(array) can cope with a column added with withColumn()');
+    }
+
     public function testSelectArrayPaginate()
     {
         BookstoreDataPopulator::depopulate($this->con);
