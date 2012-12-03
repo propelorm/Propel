@@ -3805,7 +3805,6 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
         $inputCollectionEntry[0] = strtolower($inputCollectionEntry[0]);
 
         $collName = $this->getRefFKCollVarName($refFK);
-        $relCol   = $this->getFKPhpNameAffix($refFK, $plural = false);
 
         $script .= "
     /**
@@ -3821,10 +3820,6 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
     public function set{$relatedName}(PropelCollection \${$inputCollection}, PropelPDO \$con = null)
     {
         \$this->{$inputCollection}ScheduledForDeletion = \$this->get{$relatedName}(new Criteria(), \$con)->diff(\${$inputCollection});
-
-        foreach (\$this->{$inputCollection}ScheduledForDeletion as \${$inputCollectionEntry}Removed) {
-            \${$inputCollectionEntry}Removed->set{$relCol}(null);
-        }
 
         \$this->{$collName} = null;
         foreach (\${$inputCollection} as \${$inputCollectionEntry}) {
@@ -3885,7 +3880,6 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
         $lowerRelatedObjectClassName[0] = strtolower($lowerRelatedObjectClassName[0]);
 
         $collName = $this->getRefFKCollVarName($refFK);
-        $relCol   = $this->getFKPhpNameAffix($refFK, $plural = false);
 
         $script .= "
     /**
@@ -3901,7 +3895,6 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
                 \$this->{$inputCollection}->clear();
             }
             \$this->{$inputCollection}[]= \${$lowerRelatedObjectClassName};
-            \${$lowerRelatedObjectClassName}->set{$relCol}(null);
         }
 
         return \$this;
