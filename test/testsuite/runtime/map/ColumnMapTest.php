@@ -149,4 +149,14 @@ class ColumnMapTest extends BookstoreTestBase
       $titleColumn->setPrimaryString(true);
       $this->assertTrue($titleColumn->isPrimaryString(), 'isPrimaryString() returns true if set.');
   }
+
+  public function testIsInteger()
+  {
+      $bookTable = BookPeer::getTableMap();
+      $idColumn = $bookTable->getColumn('id');  // INTEGER
+      $titleColumn = $bookTable->getColumn('title');  // VARCHAR
+
+      $this->assertTrue($idColumn->isInteger(), 'IsInteger() returns true');
+      $this->assertFalse($titleColumn->isInteger(), 'IsInteger() returns false');
+  }
 }
