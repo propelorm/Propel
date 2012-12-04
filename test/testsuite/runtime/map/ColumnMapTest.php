@@ -156,7 +156,7 @@ class ColumnMapTest extends BookstoreTestBase
       $idColumn = $bookTable->getColumn('id');  // INTEGER
       $titleColumn = $bookTable->getColumn('title');  // VARCHAR
 
-      $this->assertTrue($idColumn->isInteger(), 'IsInteger() returns true');
-      $this->assertFalse($titleColumn->isInteger(), 'IsInteger() returns false');
+      $this->assertTrue($idColumn->isInteger(), 'isInteger() returns true');
+      $this->assertFalse($titleColumn->isInteger(), 'isInteger() returns false');
   }
 }
