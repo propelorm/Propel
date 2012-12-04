@@ -80,34 +80,65 @@ protected \$aNestedSetParent = null;
 
     public function preSave($builder)
     {
-        $peerClassname = $builder->getStubPeerBuilder()->getClassname();
+        $peerClassname  = $builder->getStubPeerBuilder()->getClassname();
         $queryClassname = $builder->getStubQueryBuilder()->getClassname();
 
-        $script = "if (\$this->isNew() && \$this->isRoot()) {
-    // check if no other root exist in, the tree
-    \$nbRoots = $queryClassname::create()
-        ->addUsingAlias($peerClassname::LEFT_COL, 1, Criteria::EQUAL)";
-
         if ($this->behavior->useScope()) {
-            $script .= "
-        ->addUsingAlias($peerClassname::SCOPE_COL, \$this->getScopeValue(), Criteria::EQUAL)";
-        }
-
-        $script .= "
+            if ($this->table->hasAutoIncrementPrimaryKey()
+                && $this->table->getAutoIncrementPrimaryKey()->getName() == $this->getColumnAttribute('scope_column')
+            ) {
+                $script = <<<PHP
+if (\$this->isNew() && \$this->isRoot() && \$this->getScopeValue() !== null) {
+    // check if no other root exist in the tree
+    \$nbRoots = {$queryClassname}::create()
+        ->addUsingAlias({$peerClassname}::LEFT_COL, 1, Criteria::EQUAL)
+        ->addUsingAlias({$peerClassname}::SCOPE_COL, \$this->getScopeValue(), Criteria::EQUAL)
         ->count(\$con);
     if (\$nbRoots > 0) {
-            throw new PropelException(";
-
-        if ($this->behavior->useScope()) {
-            $script .= "sprintf('A root node already exists in this tree with scope \"%s\".', \$this->getScopeValue())";
-        } else {
-            $script .= "'A root node already exists in this tree. To allow multiple root nodes, add the `use_scope` parameter in the nested_set behavior tag.'";
-        }
-
-        $script .= ");
+        throw new PropelException(
+            sprintf('A root node already exists in this tree with scope \"%s\".', \$this->getScopeValue())
+        );
     }
 }
-\$this->processNestedSetQueries(\$con);";
+PHP;
+            } else {
+                $script = <<<PHP
+if (\$this->isNew() && \$this->isRoot()) {
+    // check if no other root exist in the tree
+    \$nbRoots = {$queryClassname}::create()
+        ->addUsingAlias({$peerClassname}::LEFT_COL, 1, Criteria::EQUAL)
+        ->addUsingAlias({$peerClassname}::SCOPE_COL, \$this->getScopeValue(), Criteria::EQUAL)
+        ->count(\$con);
+    if (\$nbRoots > 0) {
+        throw new PropelException(
+            sprintf('A root node already exists in this tree with scope \"%s\".', \$this->getScopeValue())
+        );
+    }
+}
+PHP;
+            }
+        } else {
+            $script = <<<PHP
+if (\$this->isNew() && \$this->isRoot()) {
+    // check if no other root exist in the tree
+    \$nbRoots = {$queryClassname}::create()
+        ->addUsingAlias({$peerClassname}::LEFT_COL, 1, Criteria::EQUAL)
+        ->count(\$con);
+    if (\$nbRoots > 0) {
+        throw new PropelException(
+            'A root node already exists in this tree. To allow multiple root nodes,'
+            . ' add the `use_scope` parameter in the nested_set behavior tag.'
+        );
+    }
+}
+PHP;
+        }
+
+        $script.= <<<PHP
+
+\$this->processNestedSetQueries(\$con);
+
+PHP;
 
         return $script;
     }
