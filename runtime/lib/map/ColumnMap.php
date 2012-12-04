@@ -218,7 +218,7 @@ class ColumnMap
    */
   public function isInteger()
   {
-    return $this->getPdoType() === \PDO::PARAM_INT;
+    return $this->getPdoType() === PDO::PARAM_INT;
   }
 
   /**
