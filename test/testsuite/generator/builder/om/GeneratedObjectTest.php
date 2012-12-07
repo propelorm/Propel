@@ -757,8 +757,9 @@ class GeneratedObjectTest extends BookstoreTestBase
         $this->assertFalse($op2->isDeleted(), 'BookOpinion2 is not deleted');
 
         $this->assertEquals(1, count($br1->getBookOpinions()), 'BookReader1 thinks it is assigned to 1 BookOpinion (BookOpinion1)');
-        $this->assertEquals(spl_object_hash($op1), spl_object_hash($br1->getBookOpinions()[0]), 'BookReader1 assigned BookOpinion is still BookOpinion1');
-        $this->assertFalse($br1->getBookOpinions()[0]->isDeleted(), 'BookReader1 assigned BookOpinion still thinks it has not been deleted');
+        $temp_op = $br1->getBookOpinions();
+        $this->assertEquals(spl_object_hash($op1), spl_object_hash($temp_op[0]), 'BookReader1 assigned BookOpinion is still BookOpinion1');
+        $this->assertFalse($temp_op[0]->isDeleted(), 'BookReader1 assigned BookOpinion still thinks it has not been deleted');
 
         $br1->reload(true);  // and reset the relations
 
