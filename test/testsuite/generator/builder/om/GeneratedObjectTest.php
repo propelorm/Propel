@@ -682,6 +682,143 @@ class GeneratedObjectTest extends BookstoreTestBase
     }
 
     /**
+     * When a relation PK is a composite, replacing the list of relations will flag some of them to be deleted.
+     * We primary keys on the "To be deleted" opinions must not be blanked (null) because we need to values to be able to delete the entry.
+     */
+    public function testReplace_RelationWithCompositePK()
+    {
+        BookReaderQuery::create()->deleteAll();
+        BookQuery::create()->deleteAll();
+        BookOpinionQuery::create()->deleteAll();
+
+        $br1 = new BookReader();
+        $br1->setName("TestReader");
+        $br1->save();
+
+        $br2 = new BookReader();
+        $br2->setName("TestReader2");
+        $br2->save();
+
+        $b = new Book();
+        $b->setTitle("TestBook");
+        $b->setISBN("XX-XX-XX-XX");
+        $b->save();
+
+        $op1 = new BookOpinion();
+        $op1->setBookReader($br1);
+        $op1->setBook($b);
+        $op1->setRating(10);
+        $op1->setRecommendToFriend(true);
+        $op1->save();
+
+        // make sure everything is loaded correctly (and their relation too)
+        $br1->reload(true);
+        $b->reload(true);
+        $op1->reload(true);
+        $br2->reload(true);
+
+        $op2 = new BookOpinion();
+        $op2->setBookReader($br2);
+        $op2->setRating(8);
+        $op2->setRecommendToFriend(false);
+
+        // the setBookOpinions function expect a PropelCollection
+        $pc = new PropelObjectCollection();
+        $pc->setModel('BookOpinion');
+        $pc->append($op2);
+
+        $br1->getBookOpinions(); // load the relation
+
+        $b->setBookOpinions($pc); // this will flag to be deleted the currently assigned opinion and will add the new opinion so it will can be saved
+        $b->save(); // this will delete $op1 and insert $op2
+
+        $this->assertEquals(2, BookReaderQuery::create()->count(), '2 BookReader');
+        $this->assertEquals(1, BookQuery::create()->count(), '1 Book');
+        $this->assertEquals(1, BookOpinionQuery::create()->count(), 'Only 1 BookOpinion; the new one got inserted and the previously associated one got deleted');
+
+        $this->assertEquals(1, count($b->getBookOpinions()), 'Book has 1 BookOpinion');
+        $this->assertEquals(1, count($op2->getBook()), 'BookOpinion2 has a relation to the Book');
+        $this->assertEquals(1, count($br1->getBookOpinions()), 'BookReader1 has 1 BookOpinion (BookOpinion1)');
+        $this->assertEquals(1, count($br2->getBookOpinions()), 'BookReader2 has 1 BookOpinion (BookOpinion2)');
+        
+        $this->assertFalse($op1->isDeleted(), 'BookOpinion1 think it has not been deleted');
+
+        $caughtException = false;
+        try
+        {
+          $op1->reload(false);  // will fail because won't find the entry in the db
+        } catch (PropelException $pe)
+        {
+          $caughtException = true;
+        }
+
+        $this->assertTrue($caughtException, 'Could not reload BookOpinion1 because it has been deleted from the db');
+
+        $this->assertFalse($op2->isDeleted(), 'BookOpinion2 is not deleted');
+
+        $this->assertEquals(1, count($br1->getBookOpinions()), 'BookReader1 thinks it is assigned to 1 BookOpinion (BookOpinion1)');
+        $this->assertEquals(spl_object_hash($op1), spl_object_hash($br1->getBookOpinions()[0]), 'BookReader1 assigned BookOpinion is still BookOpinion1');
+        $this->assertFalse($br1->getBookOpinions()[0]->isDeleted(), 'BookReader1 assigned BookOpinion still thinks it has not been deleted');
+
+        $br1->reload(true);  // and reset the relations
+
+        $this->assertEquals(0, count($br1->getBookOpinions()), 'BookReader1 no longer has any BookOpinion');
+    }
+
+    /**
+     * Test removing object when FK is part of the composite PK
+     */
+    public function testRemove_CompositePK()
+    {
+        BookReaderQuery::create()->deleteAll();
+        BookQuery::create()->deleteAll();
+        BookOpinionQuery::create()->deleteAll();
+
+        $br = new BookReader();
+        $br->setName("TestReader");
+        $br->save();
+
+        $b = new Book();
+        $b->setTitle("TestBook");
+        $b->setISBN("XX-XX-XX-XX");
+        $b->save();
+
+        $op = new BookOpinion();
+        $op->setBookReader($br);
+        $op->setBook($b);
+        $op->setRating(10);
+        $op->setRecommendToFriend(true);
+        $op->save();
+
+        $this->assertEquals(1, BookReaderQuery::create()->count(), '1 BookReader');
+        $this->assertEquals(1, BookQuery::create()->count(), '1 Book');
+        $this->assertEquals(1, BookOpinionQuery::create()->count(), '1 BookOpinion');
+
+        // make sure everything is loaded correctly (and their relation too)
+        $br->reload(true);
+        $b->reload(true);
+        $op->reload(true);
+
+        $br->getBookOpinions(); // load the relation
+
+        $b->removeBookOpinion($op);
+        $b->save();
+
+        // the Book knows that there is no longer an opinion
+        $this->assertEquals(0, count($b->getBookOpinions()), 'Book knows there is no opinion');
+        // but not the BookReader
+        $this->assertEquals(1, count($br->getBookOpinions()), 'BookReader still thinks it has 1 opinion');
+
+        $br->reload(true);  // with relations
+
+        $this->assertEquals(0, count($br->getBookOpinions()), 'BookReader now knows the opinion is gone');
+
+        $this->assertEquals(1, BookReaderQuery::create()->count(), '1 BookReader');
+        $this->assertEquals(1, BookQuery::create()->count(), '1 Book');
+        $this->assertEquals(0, BookOpinionQuery::create()->count(), '0 BookOpinion');
+    }
+    
+    /**
      *
      */
     public function testCopyConcretInheritance()
