@@ -36,10 +36,9 @@ class SluggableBehavior extends Behavior
     {
         if (!$this->getTable()->containsColumn($this->getParameter('slug_column'))) {
             $this->getTable()->addColumn(array(
-                'name'      => $this->getParameter('slug_column'),
-                'type'      => 'VARCHAR',
-                'size'      => 255,
-                'required'  => false,
+                'name' => $this->getParameter('slug_column'),
+                'type' => 'VARCHAR',
+                'size' => 255
             ));
             // add a unique to column
             $unique = new Unique($this->getColumnForParameter('slug_column'));
@@ -81,10 +80,13 @@ class SluggableBehavior extends Behavior
     {
         $const = $builder->getColumnConstant($this->getColumnForParameter('slug_column'));
         $pattern = $this->getParameter('slug_pattern');
+        $script = "
+if (\$this->isColumnModified($const) && \$this->{$this->getColumnGetter()}()) {
+    \$this->{$this->getColumnSetter()}(\$this->makeSlugUnique(\$this->{$this->getColumnGetter()}()));";
 
-        if ($pattern && $this->getParameter('permanent') != 'true') {
-            $script = "
-if ((\$this->isColumnModified($const) || ";
+        if ($pattern && $this->booleanValue($this->getParameter('permanent'))) {
+            $script .= "
+} elseif (";
             $count = preg_match_all('{[a-zA-Z]+}', $pattern, $matches, PREG_PATTERN_ORDER);
 
             foreach ($matches[0] as $key => $match) {
@@ -96,26 +98,21 @@ if ((\$this->isColumnModified($const) || ";
                 $script .= "\$this->isColumnModified($columnConst)" . ($key < $count - 1 ? " || " : "");
             }
 
-            $script .= ") && \$this->{$this->getColumnGetter()}()) {";
-        } else {
-            $script .= "if (\$this->isColumnModified($const) && \$this->{$this->getColumnGetter()}()) {";
+            $script .= ") {
+    \$this->{$this->getColumnSetter()}(\$this->createSlug());";
         }
 
+    if (null == $pattern && $this->booleanValue($this->getParameter('permanent'))) {
         $script .= "
-    \$this->{$this->getColumnSetter()}(\$this->makeSlugUnique(\$this->{$this->getColumnGetter()}()));";
-
-        if (null == $pattern && $this->getParameter('permanent') != 'true') {
-            $script .= "
 } else {
     \$this->{$this->getColumnSetter()}(\$this->createSlug());
 }";
-        } else {
-            $script .= "
+    } else {
+        $script .= "
 } elseif (!\$this->{$this->getColumnGetter()}()) {
     \$this->{$this->getColumnSetter()}(\$this->createSlug());
 }";
-        }
-
+    }
         return $script;
     }
 
@@ -123,7 +120,7 @@ if ((\$this->isColumnModified($const) || ";
     {
         $this->builder = $builder;
         $script = '';
-        if ($this->getParameter('slug_column') != 'slug') {
+        if ('slug' != $this->getParameter('slug_column')) {
             $this->addSlugSetter($script);
             $this->addSlugGetter($script);
         }
@@ -264,7 +261,7 @@ protected static function cleanupSlugPart(\$slug, \$replacement = '" . $this->ge
  * @param    string \$slug                   the slug to check
  * @param    int    \$incrementReservedSpace the number of characters to keep empty
  *
- * @return string                        the truncated slug
+ * @return string                            the truncated slug
  */
 protected static function limitSlugSize(\$slug, \$incrementReservedSpace = 3)
 {
@@ -286,19 +283,20 @@ protected static function limitSlugSize(\$slug, \$incrementReservedSpace = 3)
  * Get the slug, ensuring its uniqueness
  *
  * @param    string \$slug            the slug to check
- * @param    string \$separator the   separator used by slug
+ * @param    string \$separator       the separator used by slug
  * @param    int    \$alreadyExists   false for the first try, true for the second, and take the high count + 1
- * @return string                     the unique slug
+ * @return   string                   the unique slug
  */
 protected function makeSlugUnique(\$slug, \$separator = '" . $this->getParameter('separator') ."', \$alreadyExists = false)
-{
+{";
+    $getter = $this->getColumnGetter();
+    $script .= "
     if (!\$alreadyExists) {
         \$slug2 = \$slug;
     } else {
         \$slug2 = \$slug . \$separator;";
 
         if (null == $this->getParameter('slug_pattern')) {
-            $getter = $this->getColumnGetter();
             $script .= "
 
         \$count = " . $this->builder->getStubQueryBuilder()->getClassname() . "::create()
@@ -314,14 +312,14 @@ protected function makeSlugUnique(\$slug, \$separator = '" . $this->getParameter
         $script .= "
     }
 
-    \$count = " . $this->builder->getStubQueryBuilder()->getClassname() . "::create()
-        ->filterBySlug(\$alreadyExists ? \$slug2 . '%' : \$slug2)
+    \$query = " . $this->builder->getStubQueryBuilder()->getClassname() . "::create('q')
+        ->where('q." . $this->getColumnForParameter('slug_column')->getPhpName() . " ' . (\$alreadyExists ? 'REGEXP' : '=') . ' ?', \$alreadyExists ?  \$slug2 . '[0-9]+$' : \$slug2)
         ->prune(\$this)";
 
         if ($this->getParameter('scope_column')) {
             $getter = 'get' . $this->getColumnForParameter('scope_column')->getPhpName();
             $script .="
-        ->filterBy('{$this->getColumnForParameter('scope_column')->getPhpName()}', \$this->{$getter}())";
+            ->filterBy('{$this->getColumnForParameter('scope_column')->getPhpName()}', \$this->{$getter}())";
         }
         // watch out: some of the columns may be hidden by the soft_delete behavior
         if ($this->table->hasBehavior('soft_delete')) {
@@ -329,15 +327,29 @@ protected function makeSlugUnique(\$slug, \$separator = '" . $this->getParameter
         ->includeDeleted()";
         }
         $script .= "
-    ->count();
+    ;
 
-    if (!\$alreadyExists && \$count > 0) {
-        return \$this->makeSlugUnique(\$slug, \$separator, true);
-    } elseif (!\$alreadyExists && \$count == 0) {
+    if (!\$alreadyExists) {
+        \$count = \$query->count();
+        if (\$count > 0) {
+            return \$this->makeSlugUnique(\$slug, \$separator, true);
+        }
+
         return \$slug2;
     }
 
-    return \$slug2 . (\$count + 1);
+    // Already exists
+    \$object = \$query
+        ->addDescendingOrderByColumn('LENGTH(" . $this->getColumnForParameter('slug_column')->getName() . ")')
+        ->addDescendingOrderByColumn('" . $this->getColumnForParameter('slug_column')->getName() . "')
+    ->findOne();
+
+    // First duplicate slug
+    if (null == \$object) {
+        return \$slug2 . '1';
+    }
+
+    return \$slug2 . (substr(\$object->" . $getter . "(), strlen(\$slug) + 1) + 1);
 }
 ";
     }
