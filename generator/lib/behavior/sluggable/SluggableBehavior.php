@@ -84,15 +84,16 @@ class SluggableBehavior extends Behavior
 if (\$this->isColumnModified($const) && \$this->{$this->getColumnGetter()}()) {
     \$this->{$this->getColumnSetter()}(\$this->makeSlugUnique(\$this->{$this->getColumnGetter()}()));";
 
-        if ($pattern && $this->booleanValue($this->getParameter('permanent'))) {
+        if ($pattern && false === $this->booleanValue($this->getParameter('permanent'))) {
             $script .= "
 } elseif (";
-            $count = preg_match_all('{[a-zA-Z]+}', $pattern, $matches, PREG_PATTERN_ORDER);
+            $count = preg_match_all('/{([a-zA-Z]+)}/', $pattern, $matches, PREG_PATTERN_ORDER);
 
-            foreach ($matches[0] as $key => $match) {
-                $column = $this->getTable()->getColumn($this->underscore($match));
+            foreach ($matches[1] as $key => $match) {
+
+                $column = $this->getTable()->getColumn($this->underscore(ucfirst($match)));
                 if (null == $column) {
-                    throw new \InvalidArgumentException('The pattern ' . $match . ' is invalid ! Please use PASCAL naming.');
+                    throw new \InvalidArgumentException(sprintf('The pattern %s is invalid  the column %s is not found', $pattern, $match));
                 }
                 $columnConst = $builder->getColumnConstant($column);
                 $script .= "\$this->isColumnModified($columnConst)" . ($key < $count - 1 ? " || " : "");
@@ -102,7 +103,7 @@ if (\$this->isColumnModified($const) && \$this->{$this->getColumnGetter()}()) {
     \$this->{$this->getColumnSetter()}(\$this->createSlug());";
         }
 
-    if (null == $pattern && $this->booleanValue($this->getParameter('permanent'))) {
+    if (null == $pattern && false === $this->booleanValue($this->getParameter('permanent'))) {
         $script .= "
 } else {
     \$this->{$this->getColumnSetter()}(\$this->createSlug());

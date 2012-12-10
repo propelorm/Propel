@@ -294,6 +294,25 @@ class SluggableBehaviorTest extends BookstoreTestBase
         }
     }
 
+    public function testPatternNonPermanent()
+    {
+        Table14PatternQuery::create()->deleteAll();
+
+        $t = new Table14Pattern();
+        $t->setTitle('Hello, World');
+        $t->setTags('test,tag,php');
+        $t->save();
+        $this->assertEquals('/foo/hello-world/bar/test-tag-php', $t->getUrl());
+
+        $t->setTags('php,propel');
+        $t->save();
+        $this->assertEquals('/foo/hello-world/bar/php-propel', $t->getUrl());
+
+        $t->setTitle('Title2');
+        $t->save();
+        $this->assertEquals('/foo/title2/bar/php-propel', $t->getUrl());
+    }
+
     public function testNumberOfQueriesForMakeUniqSlug()
     {
         Table13Query::create()->deleteAll();
