@@ -450,13 +450,19 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
     /**
      * The value for the $clo field.";
         if ($col->getDefaultValue()) {
-            if ($col->getDefaultValue()->isExpression()) {
+            if ($col->isEnumType()) {
+                $script .= "
+     * Note: this column has a database default value of (".join(', ', $col->getValueSet())."): ".$col->getDefaultValue()->getValue();
+            } elseif ($col->getDefaultValue()->isExpression()) {
                 $script .= "
      * Note: this column has a database default value of: (expression) ".$col->getDefaultValue()->getValue();
             } else {
                 $script .= "
      * Note: this column has a database default value of: ". $this->getDefaultValueString($col);
             }
+        } elseif ($col->isEnumType()) {
+                $script .= "
+     * Note: value set (".join(', ', $col->getValueSet()).") ";
         }
         $script .= "
      * @var        $cptype
@@ -2021,7 +2027,11 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
         foreach ($table->getColumns() as $col) {
             if (!$col->isLazyLoad()) {
                 $clo = strtolower($col->getName());
-                if ($col->getType() === PropelTypes::CLOB_EMU && $this->getPlatform() instanceof OraclePlatform) {
+
+                if (PropelTypes::ENUM === $col->getType() && $this->getPlatform() instanceof MysqlPlatform) {
+                    $script .= "
+            if (\$row[\$startcol + $n] !== null) \$this->set{$col->getPhpName()}(\$row[\$startcol + $n]);";
+                } elseif ($col->getType() === PropelTypes::CLOB_EMU && $this->getPlatform() instanceof OraclePlatform) {
                     // PDO_OCI returns a stream for CLOB objects, while other PDO adapters return a string...
                     $script .= "
             \$this->$clo = stream_get_contents(\$row[\$startcol + $n]);";
