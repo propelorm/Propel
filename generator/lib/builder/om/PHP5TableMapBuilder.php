@@ -226,7 +226,7 @@ class ".$this->getClassname()." extends TableMap
         \$this->addColumn('$cup', '$cfc', '".$col->getType()."', ".var_export($col->isNotNull(), true).", ".$size.", $default);";
                 }
             } // if col-is prim key
-            if ($col->isEnumType()) {
+            if ($col->getValueSet()) {
                 $script .= "
         \$this->getColumn('$cup', false)->setValueSet(" . var_export($col->getValueSet(), true). ");";
             }
