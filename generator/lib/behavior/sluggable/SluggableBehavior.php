@@ -314,7 +314,7 @@ protected function makeSlugUnique(\$slug, \$separator = '" . $this->getParameter
     }
 
     \$query = " . $this->builder->getStubQueryBuilder()->getClassname() . "::create('q')
-        ->where('q." . $this->getColumnForParameter('slug_column')->getPhpName() . " ' . (\$alreadyExists ? 'REGEXP' : '=') . ' ?', \$alreadyExists ?  \$slug2 . '[0-9]+$' : \$slug2)
+        ->where('q." . $this->getColumnForParameter('slug_column')->getPhpName() . " ' . (\$alreadyExists ? 'REGEXP' : '=') . ' ?', \$alreadyExists ? '^' . \$slug2 . '[0-9]+$' : \$slug2)
         ->prune(\$this)";
 
         if ($this->getParameter('scope_column')) {
