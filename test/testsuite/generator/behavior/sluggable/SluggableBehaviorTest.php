@@ -328,6 +328,43 @@ class SluggableBehaviorTest extends BookstoreTestBase
             $this->assertLessThanOrEqual(4, $con->getQueryCount() - $nbQuery, 'no more than 4 query to get a slug when it already exist');
         }
     }
+
+    public function testSlugRegexp()
+    {
+        Table13Query::create()->deleteAll();
+        $con = Propel::getConnection(Table13Peer::DATABASE_NAME);
+
+        for ($i=0; $i < 3; $i++) {
+            $t = new Table13();
+            $t->setTitle('Hello, World');
+            $t->save($con);
+        }
+        $this->assertEquals('hello-world-2', $t->getSlug());
+
+        $t = new Table13();
+        $t->setTitle('World');
+        $t->save($con);
+
+        $this->assertEquals('world', $t->getSlug());
+
+        $t = new Table13();
+        $t->setTitle('World');
+        $t->save($con);
+
+        $this->assertEquals('world-1', $t->getSlug());
+
+        $t = new Table13();
+        $t->setTitle('Hello, World');
+        $t->save($con);
+
+        $this->assertEquals('hello-world-3', $t->getSlug());
+
+        $t = new Table13();
+        $t->setTitle('World');
+        $t->save($con);
+
+        $this->assertEquals('world-2', $t->getSlug());
+    }
 }
 
 class TestableTable13 extends Table13
