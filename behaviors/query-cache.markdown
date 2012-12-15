@@ -80,7 +80,7 @@ class BookQuery extends BaseBookQuery
 
   protected function getCacheBackend()
   {
-    if (self::$cacheBackend ### null) {
+    if (self::$cacheBackend) {
       $frontendOptions = array(
          'lifetime' => 7200,
          'automatic_serialization' => true
