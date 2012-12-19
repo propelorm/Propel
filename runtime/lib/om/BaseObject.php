@@ -138,7 +138,7 @@ abstract class BaseObject
     /**
      * Code to be run before persisting the object
      * @param  PropelPDO $con
-     * @return bloolean
+     * @return boolean
      */
     public function preSave(PropelPDO $con = null)
     {
