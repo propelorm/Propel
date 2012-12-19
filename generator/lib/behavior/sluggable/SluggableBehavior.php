@@ -20,6 +20,7 @@ class SluggableBehavior extends Behavior
 {
     // default parameters value
     protected $parameters = array(
+        'add_cleanup'     => 'true',
         'slug_column'     => 'slug',
         'slug_pattern'    => '',
         'replace_pattern' => '/\W+/', // Tip: use '/[^\\pL\\d]+/u' instead if you're in PHP5.3
@@ -127,7 +128,9 @@ if (\$this->isColumnModified($const) && \$this->{$this->getColumnGetter()}()) {
         }
         $this->addCreateSlug($script);
         $this->addCreateRawSlug($script);
-        $this->addCleanupSlugPart($script);
+        if ($this->booleanValue($this->getParameter('add_cleanup'))) {
+            $this->addCleanupSlugPart($script);
+        }
         $this->addLimitSlugSize($script);
         $this->addMakeSlugUnique($script);
 
