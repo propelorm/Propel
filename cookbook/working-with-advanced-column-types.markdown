@@ -91,8 +91,17 @@ echo $book->getStyle(); // novel
 // ENUM columns are also searchable, using the generated filterByXXX() method
 // or other ModelCritera methods (like where(), condition())
 $books = BookQuery::create()
-  ->filterByStyle('novel')
+  ->filterByStyle(BookPeer::STYLE_NOVEL) // BookPeer::STYLE_NOVEL is a PHP equivalent for 'novel'
   ->find();
+
+// Alternatively there are getters for SQL value which can be used in Criteria or even plain SQL
+$style = BookPeer::getStyleSqlValue(BookPeer::STYLE_NOVEL);
+$criteria = new Criteria();
+$criteria->add(BookPeer::STYLE, $style);
+$books = BookPeer::doSelect($criteria);
+
+// NOTE: methods getStyleSqlValue() is only an alias for:
+BookPeer::getSqlValueForEnum(BookPeer::STYLE, BookPeer::STYLE_NOVEL);
 {% endhighlight %}
 
 ## OBJECT Columns ##
