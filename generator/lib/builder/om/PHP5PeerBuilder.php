@@ -499,9 +499,65 @@ abstract class ".$this->getClassname(). $extendingPeerClass . "
     {
         \$valueSets = ".$this->getPeerClassname()."::getValueSets();
 
+        if (!isset(\$valueSets[\$colname])) {
+            throw new PropelException(sprintf('Column \"%s\" has no ValueSet.', \$colname));
+        }
+
         return \$valueSets[\$colname];
     }
 ";
+    }
+
+    /**
+     * Adds the getSqlValueForEnum() method.
+     * @param      string &$script The script will be modified in this method.
+     */
+    protected function addGetSqlValueForEnum(&$script)
+    {
+        $this->declareClassFromBuilder($this->getTableMapBuilder());
+        $script .= "
+    /**
+     * Gets the SQL value for the ENUM column value
+     *
+     * @param string \$colname ENUM column name.
+     * @param string \$enumVal ENUM value.
+     *
+     * @return int            SQL value
+     */
+    public static function getSqlValueForEnum(\$colname, \$enumVal)
+    {
+        \$values = ".$this->getPeerClassname()."::getValueSet(\$colname);
+        if (!in_array(\$enumVal, \$values)) {
+            throw new PropelException(sprintf('Value \"%s\" is not accepted in this enumerated column', \$colname));
+        }
+        return array_search(\$enumVal, \$values);
+    }
+";
+    }
+
+    /**
+     * Adds methods for ENUM columns.
+     * @param      string &$script The script will be modified in this method.
+     */
+    protected function addEnumMethods(&$script)
+    {
+        foreach ($this->getTable()->getColumns() as $col) {
+          /* @var $col Column */
+            if ($col->isEnumType()) {
+                $script .= "
+    /**
+     * Gets the SQL value for ".$col->getPhpName()." ENUM value
+     *
+     * @param  string \$enumVal ENUM value to get SQL value for
+     * @return int             SQL value
+     */
+    public static function get{$col->getPhpName()}SqlValue(\$enumVal)
+    {
+        return {$this->getPeerClassname()}::getSqlValueForEnum({$this->getColumnConstant($col)}, \$enumVal);
+    }
+";
+            }
+        }
     }
 
     /**
@@ -2049,6 +2105,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . "
 
         parent::addSelectMethods($script);
 
+        $this->addEnumMethods($script);
         $this->addDoCountJoin($script);
         $this->addDoSelectJoin($script);
 
