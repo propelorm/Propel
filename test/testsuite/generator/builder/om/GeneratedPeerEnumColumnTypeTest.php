@@ -67,4 +67,28 @@ EOF;
         $expected = array('foo', 'bar', 'baz', '1', '4', '(', 'foo bar');
         $this->assertEquals($expected, ComplexColumnTypeEntity103Peer::getValueSet(ComplexColumnTypeEntity103Peer::BAR));
     }
+
+    /**
+     * @expectedException PropelException
+     */
+    public function testGetValueSetInvalidColumn()
+    {
+        ComplexColumnTypeEntity103Peer::getValueSet(ComplexColumnTypeEntity103Peer::ID);
+    }
+
+    public function testGetSqlValueForEnum()
+    {
+        $this->assertEquals(0, ComplexColumnTypeEntity103Peer::getSqlValueForEnum(ComplexColumnTypeEntity103Peer::BAR, ComplexColumnTypeEntity103Peer::BAR_FOO));
+        $this->assertEquals(1, ComplexColumnTypeEntity103Peer::getSqlValueForEnum(ComplexColumnTypeEntity103Peer::BAR, ComplexColumnTypeEntity103Peer::BAR_BAR));
+        $this->assertEquals(2, ComplexColumnTypeEntity103Peer::getSqlValueForEnum(ComplexColumnTypeEntity103Peer::BAR, ComplexColumnTypeEntity103Peer::BAR_BAZ));
+        $this->assertEquals(6, ComplexColumnTypeEntity103Peer::getSqlValueForEnum(ComplexColumnTypeEntity103Peer::BAR, ComplexColumnTypeEntity103Peer::BAR_FOO_BAR));
+    }
+
+    public function testEnumSqlGetters()
+    {
+        $this->assertEquals(0, ComplexColumnTypeEntity103Peer::getBarSqlValue(ComplexColumnTypeEntity103Peer::BAR_FOO));
+        $this->assertEquals(1, ComplexColumnTypeEntity103Peer::getBarSqlValue(ComplexColumnTypeEntity103Peer::BAR_BAR));
+        $this->assertEquals(2, ComplexColumnTypeEntity103Peer::getBarSqlValue(ComplexColumnTypeEntity103Peer::BAR_BAZ));
+        $this->assertEquals(6, ComplexColumnTypeEntity103Peer::getBarSqlValue(ComplexColumnTypeEntity103Peer::BAR_FOO_BAR));
+    }
 }
