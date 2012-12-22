@@ -100,7 +100,7 @@ $criteria = new Criteria();
 $criteria->add(BookPeer::STYLE, $style);
 $books = BookPeer::doSelect($criteria);
 
-// NOTE: methods getStyleSqlValue() is only an alias for:
+// NOTE: method getStyleSqlValue() is only an alias for:
 BookPeer::getSqlValueForEnum(BookPeer::STYLE, BookPeer::STYLE_NOVEL);
 {% endhighlight %}
 
