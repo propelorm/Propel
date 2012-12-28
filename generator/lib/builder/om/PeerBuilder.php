@@ -146,6 +146,7 @@ abstract class PeerBuilder extends OMBuilder
         if ($table->hasEnumColumns()) {
             $this->addGetValueSets($script);
             $this->addGetValueSet($script);
+            $this->addGetSqlValueForEnum($script);
         }
 
         if (!$table->isAlias()) {

@@ -900,19 +900,12 @@ abstract class ".$this->getClassname()." extends " . $parentClass . "
         }";
         } elseif ($col->getType() == PropelTypes::ENUM) {
             $script .= "
-        \$valueSet = " . $this->getPeerClassname() . "::getValueSet(" . $this->getColumnConstant($col) . ");
         if (is_scalar(\$$variableName)) {
-            if (!in_array(\$$variableName, \$valueSet)) {
-                throw new PropelException(sprintf('Value \"%s\" is not accepted in this enumerated column', \$$variableName));
-            }
-            \$$variableName = array_search(\$$variableName, \$valueSet);
+            \$$variableName = {$this->getPeerClassname()}::getSqlValueForEnum({$this->getColumnConstant($col)}, \$$variableName);
         } elseif (is_array(\$$variableName)) {
             \$convertedValues = array();
             foreach (\$$variableName as \$value) {
-                if (!in_array(\$value, \$valueSet)) {
-                    throw new PropelException(sprintf('Value \"%s\" is not accepted in this enumerated column', \$value));
-                }
-                \$convertedValues []= array_search(\$value, \$valueSet);
+                \$convertedValues[] = {$this->getPeerClassname()}::getSqlValueForEnum({$this->getColumnConstant($col)}, \$value);
             }
             \$$variableName = \$convertedValues;
             if (null === \$comparison) {
