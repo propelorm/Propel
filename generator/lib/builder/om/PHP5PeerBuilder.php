@@ -270,7 +270,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . "
     protected function addEnumColumnConstants(&$script)
     {
         foreach ($this->getTable()->getColumns() as $col) {
-            if ($col->isEnumType()) {
+            if ($col->isEnumType() || $col->getValueSet()) {
                 $script .= "
     /** The enumerated values for the " . $col->getName() . " field */";
                 foreach ($col->getValueSet() as $value) {
@@ -394,7 +394,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . "
     /** The enumerated values for this table */
     protected static \$enumValueSets = array(";
         foreach ($this->getTable()->getColumns() as $col) {
-            if ($col->isEnumType()) {
+            if ($col->isEnumType() || $col->getValueSet()) {
                 $script .= "
         ".$this->getPeerClassname()."::" . $this->getColumnName($col) ." => array(
 ";
