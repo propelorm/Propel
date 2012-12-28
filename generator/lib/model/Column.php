@@ -240,6 +240,17 @@ class Column extends XMLElement
                 }
                 $valueSet = array_map('trim', $valueSet);
                 $this->valueSet = $valueSet;
+            } elseif (preg_match('/enum\((.*?)\)/i', $this->getAttribute('sqlType', ''), $matches)) {
+                if (version_compare(PHP_VERSION, '5.3.0', '>=')) {
+                    $valueSet = str_getcsv($matches['1'], ',', '\'');
+                } else {
+                    // unfortunately, no good fallback for PHP 5.2
+                    $valueSet = array();
+                    foreach (explode(',', $matches['1']) as $value) {
+                        $valueSet[] = trim($value, " '");
+                    }
+                }
+                $this->valueSet = $valueSet;
             }
 
             $this->inheritanceType = $this->getAttribute("inheritance");

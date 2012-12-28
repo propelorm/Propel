@@ -1501,8 +1501,9 @@ class Table extends ScopedElement implements IDMethod
      */
     public function hasEnumColumns()
     {
+
         foreach ($this->getColumns() as $col) {
-            if ($col->isEnumType()) {
+            if ($col->isEnumType() || $col->getValueSet()) {
                 return true;
             }
         }
