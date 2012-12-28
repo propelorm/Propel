@@ -220,56 +220,23 @@ public function enforceVersioning()
 
     protected function addIsVersioningNecessary(&$script)
     {
-        $peerClass = $this->builder->getStubPeerBuilder()->getClassname();
-        $script .= "
-/**
- * Checks whether the current state must be recorded as a version
- *
- * @param PropelPDO \$con An optional PropelPDO connection to use.
- *
- * @return  boolean
- */
-public function isVersioningNecessary(\$con = null)
-{
-    if (\$this->alreadyInSave) {
-        return false;
-    }
+        $peerClassName = $this->builder->getStubPeerBuilder()->getClassname();
 
-    if (\$this->enforceVersion) {
-        return true;
-    }
-
-    if ({$peerClass}::isVersioningEnabled() && (\$this->isNew() || \$this->isModified() || \$this->isDeleted())) {
-        return true;
-    }";
+        $fkGetters = array();
         foreach ($this->behavior->getVersionableFks() as $fk) {
-            $fkGetter = $this->builder->getFKPhpNameAffix($fk, $plural = false);
-            $script .= "
-    if (null !== (\$object = \$this->get{$fkGetter}(\$con)) && \$object->isVersioningNecessary(\$con)) {
-        return true;
-    }
-";
+            $fkGetters[] = $this->builder->getFKPhpNameAffix($fk, $plural = false);
         }
+
+        $refFkGetters = array();
         foreach ($this->behavior->getVersionableReferrers() as $fk) {
-            $fkGetter = $this->builder->getRefFKPhpNameAffix($fk, $plural = true);
-            $script .= "
-  // to avoid infinite loops, emulate in save
-  \$this->alreadyInSave = true;
-    foreach (\$this->get{$fkGetter}(null, \$con) as \$relatedObject) {
-        if (\$relatedObject->isVersioningNecessary(\$con)) {
-      \$this->alreadyInSave = false;
-
-            return true;
+            $refFkGetters[] = $this->builder->getRefFKPhpNameAffix($fk, $plural = true);
         }
-    }
-  \$this->alreadyInSave = false;
-";
-        }
-        $script .= "
 
-    return false;
-}
-";
+        $script .= $this->behavior->renderTemplate('objectIsVersioningNecessary', array(
+            'peerClassName'     => $peerClassName,
+            'fkGetters'         => $fkGetters,
+            'refFkGetters'      => $refFkGetters,
+        ));
     }
 
     protected function addAddVersion(&$script)
@@ -289,12 +256,15 @@ public function addVersion(\$con = null)
     \$this->enforceVersion = false;
 
     \$version = new {$versionARClassname}();";
+
         foreach ($this->table->getColumns() as $col) {
             $script .= "
     \$version->set" . $col->getPhpName() . "(\$this->get" . $col->getPhpName() . "());";
         }
+
         $script .= "
     \$version->set{$this->table->getPhpName()}(\$this);";
+
         foreach ($this->behavior->getVersionableFks() as $fk) {
             $fkGetter = $this->builder->getFKPhpNameAffix($fk, $plural = false);
             $fkVersionColumnName = $fk->getLocalColumnName() . '_version';
@@ -304,6 +274,7 @@ public function addVersion(\$con = null)
         \$version->set{$fkVersionColumnPhpName}(\$related->getVersion());
     }";
         }
+
         foreach ($this->behavior->getVersionableReferrers() as $fk) {
             $fkGetter = $this->builder->getRefFKPhpNameAffix($fk, $plural = true);
             $idsColumn = $this->behavior->getReferrerIdsColumn($fk);
@@ -314,6 +285,18 @@ public function addVersion(\$con = null)
         \$version->set{$versionsColumn->getPhpName()}(array_values(\$relateds));
     }";
         }
+
+        foreach ($this->behavior->getVersionableCrossForeignKeys() as $fk) {
+            $fkGetter = $this->builder->getFKPhpNameAffix($fk, $plural = true);
+            $idsColumn = $this->behavior->getCrossForeignKeyIdsColumn($fk);
+            $versionsColumn = $this->behavior->getCrossForeignKeyVersionsColumn($fk);
+            $script .= "
+    if (\$relateds = \$this->get{$fkGetter}(\$con)->toKeyValue('PrimaryKey', 'Version')) {
+        \$version->set{$idsColumn->getPhpName()}(array_keys(\$relateds));
+        \$version->set{$versionsColumn->getPhpName()}(array_values(\$relateds));
+    }";
+        }
+
             $script .= "
     \$version->save(\$con);
 

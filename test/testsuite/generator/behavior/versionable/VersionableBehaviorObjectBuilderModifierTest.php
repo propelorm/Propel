@@ -66,6 +66,52 @@ class VersionableBehaviorObjectBuilderModifierTest extends PHPUnit_Framework_Tes
         <behavior name="versionable" />
     </table>
 
+    <table name="versionable_post">
+        <column name="id" primaryKey="true" type="INTEGER" autoIncrement="true" />
+        <column name="title" type="VARCHAR" size="255" />
+        <behavior name="versionable" />
+    </table>
+
+    <table name="versionable_tag">
+        <column name="id" primaryKey="true" type="INTEGER" autoIncrement="true" />
+        <column name="name" type="VARCHAR" size="255" />
+        <behavior name="versionable" />
+    </table>
+
+    <table name="versionable_post_tag" isCrossRef="true">
+        <column name="post_id" primaryKey="true" type="INTEGER" />
+        <column name="tag_id" primaryKey="true" type="INTEGER" />
+
+        <foreign-key foreignTable="versionable_post">
+            <reference local="post_id" foreign="id" />
+        </foreign-key>
+        <foreign-key foreignTable="versionable_tag">
+            <reference local="tag_id" foreign="id" />
+        </foreign-key>
+    </table>
+
+    <table name="versionable_user">
+        <column name="id" primaryKey="true" type="INTEGER" autoIncrement="true" />
+        <column name="username" type="VARCHAR" size="255" />
+        <behavior name="versionable" />
+    </table>
+
+    <table name="versionable_group">
+        <column name="id" primaryKey="true" type="INTEGER" autoIncrement="true" />
+        <column name="name" type="VARCHAR" size="255" />
+    </table>
+
+    <table name="versionable_user_group" isCrossRef="true">
+        <column name="user_id" primaryKey="true" type="INTEGER" />
+        <column name="group_id" primaryKey="true" type="INTEGER" />
+
+        <foreign-key foreignTable="versionable_user">
+            <reference local="user_id" foreign="id" />
+        </foreign-key>
+        <foreign-key foreignTable="versionable_group">
+            <reference local="group_id" foreign="id" />
+        </foreign-key>
+    </table>
 </database>
 EOF;
             PropelQuickBuilder::buildSchema($schema);
@@ -891,8 +937,8 @@ EOF;
         $b1->save();
     }
 
-  public function testWithInheritance()
-  {
+    public function testWithInheritance()
+    {
         $b1 = new VersionableBehaviorTest8Foo();
         $b1->save();
 
@@ -901,7 +947,7 @@ EOF;
 
         $object = $b1->getOneVersion($b1->getVersion());
         $this->assertTrue($object instanceof Versionablebehaviortest8Version);
-  }
+    }
 
     public function testEnforceVersioning()
     {
@@ -917,5 +963,51 @@ EOF;
 
         $bar->save();
         $this->assertEquals(2, $bar->getVersion());
+    }
+
+    public function testManyToManyWithIsCrossRef()
+    {
+        $t1 = new VersionableTag();
+        $t1->setName('foo');
+
+        $post = new VersionablePost();
+        $post->setTitle('Hello, World');
+        $post->addVersionableTag($t1);
+
+        $post->save();
+
+        $this->assertFalse($post->isNew());
+        $this->assertEquals(1, $post->getVersion());
+        $this->assertEquals(array(1), $post->getOneVersion(1)->getVersionableTagIds());
+
+        $post->setTitle('bar');
+        $post->removeVersionableTag($t1);
+        $post->save();
+
+        $this->assertEquals(2, $post->getVersion());
+        $this->assertEquals(array(), $post->getOneVersion(2)->getVersionableTagIds());
+    }
+
+    public function testManyToManyWithIsCrossRefOnlyOneHasVersionable()
+    {
+        $group = new VersionableGroup();
+        $group->setName('Awesome People');
+        $this->assertEquals(1, $group->save());
+
+        $user = new VersionableUser();
+        $user->setUsername('arthur-dent@marvin.net');
+        $this->assertEquals(1, $user->save());
+
+        $user->addVersionableGroup($group);
+        $this->assertTrue($user->isVersioningNecessary());
+        $this->assertGreaterThan(1, $user->save());
+        $this->assertEquals(2, $user->getVersion());
+        $this->assertEquals(array($group->getId()), $user->getOneVersion(2)->getVersionableGroupIds());
+
+        $user->removeVersionableGroup($group);
+        $this->assertTrue($user->isVersioningNecessary());
+        $this->assertGreaterThan(1, $user->save());
+        $this->assertEquals(3, $user->getVersion());
+        $this->assertEmpty($user->getOneVersion(3)->getVersionableGroupIds());
     }
 }
