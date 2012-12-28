@@ -17,20 +17,22 @@
 class PropelOnDemandIterator implements Iterator
 {
     /**
-     * @var       PropelObjectFormatter
+     * @var PropelObjectFormatter
      */
     protected $formatter;
 
     /**
-     * @var       PDOStatement
+     * @var PDOStatement
      */
     protected $stmt;
 
-    protected
-        $currentRow,
-        $currentKey = -1,
-        $isValid = null,
-        $enableInstancePoolingOnFinish = false;
+    protected $currentRow;
+
+    protected $currentKey = -1;
+
+    protected $isValid = null;
+
+    protected $enableInstancePoolingOnFinish = false;
 
     /**
      * @param PropelFormatter $formatter
@@ -39,7 +41,7 @@ class PropelOnDemandIterator implements Iterator
     public function __construct(PropelFormatter $formatter, PDOStatement $stmt)
     {
         $this->formatter = $formatter;
-        $this->stmt = $stmt;
+        $this->stmt      = $stmt;
         $this->enableInstancePoolingOnFinish = Propel::disableInstancePooling();
     }
 
@@ -59,13 +61,11 @@ class PropelOnDemandIterator implements Iterator
         return $this->stmt->rowCount();
     }
 
-    // Iterator Interface
-
     /**
      * Gets the current Model object in the collection
      * This is where the hydration takes place.
      *
-     * @see       PropelObjectFormatter::getAllObjectsFromRow()
+     * @see PropelObjectFormatter::getAllObjectsFromRow()
      *
      * @return BaseObject
      */
