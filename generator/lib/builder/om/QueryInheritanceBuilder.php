@@ -259,9 +259,9 @@ class "  .$this->getClassname() . " extends " . $baseClassname . " {
     protected function getClassKeyCondition()
     {
         $child = $this->getChild();
-        $col = $child->getColumn();
+        $col   = $child->getColumn();
 
-        return "\$this->addUsingAlias(" . $col->getConstantName() . ", " . $this->getPeerClassname()."::CLASSKEY_".strtoupper($child->getKey()).");";
+        return "\$this->addUsingAlias(" . $this->getColumnConstant($col) . ", " . $this->getPeerClassname()."::CLASSKEY_".strtoupper($child->getKey()).");";
     }
 
     protected function addDoDeleteAll(&$script)
