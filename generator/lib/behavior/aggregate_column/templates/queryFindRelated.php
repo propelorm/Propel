@@ -4,7 +4,7 @@
  *
  * @param PropelPDO $con A connection object
  */
-protected function findRelated<?php echo $relationName ?>s($con)
+protected function findRelated<?php echo $relationName ?>By<?php echo $relatedColumnPhpName ?>s($con)
 {
     $criteria = clone $this;
     if ($this->useAliasInSQL) {

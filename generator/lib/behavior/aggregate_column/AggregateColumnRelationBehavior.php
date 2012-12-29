@@ -24,13 +24,14 @@ class AggregateColumnRelationBehavior extends Behavior
     protected $parameters = array(
         'foreign_table' => '',
         'update_method' => '',
+        'related_column' => '',
     );
 
     public function postSave($builder)
     {
         $relationName = $this->getRelationName($builder);
 
-        return "\$this->updateRelated{$relationName}(\$con);";
+        return "\$this->updateRelated{$relationName}By{$this->getRelatedColumnPhpName()}(\$con);";
     }
 
     // no need for a postDelete() hook, since delete() uses Query::delete(),
@@ -40,7 +41,7 @@ class AggregateColumnRelationBehavior extends Behavior
     {
         $relationName = $this->getRelationName($builder);
 
-        return "protected \$old{$relationName};
+        return "protected \$old{$relationName}By{$this->getRelatedColumnPhpName()};
 ";
     }
 
@@ -58,6 +59,7 @@ class AggregateColumnRelationBehavior extends Behavior
             'relationName'     => $relationName,
             'variableName'     => self::lcfirst($relationName),
             'updateMethodName' => $this->getParameter('update_method'),
+            'relatedColumnPhpName' => $this->getRelatedColumnPhpName(),
         ));
     }
 
@@ -131,6 +133,7 @@ class AggregateColumnRelationBehavior extends Behavior
             'variableName'     => self::lcfirst($relationName),
             'foreignQueryName' => $foreignQueryBuilder->getClassname(),
             'refRelationName'  => $builder->getRefFKPhpNameAffix($foreignKey),
+            'relatedColumnPhpName' => $this->getRelatedColumnPhpName(),
         ));
     }
 
@@ -142,6 +145,7 @@ class AggregateColumnRelationBehavior extends Behavior
             'relationName'     => $relationName,
             'variableName'     => self::lcfirst($relationName),
             'updateMethodName' => $this->getParameter('update_method'),
+            'relatedColumnPhpName' => $this->getRelatedColumnPhpName(),
         ));
     }
 
@@ -162,6 +166,11 @@ class AggregateColumnRelationBehavior extends Behavior
     protected function getRelationName($builder)
     {
         return $builder->getFKPhpNameAffix($this->getForeignKey());
+    }
+
+    protected function getRelatedColumnPhpName()
+    {
+      return $this->getForeignTable()->getColumn($this->getParameter('related_column'))->getPhpName();
     }
 
     protected static function lcfirst($input)

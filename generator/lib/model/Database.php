@@ -493,7 +493,7 @@ class Database extends ScopedElement
     if ($bdata instanceof Behavior) {
       $behavior = $bdata;
       $behavior->setDatabase($this);
-      $this->behaviors[$behavior->getName()] = $behavior;
+      $this->behaviors[] = $behavior;
 
       return $behavior;
     } else {
@@ -515,15 +515,21 @@ class Database extends ScopedElement
   }
 
   /**
-     * check if the database has a behavior by name
-     *
-     * @param  string  $name the behavior name
-     * @return boolean True if the behavior exists
-     */
-    public function hasBehavior($name)
-    {
-        return array_key_exists($name, $this->behaviors);
+   * check if the database has a behavior by name
+   *
+   * @param  string  $name the behavior name
+   * @return boolean True if the behavior exists
+   */
+  public function hasBehavior($name)
+  {
+    foreach ($this->behaviors as $behavior) {
+      if ($behavior->getName() == $name) {
+        return true;
+      }
     }
+
+    return false;
+  }
 
   /**
    * Get one database behavior by name
@@ -532,7 +538,13 @@ class Database extends ScopedElement
    */
   public function getBehavior($name)
   {
-    return $this->behaviors[$name];
+    foreach ($this->behaviors as $behavior) {
+      if ($behavior->getName() == $name) {
+        return $behavior;
+      }
+    }
+
+    throw new PropelException('Unknown behavior ' . $name);
   }
 
   /**

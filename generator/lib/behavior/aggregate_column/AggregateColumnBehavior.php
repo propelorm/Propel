@@ -47,14 +47,20 @@ class AggregateColumnBehavior extends Behavior
             ));
         }
 
+        // change the behavior name to allow more than one behavior on the same table
+        $behaviorName = 'aggregate_column_' . $table->getName() . '_' . $columnName;
+        $this->setName($behaviorName);
+
         // add a behavior in the foreign table to autoupdate the aggregate column
         $foreignTable = $this->getForeignTable();
         if (!$foreignTable->hasBehavior('concrete_inheritance_parent')) {
+            $foreignBehaviorName = 'aggregate_column_relation_to_' . $table->getName() . '_' . $columnName;
             $relationBehavior = new AggregateColumnRelationBehavior();
-            $relationBehavior->setName('aggregate_column_relation');
+            $relationBehavior->setName($foreignBehaviorName);
             $foreignKey = $this->getForeignKey();
             $relationBehavior->addParameter(array('name' => 'foreign_table', 'value' => $table->getName()));
             $relationBehavior->addParameter(array('name' => 'update_method', 'value' => 'update' . $this->getColumn()->getPhpName()));
+            $relationBehavior->addParameter(array('name' => 'related_column', 'value' => $columnName));
             $foreignTable->addBehavior($relationBehavior);
         }
     }
