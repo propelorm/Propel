@@ -5099,7 +5099,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
     {
         $script .= "
     /**
-     * Flag to prevent endless clearAllReferences($deep=true) loop, if this object is referenced
+     * Flag to prevent endless clearAllReferences(\$deep=true) loop, if this object is referenced
      * @var        boolean
      */
     protected \$alreadyInClearAllReferencesDeep = false;
