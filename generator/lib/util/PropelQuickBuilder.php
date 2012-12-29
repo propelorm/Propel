@@ -71,7 +71,7 @@ class PropelQuickBuilder
     {
         if (null === $this->config) {
             require_once dirname(__FILE__) . '/../config/QuickGeneratorConfig.php';
-            $this->config = new QuickGeneratorConfig();
+            $this->config = new QuickGeneratorConfig($this->getPlatform());
         }
 
         return $this->config;

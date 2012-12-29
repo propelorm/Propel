@@ -10,40 +10,43 @@
 
 require_once dirname(__FILE__) . '/GeneratorConfig.php';
 require_once dirname(__FILE__) . '/GeneratorConfigInterface.php';
+require_once dirname(__FILE__) . '/../platform/PropelPlatformInterface.php';
 require_once dirname(__FILE__) . '/../platform/SqlitePlatform.php';
 
 /**
- *
- * @package		 propel.generator.config
+ * @package propel.generator.config
  */
 class QuickGeneratorConfig implements GeneratorConfigInterface
 {
     protected $builders = array(
         'peer'					=> 'PHP5PeerBuilder',
         'object'				=> 'PHP5ObjectBuilder',
-        'objectstub'		=> 'PHP5ExtensionObjectBuilder',
-        'peerstub'			=> 'PHP5ExtensionPeerBuilder',
-        'objectmultiextend' => 'PHP5MultiExtendObjectBuilder',
-        'tablemap'			=> 'PHP5TableMapBuilder',
+        'objectstub'		    => 'PHP5ExtensionObjectBuilder',
+        'peerstub'			    => 'PHP5ExtensionPeerBuilder',
+        'objectmultiextend'     => 'PHP5MultiExtendObjectBuilder',
+        'tablemap'			    => 'PHP5TableMapBuilder',
         'query'					=> 'QueryBuilder',
-        'querystub'			=> 'ExtensionQueryBuilder',
-        'queryinheritance' => 'QueryInheritanceBuilder',
-        'queryinheritancestub' => 'ExtensionQueryInheritanceBuilder',
-        'interface'			=> 'PHP5InterfaceBuilder',
+        'querystub'			    => 'ExtensionQueryBuilder',
+        'queryinheritance'      => 'QueryInheritanceBuilder',
+        'queryinheritancestub'  => 'ExtensionQueryInheritanceBuilder',
+        'interface'			    => 'PHP5InterfaceBuilder',
         'node'					=> 'PHP5NodeBuilder',
-        'nodepeer'			=> 'PHP5NodePeerBuilder',
-        'nodestub'			=> 'PHP5ExtensionNodeBuilder',
-        'nodepeerstub'	=> 'PHP5ExtensionNodePeerBuilder',
-        'nestedset'			=> 'PHP5NestedSetBuilder',
-        'nestedsetpeer' => 'PHP5NestedSetPeerBuilder',
+        'nodepeer'			    => 'PHP5NodePeerBuilder',
+        'nodestub'			    => 'PHP5ExtensionNodeBuilder',
+        'nodepeerstub'	        => 'PHP5ExtensionNodePeerBuilder',
+        'nestedset'			    => 'PHP5NestedSetBuilder',
+        'nestedsetpeer'         => 'PHP5NestedSetPeerBuilder',
     );
 
-    protected $buildProperties = array();
+    protected $buildProperties  = array();
 
-    private $generatorConfig = null;
+    private $generatorConfig    = null;
 
-    public function __construct()
+    private $configuredPlatform = null;
+
+    public function __construct(PropelPlatformInterface $platform = null)
     {
+        $this->configuredPlatform = $platform;
         $this->setBuildProperties($this->parsePseudoIniFile(dirname(__FILE__) . '/../../default.properties'));
     }
 
@@ -156,7 +159,13 @@ class QuickGeneratorConfig implements GeneratorConfigInterface
      */
     public function getConfiguredPlatform(PDO $con = null, $database = null)
     {
-        return new SqlitePlatform($con);
+        if (null === $this->configuredPlatform) {
+            return new SqlitePlatform($con);
+        }
+
+        $this->configuredPlatform->setConnection($con);
+
+        return $this->configuredPlatform;
     }
 
     /**
