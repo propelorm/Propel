@@ -4066,6 +4066,12 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
                         \${$lowerSingleRelatedName}->save(\$con);
                     }
                 }
+            } elseif (\$this->coll{$relatedName}) {
+                foreach (\$this->coll{$relatedName} as \${$lowerSingleRelatedName}) {
+                    if (\${$lowerSingleRelatedName}->isModified()) {
+                        \${$lowerSingleRelatedName}->save(\$con);
+                    }
+                }
             }
 ";
     }
