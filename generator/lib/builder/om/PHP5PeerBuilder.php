@@ -988,8 +988,15 @@ abstract class ".$this->getClassname(). $extendingPeerClass . "
      *
      * @return void
      */
-    public static function clearInstancePool()
+    public static function clearInstancePool(\$and_clear_all_references = false)
     {
+      if (\$and_clear_all_references)
+      {
+        foreach (".$this->getPeerClassname()."::\$instances as \$instance)
+        {
+          \$instance->clearAllReferences(true);
+        }
+      }
         ".$this->getPeerClassname()."::\$instances = array();
     }
     ";

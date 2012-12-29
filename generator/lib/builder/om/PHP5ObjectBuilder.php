@@ -407,6 +407,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
 
         $this->addAlreadyInSaveAttribute($script);
         $this->addAlreadyInValidationAttribute($script);
+        $this->addAlreadyInClearAllReferencesDeepAttribute($script);
 
         // apply behaviors
         $this->applyBehaviorModifier('objectAttributes', $script, "	");
@@ -5091,6 +5092,21 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
     }
 
     /**
+     * Adds the $alreadyInValidation attribute, which prevents attempting to re-validate the same object.
+     * @param string &$script The script will be modified in this method.
+     */
+    protected function addAlreadyInClearAllReferencesDeepAttribute(&$script)
+    {
+        $script .= "
+    /**
+     * Flag to prevent endless clearAllReferences($deep=true) loop, if this object is referenced
+     * @var        boolean
+     */
+    protected \$alreadyInClearAllReferencesDeep = false;
+";
+    }
+
+    /**
      * Adds the validate() method.
      * @param string &$script The script will be modified in this method.
      */
@@ -5449,6 +5465,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
         $script .= "
         \$this->alreadyInSave = false;
         \$this->alreadyInValidation = false;
+        \$this->alreadyInClearAllReferencesDeep = false;
         \$this->clearAllReferences();";
 
         if ($this->hasDefaultValues()) {
@@ -5485,7 +5502,8 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
      */
     public function clearAllReferences(\$deep = false)
     {
-        if (\$deep) {";
+        if (\$deep && !\$this->alreadyInClearAllReferencesDeep) {
+            \$this->alreadyInClearAllReferencesDeep = true;";
         $vars = array();
         foreach ($this->getTable()->getReferrers() as $refFK) {
             if ($refFK->isLocalPrimaryKey()) {
@@ -5517,7 +5535,16 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
             $vars[] = $varName;
         }
 
+        foreach ($table->getForeignKeys() as $fk) {
+            $varName = $this->getFKVarName($fk);
+            $script .= "
+            if (\$this->$varName instanceof Persistent) {
+              \$this->{$varName}->clearAllReferences(\$deep);
+            }";
+        }
         $script .= "
+
+            \$this->alreadyInClearAllReferencesDeep = false;
         } // if (\$deep)
 ";
 
