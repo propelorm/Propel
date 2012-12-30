@@ -451,6 +451,8 @@ $articles = ArticleQuery::create()
 // )
 {% endhighlight %}
 
+>**Tip**<br />The `select()` method use the `PropelSimpleArrayFormatter` if you use another propel formatter it won't work as expected. You can use your own custom formatter that extends `PropelSimpleArrayFormatter` or work the same way.
+
 ### Creating An Object Based on a Query ###
 
 You may often create a new object based on values used in conditions if a query returns no result. This happens a lot when dealing with cross-reference tables in many-to-many relationships. To avoid repeating yourself, use `findOneOrCreate()` instead of `findOne()` in such cases:
