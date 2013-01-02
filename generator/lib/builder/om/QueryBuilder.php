@@ -437,7 +437,7 @@ abstract class ".$this->getClassname()." extends " . $parentClass . "
             \$con = Propel::getConnection({$peerClassname}::DATABASE_NAME, Propel::CONNECTION_READ);
         }
         \$this->basePreSelect(\$con);
-        if (\$this->formatter || \$this->modelAlias || \$this->with || \$this->select
+        if (\$this->formatter || \$this->modelAlias || \$this->modelWith || \$this->select
          || \$this->selectColumns || \$this->asColumns || \$this->selectModifiers
          || \$this->map || \$this->having || \$this->joins) {
             return \$this->findPkComplex(\$key, \$con);
