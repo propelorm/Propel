@@ -250,6 +250,33 @@ class NamespaceTest extends PHPUnit_Framework_TestCase
             ->find($con);
     }
 
+    public function testManyToManyRecursiveSave()
+    {
+        \Foo\Bar\NamespacedBookQuery::create()->deleteAll();
+        \Baz\NamespacedBookClubQuery::create()->deleteAll();
+        NamespacedBookListRelQuery::create()->deleteAll();
+        $book1 = new \Foo\Bar\NamespacedBook();
+        $book1->setTitle('bar');
+        $book1->setISBN('1234');
+        $book1->save();
+        $book2 = new \Foo\Bar\NamespacedBook();
+        $book2->setTitle('foo');
+        $book2->setISBN('4567');
+        $book2->save();
+        $bookClub1 = new \Baz\NamespacedBookClub();
+        $bookClub1->addNamespacedBook($book1);
+        $bookClub1->addNamespacedBook($book2);
+        $bookClub1->setGroupLeader('Someone1');
+        $bookClub1->save();
+
+        $book2->setTitle('boo');
+
+        $bookClub1->setGroupLeader('Someone2');
+        $bookClub1->save();
+
+        $this->assertEquals(false, $book2->isModified());
+    }
+
     public function testUseQuery()
     {
         $book = \Foo\Bar\NamespacedBookQuery::create()
