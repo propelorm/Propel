@@ -168,7 +168,7 @@ class MyLogger implements BasicLogger
   public function log($message, $priority)
   {
     $color = $this->priorityToColor($priority);
-    echo '<p style="color: ' . $color . '">$message</p>';
+    echo '<p style="color: ' . $color . '">' . $message . '</p>';
   }
 
   private function priorityToColor($priority)
