@@ -845,7 +845,11 @@ abstract class ".$this->getClassname(). $extendingPeerClass . "
 
         $php = array();
         foreach ($pks as $pk) {
-            $php[] = '$obj->get' . $pk->getPhpName() . '()';
+            if (PropelTypes::DATE == $pk->getType()) {
+                $php[] = '$obj->get' . $pk->getPhpName() . '()->getTimestamp()';
+            } else {
+                $php[] = '$obj->get' . $pk->getPhpName() . '()';
+            }
         }
         $script .= "
                 \$key = ".$this->getInstancePoolKeySnippet($php).";";
