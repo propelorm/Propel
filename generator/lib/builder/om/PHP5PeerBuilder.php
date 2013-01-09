@@ -846,7 +846,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . "
         $php = array();
         foreach ($pks as $pk) {
             if (PropelTypes::DATE == $pk->getType()) {
-                $php[] = '$obj->get' . $pk->getPhpName() . '()->getTimestamp()';
+                $php[] = '$obj->get' . $pk->getPhpName() . '(\'U\')';
             } else {
                 $php[] = '$obj->get' . $pk->getPhpName() . '()';
             }
