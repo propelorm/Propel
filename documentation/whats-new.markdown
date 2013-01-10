@@ -702,7 +702,7 @@ Rebuild your model, and voila: ActiveRecord objects can now retrieve foreign obj
 
 ## New Reference Chapter in the Documentation: Active Record ##
 
-There wasn't any one-stop place to read about the abilities of the generated Active Record objects in the Propel documentation. Since Propel 1.6, the new [Active Record reference](active-record.html) makes it easier to learn the  usage of Propel models using code examples.
+There wasn't any one-stop place to read about the abilities of the generated Active Record objects in the Propel documentation. Since Propel 1.6, the new [Active Record reference](/reference/active-record.html) makes it easier to learn the  usage of Propel models using code examples.
 
 ## Miscellaneous ##
 
