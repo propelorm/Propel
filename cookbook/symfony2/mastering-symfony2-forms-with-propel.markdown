@@ -101,7 +101,7 @@ class BookController extends Controller
 
 To render the form, you'll need to create a Twig template like below:
 
-{% highlight django+jinja %}
+{% highlight django %}
 {# src/Acme/LibraryBundle/Resources/views/Book/new.html.twig #}
 
 <form action="{{ "{{ path('book_new')" }} }}" method="post" {{ "{{ form_enctype(form)" }} }}>
