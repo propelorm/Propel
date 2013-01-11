@@ -902,7 +902,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . "
         $php = array();
         foreach ($pks as $pk) {
             if ($pk->isTemporalType()) {
-                $php[] = '$obj->get' . $pk->getPhpName() . '(\'U\')';
+                $php[] = '$obj->get' . $pk->getPhpName() . "('U')";
             } else {
                 $php[] = '$obj->get' . $pk->getPhpName() . '()';
             }
