@@ -11,7 +11,7 @@ The intospection objects are instances of the map classes. Propel maps databases
 
 ## Retrieving a TableMap ##
 
-The starting point for runtime introspection is usually a table map. This objects stores every possible property of a table, as defined in the `schema.xml`, but accessible at runtime.
+The starting point for runtime introspection is usually a `TableMap`. This objects stores every possible property of a table, as defined in the `schema.xml`, but accessible at runtime.
 
 To retrieve a table map for a table, use the `getTableMap()` static method of the related peer class. For instance, to retrieve the table map for the `book` table, just call:
 
