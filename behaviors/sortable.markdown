@@ -157,7 +157,7 @@ $lastPaulTask = $firstTask->getNext();      // $t2
 $firstJohnTask = TaskPeer::create()->findOneByRank($rank = 1, $scope = $john->getId()); // $t1
 {% endhighlight %}
 
-Models using the sortable behavior with scope benefit from one additional Query methods named `inList()`:
+Models using the sortable behavior with scope benefit from one additional Query method named `inList()`:
 
 {% highlight php %}
 <?php
