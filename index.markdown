@@ -72,10 +72,10 @@ You can look at the [Propel CI server](http://ci.propelorm.org/) powered by [Jen
         <th><a href="https://github.com/propelorm/PropelServiceProvider">PropelServiceProvider</a></th>
     </tr>
     <tr>
-        <td><img src="http://ci.propelorm.org/job/Propel/lastBuild/buildStatus" /></td>
-        <td><img src="http://ci.propelorm.org/job/Propel2/lastBuild/buildStatus" /></td>
-        <td><img src="http://ci.propelorm.org/job/sfPropelORMPlugin/lastBuild/buildStatus" /></td>
-        <td><img src="http://ci.propelorm.org/job/PropelBundle/lastBuild/buildStatus" /></td>
-        <td><img src="http://ci.propelorm.org/job/PropelServiceProvider/lastBuild/buildStatus" /></td>
+        <td><img src="https://travis-ci.org/propelorm/Propel.png" /></td>
+        <td><img src="https://travis-ci.org/propelorm/Propel2.png" /></td>
+        <td><img src="https://travis-ci.org/propelorm/sfPropelORMPlugin.png" /></td>
+        <td><img src="https://travis-ci.org/propelorm/PropelBundle.png" /></td>
+        <td><img src="https://travis-ci.org/propelorm/PropelServiceProvider.png" /></td>
     </tr>
 </table>
