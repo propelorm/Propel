@@ -96,6 +96,13 @@ Or edit your ~/.bashrc or ~/.zshrc file with :
 export PATH=$PATH:/path/to/propel/bin
 {% endhighlight %}
 
+On Windows you could set the PATH for the opened command with :
+{% highlight bash %}
+set PATH=%PATH%;C:/path/to/propel/generator/bin/
+{% endhighlight %}
+
+To globally define the PATH adjust it inside the "Environment Variables", which you can find in your system advanced settings panel.
+
 At this point, Propel should be setup and ready to use. You can follow the steps in the [Build Guide](02-buildtime.html) to try it out.
 
 ## Alternative: Global Installation Using PEAR ##
