@@ -158,7 +158,6 @@ class QueryBuilder extends OMBuilder
  * @method array findBy" . $column->getPhpName() . "(" . $column->getPhpType() . " \$" . $column->getName() . ") Return $modelClass objects filtered by the " . $column->getName() . " column";
         }
 
-
         if ($this->getBuildProperty('addClassLevelComment')) {
             $script .= "
  *
@@ -325,7 +324,7 @@ abstract class ".$this->getClassname()." extends " . $parentClass . "
      * Returns a new " . $classname . " object.
      *
      * @param     string \$modelAlias The alias of a model in the query
-     * @param     $classname|Criteria \$criteria Optional Criteria to build the query from
+     * @param   $classname|Criteria \$criteria Optional Criteria to build the query from
      *
      * @return " . $classname . "
      */";
@@ -466,8 +465,8 @@ abstract class ".$this->getClassname()." extends " . $parentClass . "
      * @param     mixed \$key Primary key to use for the query
      * @param     PropelPDO \$con A connection object
      *
-     * @return   $ARClassname A model object, or null if the key is not found
-     * @throws   PropelException
+     * @return                 $ARClassname A model object, or null if the key is not found
+     * @throws PropelException
      */
      public function findOneBy{$column}(\$key, \$con = null)
      {
@@ -517,8 +516,8 @@ abstract class ".$this->getClassname()." extends " . $parentClass . "
      * @param     mixed \$key Primary key to use for the query
      * @param     PropelPDO \$con A connection object
      *
-     * @return   $ARClassname A model object, or null if the key is not found
-     * @throws   PropelException
+     * @return                 $ARClassname A model object, or null if the key is not found
+     * @throws PropelException
      */
     protected function findPkSimple(\$key, \$con)
     {
@@ -757,7 +756,8 @@ abstract class ".$this->getClassname()." extends " . $parentClass . "
      * <code>
      * \$query->filterBy$colPhpName(1234); // WHERE $colName = 1234
      * \$query->filterBy$colPhpName(array(12, 34)); // WHERE $colName IN (12, 34)
-     * \$query->filterBy$colPhpName(array('min' => 12)); // WHERE $colName > 12
+     * \$query->filterBy$colPhpName(array('min' => 12)); // WHERE $colName >= 12
+     * \$query->filterBy$colPhpName(array('max' => 12)); // WHERE $colName <= 12
      * </code>";
             if ($col->isForeignKey()) {
                 foreach ($col->getForeignKeys() as $fk) {
@@ -831,12 +831,7 @@ abstract class ".$this->getClassname()." extends " . $parentClass . "
      */
     public function filterBy$colPhpName(\$$variableName = null, \$comparison = null)
     {";
-        if ($col->isPrimaryKey() && ($col->getType() == PropelTypes::INTEGER || $col->getType() == PropelTypes::BIGINT)) {
-            $script .= "
-        if (is_array(\$$variableName) && null === \$comparison) {
-            \$comparison = Criteria::IN;
-        }";
-        } elseif ($col->isNumericType() || $col->isTemporalType()) {
+        if ($col->isNumericType() || $col->isTemporalType()) {
             $script .= "
         if (is_array(\$$variableName)) {
             \$useMinMax = false;
@@ -1009,8 +1004,8 @@ abstract class ".$this->getClassname()." extends " . $parentClass . "
         $script .= "
      * @param     string \$comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
-     * @return   $queryClass The current query, for fluid interface
-     * @throws   PropelException - if the provided filter is invalid.
+     * @return                 $queryClass The current query, for fluid interface
+     * @throws PropelException - if the provided filter is invalid.
      */
     public function filterBy$relationName($objectName, \$comparison = null)
     {
@@ -1073,8 +1068,8 @@ abstract class ".$this->getClassname()." extends " . $parentClass . "
      * @param   $fkPhpName|PropelObjectCollection $objectName  the related object to use as filter
      * @param     string \$comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
-     * @return   $queryClass The current query, for fluid interface
-     * @throws   PropelException - if the provided filter is invalid.
+     * @return                 $queryClass The current query, for fluid interface
+     * @throws PropelException - if the provided filter is invalid.
      */
     public function filterBy$relationName($objectName, \$comparison = null)
     {
