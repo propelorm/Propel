@@ -757,7 +757,8 @@ abstract class ".$this->getClassname()." extends " . $parentClass . "
      * <code>
      * \$query->filterBy$colPhpName(1234); // WHERE $colName = 1234
      * \$query->filterBy$colPhpName(array(12, 34)); // WHERE $colName IN (12, 34)
-     * \$query->filterBy$colPhpName(array('min' => 12)); // WHERE $colName > 12
+     * \$query->filterBy$colPhpName(array('min' => 12)); // WHERE $colName >= 12
+     * \$query->filterBy$colPhpName(array('max' => 12)); // WHERE $colName <= 12
      * </code>";
             if ($col->isForeignKey()) {
                 foreach ($col->getForeignKeys() as $fk) {
@@ -831,12 +832,7 @@ abstract class ".$this->getClassname()." extends " . $parentClass . "
      */
     public function filterBy$colPhpName(\$$variableName = null, \$comparison = null)
     {";
-        if ($col->isPrimaryKey() && ($col->getType() == PropelTypes::INTEGER || $col->getType() == PropelTypes::BIGINT)) {
-            $script .= "
-        if (is_array(\$$variableName) && null === \$comparison) {
-            \$comparison = Criteria::IN;
-        }";
-        } elseif ($col->isNumericType() || $col->isTemporalType()) {
+        if ($col->isNumericType() || $col->isTemporalType()) {
             $script .= "
         if (is_array(\$$variableName)) {
             \$useMinMax = false;
