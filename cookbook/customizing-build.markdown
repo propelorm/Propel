@@ -85,7 +85,7 @@ For example, here is how we register the `<propel-om>` task, which is the task t
     classname="propel.phing.PropelOMTask"/>
 {% endhighlight %}
 
-Simple enough. Phing will now associate the `<propel-data-model>` tag with the _PropelOMTask_ class, which it expects to find at `propel/phing/PropelOMTask.php` (on your _include_path_). If Propel generator classes are not on your _include_path_, you can specify that path in your `<taskdef>` tag:
+Simple enough. Phing will now associate the `<propel-om>` tag with the _PropelOMTask_ class, which it expects to find at `propel/phing/PropelOMTask.php` (on your _include_path_). If Propel generator classes are not on your _include_path_, you can specify that path in your `<taskdef>` tag:
 
 {% highlight xml %}
 <taskdef
