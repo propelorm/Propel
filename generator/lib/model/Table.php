@@ -1066,8 +1066,9 @@ class Table extends ScopedElement implements IDMethod
     public function hasIndex($name)
     {
         foreach ($this->indices as $idx) {
-            if ($idx->getName() == $name)
+            if ($idx->getName() == $name){
                 return true;
+            }
         }
         return false;
     }
