@@ -29,11 +29,11 @@ class MysqlPlatformMyISAMTest extends PlatformTestProvider
     {
         static $platform;
 
-        if (!$platform){
+        if (!$platform) {
             $platform = new MysqlPlatform();
-            $config = new GeneratorConfig();
+            $config   = new GeneratorConfig();
             $config->setBuildProperties(array(
-                'propel.mysql.tableType' => 'MyISAM'
+                 'propel.mysql.tableType' => 'MyISAM'
             ));
             $platform->setGeneratorConfig($config);
         }
@@ -195,7 +195,7 @@ SET FOREIGN_KEY_CHECKS = 1;
      */
     public function testGetAddTableDDLSimplePK($schema)
     {
-        $table = $this->getTableFromSchema($schema);
+        $table    = $this->getTableFromSchema($schema);
         $expected = "
 CREATE TABLE `foo`
 (
@@ -212,7 +212,7 @@ CREATE TABLE `foo`
      */
     public function testGetAddTableDDLCompositePK($schema)
     {
-        $table = $this->getTableFromSchema($schema);
+        $table    = $this->getTableFromSchema($schema);
         $expected = "
 CREATE TABLE `foo`
 (
@@ -230,7 +230,7 @@ CREATE TABLE `foo`
      */
     public function testGetAddTableDDLUniqueIndex($schema)
     {
-        $table = $this->getTableFromSchema($schema);
+        $table    = $this->getTableFromSchema($schema);
         $expected = "
 CREATE TABLE `foo`
 (
@@ -245,7 +245,7 @@ CREATE TABLE `foo`
 
     public function testGetAddTableDDLIndex()
     {
-        $schema = <<<EOF
+        $schema   = <<<EOF
 <database name="test">
     <table name="foo">
         <column name="id" primaryKey="true" type="INTEGER" autoIncrement="true" />
@@ -256,7 +256,7 @@ CREATE TABLE `foo`
     </table>
 </database>
 EOF;
-        $table = $this->getTableFromSchema($schema);
+        $table    = $this->getTableFromSchema($schema);
         $expected = "
 CREATE TABLE `foo`
 (
@@ -271,7 +271,7 @@ CREATE TABLE `foo`
 
     public function testGetAddTableDDLForeignKey()
     {
-        $schema = <<<EOF
+        $schema   = <<<EOF
 <database name="test">
     <table name="foo">
         <column name="id" primaryKey="true" type="INTEGER" autoIncrement="true" />
@@ -285,7 +285,7 @@ CREATE TABLE `foo`
     </table>
 </database>
 EOF;
-        $table = $this->getTableFromSchema($schema);
+        $table    = $this->getTableFromSchema($schema);
         $expected = "
 CREATE TABLE `foo`
 (
@@ -300,7 +300,7 @@ CREATE TABLE `foo`
 
     public function testGetAddTableDDLForeignKeySkipSql()
     {
-        $schema = <<<EOF
+        $schema   = <<<EOF
 <database name="test">
     <table name="foo">
         <column name="id" primaryKey="true" type="INTEGER" autoIncrement="true" />
@@ -314,7 +314,7 @@ CREATE TABLE `foo`
     </table>
 </database>
 EOF;
-        $table = $this->getTableFromSchema($schema);
+        $table    = $this->getTableFromSchema($schema);
         $expected = "
 CREATE TABLE `foo`
 (
@@ -329,7 +329,7 @@ CREATE TABLE `foo`
 
     public function testGetAddTableDDLEngine()
     {
-        $schema = <<<EOF
+        $schema   = <<<EOF
 <database name="test">
     <table name="foo">
         <column name="id" primaryKey="true" type="INTEGER" autoIncrement="true" />
@@ -339,9 +339,9 @@ EOF;
         $platform = new MysqlPlatform();
         $platform->setTableEngineKeyword('TYPE');
         $platform->setDefaultTableEngine('MEMORY');
-        $xtad = new XmlToAppData($platform);
-        $appData = $xtad->parseString($schema);
-        $table = $appData->getDatabase()->getTable('foo');
+        $xtad     = new XmlToAppData($platform);
+        $appData  = $xtad->parseString($schema);
+        $table    = $appData->getDatabase()->getTable('foo');
         $expected = "
 CREATE TABLE `foo`
 (
@@ -354,7 +354,7 @@ CREATE TABLE `foo`
 
     public function testGetAddTableDDLVendor()
     {
-        $schema = <<<EOF
+        $schema   = <<<EOF
 <database name="test">
     <table name="foo">
         <column name="id" primaryKey="true" type="INTEGER" autoIncrement="true" />
@@ -366,7 +366,7 @@ CREATE TABLE `foo`
     </table>
 </database>
 EOF;
-        $table = $this->getTableFromSchema($schema);
+        $table    = $this->getTableFromSchema($schema);
         $expected = "
 CREATE TABLE `foo`
 (
@@ -382,7 +382,7 @@ CREATE TABLE `foo`
      */
     public function testGetAddTableDDLSchema($schema)
     {
-        $table = $this->getTableFromSchema($schema, 'Woopah.foo');
+        $table    = $this->getTableFromSchema($schema, 'Woopah.foo');
         $expected = "
 CREATE TABLE `Woopah`.`foo`
 (
@@ -396,7 +396,7 @@ CREATE TABLE `Woopah`.`foo`
 
     public function testGetDropTableDDL()
     {
-        $table = new Table('foo');
+        $table    = new Table('foo');
         $expected = "
 DROP TABLE IF EXISTS `foo`;
 ";
@@ -408,7 +408,7 @@ DROP TABLE IF EXISTS `foo`;
      */
     public function testGetDropTableDDLSchema($schema)
     {
-        $table = $this->getTableFromSchema($schema, 'Woopah.foo');
+        $table    = $this->getTableFromSchema($schema, 'Woopah.foo');
         $expected = "
 DROP TABLE IF EXISTS `Woopah`.`foo`;
 ";
@@ -493,7 +493,7 @@ DROP TABLE IF EXISTS `Woopah`.`foo`;
 
     public function testGetPrimaryKeyDDLSimpleKey()
     {
-        $table = new Table('foo');
+        $table  = new Table('foo');
         $column = new Column('bar');
         $column->setPrimaryKey(true);
         $table->addColumn($column);
@@ -503,7 +503,7 @@ DROP TABLE IF EXISTS `Woopah`.`foo`;
 
     public function testGetPrimaryKeyDDLCompositeKey()
     {
-        $table = new Table('foo');
+        $table   = new Table('foo');
         $column1 = new Column('bar1');
         $column1->setPrimaryKey(true);
         $table->addColumn($column1);
@@ -582,7 +582,7 @@ DROP INDEX `babar` ON `foo`;
 
     public function testGetIndexDDLKeySize()
     {
-        $table = new Table('foo');
+        $table   = new Table('foo');
         $column1 = new Column('bar1');
         $column1->getDomain()->copy($this->getPlatform()->getDomainForType('VARCHAR'));
         $column1->setSize(5);
@@ -596,7 +596,7 @@ DROP INDEX `babar` ON `foo`;
 
     public function testGetIndexDDLFulltext()
     {
-        $table = new Table('foo');
+        $table   = new Table('foo');
         $column1 = new Column('bar1');
         $column1->getDomain()->copy($this->getPlatform()->getDomainForType('LONGVARCHAR'));
         $table->addColumn($column1);

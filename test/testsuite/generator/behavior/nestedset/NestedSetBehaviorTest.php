@@ -65,6 +65,10 @@ class NestedSetBehaviorTest extends BookstoreTestBase
             <parameter name="use_scope" value="true" />
             <parameter name="scope_column" value="thread_id" />
         </behavior>
+
+        <vendor type="mysql">
+            <parameter name="Engine" value="InnoDB"/>
+        </vendor>
     </table>
 </database>
 XML;
@@ -106,7 +110,7 @@ CREATE TABLE `post`
         FOREIGN KEY (`thread_id`)
         REFERENCES `thread` (`id`)
         ON DELETE CASCADE
-) ENGINE=MyISAM;
+) ENGINE=InnoDB;
 
 # This restores the fkey checks, after having unset them earlier
 SET FOREIGN_KEY_CHECKS = 1;

@@ -29,11 +29,11 @@ class MysqlPlatformMigrationTest extends PlatformMigrationTestProvider
     {
         static $platform;
 
-        if (!$platform){
+        if (!$platform) {
             $platform = new MysqlPlatform();
-            $config = new GeneratorConfig();
+            $config   = new GeneratorConfig();
             $config->setBuildProperties(array(
-                'propel.mysql.tableType' => 'InnoDB'
+                 'propel.mysql.tableType' => 'InnoDB'
             ));
             $platform->setGeneratorConfig($config);
         }

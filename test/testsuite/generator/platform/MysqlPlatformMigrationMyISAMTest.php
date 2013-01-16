@@ -29,11 +29,11 @@ class MysqlPlatformMigrationMyISAMTest extends PlatformMigrationTestProvider
     {
         static $platform;
 
-        if (!$platform){
+        if (!$platform) {
             $platform = new MysqlPlatform();
-            $config = new GeneratorConfig();
+            $config   = new GeneratorConfig();
             $config->setBuildProperties(array(
-                'propel.mysql.tableType' => 'MyISAM'
+                 'propel.mysql.tableType' => 'MyISAM'
             ));
             $platform->setGeneratorConfig($config);
         }

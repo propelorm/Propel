@@ -27,8 +27,8 @@ class MysqlPlatform extends DefaultPlatform
      */
     protected $isIdentifierQuotingEnabled = true;
 
-    protected $tableEngineKeyword = 'ENGINE';  // overwritten in build.properties
-    protected $defaultTableEngine = 'MyISAM';  // overwritten in build.properties
+    protected $tableEngineKeyword = 'ENGINE'; // overwritten in build.properties
+    protected $defaultTableEngine = 'MyISAM'; // overwritten in build.properties
 
     /**
      * Initializes db specific domain mapping.
@@ -174,11 +174,11 @@ SET FOREIGN_KEY_CHECKS = 1;
             $lines[] = $this->getUniqueDDL($unique);
         }
 
-        foreach ($table->getIndices() as $index ) {
+        foreach ($table->getIndices() as $index) {
             $lines[] = $this->getIndexDDL($index);
         }
 
-        if ($this->supportsForeignKeys($table)){
+        if ($this->supportsForeignKeys($table)) {
             foreach ($table->getForeignKeys() as $foreignKey) {
                 if ($foreignKey->isSkipSql()) {
                     continue;
@@ -201,11 +201,11 @@ SET FOREIGN_KEY_CHECKS = 1;
         $tableOptions = $this->getTableOptions($table);
 
         if ($table->getDescription()) {
-            $tableOptions []= 'COMMENT=' . $this->quote($table->getDescription());
+            $tableOptions [] = 'COMMENT=' . $this->quote($table->getDescription());
         }
 
         $tableOptions = $tableOptions ? ' ' . implode(' ', $tableOptions) : '';
-        $sep = ",
+        $sep          = ",
     ";
 
         $pattern = "
@@ -226,9 +226,9 @@ CREATE TABLE %s
 
     protected function getTableOptions(Table $table)
     {
-        $dbVI = $table->getDatabase()->getVendorInfoForType('mysql');
-        $tableVI = $table->getVendorInfoForType('mysql');
-        $vi = $dbVI->getMergedVendorInfo($tableVI);
+        $dbVI         = $table->getDatabase()->getVendorInfoForType('mysql');
+        $tableVI      = $table->getVendorInfoForType('mysql');
+        $vi           = $dbVI->getMergedVendorInfo($tableVI);
         $tableOptions = array();
         // List of supported table options
         // see http://dev.mysql.com/doc/refman/5.5/en/create-table.html
@@ -253,7 +253,7 @@ CREATE TABLE %s
             'Union'           => 'UNION',
         );
         foreach ($supportedOptions as $name => $sqlName) {
-            $parameterValue = NULL;
+            $parameterValue = null;
 
             if ($vi->hasParameter($name)) {
                 $parameterValue = $vi->getParameter($name);
@@ -279,9 +279,9 @@ DROP TABLE IF EXISTS " . $this->quoteIdentifier($table->getName()) . ";
 
     public function getColumnDDL(Column $col)
     {
-        $domain = $col->getDomain();
-        $sqlType = $domain->getSqlType();
-        $notNullString = $this->getNullString($col->isNotNull());
+        $domain         = $col->getDomain();
+        $sqlType        = $domain->getSqlType();
+        $notNullString  = $this->getNullString($col->isNotNull());
         $defaultSetting = $this->getColumnDefaultValueDDL($col);
 
         // Special handling of TIMESTAMP/DATETIME types ...
@@ -304,18 +304,18 @@ DROP TABLE IF EXISTS " . $this->quoteIdentifier($table->getName()) . ";
 
         $ddl = array($this->quoteIdentifier($col->getName()));
         if ($this->hasSize($sqlType) && $col->isDefaultSqlType($this)) {
-            $ddl []= $sqlType . $domain->printSize();
+            $ddl[] = $sqlType . $domain->printSize();
         } else {
-            $ddl []= $sqlType;
+            $ddl[] = $sqlType;
         }
         $colinfo = $col->getVendorInfoForType($this->getDatabaseType());
         if ($colinfo->hasParameter('Charset')) {
-            $ddl []= 'CHARACTER SET '. $this->quote($colinfo->getParameter('Charset'));
+            $ddl[] = 'CHARACTER SET ' . $this->quote($colinfo->getParameter('Charset'));
         }
         if ($colinfo->hasParameter('Collation')) {
-            $ddl []= 'COLLATE '. $this->quote($colinfo->getParameter('Collation'));
+            $ddl[] = 'COLLATE ' . $this->quote($colinfo->getParameter('Collation'));
         } elseif ($colinfo->hasParameter('Collate')) {
-            $ddl []= 'COLLATE '. $this->quote($colinfo->getParameter('Collate'));
+            $ddl[] = 'COLLATE ' . $this->quote($colinfo->getParameter('Collate'));
         }
         if ($sqlType == 'TIMESTAMP') {
             if ($notNullString == '') {
@@ -325,24 +325,24 @@ DROP TABLE IF EXISTS " . $this->quoteIdentifier($table->getName()) . ";
                 $defaultSetting = 'DEFAULT CURRENT_TIMESTAMP';
             }
             if ($notNullString) {
-                $ddl []= $notNullString;
+                $ddl[] = $notNullString;
             }
             if ($defaultSetting) {
-                $ddl []= $defaultSetting;
+                $ddl[] = $defaultSetting;
             }
         } else {
             if ($defaultSetting) {
-                $ddl []= $defaultSetting;
+                $ddl[] = $defaultSetting;
             }
             if ($notNullString) {
-                $ddl []= $notNullString;
+                $ddl[] = $notNullString;
             }
         }
         if ($autoIncrement = $col->getAutoIncrementString()) {
-            $ddl []= $autoIncrement;
+            $ddl[] = $autoIncrement;
         }
         if ($col->getDescription()) {
-            $ddl []= 'COMMENT ' . $this->quote($col->getDescription());
+            $ddl[] = 'COMMENT ' . $this->quote($col->getDescription());
         }
 
         return implode(' ', $ddl);
@@ -435,7 +435,7 @@ DROP INDEX %s ON %s;
 
     protected function getIndexType(Index $index)
     {
-        $type = '';
+        $type       = '';
         $vendorInfo = $index->getVendorInfoForType($this->getDatabaseType());
         if ($vendorInfo && $vendorInfo->getParameter('Index_type')) {
             $type = $vendorInfo->getParameter('Index_type') . ' ';
@@ -455,8 +455,11 @@ DROP INDEX %s ON %s;
     }
 
 
-    public function getAddForeignKeyDDL(ForeignKey $fk){
-        if ($this->supportsForeignKeys($fk->getTable())) return parent::getAddForeignKeyDDL($fk);
+    public function getAddForeignKeyDDL(ForeignKey $fk)
+    {
+        if ($this->supportsForeignKeys($fk->getTable())) {
+            return parent::getAddForeignKeyDDL($fk);
+        }
         return '';
     }
 
@@ -465,16 +468,18 @@ DROP INDEX %s ON %s;
      * Builds the DDL SQL for a ForeignKey object.
      * @return string
      */
-    public function getForeignKeyDDL(ForeignKey $fk){
-        if ($this->supportsForeignKeys($fk->getTable())) return parent::getForeignKeyDDL($fk);
+    public function getForeignKeyDDL(ForeignKey $fk)
+    {
+        if ($this->supportsForeignKeys($fk->getTable())) {
+            return parent::getForeignKeyDDL($fk);
+        }
         return '';
     }
 
 
     public function getDropForeignKeyDDL(ForeignKey $fk)
     {
-        if (!$this->supportsForeignKeys($fk->getTable())) return '';
-        if ($fk->isSkipSql()) {
+        if (!$this->supportsForeignKeys($fk->getTable()) || $fk->isSkipSql()) {
             return;
         }
         $pattern = "
@@ -597,6 +602,7 @@ ALTER TABLE %s CHANGE %s %s;
             $this->getColumnDDL($toColumn)
         );
     }
+
     /**
      * Builds the DDL SQL to modify a list of columns
      *
@@ -624,8 +630,8 @@ ALTER TABLE %s CHANGE %s %s;
             //we found the column, use the column before it, if its not the first
             if ($tableColumn->getName() == $column->getName()) {
                 //we have a column that is not the first column
-                if ($i>0) {
-                    $insertPositionDDL = "AFTER ".$this->quoteIdentifier($tableColumns[$i-1]->getName());
+                if ($i > 0) {
+                    $insertPositionDDL = "AFTER " . $this->quoteIdentifier($tableColumns[$i - 1]->getName());
                 }
                 break;
             }
@@ -644,7 +650,7 @@ ALTER TABLE %s CHANGE %s %s;
      */
     public function getAddColumnsDDL($columns)
     {
-        $lines=array();
+        $lines     = array();
         $tableName = null;
         foreach ($columns as $column) {
             if (null === $tableName) {
@@ -678,8 +684,8 @@ ALTER TABLE %s
     public function hasSize($sqlType)
     {
         return !("MEDIUMTEXT" == $sqlType || "LONGTEXT" == $sqlType
-                || "BLOB" == $sqlType || "MEDIUMBLOB" == $sqlType
-                || "LONGBLOB" == $sqlType);
+            || "BLOB" == $sqlType || "MEDIUMBLOB" == $sqlType
+            || "LONGBLOB" == $sqlType);
     }
 
     /**
