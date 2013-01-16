@@ -19,7 +19,6 @@ require_once dirname(__FILE__) . '/../../../tools/helpers/DummyPlatforms.php';
  * Tests for Table model class
  *
  * @author     Martin Poeschl (mpoeschl@marmot.at)
- * @version    $Revision$
  * @package    generator.model
  */
 class TableTest extends PHPUnit_Framework_TestCase
@@ -150,10 +149,7 @@ CREATE TABLE `bar`
     `subid` INTEGER,
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     PRIMARY KEY (`id`),
-    INDEX `bar_FI_1` (`id`, `subid`),
-    CONSTRAINT `bar_FK_1`
-        FOREIGN KEY (`id`,`subid`)
-        REFERENCES `foo` (`id`,`subid`)
+    INDEX `bar_FI_1` (`id`, `subid`)
 ) ENGINE=MyISAM;
 ";
         $appData = $xmlToAppData->parseString($schema);
@@ -165,9 +161,6 @@ CREATE TABLE `bar`
         $this->assertEquals($expectedRelationSql, $relationTableSql);
 
     }
-
-
-
 
     /**
      * @expectedException EngineException
