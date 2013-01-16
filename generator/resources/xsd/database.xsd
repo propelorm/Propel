@@ -188,7 +188,7 @@
 	<!-- Restrict php class name to letters (upper- and lowercase), numbers and the _. Dot seperated -->
 	<xs:simpleType name="php_class">
 		<xs:restriction base="xs:string">
-			<xs:pattern value="([\w_]+.?)+"/>
+            <xs:pattern value="(\\?[\w_]+\.?)+"/>
 		</xs:restriction>
 	</xs:simpleType>
 
