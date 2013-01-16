@@ -1049,8 +1049,10 @@ class Table extends ScopedElement implements IDMethod
     {
         //check if we have a index with this name already, then delete it
         foreach ($this->indices as $n => $idx) {
-            if ($idx->getName() == $name)
+            if ($idx->getName() == $name) {
                 unset($this->indices[$n]);
+                return;
+            }
         }
     }
 
