@@ -1,7 +1,7 @@
 <?php
 
 /*
- *	$Id: ConcreteInheritanceBehaviorTest.php 1458 2010-01-13 16:09:51Z francois $
+ * $Id: ConcreteInheritanceBehaviorNamespacedTest.php 1458 2010-01-13 16:09:51Z francois $
  * This file is part of the Propel package.
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -12,7 +12,7 @@
 require_once dirname(__FILE__) . '/../../../../tools/helpers/namespaces/NamespacesTestBase.php';
 
 /**
- * Tests for ConcreteInheritanceParentBehavior class
+ * Tests for ConcreteInheritanceBehaviorNamespacedTest class
  *
  * @author    François Zaniontto
  * @version   $Revision$
