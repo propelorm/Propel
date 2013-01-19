@@ -19,6 +19,28 @@ require_once dirname(__FILE__) . '/../../tools/helpers/bookstore/BookstoreEmptyT
  */
 class BookstoreTest extends BookstoreEmptyTestBase
 {
+
+    public function testConcreteOneToOne()
+    {
+
+        $book = new ConcreteOnetooneScienceBook();
+        $author = new ConcreteOnetooneBookAuthor();
+
+        $book->setTitle('Synthetic intelligence');
+        $book->setAdditionField('technical area is humanoid robotics');
+
+        $author->setConcreteOnetooneScienceBook($book);
+        $author->save();
+
+        $this->assertEquals($book->getId(), $author->getBookId());
+
+        $insertedBook = ConcreteOnetooneScienceBookQuery::create()->findPk($book->getId());
+
+        $this->assertEquals('Synthetic intelligence', $insertedBook->getTitle());
+        $this->assertEquals('technical area is humanoid robotics', $insertedBook->getAdditionField());
+
+    }
+
     public function testScenario()
     {
         // Add publisher records
