@@ -18,6 +18,9 @@ require_once dirname(__FILE__) . '/../../../../generator/lib/model/AppData.php';
  */
 class SchemaValidatorTest extends PHPUnit_Framework_TestCase
 {
+
+    private $xsdFile = 'generator/resources/xsd/database.xsd';
+
     protected function getAppDataForTable($table)
     {
         $database = new Database();
@@ -52,6 +55,23 @@ EOF;
         $appData->addDatabase($database);
         $validator = new PropelSchemaValidator($appData);
         $this->assertTrue($validator->validate());
+    }
+
+    public function testDatabasePackageName()
+    {
+
+        $schema = <<<EOF
+<database name="bookstore" package="my.sub-directory">
+    <table name="book">
+        <column name="id" required="true" primaryKey="true" autoIncrement="true" type="INTEGER" />
+        <column name="title" type="VARCHAR" size="100" primaryString="true" />
+    </table>
+</database>
+EOF;
+        $dom = new DomDocument('1.0', 'UTF-8');
+        $dom->loadXML($schema);
+
+        $this->assertTrue($dom->schemaValidate($this->xsdFile));
     }
 
     public function testValidateReturnsFalseWhenTwoTablesHaveSamePhpName()
