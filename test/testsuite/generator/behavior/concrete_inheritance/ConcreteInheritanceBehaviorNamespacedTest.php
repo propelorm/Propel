@@ -26,7 +26,7 @@ class ConcreteInheritanceBehaviorNamespacedTest extends NamespacesTestBase
         $concreteArticle->setTitle('Foo');
         $concreteArticle->setBody('Bar');
         $parent = $concreteArticle->getParentOrCreate();
-        $this->assertEquals($parent->getDescendantClass(), 'Foo\Bar\NamespacedConcreteArticle', 'getDescendantClass() will return Foo\Bar\NamespacedConcreteArticle');
+        $this->assertEquals('Foo\Bar\NamespacedConcreteArticle', $parent->getDescendantClass(), 'getDescendantClass() will return Foo\Bar\NamespacedConcreteArticle');
     }
 
     public function testgetParentOrCreateWithPrimaryKeyNotNull()
@@ -36,6 +36,6 @@ class ConcreteInheritanceBehaviorNamespacedTest extends NamespacesTestBase
         $concreteArticle->setTitle('Foo');
         $concreteArticle->setBody('Bar');
         $parent = $concreteArticle->getParentOrCreate();
-        $this->assertEquals($parent->getDescendantClass(), 'Foo\Bar\NamespacedConcreteArticle', 'getDescendantClass() will return Foo\Bar\NamespacedConcreteArticle');
+        $this->assertEquals('Foo\Bar\NamespacedConcreteArticle', $parent->getDescendantClass(), 'getDescendantClass() will return Foo\Bar\NamespacedConcreteArticle');
     }
 }
