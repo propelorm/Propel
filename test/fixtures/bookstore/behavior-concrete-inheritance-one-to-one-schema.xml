@@ -6,20 +6,20 @@
         <column name="title" type="VARCHAR" />
     </table>
 
-	<table name="concrete_onetoone_science_book">
-		<column name="addition_field" type="VARCHAR" />
+    <table name="concrete_onetoone_science_book">
+        <column name="addition_field" type="VARCHAR" />
         <behavior name="concrete_inheritance">
             <parameter name="extends" value="concrete_onetoone_book" />
         </behavior>
-	</table>
+    </table>
 
-	<table name="concrete_onetoone_book_author">
+    <table name="concrete_onetoone_book_author">
         <column name="id" required="true" primaryKey="true" autoIncrement="true" type="INTEGER" />
         <column name="name" type="VARCHAR"/>
         <column name="book_id" type="INTEGER" />
         <foreign-key foreignTable="concrete_onetoone_science_book">
             <reference local="book_id" foreign="id" />
         </foreign-key>
-	</table>
+    </table>
 
 </database>
