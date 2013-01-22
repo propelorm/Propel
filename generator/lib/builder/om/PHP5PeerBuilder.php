@@ -123,8 +123,6 @@ class PHP5PeerBuilder extends PeerBuilder
         $parentClass = $this->getBehaviorContent('parentClass');
         if (null !== $parentClass) {
             $extendingPeerClass = ' extends ' . $parentClass;
-        } elseif ($this->basePeerClassname !== 'BasePeer') {
-            $extendingPeerClass = ' extends ' . $this->basePeerClassname;
         }
 
         $script .= "
