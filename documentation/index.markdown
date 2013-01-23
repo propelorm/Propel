@@ -69,10 +69,11 @@ You can also look at [user contributed behaviors](../cookbook/user-contributed-b
 * [Using SQL Schemas](../cookbook/using-sql-schemas.html) How to organize tables into SQL schemas (only for MySQL, PostgreSQL, and MSSQL).
 * [Working With Existing Databases](../cookbook/working-with-existing-databases.html) How to build an XML schema from an existing db structure, how to dump data to XML, how to import it into a new database, etc.
 
-### Extending Propel ###
+### Contribute to Propel ###
 
 * [Writing A Behavior](../cookbook/writing-behavior.html) How to write a custom behavior to reuse model code horizontally.
 * [Testing Your Behaviors](../cookbook/testing-your-behaviors.html) How to unit test your behaviors.
+* [Working with unit tests](../cookbook/working-with-unit-tests.html) How to setup propel's required environment and use PHPUnit.
 
 ### Working with symfony 1.4 ###
 
