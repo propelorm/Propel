@@ -13,6 +13,9 @@ Propel uses the logging facility configured in `runtime-conf.xml` to record erro
 
 By default Propel will attempt to use the Log framework that is distributed with PEAR. If you are not familiar with it, check its [online documentation](http://www.indelible.org/php/Log/guide.html). It is also easy to configure Propel to use your own logging framework -- or none at all.
 
+>**Tip**<br />Install PEAR Log using `pear install Log`
+
+
 ### Logger Configuration ###
 
 The Propel log handler is configured in the `<log>` section of your project's `runtime-conf.xml` file. Here is the accepted format for this section with the default values that Propel uses:
