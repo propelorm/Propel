@@ -208,7 +208,7 @@ abstract class BaseObject
     }
 
     /**
-     * Code to be run after deleting the object in database
+     * Code to be run after object hydration
      * @param PropelPDO $con
      */
     public function postHydrate($row, $startcol = 0, $rehydrate = false)
