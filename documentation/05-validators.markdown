@@ -55,7 +55,7 @@ Propel bundles a set of validatorts that should help you deal with the most comm
 The `MatchValidator` is used to run a regular expression of choice against the column. Note that this is a `preg`, not `ereg` (check [the preg_match documentation](http://www.php.net/preg_match) for more information about regexps).
 
 {% highlight xml %}
-<validator column="username">
+<validator column="email">
   <!-- allow strings that match the email address pattern -->
   <rule
     name="match"
