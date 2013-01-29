@@ -25,6 +25,7 @@ class VersionableBehavior extends Behavior
     protected $parameters = array(
         'version_column' => 'version',
         'version_table'  => '',
+        'version_schema' => '',
         'log_created_at' => 'false',
         'log_created_by' => 'false',
         'log_comment'    => 'false',
@@ -107,14 +108,22 @@ class VersionableBehavior extends Behavior
     {
         $table = $this->getTable();
         $database = $table->getDatabase();
-        $versionTableName = $this->getParameter('version_table') ? $this->getParameter('version_table') : ($table->getName() . '_version');
+        $versionTableCommonName = $this->getParameter('version_table') ? $this->getParameter('version_table') : ($table->getCommonName() . '_version');
+        $versionTableSchema = '';
+        $versionTableName = $versionTableCommonName;
+        if ($database->getPlatform()->supportsSchemas()) {
+            $versionTableSchema = $this->getParameter('version_schema') ? $this->getParameter('version_schema') : ($table->getSchema());
+            if ($versionTableSchema) {
+                $versionTableName = $versionTableSchema.'.'.$versionTableCommonName;
+            }
+        }
         if (!$database->hasTable($versionTableName)) {
             // create the version table
             $versionTable = $database->addTable(array(
-                'name'      => $versionTableName,
+                'name'      => $versionTableCommonName,
                 'phpName'   => $this->getVersionTablePhpName(),
                 'package'   => $table->getPackage(),
-                'schema'    => $table->getSchema(),
+                'schema'    => $versionTableSchema,
                 'namespace' => $table->getNamespace() ? '\\' . $table->getNamespace() : null,
             ));
             $versionTable->isVersionTable = true;
@@ -171,7 +180,7 @@ class VersionableBehavior extends Behavior
             }
         }
         foreach ($this->getVersionableReferrers() as $fk) {
-            $fkTableName = $fk->getTable()->getName();
+            $fkTableName = $fk->getTable()->getCommonName();
             $fkIdsColumnName = $fkTableName . '_ids';
             if (!$versionTable->containsColumn($fkIdsColumnName)) {
                 $versionTable->addColumn(array(
@@ -229,7 +238,7 @@ class VersionableBehavior extends Behavior
 
     public function getReferrerIdsColumn(ForeignKey $fk)
     {
-        $fkTableName = $fk->getTable()->getName();
+        $fkTableName = $fk->getTable()->getCommonName();
         $fkIdsColumnName = $fkTableName . '_ids';
 
         return $this->versionTable->getColumn($fkIdsColumnName);
@@ -237,7 +246,7 @@ class VersionableBehavior extends Behavior
 
     public function getReferrerVersionsColumn(ForeignKey $fk)
     {
-        $fkTableName = $fk->getTable()->getName();
+        $fkTableName = $fk->getTable()->getCommonName();
         $fkIdsColumnName = $fkTableName . '_versions';
 
         return $this->versionTable->getColumn($fkIdsColumnName);
