@@ -118,19 +118,20 @@ const SCOPE_COL = '" . $tableName . '.' . $this->getColumnConstant('scope_column
         $peerClassname = $this->peerClassname;
         $script .= "
 /**
- * Returns the root nodes for the tree
+ * Updates all scope values for items that has negative left (<=0) values.
  *
- * @param      mixed \$targetScope   Connection to use.
+ * @param      mixed     \$scope
+ * @param      PropelPDO \$con	Connection to use.
  * @return     {$this->objectClassname}			Propel object for root node
  */
-public static function setNegativeScope(\$targetScope, PropelPDO \$con = null)
+public static function setNegativeScope(\$scope, PropelPDO \$con = null)
 {
     //adjust scope value to \$targetScope
     \$whereCriteria = new Criteria($peerClassname::DATABASE_NAME);
     \$whereCriteria->add($peerClassname::LEFT_COL, 0, Criteria::LESS_EQUAL);
 
     \$valuesCriteria = new Criteria($peerClassname::DATABASE_NAME);
-    \$valuesCriteria->add($peerClassname::SCOPE_COL, \$targetScope, Criteria::EQUAL);
+    \$valuesCriteria->add($peerClassname::SCOPE_COL, \$scope, Criteria::EQUAL);
 
     {$this->builder->getBasePeerClassname()}::doUpdate(\$whereCriteria, \$valuesCriteria, \$con);
 }

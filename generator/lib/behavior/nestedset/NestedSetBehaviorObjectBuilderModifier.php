@@ -1339,7 +1339,6 @@ public function moveToNextSiblingOf(\$sibling, PropelPDO \$con = null)
 protected function moveSubtreeTo(\$destLeft, \$levelDelta" . ($this->behavior->useScope() ? ", \$targetScope = null" : "") . ", PropelPDO \$con = null)
 {
     \$preventDefault = false;
-    \$level  = \$this->getLevel();
     \$left  = \$this->getLeftValue();
     \$right = \$this->getRightValue();";
 
@@ -1348,8 +1347,9 @@ protected function moveSubtreeTo(\$destLeft, \$levelDelta" . ($this->behavior->u
             $script .= "
     \$scope = \$this->getScopeValue();
 
-    if (\$targetScope === null)
-        \$targetScope = \$scope;";
+    if (\$targetScope === null){
+        \$targetScope = \$scope;
+    }";
         }
 
 
