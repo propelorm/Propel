@@ -122,7 +122,6 @@ const SCOPE_COL = '" . $tableName . '.' . $this->getColumnConstant('scope_column
  *
  * @param      mixed     \$scope
  * @param      PropelPDO \$con	Connection to use.
- * @return     {$this->objectClassname}			Propel object for root node
  */
 public static function setNegativeScope(\$scope, PropelPDO \$con = null)
 {
