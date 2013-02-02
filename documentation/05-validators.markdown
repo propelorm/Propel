@@ -64,6 +64,8 @@ The `MatchValidator` is used to run a regular expression of choice against the c
 </validator>
 {% endhighlight %}
 
+>**Tip**<br />Propel expects your pattern defined within `value` either without delimiters or in case you need a delimitier to be sorrounded by `/`. Other pattern delimiters are not supported.
+
 ### NotMatchValidator ###
 
 Opposite of `MatchValidator`, this validator returns false if the regex returns true
@@ -78,6 +80,8 @@ Opposite of `MatchValidator`, this validator returns false if the regex returns 
     message="Please enter a valid ISBN" />
 </validator>
 {% endhighlight %}
+
+>**Tip**<br />Propel expects your pattern defined within `value` either without delimiters or in case you need a delimitier to be sorrounded by `/`. Other pattern delimiters are not supported.
 
 ### MaxLengthValidator ###
 
