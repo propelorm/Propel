@@ -217,6 +217,33 @@ CREATE TABLE `foo`
         $this->assertEquals($expected, $this->getPlatform()->getAddTableDDL($table));
     }
 
+
+    public function testGetAddTableDDLComplexPK()
+    {
+        $schema   = <<<EOF
+<database name="test">
+    <table name="foo">
+        <column name="id" primaryKey="true" type="INTEGER"/>
+        <column name="second_id" primaryKey="true" type="INTEGER" autoIncrement="true" />
+        <column name="third_id" primaryKey="true" type="INTEGER" />
+        <column name="bar" type="VARCHAR" size="255" />
+    </table>
+</database>
+EOF;
+        $table    = $this->getTableFromSchema($schema);
+        $expected = "
+CREATE TABLE `foo`
+(
+    `id` INTEGER NOT NULL,
+    `second_id` INTEGER NOT NULL AUTO_INCREMENT,
+    `third_id` INTEGER NOT NULL,
+    `bar` VARCHAR(255),
+    PRIMARY KEY (`second_id`,`id`,`third_id`)
+) ENGINE=InnoDB;
+";
+        $this->assertEquals($expected, $this->getPlatform()->getAddTableDDL($table));
+    }
+
     /**
      * @dataProvider providerForTestGetAddTableDDLCompositePK
      */
