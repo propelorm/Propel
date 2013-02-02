@@ -5,7 +5,7 @@ title: Installing Propel
 
 # Installing Propel #
 
-Propel is available as a [PEAR](http://pear.php.net/manual/en/installation.getting.php) package, as a clone from the official [Github repository](http://github.com/propelorm/Propel), as a checkout from Subversion through Github and as a "traditional" [tgz](https://github.com/propelorm/Propel/tarball/master) or [zip](https://github.com/propelorm/Propel/zipball/master) package. Whatever installation method you may choose, getting Propel to work is pretty straightforward.
+Propel is available as a [composer package](https://packagist.org/packages/propel/propel1), as a [PEAR](http://pear.php.net/manual/en/installation.getting.php) package, as a clone from the official [Github repository](http://github.com/propelorm/Propel), as a checkout from [Subversion through Github](https://github.com/blog/1178-collaborating-on-github-with-subversion) and as a "traditional" [tgz](https://github.com/propelorm/Propel/tarball/master) or [zip](https://github.com/propelorm/Propel/zipball/master) package. Whatever installation method you may choose, getting Propel to work is pretty straightforward.
 
 ## Prerequisites ##
 
@@ -19,6 +19,23 @@ Propel runs on most PHP platforms. It just requires:
 ## Project-Local Installation ##
 
 For a quick start, the best choice is to install Propel inside a project directory structure, typically under a `vendor/` subdirectory:
+You could install propel manually into the your `vendor` directory, or let [composer](http://getcomposer.org/) do the job for you.
+
+### Composer Installation ###
+
+
+The only thing you need to do is, to drop the following line into your projects' `composer.json` file.
+{% highlight yaml %}
+...
+    "require": {
+        "propel/propel1": "~1.6"
+    }
+...
+{% endhighlight %}
+
+composer will also take care to download all dependencies which are required by Propel.
+
+### Manual Installation ###
 
 {% highlight bash %}
 myproject/
@@ -39,9 +56,9 @@ Alternatively, to use a tarball, type the following commands on unix platforms:
 
 {% highlight bash %}
 cd myproject/vendor
-wget http://files.propelorm.org/propel-1.6.0.tar.gz
-tar zxvf propel-1.6.0.tar.gz
-mv propel-1.6.0 propel
+wget http://files.propelorm.org/propel-1.6.X.tar.gz
+tar zxvf propel-1.6.X.tar.gz
+mv propel-1.6.X propel
 {% endhighlight %}
 
 Or, in Windows, download a ZIP from [files.propelorm.org](http://files.propelorm.org), unzip it under the `vendor/` directory, and rename it to `propel`.
