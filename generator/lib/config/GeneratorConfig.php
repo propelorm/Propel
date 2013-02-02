@@ -170,6 +170,11 @@ class GeneratorConfig implements GeneratorConfigInterface
             throw new BuildException("Specified platform class ($clazz) does not implement teh PropelPlatformInterface interface.");
         }
 
+        if ($this->getBuildProperty('disableIdentifierQuoting')) {
+            $platform->setIdentifierQuoting(false);
+        } else {
+            $platform->setIdentifierQuoting(true);
+        }
         $platform->setConnection($con);
         $platform->setGeneratorConfig($this);
 
