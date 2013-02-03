@@ -542,7 +542,7 @@ abstract class ".$this->getClassname()." extends " . $parentClass . "
         \$obj = null;
         if (\$row = \$stmt->fetch(PDO::FETCH_NUM)) {";
 
-         $script .="
+        $script .="
             \$cls = {$peerClassname}::getOMClass(\$row, 0);
             \$obj = new \$cls();
             \$obj->hydrate(\$row);
