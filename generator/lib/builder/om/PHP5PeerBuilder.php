@@ -1268,14 +1268,8 @@ abstract class ".$this->getClassname(). $extendingPeerClass . "
         }
         $script .= "
         } else {";
-        if (!$table->getChildrenColumn()) {
-            $script .= "
-            \$cls = ".$this->getPeerClassname()."::OM_CLASS;";
-        } else {
-            $script .= "
-            \$cls = ".$this->getPeerClassname()."::getOMClass(\$row, \$startcol);";
-        }
         $script .= "
+            \$cls = ".$this->getPeerClassname()."::getOMClass(\$row, \$startcol);
             \$obj = new \$cls();
             \$col = \$obj->hydrate(\$row, \$startcol);
             " . $this->getPeerClassname() . "::addInstanceToPool(\$obj, \$key);
