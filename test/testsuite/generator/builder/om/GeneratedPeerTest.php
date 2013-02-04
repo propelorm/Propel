@@ -93,5 +93,13 @@ class GeneratedPeerTest extends BookstoreTestBase
         $this->assertEquals('YAML', AuthorPeer::DEFAULT_STRING_FORMAT, 'default string format is YAML by default');
         $this->assertEquals('XML', PublisherPeer::DEFAULT_STRING_FORMAT, 'default string format can be customized using the defaultStringFormat attribute in the schema');
     }
+    
+    public function testPopulateObjectReturnClass()
+    {
+    	require_once dirname(__FILE__) . '/fixtures/MyBookExtended.php';
+    	$fakeBook = BookExtendedPeer::populateObject(array(0));
+    	
+    	$this->assertEquals('MyBookExtended', get_class($fakeBook[0]), 'populateObject returns object of getOMClass() type');
+    }
 
 }
