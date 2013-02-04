@@ -542,8 +542,14 @@ abstract class ".$this->getClassname()." extends " . $parentClass . "
         \$obj = null;
         if (\$row = \$stmt->fetch(PDO::FETCH_NUM)) {";
 
-        $script .="
-            \$cls = {$peerClassname}::getOMClass(\$row, 0);
+        if ($col = $table->getChildrenColumn()) {
+            $script .="
+            \$cls = {$peerClassname}::getOMClass(\$row, 0);";
+        } else {
+            $script .="
+            \$cls = {$peerClassname}::getOMClass();";
+        }
+        $script .= "
             \$obj = new \$cls();
             \$obj->hydrate(\$row);
             {$peerClassname}::addInstanceToPool(\$obj, $pkHashFromRow);
