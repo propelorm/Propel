@@ -1086,14 +1086,14 @@ class QueryBuilderTest extends BookstoreTestBase
     
     public function testfindPkSimpleUsesGetOmClass()
     {
-		$b = new BookExtended();
-		$b->save();
-    	
-    	require_once dirname(__FILE__) . '/fixtures/MyBookExtended.php';
+        $b = new BookExtended();
+        $b->save();
+        
+        require_once dirname(__FILE__) . '/fixtures/MyBookExtended.php';
         Propel::disableInstancePooling(); // need to be disabled to test the hydrate() method
-    	
-    	$book = BookExtendedQuery::create()->findPk($b->getPrimaryKey());
-    	$this->assertEquals('MyBookExtended', get_class($book), 'findPKSimple returns object of getOMClass() type');
+        
+        $book = BookExtendedQuery::create()->findPk($b->getPrimaryKey());
+        $this->assertEquals('MyBookExtended', get_class($book), 'findPKSimple returns object of getOMClass() type');
     }
 }
 

@@ -10,19 +10,19 @@
 
 class ChangeOmClassBehavior extends Behavior
 {
-	
-	public function extensionPeerFilter(&$script)
-	{
-		$getOMClass = <<<EOF
+
+    public function extensionPeerFilter(&$script)
+    {
+        $getOMClass = <<<EOF
 \\1
-	static public function getOMClass()
-	{
-		return 'MyBookExtended';
-	}
+    static public function getOMClass()
+    {
+        return 'MyBookExtended';
+    }
 
 }
 EOF;
-		$script = preg_replace('/(.*)}/',$getOMClass, $script);
-	}
-	
+        $script = preg_replace('/(.*)}/',$getOMClass, $script);
+    }
+
 }

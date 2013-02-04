@@ -96,10 +96,10 @@ class GeneratedPeerTest extends BookstoreTestBase
     
     public function testPopulateObjectReturnClass()
     {
-    	require_once dirname(__FILE__) . '/fixtures/MyBookExtended.php';
-    	$fakeBook = BookExtendedPeer::populateObject(array(0));
-    	
-    	$this->assertEquals('MyBookExtended', get_class($fakeBook[0]), 'populateObject returns object of getOMClass() type');
+        require_once dirname(__FILE__) . '/fixtures/MyBookExtended.php';
+        $fakeBook = BookExtendedPeer::populateObject(array(0));
+        
+        $this->assertEquals('MyBookExtended', get_class($fakeBook[0]), 'populateObject returns object of getOMClass() type');
     }
 
 }
