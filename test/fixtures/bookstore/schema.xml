@@ -402,10 +402,6 @@
 			<reference local="record_label_id" foreign="id" />
 		</foreign-key>
 	</table>
-	
-	<table name="book_extended">
-		<column name="id" type="INTEGER" primaryKey="true" autoIncrement="true" />
-		<behavior name="change_om_class" />
-	</table>
-	
+
+
 </database>
