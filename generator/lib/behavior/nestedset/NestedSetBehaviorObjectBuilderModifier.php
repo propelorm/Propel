@@ -1259,7 +1259,6 @@ public function moveToLastChildOf(\$parent, PropelPDO \$con = null)
     protected function addMoveToPrevSiblingOf(&$script)
     {
         $objectClassname = $this->objectClassname;
-        $peerClassname = $this->peerClassname;
         $script .= "
 /**
  * Moves current node and its subtree to be the previous sibling of \$sibling
