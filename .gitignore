@@ -7,4 +7,3 @@ test/fixtures/treetest/build/
 vendor/
 composer.lock
 composer.phar
-.idea/
