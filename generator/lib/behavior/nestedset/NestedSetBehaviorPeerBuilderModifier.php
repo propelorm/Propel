@@ -125,7 +125,7 @@ const SCOPE_COL = '" . $tableName . '.' . $this->getColumnConstant('scope_column
  */
 public static function setNegativeScope(\$scope, PropelPDO \$con = null)
 {
-    //adjust scope value to \$targetScope
+    //adjust scope value to \$scope
     \$whereCriteria = new Criteria($peerClassname::DATABASE_NAME);
     \$whereCriteria->add($peerClassname::LEFT_COL, 0, Criteria::LESS_EQUAL);
 
