@@ -1305,7 +1305,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . "
      * @throws PropelException Any exceptions caught during processing will be
      *		 rethrown wrapped into a PropelException.
      */
-    public static function getOMClass(\$row, \$colnum)
+    public static function getOMClass(\$row = 0, \$colnum = 0)
     {
         try {
 ";
@@ -1359,7 +1359,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . "
      *
      * @return string ClassName
      */
-    public static function getOMClass()
+    public static function getOMClass(\$row = 0, \$colnum = 0)
     {
         return ".$this->getPeerClassname()."::OM_CLASS;
     }
@@ -1382,11 +1382,11 @@ abstract class ".$this->getClassname(). $extendingPeerClass . "
 
         if (version_compare(PHP_VERSION, '5.3.0', '>=')) {
             $script .= "
-    abstract public static function getOMClass();
+    abstract public static function getOMClass(\$row = 0, \$colnum = 0);
 ";
         } else {
             $script .= "
-    public static function getOMClass()
+    public static function getOMClass(\$row = 0, \$colnum = 0)
     {
         throw new LogicException(\"You can't get OMClass for an abstract Peer class.\");
     }
