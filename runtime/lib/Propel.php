@@ -30,7 +30,7 @@ class Propel
     /**
      * The Propel version.
      */
-    const VERSION = '1.6.7';
+    const VERSION = '1.6.8-dev';
 
     /**
      * A constant for <code>default</code>.
@@ -267,6 +267,17 @@ class Propel
         }
 
         self::configureLogging();
+
+        // check whether the generated model has the same version as the runtime, see gh-#577
+        // we need to check for existance first, because tasks which rely on the runtime.xml conf will not provide a generator_version
+        if (isset(self::$configuration['generator_version']) && self::$configuration['generator_version'] != self::VERSION) {
+            $warning = "Version mismatch: The generated model was build using propel '". self::$configuration['generator_version'] ."' while the current runtime is at version '". self::VERSION ."'";
+            if (self::$logger) {
+                self::$logger->warning($warning);
+            } else {
+                trigger_error($warning, E_USER_WARNING);
+            }
+        }
 
         // reset the connection map (this should enable runtime changes of connection params)
         self::$connectionMap = array();
