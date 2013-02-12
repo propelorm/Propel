@@ -1567,7 +1567,7 @@ class Criteria implements IteratorAggregate
         foreach ($criteria->getMap() as $key => $criterion) {
             if ($isFirstCondition && $this->defaultCombineOperator == Criteria::LOGICAL_OR) {
                 $this->addOr($criterion, null, null, false);
-                $this->defaultCombineOperator = Criteria::LOGICAL_AND;
+                $this->defaultCombineOperator == Criteria::LOGICAL_AND;
             } elseif ($this->containsKey($key)) {
                 $this->addAnd($criterion);
             } else {
