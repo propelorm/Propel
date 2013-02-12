@@ -239,7 +239,10 @@ class Criteria implements IteratorAggregate
      */
     protected $defaultCombineOperator = Criteria::LOGICAL_AND;
 
-    // flags for boolean functions
+    /**
+     * Flags for boolean functions
+     * @var PropelConditionalProxy
+     */
     protected $conditionalProxy = null;
 
     /**
@@ -338,7 +341,7 @@ class Criteria implements IteratorAggregate
     /**
      * Returns the column name associated with an alias (AS-column).
      *
-     * @param  string      $alias
+     * @param  string      $as
      * @return string|null $string The name if found, null otherwise.
      */
     public function getColumnForAs($as)
@@ -480,6 +483,8 @@ class Criteria implements IteratorAggregate
      * a transaction.  This is here primarily to support the oid type in
      * postgresql.  Though it can be used to require any single sql statement
      * to use a transaction.
+     *
+     * @param bool $v
      * @return void
      */
     public function setUseTransaction($v)
@@ -639,7 +644,7 @@ class Criteria implements IteratorAggregate
      * any SELECT columns or WHERE columns.  This must be explicitly
      * set, of course, in order to be useful.
      *
-     * @param string $v
+     * @param string $tableName
      */
     public function setPrimaryTableName($tableName)
     {
@@ -699,7 +704,7 @@ class Criteria implements IteratorAggregate
      *
      * @param  string   $key
      * @param  mixed    $value
-     * @return Instance of self.
+     * @return Criteria A modified Criteria object.
      */
     public function put($key, $value)
     {
@@ -746,19 +751,19 @@ class Criteria implements IteratorAggregate
      * The name of the table must be used implicitly in the column name,
      * so the Column name must be something like 'TABLE.id'.
      *
-     * @param string $critOrColumn The column to run the comparison on, or Criterion object.
+     * @param string $critOrColumn The column to run the comparison on, or a Criterion object.
      * @param mixed  $value
      * @param string $comparison   A String.
      *
      * @return Criteria A modified Criteria object.
      */
-    public function add($p1, $value = null, $comparison = null)
+    public function add($critOrColumn, $value = null, $comparison = null)
     {
-        $criterion = $this->getCriterionForCondition($p1, $value, $comparison);
-        if ($p1 instanceof Criterion) {
-            $this->map[$p1->getTable() . '.' . $p1->getColumn()] = $criterion;
+        $criterion = $this->getCriterionForCondition($critOrColumn, $value, $comparison);
+        if ($critOrColumn instanceof Criterion) {
+            $this->map[$critOrColumn->getTable() . '.' . $critOrColumn->getColumn()] = $criterion;
         } else {
-            $this->map[$p1] = $criterion;
+            $this->map[$critOrColumn] = $criterion;
         }
 
         return $this;
@@ -785,7 +790,7 @@ class Criteria implements IteratorAggregate
      * @param mixed  $value
      * @param string $comparison A String.
      *
-     * @return A modified Criteria object.
+     * @return Criteria A modified Criteria object.
      */
     public function addCond($name, $p1, $value = null, $comparison = null)
     {
@@ -838,8 +843,8 @@ class Criteria implements IteratorAggregate
      * // LEFT JOIN FOO ON (PROJECT.ID = FOO.PROJECT_ID)
      * </code>
      *
-     * @param mixed $left     A String with the left side of the join.
-     * @param mixed $right    A String with the right side of the join.
+     * @param mixed $left     A String with the left side of the join, or an array (@see addMultipleJoin).
+     * @param mixed $right    A String with the right side of the join, or an array (@see addMultipleJoin).
      * @param mixed $joinType A String with the join operator
      *                             among Criteria::INNER_JOIN, Criteria::LEFT_JOIN,
      *                             and Criteria::RIGHT_JOIN
@@ -1451,7 +1456,7 @@ class Criteria implements IteratorAggregate
      * This method checks another Criteria to see if they contain
      * the same attributes and hashtable entries.
      *
-     * @param mixed $crit
+     * @param Criteria|null $crit
      * @return boolean
      */
     public function equals($crit)

@@ -69,6 +69,10 @@ class ModelJoin extends Join
         return $this->tableMap;
     }
 
+    /**
+     * @param ModelJoin $join
+     * @return ModelJoin
+     */
     public function setPreviousJoin(ModelJoin $join)
     {
         $this->previousJoin = $join;
@@ -76,11 +80,17 @@ class ModelJoin extends Join
         return $this;
     }
 
+    /**
+     * @return ModelJoin
+     */
     public function getPreviousJoin()
     {
         return $this->previousJoin;
     }
 
+    /**
+     * @return bool
+     */
     public function isPrimary()
     {
         return null === $this->previousJoin;
@@ -124,6 +134,10 @@ class ModelJoin extends Join
         }
     }
 
+    /**
+     * @param ModelJoin $join
+     * @return bool
+     */
     public function equals($join)
     {
         return parent::equals($join)
