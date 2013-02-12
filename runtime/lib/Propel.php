@@ -269,7 +269,8 @@ class Propel
         self::configureLogging();
 
         // check whether the generated model has the same version as the runtime, see gh-#577
-        if (self::$configuration['generator_version'] != self::VERSION) {
+        // we need to check for existance first, because tasks which rely on the runtime.xml conf will not provide a generator_version
+        if (isset(self::$configuration['generator_version']) && self::$configuration['generator_version'] != self::VERSION) {
             $warning = "Version mismatch: The generated model was build using propel '". self::$configuration['generator_version'] ."' while the current runtime is at version '". self::VERSION ."'";
             if (self::$logger) {
                 self::$logger->warning($warning);
