@@ -1610,9 +1610,9 @@ class Criteria implements IteratorAggregate
      * $crit->addHaving($c);
      * </code>
      *
-     * @param mixed $p1     A Criterion object
-     * @param mixed $value
-     * @param string $comparison
+     * @param mixed $p1         A Criterion, or a SQL clause with a question mark placeholder, or a column name
+     * @param mixed $value      The value to bind in the condition
+     * @param mixed $comparison A Criteria class constant, or a PDO::PARAM_ class constant
      *
      * @return Criteria Modified Criteria object (for fluent API)
      */
