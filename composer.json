@@ -17,10 +17,19 @@
     "php": ">=5.2.4",
     "phing/phing": "~2.4"
   },
+  "require-dev": {
+    "pear-pear.php.net/PEAR_PackageFileManager2": "@stable"
+  },
   "extra": {
     "branch-alias": {
-      "dev-master": "1.6-dev"
+      "dev-master": "1.7-dev"
     }
   },
+  "repositories": [
+    {
+      "type": "pear",
+      "url": "http://pear.php.net"
+    }
+  ],
   "bin": ["generator/bin/propel-gen", "generator/bin/propel-gen.bat"]
 }
