@@ -46,6 +46,9 @@ EOF;
 
     /**
      * See: https://github.com/propelorm/Propel/issues/515
+     *
+     * @expectedException PropelException
+     * @expectedExceptionMessage Unable to execute UPDATE statement [UPDATE  SET ] [wrapped: Undefined index: ]
      */
     public function testShiftRank()
     {
