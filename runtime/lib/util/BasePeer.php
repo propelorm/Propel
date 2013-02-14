@@ -377,6 +377,8 @@ class BasePeer
                 }
                 $sql .= " SET ";
                 $p = 1;
+
+                if (!$updateTablesColumns[$tableName]) continue; //a empty UPDATE query makes no sense.
                 foreach ($updateTablesColumns[$tableName] as $col) {
                     $updateColumnName = substr($col, strrpos($col, '.') + 1);
                     // add identifiers for the actual database?
