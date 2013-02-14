@@ -47,13 +47,11 @@ EOF;
     /**
      * See: https://github.com/propelorm/Propel/issues/515
      *
-     * @expectedException PropelException
-     * @expectedExceptionMessage Unable to execute UPDATE statement [UPDATE  SET ] [wrapped: Undefined index: ]
      */
     public function testShiftRank()
     {
         $peer = new \Test\SortableTest1Peer();
-        $peer->shiftRank(1);
+        $peer->shiftRank(1); //should not throw any exception
     }
 
     public function testParameters()
