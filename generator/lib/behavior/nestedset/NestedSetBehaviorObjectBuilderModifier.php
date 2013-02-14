@@ -160,7 +160,7 @@ if (\$this->isInTree()) {
             $this->addGetLevel($script);
         }
         if ($this->getParameter('use_scope') == 'true'
-         && $this->getColumnPhpName('scope_column') != 'ScopeValue') {
+            && $this->getColumnPhpName('scope_column') != 'ScopeValue') {
             $this->addGetScope($script);
         }
 
@@ -174,7 +174,7 @@ if (\$this->isInTree()) {
             $this->addSetLevel($script);
         }
         if ($this->getParameter('use_scope') == 'true'
-         && $this->getColumnPhpName('scope_column') != 'ScopeValue') {
+            && $this->getColumnPhpName('scope_column') != 'ScopeValue') {
             $this->addSetScope($script);
         }
 
@@ -466,7 +466,7 @@ public function isDescendantOf(\$parent)
         if ($this->behavior->useScope()) {
             $script .= "
     if (\$this->getScopeValue() !== \$parent->getScopeValue()) {
-        throw new PropelException('Comparing two nodes of different trees');
+        return false; //since the `this` and \$parent are in different scopes, there's no way that `this` is be a descendant of \$parent.
     }";
         }
         $script .= "
@@ -1214,18 +1214,12 @@ public function moveToFirstChildOf(\$parent, PropelPDO \$con = null)
     if (!\$this->isInTree()) {
         throw new PropelException('A $objectClassname object must be already in the tree to be moved. Use the insertAsFirstChildOf() instead.');
     }";
-    if ($this->behavior->useScope()) {
         $script .= "
-    if (\$parent->getScopeValue() != \$this->getScopeValue()) {
-        throw new PropelException('Moving nodes across trees is not supported');
-    }";
-    }
-    $script .= "
     if (\$parent->isDescendantOf(\$this)) {
         throw new PropelException('Cannot move a node as child of one of its subtree nodes.');
     }
 
-    \$this->moveSubtreeTo(\$parent->getLeftValue() + 1, \$parent->getLevel() - \$this->getLevel() + 1, \$con);
+    \$this->moveSubtreeTo(\$parent->getLeftValue() + 1, \$parent->getLevel() - \$this->getLevel() + 1" . ($this->behavior->useScope() ? ", \$parent->getScopeValue()" : "") . ", \$con);
 
     return \$this;
 }
@@ -1250,18 +1244,12 @@ public function moveToLastChildOf(\$parent, PropelPDO \$con = null)
     if (!\$this->isInTree()) {
         throw new PropelException('A $objectClassname object must be already in the tree to be moved. Use the insertAsLastChildOf() instead.');
     }";
-    if ($this->behavior->useScope()) {
         $script .= "
-    if (\$parent->getScopeValue() != \$this->getScopeValue()) {
-        throw new PropelException('Moving nodes across trees is not supported');
-    }";
-    }
-    $script .= "
     if (\$parent->isDescendantOf(\$this)) {
         throw new PropelException('Cannot move a node as child of one of its subtree nodes.');
     }
 
-    \$this->moveSubtreeTo(\$parent->getRightValue(), \$parent->getLevel() - \$this->getLevel() + 1, \$con);
+    \$this->moveSubtreeTo(\$parent->getRightValue(), \$parent->getLevel() - \$this->getLevel() + 1" . ($this->behavior->useScope() ? ", \$parent->getScopeValue()" : "") . ", \$con);
 
     return \$this;
 }
@@ -1289,18 +1277,12 @@ public function moveToPrevSiblingOf(\$sibling, PropelPDO \$con = null)
     if (\$sibling->isRoot()) {
         throw new PropelException('Cannot move to previous sibling of a root node.');
     }";
-    if ($this->behavior->useScope()) {
         $script .= "
-    if (\$sibling->getScopeValue() != \$this->getScopeValue()) {
-        throw new PropelException('Moving nodes across trees is not supported');
-    }";
-    }
-    $script .= "
     if (\$sibling->isDescendantOf(\$this)) {
         throw new PropelException('Cannot move a node as sibling of one of its subtree nodes.');
     }
 
-    \$this->moveSubtreeTo(\$sibling->getLeftValue(), \$sibling->getLevel() - \$this->getLevel(), \$con);
+    \$this->moveSubtreeTo(\$sibling->getLeftValue(), \$sibling->getLevel() - \$this->getLevel()" . ($this->behavior->useScope() ? ", \$sibling->getScopeValue()" : "") . ", \$con);
 
     return \$this;
 }
@@ -1328,18 +1310,12 @@ public function moveToNextSiblingOf(\$sibling, PropelPDO \$con = null)
     if (\$sibling->isRoot()) {
         throw new PropelException('Cannot move to next sibling of a root node.');
     }";
-    if ($this->behavior->useScope()) {
         $script .= "
-    if (\$sibling->getScopeValue() != \$this->getScopeValue()) {
-        throw new PropelException('Moving nodes across trees is not supported');
-    }";
-    }
-    $script .= "
     if (\$sibling->isDescendantOf(\$this)) {
         throw new PropelException('Cannot move a node as sibling of one of its subtree nodes.');
     }
 
-    \$this->moveSubtreeTo(\$sibling->getRightValue() + 1, \$sibling->getLevel() - \$this->getLevel(), \$con);
+    \$this->moveSubtreeTo(\$sibling->getRightValue() + 1, \$sibling->getLevel() - \$this->getLevel()" . ($this->behavior->useScope() ? ", \$sibling->getScopeValue()" : "") . ", \$con);
 
     return \$this;
 }
@@ -1359,15 +1335,25 @@ public function moveToNextSiblingOf(\$sibling, PropelPDO \$con = null)
  * @param      int	\$levelDelta Delta to add to the levels
  * @param      PropelPDO \$con		Connection to use.
  */
-protected function moveSubtreeTo(\$destLeft, \$levelDelta, PropelPDO \$con = null)
+protected function moveSubtreeTo(\$destLeft, \$levelDelta" . ($this->behavior->useScope() ? ", \$targetScope = null" : "") . ", PropelPDO \$con = null)
 {
+    \$preventDefault = false;
     \$left  = \$this->getLeftValue();
     \$right = \$this->getRightValue();";
+
+
         if ($useScope) {
             $script .= "
-    \$scope = \$this->getScopeValue();";
+    \$scope = \$this->getScopeValue();
+
+    if (\$targetScope === null){
+        \$targetScope = \$scope;
+    }";
         }
+
+
         $script .= "
+
 
     \$treeSize = \$right - \$left +1;
 
@@ -1377,22 +1363,58 @@ protected function moveSubtreeTo(\$destLeft, \$levelDelta, PropelPDO \$con = nul
 
     \$con->beginTransaction();
     try {
+
         // make room next to the target for the subtree
-        $peerClassname::shiftRLValues(\$treeSize, \$destLeft, null" . ($useScope ? ", \$scope" : "") . ", \$con);
+        $peerClassname::shiftRLValues(\$treeSize, \$destLeft, null" . ($useScope ? ", \$targetScope" : "") . ", \$con);
 
-        if (\$left >= \$destLeft) { // src was shifted too?
-            \$left += \$treeSize;
-            \$right += \$treeSize;
+";
+
+        if ($useScope) {
+
+            $script .= "
+
+        if (\$targetScope != \$scope){
+
+            //move subtree to < 0, so the items are out of scope.
+            $peerClassname::shiftRLValues(-\$right, \$left, \$right" . ($useScope ? ", \$scope" : "") . ", \$con);
+
+            //update scopes
+            $peerClassname::setNegativeScope(\$targetScope, \$con);
+
+            //update levels
+            $peerClassname::shiftLevel(\$levelDelta, \$left - \$right, 0" . ($useScope ? ", \$targetScope" : "") . ", \$con);
+
+            //move the subtree to the target
+            $peerClassname::shiftRLValues((\$right - \$left) + \$destLeft, \$left - \$right, 0" . ($useScope ? ", \$targetScope" : "") . ", \$con);
+
+
+            \$preventDefault = true;
+        }
+        ";
+
         }
 
-        if (\$levelDelta) {
-            // update the levels of the subtree
-            $peerClassname::shiftLevel(\$levelDelta, \$left, \$right" . ($useScope ? ", \$scope" : "") . ", \$con);
+        $script .= "
+
+        if (!\$preventDefault){
+
+
+            if (\$left >= \$destLeft) { // src was shifted too?
+                \$left += \$treeSize;
+                \$right += \$treeSize;
+            }
+
+            if (\$levelDelta) {
+                // update the levels of the subtree
+                $peerClassname::shiftLevel(\$levelDelta, \$left, \$right" . ($useScope ? ", \$scope" : "") . ", \$con);
+            }
+
+            // move the subtree to the target
+            $peerClassname::shiftRLValues(\$destLeft - \$left, \$left, \$right" . ($useScope ? ", \$scope" : "") . ", \$con);
         }
+        ";
 
-        // move the subtree to the target
-        $peerClassname::shiftRLValues(\$destLeft - \$left, \$left, \$right" . ($useScope ? ", \$scope" : "") . ", \$con);
-
+        $script .= "
         // remove the empty room at the previous location of the subtree
         $peerClassname::shiftRLValues(-\$treeSize, \$right + 1, null" . ($useScope ? ", \$scope" : "") . ", \$con);
 

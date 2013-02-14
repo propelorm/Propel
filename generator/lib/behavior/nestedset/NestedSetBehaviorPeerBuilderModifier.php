@@ -107,8 +107,34 @@ const SCOPE_COL = '" . $tableName . '.' . $this->getColumnConstant('scope_column
         $this->addUpdateLoadedNodes($script);
         $this->addMakeRoomForLeaf($script);
         $this->addFixLevels($script);
+        $this->addSetNegativeScope($script);
 
         return $script;
+    }
+
+    protected function addSetNegativeScope(&$script)
+    {
+
+        $peerClassname = $this->peerClassname;
+        $script .= "
+/**
+ * Updates all scope values for items that has negative left (<=0) values.
+ *
+ * @param      mixed     \$scope
+ * @param      PropelPDO \$con	Connection to use.
+ */
+public static function setNegativeScope(\$scope, PropelPDO \$con = null)
+{
+    //adjust scope value to \$scope
+    \$whereCriteria = new Criteria($peerClassname::DATABASE_NAME);
+    \$whereCriteria->add($peerClassname::LEFT_COL, 0, Criteria::LESS_EQUAL);
+
+    \$valuesCriteria = new Criteria($peerClassname::DATABASE_NAME);
+    \$valuesCriteria->add($peerClassname::SCOPE_COL, \$scope, Criteria::EQUAL);
+
+    {$this->builder->getBasePeerClassname()}::doUpdate(\$whereCriteria, \$valuesCriteria, \$con);
+}
+";
     }
 
     protected function addRetrieveRoots(&$script)
@@ -141,11 +167,11 @@ public static function retrieveRoots(Criteria \$criteria = null, PropelPDO \$con
 /**
  * Returns the root node for a given scope
  *";
-         if ($useScope) {
-             $script .= "
+        if ($useScope) {
+            $script .= "
  * @param      int \$scope		Scope to determine which root node to return";
-         }
-         $script .= "
+        }
+        $script .= "
  * @param      PropelPDO \$con	Connection to use.
  * @return     {$this->objectClassname}			Propel object for root node
  */
@@ -172,11 +198,11 @@ public static function retrieveRoot(" . ($useScope ? "\$scope = null, " : "") . 
 /**
  * Returns the whole tree node for a given scope
  *";
-         if ($useScope) {
-             $script .= "
+        if ($useScope) {
+            $script .= "
  * @param      int \$scope		Scope to determine which root node to return";
-         }
-         $script .= "
+        }
+        $script .= "
  * @param      Criteria \$criteria	Optional Criteria to filter the query
  * @param      PropelPDO \$con	Connection to use.
  * @return     {$this->objectClassname}			Propel object for root node
@@ -227,11 +253,11 @@ public static function isValid($objectClassname \$node = null)
 /**
  * Delete an entire tree
  * ";
-         if ($useScope) {
-             $script .= "
+        if ($useScope) {
+            $script .= "
  * @param      int \$scope		Scope to determine which tree to delete";
-         }
-         $script .= "
+        }
+        $script .= "
  * @param      PropelPDO \$con	Connection to use.
  *
  * @return     int  The number of deleted nodes
@@ -431,6 +457,9 @@ public static function updateLoadedNodes(\$prune = null, PropelPDO \$con = null)
             } elseif ($col->getPhpName() == $this->getColumnPhpName('right_column')) {
                 $script .= "
                     \$object->setRightValue(\$row[$n]);";
+            } elseif ($this->getParameter('use_scope') == 'true' && $col->getPhpName() == $this->getColumnPhpName('scope_column')) {
+                $script .= "
+                    \$object->setScopeValue(\$row[$n]);";
             } elseif ($col->getPhpName() == $this->getColumnPhpName('level_column')) {
                 $script .= "
                     \$object->setLevel(\$row[$n]);
@@ -457,11 +486,11 @@ public static function updateLoadedNodes(\$prune = null, PropelPDO \$con = null)
  * Update the tree to allow insertion of a leaf at the specified position
  *
  * @param      int \$left	left column value";
-         if ($useScope) {
-                      $script .= "
+        if ($useScope) {
+            $script .= "
  * @param      integer \$scope	scope column value";
-         }
-         $script .= "
+        }
+        $script .= "
  * @param      mixed \$prune	Object to prune from the shift
  * @param      PropelPDO \$con	Connection to use.
  */
@@ -484,11 +513,11 @@ public static function makeRoomForLeaf(\$left" . ($useScope ? ", \$scope" : "").
 /**
  * Update the tree to allow insertion of a leaf at the specified position
  *";
-         if ($useScope) {
-                      $script .= "
+        if ($useScope) {
+            $script .= "
  * @param      integer \$scope	scope column value";
-         }
-         $script .= "
+        }
+        $script .= "
  * @param      PropelPDO \$con	Connection to use.
  */
 public static function fixLevels(" . ($useScope ? "\$scope, " : ""). "PropelPDO \$con = null)
