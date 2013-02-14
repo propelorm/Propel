@@ -17,6 +17,11 @@
  */
 class PropelQuery
 {
+    /**
+     * @param string $queryClassAndAlias
+     * @return ModelCriteria
+     * @throws PropelException
+     */
     public static function from($queryClassAndAlias)
     {
         list($class, $alias) = ModelCriteria::getClassAndAlias($queryClassAndAlias);

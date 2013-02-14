@@ -198,7 +198,8 @@ class Join
   }
 
   /**
-   * @return     the comparison operator for the join condition
+   * @param int $index
+   * @return string    the comparison operator for the join condition
    */
   public function getOperator($index = 0)
   {
@@ -539,6 +540,10 @@ class Join
         );
     }
 
+    /**
+     * @param Join $join
+     * @return bool
+     */
     public function equals($join)
     {
         return $join !== null

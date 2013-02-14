@@ -239,7 +239,10 @@ class Criteria implements IteratorAggregate
      */
     protected $defaultCombineOperator = Criteria::LOGICAL_AND;
 
-    // flags for boolean functions
+    /**
+     * Flags for boolean functions
+     * @var PropelConditionalProxy
+     */
     protected $conditionalProxy = null;
 
     /**
@@ -338,7 +341,7 @@ class Criteria implements IteratorAggregate
     /**
      * Returns the column name associated with an alias (AS-column).
      *
-     * @param  string      $alias
+     * @param  string      $as
      * @return string|null $string The name if found, null otherwise.
      */
     public function getColumnForAs($as)
@@ -480,6 +483,8 @@ class Criteria implements IteratorAggregate
      * a transaction.  This is here primarily to support the oid type in
      * postgresql.  Though it can be used to require any single sql statement
      * to use a transaction.
+     *
+     * @param bool $v
      * @return void
      */
     public function setUseTransaction($v)
@@ -639,7 +644,7 @@ class Criteria implements IteratorAggregate
      * any SELECT columns or WHERE columns.  This must be explicitly
      * set, of course, in order to be useful.
      *
-     * @param string $v
+     * @param string $tableName
      */
     public function setPrimaryTableName($tableName)
     {
@@ -699,7 +704,7 @@ class Criteria implements IteratorAggregate
      *
      * @param  string   $key
      * @param  mixed    $value
-     * @return Instance of self.
+     * @return Criteria A modified Criteria object.
      */
     public function put($key, $value)
     {
@@ -746,19 +751,19 @@ class Criteria implements IteratorAggregate
      * The name of the table must be used implicitly in the column name,
      * so the Column name must be something like 'TABLE.id'.
      *
-     * @param string $critOrColumn The column to run the comparison on, or Criterion object.
+     * @param string $critOrColumn The column to run the comparison on, or a Criterion object.
      * @param mixed  $value
      * @param string $comparison   A String.
      *
      * @return Criteria A modified Criteria object.
      */
-    public function add($p1, $value = null, $comparison = null)
+    public function add($critOrColumn, $value = null, $comparison = null)
     {
-        $criterion = $this->getCriterionForCondition($p1, $value, $comparison);
-        if ($p1 instanceof Criterion) {
-            $this->map[$p1->getTable() . '.' . $p1->getColumn()] = $criterion;
+        $criterion = $this->getCriterionForCondition($critOrColumn, $value, $comparison);
+        if ($critOrColumn instanceof Criterion) {
+            $this->map[$critOrColumn->getTable() . '.' . $critOrColumn->getColumn()] = $criterion;
         } else {
-            $this->map[$p1] = $criterion;
+            $this->map[$critOrColumn] = $criterion;
         }
 
         return $this;
@@ -785,7 +790,7 @@ class Criteria implements IteratorAggregate
      * @param mixed  $value
      * @param string $comparison A String.
      *
-     * @return A modified Criteria object.
+     * @return Criteria A modified Criteria object.
      */
     public function addCond($name, $p1, $value = null, $comparison = null)
     {
@@ -838,8 +843,8 @@ class Criteria implements IteratorAggregate
      * // LEFT JOIN FOO ON (PROJECT.ID = FOO.PROJECT_ID)
      * </code>
      *
-     * @param mixed $left     A String with the left side of the join.
-     * @param mixed $right    A String with the right side of the join.
+     * @param mixed $left     A String with the left side of the join, or an array (@see addMultipleJoin).
+     * @param mixed $right    A String with the right side of the join, or an array (@see addMultipleJoin).
      * @param mixed $joinType A String with the join operator
      *                             among Criteria::INNER_JOIN, Criteria::LEFT_JOIN,
      *                             and Criteria::RIGHT_JOIN
@@ -1168,7 +1173,7 @@ class Criteria implements IteratorAggregate
     /**
      * Set limit.
      *
-     * @param      limit An int with the value for limit.
+     * @param int $limit An int with the value for limit.
      * @return Criteria Modified Criteria object (for fluent API)
      */
     public function setLimit($limit)
@@ -1206,7 +1211,7 @@ class Criteria implements IteratorAggregate
     /**
      * Get offset.
      *
-     * @return An int with the value for offset.
+     * @return int An int with the value for offset.
      */
     public function getOffset()
     {
@@ -1288,7 +1293,7 @@ class Criteria implements IteratorAggregate
     /**
      * Get select modifiers.
      *
-     * @return An array with the select modifiers.
+     * @return array An array with the select modifiers.
      */
     public function getSelectModifiers()
     {
@@ -1299,7 +1304,7 @@ class Criteria implements IteratorAggregate
      * Add group by column name.
      *
      * @param  string $groupBy The name of the column to group by.
-     * @return A      modified Criteria object.
+     * @return Criteria Modified Criteria object (for fluent API)
      */
     public function addGroupByColumn($groupBy)
     {
@@ -1312,7 +1317,7 @@ class Criteria implements IteratorAggregate
      * Add order by column name, explicitly specifying ascending.
      *
      * @param  string $name The name of the column to order by.
-     * @return A      modified Criteria object.
+     * @return Criteria Modified Criteria object (for fluent API)
      */
     public function addAscendingOrderByColumn($name)
     {
@@ -1450,6 +1455,8 @@ class Criteria implements IteratorAggregate
     /**
      * This method checks another Criteria to see if they contain
      * the same attributes and hashtable entries.
+     *
+     * @param Criteria|null $crit
      * @return boolean
      */
     public function equals($crit)
@@ -1608,9 +1615,11 @@ class Criteria implements IteratorAggregate
      * $crit->addHaving($c);
      * </code>
      *
-     * @param      having A Criterion object
+     * @param mixed $p1         A Criterion, or a SQL clause with a question mark placeholder, or a column name
+     * @param mixed $value      The value to bind in the condition
+     * @param mixed $comparison A Criteria class constant, or a PDO::PARAM_ class constant
      *
-     * @return A modified Criteria object.
+     * @return Criteria Modified Criteria object (for fluent API)
      */
     public function addHaving($p1, $value = null, $comparison = null)
     {
@@ -1668,11 +1677,16 @@ class Criteria implements IteratorAggregate
      *  - addAnd(column, value)
      *  - addAnd(Criterion)
      *
+     * @param mixed $p1         A Criterion, or a SQL clause with a question mark placeholder, or a column name
+     * @param mixed $value      The value to bind in the condition
+     * @param mixed $comparison A Criteria class constant, or a PDO::PARAM_ class constant
+     * @param bool $preferColumnCondition
+     *
      * @return Criteria A modified Criteria object.
      */
-    public function addAnd($p1, $p2 = null, $p3 = null, $preferColumnCondition = true)
+    public function addAnd($p1, $value = null, $comparison = null, $preferColumnCondition = true)
     {
-        $criterion = $this->getCriterionForCondition($p1, $p2, $p3);
+        $criterion = $this->getCriterionForCondition($p1, $value, $comparison);
 
         $key = $criterion->getTable() . '.' . $criterion->getColumn();
         if ($preferColumnCondition && $this->containsKey($key)) {
@@ -1699,11 +1713,16 @@ class Criteria implements IteratorAggregate
      *  - addOr(column, value)
      *  - addOr(Criterion)
      *
+     * @param mixed $p1         A Criterion, or a SQL clause with a question mark placeholder, or a column name
+     * @param mixed $value      The value to bind in the condition
+     * @param mixed $comparison A Criteria class constant, or a PDO::PARAM_ class constant
+     * @param bool $preferColumnCondition
+     *
      * @return Criteria A modified Criteria object.
      */
-    public function addOr($p1, $p2 = null, $p3 = null, $preferColumnCondition = true)
+    public function addOr($p1, $value = null, $comparison = null, $preferColumnCondition = true)
     {
-        $rightCriterion = $this->getCriterionForCondition($p1, $p2, $p3);
+        $rightCriterion = $this->getCriterionForCondition($p1, $value, $comparison);
 
         $key = $rightCriterion->getTable() . '.' . $rightCriterion->getColumn();
         if ($preferColumnCondition && $this->containsKey($key)) {
@@ -1752,6 +1771,9 @@ class Criteria implements IteratorAggregate
 
     // Fluid operators
 
+    /**
+     * @return Criteria
+     */
     public function _or()
     {
         $this->defaultCombineOperator = Criteria::LOGICAL_OR;
@@ -1759,6 +1781,9 @@ class Criteria implements IteratorAggregate
         return $this;
     }
 
+    /**
+     * @return Criteria
+     */
     public function _and()
     {
         $this->defaultCombineOperator = Criteria::LOGICAL_AND;
