@@ -3793,7 +3793,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
 ";
     } // addRefererGet()
 
-    protected function addRefFKSet(&$script, $refFK)
+    protected function addRefFKSet(&$script, ForeignKey $refFK)
     {
         $relatedName = $this->getRefFKPhpNameAffix($refFK, $plural = true);
         $relatedObjectClassName = $this->getRefFKPhpNameAffix($refFK, $plural = false);
@@ -3824,8 +3824,22 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
     {
         \${$inputCollection}ToDelete = \$this->get{$relatedName}(new Criteria(), \$con)->diff(\${$inputCollection});
 
-        \$this->{$inputCollection}ScheduledForDeletion = unserialize(serialize(\${$inputCollection}ToDelete));
+";
 
+        if ($refFK->isForeignPrimaryKey() && $refFK->getOnDelete() != ForeignKey::SETNULL){
+            $script .= "
+        //since the foreign key is at the same time the PK and can not be null
+        //we can not just set it to NULL in the lines below. We have to store
+        //a backup of all values, so we have later all PK values to remove it then.
+        \$this->{$inputCollection}ScheduledForDeletion = unserialize(serialize(\${$inputCollection}ToDelete));
+";
+        } else {
+            $script .= "
+        \$this->{$inputCollection}ScheduledForDeletion = \${$inputCollection}ToDelete;
+";
+        }
+
+        $script .= "
         foreach (\${$inputCollection}ToDelete as \${$inputCollectionEntry}Removed) {
             \${$inputCollectionEntry}Removed->set{$relCol}(null);
         }
@@ -4076,7 +4090,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
 ";
     }
 
-    protected function addRefFkScheduledForDeletion(&$script, $refFK)
+    protected function addRefFkScheduledForDeletion(&$script, ForeignKey $refFK)
     {
         $relatedName = $this->getRefFKPhpNameAffix($refFK, $plural = true);
 
@@ -4090,11 +4104,13 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
         $queryClassName = $this->getNewStubQueryBuilder($refFK->getTable())->getClassname();
 
         $localColumn = $refFK->getLocalColumn();
+        $localColumn->isNotNull();
 
         $script .= "
             if (\$this->{$lowerRelatedName}ScheduledForDeletion !== null) {
                 if (!\$this->{$lowerRelatedName}ScheduledForDeletion->isEmpty()) {";
-        if (!$refFK->isComposite() && !$localColumn->isNotNull()) {
+        if (!$refFK->isForeignPrimaryKey() || $refFK->getOnDelete() == ForeignKey::SETNULL) {
+            //the pk is not at the same time a fk, so we have all data to remove it safely through ->save().
             $script .= "
                     foreach (\$this->{$lowerRelatedName}ScheduledForDeletion as \${$lowerSingleRelatedName}) {
                         // need to save related object because we set the relation to null

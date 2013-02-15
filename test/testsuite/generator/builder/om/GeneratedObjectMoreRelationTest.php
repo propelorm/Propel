@@ -10,16 +10,18 @@
  */
 
 /**
- * Tests for SortableBehavior class
+ * Tests for More relations
  *
  * @author		MArc J. Schmidt
  * @version		$Revision$
- * @package		generator.misc
+ * @package		generator.builder.om
  */
-class MoreRelationTest extends PHPUnit_Framework_TestCase
+class GeneratedObjectMoreRelationTest extends PHPUnit_Framework_TestCase
 {
 
-
+    /**
+     * Setup schema und some default data
+     */
     public function setUp()
     {
         parent::setUp();
@@ -41,6 +43,15 @@ class MoreRelationTest extends PHPUnit_Framework_TestCase
           <reference local="page_id" foreign="id"/>
         </foreign-key>
     </table>
+
+    <table name="more_relation_test_comment" phpName="Comment">
+        <column name="user_id" required="true" primaryKey="true" type="INTEGER" />
+        <column name="page_id" required="true" primaryKey="true" type="INTEGER" />
+        <column name="comment" type="VARCHAR" size="100" />
+        <foreign-key foreignTable="more_relation_test_page" onDelete="cascade">
+          <reference local="page_id" foreign="id"/>
+        </foreign-key>
+    </table>
 </database>
 EOF;
 
@@ -52,7 +63,7 @@ EOF;
         \MoreRelationTest\PagePeer::doDeleteAll();
         \MoreRelationTest\ContentPeer::doDeleteAll();
 
-        for($i=1;$i<=5;$i++){
+        for($i=1;$i<=2;$i++){
 
             $page = new \MoreRelationTest\Page();
 
@@ -64,12 +75,53 @@ EOF;
                 $content->setContent(str_repeat('Content', $j));
                 $page->addContent($content);
 
+                $comment = new \MoreRelationTest\Comment();
+                $comment->setUserId($j);
+                $comment->setComment(str_repeat('Comment', $j));
+                $page->addComment($comment);
+
             }
             $page->save();
         }
 
     }
 
+    /**
+     * Composite PK deletion of a 1-to-n relation through set<RelationName>()
+     * where the PK is at them same time a FK.
+     */
+    public function testCommentsDeletion(){
+
+        $commentCollection = new PropelObjectCollection();
+        $commentCollection->setModel('MoreRelationTest\\Comment');
+
+        $comment = new \MoreRelationTest\Comment();
+        $comment->setComment('I should be alone :-(');
+        $comment->setUserId(123);
+
+        $commentCollection[] = $comment;
+
+        $page = \MoreRelationTest\PageQuery::create()->findOne();
+        $id = $page->getId();
+
+        $count = \MoreRelationTest\CommentQuery::create()->filterByPageId($id)->count();
+        $this->assertEquals(3, $count, 'We created for each page 3 comments.');
+
+
+        $page->setComments($commentCollection);
+        $page->save();
+
+        unset($page);
+
+        $count = \MoreRelationTest\CommentQuery::create()->filterByPageId($id)->count();
+        $this->assertEquals(1, $count, 'We assigned a collection of only one item.');
+
+    }
+
+    /**
+     * Basic deletion of a 1-to-n relation through set<RelationName>().
+     *
+     */
     public function testContentsDeletion(){
 
 
