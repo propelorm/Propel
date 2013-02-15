@@ -68,7 +68,6 @@ EOF;
 
             $builder = new PropelQuickBuilder();
             $builder->setSchema($schema);
-            file_put_contents('/var/tmp/penis.php', "<?php \n".$builder->getClasses(array('object')));
             $builder->build();
         }
 
