@@ -3826,12 +3826,12 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
 
 ";
 
-        if ($refFK->isAtLeastOneForeignPrimaryKey()){
+        if ($refFK->isAtLeastOneLocalPrimaryKey()){
             $script .= "
         //since at least one column in the foreign key is at the same time a PK
-        //so we can not just set a PK to NULL in the lines below. We have to store
+        //we can not just set a PK to NULL in the lines below. We have to store
         //a backup of all values, so we are able to manipulate these items based on the onDelete value later.
-        \$this->{$inputCollection}ScheduledForDeletion = unserialize(serialize(\${$inputCollection}ToDelete));
+        \$this->{$inputCollection}ScheduledForDeletion = clone \${$inputCollection}ToDelete;
 ";
         } else {
             $script .= "
@@ -4107,14 +4107,14 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
             if (\$this->{$lowerRelatedName}ScheduledForDeletion !== null) {
                 if (!\$this->{$lowerRelatedName}ScheduledForDeletion->isEmpty()) {";
 
-        if ($refFK->isAtLeastOneForeignPrimaryKey() && $refFK->getOnDelete() == ForeignKey::CASCADE) {
-            $script .= "
+
+        if ($refFK->getOnDelete() == ForeignKey::CASCADE) {
+                $script .= "
                     //the foreign key is flagged as `CASCADE`, so we delete the items
                     $queryClassName::create()
                         ->filterByPrimaryKeys(\$this->{$lowerRelatedName}ScheduledForDeletion->getPrimaryKeys(false))
                         ->delete(\$con);";
         } else {
-            //the pk is not at the same time a fk, so we have all data to set the FK safely through ->save().
             $script .= "
                     foreach (\$this->{$lowerRelatedName}ScheduledForDeletion as \${$lowerSingleRelatedName}) {
                         // need to save related object because we set the relation to null

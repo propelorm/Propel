@@ -529,7 +529,7 @@ class ForeignKey extends XMLElement
     /**
      * Whether this foreign key is also the primary key of the foreign table.
      *
-     * @return boolean Returns true if _all_ columns inside this foreign key are primary keys of the foreign table
+     * @return boolean Returns true if all columns inside this foreign key are primary keys of the foreign table
      */
     public function isForeignPrimaryKey()
     {
@@ -601,7 +601,7 @@ class ForeignKey extends XMLElement
     /**
      * Whether this foreign key is also the primary key of the local table.
      *
-     * @return boolean
+     * @return boolean True if all local columns are at the same time a primary key
      */
     public function isLocalPrimaryKey()
     {
@@ -616,6 +616,24 @@ class ForeignKey extends XMLElement
 
         return ((count($localPKCols) === count($localCols)) &&
             !array_diff($localPKCols, $localCols));
+    }
+
+    /**
+     * Whether at least one local column is also a primary key.
+     *
+     * @return boolean True if there is at least one column that is a primary key
+     */
+    public function isAtLeastOneLocalPrimaryKey()
+    {
+        $localCols = $this->getLocalColumnObjects();
+
+        foreach ($localCols as $localCol){
+            if ($this->getTable()->getColumn($localCol->getName())->isPrimaryKey()){
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**

@@ -34,6 +34,7 @@ class GeneratedObjectMoreRelationTest extends PHPUnit_Framework_TestCase
         <column name="id" required="true" primaryKey="true" autoIncrement="true" type="INTEGER" />
         <column name="title" type="VARCHAR" size="100" primaryString="true" />
     </table>
+
     <table name="more_relation_test_content" phpName="Content">
         <column name="id" required="true" primaryKey="true" autoIncrement="true" type="INTEGER" />
         <column name="title" type="VARCHAR" size="100" />
@@ -52,16 +53,29 @@ class GeneratedObjectMoreRelationTest extends PHPUnit_Framework_TestCase
           <reference local="page_id" foreign="id"/>
         </foreign-key>
     </table>
+
+    <table name="more_relation_test_content_comment" phpName="ContentComment">
+        <column name="id" required="true" autoIncrement="true" primaryKey="true" type="INTEGER" />
+        <column name="content_id" type="INTEGER" />
+        <column name="comment" type="VARCHAR" size="100" />
+        <foreign-key foreignTable="more_relation_test_content" onDelete="setnull">
+          <reference local="content_id" foreign="id"/>
+        </foreign-key>
+    </table>
+
 </database>
 EOF;
 
             $builder = new PropelQuickBuilder();
             $builder->setSchema($schema);
+            file_put_contents('/var/tmp/penis.php', "<?php \n".$builder->getClasses(array('object')));
             $builder->build();
         }
 
-        \MoreRelationTest\PagePeer::doDeleteAll();
+        \MoreRelationTest\ContentCommentPeer::doDeleteAll();
         \MoreRelationTest\ContentPeer::doDeleteAll();
+        \MoreRelationTest\CommentPeer::doDeleteAll();
+        \MoreRelationTest\PagePeer::doDeleteAll();
 
         for($i=1;$i<=2;$i++){
 
@@ -80,14 +94,20 @@ EOF;
                 $comment->setComment(str_repeat('Comment', $j));
                 $page->addComment($comment);
 
+                $comment = new \MoreRelationTest\ContentComment();
+                $comment->setContentId($i*$j);
+                $comment->setComment(str_repeat('Comment-'.$j.', ', $j));
+                $content->addContentComment($comment);
+
             }
+
             $page->save();
         }
 
     }
 
     /**
-     * Composite PK deletion of a 1-to-n relation through set<RelationName>()
+     * Composite PK deletion of a 1-to-n relation through set<RelationName>() and remove<RelationName>()
      * where the PK is at the same time a FK.
      */
     public function testCommentsDeletion(){
@@ -107,14 +127,59 @@ EOF;
         $count = \MoreRelationTest\CommentQuery::create()->filterByPageId($id)->count();
         $this->assertEquals(3, $count, 'We created for each page 3 comments.');
 
-
         $page->setComments($commentCollection);
         $page->save();
 
-        unset($page);
-
         $count = \MoreRelationTest\CommentQuery::create()->filterByPageId($id)->count();
         $this->assertEquals(1, $count, 'We assigned a collection of only one item.');
+
+        $count = \MoreRelationTest\CommentQuery::create()->filterByPageId(NULL)->count();
+        $this->assertEquals(0, $count, 'There should be no unassigned comment.');
+
+        $page->removeComment($comment);
+        $page->save();
+
+        $count = \MoreRelationTest\CommentQuery::create()->filterByPageId($id)->count();
+        $this->assertEquals(0, $count, 'We assigned a collection of only one item.');
+
+        $count = \MoreRelationTest\CommentQuery::create()->filterByPageId(NULL)->count();
+        $this->assertEquals(0, $count, 'There should be no unassigned comment.');
+
+    }
+
+    /**
+     * Deletion of a 1-to-n relation through set<RelationName>()
+     * with onDelete=setnull
+     */
+    public function testContentCommentDeletion(){
+
+        $commentCollection = new PropelObjectCollection();
+        $commentCollection->setModel('MoreRelationTest\\ContentComment');
+
+        $comment = new \MoreRelationTest\ContentComment();
+        $comment->setComment('I\'m Mario');
+        $commentCollection[] = $comment;
+
+        $comment2 = new \MoreRelationTest\ContentComment();
+        $comment2->setComment('I\'m Mario\'s friend');
+        $commentCollection[] = $comment2;
+
+        $content = \MoreRelationTest\ContentQuery::create()->findOne();
+        $id = $content->getId();
+
+        $count = \MoreRelationTest\ContentCommentQuery::create()->filterByContentId($id)->count();
+        $this->assertEquals(1, $count, 'We created for each page 1 comments.');
+
+        $content->setContentComments($commentCollection);
+        $content->save();
+
+        unset($content);
+
+        $count = \MoreRelationTest\ContentCommentQuery::create()->filterByContentId($id)->count();
+        $this->assertEquals(2, $count, 'We assigned a collection of two items.');
+
+        $count = \MoreRelationTest\ContentCommentQuery::create()->filterByContentId(NULL)->count();
+        $this->assertEquals(1, $count, 'There should be one unassigned contentComment.');
 
     }
 
@@ -138,7 +203,6 @@ EOF;
 
         $count = \MoreRelationTest\ContentQuery::create()->filterByPageId($id)->count();
         $this->assertEquals(3, $count, 'We created for each page 3 contents.');
-
 
         $page->setContents($contentCollection);
         $page->save();
