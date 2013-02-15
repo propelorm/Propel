@@ -188,7 +188,6 @@ EOF;
      */
     public function testContentsDeletion(){
 
-
         $contentCollection = new PropelObjectCollection();
         $contentCollection->setModel('MoreRelationTest\\Content');
 
@@ -212,10 +211,5 @@ EOF;
         $this->assertEquals(1, $count, 'We assigned a collection of only one item.');
 
     }
-
-
-
-
-
 
 }
