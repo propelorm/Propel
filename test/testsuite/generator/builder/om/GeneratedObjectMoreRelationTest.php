@@ -88,7 +88,7 @@ EOF;
 
     /**
      * Composite PK deletion of a 1-to-n relation through set<RelationName>()
-     * where the PK is at them same time a FK.
+     * where the PK is at the same time a FK.
      */
     public function testCommentsDeletion(){
 
