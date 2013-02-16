@@ -562,7 +562,8 @@ class ModelCriteria extends Criteria
         }
 
         // Add requested columns which are not withColumns
-        $columnNames = is_array($this->select) ? $this->select : array($this->select);
+        $columnNames = (array) $this->select;
+        
         // temporary store columns Alias or withColumn
         $asColumns = $this->getAsColumns();
         $this->asColumns = array();
@@ -574,7 +575,14 @@ class ModelCriteria extends Criteria
                 $this->addAsColumn('"' . $columnName . '"', $column[1]);
             } else {
                 $this->addAsColumn($columnName, $asColumns[$columnName]);
+                // remove already added columns
+                unset($asColumns[$columnName]);
             }
+        }
+        
+        // re-add all remaining columns which were not contained in select-columnNames
+        foreach($asColumns as $columnName => $columnAlias) {
+            $this->addAsColumn($columnName, $columnAlias);
         }
     }
 
