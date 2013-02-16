@@ -39,6 +39,14 @@ class PropelOnDemandCollectionTest extends BookstoreEmptyTestBase
         $this->assertEquals(4, count($this->books));
     }
 
+    /**
+     * @expectedException PropelException
+     */
+    public function testClone()
+    {
+        $clone = clone $this->books;
+    }
+    
     public function testKeys()
     {
         $i = 0;

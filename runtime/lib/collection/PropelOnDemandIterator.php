@@ -30,8 +30,14 @@ class PropelOnDemandIterator implements Iterator
 
     protected $currentKey = -1;
 
+    /**
+     * @var boolean|null
+     */
     protected $isValid = null;
 
+    /**
+     * @var boolean
+     */
     protected $enableInstancePoolingOnFinish = false;
 
     /**
