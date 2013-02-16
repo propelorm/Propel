@@ -39,6 +39,16 @@ class PropelOnDemandCollectionTest extends BookstoreEmptyTestBase
         $this->assertEquals(4, count($this->books));
     }
 
+    public function testClone()
+    {
+        $clone = clone $this->books;
+        
+        $bookKey = $this->books->getIterator()->key();
+        $cloneKey = $clone->getIterator()->key();
+        
+        $this->assertEquals($bookKey, $cloneKey, 'clone a connection should not hydrate remaining rows');
+    }
+    
     public function testKeys()
     {
         $i = 0;

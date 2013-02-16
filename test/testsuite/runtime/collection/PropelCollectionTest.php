@@ -39,6 +39,19 @@ class PropelCollectionTest extends BookstoreTestBase
         $this->assertEquals('bar1', $data[0], 'getData() returns a copy of the collection data');
     }
 
+    public function testClone()
+    {
+        $data = array('bar1', 'bar2', 'bar3');
+        $col = new PropelCollection($data);
+        
+        $clone = clone $col;
+        
+        $orgCount = $col->getIterator()->count();
+        $cloneCount = $clone->getIterator()->count();
+        
+        $this->assertEquals($orgCount, $cloneCount, 'all entries will be cloned');
+    }
+    
     public function testSetData()
     {
         $col = new PropelCollection();
