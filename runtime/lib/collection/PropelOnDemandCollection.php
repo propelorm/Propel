@@ -21,11 +21,6 @@ class PropelOnDemandCollection extends PropelCollection
      */
     protected $iterator;
 
-    protected
-        $currentRow,
-        $currentKey = -1,
-        $isValid = null;
-
     /**
      * @param PropelFormatter $formatter
      * @param PDOStatement    $stmt
@@ -69,9 +64,6 @@ class PropelOnDemandCollection extends PropelCollection
      */
     public function offsetExists($offset)
     {
-        if ($offset == $this->currentKey) {
-            return true;
-        }
         throw new PropelException('The On Demand Collection does not allow acces by offset');
     }
 
@@ -83,9 +75,6 @@ class PropelOnDemandCollection extends PropelCollection
      */
     public function offsetGet($offset)
     {
-        if ($offset == $this->currentKey) {
-            return $this->currentRow;
-        }
         throw new PropelException('The On Demand Collection does not allow acces by offset');
     }
 
