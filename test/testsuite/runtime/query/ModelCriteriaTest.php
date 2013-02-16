@@ -20,7 +20,7 @@ require_once dirname(__FILE__) . '/../../../tools/helpers/bookstore/BookstoreDat
  */
 class ModelCriteriaTest extends BookstoreTestBase
 {
-    protected function assertCriteriaTranslation($criteria, $expectedSql, $expectedParams, $message = '')
+    protected function assertCriteriaTranslation(Criteria $criteria, $expectedSql, $expectedParams, $message = '')
     {
         $params = array();
         $result = BasePeer::createSelectSql($criteria, $params);
@@ -1319,6 +1319,23 @@ class ModelCriteriaTest extends BookstoreTestBase
         $this->assertCriteriaTranslation($c, $sql, $params, 'withColumn() adds a calculated column using quotes to the select clause');
     }
 
+    public function testWithColumnAndSelect()
+    {
+        $c = new ModelCriteria('bookstore', 'Author');
+        $c->join('Book');
+        $c->withColumn('COUNT(Book.Id)', 'NbBooks');
+        $c->select(array('FirstName', 'LastName'));
+        $collection = $c->find();
+        
+        $this->assertThat($collection, $this->isInstanceOf('PropelCollection'));
+        
+        foreach($collection as $array) {
+            $this->assertArrayHasKey('FirstName', $array);
+            $this->assertArrayHasKey('LastName', $array);
+            $this->assertArrayHasKey('NbBooks', $array);
+        }
+    }
+    
     public function testWithColumnAndSelectColumns()
     {
         $c = new ModelCriteria('bookstore', 'Book');
