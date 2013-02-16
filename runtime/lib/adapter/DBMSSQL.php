@@ -166,7 +166,7 @@ class DBMSSQL extends DBAdapter
             $selectStatement = str_ireplace('distinct ', '', $selectStatement);
         }
 
-        // if we're starting at offset 0 then theres no need to simulate limit,
+        // if we're starting at offset 0 then theres no need to simulate LIMIT,
         // just grab the top $limit number of rows
         if ($offset == 0) {
             $sql = $selectText . 'TOP ' . $limit . ' ' . $selectStatement . ' FROM ' . $fromStatement;
@@ -179,11 +179,11 @@ class DBMSSQL extends DBAdapter
         $orders = '';
 
         if ($orderStatement !== false) {
-            //remove order statement from the from statement
+            //remove order statement from the FROM statement
             $fromStatement = trim(str_replace($orderStatement, '', $fromStatement));
 
             $order = str_ireplace('ORDER BY', '', $orderStatement);
-            $orders = explode(',', $order);
+            $orders = array_map('trim', explode(',', $order));
 
             for ($i = 0; $i < count($orders); $i ++) {
                 $orderArr[trim(preg_replace('/\s+(ASC|DESC)$/i', '', $orders[$i]))] = array(
