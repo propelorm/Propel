@@ -283,6 +283,8 @@ class ForeignKey extends XMLElement
 
     /**
      * Get the parent Table of the foreign key
+     *
+     * @return Table
      */
     public function getTable()
     {

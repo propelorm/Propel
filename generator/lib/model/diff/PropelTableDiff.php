@@ -114,7 +114,7 @@ class PropelTableDiff
     /**
      * Getter for the addedColumns property
      *
-     * @return array
+     * @return Column[]
      */
     public function getAddedColumns()
     {
@@ -534,7 +534,7 @@ class PropelTableDiff
      */
     public function removeRemovedFk($fkName)
     {
-        unset($this->removedFks[$columnName]);
+        unset($this->removedFks[$fkName]);
     }
 
     /**
@@ -578,6 +578,96 @@ class PropelTableDiff
     {
         return $this->modifiedFks;
     }
+
+
+    /**
+     * @return bool
+     */
+    public function hasModifiedFks()
+    {
+        return !!$this->modifiedFks;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasModifiedIndices()
+    {
+        return !!$this->modifiedIndices;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasModifiedColumns()
+    {
+        return !!$this->modifiedColumns;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasRemovedFks()
+    {
+        return !!$this->modifiedColumns;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasRemovedIndices()
+    {
+        return !!$this->removedIndices;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasRenamedColumns()
+    {
+        return !!$this->renamedColumns;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasRemovedColumns()
+    {
+        return !!$this->removedColumns;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasAddedColumns()
+    {
+        return !!$this->addedColumns;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasAddedIndices()
+    {
+        return !!$this->addedIndices;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasAddedFks()
+    {
+        return !!$this->addedFks;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasAddedPkColumns()
+    {
+        return !!$this->addedPkColumns;
+    }
+
 
     /**
      * Get the reverse diff for this diff
