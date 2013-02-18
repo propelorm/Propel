@@ -20,7 +20,7 @@ class SqlitePlatformTest extends PlatformTestProvider
     /**
      * Get the Platform object for this class
      *
-     * @return Platform
+     * @return DefaultPlatform
      */
     protected function getPlatform()
     {
@@ -75,15 +75,13 @@ DROP TABLE IF EXISTS [book];
 
 CREATE TABLE [book]
 (
-    [id] INTEGER NOT NULL PRIMARY KEY,
+    [id] INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     [title] VARCHAR(255) NOT NULL,
-    [author_id] INTEGER
+    [author_id] INTEGER,
+    FOREIGN KEY ([author_id]) REFERENCES author ([id])
 );
 
 CREATE INDEX [book_I_1] ON [book] ([title]);
-
--- SQLite does not support foreign keys; this is just for reference
--- FOREIGN KEY ([author_id]) REFERENCES author ([id])
 
 -----------------------------------------------------------------------
 -- author
@@ -93,7 +91,7 @@ DROP TABLE IF EXISTS [author];
 
 CREATE TABLE [author]
 (
-    [id] INTEGER NOT NULL PRIMARY KEY,
+    [id] INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     [first_name] VARCHAR(100),
     [last_name] VARCHAR(100)
 );
@@ -122,7 +120,7 @@ EOF;
 -- This is foo table
 CREATE TABLE [foo]
 (
-    [id] INTEGER NOT NULL PRIMARY KEY,
+    [id] INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     [bar] VARCHAR(255) NOT NULL
 );
 ";
@@ -174,7 +172,7 @@ CREATE TABLE [foo]
         $expected = "
 CREATE TABLE [foo]
 (
-    [id] INTEGER NOT NULL PRIMARY KEY,
+    [id] INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     [bar] INTEGER,
     UNIQUE ([bar])
 );
@@ -273,7 +271,7 @@ CREATE INDEX [babar] ON [foo] ([bar1],[bar2]);
 
 CREATE INDEX [foo_index] ON [foo] ([bar1]);
 ";
-        $this->assertEquals($expected, $this->getPLatform()->getAddIndicesDDL($table));
+        $this->assertEquals($expected, $this->getPlatform()->getAddIndicesDDL($table));
     }
 
     /**
@@ -284,7 +282,7 @@ CREATE INDEX [foo_index] ON [foo] ([bar1]);
         $expected = "
 CREATE INDEX [babar] ON [foo] ([bar1],[bar2]);
 ";
-        $this->assertEquals($expected, $this->getPLatform()->getAddIndexDDL($index));
+        $this->assertEquals($expected, $this->getPlatform()->getAddIndexDDL($index));
     }
 
     /**
@@ -295,7 +293,7 @@ CREATE INDEX [babar] ON [foo] ([bar1],[bar2]);
         $expected = "
 DROP INDEX [babar];
 ";
-        $this->assertEquals($expected, $this->getPLatform()->getDropIndexDDL($index));
+        $this->assertEquals($expected, $this->getPlatform()->getDropIndexDDL($index));
     }
 
     /**
@@ -304,7 +302,7 @@ DROP INDEX [babar];
     public function testGetIndexDDL($index)
     {
         $expected = 'INDEX [babar] ([bar1],[bar2])';
-        $this->assertEquals($expected, $this->getPLatform()->getIndexDDL($index));
+        $this->assertEquals($expected, $this->getPlatform()->getIndexDDL($index));
     }
 
     /**
@@ -322,13 +320,11 @@ DROP INDEX [babar];
     public function testGetAddForeignKeysDDL($table)
     {
         $expected = "
--- SQLite does not support foreign keys; this is just for reference
--- FOREIGN KEY ([bar_id]) REFERENCES bar ([id])
+--- SQLite does not support altering foreign keys directly; this is just for reference
 
--- SQLite does not support foreign keys; this is just for reference
--- FOREIGN KEY ([baz_id]) REFERENCES baz ([id])
+--- SQLite does not support altering foreign keys directly; this is just for reference
 ";
-        $this->assertEquals($expected, $this->getPLatform()->getAddForeignKeysDDL($table));
+        $this->assertEquals($expected, $this->getPlatform()->getAddForeignKeysDDL($table));
     }
 
     /**
@@ -337,10 +333,9 @@ DROP INDEX [babar];
     public function testGetAddForeignKeyDDL($fk)
     {
         $expected = "
--- SQLite does not support foreign keys; this is just for reference
--- FOREIGN KEY ([bar_id]) REFERENCES bar ([id])
+--- SQLite does not support altering foreign keys directly; this is just for reference
 ";
-        $this->assertEquals($expected, $this->getPLatform()->getAddForeignKeyDDL($fk));
+        $this->assertEquals($expected, $this->getPlatform()->getAddForeignKeyDDL($fk));
     }
 
     /**
@@ -349,7 +344,7 @@ DROP INDEX [babar];
     public function testGetDropForeignKeyDDL($fk)
     {
         $expected = '';
-        $this->assertEquals($expected, $this->getPLatform()->getDropForeignKeyDDL($fk));
+        $this->assertEquals($expected, $this->getPlatform()->getDropForeignKeyDDL($fk));
     }
 
     /**
@@ -357,11 +352,9 @@ DROP INDEX [babar];
      */
     public function testGetForeignKeyDDL($fk)
     {
-        $expected = "
--- SQLite does not support foreign keys; this is just for reference
--- FOREIGN KEY ([bar_id]) REFERENCES bar ([id])
-";
-        $this->assertEquals($expected, $this->getPLatform()->getForeignKeyDDL($fk));
+        $expected = "FOREIGN KEY ([bar_id]) REFERENCES bar ([id])
+    ON DELETE CASCADE";
+        $this->assertEquals($expected, $this->getPlatform()->getForeignKeyDDL($fk));
     }
 
     public function testGetCommentBlockDDL()
@@ -371,7 +364,7 @@ DROP INDEX [babar];
 -- foo bar
 -----------------------------------------------------------------------
 ";
-        $this->assertEquals($expected, $this->getPLatform()->getCommentBlockDDL('foo bar'));
+        $this->assertEquals($expected, $this->getPlatform()->getCommentBlockDDL('foo bar'));
     }
 
 }
