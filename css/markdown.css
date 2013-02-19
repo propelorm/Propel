@@ -69,6 +69,10 @@
   overflow-y:auto;
 }
 
+.gist pre {
+    color: #000;
+}
+
 .markdown blockquote {
   background: #F8F8FF;
   padding: 10px;
