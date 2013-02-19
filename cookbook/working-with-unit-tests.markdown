@@ -177,28 +177,29 @@ follows:
 class GeneratedObjectTest extends BookstoreTestBase
 {
 
-}
 [...]
 
-/**
- * Test saving object when only default values are set.
- */
-public function testSaveWithDefaultValues()
-{
-    // Relies on a default value of 'Penguin' specified in schema
-    // for publisher.name col.
+    /**
+     * Test saving object when only default values are set.
+     */
+    public function testSaveWithDefaultValues()
+    {
+        // Relies on a default value of 'Penguin' specified in schema
+        // for publisher.name col.
+        
+        $pub = new Publisher();
+        $pub->setName('Penguin');
+        // in the past this wouldn't have marked object as modified
+        // since 'Penguin' is the value that's already set for that attrib
+        $pub->save();
+        
+        // if getId() returns the new ID, then we know save() worked.
+        $this->assertNotNull($pub->getId(), "Expect Publisher->save() to work  with only default values.");
+    }
     
-    $pub = new Publisher();
-    $pub->setName('Penguin');
-    // in the past this wouldn't have marked object as modified
-    // since 'Penguin' is the value that's already set for that attrib
-    $pub->save();
-    
-    // if getId() returns the new ID, then we know save() worked.
-    $this->assertNotNull($pub->getId(), "Expect Publisher->save() to work  with only default values.");
-}
-
 [...]
+
+}
 
 ?>
 {% endhighlight %}
