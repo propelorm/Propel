@@ -12,6 +12,12 @@ require_once dirname(__FILE__) . '/../../tools/helpers/PlatformDatabaseBuildTime
 class Issue617Test extends PlatformDatabaseBuildTimeBase
 {
 
+    /**
+     * Contains the builder instance of the updated schema (removed FK)
+     * @var PropelQuickBuilder
+     */
+    private $updatedBuilder;
+
     protected function setUp()
     {
         parent::setUp();
@@ -33,9 +39,10 @@ class Issue617Test extends PlatformDatabaseBuildTimeBase
         $this->con->query('DROP TABLE IF EXISTS `issue617_group`');
     }
 
-    public function testForeignKey()
-    {
-        $this->readDatabase();
+    /**
+     * Setups the initial schema.
+     */
+    private function setupInitSchema(){
 
         /*
          * Create issue617 tables with foreign keys
@@ -109,6 +116,14 @@ SET FOREIGN_KEY_CHECKS = 1;
         $this->assertEquals($expected, $sql);
         $this->updateSchema($builder->getDatabase());
 
+    }
+
+    /**
+     * Drop the foreign key in the `_user` table and check whether it generates
+     * the correct `DROP` SQL.
+     */
+    private function dropForeignKey(){
+
         /*
          * Create issue617 tables without foreign keys
          */
@@ -136,11 +151,11 @@ SET FOREIGN_KEY_CHECKS = 1;
 </database>
 ';
 
-        $updatedBuilder = new PropelQuickBuilder();
-        $updatedBuilder->setPlatform($this->database->getPlatform());
-        $updatedBuilder->setSchema($updatedSchema);
+        $this->updatedBuilder = new PropelQuickBuilder();
+        $this->updatedBuilder->setPlatform($this->database->getPlatform());
+        $this->updatedBuilder->setSchema($updatedSchema);
 
-        $diff = PropelDatabaseComparator::computeDiff($this->database, $updatedBuilder->getDatabase());
+        $diff = PropelDatabaseComparator::computeDiff($this->database, $this->updatedBuilder->getDatabase());
         $sql = $this->database->getPlatform()->getModifyDatabaseDDL($diff);
 
         $expected = '
@@ -161,13 +176,17 @@ SET FOREIGN_KEY_CHECKS = 1;
 ';
 
         $this->assertEquals($expected, $sql);
-        $this->updateSchema($updatedBuilder->getDatabase());
+        $this->updateSchema($this->updatedBuilder->getDatabase());
+    }
 
-        /*
-         * Checks the FKs are really deleted.
-         */
+    /*
+     * Checks if FKs are really deleted.
+     */
+    private function checkDeletedFk(){
+
+
         $this->readDatabase();
-        $diff = PropelDatabaseComparator::computeDiff($this->database, $updatedBuilder->getDatabase());
+        $diff = PropelDatabaseComparator::computeDiff($this->database, $this->updatedBuilder->getDatabase());
         $sql = $this->database->getPlatform()->getModifyDatabaseDDL($diff);
 
         $expected = '
@@ -182,6 +201,20 @@ SET FOREIGN_KEY_CHECKS = 1;
 ';
 
         $this->assertEquals($expected, $sql);
+
+    }
+
+    /**
+     * Checks if a changed schema with removed FK does really delete the FK.
+     * Based on a real use-case, reverse classes and `computeDiff`.
+     */
+    public function testDropForeignKey()
+    {
+        $this->readDatabase();
+
+        $this->setupInitSchema();
+        $this->dropForeignKey();
+        $this->checkDeletedFk();
 
     }
 

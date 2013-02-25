@@ -64,7 +64,7 @@ class PlatformDatabaseBuildTimeBase extends PHPUnit_Framework_TestCase
      * Detects the differences between current connected database and $pDatabase
      * and updates the schema. This does not DROP tables.
      *
-     * @param $pDatabase
+     * @param  Database $pDatabase
      */
     public function updateSchema($pDatabase)
     {
@@ -86,6 +86,9 @@ class PlatformDatabaseBuildTimeBase extends PHPUnit_Framework_TestCase
     }
 }
 
+/*
+ * We needs this wrapper since `PropelConvertConfTask::simpleXmlToArray` is protected.
+ */
 class PlatformDatabaseBuildTimeBaseTask extends PropelConvertConfTask
 {
     public static function simpleXmlToArray($xml)
