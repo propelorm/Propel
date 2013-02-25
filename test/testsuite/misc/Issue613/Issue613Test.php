@@ -22,7 +22,7 @@ class Issue613Test extends BookstoreTestBase
      */
     private function getPreparedCriteriaObject()
     {
-        $tmpFile = sys_get_temp_dir().'propel-test-issue-613-serialized-object.tmp';
+        $tmpFile = sys_get_temp_dir().'/propel-test-issue-613-serialized-object.tmp';
         BookPeer::clearRelatedInstancePool();
         $criteria = new Criteria();
         $criteria->addSelectColumn(BookPeer::ID);
