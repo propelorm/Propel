@@ -16,7 +16,7 @@ class Issue613Test extends BookstoreTestBase
 {
 
     /**
-     * Creates a
+     * Creates a temp file with a serialized Criteria object.
      *
      * @return string The file path to the serialized Criteria
      */
@@ -33,6 +33,11 @@ class Issue613Test extends BookstoreTestBase
         return $tmpFile;
     }
 
+    /**
+     * Fires the given script and checks if it has been executed without error.
+     *
+     * @param string $pScript
+     */
     private function fireTestUnserialization($pScript)
     {
 
@@ -46,6 +51,9 @@ class Issue613Test extends BookstoreTestBase
         $this->assertEquals(0, $returnCode, 'The unserialization should work without exception.');
     }
 
+    /**
+     * The actual test.
+     */
     public function testUnserializeCriteria()
     {
         $this->fireTestUnserialization('unserialize_criteria.php');
