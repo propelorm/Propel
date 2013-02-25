@@ -153,8 +153,9 @@ propel.packageObjectModel = false
 #   tables and columns to be the same as SQL name.
 #
 # addVendorInfo
-#   If true, the reverse task will add vendor specific information
-#   to the database schema
+#   If true, the reverse task will add all vendor specific information
+#   to the database schema. Under `mysql` the `Engine` vendor information
+#   is always added.
 #
 # addValidators
 #   List of Validators that the reverse task may add to the schema
