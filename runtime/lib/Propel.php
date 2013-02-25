@@ -381,6 +381,33 @@ class Propel
         return self::$configuration->getParameters($type);
     }
 
+
+    /**
+     * This makes sure all model peers have registered their table to Propel's core.
+     * E.g. through a `unserialization` of a standalone Criteria it's not automatically
+     * known which tables belongs to which model classes.
+     *
+     * This call can be quite slow and can have a big memory consumption, since
+     * it autoLoads/parses all model class that belongs to the current database
+     * (defined through `Propel::setConfiguration` or `Propel::init`).
+     *
+     * If you know which tables (and their class name) are used in the Criteria,
+     * then you should better trigger only the appropriate `*Peer::buildTableMap()`
+     * to make the `table => model class` known. If not, this method is the only
+     * wait to make all `tables to model classes` relation available to Propel.
+     *
+     */
+    public static function buildAllTableMaps()
+    {
+        if (self::$configuration && self::$configuration['classmap']) {
+            foreach (self::$configuration['classmap'] as $class => $file) {
+                if (substr($class, -4) === 'Peer') {
+                    class_exists($class);
+                }
+            }
+        }
+    }
+
     /**
      * Override the configured logger.
      *
