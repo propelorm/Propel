@@ -181,10 +181,10 @@ EOF;
     {
         $table = new Table('foo');
         $column1 = new Column('bar1');
-        $column1->getDomain()->copy(new Domain('FOOTYPE'));
+        $column1->getDomain()->copy(new Domain('INTEGER'));
         $table->addColumn($column1);
         $column2 = new Column('bar2');
-        $column2->getDomain()->copy(new Domain('BARTYPE'));
+        $column2->getDomain()->copy(new Domain('INTEGER'));
         $table->addColumn($column2);
         $index = new Unique('babar');
         $index->addColumn($column1);
@@ -200,10 +200,10 @@ EOF;
     {
         $table = new Table('foo');
         $column1 = new Column('bar1');
-        $column1->getDomain()->copy(new Domain('FOOTYPE'));
+        $column1->getDomain()->copy(new Domain('INTEGER'));
         $table->addColumn($column1);
         $column2 = new Column('bar2');
-        $column2->getDomain()->copy(new Domain('BARTYPE'));
+        $column2->getDomain()->copy(new Domain('INTEGER'));
         $table->addColumn($column2);
         $index1 = new Index('babar');
         $index1->addColumn($column1);
@@ -222,10 +222,10 @@ EOF;
     {
         $table = new Table('foo');
         $column1 = new Column('bar1');
-        $column1->getDomain()->copy(new Domain('FOOTYPE'));
+        $column1->getDomain()->copy(new Domain('INTEGER'));
         $table->addColumn($column1);
         $column2 = new Column('bar2');
-        $column2->getDomain()->copy(new Domain('BARTYPE'));
+        $column2->getDomain()->copy(new Domain('INTEGER'));
         $table->addColumn($column2);
         $index = new Index('babar');
         $index->addColumn($column1);
@@ -253,11 +253,11 @@ EOF;
     {
         $table1 = new Table('foo');
         $column1 = new Column('bar_id');
-        $column1->getDomain()->copy(new Domain('FOOTYPE'));
+        $column1->getDomain()->copy(new Domain('INTEGER'));
         $table1->addColumn($column1);
         $table2 = new Table('bar');
         $column2 = new Column('id');
-        $column2->getDomain()->copy(new Domain('BARTYPE'));
+        $column2->getDomain()->copy(new Domain('INTEGER'));
         $table2->addColumn($column2);
         $fk = new ForeignKey('foo_bar_FK');
         $fk->setForeignTableCommonName('bar');
@@ -286,11 +286,11 @@ EOF;
         $table1 = new Table('foo');
 
         $column1 = new Column('bar_id');
-        $column1->getDomain()->copy(new Domain('FOOTYPE'));
+        $column1->getDomain()->copy(new Domain('INTEGER'));
         $table1->addColumn($column1);
         $table2 = new Table('bar');
         $column2 = new Column('id');
-        $column2->getDomain()->copy(new Domain('BARTYPE'));
+        $column2->getDomain()->copy(new Domain('INTEGER'));
         $table2->addColumn($column2);
 
         $fk = new ForeignKey('foo_bar_FK');
@@ -300,11 +300,11 @@ EOF;
         $table1->addForeignKey($fk);
 
         $column3 = new Column('baz_id');
-        $column3->getDomain()->copy(new Domain('BAZTYPE'));
+        $column3->getDomain()->copy(new Domain('INTEGER'));
         $table1->addColumn($column3);
         $table3 = new Table('baz');
         $column4 = new Column('id');
-        $column4->getDomain()->copy(new Domain('BAZTYPE'));
+        $column4->getDomain()->copy(new Domain('INTEGER'));
         $table3->addColumn($column4);
 
         $fk = new ForeignKey('foo_baz_FK');

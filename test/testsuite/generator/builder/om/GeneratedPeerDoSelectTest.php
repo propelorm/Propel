@@ -145,11 +145,11 @@ class GeneratedPeerDoSelectTest extends BookstoreEmptyTestBase
 
     public function testDoSelectJoinOneToOne()
     {
-        $con = Propel::getConnection();
+        $con = Propel::getConnection(BookPeer::DATABASE_NAME);
         $count = $con->getQueryCount();
         Propel::disableInstancePooling();
         $c = new Criteria();
-        $accs = BookstoreEmployeeAccountPeer::doSelectJoinBookstoreEmployee($c);
+        $accs = BookstoreEmployeeAccountPeer::doSelectJoinBookstoreEmployee($c, $con);
         Propel::enableInstancePooling();
         $this->assertEquals(1, $con->getQueryCount() - $count, 'doSelectJoin() makes only one query in a one-to-one relationship');
     }

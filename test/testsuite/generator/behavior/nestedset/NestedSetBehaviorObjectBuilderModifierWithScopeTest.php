@@ -117,13 +117,13 @@ class NestedSetBehaviorObjectBuilderModifierWithScopeTest extends BookstoreNeste
     {
         $this->initTreeWithScope();
         $t1 = $this->getByTitle('t1');
-        $this->assertNull($t1->getParent($this->con), 'getParent() return null for root nodes');
+        $this->assertNull($t1->getParent(), 'getParent() return null for root nodes');
         $t2 = $this->getByTitle('t2');
-        $this->assertEquals($t2->getParent($this->con), $t1, 'getParent() correctly retrieves parent for leafs');
+        $this->assertEquals($t2->getParent(), $t1, 'getParent() correctly retrieves parent for leafs');
         $t3 = $this->getByTitle('t3');
-        $this->assertEquals($t3->getParent($this->con), $t1, 'getParent() correctly retrieves parent for nodes');
+        $this->assertEquals($t3->getParent(), $t1, 'getParent() correctly retrieves parent for nodes');
         $t4 = $this->getByTitle('t4');
-        $this->assertEquals($t4->getParent($this->con), $t3, 'getParent() retrieves the same parent for nodes');
+        $this->assertEquals($t4->getParent(), $t3, 'getParent() retrieves the same parent for nodes');
     }
 
     public function testGetPrevSibling()
@@ -143,11 +143,11 @@ class NestedSetBehaviorObjectBuilderModifierWithScopeTest extends BookstoreNeste
          | \
          t9 t10
         */
-        $this->assertNull($t1->getPrevSibling($this->con), 'getPrevSibling() returns null for root nodes');
-        $this->assertNull($t2->getPrevSibling($this->con), 'getPrevSibling() returns null for first siblings');
-        $this->assertEquals($t3->getPrevSibling($this->con), $t2, 'getPrevSibling() correctly retrieves prev sibling');
-        $this->assertNull($t6->getPrevSibling($this->con), 'getPrevSibling() returns null for first siblings');
-        $this->assertEquals($t7->getPrevSibling($this->con), $t6, 'getPrevSibling() correctly retrieves prev sibling');
+        $this->assertNull($t1->getPrevSibling(), 'getPrevSibling() returns null for root nodes');
+        $this->assertNull($t2->getPrevSibling(), 'getPrevSibling() returns null for first siblings');
+        $this->assertEquals($t3->getPrevSibling(), $t2, 'getPrevSibling() correctly retrieves prev sibling');
+        $this->assertNull($t6->getPrevSibling(), 'getPrevSibling() returns null for first siblings');
+        $this->assertEquals($t7->getPrevSibling(), $t6, 'getPrevSibling() correctly retrieves prev sibling');
     }
 
     public function testGetNextSibling()
@@ -167,11 +167,11 @@ class NestedSetBehaviorObjectBuilderModifierWithScopeTest extends BookstoreNeste
          | \
          t9 t10
         */
-        $this->assertNull($t1->getNextSibling($this->con), 'getNextSibling() returns null for root nodes');
-        $this->assertEquals($t2->getNextSibling($this->con), $t3, 'getNextSibling() correctly retrieves next sibling');
-        $this->assertNull($t3->getNextSibling($this->con), 'getNextSibling() returns null for last siblings');
-        $this->assertEquals($t6->getNextSibling($this->con), $t7, 'getNextSibling() correctly retrieves next sibling');
-        $this->assertNull($t7->getNextSibling($this->con), 'getNextSibling() returns null for last siblings');
+        $this->assertNull($t1->getNextSibling(), 'getNextSibling() returns null for root nodes');
+        $this->assertEquals($t2->getNextSibling(), $t3, 'getNextSibling() correctly retrieves next sibling');
+        $this->assertNull($t3->getNextSibling(), 'getNextSibling() returns null for last siblings');
+        $this->assertEquals($t6->getNextSibling(), $t7, 'getNextSibling() correctly retrieves next sibling');
+        $this->assertNull($t7->getNextSibling(), 'getNextSibling() returns null for last siblings');
     }
 
     public function testGetDescendants()

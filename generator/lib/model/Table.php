@@ -1582,6 +1582,18 @@ class Table extends ScopedElement implements IDMethod
     }
 
     /**
+     * Removes a foreign key.
+     *
+     * @param ForeignKey $fk
+     */
+    public function removeForeignKey(ForeignKey $fk){
+        $idx = array_search($fk, $this->foreignKeys);
+        if ($idx !== false){
+            unset($this->foreignKeys[$idx]);
+        }
+    }
+
+    /**
      * Returns a Collection of parameters relevant for the chosen
      * id generation method.
      */
@@ -1601,7 +1613,7 @@ class Table extends ScopedElement implements IDMethod
 
     /**
      * Returns an Array containing all the UKs in the table
-     * @return array Unique[]
+     * @return Unique[]
      */
     public function getUnices()
     {
@@ -1878,7 +1890,7 @@ class Table extends ScopedElement implements IDMethod
      * Returns the collection of Columns which make up the single primary
      * key for this table.
      *
-     * @return array Column[] A list of the primary key parts.
+     * @return Column[] A list of the primary key parts.
      */
     public function getPrimaryKey()
     {

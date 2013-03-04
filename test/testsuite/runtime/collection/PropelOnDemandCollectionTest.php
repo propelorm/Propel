@@ -22,7 +22,7 @@ class PropelOnDemandCollectionTest extends BookstoreEmptyTestBase
     protected function setUp()
     {
         parent::setUp();
-        BookstoreDataPopulator::populate($this->con);
+        BookstoreDataPopulator::populate();
         Propel::disableInstancePooling();
         $this->books = PropelQuery::from('Book')->setFormatter(ModelCriteria::FORMAT_ON_DEMAND)->find();
     }

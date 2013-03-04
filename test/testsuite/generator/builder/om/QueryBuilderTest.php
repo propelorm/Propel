@@ -139,7 +139,7 @@ class QueryBuilderTest extends BookstoreTestBase
         $b = new Book();
         $b->setTitle('bar');
         $b->setIsbn('2342');
-        $b->save($this->con);
+        $b->save();
         $count = $this->con->getQueryCount();
 
         BookPeer::clearInstancePool();
@@ -154,7 +154,7 @@ class QueryBuilderTest extends BookstoreTestBase
         $b = new Book();
         $b->setTitle('foo');
         $b->setIsbn('2342');
-        $b->save($this->con);
+        $b->save();
         $count = $this->con->getQueryCount();
 
         $book = BookQuery::create()->findPk($b->getId(), $this->con);
@@ -198,7 +198,7 @@ class QueryBuilderTest extends BookstoreTestBase
         $b = new Book();
         $b->setTitle('foo');
         $b->setIsbn('2342');
-        $b->save($this->con);
+        $b->save();
         BookPeer::clearInstancePool();
 
         BookQuery::create()->findPk($b->getId(), $this->con);
@@ -214,7 +214,7 @@ class QueryBuilderTest extends BookstoreTestBase
         $b = new Book();
         $b->setTitle('foo');
         $b->setIsbn('2342');
-        $b->save($this->con);
+        $b->save();
         BookPeer::clearInstancePool();
 
         BookQuery::create()->findOneById($b->getId(), $this->con);
@@ -227,8 +227,10 @@ class QueryBuilderTest extends BookstoreTestBase
 
     public function testFindPkUsesFindPkComplexOnNonEmptyQueries()
     {
-        BookQuery::create('b')->findPk(123, $this->con);
-        $expected = 'SELECT book.id, book.title, book.isbn, book.price, book.publisher_id, book.author_id FROM `book` WHERE book.id=123';
+        BookQuery::create('b')->findPk(123);
+        $con = Propel::getConnection(BookPeer::DATABASE_NAME);
+        $q = $con instanceof DBMySQL ? '`' : '';
+        $expected = "SELECT book.id, book.title, book.isbn, book.price, book.publisher_id, book.author_id FROM {$q}book{$q} WHERE book.id=123";
         $this->assertEquals($expected, $this->con->getLastExecutedQuery());
     }
 
@@ -237,7 +239,7 @@ class QueryBuilderTest extends BookstoreTestBase
         $b = new Book();
         $b->setTitle('foo');
         $b->setIsbn('2345');
-        $b->save($this->con);
+        $b->save();
         BookPeer::clearInstancePool();
 
         BookQuery::create('b')->findPk($b->getId(), $this->con);
@@ -658,22 +660,22 @@ class QueryBuilderTest extends BookstoreTestBase
 
     public function testFilterByFkObjectCollection()
     {
-        BookstoreDataPopulator::depopulate($this->con);
-        BookstoreDataPopulator::populate($this->con);
+        BookstoreDataPopulator::depopulate();
+        BookstoreDataPopulator::populate();
 
         $authors = AuthorQuery::create()
             ->orderByFirstName()
             ->limit(2)
-            ->find($this->con);
+            ->find();
 
         $books = BookQuery::create()
             ->filterByAuthor($authors)
-            ->find($this->con);
+            ->find();
         $q1 = $this->con->getLastExecutedQuery();
 
         $books = BookQuery::create()
             ->add(BookPeer::AUTHOR_ID, $authors->getPrimaryKeys(), Criteria::IN)
-            ->find($this->con);
+            ->find();
         $q2 = $this->con->getLastExecutedQuery();
 
         $this->assertEquals($q2, $q1, 'filterByFk() accepts a collection and results to an IN query');
@@ -720,18 +722,18 @@ class QueryBuilderTest extends BookstoreTestBase
 
         $testLabel = RecordLabelQuery::create()
             ->limit(2)
-            ->find($this->con);
+            ->find();
 
         $testRelease = ReleasePoolQuery::create()
             ->addJoin(ReleasePoolPeer::RECORD_LABEL_ID, RecordLabelPeer::ID)
             ->filterByRecordLabel($testLabel)
-            ->find($this->con);
+            ->find();
         $q1 = $this->con->getLastExecutedQuery();
 
         $releasePool = ReleasePoolQuery::create()
             ->addJoin(ReleasePoolPeer::RECORD_LABEL_ID, RecordLabelPeer::ID)
             ->add(ReleasePoolPeer::RECORD_LABEL_ID, $testLabel->toKeyValue('Id', 'Id'), Criteria::IN)
-            ->find($this->con);
+            ->find();
         $q2 = $this->con->getLastExecutedQuery();
 
         $this->assertEquals($q2, $q1, 'filterBy{RelationName}() only accepts arguments of type {RelationName} or PropelCollection');
@@ -758,23 +760,23 @@ class QueryBuilderTest extends BookstoreTestBase
 
     public function testFilterByRefFkObjectCollection()
     {
-        BookstoreDataPopulator::depopulate($this->con);
-        BookstoreDataPopulator::populate($this->con);
+        BookstoreDataPopulator::depopulate();
+        BookstoreDataPopulator::populate();
 
         $books = BookQuery::create()
             ->orderByTitle()
             ->limit(2)
-            ->find($this->con);
+            ->find();
 
         $authors = AuthorQuery::create()
             ->filterByBook($books)
-            ->find($this->con);
+            ->find();
         $q1 = $this->con->getLastExecutedQuery();
 
         $authors = AuthorQuery::create()
             ->addJoin(AuthorPeer::ID, BookPeer::AUTHOR_ID, Criteria::LEFT_JOIN)
             ->add(BookPeer::ID, $books->getPrimaryKeys(), Criteria::IN)
-            ->find($this->con);
+            ->find();
         $q2 = $this->con->getLastExecutedQuery();
 
         $this->assertEquals($q2, $q1, 'filterByRefFk() accepts a collection and results to an IN query in the joined table');
