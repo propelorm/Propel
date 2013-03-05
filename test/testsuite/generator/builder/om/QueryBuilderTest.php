@@ -1090,7 +1090,7 @@ class QueryBuilderTest extends BookstoreTestBase
         $b->save();
         
         require_once dirname(__FILE__) . '/fixtures/MyBookExtended.php';
-        Propel::disableInstancePooling(); // need to be disabled to test the hydrate() method
+        BookExtendedPeer::clearInstancePool(); //clear saved object
         
         $book = BookExtendedQuery::create()->findPk($b->getPrimaryKey());
         $this->assertEquals('MyBookExtended', get_class($book), 'findPKSimple returns object of getOMClass() type');
