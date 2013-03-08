@@ -15,7 +15,7 @@ class ChangeOmClassBehavior extends Behavior
     {
         $getOMClass = <<<EOF
 \\1
-    static public function getOMClass()
+    static public function getOMClass(\$row = 0, \$colnum = 0)
     {
         return 'MyBookExtended';
     }
