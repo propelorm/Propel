@@ -27,6 +27,13 @@ class PropelQuery
         list($class, $alias) = ModelCriteria::getClassAndAlias($queryClassAndAlias);
         $queryClass = $class . 'Query';
         if (!class_exists($queryClass)) {
+            //try with getOMClass
+            if(class_exists($class) && defined($class.'::PEER')){
+                $peerClass = $class::PEER;
+                $queryClass = substr($peerClass,0,-4).'Query';
+            }
+        }
+        if (!class_exists($queryClass)) {
             throw new PropelException('Cannot find a query class for ' . $class);
         }
         $query = new $queryClass();
