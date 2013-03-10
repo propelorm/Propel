@@ -89,6 +89,8 @@ SET FOREIGN_KEY_CHECKS = 0;
 
 DROP TABLE IF EXISTS `book`;
 
+DROP TABLE IF EXISTS `foo`;
+
 CREATE TABLE `issue617_user`
 (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
@@ -165,6 +167,8 @@ SET FOREIGN_KEY_CHECKS = 0;
 
 DROP TABLE IF EXISTS `book`;
 
+DROP TABLE IF EXISTS `foo`;
+
 ALTER TABLE `issue617_user` DROP FOREIGN KEY `issue617_user_FK_1`;
 
 DROP INDEX `issue617_user_FI_1` ON `issue617_user`;
@@ -195,6 +199,8 @@ SET FOREIGN_KEY_CHECKS = 1;
 SET FOREIGN_KEY_CHECKS = 0;
 
 DROP TABLE IF EXISTS `book`;
+
+DROP TABLE IF EXISTS `foo`;
 
 # This restores the fkey checks, after having unset them earlier
 SET FOREIGN_KEY_CHECKS = 1;

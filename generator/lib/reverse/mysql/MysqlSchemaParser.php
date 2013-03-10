@@ -203,7 +203,7 @@ class MysqlSchemaParser extends BaseSchemaParser
                 $sqlType = $row['Type'];
             }
             foreach (self::$defaultTypeSizes as $type => $defaultSize) {
-                if ($nativeType == $type && $size == $defaultSize) {
+                if ($nativeType == $type && $size == $defaultSize && $scale === null) {
                     $size = null;
                     continue;
                 }
