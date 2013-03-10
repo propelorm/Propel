@@ -1083,6 +1083,18 @@ class QueryBuilderTest extends BookstoreTestBase
         $nbBookListRel = BookListRelQuery::create()->prune($testBookListRel)->count();
         $this->assertEquals(1, $nbBookListRel, 'prune() removes an object from the result');
     }
+    
+    public function testfindPkSimpleUsesGetOmClass()
+    {
+        $b = new BookExtended();
+        $b->save();
+        
+        require_once dirname(__FILE__) . '/fixtures/MyBookExtended.php';
+        BookExtendedPeer::clearInstancePool(); //clear saved object
+        
+        $book = BookExtendedQuery::create()->findPk($b->getPrimaryKey());
+        $this->assertEquals('MyBookExtended', get_class($book), 'findPKSimple returns object of getOMClass() type');
+    }
 }
 
 class myCustomBookQuery extends BookQuery

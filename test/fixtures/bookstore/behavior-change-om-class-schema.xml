@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<database name="bookstore-behavior" defaultIdMethod="native" package="behavior.change_om_class">
+
+	<table name="book_extended">
+		<column name="id" type="INTEGER" primaryKey="true" autoIncrement="true" />
+		<behavior name="change_om_class" />
+	</table>
+	
+</database>

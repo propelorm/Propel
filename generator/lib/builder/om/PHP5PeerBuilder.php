@@ -1270,7 +1270,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . "
         } else {";
         if (!$table->getChildrenColumn()) {
             $script .= "
-            \$cls = ".$this->getPeerClassname()."::OM_CLASS;";
+            \$cls = ".$this->getPeerClassname()."::getOMClass();";
         } else {
             $script .= "
             \$cls = ".$this->getPeerClassname()."::getOMClass(\$row, \$startcol);";

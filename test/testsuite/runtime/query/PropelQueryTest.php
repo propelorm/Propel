@@ -41,6 +41,11 @@ class PropelQueryTest extends BookstoreTestBase
         } catch (PropelException $e) {
             $this->assertTrue(true, 'PropelQuery::from() throws an exception when called on a non-existing query class');
         }
+        
+        require_once dirname(__FILE__) . '/../../../testsuite/generator/builder/om/fixtures/MyBookExtended.php';
+        $q = PropelQuery::from('myBookExtended');
+        $expected = new BookExtendedQuery();
+        $this->assertEquals($expected, $q, 'from() can find query classes when Peer::getOMClass is changed');
     }
 
     public function testQuery()

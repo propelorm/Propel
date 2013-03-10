@@ -544,13 +544,13 @@ abstract class ".$this->getClassname()." extends " . $parentClass . "
 
         if ($col = $table->getChildrenColumn()) {
             $script .="
-            \$cls = {$peerClassname}::getOMClass(\$row, 0);
-            \$obj = new \$cls();";
+            \$cls = {$peerClassname}::getOMClass(\$row, 0);";
         } else {
             $script .="
-            \$obj = new $ARClassname();";
+            \$cls = {$peerClassname}::getOMClass();";
         }
         $script .= "
+            \$obj = new \$cls();
             \$obj->hydrate(\$row);
             {$peerClassname}::addInstanceToPool(\$obj, $pkHashFromRow);
         }
