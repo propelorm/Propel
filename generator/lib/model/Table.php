@@ -118,14 +118,14 @@ class Table extends ScopedElement implements IDMethod
     private $idMethod;
 
     /**
-     * Wether an INSERT with set PK is allowed on tables with IDMethod::NATIVE
+     * Whether an INSERT with set PK is allowed on tables with IDMethod::NATIVE
      *
      * @var       boolean
      */
     private $allowPkInsert;
 
     /**
-     * Strategry to use for converting column name to phpName.
+     * Strategy to use for converting column name to phpName.
      *
      * @var       string
      */
@@ -1679,7 +1679,7 @@ class Table extends ScopedElement implements IDMethod
 
     /**
      * Return the foreign keys that includes col in it's list of local columns.
-     * Eg. Foreign key (a,b,c) refrences tbl(x,y,z) will be returned of col is either a,b or c.
+     * Eg. Foreign key (a,b,c) references tbl(x,y,z) will be returned of col is either a,b or c.
      * @param  string $col
      * @return array  ForeignKey[] or null if there is no FK for specified column.
      */
@@ -1748,7 +1748,7 @@ class Table extends ScopedElement implements IDMethod
 
     /**
      * Flag to determine if tree node class should be generated for this table.
-     * @return valur of treeMode
+     * @return value of treeMode
      */
     public function treeMode()
     {

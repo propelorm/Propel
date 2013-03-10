@@ -11,7 +11,7 @@
 include_once 'phing/system/io/Reader.php';
 
 /**
- * Overrides Phing's StringReader to allow inclusin inside a BufferedReader
+ * Overrides Phing's StringReader to allow inclusion inside a BufferedReader
  *
  * @author     François Zaninotto
  * @version    $Revision$

@@ -240,7 +240,7 @@ class SortableBehaviorObjectBuilderModifierTest extends BookstoreSortableTestBas
     {
         $t3 = Table11Peer::retrieveByRank(3);
         $res = $t3->moveToTop();
-        $this->assertEquals($t3, $res, 'moveToTop() returns the current oobject');
+        $this->assertEquals($t3, $res, 'moveToTop() returns the current object');
         $expected = array(1 => 'row3', 2 => 'row1', 3 => 'row2', 4 => 'row4');
         $this->assertEquals($expected, $this->getFixturesArray(), 'moveToTop() moves to the top');
         $res = $t3->moveToTop();

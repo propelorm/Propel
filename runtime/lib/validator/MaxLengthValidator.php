@@ -21,7 +21,7 @@
  *   <column name="username" type="VARCHAR" size="25" required="true" />
  *
  *   <validator column="username">
- *     <rule name="maxLength" message="Passwort must be at least ${value} characters !" />
+ *     <rule name="maxLength" message="Password must be at least ${value} characters !" />
  *   </validator>
  * </code>
  *

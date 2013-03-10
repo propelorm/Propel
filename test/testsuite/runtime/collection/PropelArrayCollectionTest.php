@@ -102,7 +102,7 @@ class PropelArrayCollectionTest extends BookstoreEmptyTestBase
         $author->save();
         $books = array(
             array('Title' => 'Mansfield Park', 'ISBN' => '234', 'AuthorId' => $author->getId()),
-            array('Title' => 'Pride And PRejudice', 'ISBN' => '124', 'AuthorId' => $author->getId())
+            array('Title' => 'Pride And Prejudice', 'ISBN' => '124', 'AuthorId' => $author->getId())
         );
         $col = new PropelArrayCollection();
         $col->setModel('Book');

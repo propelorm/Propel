@@ -143,7 +143,7 @@ class ModelCriteriaTest extends BookstoreTestBase
         $params = array(
             array('table' => 'book', 'column' => 'title', 'value' => 'foo'),
         );
-        $this->assertCriteriaTranslation($c, $sql, $params, 'setModelAlias() allows the definition of the alias after constrution');
+        $this->assertCriteriaTranslation($c, $sql, $params, 'setModelAlias() allows the definition of the alias after construction');
 
         $c = new ModelCriteria('bookstore', 'Book', 'b');
         $c->where('b.Title = ?', 'foo');
@@ -168,7 +168,7 @@ class ModelCriteriaTest extends BookstoreTestBase
             array('table' => 'book', 'column' => 'title', 'value' => 'foo'),
             array('table' => 'author', 'column' => 'first_name', 'value' => 'john'),
         );
-        $this->assertCriteriaTranslation($c, $sql, $params, 'setModelAlias() allows the definition of a true SQL alias after constrution');
+        $this->assertCriteriaTranslation($c, $sql, $params, 'setModelAlias() allows the definition of a true SQL alias after construction');
     }
 
     public function testCondition()
@@ -403,7 +403,7 @@ class ModelCriteriaTest extends BookstoreTestBase
         $params =  array(
             array('table' => 'book', 'column' => 'title', 'value' => 'foo'),
         );
-        $this->assertCriteriaTranslation($c, $sql, $params, 'filterBy() accepts a sicustom comparator');
+        $this->assertCriteriaTranslation($c, $sql, $params, 'filterBy() accepts a custom comparator');
 
         $c = new ModelCriteria('bookstore', 'Book', 'b');
         $c->filterBy('Title', 'foo');
@@ -1365,7 +1365,7 @@ class ModelCriteriaTest extends BookstoreTestBase
         $c->withColumn('UPPER(Book.isbn)', 'isbn');
         $sql = 'SELECT book.id, UPPER(book.title) AS foo, UPPER(book.isbn) AS isbn FROM `book`';
         $params = array();
-        $this->assertCriteriaTranslation($c, $sql, $params, 'withColumn() called repeatedly adds several as colums');
+        $this->assertCriteriaTranslation($c, $sql, $params, 'withColumn() called repeatedly adds several as columns');
     }
 
     public function testKeepQuery()

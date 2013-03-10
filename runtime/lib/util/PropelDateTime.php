@@ -12,7 +12,7 @@
  * DateTime subclass which supports serialization.
  *
  * Currently Propel is not using this for storing date/time objects
- * within model objeects; however, we are keeping it in the repository
+ * within model objects; however, we are keeping it in the repository
  * because it is useful if you want to store a DateTime object in a session.
  *
  * @author     Alan Pinstein

@@ -71,7 +71,7 @@ class TypeValidator implements BasicValidator
                 return function_exists($value);
                 break;
             default:
-                throw new PropelException('Unkonwn type ' . $map->getValue());
+                throw new PropelException('Unknown type ' . $map->getValue());
                 break;
         }
     }

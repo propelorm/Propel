@@ -237,7 +237,7 @@ class DBMSSQL extends DBAdapter
                 $innerSelect .= $selColArr[0] . ' AS ' . $alias . ', ';
                 $outerSelect .= $alias . ', ';
             } else {
-                //agregate columns must always have an alias clause
+                //aggregate columns must always have an alias clause
                 if (! stristr($selCol, ' AS ')) {
                     throw new Exception('DBMSSQL::applyLimit() requires aggregate columns to have an Alias clause');
                 }

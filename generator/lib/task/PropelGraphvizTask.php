@@ -41,7 +41,7 @@ class PropelGraphvizTask extends AbstractPropelDataModelTask
 
     /**
      * Set the sqldbmap.
-     * @param PhingFile $sqldbmap The db map.
+     * @param PhingFile $out The db map.
      */
     public function setOutputDirectory(PhingFile $out)
     {

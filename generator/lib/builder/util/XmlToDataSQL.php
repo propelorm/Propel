@@ -82,7 +82,7 @@ class XmlToDataSQL extends AbstractHandler
     public $parser;
 
     /**
-     * Flag for enabing debug output to aid in parser tracing.
+     * Flag for enabling debug output to aid in parser tracing.
      */
     const DEBUG = false;
 

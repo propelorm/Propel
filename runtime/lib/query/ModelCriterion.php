@@ -22,11 +22,12 @@ class ModelCriterion extends Criterion
     /**
      * Create a new instance.
      *
-     * @param Criteria  $parent      The outer class (this is an "inner" class).
+     * @param Criteria  $outer       The outer class (this is an "inner" class).
      * @param ColumnMap $column      A Column object to help escaping the value
      * @param mixed     $value
      * @param string    $comparison, among ModelCriteria::MODEL_CLAUSE
      * @param string    $clause      A simple pseudo-SQL clause, e.g. 'foo.BAR LIKE ?'
+     * @param string    $type
      */
     public function __construct(Criteria $outer, $column, $value = null, $comparison = ModelCriteria::MODEL_CLAUSE, $clause, $type = null)
     {
@@ -57,7 +58,7 @@ class ModelCriterion extends Criterion
     }
 
     /**
-     * Figure out which MocelCriterion method to use
+     * Figure out which ModelCriterion method to use
      * to build the prepared statement and parameters using to the Criterion comparison
      * and call it to append the prepared statement and the parameters of the current clause.
      * For performance reasons, this method tests the cases of parent::dispatchPsHandling()
@@ -275,9 +276,9 @@ class ModelCriterion extends Criterion
         }
 
         foreach ($this->clauses as $clause) {
-            // TODO: i KNOW there is a php incompatibility with the following line
-            // but i dont remember what it is, someone care to look it up and
-            // replace it if it doesnt bother us?
+            // TODO: I KNOW there is a php incompatibility with the following line
+            // but I don't remember what it is, someone care to look it up and
+            // replace it if it doesn't bother us?
             // $clause->appendPsTo($sb='',$params=array());
             $sb = '';
             $params = array();

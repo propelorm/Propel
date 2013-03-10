@@ -6,7 +6,7 @@
 # This file contains some example properties.  Ideally properties
 # should be specified in the project-specific build.properties file;
 # however, this file can be used to specify non-default properties
-# that you would like to use accross all of your Propel projects.
+# that you would like to use across all of your Propel projects.
 # -------------------------------------------------------------------
 #
 
@@ -19,7 +19,7 @@ propel.home = .
 # -------------------------------------------------------------------
 # This is the name of your Propel project. The name of your Propel
 # project is used (by default) to determine where the generator will
-# find needed configuration files and will place resuilting build
+# find needed configuration files and will place resulting build
 # files. E.g. if your project is named 'killerapp', Propel will
 # look here for schema.xml and runtime-conf.xml files:
 #
@@ -27,7 +27,7 @@ propel.home = .
 #
 # -------------------------------------------------------------------
 
-# You can set this here, but it's preferrable to set this in a
+# You can set this here, but it's preferable to set this in a
 # project-specific build.properties file.
 #
 # propel.project = bookstore
@@ -43,7 +43,7 @@ propel.home = .
 #   mssql, mysql, oracle, pgsql, sqlite
 # -------------------------------------------------------------------
 
-# You can set this here, but it's preferrable to set this in a
+# You can set this here, but it's preferable to set this in a
 # project-specific build.properties file.
 #
 # propel.database = mysql
@@ -73,7 +73,7 @@ propel.home = .
 #
 # complexObjectModel
 #   If true, Propel generates data objects with collection support and
-#   methods to easily retreive foreign key relationships.
+#   methods to easily retrieve foreign key relationships.
 #
 # targetPackage
 #   Sets the PHP "package" the om files will generated to, e.g.
@@ -111,10 +111,10 @@ propel.packageObjectModel = false
 #
 # -------------------------------------------------------------------
 # PDO connection settings. These connection settings are used by
-# build tagets that perform database operations (e.g. 'insert-sql',
+# build targets that perform database operations (e.g. 'insert-sql',
 # 'reverse').
 #
-# You can set them here, but it's preferrable to set these properties
+# You can set them here, but it's preferable to set these properties
 # in a project-specific build.properties file.
 #
 
@@ -124,7 +124,7 @@ propel.packageObjectModel = false
 # propel.database.driver = creole.drivers.sqlite.SQLiteConnection
 
 # Note that if you do not wish to specify the database (e.g. if you
-# are using multiple databses) you can use the @DB@ token which
+# are using multiple databases) you can use the @DB@ token which
 # will be replaced with a database at runtime.
 #
 # propel.database.url = mysql:host=$host;dbname=$database
@@ -136,7 +136,7 @@ propel.packageObjectModel = false
 # Use the URL below to specify a DSN to used to create the database.
 # Note that this URL should not contain the database name, as you will
 # get an error if the database does not exist.
-# (This does not apply to SQLite since the databse is automatically created
+# (This does not apply to SQLite since the database is automatically created
 # when the connection is made -- if it does not already exist.)
 #
 # propel.database.createUrl = mysql:host=$host;dbname=$database
