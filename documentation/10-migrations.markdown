@@ -21,18 +21,18 @@ The workflow of Propel migrations is very simple:
 
 Here is a concrete example. On a new bookstore project, a developer creates an XML schema with a single `book` table:
 
-{% highlight xml %}
+```xml
 <database name="bookstore" defaultIdMethod="native">
   <table name="book" description="Book Table">
     <column name="id" type="INTEGER" primaryKey="true" autoIncrement="true" />    <column name="title" type="VARCHAR" required="true" primaryString="true" />
     <column name="isbn" required="true" type="VARCHAR" size="24" phpName="ISBN" />
   </table>
 </database>
-{% endhighlight %}
+```
 
 The developer then calls the `diff` task to ask Propel to compare the database structure and the XML schema:
 
-{% highlight text %}
+```text
 > propel-gen diff
 
 [propel-sql-diff] Reading databases structure...
@@ -44,11 +44,11 @@ The developer then calls the `diff` task to ask Propel to compare the database s
 [propel-sql-diff] "PropelMigration_1286483354.php" file successfully created in /path/to/project/build/migrations
 [propel-sql-diff]   Please review the generated SQL statements, and add data migration code if necessary.
 [propel-sql-diff]   Once the migration class is valid, call the "migrate" task to execute it.
-{% endhighlight %}
+```
 
 It is recommended to review the generated migration class to check the generated SQL code. It contains two methods, `getUpSQL()` and `getDownSQL()`, allowing to migrate the database structure to match the updated schema, and back:
 
-{% highlight php %}
+```php
 <?php
 /**
  * Data object containing the SQL and PHP code to migrate the database
@@ -80,31 +80,31 @@ DROP TABLE IF EXISTS `book`;
 );
 	}
 }
-{% endhighlight %}
+```
 
 >**Tip**<br />On a project using version control, it is important to commit the migration classes to the code repository. That way, other developers checking out the project will just have to run the same migrations to get a database in a similar state.
 
 Now, to actually create the `book` table in the database, the developer has to call the `migrate` task:
 
-{% highlight text %}
+```text
 > propel-gen migrate
 
 [propel-migration] Executing migration PropelMigration_1286483354 up
 [propel-migration] 1 of 1 SQL statements executed successfully on datasource "bookstore"
 [propel-migration] Migration complete. No further migration to execute.
-{% endhighlight %}
+```
 
 The `book` table is now created in the database. It can be populated with data.
 
 Finally, in order to use the newly added table in application development, the developer has to call the `om` task to generate the updated object model classes:
 
-{% highlight text %}
+```text
 > propel-gen om
-{% endhighlight %}
+```
 
 After a few days, the developer wants to add a new `author` table, with a foreign key in the `book` table. The schema is modified as follows:
 
-{% highlight xml %}
+```xml
 <database name="bookstore" defaultIdMethod="native">
   <table name="book" description="Book Table">
     <column name="id" type="INTEGER" primaryKey="true" autoIncrement="true" />
@@ -121,11 +121,11 @@ After a few days, the developer wants to add a new `author` table, with a foreig
     <column name="last_name" type="VARCHAR" />
   </table>
 </database>
-{% endhighlight %}
+```
 
 In order to update the database structure accordingly, the process is the same:
 
-{% highlight text %}
+```text
 > propel-gen diff
 
 [propel-sql-diff] Reading databases structure...
@@ -143,11 +143,11 @@ In order to update the database structure accordingly, the process is the same:
 [propel-migration] Executing migration PropelMigration_1286484196 up
 [propel-migration] 4 of 4 SQL statements executed successfully on datasource "bookstore"
 [propel-migration] Migration complete. No further migration to execute.
-{% endhighlight %}
+```
 
 Propel has executed the `PropelMigration_1286484196::getUpSQL()` code, which alters the `book` structure _without removing data_:
 
-{% highlight sql %}
+```sql
 ALTER TABLE `book` ADD
 (
 	`author_id` INTEGER
@@ -168,13 +168,13 @@ CREATE TABLE `author`
 	`last_name` VARCHAR(255),
 	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB;
-{% endhighlight %}
+```
 
 >**Tip**<br />`diff` and `migrate` often come one after the other, so you may want to execute them both in one call. That's possible, provided that the first argument of the `propel-gen` script is the path to the current project:
 
-{% highlight text %}
+```text
 > propel-gen . diff migrate
-{% endhighlight %}
+```
 
 ## Migration Tasks ##
 
@@ -184,33 +184,33 @@ The two basic migration tasks are `diff` and `migrate` - you already know them. 
 
 In the previous example, two migrations were executed. But the developer now wants to revert the last one. The `down` task provides exactly this feature: it reverts only one migration.
 
-{% highlight text %}
+```text
 > propel-gen down
 
 [propel-migration-down] Executing migration PropelMigration_1286484196 down
 [propel-migration-down] 4 of 4 SQL statements executed successfully on datasource "bookstore"
 [propel-migration-down] Reverse migration complete. 1 more migrations available for reverse.
-{% endhighlight %}
+```
 
 Notice that the `PropelMigration_1286484196` was executed _down_, not _up_ like the previous time. You can call this command several times to continue reverting the database structure, up to its original state:
 
-{% highlight text %}
+```text
 > propel-gen down
 
 [propel-migration-down] Executing migration PropelMigration_1286483354 down
 [propel-migration-down] 1 of 1 SQL statements executed successfully on datasource "bookstore"
 [propel-migration-down] Reverse migration complete. No more migration available for reverse
-{% endhighlight %}
+```
 
 As you may have guessed, the `up` task does exactly the opposite: it executes the next migration up:
 
-{% highlight text %}
+```text
 > propel-gen up
 
 [propel-migration-up] Executing migration PropelMigration_1286483354 up
 [propel-migration-up] 1 of 1 SQL statements executed successfully on datasource "bookstore"
 [propel-migration-up] Migration complete. 1 migrations left to execute.
-{% endhighlight %}
+```
 
 >**Tip**<br />The difference between the `up` and `migrate` tasks is that `up` executes only one migration, while `migrate` executes all the migrations that were not yet executed.
 
@@ -220,7 +220,7 @@ If you followed the latest example, you may notice that the schema and the datab
 
 For these situations, Propel provides the `status` task. It simply lists the migrations not yet executed, to help you understand where you are in the migration process.
 
-{% highlight text %}
+```text
 > propel-gen status
 
 [propel-migration-status] Checking Database Versions...
@@ -228,11 +228,11 @@ For these situations, Propel provides the `status` task. It simply lists the mig
 [propel-migration-status] 1 migration needs to be executed:
 [propel-migration-status]    PropelMigration_1286484196
 [propel-migration-status] Call the "migrate" task to execute it
-{% endhighlight %}
+```
 
 >**Tip**<br />Like all other Propel tasks, `status` offers a "verbose" mode, where the CLI output shows a lot more details. Add `-verbose` at the end of the call to enable it - but remember to add the path to the project as first argument:
 
-{% highlight text %}
+```text
 > propel-gen . status -verbose
 [propel-migration-status] Checking Database Versions...
 [propel-migration-status] Connecting to database "bookstore" using DSN "mysql:dbname=bookstore"
@@ -243,7 +243,7 @@ For these situations, Propel provides the `status` task. It simply lists the mig
 [propel-migration-status]  > PropelMigration_1286483354 (executed)
 [propel-migration-status]    PropelMigration_1286484196
 [propel-migration-status] Call the "migrate" task to execute it
-{% endhighlight %}
+```
 
 `up`, `down`, and `status` will help you to find your way in migration files, especially when they become numerous or when you need to revert more than one.
 
@@ -255,7 +255,7 @@ The Propel `diff` task creates migration class names (like `PropelMigration_1286
 
 Propel creates a special table in the database, where it keeps the date of the latest executed migration. That way, by comparing the available migrations and the date of the latest ones, Propel can determine the next migration to execute.
 
-{% highlight text %}
+```text
 mysql> select * from propel_migration;
 +------------+
 | version    |
@@ -263,7 +263,7 @@ mysql> select * from propel_migration;
 | 1286483354 |
 +------------+
 1 row in set (0.00 sec)
-{% endhighlight %}
+```
 
 So don't be surprised if your database show a `propel_migration` table that you never added to your schema - this is the Propel migration table. Propel doesn't use this table at runtime, and it never contains more than one line, so it should not bother you.
 
@@ -271,7 +271,7 @@ So don't be surprised if your database show a `propel_migration` table that you 
 
 The migration tasks support customization through a few settings from `build.properties`:
 
-{% highlight ini %}
+```ini
 # Name of the table Propel creates to keep the latest migration date
 propel.migration.table = propel_migration
 # Whether the comparison between the XML schema and the database structure
@@ -279,13 +279,13 @@ propel.migration.table = propel_migration
 propel.migration.caseInsensitive = true
 # The directory where migration classes are generated and looked for
 propel.migration.dir = ${propel.output.dir}/migrations
-{% endhighlight %}
+```
 
 >**Tip**<br />The `diff` task supports an additional parameter, called `propel.migration.editor`, which specifies a text editor to be automatically launched at the end of the task to review the generated migration. Unfortunately, only editors launched in another window are accepted due to a Phing limitation. Mac users will find it useful, though:
 
-{% highlight text %}
+```text
 > propel-gen . diff -Dpropel.migration.editor=mate
-{% endhighlight %}
+```
 
 ## Migrating Data ##
 
@@ -297,7 +297,7 @@ Each of these methods receive a `PropelMigrationManager` instance, which is a go
 
 Here is an example implementation of data migration:
 
-{% highlight php %}
+```php
 <?php
 class PropelMigration_1286483354
 {
@@ -327,13 +327,13 @@ ALTER TABLE `book` ADD
 		$stmt->execute();
 	}
 }
-{% endhighlight %}
+```
 
 >**Tip**<br />If you return `false` in the `preUp()` method, the migration is aborted.
 
 You can also use Propel ActiveRecord and Query objects, but you'll then need to bootstrap the `Propel` class and the runtime autoloading in the migration class. This is because the Propel CLI does not know where the runtime classes are.
 
-{% highlight php %}
+```php
 <?php
 
 // bootstrap the Propel runtime
@@ -359,6 +359,6 @@ class PropelMigration_1286483354
 		// ...
 	}
 }
-{% endhighlight %}
+```
 
 Of course, you can add code to the `preDown()` and `postDown()` methods to execute a data migration when reverting migrations.
