@@ -66,7 +66,7 @@ class PropelObjectCollectionWithFixturesTest extends BookstoreEmptyTestBase
         $author->save();
         $books = array(
             array('Title' => 'Mansfield Park', 'ISBN' => '1234', 'AuthorId' => $author->getId()),
-            array('Title' => 'Pride And PRejudice', 'ISBN' => '2342', 'AuthorId' => $author->getId())
+            array('Title' => 'Pride And Prejudice', 'ISBN' => '2342', 'AuthorId' => $author->getId())
         );
         $col = new PropelObjectCollection();
         $col->setModel('Book');
@@ -199,7 +199,7 @@ class PropelObjectCollectionWithFixturesTest extends BookstoreEmptyTestBase
         $this->assertTrue($books instanceof PropelObjectCollection, 'populateRelation() returns a PropelCollection instance');
         $this->assertEquals('Book', $books->getModel(), 'populateRelation() returns a collection of the related objects');
         $this->assertEquals(0, count($books), 'populateRelation() the list of related objects');
-        $this->assertEquals($count, $this->con->getQueryCount(), 'populateRelation() doesn\'t issue a new query on empy collections');
+        $this->assertEquals($count, $this->con->getQueryCount(), 'populateRelation() doesn\'t issue a new query on empty collections');
     }
 
     public function testPopulateRelationOneToMany()

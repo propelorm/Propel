@@ -26,7 +26,7 @@
  *     <rule
  *       name="notMatch"
  *       value="/[^\d-]+/"
- *       message="Please enter a valid email adress." />
+ *       message="Please enter a valid email address." />
  *   </validator>
  * </code>
  *

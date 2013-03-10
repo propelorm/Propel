@@ -192,7 +192,7 @@
 		</xs:restriction>
 	</xs:simpleType>
 
-	<!-- Restrict php namespaces name to letters (upper- and lowercase), numbers and the backslash Dot seperated -->
+	<!-- Restrict php namespaces name to letters (upper- and lowercase), numbers and the backslash Dot separated -->
 	<xs:simpleType name="php_namespace">
 		<xs:restriction base="xs:string">
 			<xs:pattern value="(\\?[\w_]+)+"/>
@@ -427,7 +427,7 @@
 		<xs:attribute name="phpNamingMethod" type="phpnamingmethod" use="optional">
 			<xs:annotation>
 				<xs:documentation xml:lang="en">
-					Name of the method used to transform the column name into a phpName. Defaults to 'clean', which Removes any character that is not a letter or a number and capitilizes the first letter of the name, the first letter of each alphanumeric block, and converts the rest of the letters to lowercase. Possible values: any of the PhpNameGenerator CONV_METHOD_XXX constants (clean, underscore, phpName, nochange).
+					Name of the method used to transform the column name into a phpName. Defaults to 'clean', which Removes any character that is not a letter or a number and capitalizes the first letter of the name, the first letter of each alphanumeric block, and converts the rest of the letters to lowercase. Possible values: any of the PhpNameGenerator CONV_METHOD_XXX constants (clean, underscore, phpName, nochange).
 				</xs:documentation>
 			</xs:annotation>
 		</xs:attribute>
@@ -743,7 +743,7 @@
 		<xs:attribute name="phpNamingMethod" type="phpnamingmethod" use='optional'>
 			<xs:annotation>
 				<xs:documentation xml:lang="en">
-					Name of the method used to transform the table name into a phpName. Defaults to 'clean', which Removes any character that is not a letter or a number and capitilizes the first letter of the name, the first letter of each alphanumeric block, and converts the rest of the letters to lowercase. Possible values: any of the PhpNameGenerator CONV_METHOD_XXX constants (clean, underscore, phpName, nochange).
+					Name of the method used to transform the table name into a phpName. Defaults to 'clean', which Removes any character that is not a letter or a number and capitalizes the first letter of the name, the first letter of each alphanumeric block, and converts the rest of the letters to lowercase. Possible values: any of the PhpNameGenerator CONV_METHOD_XXX constants (clean, underscore, phpName, nochange).
 				</xs:documentation>
 			</xs:annotation>
 		</xs:attribute>

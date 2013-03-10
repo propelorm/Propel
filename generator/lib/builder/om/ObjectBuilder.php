@@ -47,7 +47,7 @@ abstract class ObjectBuilder extends OMBuilder
     /**
      * Adds the getter methods for the column values.
      * This is here because it is probably generic enough to apply to templates being generated
-     * in different langauges (e.g. PHP4 and PHP5).
+     * in different languages (e.g. PHP4 and PHP5).
      * @param      string &$script The script will be modified in this method.
      */
     protected function addColumnAccessorMethods(&$script)

@@ -56,7 +56,7 @@ class ModelCriteria extends Criteria
      * Creates a new instance with the default capacity which corresponds to
      * the specified database.
      *
-     * @param string $dbName     The dabase name
+     * @param string $dbName     The database name
      * @param string $modelName  The phpName of a model, e.g. 'Book'
      * @param string $modelAlias The alias for the model in this query, e.g. 'b'
      */
@@ -130,7 +130,7 @@ class ModelCriteria extends Criteria
     }
 
     /**
-     * Returns the TabkleMap object for this Criteria
+     * Returns the TableMap object for this Criteria
      *
      * @return TableMap
      */
@@ -968,7 +968,7 @@ class ModelCriteria extends Criteria
      *
      * @param Criteria $criteria The criteria to read properties from
      * @param string   $operator The logical operator used to combine conditions
-     *              Defaults to Criteria::LOGICAL_AND, also accapts Criteria::LOGICAL_OR
+     *              Defaults to Criteria::LOGICAL_AND, also accepts Criteria::LOGICAL_OR
      *
      * @return ModelCriteria The primary criteria object
      */
@@ -1124,9 +1124,9 @@ class ModelCriteria extends Criteria
 
     /**
      * Triggers the automated cloning on termination.
-     * By default, temrination methods don't clone the current object,
+     * By default, termination methods don't clone the current object,
      * even though they modify it. If the query must be reused after termination,
-     * you must call this method prior to temrination.
+     * you must call this method prior to termination.
      *
      * @param boolean $isKeepQuery
      *
@@ -1663,9 +1663,9 @@ class ModelCriteria extends Criteria
     /**
      * Code to execute before every UPDATE statement
      *
-     * @param array     $values               The associatiove array of columns and values for the update
+     * @param array     $values               The associative array of columns and values for the update
      * @param PropelPDO $con                  The connection object used by the query
-     * @param boolean   $forceIndividualSaves If false (default), the resulting call is a BasePeer::doUpdate(), ortherwise it is a series of save() calls on all the found objects
+     * @param boolean   $forceIndividualSaves If false (default), the resulting call is a BasePeer::doUpdate(), otherwise it is a series of save() calls on all the found objects
      */
     protected function basePreUpdate(&$values, PropelPDO $con, $forceIndividualSaves = false)
     {
@@ -1699,7 +1699,7 @@ class ModelCriteria extends Criteria
     *
     * @param      array $values Associative array of keys and values to replace
     * @param      PropelPDO $con an optional connection object
-    * @param      boolean $forceIndividualSaves If false (default), the resulting call is a BasePeer::doUpdate(), ortherwise it is a series of save() calls on all the found objects
+    * @param      boolean $forceIndividualSaves If false (default), the resulting call is a BasePeer::doUpdate(), otherwise it is a series of save() calls on all the found objects
     *
     * @return     Integer Number of updated rows
     *
@@ -1744,7 +1744,7 @@ class ModelCriteria extends Criteria
     *
     * @param      array $values Associative array of keys and values to replace
     * @param      PropelPDO $con a connection object
-    * @param      boolean $forceIndividualSaves If false (default), the resulting call is a BasePeer::doUpdate(), ortherwise it is a series of save() calls on all the found objects
+    * @param      boolean $forceIndividualSaves If false (default), the resulting call is a BasePeer::doUpdate(), otherwise it is a series of save() calls on all the found objects
     *
     * @return     Integer Number of updated rows
     */
@@ -2094,7 +2094,7 @@ class ModelCriteria extends Criteria
      *
      * @param string $colName the fully qualified column name, e.g 'book.TITLE' or BookPeer::TITLE
      *
-     * @return string the fully qualified column name, using table alias if applicatble
+     * @return string the fully qualified column name, using table alias if applicable
      */
     public function getAliasedColName($colName)
     {
@@ -2211,7 +2211,7 @@ class ModelCriteria extends Criteria
             $type = substr($name, 0, $pos);
             if (in_array($type, array('left', 'right', 'inner'))) {
                 $joinType = strtoupper($type) . ' JOIN';
-                // Test if first argument is suplied, else don't provide an alias to joinXXX (default value)
+                // Test if first argument is supplied, else don't provide an alias to joinXXX (default value)
                 if (!isset($arguments[0])) {
                     $arguments[0] = null;
                 }

@@ -518,9 +518,9 @@ class Criterion
         }
 
         foreach ($this->clauses as $clause) {
-            // TODO: i KNOW there is a php incompatibility with the following line
-            // but i dont remember what it is, someone care to look it up and
-            // replace it if it doesnt bother us?
+            // TODO: I KNOW there is a php incompatibility with the following line
+            // but I don't remember what it is, someone care to look it up and
+            // replace it if it doesn't bother us?
             // $clause->appendPsTo($sb='',$params=array());
             $sb = '';
             $params = array();

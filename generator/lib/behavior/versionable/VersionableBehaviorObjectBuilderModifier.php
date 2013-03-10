@@ -327,7 +327,7 @@ public function addVersion(\$con = null)
         $ARclassName = $this->getActiveRecordClassName();
         $script .= "
 /**
- * Sets the properties of the curent object to the value they had at a specific version
+ * Sets the properties of the current object to the value they had at a specific version
  *
  * @param   integer \$versionNumber The version number to read
  * @param   PropelPDO \$con the connection to use

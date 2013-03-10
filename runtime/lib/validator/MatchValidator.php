@@ -44,7 +44,7 @@ class MatchValidator implements BasicValidator
      * for use with preg_match().
      *
      * @param  string $exp
-     * @return string Prepared regular expession.
+     * @return string Prepared regular expression.
      */
     private function prepareRegexp($exp)
     {

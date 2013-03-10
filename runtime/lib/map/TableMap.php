@@ -250,7 +250,7 @@ class TableMap
     }
 
     /**
-     * Sets the name of the sequencxe used to generate a key
+     * Sets the name of the sequence used to generate a key
      *
      * @param   $pkInfo information needed to generate a key
      */
@@ -659,7 +659,7 @@ class TableMap
         return null;
     }
 
-    // Deprecated methods and attributres, to be removed
+    // Deprecated methods and attributes, to be removed
 
     /**
      * Does this table contain the specified column?
@@ -678,7 +678,7 @@ class TableMap
      * Normalizes the column name, removing table prefix and uppercasing.
      * article.first_name becomes FIRST_NAME
      *
-     * @deprecated Use ColumnMap::normalizeColumName() instead
+     * @deprecated Use ColumnMap::normalizeColumnName() instead
      * @param  string $name
      * @return string Normalized column name.
      */

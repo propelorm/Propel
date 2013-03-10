@@ -77,7 +77,7 @@ class PgsqlPlatform extends DefaultPlatform
 
     public function getBooleanString($b)
     {
-        // parent method does the checking for allowes tring
+        // parent method does the checking to allow string
         // representations & returns integer
         $b = parent::getBooleanString($b);
 

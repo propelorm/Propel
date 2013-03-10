@@ -30,7 +30,7 @@ class ValidatorMap
     private $classname;
     /** value to check against */
     private $value;
-    /** execption message thrown on invalid input */
+    /** exception message thrown on invalid input */
     private $message;
     /** related column */
     private $column;

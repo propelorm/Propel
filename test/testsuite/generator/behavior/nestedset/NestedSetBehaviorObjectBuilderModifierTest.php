@@ -329,7 +329,7 @@ class NestedSetBehaviorObjectBuilderModifierTest extends BookstoreNestedSetTestB
         $this->assertFalse($t0->hasPrevSibling(), 'empty node has no previous sibling');
         $this->assertFalse($t1->hasPrevSibling(), 'root node has no previous sibling');
         $this->assertFalse($t2->hasPrevSibling(), 'first sibling has no previous sibling');
-        $this->assertTrue($t3->hasPrevSibling(), 'not first sibling has a previous siblingt');
+        $this->assertTrue($t3->hasPrevSibling(), 'not first sibling has a previous sibling');
     }
 
     public function testGetPrevSibling()

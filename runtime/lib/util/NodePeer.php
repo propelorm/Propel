@@ -268,7 +268,7 @@ interface NodePeer
      *
      * @param  object    $node Propel object of node to create path to
      * @param  PropelPDO $con  Connection to use.
-     * @return array     Array in order of heirarchy
+     * @return array     Array in order of hierarchy
      */
     public static function getPath(NodeObject $node, PropelPDO $con = null);
 

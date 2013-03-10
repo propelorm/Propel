@@ -207,7 +207,7 @@ EOF;
         $this->assertContains($expected, $builder->getSQL());
     }
 
-    public function testModiFyTableMovesValidatorsOnI18nColumns()
+    public function testModifyTableMovesValidatorsOnI18nColumns()
     {
         $schema = <<<EOF
 <database name="i18n_behavior_test_0">
@@ -257,7 +257,7 @@ EOF;
         $this->assertEquals(array(), $i18nTable->getValidators());
     }
 
-    public function testModiFyTableUsesCustomI18nTableName()
+    public function testModifyTableUsesCustomI18nTableName()
     {
         $schema = <<<EOF
 <database name="i18n_behavior_test_0">

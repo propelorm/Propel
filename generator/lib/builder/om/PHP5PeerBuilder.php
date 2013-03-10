@@ -90,7 +90,7 @@ class PHP5PeerBuilder extends PeerBuilder
     } // addIncludes()
 
     /**
-     * Adds class phpdoc comment and openning of class.
+     * Adds class phpdoc comment and opening of class.
      * @param      string &$script The script will be modified in this method.
      */
     protected function addClassOpen(&$script)
@@ -226,7 +226,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . "
     const DEFAULT_STRING_FORMAT = '" . $this->getTable()->getDefaultStringFormat() . "';
 
     /**
-     * An identiy map to hold any loaded instances of ".$this->getObjectClassname()." objects.
+     * An identity map to hold any loaded instances of ".$this->getObjectClassname()." objects.
      * This must be public so that other peer classes can access this when hydrating from JOIN
      * queries.
      * @var        array ".$this->getObjectClassname()."[]
@@ -248,7 +248,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . "
     }
 
     /**
-     * Adds the COLUMN_NAME contants to the class definition.
+     * Adds the COLUMN_NAME constants to the class definition.
      * @param      string &$script The script will be modified in this method.
      */
     protected function addColumnNameConstants(&$script)
@@ -380,7 +380,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . "
         $script .= ")
     );
 ";
-    } // addFielKeysAttribute
+    } // addFieldKeysAttribute
 
     /**
      * Adds the valueSet attributes for ENUM columns.
@@ -1844,7 +1844,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . "
 ";
 
         // This logic is almost exactly the same as that in doOnDeleteCascade()
-        // it may make sense to refactor this, provided that thigns don't
+        // it may make sense to refactor this, provided that things don't
         // get too complicated.
 
         foreach ($table->getReferrers() as $fk) {
