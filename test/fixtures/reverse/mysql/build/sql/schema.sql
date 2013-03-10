@@ -11,3 +11,9 @@ CREATE TABLE book
 ) ENGINE=InnoDB COMMENT='Book Table';
 
 CREATE VIEW view_book_titles AS SELECT title FROM book;
+
+DROP TABLE IF EXISTS foo;
+
+CREATE TABLE foo (
+  `longitude` decimal(10,7) NOT NULL
+) ENGINE=InnoDB;
