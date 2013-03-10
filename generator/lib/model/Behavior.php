@@ -193,7 +193,7 @@ class Behavior extends XMLElement
      * using variables passed as arguments.
      *
      * @param string $filename    The template file name, relative to the behavior's dirname
-     * @param array  $vars        An associative array of argumens to be rendered
+     * @param array  $vars        An associative array of arguments to be rendered
      * @param string $templateDir The name of the template subdirectory
      *
      * @return string The rendered template

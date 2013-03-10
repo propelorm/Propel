@@ -56,6 +56,7 @@ interface SchemaParser
      * Parse the schema and populate passed-in Database model object.
      *
      * @param Database $database
+     * @param Task     $task
      *
      * @return int number of generated tables
      */

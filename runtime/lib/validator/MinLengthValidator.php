@@ -15,7 +15,7 @@
  *   <column name="password" type="VARCHAR" size="34" required="true" />
  *
  *   <validator column="password">
- *     <rule name="minLength" value="5" message="Passwort must be at least ${value} characters !" />
+ *     <rule name="minLength" value="5" message="Password must be at least ${value} characters !" />
  *   </validator>
  * </code>
  *

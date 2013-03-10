@@ -541,7 +541,7 @@ class Propel
     /**
      * Gets an already-opened PDO connection or opens a new one for passed-in db name.
      *
-     * @param string $name The datasource name that is used to look up the DSN from the runtime configuation file.
+     * @param string $name The datasource name that is used to look up the DSN from the runtime configuration file.
      * @param string $mode The connection mode (this applies to replication systems).
      *
      * @return PDO A database connection

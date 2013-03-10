@@ -105,7 +105,7 @@
 		<echo message="This will attempt to find your project directory in"/>
 		<echo message="the default directory (./projects/bookstore)."/>
 		<echo message=" "/>
-		<echo message="You can also avoid this message and specicfy a custom "/>
+		<echo message="You can also avoid this message and specify a custom "/>
 		<echo message="directory, using the project.dir property:"/>
 		<echo message=" "/>
 		<echo message="-Dproject.dir=/path/to/bookstore"/>

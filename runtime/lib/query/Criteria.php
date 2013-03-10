@@ -181,7 +181,7 @@ class Criteria implements IteratorAggregate
     protected $having = null;
 
     /**
-     * Storage of join data. colleciton of Join objects.
+     * Storage of join data. collection of Join objects.
      * @var        array
      */
     protected $joins = array();
@@ -201,7 +201,7 @@ class Criteria implements IteratorAggregate
      */
     protected $primaryTableName;
 
-    /** The name of the database as given in the contructor. */
+    /** The name of the database as given in the constructor. */
     protected $originalDbName;
 
     /**
@@ -249,7 +249,7 @@ class Criteria implements IteratorAggregate
      * Creates a new instance with the default capacity which corresponds to
      * the specified database.
      *
-     * @param string $dbName The dabase name.
+     * @param string $dbName The database name.
      */
     public function __construct($dbName = null)
     {
@@ -1198,7 +1198,7 @@ class Criteria implements IteratorAggregate
      * Set offset.
      *
      * @param int $offset An int with the value for offset.  (Note this values is
-     * 							cast to a 32bit integer and may result in truncatation)
+     * 							cast to a 32bit integer and may result in truncation)
      * @return Criteria Modified Criteria object (for fluent API)
      */
     public function setOffset($offset)
@@ -1519,7 +1519,7 @@ class Criteria implements IteratorAggregate
      *
      * @param Criteria $criteria The criteria to read properties from
      * @param string   $operator The logical operator used to combine conditions
-     *            Defaults to Criteria::LOGICAL_AND, also accapts Criteria::LOGICAL_OR
+     *            Defaults to Criteria::LOGICAL_AND, also accepts Criteria::LOGICAL_OR
      *            This parameter is deprecated, use _or() instead
      *
      * @return Criteria The current criteria object
@@ -1572,7 +1572,7 @@ class Criteria implements IteratorAggregate
         foreach ($criteria->getMap() as $key => $criterion) {
             if ($isFirstCondition && $this->defaultCombineOperator == Criteria::LOGICAL_OR) {
                 $this->addOr($criterion, null, null, false);
-                $this->defaultCombineOperator == Criteria::LOGICAL_AND;
+                $this->defaultCombineOperator = Criteria::LOGICAL_AND;
             } elseif ($this->containsKey($key)) {
                 $this->addAnd($criterion);
             } else {
@@ -1633,15 +1633,15 @@ class Criteria implements IteratorAggregate
      *
      * This method has multiple signatures, and behaves differently according to it:
   *
-     *  - If the first argument is a Criterion, it just resturns this Criterion.
-     *    <code>$c->getCriterionForConsition($criterion); // returns $criterion</code>
+     *  - If the first argument is a Criterion, it just returns this Criterion.
+     *    <code>$c->getCriterionForCondition($criterion); // returns $criterion</code>
      *
      *  - If the last argument is a PDO::PARAM_* constant value, create a Criterion
      *    using Criteria::RAW and $comparison as a type.
-     *    <code>$c->getCriterionForConsition('foo like ?', '%bar%', PDO::PARAM_STR);</code>
+     *    <code>$c->getCriterionForCondition('foo like ?', '%bar%', PDO::PARAM_STR);</code>
      *
      *  - Otherwise, create a classic Criterion based on a column name and a comparison.
-     *    <code>$c->getCriterionForConsition(BookPeer::TITLE, 'War%', Criteria::LIKE);</code>
+     *    <code>$c->getCriterionForCondition(BookPeer::TITLE, 'War%', Criteria::LIKE);</code>
      *
      * @param mixed $p1         A Criterion, or a SQL clause with a question mark placeholder, or a column name
      * @param mixed $value      The value to bind in the condition

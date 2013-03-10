@@ -20,7 +20,7 @@ class PgsqlDataSQLBuilder extends DataSQLBuilder
 {
 
     /**
-     * The largets serial value encountered this far.
+     * The largest serial value encountered this far.
      *
      * @var        int
      */

@@ -140,10 +140,10 @@ class PHP5TableMapBuilderTest extends BookstoreTestBase
      public function testSingleTableInheritance()
     {
         $bookTable = $this->databaseMap->getTableByPhpName('Book');
-        $this->assertFalse($bookTable->isSingleTableInheritance(), 'isSingleTabkeInheritance() returns false by default');
+        $this->assertFalse($bookTable->isSingleTableInheritance(), 'isSingleTableInheritance() returns false by default');
 
         $empTable = $this->databaseMap->getTableByPhpName('BookstoreEmployee');
-        $this->assertTrue($empTable->isSingleTableInheritance(), 'isSingleTabkeInheritance() returns true for tables using single table inheritance');
+        $this->assertTrue($empTable->isSingleTableInheritance(), 'isSingleTableInheritance() returns true for tables using single table inheritance');
     }
 
     public function testPrimaryString()

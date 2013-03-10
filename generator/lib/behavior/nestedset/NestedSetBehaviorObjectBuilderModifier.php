@@ -1539,7 +1539,7 @@ public function setParentNode(\$parent = null)
 }
 
 /**
- * Alias for countDecendants(), for BC with Propel 1.4 nested sets
+ * Alias for countDescendants(), for BC with Propel 1.4 nested sets
  *
  * @deprecated since 1.5
  * @see        setParent

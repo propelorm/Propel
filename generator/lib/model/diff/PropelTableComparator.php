@@ -79,8 +79,8 @@ class PropelTableComparator
     /**
      * Compute and return the difference between two table objects
      *
-     * @param Column  $fromTable
-     * @param Column  $toTable
+     * @param Table   $fromTable
+     * @param Table   $toTable
      * @param boolean $caseInsensitive Whether the comparison is case insensitive.
      *                                 False by default.
      *

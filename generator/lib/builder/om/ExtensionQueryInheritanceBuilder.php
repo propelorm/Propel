@@ -47,7 +47,7 @@ class ExtensionQueryInheritanceBuilder extends OMBuilder
     }
 
     /**
-     * Set the child object that we're operating on currrently.
+     * Set the child object that we're operating on currently.
      * @param   $child Inheritance
      */
     public function setChild(Inheritance $child)
@@ -83,7 +83,7 @@ require '".$requiredClassFilePath."';
     } // addIncludes()
 
     /**
-     * Adds class phpdoc comment and openning of class.
+     * Adds class phpdoc comment and opening of class.
      * @param      string &$script The script will be modified in this method.
      */
     protected function addClassOpen(&$script)

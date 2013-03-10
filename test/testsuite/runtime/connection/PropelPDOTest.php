@@ -312,7 +312,7 @@ class PropelPDOTest extends PHPUnit_Framework_TestCase
         $con->useDebug(false);
         $this->assertEquals(array('PDOStatement'), $con->getAttribute(PDO::ATTR_STATEMENT_CLASS), 'Statement is PDOStatement when debug is false');
         $con->useDebug(true);
-        $this->assertEquals(array('DebugPDOStatement', array($con)), $con->getAttribute(PDO::ATTR_STATEMENT_CLASS), 'statement is DebugPDOStament when debug is true');
+        $this->assertEquals(array('DebugPDOStatement', array($con)), $con->getAttribute(PDO::ATTR_STATEMENT_CLASS), 'statement is DebugPDOStatement when debug is true');
     }
 
     public function testDebugLatestQuery()

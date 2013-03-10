@@ -123,9 +123,9 @@ class VendorInfo extends XMLElement
     }
 
     /**
-     * Sets assoc array of parameters for venfor specific info.
+     * Sets assoc array of parameters for vendor specific info.
      *
-     * @param array $params Paramter data.
+     * @param array $params Parameter data.
      */
     public function setParameters(array $params = array())
     {

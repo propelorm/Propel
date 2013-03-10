@@ -168,7 +168,7 @@ EOF;
         $this->assertContains('Table "book_book" implements an equal nest relationship for table "book". This feature is not supported', $validator->getErrors());
     }
 
-    public function testValidateReturnsFalseWhenTwoColumnssHaveSamePhpName()
+    public function testValidateReturnsFalseWhenTwoColumnsHaveSamePhpName()
     {
         $column1 = new Column('foo');
         $column2 = new Column('bar');

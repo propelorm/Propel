@@ -18,7 +18,7 @@ require_once dirname(__FILE__) . '/../../../../../generator/lib/util/PropelQuick
  * object operations.  The _idea_ here is to test every possible generated method
  * from Object.tpl; if necessary, bookstore will be expanded to accommodate this.
  *
- * The database is relaoded before every test and flushed after every test.  This
+ * The database is reloaded before every test and flushed after every test.  This
  * means that you can always rely on the contents of the databases being the same
  * for each test method in this class.  See the BookstoreDataPopulator::populate()
  * method for the exact contents of the database.
@@ -107,7 +107,7 @@ class GeneratedObjectTest extends BookstoreTestBase
      * @link       http://propel.phpdb.org/trac/ticket/378
      * @link       http://propel.phpdb.org/trac/ticket/555
      */
-    public function testDefaultExpresions()
+    public function testDefaultExpressions()
     {
         if (Propel::getDb(BookstoreEmployeePeer::DATABASE_NAME) instanceof DBSqlite) {
             $this->markTestSkipped("Cannot test default expressions with SQLite");

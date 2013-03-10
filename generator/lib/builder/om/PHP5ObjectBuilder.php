@@ -183,7 +183,7 @@ class PHP5ObjectBuilder extends ObjectBuilder
     } // addIncludes()
 
     /**
-     * Adds class phpdoc comment and openning of class.
+     * Adds class phpdoc comment and opening of class.
      * @param string &$script The script will be modified in this method.
      */
     protected function addClassOpen(&$script)
@@ -382,7 +382,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
     protected static \$peer;
 
     /**
-     * The flag var to prevent infinit loop in deep copy
+     * The flag var to prevent infinite loop in deep copy
      * @var       boolean
      */
     protected \$startCopy = false;
@@ -593,7 +593,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
 
     /**
      * Add the function close for the getPeer method
-     * Note: this is just a } and the body ends with a return statement, so it's quite useless. But it's here anyway for consisency, cause there's a close function for all functions and in some other instances, they are useful
+     * Note: this is just a } and the body ends with a return statement, so it's quite useless. But it's here anyway for consistency, cause there's a close function for all functions and in some other instances, they are useful
      * @param string &$script The script will be modified in this method.
      **/
     protected function addGetPeerFunctionClose(&$script)
@@ -800,7 +800,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
         if (!$useDateTime) {
             $script .= "
      * This accessor only only work with unix epoch dates.  Consider enabling the propel.useDateTimeClass
-     * option in order to avoid converstions to integers (which are limited in the dates they can express).";
+     * option in order to avoid conversions to integers (which are limited in the dates they can express).";
         }
         $script .= "
      *
@@ -1987,7 +1987,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
      * more tables.
      *
      * @param array \$row The row returned by PDOStatement->fetch(PDO::FETCH_NUM)
-     * @param int \$startcol 0-based offset column which indicates which restultset column to start with.
+     * @param int \$startcol 0-based offset column which indicates which resultset column to start with.
      * @param boolean \$rehydrate Whether this object is being re-hydrated from the database.
      * @return int             next starting column
      * @throws PropelException - Any caught Exception will be rewrapped as a PropelException.
@@ -2797,7 +2797,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
     }
 
     /**
-     * Adds the methods related to validationg the object.
+     * Adds the methods related to the validation of the object.
      * @param string &$script The script will be modified in this method.
      */
     protected function addValidationMethods(&$script)
@@ -2881,7 +2881,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
         return \$this->get".$pkeys[0]->getPhpName()."();
     }
 ";
-    } // addetPrimaryKey_SingleFK
+    } // addGetPrimaryKey_SingleFK
 
     /**
      * Adds the setPrimaryKey() method for tables that contain a multi-column primary key.
@@ -2914,7 +2914,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
 
     /**
      * Adds the getPrimaryKey() method for objects that have no primary key.
-     * This "feature" is dreprecated, since the getPrimaryKey() method is not required
+     * This "feature" is deprecated, since the getPrimaryKey() method is not required
      * by the Persistent interface (or used by the templates).  Hence, this method is also
      * deprecated.
      * @param string &$script The script will be modified in this method.
@@ -3007,7 +3007,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
 
     /**
      * Adds the setPrimaryKey() method for objects that have no primary key.
-     * This "feature" is dreprecated, since the setPrimaryKey() method is not required
+     * This "feature" is deprecated, since the setPrimaryKey() method is not required
      * by the Persistent interface (or used by the templates).  Hence, this method is also
      * deprecated.
      * @param string &$script The script will be modified in this method.
@@ -3064,7 +3064,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
         $script .= "
     }
 ";
-    } // addetPrimaryKey_SingleFK
+    } // addIsPrimaryKeyKeyNull
 
     // --------------------------------------------------------------------
     // Complex OM Methods
@@ -3391,7 +3391,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
             $tblFK2 = $this->getForeignTable($fk2);
             $doJoinGet = !$tblFK2->isForReferenceOnly();
 
-            // it doesn't make sense to join in rows from the curent table, since we are fetching
+            // it doesn't make sense to join in rows from the current table, since we are fetching
             // objects related to *this* table (i.e. the joined rows will all be the same row as current object)
             if ($this->getTable()->getPhpName() == $tblFK2->getPhpName()) {
                 $doJoinGet = false;
@@ -4458,7 +4458,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
     // ----------------------------------------------------------------
 
     /**
-     * Adds the workhourse doSave() method.
+     * Adds the workhouse doSave() method.
      * @param string &$script The script will be modified in this method.
      */
     protected function addDoSave(&$script)
@@ -4501,7 +4501,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
 
             $script .= "
             // We call the save method on the following object(s) if they
-            // were passed to this object by their coresponding set
+            // were passed to this object by their corresponding set
             // method.  This object relates to these object(s) by a
             // foreign key reference.
 ";
@@ -4987,7 +4987,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
         try {";
 
         if ($this->getGeneratorConfig()->getBuildProperty('addHooks')) {
-            // save with runtime hools
+            // save with runtime hooks
             $script .= "
             \$ret = \$this->preSave(\$con);";
             $this->applyBehaviorModifier('preSave', $script, "			");
@@ -5148,7 +5148,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
     } // addValidate()
 
     /**
-     * Adds the workhourse doValidate() method.
+     * Adds the workhouse doValidate() method.
      * @param string &$script The script will be modified in this method.
      */
     protected function addDoValidate(&$script)
@@ -5161,10 +5161,10 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
      *
      * In addition to checking the current object, all related objects will
      * also be validated.  If all pass then <code>true</code> is returned; otherwise
-     * an aggreagated array of ValidationFailed objects will be returned.
+     * an aggregated array of ValidationFailed objects will be returned.
      *
      * @param array \$columns Array of column names to validate.
-     * @return mixed <code>true</code> if all validations pass; array of <code>ValidationFailed</code> objets otherwise.
+     * @return mixed <code>true</code> if all validations pass; array of <code>ValidationFailed</code> objects otherwise.
      */
     protected function doValidate(\$columns = null)
     {
@@ -5178,7 +5178,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
             $script .= "
 
             // We call the validate method on the following object(s) if they
-            // were passed to this object by their coresponding set
+            // were passed to this object by their corresponding set
             // method.  This object relates to these object(s) by a
             // foreign key reference.
 ";
@@ -5276,7 +5276,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
         if (\$this->".$varName." !== null && \$this->$clo !== \$this->".$varName."->get".$colFK->getPhpName()."()) {
             \$this->$varName = null;
         }";
-                } // foraech
+                } // foreach
             } /* if col is foreign key */
 
         } // foreach
@@ -5377,8 +5377,8 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
             \$this->startCopy = true;
 ";
             foreach ($table->getReferrers() as $fk) {
-                //HL: commenting out self-referrential check below
-                //		it seems to work as expected and is probably desireable to have those referrers from same table deep-copied.
+                //HL: commenting out self-referential check below
+                //		it seems to work as expected and is probably desirable to have those referrers from same table deep-copied.
                 //if ( $fk->getTable()->getName() != $table->getName() ) {
 
                 if ($fk->isLocalPrimaryKey()) {
@@ -5503,7 +5503,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
      *
      * This method is a user-space workaround for PHP's inability to garbage collect
      * objects with circular references (even in PHP 5.3). This is currently necessary
-     * when using Propel in certain daemon or large-volumne/high-memory operations.
+     * when using Propel in certain daemon or large-volume/high-memory operations.
      *
      * @param boolean \$deep Whether to also clear the references on all referrer objects.
      */

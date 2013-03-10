@@ -166,7 +166,7 @@ class SluggableBehaviorTest extends BookstoreTestBase
         $t = new Table14();
         $t->setTitle('Hello, World');
         $t->save();
-        $this->assertEquals('/foo/hello-world/bar', $t->getSlug(), 'preSave() sets a cleanued up slug for objects');
+        $this->assertEquals('/foo/hello-world/bar', $t->getSlug(), 'preSave() sets a cleaned up slug for objects');
         $t = new Table14();
         $t->setTitle('Hello, World');
         $t->save();

@@ -213,7 +213,7 @@ class PropelConvertConfTask extends AbstractPropelDataModelTask
 
             }
 
-            // add the childs attributes as if they where children
+            // add the children attributes as if they where children
             foreach ( $v->attributes() as $ak => $av ) {
 
                 // if the child is not an array, transform it into one

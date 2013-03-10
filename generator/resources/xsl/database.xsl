@@ -85,7 +85,7 @@
 	</xsl:template>
 
 	<!--
-	Tranlate IdMethod attribute to idMethod attribute
+	Translate IdMethod attribute to idMethod attribute
 	-->
 	<xsl:template match='@IdMethod'>
 		<xsl:attribute name='idMethod'><xsl:value-of select='.'/></xsl:attribute>

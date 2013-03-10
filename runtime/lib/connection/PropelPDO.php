@@ -36,7 +36,7 @@ class PropelPDO extends PDO
     const PROPEL_ATTR_CACHE_PREPARES = -1;
 
     /**
-     * Attribute to use to set the connection name usefull for explains
+     * Attribute to use to set the connection name useful for explains
      */
     const PROPEL_ATTR_CONNECTION_NAME = -2;
 
@@ -213,7 +213,7 @@ class PropelPDO extends PDO
 
     /**
      * Check whether the connection contains a transaction that can be committed.
-     * To be used in an evironment where Propelexceptions are caught.
+     * To be used in an environment where Propelexceptions are caught.
      *
      * @return boolean True if the connection is in a committable transaction
      */

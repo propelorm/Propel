@@ -30,7 +30,7 @@ class QueryBuilderTest extends BookstoreTestBase
     public function testConstructor()
     {
         $query = new BookQuery();
-        $this->assertEquals($query->getDbName(), 'bookstore', 'Constructor sets dabatase name');
+        $this->assertEquals($query->getDbName(), 'bookstore', 'Constructor sets database name');
         $this->assertEquals($query->getModelName(), 'Book', 'Constructor sets model name');
     }
 
@@ -38,11 +38,11 @@ class QueryBuilderTest extends BookstoreTestBase
     {
         $query = BookQuery::create();
         $this->assertTrue($query instanceof BookQuery, 'create() returns an object of its class');
-        $this->assertEquals($query->getDbName(), 'bookstore', 'create() sets dabatase name');
+        $this->assertEquals($query->getDbName(), 'bookstore', 'create() sets database name');
         $this->assertEquals($query->getModelName(), 'Book', 'create() sets model name');
         $query = BookQuery::create('foo');
         $this->assertTrue($query instanceof BookQuery, 'create() returns an object of its class');
-        $this->assertEquals($query->getDbName(), 'bookstore', 'create() sets dabatase name');
+        $this->assertEquals($query->getDbName(), 'bookstore', 'create() sets database name');
         $this->assertEquals($query->getModelName(), 'Book', 'create() sets model name');
         $this->assertEquals($query->getModelAlias(), 'foo', 'create() can set the model alias');
     }
@@ -53,11 +53,11 @@ class QueryBuilderTest extends BookstoreTestBase
         $query = myCustomBookQuery::create();
         $this->assertTrue($query instanceof myCustomBookQuery, 'create() returns an object of its class');
         $this->assertTrue($query instanceof BookQuery, 'create() returns an object of its class');
-        $this->assertEquals($query->getDbName(), 'bookstore', 'create() sets dabatase name');
+        $this->assertEquals($query->getDbName(), 'bookstore', 'create() sets database name');
         $this->assertEquals($query->getModelName(), 'Book', 'create() sets model name');
         $query = myCustomBookQuery::create('foo');
         $this->assertTrue($query instanceof myCustomBookQuery, 'create() returns an object of its class');
-        $this->assertEquals($query->getDbName(), 'bookstore', 'create() sets dabatase name');
+        $this->assertEquals($query->getDbName(), 'bookstore', 'create() sets database name');
         $this->assertEquals($query->getModelName(), 'Book', 'create() sets model name');
         $this->assertEquals($query->getModelAlias(), 'foo', 'create() can set the model alias');
     }

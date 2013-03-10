@@ -72,7 +72,7 @@ class PropelOnDemandCollection extends PropelCollection
         if ($offset == $this->currentKey) {
             return true;
         }
-        throw new PropelException('The On Demand Collection does not allow acces by offset');
+        throw new PropelException('The On Demand Collection does not allow access by offset');
     }
 
     /**
@@ -86,7 +86,7 @@ class PropelOnDemandCollection extends PropelCollection
         if ($offset == $this->currentKey) {
             return $this->currentRow;
         }
-        throw new PropelException('The On Demand Collection does not allow acces by offset');
+        throw new PropelException('The On Demand Collection does not allow access by offset');
     }
 
     /**
@@ -167,12 +167,12 @@ class PropelOnDemandCollection extends PropelCollection
 
     public function getArrayCopy()
     {
-        throw new PropelException('The On Demand Collection does not allow acces by offset');
+        throw new PropelException('The On Demand Collection does not allow access by offset');
     }
 
     public function getFlags()
     {
-        throw new PropelException('The On Demand Collection does not allow acces by offset');
+        throw new PropelException('The On Demand Collection does not allow access by offset');
     }
 
     public function ksort()
