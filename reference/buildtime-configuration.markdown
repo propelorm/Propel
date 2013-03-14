@@ -27,7 +27,7 @@ You can also create a global `build.properties` file in the same directory as Pr
 
 You can also specify properties on the command line when you invoke Propel. The command line accepts a camelCase version of the property name. So for instance, to set the value of the `propel.some.other.property` property using the command line, type:
 
-    > propel-gen /path/to/project -Dpropel.someOtherProperty#value
+    > propel-gen /path/to/project -Dpropel.someOtherProperty=value
 
 >**Tip**<br />There is no space between the -D and the property name.
 
