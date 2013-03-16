@@ -13,7 +13,7 @@ Database transactions are the key to assure the data integrity and the performan
 
 Propel uses PDO as database abstraction layer, and therefore uses [PDO's built-in support for database transactions](http://www.php.net/manual/en/pdo.transactions.php). The syntax is the same, as you can see in the classical "money transfer" example:
 
-{% highlight php %}
+```php
 <?php
 public function transferMoney($fromAccountNumber, $toAccountNumber, $amount)
 {
@@ -39,7 +39,7 @@ public function transferMoney($fromAccountNumber, $toAccountNumber, $amount)
     throw $e;
   }
 }
-{% endhighlight %}
+```
 
 The transaction statements are `beginTransaction()`, `commit()` and `rollback()`, which are methods of the PDO connection object. Transaction methods are typically used inside a `try/catch` block. The exception is rethrown after rolling back the transaction: That ensures that the user knows that something wrong happened.
 
@@ -53,28 +53,28 @@ Another example of the use of transactions is for [denormalized schemas](http://
 
 For instance, suppose that you have an `Author` model with a one to many relationship to a `Book` model. every time you need to display the number of books written by an author, you call `countBooks()` on the author object, which issues a new query to the database:
 
-{% highlight php %}
+```php
 <ul>
 <?php foreach ($authors as $author): ?>
   <li><?php echo $author->getName() ?> (<?php echo $author->countBooks() ?> books)</li>
 <?php endforeach; ?>
 </ul>
-{% endhighlight %}
+```
 
 If you have a large number of authors and books, this simple code snippet can be a real performance blow to your application. The usual way to optimize it is to _denormalize_ your schema by storing the number of books by each author in a new `nb_books` column, in the `author` table.
 
-{% highlight xml %}
+```xml
 <table name="author" phpName="Author">
   <column name="id" type="integer" required="true" primaryKey="true" autoIncrement="true"/>
   <column name="first_name" type="varchar" size="128" required="true"/>
   <column name="last_name" type="varchar" size="128" required="true"/>
   <column name="nb_books" type="INTEGER" default="0" />
 </table>
-{% endhighlight %}
+```
 
 You must update this new column every time you save or delete a `Book` object; this will make write queries a little slower, but read queries much faster. Fortunately, Propel model objects support pre- and post- hooks for the `save()` and `delete()` methods, so this is quite easy to implement:
 
-{% highlight php %}
+```php
 <?php
 class Book extends BaseBook
 {
@@ -96,11 +96,11 @@ class Book extends BaseBook
     $author->save($con);
   }
 }
-{% endhighlight %}
+```
 
 The `BaseBook::save()` method wraps the actual database INSERT/UPDATE query inside a transaction, together with any other query registered in a pre- or post- save hook. That means that when you save a book, the `postSave()` code is executed in the same transaction as the actual `$book->save()` method. Everything happens as is the code was the following:
 
-{% highlight php %}
+```php
 <?php
 class Book extends BaseBook
 {
@@ -125,7 +125,7 @@ class Book extends BaseBook
     }
   }
 }
-{% endhighlight %}
+```
 
 In this example, the `nb_books` column of the `author` table will always we synchronized with the number of books. If anything happens during the transaction, the saving of the book is rolled back, as well as the `nb_books` column update. The transaction serves to preserve data consistency in a denormalized schema ("Consistency" stands for the C in ACID).
 
@@ -135,7 +135,7 @@ In this example, the `nb_books` column of the `author` table will always we sync
 
 Some RDBMS offer the ability to nest transactions, to allow partial rollback of a set of transactions. PDO does not provide this ability at the PHP level; nevertheless, Propel emulates nested transactions for all supported database engines:
 
-{% highlight php %}
+```php
 <?php
 function deleteBooksWithNoPrice(PropelPDO $con)
 {
@@ -177,7 +177,7 @@ function cleanup(PropelPDO $con)
      throw $e;
   }
 }
-{% endhighlight %}
+```
 
 All three functions alter data in a transaction, ensuring data integrity for each. In addition, the `cleanup()` function actually executes two nested transactions inside one main transaction.
 
@@ -191,7 +191,7 @@ So you can use transactions everywhere it's necessary in your code, without worr
 
 A database transaction has a cost in terms of performance. In fact, for simple data manipulation, the cost of the transaction is more important than the cost of the query itself. Take the following example:
 
-{% highlight php %}
+```php
 <?php
 $con = Propel::getConnection(BookPeer::DATABASE_NAME);
 for ($i=0; $i<2002; $i++)
@@ -200,11 +200,11 @@ for ($i=0; $i<2002; $i++)
   $book->setTitle($i . ': A Space Odyssey');
   $book->save($con);
 }
-{% endhighlight %}
+```
 
 As explained earlier, Propel wraps every save operation inside a transaction. In terms of execution time, this is very expensive. Here is how the above code would translate to MySQL in an InnodDB table:
 
-{% highlight sql %}
+```sql
 BEGIN;
 INSERT INTO book (`ID`,`TITLE`) VALUES (NULL,'0: A Space Odyssey');
 COMMIT;
@@ -215,11 +215,11 @@ BEGIN;
 INSERT INTO book (`ID`,`TITLE`) VALUES (NULL,'2: A Space Odyssey');
 COMMIT;
 ...
-{% endhighlight %}
+```
 
 You can take advantage of Propel's nested transaction capabilities to encapsulate the whole loop inside one single transaction. This will reduce the execution time drastically:
 
-{% highlight php %}
+```php
 <?php
 $con = Propel::getConnection(BookPeer::DATABASE_NAME);
 $con->beginTransaction();
@@ -230,18 +230,18 @@ for ($i=0; $i<2002; $i++)
   $book->save($con);
 }
 $con->commit();
-{% endhighlight %}
+```
 
 The transactions inside each `save()` will become nested, and therefore not translated into actual database transactions. Only the outmost transaction will become a database transaction. So this will translate to MySQL as:
 
-{% highlight sql %}
+```sql
 BEGIN;
 INSERT INTO book (`ID`,`TITLE`) VALUES (NULL,'0: A Space Odyssey');
 INSERT INTO book (`ID`,`TITLE`) VALUES (NULL,'1: A Space Odyssey');
 INSERT INTO book (`ID`,`TITLE`) VALUES (NULL,'2: A Space Odyssey');
 ...
 COMMIT;
-{% endhighlight %}
+```
 
 In practice, encapsulating a large amount of simple queries inside a single transaction significantly improves performance.
 
@@ -251,22 +251,22 @@ Tip: Until the final `commit()` is called, most database engines lock updated ro
 
 All the code examples in this chapter show the connection object passed a a parameter to Propel methods that trigger a database query:
 
-{% highlight php %}
+```php
 <?php
 $con = Propel::getConnection(AccountPeer::DATABASE_NAME);
 $fromAccount = AccountPeer::retrieveByPk($fromAccountNumber, $con);
 $fromAccount->setValue($fromAccount->getValue() - $amount);
 $fromAccount->save($con);
-{% endhighlight %}
+```
 
 The same code works without explicitly passing the connection object, because Propel knows how to get the right connection from a Model:
 
-{% highlight php %}
+```php
 <?php
 $fromAccount = AccountPeer::retrieveByPk($fromAccountNumber);
 $fromAccount->setValue($fromAccount->getValue() - $amount);
 $fromAccount->save();
-{% endhighlight %}
+```
 
 However, it's a good practice to pass the connection explicitly, and for three reasons:
 

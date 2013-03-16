@@ -25,41 +25,42 @@ You could install propel manually into the your `vendor` directory, or let [comp
 
 
 The only thing you need to do is, to drop the following line into your projects' `composer.json` file.
-{% highlight yaml %}
-...
+
+```yaml
+{
     "require": {
         "propel/propel1": "~1.6"
     }
-...
-{% endhighlight %}
+}
+```
 
 composer will also take care to download all dependencies which are required by Propel.
 
 ### Manual Installation ###
 
-{% highlight bash %}
+```bash
 myproject/
   ...
   vendor/ <= This is where third-party libraries usually go
-{% endhighlight %}
+```
 
 To install Propel there using Git, type:
 
-{% highlight bash %}
+```bash
 cd myproject/vendor
 git clone https://github.com/propelorm/Propel.git propel
-{% endhighlight %}
+```
 
 This will export the propel library to a local `myproject/vendor/propel/` directory.
 
 Alternatively, to use a tarball, type the following commands on unix platforms:
 
-{% highlight bash %}
+```bash
 cd myproject/vendor
 wget http://files.propelorm.org/propel-1.6.X.tar.gz
 tar zxvf propel-1.6.X.tar.gz
 mv propel-1.6.X propel
-{% endhighlight %}
+```
 
 Or, in Windows, download a ZIP from [files.propelorm.org](http://files.propelorm.org), unzip it under the `vendor/` directory, and rename it to `propel`.
 
@@ -81,11 +82,11 @@ The Propel generator uses [Phing 2.4.5](http://phing.info/) to manage command li
 
 To install these packages, use the PEAR command as follows:
 
-{% highlight bash %}
+```bash
 pear channel-discover pear.phing.info
 pear install phing/phing
 pear install Log
-{% endhighlight %}
+```
 
 Refer to their respective websites for alternative installation strategies for Phing and PEAR Log.
 
@@ -93,30 +94,31 @@ Refer to their respective websites for alternative installation strategies for P
 
 The Propel generator component bundles a `propel-gen` sh script (and a `propel-gen.bat` script for Windows). This script makes it easy to execute build commands. You can test this component is properly installed by calling the `propel-gen` script from the CLI:
 
-{% highlight bash %}
+```bash
 cd myproject
 vendor/propel/generator/bin/propel-gen
-{% endhighlight %}
+```
 
 The script should output a welcome message, followed by a 'BUILD FAILED' message, which is normal - you haven't defined a model to build yet.
 
 >**Tip**<br />In order to allow an easier execution the script, you can also add the propel generator's `bin/` directory to your PATH, or create a symlink. For example:
 
-{% highlight bash %}
+```bash
 cd myproject
 ln -s vendor/propel/generator/bin/propel-gen propel-gen # Make a symlink to the propel generator file
-{% endhighlight %}
+```
 
 Or edit your ~/.bashrc or ~/.zshrc file with :
-{% highlight bash %}
-... Your default configuration, aliases, etc.
+
+```bash
 export PATH=$PATH:/path/to/propel/bin
-{% endhighlight %}
+```
 
 On Windows you could set the PATH for the opened command with :
-{% highlight bash %}
+
+```
 set PATH=%PATH%;C:/path/to/propel/generator/bin/
-{% endhighlight %}
+```
 
 To globally define the PATH adjust it inside the "Environment Variables", which you can find in your system advanced settings panel.
 
@@ -130,19 +132,19 @@ Propel has its own PEAR channel, that you must "discover". Using the `pear insta
 
 So the commands to install Propel, Phing and PEAR Log globally sum up to this:
 
-{% highlight bash %}
+```bash
 pear channel-discover pear.propelorm.org
 pear install -a propel/propel_generator
 pear install -a propel/propel_runtime
-{% endhighlight %}
+```
 
 Once Propel is installed globally, you can access the `propel-gen` command from everywhere without symlink.
 
 >**Tip**<br />If you want to install non-stable versions of Propel, change your `preferred_state` PEAR environment variable before installing the Propel packages. Valid states include 'stable', 'beta', 'alpha', and 'devel':
 
-{% highlight bash %}
+```bash
 pear config-set preferred_state beta
-{% endhighlight %}
+```
 
 ## Troubleshooting ##
 
@@ -164,15 +166,15 @@ If you choose to install Propel via PEAR, and if it's your first use of PEAR, th
 
 Phing versions 2.4.3 and 2.4.4 are incompatible with Propel. Check your Phing version by calling:
 
-{% highlight bash %}
+```bash
 phing -v
-{% endhighlight %}
+```
 
 In case you're using a version less than 2.4.5, upgrade to the latest stable version:
 
-{% highlight bash %}
+```bash
 pear upgrade phing/phing
-{% endhighlight %}
+```
 
 ### Getting Help ###
 

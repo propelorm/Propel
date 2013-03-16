@@ -46,7 +46,7 @@ created databases. See `Configure the credentials to be used`.
 
 You must configure both the generator and the runtime connection settings:
 
-{% highlight ini %}
+```ini
 // in test/fixtures/bookstore/build.properties
 propel.database = mysql
 propel.database.url = mysql:dbname=test
@@ -55,9 +55,9 @@ propel.disableIdentifierQuoting=true
 # For MySQL or Oracle, you also need to specify username & password
 propel.database.user = myusername
 propel.database.password = p@ssw0rd
-{% endhighlight %}
+```
 
-{% highlight xml %}
+```xml
 // in test/fixtures/bookstore/runtime-conf.xml
 <datasource id="bookstore">
   <!-- the Propel adapter to use for this connection -->
@@ -82,7 +82,7 @@ propel.database.password = p@ssw0rd
       </settings>
   </connection>
 </datasource>
-{% endhighlight %}
+```
 
 >**Tip**<br />To run the unit tests for the namespace support in PHP 5.3, you must also configure the `fixtures/namespaced` project.
 
@@ -171,7 +171,7 @@ values have been specified. Just add a `testSaveWithDefaultValues()` method to t
 `GeneratedObjectTest` class (test/testsuite/generator/builder/om/GeneratedObjectTest.php), as
 follows:
 
-{% highlight php %}
+```php
 <?php
 
 class GeneratedObjectTest extends BookstoreTestBase
@@ -202,7 +202,7 @@ class GeneratedObjectTest extends BookstoreTestBase
 }
 
 ?>
-{% endhighlight %}
+```
 
 
 You can also write additional unit test classes to any of the directories in `test/testsuite/`

@@ -12,17 +12,17 @@ The `soft_delete` behavior overrides the deletion methods of a model object to m
 ## Basic Usage ##
 
 In the `schema.xml`, use the `<behavior>` tag to add the `soft_delete` behavior to a table:
-{% highlight xml %}
+```xml
 <table name="book">
   <column name="id" required="true" primaryKey="true" autoIncrement="true" type="INTEGER" />
   <column name="title" type="VARCHAR" required="true" primaryString="true" />
   <behavior name="soft_delete" />
 </table>
-{% endhighlight %}
+```
 
 Rebuild your model, insert the table creation sql again, and you're ready to go. The model now has one new column, `deleted_at`, that stores the deletion date. Select queries don't return the deleted objects:
 
-{% highlight php %}
+```php
 <?php
 $b = new Book();
 $b->setTitle('War And Peace');
@@ -31,7 +31,7 @@ $b->delete();
 echo $b->isDeleted(); // false
 echo $b->getDeletedAt(); // 2009-10-02 18:14:23
 $books = BookQuery::create()->find(); // empty collection
-{% endhighlight %}
+```
 
 Behind the curtain, the behavior adds a condition to every SELECT query to return only records where the `deleted_at` column is null. That's why the deleted objects don't appear anymore upon selection.
 
@@ -39,22 +39,22 @@ _Warning_gg Deleted results may show up in related results (i.e. when you use `j
 
 You can include deleted results in a query by calling the `includeDeleted()` filter:
 
-{% highlight php %}
+```php
 <?php
 $book = BookQuery::create()
   ->includeDeleted()
   ->findOne();
 echo $book->getTitle(); // 'War And Peace'
-{% endhighlight %}
+```
 
 You can also turn off the query alteration for the next query by calling the static method `disableSoftDelete()` on the related Query object:
 
-{% highlight php %}
+```php
 <?php
 BookQuery::disableSoftDelete();
 $book = BookQuery::create()->findOne();
 echo $book->getTitle(); // 'War And Peace'
-{% endhighlight %}
+```
 
 Note that `find()` and other selection methods automatically re-enable the `soft_delete` filter, so `disableSoftDelete()` is really a single shot method. You can also enable the query alteration manually by calling the `enableSoftDelete()` method on Query objects.
 
@@ -62,26 +62,26 @@ Note that `find()` and other selection methods automatically re-enable the `soft
 
 If you want to recover a deleted object, use the `unDelete()` method:
 
-{% highlight php %}
+```php
 <?php
 $book->unDelete();
 $books = BookQuery::create()->find();
 $book = $books[0];
 echo $book->getTitle(); // 'War And Peace'
-{% endhighlight %}
+```
 
 If you want to force the real deletion of an object, call the `forceDelete()` method:
 
-{% highlight php %}
+```php
 <?php
 $book->forceDelete();
 echo $book->isDeleted(); // true
 $books = BookQuery::create()->find(); // empty collection
-{% endhighlight %}
+```
 
 The query methods `delete()` and `deleteAll()` also perform a soft deletion, unless you disable the behavior on the peer class:
 
-{% highlight php %}
+```php
 <?php
 $b = new Book();
 $b->setTitle('War And Peace');
@@ -102,13 +102,13 @@ BookQuery::create()->delete();
 BookQuery::create()->filterByTitle('%Lo%')->forceDelete();
 // To remove all use
 BookQuery::create()->forceDeleteAll();
-{% endhighlight %}
+```
 
 ## Parameters ##
 
 You can change the name of the column added by the behavior by setting the `deleted_column` parameter:
 
-{% highlight xml %}
+```xml
 <table name="book">
   <column name="id" required="true" primaryKey="true" autoIncrement="true" type="INTEGER" />
   <column name="title" type="VARCHAR" required="true" primaryString="true" />
@@ -117,9 +117,9 @@ You can change the name of the column added by the behavior by setting the `dele
     <parameter name="deleted_column" value="my_deletion_date" />
   </behavior>
 </table>
-{% endhighlight %}
+```
 
-{% highlight php %}
+```php
 <?php
 $b = new Book();
 $b->setTitle('War And Peace');
@@ -127,4 +127,4 @@ $b->save();
 $b->delete();
 echo $b->getMyDeletionDate(); // 2009-10-02 18:14:23
 $books = BookQuery::create()->find(); // empty collection
-{% endhighlight %}
+```

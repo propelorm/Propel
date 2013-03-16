@@ -18,7 +18,7 @@ You can configure Propel to support replication by adding a `<slaves>` element w
 
 The `<slaves>` section is at the same level as the master `<connection>` and contains multiple nested `<connection>` elements with the same information as the top-level (master) `<connection>`. It is recommended that they are numbered. The follwing example shows a slaves section with a several slave connections configured where "localhost" is the master and "slave-server1" and "slave-server2" are the slave-database connections.
 
-{% highlight xml %}
+```xml
 <?xml version="1.0"?>
 <config>
   <log>
@@ -51,7 +51,7 @@ The `<slaves>` section is at the same level as the master `<connection>` and con
     </datasources>
   </propel>
 </config>
-{% endhighlight %}
+```
 
 ## Implementation ##
 
@@ -61,11 +61,11 @@ The replication functionality is implemented in the Propel connection configurat
 
 When requesting a connection from Propel (_Propel::getConnection()_), you can either specify that you want a READ connection (slave) or WRITE connection (master).  Methods that are designed to perform READ operations, like the `doSelect*()` methods of your generated Peer classes, will always request a READ connection like so:
 
-{% highlight php %}
+```php
 <?php
 
 $con = Propel::getConnection(MyPeer::DATABASE_NAME, Propel::CONNECTION_READ);
-{% endhighlight %}
+```
 
 Other methods that are designed to perform write operations will explicitly request a Propel::CONNECTION_WRITE connection.  The WRITE connections are also the default, however, so applications that make a call to _Propel::getConnection()_ without specifying a connection mode will always get a master connection.
 
@@ -75,13 +75,13 @@ Both READ (slave) and WRITE (master) connections are only configured on demand. 
 
 _Important:_ if you are using Propel to execute custom SQL queries in your application (and you want to make sure that Propel respects your replication setup), you will need to explicitly get the correct connection.  For example:
 
-{% highlight php %}
+```php
 <?php
 
 $con = Propel::getConnection(MyPeer::DATABASE_NAME, Propel::CONNECTION_READ);
 $stmt = $con->query('SELECT * FROM my');
 /* ... */
-{% endhighlight %}
+```
 
 ### Propel::setForceMasterConnection() ###
 

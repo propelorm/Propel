@@ -27,7 +27,7 @@ Assuming you wrote a `MyAwesomeBehavior` behavior which probably does amazing st
 
 The `MyAwesomeBehaviorTest` class looks like the following one:
 
-{% highlight php %}
+```php
 <?php
 
 class MyAwesomeBehaviorTest extends \PHPUnit_Framework_TestCase
@@ -52,7 +52,7 @@ EOF;
         }
     }
 }
-{% endhighlight %}
+```
 
 We rely on the [PropelQuickBuilder](https://github.com/propelorm/Propel/blob/master/generator/lib/util/PropelQuickBuilder.php)
 to generated all classes in memory. It's a convenient way to test some parts of Propel without using fixtures files.
@@ -60,22 +60,22 @@ to generated all classes in memory. It's a convenient way to test some parts of 
 Write a XML schema as usual, and use your new behavior in it. Now, take care of the line below. It's how you will register
 your new behavior in the `PropelQuickBuilder`:
 
-{% highlight php %}
+```php
 <?php
 
 $config->setBuildProperty('behavior.my_awesome.class', __DIR__.'/../src/MyAwesomeBehavior');
-{% endhighlight %}
+```
 
 
 The `PropelQuickBuilder` comes with a **SQLite** database. That means you can execute database queries in your tests.
 Did you notice the `$con` variable? It can be useful to add some logic to the database connection in use:
 
-{% highlight php %}
+```php
 <?php
 
 // Register a 'ACOS' SQL function as SQLite doesn't provide it by default
 $con->sqliteCreateFunction('ACOS', 'acos', 1);
-{% endhighlight %}
+```
 
 You can now use your in memory classes in your test methods. It will just work.
 
@@ -87,7 +87,7 @@ nice way to share your behavior with other people, or just to require it in your
 
 A basic configuration looks like:
 
-{% highlight javascript %}
+```javascript
 {
     "name": "willdurand/propel-myawesome-behavior",
     "description": "A nice description.",
@@ -106,7 +106,7 @@ A basic configuration looks like:
         "classmap": ["src/"]
     }
 }
-{% endhighlight %}
+```
 
 
 >**Note**<br />The convention is to prefix your package name with propel-, and to suffix it with -behavior.
@@ -120,7 +120,7 @@ If you run the command below, Composer will setup your behavior to run the test 
 
 Now, you have to configure your project for PHPUnit. It's really easy. Start by copying the following `phpunit.xml.dist` file:
 
-{% highlight xml %}
+```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit backupGlobals="false"
     backupStaticAttributes="false"
@@ -144,18 +144,18 @@ Now, you have to configure your project for PHPUnit. It's really easy. Start by 
         </whitelist>
     </filter>
 </phpunit>
-{% endhighlight %}
+```
 
 Now, create the `tests/bootstrap.php` file:
 
-{% highlight php %}
+```php
 <?php
 
 require_once __DIR__ . '/../vendor/autoload.php';
 set_include_path(__DIR__ . '/../vendor/phing/phing/classes' . PATH_SEPARATOR . get_include_path());
 
 require_once __DIR__ . '/../vendor/propel/propel1/generator/lib/util/PropelQuickBuilder.php';
-{% endhighlight %}
+```
 
 
 That's all! Now, you just have to run the `phpunit` command, and it will launch your test suite.
@@ -166,7 +166,7 @@ That's all! Now, you just have to run the `phpunit` command, and it will launch 
 [Travis-ci](http://travis-ci.org/) is a distributed build platform for the open source community.
 If you want to add your behavior to Travis-ci, you can use the following `.travis.yml` file:
 
-{% highlight yaml %}
+```yaml
 language: php
 
 php:
@@ -179,4 +179,4 @@ before_script:
     - php composer.phar --dev install
 
 script: phpunit --coverage-text
-{% endhighlight %}
+```
