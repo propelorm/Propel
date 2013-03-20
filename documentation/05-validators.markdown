@@ -98,6 +98,7 @@ When you want to limit the size of the string to be inserted in a column, use th
 ```
 
 >**Tip**<br />If you have specified the `size` attribute in the `<column>` tag, you don't have to specify the `value` attribute in the validator rule again, as this is done automatically.
+
 >**Tip**<br />The `MaxLengthValidator` uses `mb_strlen` internally when available. Therefore make sure you defined the correct `mb_internal_encoding` when handling e.g. UTF-8 Strings.
 
 ### MinLengthValidator ###
