@@ -71,7 +71,7 @@ class DBOracleTest extends BookstoreTestBase
         $c->addAsColumn('book_ID', BookPeer::ID);
         $fromClause = array();
         $selectSql = $db->createSelectSqlPart($c, $fromClause);
-        $this->assertEquals('SELECT book.id, book.id AS '.$db->quoteIdentifier('book_ID').'', $selectSql, 'createSelectSqlPart() returns a SQL SELECT clause with both select and as columns');
+        $this->assertEquals('SELECT book.id, book.id AS '.$db->quoteIdentifier('book_ID'), $selectSql, 'createSelectSqlPart() returns a SQL SELECT clause with both select and as columns');
         $this->assertEquals(array('book'), $fromClause, 'createSelectSqlPart() adds the tables from the select columns to the from clause');
     }
 
