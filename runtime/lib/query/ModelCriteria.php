@@ -572,7 +572,7 @@ class ModelCriteria extends Criteria
             if (!array_key_exists($columnName, $asColumns)) {
                 $column = $this->getColumnFromName($columnName);
                 // always put quotes around the columnName to be safe, we strip them in the formatter
-                $this->addAsColumn('"' . $columnName . '"', $column[1]);
+                $this->addAsColumn($columnName, $column[1]);
             } else {
                 $this->addAsColumn($columnName, $asColumns[$columnName]);
                 // remove already added columns
