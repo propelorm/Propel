@@ -342,6 +342,7 @@ Place the following schema in `src/Acme/DemoBundle/Resources/config/schema.xml`:
 </database>
 {% endhighlight %}
 
+If you are working with an existing database, please [check the related section](#working-with-existing-databases).
 
 ## The Commands ##
 
@@ -435,6 +436,8 @@ You can define which connection to use:
 
     > php app/console propel:reverse --connection=default
 
+This will create your schema file under `app/propel/generated-schemas`. You need to move/copy it to the corresponding 
+bundle config directory. For example: `src/Acme/DemoBundle/Resources/config/`.
 
 ## The Fixtures ##
 
