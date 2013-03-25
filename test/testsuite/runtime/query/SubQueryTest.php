@@ -215,7 +215,7 @@ class SubQueryTest extends BookstoreTestBase
         $c->select(array('alias1.Id'));
         $c->configureSelectColumns();
 
-        $sql = "SELECT alias1.id AS \"alias1.Id\" FROM (SELECT book.id, book.title, book.isbn, book.price, book.publisher_id, book.author_id FROM `book`) AS alias1";
+        $sql = "SELECT alias1.id AS `alias1.Id` FROM (SELECT book.id, book.title, book.isbn, book.price, book.publisher_id, book.author_id FROM `book`) AS alias1";
         $params = array();
         $this->assertCriteriaTranslation($c, $sql, $params, 'addSelectQuery() forges a unique alias and adds select columns by default');
     }

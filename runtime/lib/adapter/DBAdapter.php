@@ -461,7 +461,7 @@ abstract class DBAdapter
 
         // set the aliases
         foreach ($criteria->getAsColumns() as $alias => $col) {
-            $selectClause[] = $col . ' AS ' . $alias;
+            $selectClause[] = $col . ' AS ' . $this->quoteIdentifier($alias);
         }
 
         $selectModifiers = $criteria->getSelectModifiers();

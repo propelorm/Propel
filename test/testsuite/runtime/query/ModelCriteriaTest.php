@@ -194,7 +194,7 @@ class ModelCriteriaTest extends BookstoreTestBase
         $c->condition('cond2', 'title_start like ?', '%bar%', PDO::PARAM_STR);
         $c->combine(array('cond1', 'cond2'), 'or');
 
-        $sql = "SELECT book.id, book.title, book.isbn, book.price, book.publisher_id, book.author_id, SUBSTRING(book.title, 1, 4) AS title_start FROM `book` WHERE (book.title <> :p1 OR title_start like :p2)";
+        $sql = "SELECT book.id, book.title, book.isbn, book.price, book.publisher_id, book.author_id, SUBSTRING(book.title, 1, 4) AS `title_start` FROM `book` WHERE (book.title <> :p1 OR title_start like :p2)";
         $params = array(
             array('table' => 'book', 'column' => 'title', 'value' => 'foo'),
             array('table' => null, 'type' => PDO::PARAM_STR, 'value' => '%bar%'),
@@ -456,13 +456,13 @@ class ModelCriteriaTest extends BookstoreTestBase
         $c->withColumn('SUBSTRING(Book.Title, 1, 4)', 'title_start');
         $c->having('title_start = ?', 'foo', PDO::PARAM_STR);
 
-        $sql = 'SELECT book.id, book.title, book.isbn, book.price, book.publisher_id, book.author_id, SUBSTRING(book.title, 1, 4) AS title_start FROM `book` HAVING title_start = :p1';
+        $sql = 'SELECT book.id, book.title, book.isbn, book.price, book.publisher_id, book.author_id, SUBSTRING(book.title, 1, 4) AS `title_start` FROM `book` HAVING title_start = :p1';
         $params = array(
             array('table' => null, 'type' => 2, 'value' => 'foo'),
         );
         $this->assertCriteriaTranslation($c, $sql, $params, 'having() accepts a string clause');
         $c->find($this->con);
-        $expected = 'SELECT book.id, book.title, book.isbn, book.price, book.publisher_id, book.author_id, SUBSTRING(book.title, 1, 4) AS title_start FROM `book` HAVING title_start = \'foo\'';
+        $expected = 'SELECT book.id, book.title, book.isbn, book.price, book.publisher_id, book.author_id, SUBSTRING(book.title, 1, 4) AS `title_start` FROM `book` HAVING title_start = \'foo\'';
         $this->assertEquals($expected, $this->con->getLastExecutedQuery());
     }
 
@@ -513,7 +513,7 @@ class ModelCriteriaTest extends BookstoreTestBase
         $c->addAsColumn('t', BookPeer::TITLE);
         $c->orderBy('t');
 
-        $sql = 'SELECT book.title AS t FROM  ORDER BY t ASC';
+        $sql = 'SELECT book.title AS `t` FROM  ORDER BY t ASC';
         $params = array();
         $this->assertCriteriaTranslation($c, $sql, $params, 'orderBy() accepts a column alias and adds an ORDER BY clause');
     }
@@ -552,7 +552,7 @@ class ModelCriteriaTest extends BookstoreTestBase
         $c->addAsColumn('t', BookPeer::TITLE);
         $c->groupBy('t');
 
-        $sql = 'SELECT book.title AS t FROM  GROUP BY t';
+        $sql = 'SELECT book.title AS `t` FROM  GROUP BY t';
         $params = array();
         $this->assertCriteriaTranslation($c, $sql, $params, 'groupBy() accepts a column alias and adds a GROUP BY clause');
     }
@@ -1272,10 +1272,10 @@ class ModelCriteriaTest extends BookstoreTestBase
     public static function conditionsForTestWithColumn()
     {
         return array(
-            array('Book.Title', 'BookTitle', 'book.title AS BookTitle'),
-            array('Book.Title', null, 'book.title AS BookTitle'),
-            array('UPPER(Book.Title)', null, 'UPPER(book.title) AS UPPERBookTitle'),
-            array('CONCAT(Book.Title, Book.isbn)', 'foo', 'CONCAT(book.title, book.isbn) AS foo'),
+            array('Book.Title', 'BookTitle', 'book.title AS `BookTitle`'),
+            array('Book.Title', null, 'book.title AS `BookTitle`'),
+            array('UPPER(Book.Title)', null, 'UPPER(book.title) AS `UPPERBookTitle`'),
+            array('CONCAT(Book.Title, Book.isbn)', 'foo', 'CONCAT(book.title, book.isbn) AS `foo`'),
         );
     }
 
@@ -1296,14 +1296,14 @@ class ModelCriteriaTest extends BookstoreTestBase
         return array(
             // Examples for simple string concatenation needed for MSSQL.
             // MSSQL has no CONCAT() function so uses + to join strings.
-            array("CONVERT(varchar, Author.Age, 120) + \' GMT\'", 'GMTCreatedAt', "CONVERT(varchar, author.age, 120) + \' GMT\' AS GMTCreatedAt"),
-            array("(Author.FirstName + ' ' + Author.LastName)", 'AuthorFullname', "(author.first_name + ' ' + author.last_name) AS AuthorFullname"),
-            array("('\"' + Author.FirstName + ' ' + Author.LastName + '\"')", 'QuotedAuthorFullname', "('\"' + author.first_name + ' ' + author.last_name + '\"') AS QuotedAuthorFullname"),
+            array("CONVERT(varchar, Author.Age, 120) + \' GMT\'", 'GMTCreatedAt', "CONVERT(varchar, author.age, 120) + \' GMT\' AS `GMTCreatedAt`"),
+            array("(Author.FirstName + ' ' + Author.LastName)", 'AuthorFullname', "(author.first_name + ' ' + author.last_name) AS `AuthorFullname`"),
+            array("('\"' + Author.FirstName + ' ' + Author.LastName + '\"')", 'QuotedAuthorFullname', "('\"' + author.first_name + ' ' + author.last_name + '\"') AS `QuotedAuthorFullname`"),
 
             // Examples for simple string concatenation needed for Sqlite
             // Sqlite has no CONCAT() function so uses || to join strings.  || can also be used to join strings in PQSql and Oracle
-            array("(Author.FirstName || ' ' || Author.LastName)", 'AuthorFullname', "(author.first_name || ' ' || author.last_name) AS AuthorFullname"),
-            array("('\"' || Author.FirstName || ' ' || Author.LastName || '\"')", 'QuotedAuthorFullname', "('\"' || author.first_name || ' ' || author.last_name || '\"') AS QuotedAuthorFullname"),
+            array("(Author.FirstName || ' ' || Author.LastName)", 'AuthorFullname', "(author.first_name || ' ' || author.last_name) AS `AuthorFullname`"),
+            array("('\"' || Author.FirstName || ' ' || Author.LastName || '\"')", 'QuotedAuthorFullname', "('\"' || author.first_name || ' ' || author.last_name || '\"') AS `QuotedAuthorFullname`"),
         );
     }
 
@@ -1340,14 +1340,14 @@ class ModelCriteriaTest extends BookstoreTestBase
     {
         $c = new ModelCriteria('bookstore', 'Book');
         $c->withColumn('UPPER(Book.Title)', 'foo');
-        $sql = 'SELECT book.id, book.title, book.isbn, book.price, book.publisher_id, book.author_id, UPPER(book.title) AS foo FROM `book`';
+        $sql = 'SELECT book.id, book.title, book.isbn, book.price, book.publisher_id, book.author_id, UPPER(book.title) AS `foo` FROM `book`';
         $params = array();
         $this->assertCriteriaTranslation($c, $sql, $params, 'withColumn() adds the object columns if the criteria has no select columns');
 
         $c = new ModelCriteria('bookstore', 'Book');
         $c->addSelectColumn('book.id');
         $c->withColumn('UPPER(Book.Title)', 'foo');
-        $sql = 'SELECT book.id, UPPER(book.title) AS foo FROM `book`';
+        $sql = 'SELECT book.id, UPPER(book.title) AS `foo` FROM `book`';
         $params = array();
         $this->assertCriteriaTranslation($c, $sql, $params, 'withColumn() does not add the object columns if the criteria already has select columns');
 
@@ -1355,7 +1355,7 @@ class ModelCriteriaTest extends BookstoreTestBase
         $c->addSelectColumn('book.id');
         $c->withColumn('UPPER(Book.Title)', 'foo');
         $c->addSelectColumn('book.title');
-        $sql = 'SELECT book.id, book.title, UPPER(book.title) AS foo FROM `book`';
+        $sql = 'SELECT book.id, book.title, UPPER(book.title) AS `foo` FROM `book`';
         $params = array();
         $this->assertCriteriaTranslation($c, $sql, $params, 'withColumn() does adds as column after the select columns even though the withColumn() method was called first');
 
@@ -1363,7 +1363,7 @@ class ModelCriteriaTest extends BookstoreTestBase
         $c->addSelectColumn('book.id');
         $c->withColumn('UPPER(Book.Title)', 'foo');
         $c->withColumn('UPPER(Book.isbn)', 'isbn');
-        $sql = 'SELECT book.id, UPPER(book.title) AS foo, UPPER(book.isbn) AS isbn FROM `book`';
+        $sql = 'SELECT book.id, UPPER(book.title) AS `foo`, UPPER(book.isbn) AS `isbn` FROM `book`';
         $params = array();
         $this->assertCriteriaTranslation($c, $sql, $params, 'withColumn() called repeatedly adds several as columns');
     }
