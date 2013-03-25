@@ -74,8 +74,8 @@ $loader->registerPrefixes(array(
 You are almost ready, the next steps are:
 
 * to [configure the bundle](#configuration);
-* to [configure Propel](#propel_configuration);
-* to [write an XML schema](#xml_schema).
+* to [configure Propel](#propel-configuration);
+* to [write an XML schema](#xml-schema).
 
 Now, you can build your model classes, and SQL by running the following command:
 
