@@ -11,7 +11,7 @@
 require_once dirname(__FILE__) . '/../../../tools/helpers/bookstore/BookstoreTestBase.php';
 
 /**
- * Tests the DbOracle adapter
+ * Tests adapter independent functionality
  *
  * @see        BookstoreDataPopulator
  * @author     Francois EZaninotto
@@ -121,11 +121,5 @@ class DBAdapterTest extends BookstoreTestBase
         $selectSql = $db->createSelectSqlPart($c, $fromClause, true);
         $this->assertEquals('SELECT book.id AS '.$db->quoteIdentifier('book_id_1').', book.id AS '.$db->quoteIdentifier('book_id'), $selectSql, 'createSelectSqlPart() aliases all columns if passed true as last parameter');
         $this->assertEquals(array(), $fromClause, 'createSelectSqlPart() does not add the tables from an all-aliased list of select columns');
-    }
-
-    public function testQuotingIdentifiers()
-    {
-        $db = Propel::getDB(BookPeer::DATABASE_NAME);
-        $this->assertNotEquals('Book ISBN', $db->quoteIdentifier('Book ISBN'));
     }
 }

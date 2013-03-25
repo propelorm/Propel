@@ -8,7 +8,7 @@
  * @license    MIT License
  */
 
-require_once dirname(__FILE__) . '/../../../tools/helpers/bookstore/BookstoreTestBase.php';
+require_once dirname(__FILE__) . '/DBAdapterTestAbstract.php';
 
 /**
  * Tests the DbOracle adapter
@@ -17,7 +17,7 @@ require_once dirname(__FILE__) . '/../../../tools/helpers/bookstore/BookstoreTes
  * @author     Francois EZaninotto
  * @package    runtime.adapter
  */
-class DBOracleTest extends BookstoreTestBase
+class DBOracleTest extends DBAdapterTestAbstract
 {
     public function testApplyLimitSimple()
     {
@@ -80,5 +80,10 @@ class DBOracleTest extends BookstoreTestBase
         $db = new DBOracle();
         $explainQuery = $db->getExplainPlanQuery('SELECT B.* FROM (SELECT A.*, rownum AS '.$db->quoteIdentifier('PROPEL_ROWNUM').' FROM (SELECT book.id AS '.$db->quoteIdentifier('ORA_COL_ALIAS_0').', book.title AS '.$db->quoteIdentifier('ORA_COL_ALIAS_1').', book.isbn AS '.$db->quoteIdentifier('ORA_COL_ALIAS_2').', book.price AS '.$db->quoteIdentifier('ORA_COL_ALIAS_3').', book.publisher_id AS '.$db->quoteIdentifier('ORA_COL_ALIAS_4').', book.author_id AS '.$db->quoteIdentifier('ORA_COL_ALIAS_5').', author.id AS '.$db->quoteIdentifier('ORA_COL_ALIAS_6').', author.first_name AS '.$db->quoteIdentifier('ORA_COL_ALIAS_7').', author.last_name AS '.$db->quoteIdentifier('ORA_COL_ALIAS_8').', author.email AS '.$db->quoteIdentifier('ORA_COL_ALIAS_9').', author.age AS '.$db->quoteIdentifier('ORA_COL_ALIAS_10').', book.price AS '.$db->quoteIdentifier('BOOK_PRICE').' FROM book, author) A ) B WHERE  B.PROPEL_ROWNUM <= 1', 'iuyiuyiu');
         $this->assertEquals('EXPLAIN PLAN SET STATEMENT_ID = \'iuyiuyiu\' FOR SELECT B.* FROM (SELECT A.*, rownum AS '.$db->quoteIdentifier('PROPEL_ROWNUM').' FROM (SELECT book.id AS '.$db->quoteIdentifier('ORA_COL_ALIAS_0').', book.title AS '.$db->quoteIdentifier('ORA_COL_ALIAS_1').', book.isbn AS '.$db->quoteIdentifier('ORA_COL_ALIAS_2').', book.price AS '.$db->quoteIdentifier('ORA_COL_ALIAS_3').', book.publisher_id AS '.$db->quoteIdentifier('ORA_COL_ALIAS_4').', book.author_id AS '.$db->quoteIdentifier('ORA_COL_ALIAS_5').', author.id AS '.$db->quoteIdentifier('ORA_COL_ALIAS_6').', author.first_name AS '.$db->quoteIdentifier('ORA_COL_ALIAS_7').', author.last_name AS '.$db->quoteIdentifier('ORA_COL_ALIAS_8').', author.email AS '.$db->quoteIdentifier('ORA_COL_ALIAS_9').', author.age AS '.$db->quoteIdentifier('ORA_COL_ALIAS_10').', book.price AS '.$db->quoteIdentifier('BOOK_PRICE').' FROM book, author) A ) B WHERE  B.PROPEL_ROWNUM <= 1', $explainQuery, 'getExplainPlanQuery() returns a SQL Explain query');
+    }
+
+    public function testQuotingIdentifiers() {
+        $db = new DBOracle();
+        $this->assertEquals('"Book ISBN"', $db->quoteIdentifier('Book ISBN'));
     }
 }
