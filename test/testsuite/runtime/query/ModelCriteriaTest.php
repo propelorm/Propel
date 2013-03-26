@@ -939,6 +939,30 @@ class ModelCriteriaTest extends BookstoreTestBase
         $this->assertEquals($expectedSQL, $con->getLastExecutedQuery(), 'addJoinCondition() allows the use of custom conditions');
     }
 
+    public function testAddJoinConditionWithInOperator()
+    {
+        $con = Propel::getConnection(BookPeer::DATABASE_NAME);
+        $c = new ModelCriteria('bookstore', 'Author');
+        $c->join('Author.Book', Criteria::LEFT_JOIN);
+        $c->addJoinCondition('Book', 'Book.isbn IN ?', array(1, 7, 42));
+        $c->limit(1);
+        $books = AuthorPeer::doSelect($c, $con);
+        $expectedSQL = "SELECT author.id, author.first_name, author.last_name, author.email, author.age FROM `author` LEFT JOIN `book` ON (author.id=book.author_id AND book.isbn IN (1,7,42)) LIMIT 1";
+        $this->assertEquals($expectedSQL, $con->getLastExecutedQuery(), 'addJoinCondition() allows the use of custom conditions');
+    }
+
+    public function testAddJoinConditionWithNotInOperator()
+    {
+        $con = Propel::getConnection(BookPeer::DATABASE_NAME);
+        $c = new ModelCriteria('bookstore', 'Author');
+        $c->join('Author.Book', Criteria::LEFT_JOIN);
+        $c->addJoinCondition('Book', 'Book.isbn NOT IN ?', array(1, 7, 42));
+        $c->limit(1);
+        $books = AuthorPeer::doSelect($c, $con);
+        $expectedSQL = "SELECT author.id, author.first_name, author.last_name, author.email, author.age FROM `author` LEFT JOIN `book` ON (author.id=book.author_id AND book.isbn NOT IN (1,7,42)) LIMIT 1";
+        $this->assertEquals($expectedSQL, $con->getLastExecutedQuery(), 'addJoinCondition() allows the use of custom conditions');
+    }
+
     public function testAddJoinConditionBinding()
     {
         $con = Propel::getConnection(BookPeer::DATABASE_NAME);
