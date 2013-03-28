@@ -905,6 +905,28 @@ class ModelCriteriaTest extends BookstoreTestBase
         $this->assertEquals($expectedSQL, $con->getLastExecutedQuery(), 'join() allows the use of relation alias in further joins()');
     }
 
+    public function testJoinDuplicate()  {
+        $c = new ModelCriteria('bookstore', 'Author');
+        $c->addJoinObject(new Join('tbl.COL1', 'tbl.COL2', 'LEFT JOIN'));
+        $c->addJoinObject(new Join('tbl.COL1', 'tbl.COL2', 'LEFT JOIN'));
+        $this->assertEquals(1, count($c->getJoins()), 'Expected not to have duplicate LEFT JOIN added.');
+
+        $c->addJoinObject(new Join('tbl.COL1', 'tbl.COL2', 'RIGHT JOIN'));
+        $c->addJoinObject(new Join('tbl.COL1', 'tbl.COL2', 'RIGHT JOIN'));
+        $this->assertEquals(2, count($c->getJoins()), 'Expected 1 new right join to be added.');
+
+        $c->addJoinObject(new Join('tbl.COL1', 'tbl.COL2'));
+        $c->addJoinObject(new Join('tbl.COL1', 'tbl.COL2'));
+        $this->assertEquals(3, count($c->getJoins()), 'Expected 1 new implicit join to be added.');
+
+        $c->addJoinObject(new Join('tbl.COL1', 'tbl.COL2', 'INNER JOIN'));
+        $this->assertEquals(3, count($c->getJoins()), 'Expected to not add any new join
+                                                        as INNER JOIN is default joinType and it is already added');
+
+        $c->addJoinObject(new Join('tbl.COL3', 'tbl.COL4'));
+        $this->assertEquals(4, count($c->getJoins()), "Expected new col join to be added.");
+     }
+
     public function testAddJoinConditionSimple()
     {
         $con = Propel::getConnection(BookPeer::DATABASE_NAME);
