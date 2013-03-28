@@ -51,7 +51,7 @@ Once done, you can submit the Pull Request by pushing your branch to your fork:
 
 ```bash
 $ git push origin fix-my-patch
-```bash
+```
 
 Go to www.github.com and press the _Pull Request_ button. Add a short description to this Pull Request and submit it.
 
