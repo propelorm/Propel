@@ -804,6 +804,16 @@ class CriteriaTest extends BookstoreTestBase
         $params = array();
         $result = BasePeer::createSelectSql($c, $params);
         $this->assertEquals($expect, $result);
+
+        $con = Propel::getConnection(BookPeer::DATABASE_NAME);
+        $c = new Criteria();
+        $c->addMultipleJoin(array(
+                array(AuthorPeer::ID, BookPeer::AUTHOR_ID),
+                array(BookPeer::ISBN, 3)
+            ));
+        AuthorPeer::doSelectOne($c, $con);
+        $expectedSQL = 'SELECT author.id, author.first_name, author.last_name, author.email, author.age FROM author INNER JOIN book ON (author.id=book.author_id AND book.isbn=3) LIMIT 1';
+        $this->assertEquals($expectedSQL, $con->getLastExecutedQuery());
     }
 
     /**
