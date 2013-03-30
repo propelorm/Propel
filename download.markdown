@@ -13,7 +13,7 @@ Clone it:
 
 ```bash
 $ git clone git://github.com/propelorm/Propel.git
-```bash
+```
 
 Or add it as a submodule:
 
