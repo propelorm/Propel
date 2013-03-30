@@ -963,7 +963,15 @@ class Criteria implements IteratorAggregate
      */
     public function addJoinObject(Join $join)
     {
-      if (!in_array($join, $this->joins)) { // compare equality, NOT identity
+        $isAlreadyAdded = false;
+        foreach ($this->joins as $alreadyAddedJoin) {
+            if ($join->equals($alreadyAddedJoin)) {
+                $isAlreadyAdded = true;
+                break;
+            }
+        }
+
+        if (!$isAlreadyAdded) {
             $this->joins[] = $join;
         }
 

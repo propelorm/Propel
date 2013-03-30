@@ -884,7 +884,7 @@ class CriteriaTest extends BookstoreTestBase
 
         $c->addJoin("tbl.COL1", "tbl.COL2", Criteria::LEFT_JOIN);
         $c->addJoin("tbl.COL1", "tbl.COL2", Criteria::LEFT_JOIN);
-        $this->assertEquals(1, count($c->getJoins()), "Expected not to have duplicate LJOIN added.");
+        $this->assertEquals(1, count($c->getJoins()), "Expected not to have duplicate LEFT JOIN added.");
 
         $c->addJoin("tbl.COL1", "tbl.COL2", Criteria::RIGHT_JOIN);
         $c->addJoin("tbl.COL1", "tbl.COL2", Criteria::RIGHT_JOIN);
@@ -893,6 +893,10 @@ class CriteriaTest extends BookstoreTestBase
         $c->addJoin("tbl.COL1", "tbl.COL2");
         $c->addJoin("tbl.COL1", "tbl.COL2");
         $this->assertEquals(3, count($c->getJoins()), "Expected 1 new implicit join to be added.");
+
+        $c->addJoin("tbl.COL1", "tbl.COL2", Criteria::INNER_JOIN);
+        $this->assertEquals(3, count($c->getJoins()), "Expected to not add any new join
+                                                        as INNER JOIN is default joinType and it is already added");
 
         $c->addJoin("tbl.COL3", "tbl.COL4");
         $this->assertEquals(4, count($c->getJoins()), "Expected new col join to be added.");
