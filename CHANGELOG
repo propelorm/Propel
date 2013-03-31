@@ -1,5 +1,12 @@
 # Changelog Of The Propel 1.6 Branch #
 
+## 2013-03-31: Version 1.6.9 ##
+
+e9313d0 [Sluggable] fix issue with slug ending with 0XYZ
+81815e6 [Sluggable] add test to prove issue with slug ending with 0XYZ
+46ff6a2 Split the `testForeignKey` into several methods. Added some phpdoc so its cleaer
+409850e Fixed #617. Proved the issue #617 and fixed it.
+
 ## 2013-02-14: Version 1.6.8 ##
 
 01ea918 Fixed #601.
