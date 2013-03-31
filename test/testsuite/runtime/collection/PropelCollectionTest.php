@@ -43,39 +43,39 @@ class PropelCollectionTest extends BookstoreTestBase
     {
         $data = array('bar1', 'bar2', 'bar3');
         $col = new PropelCollection($data);
-        
+
         $clone = clone $col;
-        
+
         $orgCount = $col->getIterator()->count();
         $cloneCount = $clone->getIterator()->count();
-        
+
         $this->assertEquals($orgCount, $cloneCount, 'all entries will be cloned');
     }
-    
+
     public function testCloneContainingObjects()
     {
         $a = new Author();
         $b= new Book();
         $b->setAuthor($a);
         $b->setISBN('ISBN1');
-        
+
         $b1 = new Book();
         $b1->setPrice(5.55);
-        
+
         $col = new PropelCollection(array($b, $b1));
         $clone = clone $col;
-        
+
         $orgCount = $col->getIterator()->count();
         $cloneCount = $clone->getIterator()->count();
         $this->assertEquals($orgCount, $cloneCount, 'cloned collections have the same size');
-        
+
         $this->assertEquals($b, $clone[0], 'cloned objects are equal');
         $this->assertEquals($b1, $clone[1], 'cloned objects are equal');
-        
+
         $this->assertNotSame($b, $clone[0], 'cloned objects are copies, not identical');
         $this->assertNotSame($b1, $clone[1], 'cloned objects are copies, not identical');
     }
-    
+
     public function testSetData()
     {
         $col = new PropelCollection();

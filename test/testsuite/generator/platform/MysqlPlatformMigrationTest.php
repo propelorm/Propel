@@ -37,6 +37,7 @@ class MysqlPlatformMigrationTest extends PlatformMigrationTestProvider
             ));
             $platform->setGeneratorConfig($config);
         }
+
         return $platform;
     }
 

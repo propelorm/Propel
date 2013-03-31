@@ -540,7 +540,7 @@ class Join
     }
 
     /**
-     * @param Join $join
+     * @param  Join $join
      * @return bool
      */
     public function equals($join)

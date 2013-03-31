@@ -62,4 +62,3 @@ try {
     // exit with non-0 error code.
     exit(1);
 }
-

@@ -99,7 +99,8 @@ class DBMySQLTest extends DBAdapterTestAbstract
         return $con;
     }
 
-    public function testQuotingIdentifiers() {
+    public function testQuotingIdentifiers()
+    {
         $db = new DBMySQL();
         $this->assertEquals('`Book ISBN`', $db->quoteIdentifier('Book ISBN'));
     }

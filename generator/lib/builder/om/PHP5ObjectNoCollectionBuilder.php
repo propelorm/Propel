@@ -608,8 +608,7 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
                 $script .= "
         if (\$criteria === null) {
             \$criteria = new Criteria($peerClassname::DATABASE_NAME);
-        } elseif (\$criteria instanceof Criteria)
-        {
+        } elseif (\$criteria instanceof Criteria) {
             \$criteria = clone \$criteria;
         }
 
@@ -864,8 +863,7 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
         $script .= "
         if (\$criteria === null) {
             \$criteria = new Criteria($peerClassname::DATABASE_NAME);
-        } elseif (\$criteria instanceof Criteria)
-        {
+        } elseif (\$criteria instanceof Criteria) {
             \$criteria = clone \$criteria;
         }
 

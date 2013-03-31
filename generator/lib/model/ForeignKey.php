@@ -627,8 +627,8 @@ class ForeignKey extends XMLElement
     {
         $localCols = $this->getLocalColumnObjects();
 
-        foreach ($localCols as $localCol){
-            if ($this->getTable()->getColumn($localCol->getName())->isPrimaryKey()){
+        foreach ($localCols as $localCol) {
+            if ($this->getTable()->getColumn($localCol->getName())->isPrimaryKey()) {
                 return true;
             }
         }

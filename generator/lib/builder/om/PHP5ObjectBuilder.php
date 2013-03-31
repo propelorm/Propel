@@ -129,7 +129,7 @@ class PHP5ObjectBuilder extends ObjectBuilder
     /**
      * Returns the type-casted and stringified default value for the specified Column.
      * This only works for scalar default values currently.
-     * @return string The default value or 'null' if there is none.
+     * @return string          The default value or 'null' if there is none.
      * @throws EngineException
      */
     protected function getDefaultValueString(Column $col)
@@ -1221,6 +1221,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
         }
 
         $script .= "
+
         return \$this->$clo;";
     }
 
@@ -2074,6 +2075,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
         $this->applyBehaviorModifier('postHydrate', $script, "            ");
 
         $script .= "
+
             return \$startcol + $n; // $n = ".$this->getPeerClassname()."::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception \$e) {
@@ -3156,7 +3158,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
     /**
      * Declares an association between this object and a $className object.
      *
-     * @param             $className \$v
+     * @param   $className \$v
      * @return ".$this->getObjectClassname()." The current object (for fluent API support)
      * @throws PropelException
      */
@@ -3584,7 +3586,6 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
 ";
     } // addRefFKPartial()
 
-
     /**
      * Adds the method that initializes the referrer fkey collection.
      * @param string &$script The script will be modified in this method.
@@ -3642,7 +3643,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
      * Method called to associate a $className object to this object
      * through the $className foreign key attribute.
      *
-     * @param    $className \$l $className
+     * @param   $className \$l $className
      * @return ".$this->getObjectClassname()." The current object (for fluent API support)
      */
     public function add".$this->getRefFKPhpNameAffix($refFK, $plural = false)."($className \$l)
@@ -3696,7 +3697,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
                 return 0;
             }
 
-            if(\$partial && !\$criteria) {
+            if (\$partial && !\$criteria) {
                 return count(\$this->get$relCol());
             }
             \$query = $fkQueryClassname::create(null, \$criteria);
@@ -3762,7 +3763,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
                     if (false !== \$this->{$collName}Partial && count(\$$collName)) {
                       \$this->init".$this->getRefFKPhpNameAffix($refFK, $plural = true)."(false);
 
-                      foreach(\$$collName as \$obj) {
+                      foreach (\$$collName as \$obj) {
                         if (false == \$this->{$collName}->contains(\$obj)) {
                           \$this->{$collName}->append(\$obj);
                         }
@@ -3772,12 +3773,13 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
                     }
 
                     \$$collName"."->getInternalIterator()->rewind();
+
                     return \$$collName;
                 }
 
-                if(\$partial && \$this->$collName) {
-                    foreach(\$this->$collName as \$obj) {
-                        if(\$obj->isNew()) {
+                if (\$partial && \$this->$collName) {
+                    foreach (\$this->$collName as \$obj) {
+                        if (\$obj->isNew()) {
                             \${$collName}[] = \$obj;
                         }
                     }
@@ -3826,7 +3828,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
 
 ";
 
-        if ($refFK->isAtLeastOneLocalPrimaryKey()){
+        if ($refFK->isAtLeastOneLocalPrimaryKey()) {
             $script .= "
         //since at least one column in the foreign key is at the same time a PK
         //we can not just set a PK to NULL in the lines below. We have to store
@@ -3995,7 +3997,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
     /**
      * Sets a single $className object as related to this object by a one-to-one relationship.
      *
-     * @param             $className \$v $className
+     * @param   $className \$v $className
      * @return ".$this->getObjectClassname()." The current object (for fluent API support)
      * @throws PropelException
      */
@@ -4106,7 +4108,6 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
         $script .= "
             if (\$this->{$lowerRelatedName}ScheduledForDeletion !== null) {
                 if (!\$this->{$lowerRelatedName}ScheduledForDeletion->isEmpty()) {";
-
 
         if ($refFK->getOnDelete() == ForeignKey::CASCADE) {
                 $script .= "
@@ -4366,7 +4367,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
      * Associate a " . $crossObjectClassName . " object to this object
      * through the " . $tblFK->getName() . " cross reference table.
      *
-     * @param  " .  $crossObjectClassName . " " . $crossObjectName . " The $className object to relate
+     * @param " . $crossObjectClassName . " " . $crossObjectName . " The $className object to relate
      * @return ".$this->getObjectClassname()." The current object (for fluent API support)
      */
     public function add{$relatedObjectClassName}($crossObjectClassName $crossObjectName)

@@ -76,12 +76,12 @@ EOF;
         \MoreRelationTest\CommentPeer::doDeleteAll();
         \MoreRelationTest\PagePeer::doDeleteAll();
 
-        for($i=1;$i<=2;$i++){
+        for ($i=1;$i<=2;$i++) {
 
             $page = new \MoreRelationTest\Page();
 
             $page->setTitle('Page '.$i);
-            for($j=1;$j<=3;$j++){
+            for ($j=1;$j<=3;$j++) {
 
                 $content = new \MoreRelationTest\Content();
                 $content->setTitle('Content '.$j);
@@ -109,8 +109,8 @@ EOF;
      * Composite PK deletion of a 1-to-n relation through set<RelationName>() and remove<RelationName>()
      * where the PK is at the same time a FK.
      */
-    public function testCommentsDeletion(){
-
+    public function testCommentsDeletion()
+    {
         $commentCollection = new PropelObjectCollection();
         $commentCollection->setModel('MoreRelationTest\\Comment');
 
@@ -150,8 +150,8 @@ EOF;
      * Deletion of a 1-to-n relation through set<RelationName>()
      * with onDelete=setnull
      */
-    public function testContentCommentDeletion(){
-
+    public function testContentCommentDeletion()
+    {
         $commentCollection = new PropelObjectCollection();
         $commentCollection->setModel('MoreRelationTest\\ContentComment');
 
@@ -186,8 +186,8 @@ EOF;
      * Basic deletion of a 1-to-n relation through set<RelationName>().
      *
      */
-    public function testContentsDeletion(){
-
+    public function testContentsDeletion()
+    {
         $contentCollection = new PropelObjectCollection();
         $contentCollection->setModel('MoreRelationTest\\Content');
 

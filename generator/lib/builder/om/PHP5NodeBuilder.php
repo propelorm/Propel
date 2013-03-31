@@ -209,7 +209,6 @@ abstract class ".$this->getClassname()." implements IteratorAggregate {
     public function __call(\$name, \$parms)
     {
         if (method_exists(\$this->obj, \$name))
-
             return call_user_func_array(array(\$this->obj, \$name), \$parms);
         else
             throw new PropelException('get method not defined: \$name');
@@ -347,11 +346,9 @@ abstract class ".$this->getClassname()." implements IteratorAggregate {
     {
         foreach (\$this->childNodes as \$childNode) {
             if (\$childNode->equals(\$node, \$strict))
-
                 return true;
 
             if (\$recurse && \$childNode->hasChildNode(\$node, \$recurse))
-
                 return true;
         }
 
@@ -483,17 +480,13 @@ abstract class ".$this->getClassname()." implements IteratorAggregate {
             return null;
         } elseif (\$prev) {
             if (\$nidx > 1 && (\$parentNode = \$this->getParentNode(\$querydb, \$con)))
-
                 return \$parentNode->getChildNodeAt(\$nidx-1, \$querydb, \$con);
             else
-
                 return null;
         } else {
             if (\$parentNode = \$this->getParentNode(\$querydb, \$con))
-
                 return \$parentNode->getChildNodeAt(\$nidx+1, \$querydb, \$con);
             else
-
                 return null;
         }
     }
@@ -939,7 +932,6 @@ abstract class ".$this->getClassname()." implements IteratorAggregate {
         \$lastIdx = (\$lastNode !== null ? \$lastNode->getNodeIndex() : 0);
 
         if (\$lastNode === null || \$offsetIdx > \$lastIdx)
-
             return;
 
         if (\$con === null)
@@ -1008,7 +1000,7 @@ abstract class ".$this->getClassname()." implements IteratorAggregate {
      * @param   $nodeClassname \$node     Node to insert.
      * @param   int       \$childIdx One-based child index to insert at.
      * @param   PropelPDO \$con      Connection to use.
-     * @return   void
+     * @return void
      */
     protected function insertNewChildNode(\$node, \$childIdx, PropelPDO \$con)
     {

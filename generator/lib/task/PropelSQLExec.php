@@ -69,7 +69,7 @@ class PropelSQLExec extends Task
     /**
      * Set the sqldbmap properties file.
      *
-     * @param     $sqldbmap filename for the sqldbmap
+     * @param   $sqldbmap filename for the sqldbmap
      */
     public function setSqlDbMap($sqldbmap)
     {

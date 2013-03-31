@@ -103,8 +103,8 @@ interface NodeObject extends IteratorAggregate
     /**
      * Sets the children array of the node in the tree
      *
-     * @param  Node[]        $children array of Propel node object
-     * @return object        The current object (for fluent API support)
+     * @param  Node[] $children array of Propel node object
+     * @return object The current object (for fluent API support)
      */
     public function setChildren(array $children);
 

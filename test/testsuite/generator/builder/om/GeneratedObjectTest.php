@@ -740,15 +740,13 @@ class GeneratedObjectTest extends BookstoreTestBase
         $this->assertEquals(1, count($op2->getBook()), 'BookOpinion2 has a relation to the Book');
         $this->assertEquals(1, count($br1->getBookOpinions()), 'BookReader1 has 1 BookOpinion (BookOpinion1)');
         $this->assertEquals(1, count($br2->getBookOpinions()), 'BookReader2 has 1 BookOpinion (BookOpinion2)');
-        
+
         $this->assertFalse($op1->isDeleted(), 'BookOpinion1 think it has not been deleted');
 
         $caughtException = false;
-        try
-        {
+        try {
           $op1->reload(false);  // will fail because won't find the entry in the db
-        } catch (PropelException $pe)
-        {
+        } catch (PropelException $pe) {
           $caughtException = true;
         }
 
@@ -818,7 +816,7 @@ class GeneratedObjectTest extends BookstoreTestBase
         $this->assertEquals(1, BookQuery::create()->count(), '1 Book');
         $this->assertEquals(0, BookOpinionQuery::create()->count(), '0 BookOpinion');
     }
-    
+
     /**
      *
      */

@@ -905,7 +905,8 @@ class ModelCriteriaTest extends BookstoreTestBase
         $this->assertEquals($expectedSQL, $con->getLastExecutedQuery(), 'join() allows the use of relation alias in further joins()');
     }
 
-    public function testJoinDuplicate()  {
+    public function testJoinDuplicate()
+    {
         $c = new ModelCriteria('bookstore', 'Author');
         $c->addJoinObject(new Join('tbl.COL1', 'tbl.COL2', 'LEFT JOIN'));
         $c->addJoinObject(new Join('tbl.COL1', 'tbl.COL2', 'LEFT JOIN'));
@@ -1348,16 +1349,16 @@ class ModelCriteriaTest extends BookstoreTestBase
         $c->withColumn('COUNT(Book.Id)', 'NbBooks');
         $c->select(array('FirstName', 'LastName'));
         $collection = $c->find();
-        
+
         $this->assertThat($collection, $this->isInstanceOf('PropelCollection'));
-        
-        foreach($collection as $array) {
+
+        foreach ($collection as $array) {
             $this->assertArrayHasKey('FirstName', $array);
             $this->assertArrayHasKey('LastName', $array);
             $this->assertArrayHasKey('NbBooks', $array);
         }
     }
-    
+
     public function testWithColumnAndSelectColumns()
     {
         $c = new ModelCriteria('bookstore', 'Book');

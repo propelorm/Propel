@@ -40,6 +40,7 @@ class SortableRelationBehavior extends Behavior
 
         $script = "\$this->{$this->getObjectMoveRelatedToNullScopeMethodName()}(\$con);
 ";
+
         return $script;
     }
 
@@ -56,12 +57,12 @@ class SortableRelationBehavior extends Behavior
     protected function getRelatedClassPluralForm()
     {
         $relatedClass = $this->getForeignTable()->getPhpName();
+
         return $this->builder->getPluralizer()->getPluralForm($relatedClass);
     }
 
     protected function getObjectMoveRelatedToNullScopeMethodName()
     {
-
         return "moveRelated{$this->getRelatedClassPluralForm()}ToNullScope";
     }
 

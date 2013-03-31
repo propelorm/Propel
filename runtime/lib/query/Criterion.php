@@ -125,7 +125,7 @@ class Criterion
     /**
      * Set the table name.
      *
-     * @param string $name A String with the table name.
+     * @param  string $name A String with the table name.
      * @return void
      */
     public function setTable($name)
@@ -243,7 +243,7 @@ class Criterion
     /**
      * Append an OR Criterion onto this Criterion's list.
      *
-     * @param Criterion $criterion
+     * @param  Criterion $criterion
      * @return Criterion
      */
     public function addOr(Criterion $criterion)
@@ -462,7 +462,7 @@ class Criterion
      * This method checks another Criteria to see if they contain
      * the same attributes and hashtable entries.
      *
-     * @param Criterion|null $obj
+     * @param  Criterion|null $obj
      * @return boolean
      */
     public function equals($obj)

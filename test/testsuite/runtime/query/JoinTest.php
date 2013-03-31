@@ -165,7 +165,8 @@ class JoinTest extends BaseTestCase
     $this->assertEquals('LEFT JOIN', $j->getJoinType());
   }
 
-    public function testEquality() {
+    public function testEquality()
+    {
         $j1 = new Join('foo', 'bar', 'INNER JOIN');
 
         $j2 = new Join('foo', 'bar', 'INNER JOIN');

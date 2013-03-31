@@ -110,7 +110,7 @@ class PropelDataDumpTask extends AbstractPropelDataModelTask
     /**
      * Set the database name
      *
-     * @param      $v The new DatabaseName value
+     * @param   $v The new DatabaseName value
      */
     public function setDatabaseName($v)
     {

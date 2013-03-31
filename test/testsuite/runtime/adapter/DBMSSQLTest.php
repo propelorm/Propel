@@ -19,7 +19,7 @@ require_once dirname(__FILE__) . '/DBAdapterTestAbstract.php';
  */
 class DBMSSQLTest extends DBAdapterTestAbstract
 {
-    function testSelectJoinOrderAlias ()
+    public function testSelectJoinOrderAlias ()
     {
         $adapter = new DBMSSQL();
         $sql = 'SELECT Field, Related.Field AS [RelatedField] FROM Record LEFT JOIN Related ON Record.RelatedID = Related.ID ORDER BY [RelatedField] ASC';
@@ -27,7 +27,8 @@ class DBMSSQLTest extends DBAdapterTestAbstract
         $this->assertEquals('SELECT [Field], [RelatedField] FROM (SELECT ROW_NUMBER() OVER(ORDER BY Related.Field ASC) AS [RowNumber], Field AS [Field], Related.Field AS [RelatedField] FROM Record LEFT JOIN Related ON Record.RelatedID = Related.ID) AS derivedb WHERE RowNumber BETWEEN 11 AND 15', $sql);
     }
 
-    public function testQuotingIdentifiers() {
+    public function testQuotingIdentifiers()
+    {
         $db = new DBMSSQL();
         $this->assertEquals('[Book ISBN]', $db->quoteIdentifier('Book ISBN'));
     }

@@ -37,6 +37,7 @@ class MysqlPlatformMigrationMyISAMTest extends PlatformMigrationTestProvider
             ));
             $platform->setGeneratorConfig($config);
         }
+
         return $platform;
     }
 

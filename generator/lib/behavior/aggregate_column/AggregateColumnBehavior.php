@@ -74,7 +74,7 @@ class AggregateColumnBehavior extends Behavior
     protected function addObjectCompute()
     {
         $conditions = array();
-        if($this->getParameter('condition')) {
+        if ($this->getParameter('condition')) {
           $conditions[] = $this->getParameter('condition');
         }
 

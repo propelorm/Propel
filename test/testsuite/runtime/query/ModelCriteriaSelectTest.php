@@ -455,7 +455,8 @@ class ModelCriteriaSelectTest extends BookstoreTestBase
         $this->assertEquals(array('Book.Id', 'Book.Title', 'Book.ISBN', 'Book.Price', 'Book.PublisherId', 'Book.AuthorId'), $c->getSelect());
     }
 
-    public function testQuotingAliases() {
+    public function testQuotingAliases()
+    {
         $c = new ModelCriteria('bookstore', 'Book');
         $c->withColumn('book.title', 'Book Title (*.)');
         $c->select('Book Title (*.)');

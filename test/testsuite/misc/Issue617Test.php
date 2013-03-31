@@ -42,8 +42,8 @@ class Issue617Test extends PlatformDatabaseBuildTimeBase
     /**
      * Setups the initial schema.
      */
-    private function setupInitSchema(){
-
+    private function setupInitSchema()
+    {
         /*
          * Create issue617 tables with foreign keys
          */
@@ -124,8 +124,8 @@ SET FOREIGN_KEY_CHECKS = 1;
      * Drop the foreign key in the `_user` table and check whether it generates
      * the correct `DROP` SQL.
      */
-    private function dropForeignKey(){
-
+    private function dropForeignKey()
+    {
         /*
          * Create issue617 tables without foreign keys
          */
@@ -186,9 +186,8 @@ SET FOREIGN_KEY_CHECKS = 1;
     /*
      * Checks if FKs are really deleted.
      */
-    private function checkDeletedFk(){
-
-
+    private function checkDeletedFk()
+    {
         $this->readDatabase();
         $diff = PropelDatabaseComparator::computeDiff($this->database, $this->updatedBuilder->getDatabase());
         $sql = $this->database->getPlatform()->getModifyDatabaseDDL($diff);

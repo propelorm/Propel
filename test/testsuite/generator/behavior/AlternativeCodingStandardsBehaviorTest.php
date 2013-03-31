@@ -29,17 +29,13 @@ class AlternativeCodingStandardsBehaviorTest extends PHPUnit_Framework_TestCase
 {
 }"),
             array("if (true) {
-}", "if (true)
-{
+}", "if (true) {
 }"),
             array("} else {
-}", "}
-else
-{
+}", "} else {
 }"),
             array("foreach (\$i as \$j) {
-}", "foreach (\$i as \$j)
-{
+}", "foreach (\$i as \$j) {
 }"),
         );
     }

@@ -64,7 +64,7 @@ class PlatformDatabaseBuildTimeBase extends PHPUnit_Framework_TestCase
      * Detects the differences between current connected database and $pDatabase
      * and updates the schema. This does not DROP tables.
      *
-     * @param  Database $pDatabase
+     * @param Database $pDatabase
      */
     public function updateSchema($pDatabase)
     {

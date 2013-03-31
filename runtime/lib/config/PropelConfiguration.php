@@ -122,8 +122,8 @@ class PropelConfiguration implements ArrayAccess
      *   print_r($c['foo1']); => array('foo2' => 'bar')
      * </code>
      *
-     * @param string  $name  Configuration item name (name.space.name)
-     * @param mixed   $value Value to be stored
+     * @param string  $name              Configuration item name (name.space.name)
+     * @param mixed   $value             Value to be stored
      * @param Boolean $autoFlattenArrays
      */
     public function setParameter($name, $value, $autoFlattenArrays = true)

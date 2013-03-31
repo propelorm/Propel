@@ -76,7 +76,6 @@ class MysqlSchemaParserTest extends PHPUnit_Framework_TestCase
         $table = $database->getTable('foo');
         $c1 = $table->getColumn('longitude');
 
-
         $parser = new MysqlSchemaParser(Propel::getConnection('reverse-bookstore'));
         $parser->setGeneratorConfig(new QuickGeneratorConfig());
 

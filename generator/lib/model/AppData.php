@@ -109,7 +109,7 @@ class AppData
     /**
      * Set the name of the database.
      *
-     * @param      $name of the database.
+     * @param   $name of the database.
      */
     public function setName($name)
     {

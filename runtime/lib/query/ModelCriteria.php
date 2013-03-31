@@ -269,7 +269,7 @@ class ModelCriteria extends Criteria
      *
      * @param mixed $clause A string representing the pseudo SQL clause, e.g. 'Book.AuthorId = ?'
      *                           Or an array of condition names
-     * @param mixed $value A value for the condition
+     * @param mixed  $value       A value for the condition
      * @param string $bindingType
      *
      * @return ModelCriteria The current object, for fluid interface
@@ -303,8 +303,8 @@ class ModelCriteria extends Criteria
      * @see Criteria::addOr()
      * @deprecated Use _or()->where() instead
      *
-     * @param string $clause The pseudo SQL clause, e.g. 'AuthorId = ?'
-     * @param mixed  $value  A value for the condition
+     * @param string $clause      The pseudo SQL clause, e.g. 'AuthorId = ?'
+     * @param mixed  $value       A value for the condition
      * @param string $bindingType
      *
      * @return ModelCriteria The current object, for fluid interface
@@ -332,7 +332,7 @@ class ModelCriteria extends Criteria
      *
      * @param mixed $clause A string representing the pseudo SQL clause, e.g. 'Book.AuthorId = ?'
      *                           Or an array of condition names
-     * @param mixed $value A value for the condition
+     * @param mixed  $value       A value for the condition
      * @param string $bindingType
      *
      * @return ModelCriteria The current object, for fluid interface
@@ -563,7 +563,7 @@ class ModelCriteria extends Criteria
 
         // Add requested columns which are not withColumns
         $columnNames = (array) $this->select;
-        
+
         // temporary store columns Alias or withColumn
         $asColumns = $this->getAsColumns();
         $this->asColumns = array();
@@ -578,9 +578,9 @@ class ModelCriteria extends Criteria
                 unset($asColumns[$columnName]);
             }
         }
-        
+
         // re-add all remaining columns which were not contained in select-columnNames
-        foreach($asColumns as $columnName => $columnAlias) {
+        foreach ($asColumns as $columnName => $columnAlias) {
             $this->addAsColumn($columnName, $columnAlias);
         }
     }
@@ -700,10 +700,10 @@ class ModelCriteria extends Criteria
      * $query->addJoinCondition('Author', 'Book.Title LIKE ?', 'foo%');
      * </code>
      *
-     * @param string $name     The relation name or alias on which the join was created
-     * @param string $clause   SQL clause, may contain column and table phpNames
-     * @param mixed  $value    An optional value to bind to the clause
-     * @param string $operator The operator to use to add the condition. Defaults to 'AND'
+     * @param string $name        The relation name or alias on which the join was created
+     * @param string $clause      SQL clause, may contain column and table phpNames
+     * @param mixed  $value       An optional value to bind to the clause
+     * @param string $operator    The operator to use to add the condition. Defaults to 'AND'
      * @param string $bindingType
      *
      * @return ModelCriteria The current object, for fluid interface
@@ -763,7 +763,7 @@ class ModelCriteria extends Criteria
     /**
      * Add a join object to the Criteria
      * @see   Criteria::addJoinObject()
-     * @param Join $join A join object
+     * @param Join   $join A join object
      * @param string $name
      *
      * @return ModelCriteria The current object, for fluid interface
@@ -924,7 +924,7 @@ class ModelCriteria extends Criteria
      * Initializes a secondary ModelCriteria object, to be later merged with the current object
      *
      * @see       ModelCriteria::endUse()
-     * @param string $relationName        Relation name or alias
+     * @param string $relationName           Relation name or alias
      * @param string $secondaryCriteriaClass Classname for the ModelCriteria to be used
      *
      * @return ModelCriteria The secondary criteria object
@@ -1807,8 +1807,8 @@ class ModelCriteria extends Criteria
      * Creates a Criterion object based on a SQL clause and a value
      * Uses introspection to translate the column phpName into a fully qualified name
      *
-     * @param string $clause The pseudo SQL clause, e.g. 'AuthorId = ?'
-     * @param mixed  $value  A value for the condition
+     * @param string $clause      The pseudo SQL clause, e.g. 'AuthorId = ?'
+     * @param mixed  $value       A value for the condition
      * @param string $bindingType
      *
      * @return Criterion a Criterion or ModelCriterion object
@@ -1980,7 +1980,7 @@ class ModelCriteria extends Criteria
      *   => array($authorFirstNameColumnMap, 'a.FIRST_NAME')
      * </code>
      *
-     * @param string $phpName String representing the column name in a pseudo SQL clause, e.g. 'Book.Title'
+     * @param string  $phpName      String representing the column name in a pseudo SQL clause, e.g. 'Book.Title'
      * @param boolean $failSilently
      *
      * @return array List($columnMap, $realColumnName)
@@ -2043,8 +2043,8 @@ class ModelCriteria extends Criteria
     /**
      * Special case for subquery columns
      *
-     * @param string $class
-     * @param string $phpName
+     * @param string  $class
+     * @param string  $phpName
      * @param boolean $failSilently
      *
      * @return array List($columnMap, $realColumnName)

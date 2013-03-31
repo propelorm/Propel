@@ -932,7 +932,8 @@ class CriteriaTest extends BookstoreTestBase
         $this->assertEquals("column_alias", $crit->getColumn());
     }
 
-    public function testQuotingAlias() {
+    public function testQuotingAlias()
+    {
         $db = Propel::getDB();
         $c = new Criteria();
         $c->addSelectColumn(BookPeer::TITLE);

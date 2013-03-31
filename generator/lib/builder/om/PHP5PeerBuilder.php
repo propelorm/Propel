@@ -520,7 +520,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . "
      * @param string \$colname ENUM column name.
      * @param string \$enumVal ENUM value.
      *
-     * @return int            SQL value
+     * @return int SQL value
      */
     public static function getSqlValueForEnum(\$colname, \$enumVal)
     {
@@ -528,6 +528,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . "
         if (!in_array(\$enumVal, \$values)) {
             throw new PropelException(sprintf('Value \"%s\" is not accepted in this enumerated column', \$colname));
         }
+
         return array_search(\$enumVal, \$values);
     }
 ";
@@ -547,7 +548,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . "
      * Gets the SQL value for ".$col->getPhpName()." ENUM value
      *
      * @param  string \$enumVal ENUM value to get SQL value for
-     * @return int             SQL value
+     * @return int SQL value
      */
     public static function get{$col->getPhpName()}SqlValue(\$enumVal)
     {
@@ -992,10 +993,8 @@ abstract class ".$this->getClassname(). $extendingPeerClass . "
      */
     public static function clearInstancePool(\$and_clear_all_references = false)
     {
-      if (\$and_clear_all_references)
-      {
-        foreach (".$this->getPeerClassname()."::\$instances as \$instance)
-        {
+      if (\$and_clear_all_references) {
+        foreach (".$this->getPeerClassname()."::\$instances as \$instance) {
           \$instance->clearAllReferences(true);
         }
       }
@@ -2002,7 +2001,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . "
      *
      * @param      array \$pks List of primary keys
      * @param      PropelPDO \$con the connection to use
-     * @return " .$this->getObjectClassname(). "[]
+     * @return "               .$this->getObjectClassname(). "[]
      * @throws PropelException Any exceptions caught during processing will be
      *		 rethrown wrapped into a PropelException.
      */
@@ -2181,7 +2180,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . "
           $script .= "
         \$criteria->addMultipleJoin(array(
 ";
-          foreach ($lftCols as $columnName ) {
+          foreach ($lftCols as $columnName) {
             $script .= sprintf("        array(%s, %s),
 ",
                   $this->getColumnConstant($table->getColumn($columnName) ),
@@ -2684,7 +2683,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . "
 
         $fkeys = $table->getForeignKeys();  // this sep assignment is necessary otherwise sub-loops over
         // getForeignKeys() will cause this to only execute one time.
-        foreach ($fkeys as $fk ) {
+        foreach ($fkeys as $fk) {
 
             $tblFK = $table->getDatabase()->getTable($fk->getForeignTableName());
 
@@ -2873,7 +2872,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . "
 
         $fkeys = $table->getForeignKeys();  // this sep assignment is necessary otherwise sub-loops over
         // getForeignKeys() will cause this to only execute one time.
-        foreach ($fkeys as $fk ) {
+        foreach ($fkeys as $fk) {
 
             $tblFK = $table->getDatabase()->getTable($fk->getForeignTableName());
 

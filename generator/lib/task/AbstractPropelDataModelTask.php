@@ -190,7 +190,7 @@ abstract class AbstractPropelDataModelTask extends Task
     /**
      * Set the current target database. (e.g. mysql, oracle, ..)
      *
-     * @param      $v target database(s)
+     * @param   $v target database(s)
      */
     public function setTargetDatabase($v)
     {
@@ -280,7 +280,7 @@ abstract class AbstractPropelDataModelTask extends Task
     /**
      * Set the current target database encoding.
      *
-     * @param      $v target database encoding
+     * @param   $v target database encoding
      */
     public function setDbEncoding($v)
     {

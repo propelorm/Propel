@@ -16,8 +16,8 @@ require_once dirname(__FILE__) . '/../../../tools/helpers/bookstore/BookstoreTes
  * @package    runtime.adapter
  */
 
-abstract class DBAdapterTestAbstract extends BookstoreTestBase {
-
+abstract class DBAdapterTestAbstract extends BookstoreTestBase
+{
     abstract public function testQuotingIdentifiers();
 
 }

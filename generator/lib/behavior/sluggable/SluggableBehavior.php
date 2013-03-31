@@ -115,6 +115,7 @@ if (\$this->isColumnModified($const) && \$this->{$this->getColumnGetter()}()) {
     \$this->{$this->getColumnSetter()}(\$this->createSlug());
 }";
     }
+
         return $script;
     }
 
