@@ -220,6 +220,9 @@ class GeneratedObjectRelTest extends BookstoreEmptyTestBase
         $this->assertEquals(1, $list->countBooks(), 'addCrossFk() sets the internal collection properly');
         $this->assertEquals(1, $list->countBookListRels(), 'addCrossFk() sets the internal cross reference collection properly');
 
+        $this->assertEquals(1, $book->countBookClubLists(), 'addCrossFk() sets the internal collection for related object properly');
+        $this->assertEquals(1, $book->countBookListRels(), 'addCrossFk() sets the internal cross reference collection for related object properly');
+
         $list->save();
         $this->assertFalse($book->isNew(), 'related object is saved if added');
         $rels = $list->getBookListRels();
