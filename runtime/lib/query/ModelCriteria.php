@@ -1231,7 +1231,11 @@ class ModelCriteria extends Criteria
         }
         if (!$ret = $this->findOne($con)) {
             $class = $this->getModelName();
-            $obj = new $class();
+            $obj = new $class();            
+            if (!is_callable(array($this, 'setByName'))) {
+                throw new PropelException('findOneOrCreate() was not able to find the method setByName of class '. __CLASS__ .' Make sure the build property \"propel.addGenericMutators\" is set to \"true\" in your build.properties file.');
+            }
+            
             foreach ($this->keys() as $key) {
                 $obj->setByName($key, $this->getValue($key), BasePeer::TYPE_COLNAME);
             }
@@ -1762,6 +1766,10 @@ class ModelCriteria extends Criteria
             // Update rows one by one
             $objects = $this->setFormatter(ModelCriteria::FORMAT_OBJECT)->find($con);
             foreach ($objects as $object) {
+                if (!is_callable(array($object, 'setByName'))) {
+                    throw new PropelException('doUpdate() was not able to find the method setByName of class '. get_class($object) .' Make sure the build property \"propel.addGenericMutators\" is set to \"true\" in your build.properties file.');
+                }
+                
                 foreach ($values as $key => $value) {
                     $object->setByName($key, $value);
                 }
