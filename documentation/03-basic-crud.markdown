@@ -157,6 +157,8 @@ $author = AuthorQuery::create()->findOneByFirstName('Jane');
 
 The Propel Query API is very powerful. The next chapter will teach you to use it to add conditions on related objects. If you can't wait, jump to the [Query API reference](../reference/model-criteria).
 
+>**Tip**<br />The `find*` methods do not always query the database. The propel instance pool serves as a cache that helps to avoid needless queries. In some cases, forcing a query might be necessary, e.g. if the old password of a user entity class is needed in the save() function, after the values have been overwritten by binding it to a form. Propel::disableInstancePooling() helps to force queries. 
+
 ### Using Custom SQL ###
 
 The `Query` class provides a relatively simple approach to constructing a query. Its database neutrality and logical simplicity make it a good choice for expressing many common queries. However, for a very complex query, it may prove more effective (and less painful) to simply use a custom SQL query to hydrate your Propel objects.
