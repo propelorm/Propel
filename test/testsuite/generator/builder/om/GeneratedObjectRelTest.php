@@ -137,6 +137,21 @@ class GeneratedObjectRelTest extends BookstoreEmptyTestBase
 
     }
 
+
+    /**
+     * In previous test cases the crossref object was created explicitly. But even without creating
+     * it explicitly the reverse relations should hold.
+     */
+    public function testManyToManyWithoutExplicitCrossrefObject() {
+        $list = new BookClubList();
+        $book = new Book();
+
+        $book->addBookClubList($list);
+        $this->assertEquals(1, count($book->getBookClubLists()));
+        $this->assertEquals(1, count($list->getBooks()));
+    }
+
+
     public function testManyToManyGetterExists()
     {
         $this->assertTrue(method_exists('BookClubList', 'getBooks'), 'Object generator correctly adds getter for the crossRefFk');
