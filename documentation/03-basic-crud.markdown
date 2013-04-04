@@ -157,6 +157,8 @@ $author = AuthorQuery::create()->findOneByFirstName('Jane');
 
 The Propel Query API is very powerful. The next chapter will teach you to use it to add conditions on related objects. If you can't wait, jump to the [Query API reference](../reference/model-criteria).
 
+>**Tip**<br />The `findPk` method and `findOneByXXX` magic methods (for primary key attributes) do not always query the database, but sometimes give you information from a cache. See the section about the [instance pool](#propel-instance-pool) for more information.
+
 ### Using Custom SQL ###
 
 The `Query` class provides a relatively simple approach to constructing a query. Its database neutrality and logical simplicity make it a good choice for expressing many common queries. However, for a very complex query, it may prove more effective (and less painful) to simply use a custom SQL query to hydrate your Propel objects.
@@ -301,7 +303,8 @@ The [ModelCriteria Query API reference](../reference/model-criteria) describes e
 
 ## Propel Instance Pool ##
 
-Propel keeps a list of the objects that you already retrieved in memory to avoid calling the same request twice in a PHP script. This list is called the instance pool, and is automatically populated from your past requests:
+Propel keeps a list of the objects that you already retrieved in memory to avoid calling the same request twice in a PHP script. This list is called the instance pool, and is automatically populated from your past requests.
+The instance pool is consulted whenever searching for an object using its primary key via `findPk` or `findOneById` (which is an alias for the former).
 
 ```php
 <?php
@@ -310,6 +313,29 @@ $author1 = AuthorQuery::create()->findPk(1);
 // Issues a SELECT query
 ...
 // second call
-$author2 = AuthorQuery::create()->findPk(1);
+$author2 = AuthorQuery::create()->findPk(1);    // or AuthorQuery::create()->findOneById(1);
 // Skips the SQL query and returns the existing $author1 object
+```
+
+The instance pool is located in and managed via an entity's peer class (e.g. `AuthorPeer::getInstanceFromPool((string) $key)`) but there should seldom or never be the need to call it manually.
+
+That said, remember that in some cases, executing an actual query to the database might be necessary, e.g. if the state of the object differs from the database state.
+This is frequently the case if for instance the attributes are set externally by e.g. binding it to a form.
+If the values as of the database state of an entity are needed within an entity, for instance in its `save()` function, using `findPk($this->id)` and `findOneById($this->getId())` won't work, since the instance pool will answer this request, giving you the data you already have.
+To retrieve the object either use one of the other `find` methods or disable instance pooling for the moment:
+
+```php
+<?php
+
+  public function save(PropelPDO $con = NULL) {
+    
+    \Propel::disableInstancePooling();
+
+    $uq = UserQuery::create()->findOneById($this->getId());
+    if( null !== $uq ){
+        $oldPassword = $uq->getPassword();
+        $this->setPassword($oldPassword);
+    }
+
+    \Propel::enableInstancePooling();
 ```
