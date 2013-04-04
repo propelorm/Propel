@@ -157,7 +157,7 @@ $author = AuthorQuery::create()->findOneByFirstName('Jane');
 
 The Propel Query API is very powerful. The next chapter will teach you to use it to add conditions on related objects. If you can't wait, jump to the [Query API reference](../reference/model-criteria).
 
->**Tip**<br />The `findPk` and `findOneById` methods do not always query the database, but sometimes give you information from a cache. See the section about the [instance pool](#propel-instance-pool) for more information.
+>**Tip**<br />The `findPk` method and `findOneByXXX` magic methods (for primary key attributes) do not always query the database, but sometimes give you information from a cache. See the section about the [instance pool](#propel-instance-pool) for more information.
 
 ### Using Custom SQL ###
 
