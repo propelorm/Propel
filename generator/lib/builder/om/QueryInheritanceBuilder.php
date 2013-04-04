@@ -326,6 +326,10 @@ class "  .$this->getClassname() . " extends " . $baseClassname . " {
         if (!\$ret = \$this->findOne(\$con)) {
             \$class = ".$this->getPeerClassname() . "::CLASSNAME_" . strtoupper($child->getKey()) . ";
             \$obj = new \$class;
+            if (!is_callable(array(\$obj, 'setByName'))) {
+                throw new PropelException('findOneOrCreate() was not able to find the method setByName of class '. get_class(\$obj) .' Make sure the build property \"propel.addGenericMutators\" is set to \"true\" in your build.properties file.');
+            }
+            
             foreach (\$this->keys() as \$key) {
                 \$obj->setByName(\$key, \$this->getValue(\$key), BasePeer::TYPE_COLNAME);
             }
