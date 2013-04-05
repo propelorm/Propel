@@ -70,7 +70,7 @@ class ModelJoin extends Join
     }
 
     /**
-     * @param ModelJoin $join
+     * @param  ModelJoin $join
      * @return ModelJoin
      */
     public function setPreviousJoin(ModelJoin $join)
@@ -135,7 +135,7 @@ class ModelJoin extends Join
     }
 
     /**
-     * @param ModelJoin $join
+     * @param  ModelJoin $join
      * @return bool
      */
     public function equals($join)

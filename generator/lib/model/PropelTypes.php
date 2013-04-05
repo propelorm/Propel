@@ -173,7 +173,7 @@ class PropelTypes
     );
 
     /**
-     * Mapping between Propel types and PDO type contants (for prepared statement setting).
+     * Mapping between Propel types and PDO type constants (for prepared statement setting).
      *
      * @var        array
      */
@@ -244,7 +244,7 @@ class PropelTypes
     }
 
     /**
-     * Resturns the PDO type (PDO::PARAM_* constant) value.
+     * Returns the PDO type (PDO::PARAM_* constant) value.
      * @return int
      */
     public static function getPDOType($type)
@@ -253,7 +253,7 @@ class PropelTypes
     }
 
     /**
-     * Resturns the PDO type ('PDO::PARAM_*' constant) name.
+     * Returns the PDO type ('PDO::PARAM_*' constant) name.
      * @return string
      */
     public static function getPdoTypeString($type)

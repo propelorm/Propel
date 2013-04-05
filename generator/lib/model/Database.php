@@ -138,7 +138,7 @@ class Database extends ScopedElement
 
     /**
      * Set the value of baseClass.
-     * @param      v  Value to assign to baseClass.
+     * @param   $v Value to assign to baseClass.
      */
     public function setBaseClass($v)
     {
@@ -156,7 +156,7 @@ class Database extends ScopedElement
 
     /**
      * Set the value of basePeer.
-     * @param      v Value to assign to basePeer.
+     * @param   $v Value to assign to basePeer.
      */
     public function setBasePeer($v)
     {
@@ -174,7 +174,7 @@ class Database extends ScopedElement
 
     /**
      * Set the value of defaultIdMethod.
-     * @param      v Value to assign to defaultIdMethod.
+     * @param   $v Value to assign to defaultIdMethod.
      */
     public function setDefaultIdMethod($v)
     {

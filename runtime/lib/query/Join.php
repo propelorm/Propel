@@ -226,8 +226,7 @@ class Join
     /**
      * Get the join type
      *
-     * @return string The type of the join, i.e. Criteria::LEFT_JOIN(), ...,
-     *         or null for adding the join condition to the where Clause
+     * @return string The type of the join, i.e. Criteria::LEFT_JOIN()
      */
     public function getJoinType()
     {
@@ -541,14 +540,14 @@ class Join
     }
 
     /**
-     * @param Join $join
+     * @param  Join $join
      * @return bool
      */
     public function equals($join)
     {
         return $join !== null
                 && $join instanceof Join
-                && $this->joinType == $join->getJoinType()
+                && $this->getJoinType() == $join->getJoinType()
                 && $this->getConditions() == $join->getConditions();
     }
 

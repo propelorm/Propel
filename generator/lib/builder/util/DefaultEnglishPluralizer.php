@@ -11,7 +11,7 @@
 require_once dirname(__FILE__) . '/Pluralizer.php';
 
 /**
- * The default Enlglish pluralizer class.
+ * The default English pluralizer class.
  *
  * @author     Hans Lellelid <hans@xmpl.org>
  * @version    $Revision$

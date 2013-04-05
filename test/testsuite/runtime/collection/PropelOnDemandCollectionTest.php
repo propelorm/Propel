@@ -46,7 +46,7 @@ class PropelOnDemandCollectionTest extends BookstoreEmptyTestBase
     {
         $clone = clone $this->books;
     }
-    
+
     public function testKeys()
     {
         $i = 0;

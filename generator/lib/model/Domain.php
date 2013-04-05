@@ -243,7 +243,7 @@ class Domain extends XMLElement
     /**
      * Replaces the type if the new value is not null.
      *
-     * @param string $value The tyep to set.
+     * @param string $value The type to set.
      */
     public function replaceType($value)
     {
@@ -299,7 +299,7 @@ class Domain extends XMLElement
     /**
      * Replaces the default value if the new value is not null.
      *
-     * @param ColumnDefaultValue $value The defualt value object
+     * @param ColumnDefaultValue $value The default value object
      */
     public function replaceDefaultValue(ColumnDefaultValue $value = null)
     {

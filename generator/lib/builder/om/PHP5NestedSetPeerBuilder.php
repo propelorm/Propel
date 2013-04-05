@@ -52,7 +52,7 @@ require '".$this->getPeerBuilder()->getClassFilePath()."';
     } // addIncludes()
 
     /**
-     * Adds class phpdoc comment and openning of class.
+     * Adds class phpdoc comment and opening of class.
      * @param      string &$script The script will be modified in this method.
      */
     protected function addClassOpen(&$script)
@@ -1039,7 +1039,7 @@ abstract class ".$this->getClassname()." extends ".$this->getPeerBuilder()->getC
      *
      * @param   $objectClassname \$node	Propel object of node to create path to
      * @param      PropelPDO \$con	Connection to use.
-     * @return array Array in order of heirarchy
+     * @return array Array in order of hierarchy
      */
     public static function getPath(NodeObject \$node, PropelPDO \$con = null)
     {

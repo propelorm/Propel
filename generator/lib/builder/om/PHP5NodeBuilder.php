@@ -49,7 +49,7 @@ class PHP5NodeBuilder extends ObjectBuilder
     } // addIncludes()
 
     /**
-     * Adds class phpdoc comment and openning of class.
+     * Adds class phpdoc comment and opening of class.
      * @param      string &$script The script will be modified in this method.
      */
     protected function addClassOpen(&$script)
@@ -201,15 +201,14 @@ abstract class ".$this->getClassname()." implements IteratorAggregate {
     /**
      * Convenience overload for wrapped object methods.
      *
-     * @param      string Method name to call on wrapped object.
-     * @param      mixed Parameter accepted by wrapped object set method.
+     * @param      string \$name  Method name to call on wrapped object.
+     * @param      mixed  \$parms Parameter accepted by wrapped object set method.
      * @return mixed           Return value of wrapped object method.
      * @throws PropelException Fails if method is not defined for wrapped object.
      */
     public function __call(\$name, \$parms)
     {
         if (method_exists(\$this->obj, \$name))
-
             return call_user_func_array(array(\$this->obj, \$name), \$parms);
         else
             throw new PropelException('get method not defined: \$name');
@@ -230,8 +229,8 @@ abstract class ".$this->getClassname()." implements IteratorAggregate {
      *   \"querydb\" - True if nodes should be retrieved from database.
      *   \"con\" - Connection to use if retrieving from database.
      *
-     * @param      string Type of iterator to use (\"pre\", \"post\", \"level\").
-     * @param      array Map of option name => value.
+     * @param      string \$type Type of iterator to use (\"pre\", \"post\", \"level\").
+     * @param      array  \$opts Map of option name => value.
      * @return void
      * @todo       Implement other iterator types (i.e. post-order, level, etc.)
      */
@@ -249,8 +248,8 @@ abstract class ".$this->getClassname()." implements IteratorAggregate {
     /**
      * Returns a pre-order iterator for this node and its children.
      *
-     * @param      string Type of iterator to use (\"pre\", \"post\", \"level\")
-     * @param      array Map of option name => value.
+     * @param      string \$type Type of iterator to use (\"pre\", \"post\", \"level\")
+     * @param      array  \$opts Map of option name => value.
      * @return NodeIterator
      */
     public function getIterator(\$type = null, \$opts = null)
@@ -338,20 +337,18 @@ abstract class ".$this->getClassname()." implements IteratorAggregate {
      * Returns true if specified node is a child of this node. If recurse is
      * true, checks if specified node is a descendant of this node.
      *
-     * @param      ".$this->getStubNodeBuilder()->getClassname()." Node to look for.
-     * @param      boolean True if strict comparison should be used.
-     * @param      boolean True if all descendants should be checked.
+     * @param      ".$this->getStubNodeBuilder()->getClassname()." \$node Node to look for.
+     * @param      boolean \$strict  True if strict comparison should be used.
+     * @param      boolean \$recurse True if all descendants should be checked.
      * @return boolean
      */
     public function hasChildNode(\$node, \$strict = false, \$recurse = false)
     {
         foreach (\$this->childNodes as \$childNode) {
             if (\$childNode->equals(\$node, \$strict))
-
                 return true;
 
             if (\$recurse && \$childNode->hasChildNode(\$node, \$recurse))
-
                 return true;
         }
 
@@ -367,9 +364,9 @@ abstract class ".$this->getClassname()." implements IteratorAggregate {
      * Returns child node at one-based index. Retrieves from database if not
      * loaded yet.
      *
-     * @param      int One-based child node index.
-     * @param      boolean True if child should be retrieved from database.
-     * @param      PropelPDO Connection to use if retrieving from database.
+     * @param      int       \$i       One-based child node index.
+     * @param      boolean   \$querydb True if child should be retrieved from database.
+     * @param      PropelPDO \$con     Connection to use if retrieving from database.
      * @return   ".$this->getStubNodeBuilder()->getClassname()."
      */
     public function getChildNodeAt(\$i, \$querydb = false, PropelPDO \$con = null)
@@ -397,8 +394,8 @@ abstract class ".$this->getClassname()." implements IteratorAggregate {
     /**
      * Returns first child node (if any). Retrieves from database if not loaded yet.
      *
-     * @param      boolean True if child should be retrieved from database.
-     * @param      PropelPDO Connection to use if retrieving from database.
+     * @param      boolean   \$querydb True if child should be retrieved from database.
+     * @param      PropelPDO \$con     Connection to use if retrieving from database.
      * @return   ".$this->getStubNodeBuilder()->getClassname()."
      */
     public function getFirstChildNode(\$querydb = false, PropelPDO \$con = null)
@@ -417,8 +414,8 @@ abstract class ".$this->getClassname()." implements IteratorAggregate {
     /**
      * Returns last child node (if any).
      *
-     * @param      boolean True if child should be retrieved from database.
-     * @param      PropelPDO Connection to use if retrieving from database.
+     * @param      boolean   \$querydb True if child should be retrieved from database.
+     * @param      PropelPDO \$con     Connection to use if retrieving from database.
      */
     public function getLastChildNode(\$querydb = false, PropelPDO \$con = null)
     {
@@ -470,9 +467,9 @@ abstract class ".$this->getClassname()." implements IteratorAggregate {
      * Returns next (or previous) sibling node or null. Retrieves from database if
      * not loaded yet.
      *
-     * @param      boolean True if previous sibling should be returned.
-     * @param      boolean True if sibling should be retrieved from database.
-     * @param      PropelPDO Connection to use if retrieving from database.
+     * @param      boolean   \$prev    True if previous sibling should be returned.
+     * @param      boolean   \$querydb True if sibling should be retrieved from database.
+     * @param      PropelPDO \$con     Connection to use if retrieving from database.
      * @return   ".$this->getStubNodeBuilder()->getClassname()."
      */
     public function getSiblingNode(\$prev = false, \$querydb = false, PropelPDO \$con = null)
@@ -483,17 +480,13 @@ abstract class ".$this->getClassname()." implements IteratorAggregate {
             return null;
         } elseif (\$prev) {
             if (\$nidx > 1 && (\$parentNode = \$this->getParentNode(\$querydb, \$con)))
-
                 return \$parentNode->getChildNodeAt(\$nidx-1, \$querydb, \$con);
             else
-
                 return null;
         } else {
             if (\$parentNode = \$this->getParentNode(\$querydb, \$con))
-
                 return \$parentNode->getChildNodeAt(\$nidx+1, \$querydb, \$con);
             else
-
                 return null;
         }
     }
@@ -509,8 +502,8 @@ abstract class ".$this->getClassname()." implements IteratorAggregate {
     /**
      * Returns parent node. Loads from database if not cached yet.
      *
-     * @param      boolean True if parent should be retrieved from database.
-     * @param      PropelPDO Connection to use if retrieving from database.
+     * @param      boolean   \$querydb True if parent should be retrieved from database.
+     * @param      PropelPDO \$con     Connection to use if retrieving from database.
      * @return   ".$this->getStubNodeBuilder()->getClassname()."
      */
     public function getParentNode(\$querydb = true, PropelPDO \$con = null)
@@ -546,8 +539,8 @@ abstract class ".$this->getClassname()." implements IteratorAggregate {
      * Returns an array of all ancestor nodes, starting with the root node
      * first.
      *
-     * @param      boolean True if ancestors should be retrieved from database.
-     * @param      PropelPDO Connection to use if retrieving from database.
+     * @param      boolean   \$querydb True if ancestors should be retrieved from database.
+     * @param      PropelPDO \$con     Connection to use if retrieving from database.
      * @return array
      */
     public function getAncestors(\$querydb = false, PropelPDO \$con = null)
@@ -585,7 +578,7 @@ abstract class ".$this->getClassname()." implements IteratorAggregate {
      * Also changes the node path to '0' to indicate that it is not a
      * stored node.
      *
-     * @param      boolean
+     * @param      boolean \$b
      * @return void
      */
     public function setNew(\$b)
@@ -602,7 +595,7 @@ abstract class ".$this->getClassname()." implements IteratorAggregate {
     /**
      * Changes the state of the object and its descendants to 'deleted'.
      *
-     * @param      boolean
+     * @param      boolean \$b
      * @return void
      */
     public function setDeleted(\$b)
@@ -624,9 +617,9 @@ abstract class ".$this->getClassname()." implements IteratorAggregate {
      * \$beforeNode. If \$beforeNode is not specified the node will be appended to
      * the end of the child nodes.
      *
-     * @param      ".$this->getStubNodeBuilder()->getClassname()." Node to add.
-     * @param      ".$this->getStubNodeBuilder()->getClassname()." Node to insert before.
-     * @param      PropelPDO Connection to use.
+     * @param      ".$this->getStubNodeBuilder()->getClassname()." \$node       Node to add.
+     * @param      ".$this->getStubNodeBuilder()->getClassname()." \$beforeNode Node to insert before.
+     * @param      PropelPDO \$con Connection to use.
      */
     public function addChildNode(\$node, \$beforeNode = null, PropelPDO \$con = null)
     {
@@ -704,9 +697,9 @@ abstract class ".$this->getClassname()." implements IteratorAggregate {
     /**
      * Moves the specified child node in the specified direction.
      *
-     * @param      ".$this->getStubNodeBuilder()->getClassname()." Node to move.
-     * @param      int Number of spaces to move among siblings (may be negative).
-     * @param      PropelPDO Connection to use.
+     * @param      ".$this->getStubNodeBuilder()->getClassname()." \$node      Node to move.
+     * @param      int       \$direction Number of spaces to move among siblings (may be negative).
+     * @param      PropelPDO \$con       Connection to use.
      * @throws PropelException
      */
     public function moveChildNode(\$node, \$direction, PropelPDO \$con = null)
@@ -724,8 +717,8 @@ abstract class ".$this->getClassname()." implements IteratorAggregate {
     /**
      * Saves modified object data to the datastore.
      *
-     * @param      boolean If true, descendants will be saved as well.
-     * @param      PropelPDO Connection to use.
+     * @param      boolean   \$recurse If true, descendants will be saved as well.
+     * @param      PropelPDO \$con     Connection to use.
      */
     public function save(\$recurse = false, PropelPDO \$con = null)
     {
@@ -756,7 +749,7 @@ abstract class ".$this->getClassname()." implements IteratorAggregate {
     /**
      * Removes this object and all descendants from datastore.
      *
-     * @param      PropelPDO Connection to use.
+     * @param      PropelPDO \$con Connection to use.
      * @return void
      * @throws PropelException
      */
@@ -793,8 +786,8 @@ abstract class ".$this->getClassname()." implements IteratorAggregate {
      * this instead of equality operators to prevent recursive dependency
      * errors.
      *
-     * @param   $nodeClassname Node to compare.
-     * @param      boolean True if strict comparison should be used.
+     * @param   $nodeClassname \$node Node to compare.
+     * @param   boolean \$strict True if strict comparison should be used.
      * @return boolean
      */
     public function equals(\$node, \$strict = false)
@@ -817,7 +810,7 @@ abstract class ".$this->getClassname()." implements IteratorAggregate {
      * from the database. To set the parent of a node, you should call
      * addChildNode() on the parent.
      *
-     * @param                  $nodeClassname Parent node to attach.
+     * @param  $nodeClassname \$node Parent node to attach.
      * @return void
      * @throws PropelException
      */
@@ -841,7 +834,7 @@ abstract class ".$this->getClassname()." implements IteratorAggregate {
      * from the database. To add a child to a node you should call the
      * addChildNode() method instead.
      *
-     * @param                  $nodeClassname Child node to attach.
+     * @param  $nodeClassname \$node Child node to attach.
      * @return void
      * @throws PropelException
      */
@@ -877,7 +870,7 @@ abstract class ".$this->getClassname()." implements IteratorAggregate {
     /**
      * This method is used internally when deleting nodes. It is used to break
      * the link to this node's parent.
-     * @param                  $nodeClassname Parent node to detach from.
+     * @param  $nodeClassname \$node Parent node to detach from.
      * @return void
      * @throws PropelException
      */
@@ -898,7 +891,7 @@ abstract class ".$this->getClassname()." implements IteratorAggregate {
     /**
      * This method is used internally when deleting nodes. It is used to break
      * the link to this between this node and the specified child.
-     * @param      ".$this->getStubNodeBuilder()->getClassname()." Child node to detach.
+     * @param      ".$this->getStubNodeBuilder()->getClassname()." \$node Child node to detach.
      * @return void
      * @throws PropelException
      */
@@ -924,9 +917,9 @@ abstract class ".$this->getClassname()." implements IteratorAggregate {
      * method assumes that there is already space available in the
      * direction/offset indicated.
      *
-     * @param      int Direction/# spaces to shift. 1=leftshift, 1=rightshift
-     * @param      int Node index to start shift at.
-     * @param      PropelPDO The connection to be used.
+     * @param      int       \$direction Direction/# spaces to shift. 1=leftshift, 1=rightshift
+     * @param      int       \$offsetIdx Node index to start shift at.
+     * @param      PropelPDO \$con       The connection to be used.
      * @return void
      * @throws PropelException
      */
@@ -939,7 +932,6 @@ abstract class ".$this->getClassname()." implements IteratorAggregate {
         \$lastIdx = (\$lastNode !== null ? \$lastNode->getNodeIndex() : 0);
 
         if (\$lastNode === null || \$offsetIdx > \$lastIdx)
-
             return;
 
         if (\$con === null)
@@ -1005,10 +997,10 @@ abstract class ".$this->getClassname()." implements IteratorAggregate {
     /**
      * Inserts the node and its children at the specified childIdx.
      *
-     * @param   $nodeClassname Node to insert.
-     * @param      int One-based child index to insert at.
-     * @param      PropelPDO Connection to use.
-     * @param      void
+     * @param   $nodeClassname \$node     Node to insert.
+     * @param   int       \$childIdx One-based child index to insert at.
+     * @param   PropelPDO \$con      Connection to use.
+     * @return void
      */
     protected function insertNewChildNode(\$node, \$childIdx, PropelPDO \$con)
     {
@@ -1033,8 +1025,8 @@ abstract class ".$this->getClassname()." implements IteratorAggregate {
     /**
      * Adjust new/deleted status of node and all children.
      *
-     * @param      string Status to change ('New' or 'Deleted')
-     * @param      boolean Value for status.
+     * @param      string  \$status Status to change ('New' or 'Deleted')
+     * @param      boolean \$b      Value for status.
      * @return void
      */
     protected function adjustStatus(\$status, \$b)
@@ -1057,8 +1049,8 @@ abstract class ".$this->getClassname()." implements IteratorAggregate {
      * Adjust path of node and all children. This is used internally when
      * inserting/moving nodes.
      *
-     * @param      string Section of old path to change.
-     * @param      string New section to replace old path with.
+     * @param      string \$oldBasePath Section of old path to change.
+     * @param      string \$newBasePath New section to replace old path with.
      * @return void
      */
     protected function adjustNodePath(\$oldBasePath, \$newBasePath)

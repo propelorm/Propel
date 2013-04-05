@@ -510,6 +510,7 @@ class CriteriaTest extends BookstoreTestBase
 
     public function testAddRaw()
     {
+        $db = Propel::getDB();
         $c = new Criteria();
         $c->addSelectColumn('A.COL');
         $c->addAsColumn('foo', 'B.COL');
@@ -517,7 +518,7 @@ class CriteriaTest extends BookstoreTestBase
 
         $params = array();
         $result = BasePeer::createSelectSql($c, $params);
-        $expected = "SELECT A.COL, B.COL AS foo FROM A WHERE foo = :p1";
+        $expected = 'SELECT A.COL, B.COL AS '.$db->quoteIdentifier('foo').' FROM A WHERE foo = :p1';
         $this->assertEquals($expected, $result);
         $expected = array(
             array('table' => null, 'type' => PDO::PARAM_STR, 'value' => 123)
@@ -883,7 +884,7 @@ class CriteriaTest extends BookstoreTestBase
 
         $c->addJoin("tbl.COL1", "tbl.COL2", Criteria::LEFT_JOIN);
         $c->addJoin("tbl.COL1", "tbl.COL2", Criteria::LEFT_JOIN);
-        $this->assertEquals(1, count($c->getJoins()), "Expected not to have duplciate LJOIN added.");
+        $this->assertEquals(1, count($c->getJoins()), "Expected not to have duplicate LEFT JOIN added.");
 
         $c->addJoin("tbl.COL1", "tbl.COL2", Criteria::RIGHT_JOIN);
         $c->addJoin("tbl.COL1", "tbl.COL2", Criteria::RIGHT_JOIN);
@@ -892,6 +893,10 @@ class CriteriaTest extends BookstoreTestBase
         $c->addJoin("tbl.COL1", "tbl.COL2");
         $c->addJoin("tbl.COL1", "tbl.COL2");
         $this->assertEquals(3, count($c->getJoins()), "Expected 1 new implicit join to be added.");
+
+        $c->addJoin("tbl.COL1", "tbl.COL2", Criteria::INNER_JOIN);
+        $this->assertEquals(3, count($c->getJoins()), "Expected to not add any new join
+                                                        as INNER JOIN is default joinType and it is already added");
 
         $c->addJoin("tbl.COL3", "tbl.COL4");
         $this->assertEquals(4, count($c->getJoins()), "Expected new col join to be added.");
@@ -927,31 +932,44 @@ class CriteriaTest extends BookstoreTestBase
         $this->assertEquals("column_alias", $crit->getColumn());
     }
 
+    public function testQuotingAlias()
+    {
+        $db = Propel::getDB();
+        $c = new Criteria();
+        $c->addSelectColumn(BookPeer::TITLE);
+        $c->addAsColumn('Book ISBN', BookPeer::ISBN);
+        $expected = 'SELECT book.title, book.isbn AS '.$db->quoteIdentifier('Book ISBN').' FROM book';
+        $params = array();
+        $result = BasePeer::createSelectSql($c, $params);
+        $this->assertEquals($expected, $result);
+        // Below is to ensure we test with adapter which quotes identifiers
+        $this->assertNotEquals('Book ISBN', $db->quoteIdentifier('Book ISBN'));
+    }
+
     public function testHaving()
     {
+        $db = Propel::getDB();
         $c = new Criteria();
         $c->addSelectColumn(BookPeer::TITLE);
         $c->addAsColumn('isb_n', BookPeer::ISBN);
         $crit = $c->getNewCriterion('isb_n', '1234567890123');
         $c->addHaving($crit);
-        $expected = 'SELECT book.title, book.isbn AS isb_n FROM book HAVING isb_n=:p1';
+        $expected = 'SELECT book.title, book.isbn AS '.$db->quoteIdentifier('isb_n').' FROM book HAVING isb_n=:p1';
         $params = array();
         $result = BasePeer::createSelectSql($c, $params);
         $this->assertEquals($expected, $result);
-        BasePEer::doSelect($c, $this->con);
-        $expected = 'SELECT book.title, book.isbn AS isb_n FROM book HAVING isb_n=\'1234567890123\'';
-        $this->assertEquals($expected, $this->con->getLastExecutedQuery());
     }
 
     public function testMultipleHaving()
     {
+        $db = Propel::getDB();
         $c = new Criteria();
         $c->addSelectColumn(BookPeer::TITLE);
         $c->addAsColumn('isb_n', BookPeer::ISBN);
         $crit = $c->getNewCriterion('isb_n', '1234567890123');
         $crit->addAnd($c->getNewCriterion(BookPeer::TITLE, 'Foobar'));
         $c->addHaving($crit);
-        $expected = 'SELECT book.title, book.isbn AS isb_n FROM book HAVING (isb_n=:p1 AND book.title=:p2)';
+        $expected = 'SELECT book.title, book.isbn AS '.$db->quoteIdentifier('isb_n').' FROM book HAVING (isb_n=:p1 AND book.title=:p2)';
         $params = array();
         $result = BasePeer::createSelectSql($c, $params);
         $this->assertEquals($expected, $result);
@@ -959,17 +977,15 @@ class CriteriaTest extends BookstoreTestBase
 
     public function testHavingRaw()
     {
+        $db = Propel::getDB();
         $c = new Criteria();
         $c->addSelectColumn(BookPeer::TITLE);
         $c->addAsColumn("isb_n", BookPeer::ISBN);
         $c->addHaving('isb_n = ?', '1234567890123', PDO::PARAM_STR);
-        $expected = 'SELECT book.title, book.isbn AS isb_n FROM book HAVING isb_n = :p1';
+        $expected = 'SELECT book.title, book.isbn AS '.$db->quoteIdentifier('isb_n').' FROM book HAVING isb_n = :p1';
         $params = array();
         $result = BasePeer::createSelectSql($c, $params);
         $this->assertEquals($expected, $result);
-        BasePEer::doSelect($c, $this->con);
-        $expected = 'SELECT book.title, book.isbn AS isb_n FROM book HAVING isb_n = \'1234567890123\'';
-        $this->assertEquals($expected, $this->con->getLastExecutedQuery());
     }
 
     /**

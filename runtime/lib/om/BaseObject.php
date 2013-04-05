@@ -241,8 +241,8 @@ abstract class BaseObject
      */
     public function equals($obj)
     {
-        $thisclazz = get_class($this);
-        if (is_object($obj) && $obj instanceof $thisclazz) {
+        $thisclass = get_class($this);
+        if (is_object($obj) && $obj instanceof $thisclass) {
             if ($this === $obj) {
                 return true;
             } elseif ($this->getPrimaryKey() === null || $obj->getPrimaryKey() === null) {

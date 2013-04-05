@@ -57,7 +57,7 @@ class AppData
     /**
      * Creates a new instance for the specified database type.
      *
-     * @param PropelPlatformInterface $platform The default platform object to use for any databases added to this application model.
+     * @param PropelPlatformInterface $defaultPlatform The default platform object to use for any databases added to this application model.
      */
     public function __construct(PropelPlatformInterface $defaultPlatform = null)
     {
@@ -109,7 +109,7 @@ class AppData
     /**
      * Set the name of the database.
      *
-     * @param      name of the database.
+     * @param   $name of the database.
      */
     public function setName($name)
     {
@@ -211,7 +211,7 @@ class AppData
      * Add a database to the list and sets the AppData property to this
      * AppData
      *
-     * @param Datebase|string $db the database to add
+     * @param Database|string $db the database to add
      *
      * @return Database
      */

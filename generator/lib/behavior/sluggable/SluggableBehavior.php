@@ -115,6 +115,7 @@ if (\$this->isColumnModified($const) && \$this->{$this->getColumnGetter()}()) {
     \$this->{$this->getColumnSetter()}(\$this->createSlug());
 }";
     }
+
         return $script;
     }
 
@@ -260,7 +261,7 @@ protected static function cleanupSlugPart(\$slug, \$replacement = '" . $this->ge
         $script .= "
 
 /**
- * Make sure the slug is short enough to accomodate the column size
+ * Make sure the slug is short enough to accommodate the column size
  *
  * @param    string \$slug                   the slug to check
  * @param    int    \$incrementReservedSpace the number of characters to keep empty
@@ -353,7 +354,12 @@ protected function makeSlugUnique(\$slug, \$separator = '" . $this->getParameter
         return \$slug2 . '1';
     }
 
-    return \$slug2 . (substr(\$object->" . $getter . "(), strlen(\$slug) + 1) + 1);
+    \$slugNum = substr(\$object->" . $getter . "(), strlen(\$slug) + 1);
+    if (0 == \$slugNum[0]) {
+        \$slugNum[0] = 1;
+    }
+
+    return \$slug2 . (\$slugNum + 1);
 }
 ";
     }

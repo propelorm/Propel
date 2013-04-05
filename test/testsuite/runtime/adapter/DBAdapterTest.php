@@ -11,7 +11,7 @@
 require_once dirname(__FILE__) . '/../../../tools/helpers/bookstore/BookstoreTestBase.php';
 
 /**
- * Tests the DbOracle adapter
+ * Tests adapter independent functionality
  *
  * @see        BookstoreDataPopulator
  * @author     Francois EZaninotto
@@ -82,7 +82,7 @@ class DBAdapterTest extends BookstoreTestBase
         $c->addAsColumn('book_ID', BookPeer::ID);
         $fromClause = array();
         $selectSql = $db->createSelectSqlPart($c, $fromClause);
-        $this->assertEquals('SELECT book.id, book.id AS book_ID', $selectSql, 'createSelectSqlPart() returns a SQL SELECT clause with both select and as columns');
+        $this->assertEquals('SELECT book.id, book.id AS '.$db->quoteIdentifier('book_ID'), $selectSql, 'createSelectSqlPart() returns a SQL SELECT clause with both select and as columns');
         $this->assertEquals(array('book'), $fromClause, 'createSelectSqlPart() adds the tables from the select columns to the from clause');
     }
 
@@ -94,7 +94,7 @@ class DBAdapterTest extends BookstoreTestBase
         $c->addAsColumn('book_ID', 'IF(1, '.BookPeer::ID.', '.BookPeer::TITLE.')');
         $fromClause = array();
         $selectSql = $db->createSelectSqlPart($c, $fromClause);
-        $this->assertEquals('SELECT book.id, IF(1, book.id, book.title) AS book_ID', $selectSql, 'createSelectSqlPart() returns a SQL SELECT clause with both select and as columns');
+        $this->assertEquals('SELECT book.id, IF(1, book.id, book.title) AS '.$db->quoteIdentifier('book_ID'), $selectSql, 'createSelectSqlPart() returns a SQL SELECT clause with both select and as columns');
         $this->assertEquals(array('book'), $fromClause, 'createSelectSqlPart() adds the tables from the select columns to the from clause');
     }
 
@@ -107,7 +107,7 @@ class DBAdapterTest extends BookstoreTestBase
         $c->setDistinct();
         $fromClause = array();
         $selectSql = $db->createSelectSqlPart($c, $fromClause);
-        $this->assertEquals('SELECT DISTINCT book.id, book.id AS book_ID', $selectSql, 'createSelectSqlPart() includes the select modifiers in the SELECT clause');
+        $this->assertEquals('SELECT DISTINCT book.id, book.id AS '.$db->quoteIdentifier('book_ID'), $selectSql, 'createSelectSqlPart() includes the select modifiers in the SELECT clause');
         $this->assertEquals(array('book'), $fromClause, 'createSelectSqlPart() adds the tables from the select columns to the from clause');
     }
 
@@ -119,8 +119,7 @@ class DBAdapterTest extends BookstoreTestBase
         $c->addAsColumn('book_id', BookPeer::ID);
         $fromClause = array();
         $selectSql = $db->createSelectSqlPart($c, $fromClause, true);
-        $this->assertEquals('SELECT book.id AS book_id_1, book.id AS book_id', $selectSql, 'createSelectSqlPart() aliases all columns if passed true as last parameter');
+        $this->assertEquals('SELECT book.id AS '.$db->quoteIdentifier('book_id_1').', book.id AS '.$db->quoteIdentifier('book_id'), $selectSql, 'createSelectSqlPart() aliases all columns if passed true as last parameter');
         $this->assertEquals(array(), $fromClause, 'createSelectSqlPart() does not add the tables from an all-aliased list of select columns');
     }
-
 }

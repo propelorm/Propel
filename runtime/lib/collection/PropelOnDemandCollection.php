@@ -64,7 +64,7 @@ class PropelOnDemandCollection extends PropelCollection
      */
     public function offsetExists($offset)
     {
-        throw new PropelException('The On Demand Collection does not allow acces by offset');
+        throw new PropelException('The On Demand Collection does not allow access by offset');
     }
 
     /**
@@ -75,7 +75,7 @@ class PropelOnDemandCollection extends PropelCollection
      */
     public function offsetGet($offset)
     {
-        throw new PropelException('The On Demand Collection does not allow acces by offset');
+        throw new PropelException('The On Demand Collection does not allow access by offset');
     }
 
     /**
@@ -156,12 +156,12 @@ class PropelOnDemandCollection extends PropelCollection
 
     public function getArrayCopy()
     {
-        throw new PropelException('The On Demand Collection does not allow acces by offset');
+        throw new PropelException('The On Demand Collection does not allow access by offset');
     }
 
     public function getFlags()
     {
-        throw new PropelException('The On Demand Collection does not allow acces by offset');
+        throw new PropelException('The On Demand Collection does not allow access by offset');
     }
 
     public function ksort()

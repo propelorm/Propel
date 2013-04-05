@@ -27,7 +27,7 @@
 
   <!--
     The default.properties file will map old properties to the new ones along
-    with setting the corret defaults.
+    with setting the correct defaults.
   -->
   <property file="${propel.home}/default.properties"/>
 
@@ -133,7 +133,7 @@
   </target>
 
   <!--	temporary target to check whether postgres is being used with identifier quoting ON.
-		If so, a warning is issued, since identifier quoting is only paritally implemented & this point.  -->
+		If so, a warning is issued, since identifier quoting is only partially implemented & this point.  -->
   <target name="pgsql-quoting-check">
   	<if>
   		<and>

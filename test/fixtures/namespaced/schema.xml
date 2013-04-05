@@ -84,7 +84,7 @@
 			<reference local="supervisor_id" foreign="id" />
 		</foreign-key>
 	</table>
-        
+
         <table name="ns_concrete_content" phpName="NamespacedConcreteContent" namespace="Foo\Bar">
 		<column name="id" required="true" primaryKey="true" type="INTEGER" />
 		<column name="title" type="VARCHAR" size="100" primaryString="true" />

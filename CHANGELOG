@@ -4,6 +4,13 @@
 
 n/a
 
+## 2013-03-31: Version 1.6.9 ##
+
+e9313d0 [Sluggable] fix issue with slug ending with 0XYZ
+81815e6 [Sluggable] add test to prove issue with slug ending with 0XYZ
+46ff6a2 Split the `testForeignKey` into several methods. Added some phpdoc so its cleaer
+409850e Fixed #617. Proved the issue #617 and fixed it.
+
 ## 2013-02-14: Version 1.6.8 ##
 
 01ea918 Fixed #601.
@@ -15,7 +22,7 @@ b2458cb Docblock fixes and one assignment typo
 57bf351 Changed the signature of generated "getOMClass()" functions to a more generic form to be compatible with Concrete Inheritance Behaviour (as of: https://github.com/propelorm/Propel/issues/563#issuecomment-13036863).
 85a92dd updated phing dependency to latest minor release, using tilde operator
 799b71d MySQL throws an 'Incorrect table definition; there can be only one auto column and it must be defined as a key' if the primary key consists of multiple columns and if the first is not the autoIncrement one. So this push the autoIncrement column to the first position if its not already.
-b9440ea In the Task `PorpelSQLDiffTask` the `disableIdentifierQuoting` build property was not handled.
+b9440ea In the Task `PropelSQLDiffTask` the `disableIdentifierQuoting` build property was not handled.
 c09ef55 `setNegativeScope` does not return anything.
 39ad25d Coding style, comments adjusted and removed unused variable.
 4cbf8a8 Removed limitation where we can only move branches inside the same scope.
@@ -77,7 +84,7 @@ f860b20 sortable behavior: fixed rank shifting on delete when there are no relat
 6966cd9 fix #500 update composer.json force phing 2.4.12
 22b7ef5 Fix a few typos
 8bba368 Fix wrong escape of $con
-d55ce56 Fix single inheritance class choise error when orbject is create by findOneOrCreate function
+d55ce56 Fix single inheritance class choice error when object is create by findOneOrCreate function
 54df08d Fix test files (password introduced by error)
 1bf96f2 Active identifier quoting by default, and fix it
 1eb07b8 Enable identifier quoting
@@ -94,7 +101,7 @@ e66636c Fix PropelCollection::toArray()
 9ce1af4 Fix fixtures to avoid error (mysql safe mode)
 ecf2bc4 Fix travis setup
 2345aaa allow unsetting lazy load columns without loading
-b692286 Remove accidentaly added space
+b692286 Remove accidentally added space
 725518f Fix the 'Table "t1" declared twice' when same table name are declared on different schema fix #311
 ed54050 sortable behavior: removed getting $con in moveRelatedObjectsToNullScope()
 4c369ba sortable behavior: changed moveRelatedObjectsToNullScope() to use already existing getMaxRank() method and fixed bug in shiftRank()
@@ -122,7 +129,7 @@ f9e3c77 Fix i18n behavior with table prefix. Fixes #423
 ddf5b70 Fix #433
 56c13d7 Fix typo in the database.xsd file
 ebcdff1 Updated the Table class to not use the schema prefix as part of the phpName. Fixes issue #5. Changed DelegateBehaviorTest to not us
-0f95b75 adds tests for i18n_pk_name option, checking columns names and fk building throught table and i19n.
+0f95b75 adds tests for i18n_pk_name option, checking columns names and fk building through table and i19n.
 1c99e1d adds a test for i18n_pk_name schema option
 fc153d0 add a new option for customizing the i18n table pk column name
 6d31fa6 Fix QuickBuilder, QuickGenerator
@@ -201,9 +208,9 @@ ca773b3 fix several phpDoc and type hints
 0661d18 fix #378 change  for self::PEER
 70e572b add enforceVersioning
 3b15493 Fixed propel-gen script
-3849529 [Timestampable] Maded 'updated_at' column optional using a parameter. Fixes #370
+3849529 [Timestampable] Made 'updated_at' column optional using a parameter. Fixes #370
 ee711c7 Added bin-info in the composer Added bin-feature as described on http://getcomposer.org/doc/articles/vendor-bins.md
-88b8b48 fix remove one-to-many, add test for one-to-mmany
+88b8b48 fix remove one-to-many, add test for one-to-many
 a5d3096 fix rebase code duplication
 a1f26b5 fix setter one-to-many schedule for deletion, fix remove many-to-many
 b1f993a fix CS
@@ -269,7 +276,7 @@ cd69910 Preparing the 1.6.5 release
 45e5c3e Merge pull request #315 from ddalmais/feat-explain-plan
 4e72771 Merge pull request #324 from K-Phoen/fix-versioning-inheritance
 9f80f8b Fix: versioning tables with inheritance
-7769218 Add: some usefull methods to Versionable objects
+7769218 Add: some useful methods to Versionable objects
 45f2924 Fix PropelModelPager::getLastPage() return type.
 4cb3e5e Fix CS
 4c8d9ac Use assertArrayHasKey instead of assertTrue
@@ -283,7 +290,7 @@ aeeb66d Fix text formatting
 d54388a Remove forced database read connection Oracle must write explain plan in PLAN_TABLE
 e4c3de1 Fix phpdoc function title
 f62cba4 Enable to get the connection name in log
-a8c55fd Enable doExplainPlan to take a binded query
+a8c55fd Enable doExplainPlan to take a bound query
 00bcc96 Fix text in ExplainPlanTest
 2f6a4fa Add explain plan unit test on mysql bookstore
 9f16429 Add explain function use adapter specific doExplainPlan function
@@ -438,7 +445,7 @@ bdb2e32 this fix an issue with the propelorm/propelbundle#62
 * [14bcdaf] [turbo behavior] Bugfix for namespaced classes and query_cache behavior
 * [5bd66f6] [turbo behavior] Move the findPk() acceleration to the core. The behavior now only accelerates doInsert() (until we find a way to marge this into the core, too).
 * [d231655] Revert "Fixed the name of generated SQL files if package contains slashes"
-* [01b03f7] [turbo behavior] Use the correct binding code in accelerated findPk(). This is to accomodate cases where PK columns have special bindings (like timestamps... ot blobs, who knows). I took advantage of this to refactor the custom binding code in the adapters.
+* [01b03f7] [turbo behavior] Use the correct binding code in accelerated findPk(). This is to accommodate cases where PK columns have special bindings (like timestamps... ot blobs, who knows). I took advantage of this to refactor the custom binding code in the adapters.
 * [977dcd0] [turbo behavior] Refactor ModelCriteria::find(), findOne(), and findPk() to allow preSelect() hook to be called just like the other model hooks. This refactoring allows the turbo behavior to accelerate findPk() on every model, even those using a preSelect() hook. It also harmonizes the AR and Query apis: just like ActiveRecord::save() calls doInsert() or doUpdate(), ActiveQuery::find() calls doSelect(), and ActiveQuery::count() calls doCount().
 * [a9a2f0e] [turbo behavior] slightly better way to have binding type and value preparation depending on the platform
 * [9b0690f] [turbo behavior] Change insert acceleration strategy to allow exotic bindings. This is necessary to let Oracle, for instance, use bindParam() instead of bindValue() for CLOBs.
@@ -528,7 +535,7 @@ bdb2e32 this fix an issue with the propelorm/propelbundle#62
 * [3fd6823] [archivable behavior] Fixed a rare bug in `ModelCriteria::update()` causing "undefined index: datasources" error message
 * [b818915] [archivable behavior] Added generated ActiveQuery::archive() method
 * [f1a163d] [archivable behavior] split ArchivableBehavior class to make it more readable and ready for future additions
-* [5d6e4b0] [archivable behavior] Added the ability to use a cutom archive class.
+* [5d6e4b0] [archivable behavior] Added the ability to use a custom archive class.
 * [5088e39] [archivable behavior] Added generated ActiveRecord::populateFromArchive() method
 * [182af0c] [archivable behavior] Initial commit
 * [ce59915] [Tests] More tests for MysqlSchemaParser
@@ -559,7 +566,7 @@ bdb2e32 this fix an issue with the propelorm/propelbundle#62
 * [67a77bf] Fixed bug in PhpNameGenerator. The default name convertor for table and column names is NameGenerator::CONV_METHOD_UNDERSCORE. This method has a slight bug resulting in an incorrect phpName for table using "_0" as a prefix:
 * [04fe003] fix usage of undefined variable
 * [ceb610f] `level` is reserved keywork in oracle
-* [57a0f2c] pass vendor`s type to VentorInfo::__construct in XMLElement::getVendorInfoForType()
+* [57a0f2c] pass vendor`s type to VendorInfo::__construct in XMLElement::getVendorInfoForType()
 * [a3aaa76] detect autoincrement via sequences
 * [7c84546] [delegate behavior] Documented the fact that, finally, delegate behavior can handle inheritance over several levels
 * [8290ed5] [delegate behavior] Changed class table inheritance examples to show that the behavior is much more powerful than previously thought. Refs #40
@@ -573,7 +580,7 @@ bdb2e32 this fix an issue with the propelorm/propelbundle#62
 * [197b533] documented the delegate behavior
 * [ca09d1d] Introducing Delegate behavior, for class table inheritance fans
 * [a78212c] Fixed bad formatting in generated query classes
-* [184e63f] Removed __call() from generted ActiveRecord classes.
+* [184e63f] Removed __call() from generated ActiveRecord classes.
 * [0e454c5] Avoid getClassname() to trigger registered autoloaders for nothing.
 * [74cd5eb] Added the ability to define full qualified classnames in build properties.
 * [e1662d0] Reverted change on the TINYINT default size (MysqlSchemaParser)
@@ -588,7 +595,7 @@ bdb2e32 this fix an issue with the propelorm/propelbundle#62
 * [73a7d21] Fixed phpdoc in validator/
 * [10f5dd5] Added unit tests for issue #35 and PR #37
 * [9e62f3c] One-line fix for issue #35 (https://github.com/propelorm/Propel/issues/35)
-* [e84f5fa] Set limit parameter to 0 (like intially done) if clear() is called
+* [e84f5fa] Set limit parameter to 0 (like initially done) if clear() is called
 * [b377ebf] Added unit tests for Criteria methods: clear() and limit()
 * [5ce8fa7] Remove unneeded @returns, Fix @param order
 * [176c68f] Fix typo on docblock
@@ -614,10 +621,10 @@ bdb2e32 this fix an issue with the propelorm/propelbundle#62
 * [3dcd7b2] reproduced default isModified() logic for other mutators
 * [e1ed026] Fix for ActiveRecord::isModified() in limit cases with default values
 * [5f2ff4e] added missing validator in autoload map
-* [7164161] Remove rewind on CLOB to fixe warning
-* [4eb059d] Fixe CS + restore BLOB insert + Add rewind before CLOB bindParam
+* [7164161] Remove rewind on CLOB to fix warning
+* [4eb059d] Fixed CS + restore BLOB insert + Add rewind before CLOB bindParam
 * [e693f62] Fixed Error in logic of _if/_elseif/_else. Based on a patch by lvu, updated to Propel standards. Closes #12
-* [6f536c6] Fixe Oracle CLOB save by using PDO bindParam
+* [6f536c6] Fixed Oracle CLOB save by using PDO bindParam
 * [ea8f4c8] [1.6] Fixed failing test after updating test schema (refs #1319)
 * [258799f] [1.6] Fixed undefined method error when calling with() on a ModelCriteria having a relation with a special name (closes #1477)
 * [9eac2ed] [1.6] Fixed logging of methods (refs #1468)
@@ -661,7 +668,7 @@ bdb2e32 this fix an issue with the propelorm/propelbundle#62
 * [2293] Fixed `forceDelete()` enables soft delete behavior even when disabled (closes #1404)
 * [2292] Fixed tests under PHP 5.2 (closes #1388)
 * [2291] Fixed minor formatting issue in generated Peer class
-* [2290] Fixed generated column filters for enum columns when passed an arry (closes #1381)
+* [2290] Fixed generated column filters for enum columns when passed an array (closes #1381)
 * [2289] Fixed strict standards error in soft delete behavior (closes #1398)
 * [2288] Added missing `findRoots()` method to nested_set behavior with scope (closes #1397)
 * [2287] Fixed bad binding with SQLSRV adapter (refs #1199) (closes #1400)

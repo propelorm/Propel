@@ -503,8 +503,8 @@ abstract class OMBuilder extends DataModelBuilder
 
     /**
      * Checks whether any registered behavior on that table has a modifier for a hook
-     * @param string $hookName The name of the hook as called from one of this class methods, e.g. "preSave"
-     * @param string $modifier The name of the modifier object providing the method in the behavior
+     * @param  string  $hookName The name of the hook as called from one of this class methods, e.g. "preSave"
+     * @param  string  $modifier The name of the modifier object providing the method in the behavior
      * @return boolean
      */
     public function hasBehaviorModifier($hookName, $modifier)
@@ -524,6 +524,7 @@ abstract class OMBuilder extends DataModelBuilder
      * @param string $hookName The name of the hook as called from one of this class methods, e.g. "preSave"
      * @param string $modifier The name of the modifier object providing the method in the behavior
      * @param string &$script The script will be modified in this method.
+     * @param string $tab
      */
     public function applyBehaviorModifierBase($hookName, $modifier, &$script, $tab = "		")
     {
@@ -553,7 +554,7 @@ abstract class OMBuilder extends DataModelBuilder
     /**
      * Checks whether any registered behavior content creator on that table exists a contentName
      * @param string $contentName The name of the content as called from one of this class methods, e.g. "parentClassname"
-     * @param string $modifier The name of the modifier object providing the method in the behavior
+     * @param string $modifier    The name of the modifier object providing the method in the behavior
      */
     public function getBehaviorContentBase($contentName, $modifier)
     {

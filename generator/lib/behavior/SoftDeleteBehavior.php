@@ -61,12 +61,10 @@ class SoftDeleteBehavior extends Behavior
  */
 public function forceDelete(PropelPDO \$con = null)
 {
-    if (\$isSoftDeleteEnabled = {$peerClassName}::isSoftDeleteEnabled()) {
-        {$peerClassName}::disableSoftDelete();
+    if (\$isSoftDeleteEnabled = {$peerClassName}::isSoftDeleteEnabled()) { {$peerClassName}::disableSoftDelete();
     }
     \$this->delete(\$con);
-    if (\$isSoftDeleteEnabled) {
-        {$peerClassName}::enableSoftDelete();
+    if (\$isSoftDeleteEnabled) { {$peerClassName}::enableSoftDelete();
     }
 }
 ";
@@ -275,8 +273,7 @@ public static function isSoftDeleteEnabled()
         return <<<EOT
 if ({$builder->getStubQueryBuilder()->getClassname()}::isSoftDeleteEnabled() && \$this->localSoftDelete) {
     \$this->addUsingAlias({$builder->getColumnConstant($this->getColumnForParameter('deleted_column'))}, null, Criteria::ISNULL);
-} else {
-    {$builder->getPeerClassname()}::enableSoftDelete();
+} else { {$builder->getPeerClassname()}::enableSoftDelete();
 }
 EOT;
     }
@@ -479,8 +476,7 @@ public static function doDeleteAll2(PropelPDO \$con = null)
         return <<<EOT
 if ({$builder->getStubQueryBuilder()->getClassname()}::isSoftDeleteEnabled()) {
     \$criteria->add({$builder->getColumnConstant($this->getColumnForParameter('deleted_column'))}, null, Criteria::ISNULL);
-} else {
-    {$builder->getPeerClassname()}::enableSoftDelete();
+} else { {$builder->getPeerClassname()}::enableSoftDelete();
 }
 EOT;
     }

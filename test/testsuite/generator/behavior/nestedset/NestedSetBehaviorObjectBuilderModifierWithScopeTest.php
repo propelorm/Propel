@@ -565,7 +565,6 @@ class NestedSetBehaviorObjectBuilderModifierWithScopeTest extends BookstoreNeste
         $this->assertEquals($expected, $this->dumpTreeWithScope(2), 't10 removed from scope 2, therefore t8 `right` has been changed');
         $this->assertEquals(15, $t3->getRightValue(), 't3 has shifted by one item, so from 13 to 15');
 
-
         //move t7 into t9, from scope 1 to scope 2
         $t7->moveToFirstChildOf($t9);
 
@@ -573,7 +572,6 @@ class NestedSetBehaviorObjectBuilderModifierWithScopeTest extends BookstoreNeste
         $this->assertEquals(2, $t7->getScopeValue(), 't7 is now in scope 2');
         $this->assertEquals(6, $t8->getRightValue(), 't8 extended by 1 item, 4+2 => 6');
         $this->assertEquals(2, $t7->getLevel(), 'New level is 2');
-
 
         //dispose scope 2
         $oldt4Left = $t4->getLeftValue();
@@ -628,7 +626,6 @@ class NestedSetBehaviorObjectBuilderModifierWithScopeTest extends BookstoreNeste
         $this->assertEquals($expected, $this->dumpTreeWithScope(2), 't10 removed from scope 2, therefore t8 `right` has been changed');
         $this->assertEquals(15, $t3->getRightValue(), 't3 has shifted by one item, so from 13 to 15');
 
-
         //move t7 into t9, from scope 1 to scope 2
         $t7->moveToLastChildOf($t9);
 
@@ -636,7 +633,6 @@ class NestedSetBehaviorObjectBuilderModifierWithScopeTest extends BookstoreNeste
         $this->assertEquals(2, $t7->getScopeValue(), 't7 is now in scope 2');
         $this->assertEquals(6, $t8->getRightValue(), 't8 extended by 1 item, 4+2 => 6');
         $this->assertEquals(2, $t7->getLevel(), 'New level is 2');
-
 
         //dispose scope 2
         $t8->moveToLastChildOf($t3);
@@ -678,12 +674,10 @@ class NestedSetBehaviorObjectBuilderModifierWithScopeTest extends BookstoreNeste
         $this->assertEquals(5, $t2->getRightValue(), 'Move by one item, +2');
         $this->assertEquals(1, $t10->getLevel(), 'Level is 1 as old');
 
-
         $this->assertEquals(2, $t10->getLeftValue(), 'Moved before t2');
         $this->assertEquals(3, $t10->getRightValue(), 'Moved before t2');
 
         $this->assertEquals($t2->getScopeValue(), $t10->getScopeValue(), 'Should have now the same scope');
-
 
         $expected = array(
             't8' => array(1, 4, 0),
@@ -691,7 +685,6 @@ class NestedSetBehaviorObjectBuilderModifierWithScopeTest extends BookstoreNeste
         );
         $this->assertEquals($expected, $this->dumpTreeWithScope(2), 't10 removed from scope 2, therefore t8 `right` has been changed');
         $this->assertEquals(15, $t3->getRightValue(), 't3 has shifted by one item, so from 13 to 15');
-
 
         //move t7 before t9, from scope 1 to scope 2
         $t7->moveToPrevSiblingOf($t9);
@@ -732,7 +725,6 @@ class NestedSetBehaviorObjectBuilderModifierWithScopeTest extends BookstoreNeste
          t9 t10
         */
 
-
         $this->assertEquals(13, $t3->getRightValue(), 't3 left has 13 per init');
         $this->assertEquals(2, $t2->getLeftValue(), 'Init');
         $this->assertEquals(3, $t2->getRightValue(), 'Init');
@@ -751,14 +743,12 @@ class NestedSetBehaviorObjectBuilderModifierWithScopeTest extends BookstoreNeste
 
         $this->assertEquals($t2->getScopeValue(), $t10->getScopeValue(), 'Should have now the same scope');
 
-
         $expected = array(
             't8' => array(1, 4, 0),
             't9' => array(2, 3, 1)
         );
         $this->assertEquals($expected, $this->dumpTreeWithScope(2), 't10 removed from scope 2, therefore t8 `right` has been changed');
         $this->assertEquals(15, $t3->getRightValue(), 't3 has shifted by one item, so from 13 to 15');
-
 
         //move t7 after t9, from scope 1 to scope 2
         $t7->moveToNextSiblingOf($t9);
@@ -769,7 +759,6 @@ class NestedSetBehaviorObjectBuilderModifierWithScopeTest extends BookstoreNeste
         $this->assertEquals(1, $t7->getLevel(), 'New level is 1');
 
         $this->assertEquals($t9->getRightValue()+1, $t7->getLeftValue(), 'Moved after t9, so we have t9.right+1 as left');
-
 
         //dispose scope 2
         $oldT1Right = $t1->getRightValue();

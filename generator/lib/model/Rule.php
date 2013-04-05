@@ -39,7 +39,7 @@ class Rule extends XMLElement
 
         /*
         * Set some default values if they are not specified.
-        * This is escpecially useful for maxLength; the size
+        * This is especially useful for maxLength; the size
         * is already known by the column and this way it is
         * not necessary to manage the same size two times.
         *

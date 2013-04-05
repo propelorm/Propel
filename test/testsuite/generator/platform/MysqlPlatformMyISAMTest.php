@@ -37,6 +37,7 @@ class MysqlPlatformMyISAMTest extends PlatformTestProvider
             ));
             $platform->setGeneratorConfig($config);
         }
+
         return $platform;
     }
 

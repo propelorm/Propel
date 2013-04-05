@@ -108,7 +108,7 @@ class ValidationFailed
     }
 
     /**
-     * "magic" method to get string represenation of object.
+     * "magic" method to get string representation of object.
      * Maybe someday PHP5 will support the invoking this method automatically
      * on (string) cast.  Until then it's pretty useless.
      *

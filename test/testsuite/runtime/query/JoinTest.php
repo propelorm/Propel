@@ -165,6 +165,29 @@ class JoinTest extends BaseTestCase
     $this->assertEquals('LEFT JOIN', $j->getJoinType());
   }
 
+    public function testEquality()
+    {
+        $j1 = new Join('foo', 'bar', 'INNER JOIN');
+
+        $j2 = new Join('foo', 'bar', 'INNER JOIN');
+        $this->assertTrue($j1->equals($j2));
+
+        $j3 = new Join('foo', 'bar', 'LEFT JOIN');
+        $this->assertFalse($j1->equals($j3), 'INNER JOIN is not equal to LEFT JOIN');
+
+        $j4 = new Join('foo', 'bar', 'RIGHT JOIN');
+        $this->assertFalse($j1->equals($j4), 'INNER JOIN is not equal to RIGHT JOIN');
+
+        $j5 = new Join('foo', 'bar');
+        $j6 = new Join('foo', 'bar');
+        $this->assertTrue($j5->equals($j6), 'Joins without specified join type should be equal,
+                                                as they fallback to default join type');
+
+        $j7 = new Join('foo', 'bar', 'INNER JOIN');
+        $this->assertTrue($j5->equals($j7), 'Join without specified join type should be equal
+                                                to INNER JOIN, as it fallback to default join type');
+    }
+
   public function testCountConditions()
   {
     $j = new Join();

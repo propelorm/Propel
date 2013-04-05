@@ -146,7 +146,7 @@ class PropelColumnComparatorTest extends PHPUnit_Framework_TestCase
     /**
      * @see http://www.propelorm.org/ticket/1141
      */
-    public function testCompareDefaultExrpCurrentTimestamp()
+    public function testCompareDefaultExprCurrentTimestamp()
     {
         $c1 = new Column();
         $c1->getDomain()->setDefaultValue(new ColumnDefaultValue("NOW()", ColumnDefaultValue::TYPE_EXPR));

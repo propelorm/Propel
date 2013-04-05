@@ -576,7 +576,7 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
             $tblFK2 = $this->getForeignTable($fk2);
             $doJoinGet = !$tblFK2->isForReferenceOnly();
 
-            // it doesn't make sense to join in rows from the curent table, since we are fetching
+            // it doesn't make sense to join in rows from the current table, since we are fetching
             // objects related to *this* table (i.e. the joined rows will all be the same row as current object)
             if ($this->getTable()->getPhpName() == $tblFK2->getPhpName()) {
                 $doJoinGet = false;
@@ -608,8 +608,7 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
                 $script .= "
         if (\$criteria === null) {
             \$criteria = new Criteria($peerClassname::DATABASE_NAME);
-        } elseif (\$criteria instanceof Criteria)
-        {
+        } elseif (\$criteria instanceof Criteria) {
             \$criteria = clone \$criteria;
         }
 
@@ -864,8 +863,7 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
         $script .= "
         if (\$criteria === null) {
             \$criteria = new Criteria($peerClassname::DATABASE_NAME);
-        } elseif (\$criteria instanceof Criteria)
-        {
+        } elseif (\$criteria instanceof Criteria) {
             \$criteria = clone \$criteria;
         }
 

@@ -82,7 +82,7 @@ class XmlToDataSQL extends AbstractHandler
     public $parser;
 
     /**
-     * Flag for enabing debug output to aid in parser tracing.
+     * Flag for enabling debug output to aid in parser tracing.
      */
     const DEBUG = false;
 
@@ -106,8 +106,8 @@ class XmlToDataSQL extends AbstractHandler
     /**
      * Transform the data dump input file into SQL and writes it to the output stream.
      *
-     * @param PhingFile $xmlFile
-     * @param Writer    $out
+     * @param  PhingFile      $xmlFile
+     * @param  Writer         $out
      * @throws BuildException
      */
     public function transform(PhingFile $xmlFile, Writer $out)

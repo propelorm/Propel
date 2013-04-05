@@ -627,8 +627,8 @@ class ForeignKey extends XMLElement
     {
         $localCols = $this->getLocalColumnObjects();
 
-        foreach ($localCols as $localCol){
-            if ($this->getTable()->getColumn($localCol->getName())->isPrimaryKey()){
+        foreach ($localCols as $localCol) {
+            if ($this->getTable()->getColumn($localCol->getName())->isPrimaryKey()) {
                 return true;
             }
         }
@@ -655,7 +655,7 @@ class ForeignKey extends XMLElement
     }
 
     /**
-     * Whether this foreign key is matched by an invertes foreign key (on foreign table).
+     * Whether this foreign key is matched by an inverse foreign key (on foreign table).
      *
      * This is to prevent duplicate columns being generated for a 1:1 relationship that is represented
      * by foreign keys on both tables.  I don't know if that's good practice ... but hell, why not

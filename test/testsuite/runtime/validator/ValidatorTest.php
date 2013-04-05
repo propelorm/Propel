@@ -17,7 +17,7 @@ require_once dirname(__FILE__) . '/../../../tools/helpers/bookstore/BookstoreEmp
  * This test uses generated Bookstore classes to test the behavior of various
  * validator operations.
  *
- * The database is relaoded before every test and flushed after every test.	This
+ * The database is reloaded before every test and flushed after every test.	This
  * means that you can always rely on the contents of the databases being the same
  * for each test method in this class.	See the BookstoreDataPopulator::populate()
  * method for the exact contents of the database.
@@ -66,7 +66,7 @@ class ValidatorTest extends BookstoreEmptyTestBase
     }
 
     /**
-     * Test recursive validaton.
+     * Test recursive validation.
      */
     public function testDoValidate_Complex()
     {
@@ -104,7 +104,7 @@ class ValidatorTest extends BookstoreEmptyTestBase
     }
 
     /**
-     * Test recursive validaton with specified columns.
+     * Test recursive validation with specified columns.
      */
     public function testDoValidate_ComplexSpecifiedCols()
     {

@@ -2,7 +2,7 @@
 <?php
 
 /**
- * This is the Phing command line launcher. It starts up the system evironment
+ * This is the Phing command line launcher. It starts up the system environment
  * tests for all important paths and properties and kicks of the main command-
  * line entry point of phing located in phing.Phing
  * @version $Revision: 552 $
@@ -12,7 +12,7 @@
 // ---------------------------
 
 $dirname = dirname(__FILE__);
-$autolaoded = false;
+$autoloaded = false;
 foreach (array($dirname . '/../../', $dirname . '/../../../../../') as $dir) {
     if (file_exists($file = realpath($dir) . '/vendor/autoload.php')) {
         set_include_path($dir . '/vendor/phing/phing/classes' . PATH_SEPARATOR . get_include_path() );
@@ -62,4 +62,3 @@ try {
     // exit with non-0 error code.
     exit(1);
 }
-

@@ -77,7 +77,7 @@ abstract class DBAdapter
     /**
      * Prepare connection parameters.
      *
-     * @param  array $params
+     * @param  array $settings
      * @return array
      */
     public function prepareParams($settings)
@@ -142,7 +142,7 @@ abstract class DBAdapter
      * a piece of text used in a SQL statement (generally a single
      * quote).
      *
-     * @return string The text delimeter.
+     * @return string The text delimiter.
      */
     public function getStringDelimiter()
     {
@@ -211,7 +211,7 @@ abstract class DBAdapter
     }
 
     /**
-     * Quotes a database table which could have space seperating it from an alias, both should be identified seperately
+     * Quotes a database table which could have space separating it from an alias, both should be identified separately
      * This doesn't take care of dots which separate schema names from table names. Adapters for RDBMs which support
      * schemas have to implement that in the platform-specific way.
      *
@@ -269,7 +269,7 @@ abstract class DBAdapter
     }
 
     /**
-     * Formats a temporal value brefore binding, given a ColumnMap object.
+     * Formats a temporal value before binding, given a ColumnMap object.
      *
      * @param mixed $value The temporal value
      * @param mixed $type  PropelColumnTypes constant, or ColumnMap object
@@ -461,7 +461,7 @@ abstract class DBAdapter
 
         // set the aliases
         foreach ($criteria->getAsColumns() as $alias => $col) {
-            $selectClause[] = $col . ' AS ' . $alias;
+            $selectClause[] = $col . ' AS ' . $this->quoteIdentifier($alias);
         }
 
         $selectModifiers = $criteria->getSelectModifiers();

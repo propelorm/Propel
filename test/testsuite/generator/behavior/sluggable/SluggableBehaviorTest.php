@@ -166,7 +166,7 @@ class SluggableBehaviorTest extends BookstoreTestBase
         $t = new Table14();
         $t->setTitle('Hello, World');
         $t->save();
-        $this->assertEquals('/foo/hello-world/bar', $t->getSlug(), 'preSave() sets a cleanued up slug for objects');
+        $this->assertEquals('/foo/hello-world/bar', $t->getSlug(), 'preSave() sets a cleaned up slug for objects');
         $t = new Table14();
         $t->setTitle('Hello, World');
         $t->save();
@@ -364,6 +364,24 @@ class SluggableBehaviorTest extends BookstoreTestBase
         $t->save($con);
 
         $this->assertEquals('world-2', $t->getSlug());
+
+        $t = new Table13();
+        $t->setTitle('World 000');
+        $t->save($con);
+
+        $this->assertEquals('world-000', $t->getSlug());
+
+        $t = new Table13();
+        $t->setTitle('World');
+        $t->save($con);
+
+        $this->assertEquals('world-101', $t->getSlug());
+
+        $t = new Table13();
+        $t->setTitle('World');
+        $t->save($con);
+
+        $this->assertEquals('world-102', $t->getSlug());
     }
 }
 

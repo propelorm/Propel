@@ -100,7 +100,7 @@ class Column extends XMLElement
     /**
      * Creates a new column and set the name
      *
-     * @param			 name column name
+     * @param 	 $name column name
      */
     public function __construct($name = null)
     {
@@ -110,7 +110,7 @@ class Column extends XMLElement
     /**
      * Return a comma delimited string listing the specified columns.
      *
-     * @param			 columns Either a list of <code>Column</code> objects, or
+     * @param 	 $columns Either a list of <code>Column</code> objects, or
      * a list of <code>String</code> objects with column names.
      * @deprecated Use the Platform::getColumnListDDL() method instead
      *
@@ -256,7 +256,7 @@ class Column extends XMLElement
             $this->inheritanceType = $this->getAttribute("inheritance");
             $this->isInheritance = ($this->inheritanceType !== null
             && $this->inheritanceType !== "false"); // here we are only checking for 'false', so don't
-            // use boleanValue()
+            // use booleanValue()
 
             $this->description = $this->getAttribute("description");
         } catch (Exception $e) {

@@ -69,7 +69,7 @@ interface NodeObject extends IteratorAggregate
     public function getNumberOfChildren(PropelPDO $con = null);
 
     /**
-     * Gets the total number of desceandants for the node
+     * Gets the total number of descendants for the node
      *
      * @param  PropelPDO $con Connection to use.
      * @return int
@@ -95,7 +95,7 @@ interface NodeObject extends IteratorAggregate
     /**
      * Sets the level of the node in the tree
      *
-     * @param  int    $v new value
+     * @param  int    $level new value
      * @return object The current object (for fluent API support)
      */
     public function setLevel($level);
@@ -103,8 +103,8 @@ interface NodeObject extends IteratorAggregate
     /**
      * Sets the children array of the node in the tree
      *
-     * @param  array of Node $children array of Propel node object
-     * @return object        The current object (for fluent API support)
+     * @param  Node[] $children array of Propel node object
+     * @return object The current object (for fluent API support)
      */
     public function setChildren(array $children);
 

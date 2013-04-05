@@ -48,7 +48,7 @@ class NameFactory
     /**
      * Factory method which retrieves an instance of the named generator.
      *
-     * @param      name The fully qualified class name of the name
+     * @param   $name The fully qualified class name of the name
      * generation algorithm to retrieve.
      */
     protected static function getAlgorithm($name)

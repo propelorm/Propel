@@ -69,7 +69,7 @@ class PropelSQLExec extends Task
     /**
      * Set the sqldbmap properties file.
      *
-     * @param      sqldbmap filename for the sqldbmap
+     * @param   $sqldbmap filename for the sqldbmap
      */
     public function setSqlDbMap($sqldbmap)
     {
@@ -237,13 +237,13 @@ class PropelSQLExec extends Task
             }
         }
 
-        $successfullStatements = 0;
+        $successfulStatements = 0;
         $this->log(sprintf('Executing SQL statements...'));
         foreach ($statements as $database => $statementList) {
-            $successfullStatements += $this->insertDatabaseSqlFiles($database, $statementList);
+            $successfulStatements += $this->insertDatabaseSqlFiles($database, $statementList);
         }
 
-        $this->log(sprintf('SQL execution complete. %d statements successfully executed.', $successfullStatements));
+        $this->log(sprintf('SQL execution complete. %d statements successfully executed.', $successfulStatements));
     }
 
     protected function getFilesToExecute()

@@ -202,14 +202,14 @@ class DBMSSQL extends DBAdapter
 
             //make sure the current column isn't * or an aggregate
             if ($selColArr[0] != '*' && ! strstr($selColArr[0], '(')) {
-                
+
                 // Aliases can be used in ORDER BY clauses on a SELECT,
                 // but aliases are not valid in the ORDER BY clause of ROW_NUMBER() OVER (...),
                 // so if we notice that part of $order is actually an alias,
                 // we replace it with the original Table.Column designation.
                 if ($selColCount) {
                     // column with alias
-                    foreach(array(' ASC',' DESC') as $sort) {
+                    foreach (array(' ASC',' DESC') as $sort) {
                         $index = array_search($selColArr[2].$sort,$orders);
                         if ($index !== FALSE) {
                             // replace alias with "Table.Column ASC/DESC"
@@ -218,7 +218,7 @@ class DBMSSQL extends DBAdapter
                         }
                     }
                 }
-                
+
                 if (isset($orderArr[$selColArr[0]])) {
                     $orders[$orderArr[$selColArr[0]]['key']] = $selColArr[0] . ' ' . $orderArr[$selColArr[0]]['sort'];
                 }
@@ -237,7 +237,7 @@ class DBMSSQL extends DBAdapter
                 $innerSelect .= $selColArr[0] . ' AS ' . $alias . ', ';
                 $outerSelect .= $alias . ', ';
             } else {
-                //agregate columns must always have an alias clause
+                //aggregate columns must always have an alias clause
                 if (! stristr($selCol, ' AS ')) {
                     throw new Exception('DBMSSQL::applyLimit() requires aggregate columns to have an Alias clause');
                 }

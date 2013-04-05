@@ -9,7 +9,7 @@
  */
 
 /**
- * Dumps the contenst of selected databases to XML data dump file.
+ * Dumps the content of selected databases to XML data dump file.
  *
  * The results of the data dump can be converted to SQL using
  * the PropelDataSQLTask class.
@@ -79,7 +79,7 @@ class PropelDataDumpTask extends AbstractPropelDataModelTask
     /**
      * Set the file that maps between data XML files and databases.
      *
-     * @param  PhingFile $sqldbmap the db map
+     * @param  PhingFile $datadbmap the db map
      * @return void
      */
     public function setDataDbMap(PhingFile $datadbmap)
@@ -110,7 +110,7 @@ class PropelDataDumpTask extends AbstractPropelDataModelTask
     /**
      * Set the database name
      *
-     * @param      v The new DatabaseName value
+     * @param   $v The new DatabaseName value
      */
     public function setDatabaseName($v)
     {

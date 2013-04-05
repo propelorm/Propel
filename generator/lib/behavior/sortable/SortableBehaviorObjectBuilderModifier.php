@@ -92,8 +92,7 @@ class SortableBehaviorObjectBuilderModifier
 
         return "// if scope has changed and rank was not modified (if yes, assuming superior action)
 // insert object to the end of new scope and cleanup old one
-if (\$this->isColumnModified({$this->peerClassname}::SCOPE_COL) && !\$this->isColumnModified({$this->peerClassname}::RANK_COL)) {
-    {$this->peerClassname}::shiftRank(-1, \$this->{$this->getColumnGetter()}() + 1, null, \$this->oldScope, \$con);
+if (\$this->isColumnModified({$this->peerClassname}::SCOPE_COL) && !\$this->isColumnModified({$this->peerClassname}::RANK_COL)) { {$this->peerClassname}::shiftRank(-1, \$this->{$this->getColumnGetter()}() + 1, null, \$this->oldScope, \$con);
     \$this->insertAtBottom(\$con);
 }
 ";

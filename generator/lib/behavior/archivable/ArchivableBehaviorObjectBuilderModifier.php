@@ -196,8 +196,7 @@ class ArchivableBehaviorObjectBuilderModifier
      */
     public function fakeAutoIncrementPrimaryKeyForConcreteInheritance()
     {
-        if ($this->table->hasBehavior('concrete_inheritance'))
-        {
+        if ($this->table->hasBehavior('concrete_inheritance')) {
             $concrete_inheritance_behavior = $this->table->getBehavior('concrete_inheritance');
 
             $database = $this->table->getDatabase();
@@ -207,8 +206,7 @@ class ArchivableBehaviorObjectBuilderModifier
                 $tableName = $concrete_inheritance_behavior->getParameter('schema').'.'.$tableName;
             }
 
-            if (( $parent_table = $database->getTable($tableName) ))
-            {
+            if (( $parent_table = $database->getTable($tableName) )) {
                 return $parent_table->hasBehavior('archivable')
                     && $parent_table->hasAutoIncrementPrimaryKey();
             }

@@ -140,9 +140,7 @@ class MysqlSchemaParser extends BaseSchemaParser
             $this->addIndexes($table);
             $this->addPrimaryKey($table);
 
-            if ($this->addVendorInfo) {
-                $this->addTableVendorInfo($table);
-            }
+            $this->addTableVendorInfo($table);
         }
 
         return count($tables);
@@ -205,7 +203,7 @@ class MysqlSchemaParser extends BaseSchemaParser
                 $sqlType = $row['Type'];
             }
             foreach (self::$defaultTypeSizes as $type => $defaultSize) {
-                if ($nativeType == $type && $size == $defaultSize) {
+                if ($nativeType == $type && $size == $defaultSize && $scale === null) {
                     $size = null;
                     continue;
                 }
@@ -419,6 +417,10 @@ class MysqlSchemaParser extends BaseSchemaParser
     {
         $stmt = $this->dbh->query("SHOW TABLE STATUS LIKE '" . $table->getName() . "'");
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        if (!$this->addVendorInfo) {
+            //since we depend on `Engine` in the MysqlPlatform, we have always extract this vendor information
+            $row = array('Engine' => $row['Engine']);
+        }
         $vi = $this->getNewVendorInfoObject($row);
         $table->addVendorInfo($vi);
     }

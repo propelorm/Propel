@@ -8,7 +8,7 @@
  * @license    MIT License
  */
 
-require_once dirname(__FILE__) . '/../../../tools/helpers/bookstore/BookstoreTestBase.php';
+require_once dirname(__FILE__) . '/DBAdapterTestAbstract.php';
 
 /**
  * Tests the DbMySQL adapter
@@ -17,7 +17,7 @@ require_once dirname(__FILE__) . '/../../../tools/helpers/bookstore/BookstoreTes
  * @author     William Durand
  * @package    runtime.adapter
  */
-class DBMySQLTest extends BookstoreTestBase
+class DBMySQLTest extends DBAdapterTestAbstract
 {
     public static function getConParams()
     {
@@ -97,6 +97,12 @@ class DBMySQLTest extends BookstoreTestBase
             ->method('exec');
 
         return $con;
+    }
+
+    public function testQuotingIdentifiers()
+    {
+        $db = new DBMySQL();
+        $this->assertEquals('`Book ISBN`', $db->quoteIdentifier('Book ISBN'));
     }
 }
 

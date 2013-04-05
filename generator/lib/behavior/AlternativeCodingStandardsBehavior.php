@@ -39,13 +39,13 @@
 class AlternativeCodingStandardsBehavior extends Behavior
 {
     // default parameters value
-	protected $parameters = array(
-		'brackets_newline'        => 'true',
-		'remove_closing_comments' => 'true',
-		'use_whitespace'          => 'true',
-		'tab_size'                => 2,
-		'strip_comments'          => 'false'
-	);
+    protected $parameters = array(
+        'brackets_newline'        => 'true',
+        'remove_closing_comments' => 'true',
+        'use_whitespace'          => 'true',
+        'tab_size'                => 2,
+        'strip_comments'          => 'false'
+    );
 
     public function objectFilter(&$script)
     {
@@ -90,7 +90,7 @@ class AlternativeCodingStandardsBehavior extends Behavior
     protected function filter(&$script)
     {
         $filter = array();
-        if($this->getParameter('brackets_newline') == 'true') {
+        if ($this->getParameter('brackets_newline') == 'true') {
             $filter['#^(\t*)\}\h(else|elseif|catch)(.*)\h\{$#m'] = "$1}
 $1$2$3
 $1{";
@@ -113,8 +113,8 @@ $1{";
 
     /**
      * Remove inline and codeblock comments from a PHP code string
-     * @param string $code The input code
-     * @return string       The input code, without comments
+     * @param  string $code The input code
+     * @return string The input code, without comments
      */
     public static function stripComments($code)
     {

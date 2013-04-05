@@ -190,7 +190,7 @@ abstract class AbstractPropelDataModelTask extends Task
     /**
      * Set the current target database. (e.g. mysql, oracle, ..)
      *
-     * @param      v target database(s)
+     * @param   $v target database(s)
      */
     public function setTargetDatabase($v)
     {
@@ -268,7 +268,7 @@ abstract class AbstractPropelDataModelTask extends Task
             if (!$outputDirectory->exists()) {
                 $this->log("Output directory does not exist, creating: " . $outputDirectory->getPath(),Project::MSG_VERBOSE);
                 if (!$outputDirectory->mkdirs()) {
-                    throw new IOException("Unable to create Ouptut directory: " . $outputDirectory->getAbsolutePath());
+                    throw new IOException("Unable to create Output directory: " . $outputDirectory->getAbsolutePath());
                 }
             }
             $this->outputDirectory = $outputDirectory->getCanonicalPath();
@@ -280,7 +280,7 @@ abstract class AbstractPropelDataModelTask extends Task
     /**
      * Set the current target database encoding.
      *
-     * @param      v target database encoding
+     * @param   $v target database encoding
      */
     public function setDbEncoding($v)
     {
@@ -529,7 +529,7 @@ abstract class AbstractPropelDataModelTask extends Task
             $externalSchemaDom->load($externalSchemaFile->getAbsolutePath());
             // The external schema may have external schemas of its own ; recurse
             $this->includeExternalSchemas($externalSchemaDom, $srcDir);
-            foreach ($externalSchemaDom->getElementsByTagName("table") as $tableNode) { // see xsd, datatase may only have table or external-schema, the latter was just deleted so this should cover everything
+            foreach ($externalSchemaDom->getElementsByTagName("table") as $tableNode) { // see xsd, database may only have table or external-schema, the latter was just deleted so this should cover everything
                 $databaseNode->appendChild($dom->importNode($tableNode, true));
             }
             $nbIncludedSchemas++;
@@ -569,7 +569,7 @@ abstract class AbstractPropelDataModelTask extends Task
     }
 
     /**
-     * Checks this class against Basic requrements of any propel datamodel task.
+     * Checks this class against Basic requirements of any propel datamodel task.
      *
      * @throws BuildException - if schema fileset was not defined
      * 							- if no output directory was specified

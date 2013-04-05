@@ -55,14 +55,39 @@ class MysqlSchemaParserTest extends PHPUnit_Framework_TestCase
         $database = new Database();
         $database->setPlatform(new DefaultPlatform());
 
-        $this->assertEquals(1, $parser->parse($database), 'One table and one view defined should return one as we exclude views');
+        $this->assertEquals(2, $parser->parse($database), 'two tables and one view defined should return two as we exclude views');
 
         $tables = $database->getTables();
-        $this->assertEquals(1, count($tables));
+        $this->assertEquals(2, count($tables));
 
         $table = $tables[0];
         $this->assertEquals('Book', $table->getPhpName());
         $this->assertEquals(4, count($table->getColumns()));
+    }
+
+    public function testDecimal()
+    {
+        $t1 = new Table('foo');
+
+        $schema = '<database name="reverse_bookstore"><table name="foo"><column name="longitude" type="DECIMAL" scale="7" size="10" /></table></database>';
+        $xtad = new XmlToAppData();
+        $appData = $xtad->parseString($schema);
+        $database = $appData->getDatabase();
+        $table = $database->getTable('foo');
+        $c1 = $table->getColumn('longitude');
+
+        $parser = new MysqlSchemaParser(Propel::getConnection('reverse-bookstore'));
+        $parser->setGeneratorConfig(new QuickGeneratorConfig());
+
+        $database = new Database();
+        $database->setPlatform(new MysqlPlatform());
+        $parser->parse($database);
+
+        $table = $database->getTable('foo');
+
+        $c2 = $table->getColumn('longitude');
+        $this->assertEquals($c1->getSize(), $c2->getSize());
+        $this->assertEquals($c1->getScale(), $c2->getScale());
     }
 }
 

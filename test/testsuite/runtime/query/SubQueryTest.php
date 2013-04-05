@@ -42,7 +42,7 @@ class SubQueryTest extends BookstoreTestBase
 
         $sql = "SELECT subCriteriaAlias.id, subCriteriaAlias.title, subCriteriaAlias.isbn, subCriteriaAlias.price, subCriteriaAlias.publisher_id, subCriteriaAlias.author_id FROM (SELECT book.id, book.title, book.isbn, book.price, book.publisher_id, book.author_id FROM `book` ORDER BY book.title ASC) AS subCriteriaAlias GROUP BY subCriteriaAlias.author_id";
         $params = array();
-        $this->assertCriteriaTranslation($c, $sql, $params, 'addSubQueryCriteriaInFrom() combines two queries succesfully');
+        $this->assertCriteriaTranslation($c, $sql, $params, 'addSubQueryCriteriaInFrom() combines two queries successfully');
     }
 
     public function testSubQueryWithoutSelect()
@@ -169,7 +169,7 @@ class SubQueryTest extends BookstoreTestBase
             array('table' => 'book', 'column' => 'price', 'value' => 20),
             array('table' => 'book', 'column' => 'author_id', 'value' => 123),
         );
-        $this->assertCriteriaTranslation($c, $sql, $params, 'addSubQueryCriteriaInFrom() combines two queries succesfully');
+        $this->assertCriteriaTranslation($c, $sql, $params, 'addSubQueryCriteriaInFrom() combines two queries successfully');
     }
 
     public function testSubQueryRecursive()
@@ -215,7 +215,7 @@ class SubQueryTest extends BookstoreTestBase
         $c->select(array('alias1.Id'));
         $c->configureSelectColumns();
 
-        $sql = "SELECT alias1.id AS \"alias1.Id\" FROM (SELECT book.id, book.title, book.isbn, book.price, book.publisher_id, book.author_id FROM `book`) AS alias1";
+        $sql = "SELECT alias1.id AS `alias1.Id` FROM (SELECT book.id, book.title, book.isbn, book.price, book.publisher_id, book.author_id FROM `book`) AS alias1";
         $params = array();
         $this->assertCriteriaTranslation($c, $sql, $params, 'addSelectQuery() forges a unique alias and adds select columns by default');
     }

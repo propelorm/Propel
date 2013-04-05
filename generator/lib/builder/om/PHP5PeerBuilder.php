@@ -90,7 +90,7 @@ class PHP5PeerBuilder extends PeerBuilder
     } // addIncludes()
 
     /**
-     * Adds class phpdoc comment and openning of class.
+     * Adds class phpdoc comment and opening of class.
      * @param      string &$script The script will be modified in this method.
      */
     protected function addClassOpen(&$script)
@@ -226,7 +226,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . "
     const DEFAULT_STRING_FORMAT = '" . $this->getTable()->getDefaultStringFormat() . "';
 
     /**
-     * An identiy map to hold any loaded instances of ".$this->getObjectClassname()." objects.
+     * An identity map to hold any loaded instances of ".$this->getObjectClassname()." objects.
      * This must be public so that other peer classes can access this when hydrating from JOIN
      * queries.
      * @var        array ".$this->getObjectClassname()."[]
@@ -248,7 +248,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . "
     }
 
     /**
-     * Adds the COLUMN_NAME contants to the class definition.
+     * Adds the COLUMN_NAME constants to the class definition.
      * @param      string &$script The script will be modified in this method.
      */
     protected function addColumnNameConstants(&$script)
@@ -380,7 +380,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . "
         $script .= ")
     );
 ";
-    } // addFielKeysAttribute
+    } // addFieldKeysAttribute
 
     /**
      * Adds the valueSet attributes for ENUM columns.
@@ -520,7 +520,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . "
      * @param string \$colname ENUM column name.
      * @param string \$enumVal ENUM value.
      *
-     * @return int            SQL value
+     * @return int SQL value
      */
     public static function getSqlValueForEnum(\$colname, \$enumVal)
     {
@@ -528,6 +528,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . "
         if (!in_array(\$enumVal, \$values)) {
             throw new PropelException(sprintf('Value \"%s\" is not accepted in this enumerated column', \$colname));
         }
+
         return array_search(\$enumVal, \$values);
     }
 ";
@@ -547,7 +548,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . "
      * Gets the SQL value for ".$col->getPhpName()." ENUM value
      *
      * @param  string \$enumVal ENUM value to get SQL value for
-     * @return int             SQL value
+     * @return int SQL value
      */
     public static function get{$col->getPhpName()}SqlValue(\$enumVal)
     {
@@ -992,10 +993,8 @@ abstract class ".$this->getClassname(). $extendingPeerClass . "
      */
     public static function clearInstancePool(\$and_clear_all_references = false)
     {
-      if (\$and_clear_all_references)
-      {
-        foreach (".$this->getPeerClassname()."::\$instances as \$instance)
-        {
+      if (\$and_clear_all_references) {
+        foreach (".$this->getPeerClassname()."::\$instances as \$instance) {
           \$instance->clearAllReferences(true);
         }
       }
@@ -1844,7 +1843,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . "
 ";
 
         // This logic is almost exactly the same as that in doOnDeleteCascade()
-        // it may make sense to refactor this, provided that thigns don't
+        // it may make sense to refactor this, provided that things don't
         // get too complicated.
 
         foreach ($table->getReferrers() as $fk) {
@@ -2002,7 +2001,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . "
      *
      * @param      array \$pks List of primary keys
      * @param      PropelPDO \$con the connection to use
-     * @return " .$this->getObjectClassname(). "[]
+     * @return "               .$this->getObjectClassname(). "[]
      * @throws PropelException Any exceptions caught during processing will be
      *		 rethrown wrapped into a PropelException.
      */
@@ -2181,7 +2180,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . "
           $script .= "
         \$criteria->addMultipleJoin(array(
 ";
-          foreach ($lftCols as $columnName ) {
+          foreach ($lftCols as $columnName) {
             $script .= sprintf("        array(%s, %s),
 ",
                   $this->getColumnConstant($table->getColumn($columnName) ),
@@ -2684,7 +2683,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . "
 
         $fkeys = $table->getForeignKeys();  // this sep assignment is necessary otherwise sub-loops over
         // getForeignKeys() will cause this to only execute one time.
-        foreach ($fkeys as $fk ) {
+        foreach ($fkeys as $fk) {
 
             $tblFK = $table->getDatabase()->getTable($fk->getForeignTableName());
 
@@ -2873,7 +2872,7 @@ abstract class ".$this->getClassname(). $extendingPeerClass . "
 
         $fkeys = $table->getForeignKeys();  // this sep assignment is necessary otherwise sub-loops over
         // getForeignKeys() will cause this to only execute one time.
-        foreach ($fkeys as $fk ) {
+        foreach ($fkeys as $fk) {
 
             $tblFK = $table->getDatabase()->getTable($fk->getForeignTableName());
 
