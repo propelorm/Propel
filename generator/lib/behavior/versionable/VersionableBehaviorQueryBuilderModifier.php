@@ -18,7 +18,7 @@ class VersionableBehaviorQueryBuilderModifier
 {
     protected $behavior, $table, $builder, $objectClassname, $peerClassname;
 
-    public function __construct($behavior)
+    public function __construct(VersionableBehavior $behavior)
     {
         $this->behavior = $behavior;
         $this->table = $behavior->getTable();
