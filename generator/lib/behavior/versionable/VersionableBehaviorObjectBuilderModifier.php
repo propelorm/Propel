@@ -288,11 +288,10 @@ public function addVersion(\$con = null)
 {
     \$this->enforceVersion = false;
 
-    \$version = new {$versionARClassname}();";
-        foreach ($this->table->getColumns() as $col) {
-            $script .= "
-    \$version->set" . $col->getPhpName() . "(\$this->get" . $col->getPhpName() . "());";
-        }
+    \$version = new {$versionARClassname}();
+    \$this->copyInto(\$version, false, false);
+";
+
         $script .= "
     \$version->set{$this->table->getPhpName()}(\$this);";
         foreach ($this->behavior->getVersionableFks() as $fk) {
