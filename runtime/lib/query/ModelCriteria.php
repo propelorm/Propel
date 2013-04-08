@@ -1004,6 +1004,7 @@ class ModelCriteria extends Criteria
         $this->with = array();
         $this->primaryCriteria = null;
         $this->formatter=null;
+        $this->select = null;
 
         return $this;
     }
