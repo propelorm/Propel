@@ -33,8 +33,12 @@ class VersionableBehavior extends Behavior
         'version_comment_column' => 'version_comment'
     );
 
+    /**
+     * @var Table
+     */
+    protected $versionTable;
+
     protected
-        $versionTable,
         $objectBuilderModifier,
         $queryBuilderModifier,
         $peerBuilderModifier;
@@ -69,7 +73,7 @@ class VersionableBehavior extends Behavior
     {
         $table = $this->getTable();
         // add the version column
-        if (!$table->containsColumn($this->getParameter('version_column'))) {
+        if (!$table->hasColumn($this->getParameter('version_column'))) {
             $table->addColumn(array(
                 'name'    => $this->getParameter('version_column'),
                 'type'    => 'INTEGER',
@@ -81,20 +85,20 @@ class VersionableBehavior extends Behavior
     protected function addLogColumns()
     {
         $table = $this->getTable();
-        if ($this->getParameter('log_created_at') == 'true' && !$table->containsColumn($this->getParameter('version_created_at_column'))) {
+        if ($this->getParameter('log_created_at') == 'true' && !$table->hasColumn($this->getParameter('version_created_at_column'))) {
             $table->addColumn(array(
                 'name' => $this->getParameter('version_created_at_column'),
                 'type' => 'TIMESTAMP'
             ));
         }
-        if ($this->getParameter('log_created_by') == 'true' && !$table->containsColumn($this->getParameter('version_created_by_column'))) {
+        if ($this->getParameter('log_created_by') == 'true' && !$table->hasColumn($this->getParameter('version_created_by_column'))) {
             $table->addColumn(array(
                 'name' => $this->getParameter('version_created_by_column'),
                 'type' => 'VARCHAR',
                 'size' => 100
             ));
         }
-        if ($this->getParameter('log_comment') == 'true'  && !$table->containsColumn($this->getParameter('version_comment_column'))) {
+        if ($this->getParameter('log_comment') == 'true'  && !$table->hasColumn($this->getParameter('version_comment_column'))) {
             $table->addColumn(array(
                 'name' => $this->getParameter('version_comment_column'),
                 'type' => 'VARCHAR',
@@ -158,11 +162,10 @@ class VersionableBehavior extends Behavior
 
     public function addForeignKeyVersionColumns()
     {
-        $table = $this->getTable();
         $versionTable = $this->versionTable;
         foreach ($this->getVersionableFks() as $fk) {
             $fkVersionColumnName = $fk->getLocalColumnName() . '_version';
-            if (!$versionTable->containsColumn($fkVersionColumnName)) {
+            if (!$versionTable->hasColumn($fkVersionColumnName)) {
                 $versionTable->addColumn(array(
                     'name'    => $fkVersionColumnName,
                     'type'    => 'INTEGER',
@@ -170,21 +173,29 @@ class VersionableBehavior extends Behavior
                 ));
             }
         }
+
         foreach ($this->getVersionableReferrers() as $fk) {
             $fkTableName = $fk->getTable()->getName();
-            $fkIdsColumnName = $fkTableName . '_ids';
-            if (!$versionTable->containsColumn($fkIdsColumnName)) {
-                $versionTable->addColumn(array(
-                    'name'    => $fkIdsColumnName,
-                    'type'    => 'ARRAY'
-                ));
+
+            if ($fk->isLocalPrimaryKey()) {
+                $columns = array(
+                    $fkTableName . '_id' => $fk->getForeignColumn()->getType(),
+                    $fkTableName . '_version' => 'INTEGER',
+                );
+            } else {
+                $columns = array(
+                    $fkTableName . '_ids' => 'ARRAY',
+                    $fkTableName . '_versions' => 'ARRAY',
+                );
             }
-            $fkVersionsColumnName = $fkTableName . '_versions';
-            if (!$versionTable->containsColumn($fkVersionsColumnName)) {
-                $versionTable->addColumn(array(
-                    'name'    => $fkVersionsColumnName,
-                    'type'    => 'ARRAY'
-                ));
+
+            foreach ($columns as $eachName => $eachType) {
+                if (!$versionTable->hasColumn($eachName)) {
+                    $versionTable->addColumn(array(
+                        'name'    => $eachName,
+                        'type'    => $eachType,
+                    ));
+                }
             }
         }
     }
@@ -199,6 +210,9 @@ class VersionableBehavior extends Behavior
         return $this->getTable()->getPhpName() . 'Version';
     }
 
+    /**
+     * @return ForeignKey[]
+     */
     public function getVersionableFks()
     {
         $versionableFKs = array();
@@ -213,6 +227,9 @@ class VersionableBehavior extends Behavior
         return $versionableFKs;
     }
 
+    /**
+     * @return ForeignKey[]
+     */
     public function getVersionableReferrers()
     {
         $versionableReferrers = array();
@@ -230,17 +247,27 @@ class VersionableBehavior extends Behavior
     public function getReferrerIdsColumn(ForeignKey $fk)
     {
         $fkTableName = $fk->getTable()->getName();
-        $fkIdsColumnName = $fkTableName . '_ids';
 
-        return $this->versionTable->getColumn($fkIdsColumnName);
+        if ($fk->isLocalPrimaryKey()) {
+            $fkColumnName = $fkTableName . '_id';
+        } else {
+            $fkColumnName = $fkTableName . '_ids';
+        }
+
+        return $this->versionTable->getColumn($fkColumnName);
     }
 
     public function getReferrerVersionsColumn(ForeignKey $fk)
     {
         $fkTableName = $fk->getTable()->getName();
-        $fkIdsColumnName = $fkTableName . '_versions';
 
-        return $this->versionTable->getColumn($fkIdsColumnName);
+        if ($fk->isLocalPrimaryKey()) {
+            $fkColumnName = $fkTableName . '_version';
+        } else {
+            $fkColumnName = $fkTableName . '_versions';
+        }
+
+        return $this->versionTable->getColumn($fkColumnName);
     }
 
     public function getObjectBuilderModifier()
