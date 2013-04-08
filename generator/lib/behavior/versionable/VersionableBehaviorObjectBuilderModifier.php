@@ -245,24 +245,30 @@ public function isVersioningNecessary(\$con = null)
         foreach ($this->behavior->getVersionableFks() as $fk) {
             $fkGetter = $this->builder->getFKPhpNameAffix($fk, $plural = false);
             $script .= "
-    if (null !== (\$object = \$this->get{$fkGetter}(\$con)) && \$object->isVersioningNecessary(\$con)) {
-        return true;
+    if (\$this->a{$fkGetter}) {
+        if (null !== (\$object = \$this->get{$fkGetter}(\$con)) && \$object->isVersioningNecessary(\$con)) {
+            return true;
+        }
     }
 ";
         }
         foreach ($this->behavior->getVersionableReferrers() as $fk) {
             $fkGetter = $this->builder->getRefFKPhpNameAffix($fk, $plural = true);
             $script .= "
-  // to avoid infinite loops, emulate in save
-  \$this->alreadyInSave = true;
-    foreach (\$this->get{$fkGetter}(null, \$con) as \$relatedObject) {
-        if (\$relatedObject->isVersioningNecessary(\$con)) {
-      \$this->alreadyInSave = false;
+    if (\$this->coll{$fkGetter}) {
+        // to avoid infinite loops, emulate in save
+        \$this->alreadyInSave = true;
 
-            return true;
+        foreach (\$this->get{$fkGetter}(null, \$con) as \$relatedObject) {
+            if (\$relatedObject->isVersioningNecessary(\$con)) {
+                \$this->alreadyInSave = false;
+
+                return true;
+            }
         }
+
+        \$this->alreadyInSave = false;
     }
-  \$this->alreadyInSave = false;
 ";
         }
         $script .= "
