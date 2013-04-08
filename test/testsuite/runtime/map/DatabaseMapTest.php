@@ -119,6 +119,38 @@ class DatabaseMapTest extends BookstoreTestBase
     $this->assertEquals($tmap2, $this->databaseMap->getTableByPhpName('Foo2'), 'getTableByPhpName() returns tableMap when phpName was set by way of TableMap::setPhpName()');
   }
 
+  /**
+   * @dataProvider phpNameData
+   */
+  public function testGetTableByPhpNameNamespaced($name, $phpName, $classname)
+  {
+      try {
+          $this->databaseMap->getTableByPhpName($classname);
+          $this->fail('getTableByPhpName() throws an exception when called on an inexistent table');
+      } catch (PropelException $e) {
+          $this->assertTrue(true, 'getTableByPhpName() throws an exception when called on an inexistent table');
+      }
+      $tmap2 = new TableMap($name);
+      $tmap2->setPhpName($phpName);
+      $tmap2->setClassname($classname);
+      $this->databaseMap->addTableObject($tmap2);
+      $this->assertEquals($tmap2, $this->databaseMap->getTableByPhpName($classname), 'getTableByPhpName() returns tableMap when phpName was set by way of TableMap::setPhpName()');
+  }
+
+  public static function phpNameData()
+  {
+      return array(
+              array('foo3', 'Foo3', 'Foo3'),
+              array('foo_bar', 'FooBar', 'FooBar'),
+              array('foo4', 'Foo4', 'myNameSpace\Foo4'),
+              array('foo_bar2', 'FooBar2', 'myNameSpace\FooBar2'),
+              array('baz6', 'Baz6', '\myNameSpace\FooBar\Baz6'),
+              array('foo7', 'Foo7', '\myNameSpace\Foo7'),
+              array('foo_bar8', 'FooBar8', '\myNameSpace\FooBar8'),
+              array('baz9', 'Baz9', '\myNameSpace\FooBar\Baz9')
+      );
+  }
+
   public function testGetTableByPhpNameNotLoaded()
   {
         $this->assertEquals('book', Propel::getDatabaseMap('bookstore')->getTableByPhpName('Book')->getName(), 'getTableByPhpName() can autoload a TableMap when the Peer class is generated and autoloaded');
