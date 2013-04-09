@@ -41,12 +41,13 @@ class PropelDateTime extends DateTime
      * @param mixed        $value         The value to convert (can be a string, a timestamp, or another DateTime)
      * @param DateTimeZone $timeZone      (optional) timezone
      * @param string       $dateTimeClass The class of the object to create, defaults to DateTime
+     * @param string       $format The format of value, defaults to Y-m-d H:i:s
      *
      * @return mixed null, or an instance of $dateTimeClass
      *
      * @throws PropelException
      */
-    public static function newInstance($value, DateTimeZone $timeZone = null, $dateTimeClass = 'DateTime')
+    public static function newInstance($value, DateTimeZone $timeZone = null, $dateTimeClass = 'DateTime',$format = 'Y-m-d H:i:s')
     {
         if ($value instanceof DateTime) {
             return $value;
@@ -58,16 +59,16 @@ class PropelDateTime extends DateTime
         }
         try {
             if (self::isTimestamp($value)) { // if it's a unix timestamp
-                $dateTimeObject = new $dateTimeClass('@' . $value, new DateTimeZone('UTC'));
+                $dateTimeObject = $dateTimeClass::createFromFormat($format,'@'.$value,new DateTimeZone('UTC'));
                 // timezone must be explicitly specified and then changed
                 // because of a DateTime bug: http://bugs.php.net/bug.php?id=43003
                 $dateTimeObject->setTimeZone(new DateTimeZone(date_default_timezone_get()));
             } else {
                 if ($timeZone === null) {
                     // stupid DateTime constructor signature
-                    $dateTimeObject = new $dateTimeClass($value);
+                    $dateTimeObject = $dateTimeClass::createFromFormat($format,$value);
                 } else {
-                    $dateTimeObject = new $dateTimeClass($value, $timeZone);
+                    $dateTimeObject = $dateTimeClass::createFromFormat($format,$value,$timeZone);
                 }
             }
         } catch (Exception $e) {
