@@ -72,7 +72,7 @@ class BasePeer
      */
     const TYPE_NUM = 'num';
 
-    public static function getFieldnames ($classname, $type = self::TYPE_PHPNAME)
+    public static function getFieldnames($classname, $type = self::TYPE_PHPNAME)
     {
         // TODO we should take care of including the peer class here
 
@@ -99,11 +99,12 @@ class BasePeer
      *
      * @param  Criteria  $criteria The criteria to use.
      * @param  PropelPDO $con      A PropelPDO connection object.
+     *
      * @return int       The number of rows affected by last statement execution.  For most
-     * 				uses there is only one delete statement executed, so this number
-     * 				will correspond to the number of rows affected by the call to this
-     * 				method.  Note that the return value does require that this information
-     * 				is returned (supported) by the PDO driver.
+     *                   uses there is only one delete statement executed, so this number
+     *                   will correspond to the number of rows affected by the call to this
+     *                   method.  Note that the return value does require that this information
+     *                   is returned (supported) by the PDO driver.
      * @throws PropelException
      */
     public static function doDelete(Criteria $criteria, PropelPDO $con)
@@ -138,7 +139,7 @@ class BasePeer
                     $criteria->getCriterion($colName)->appendPsTo($sb, $params);
                     $whereClause[] = $sb;
                 }
-                $sql .= " WHERE " .  implode(" AND ", $whereClause);
+                $sql .= " WHERE " . implode(" AND ", $whereClause);
 
                 $stmt = $con->prepare($sql);
                 $db->bindValues($stmt, $params, $dbMap);
@@ -148,7 +149,6 @@ class BasePeer
                 Propel::log($e->getMessage(), Propel::LOG_ERR);
                 throw new PropelException(sprintf('Unable to execute DELETE statement [%s]', $sql), $e);
             }
-
         } // for each table
 
         return $affectedRows;
@@ -169,9 +169,10 @@ class BasePeer
      * @param  string    $tableName    The name of the table to empty.
      * @param  PropelPDO $con          A PropelPDO connection object.
      * @param  string    $databaseName the name of the database.
+     *
      * @return int       The number of rows affected by the statement.  Note
-     * 				that the return value does require that this information
-     * 				is returned (supported) by the Propel db driver.
+     *                   that the return value does require that this information
+     *                   is returned (supported) by the Propel db driver.
      * @throws PropelException - wrapping SQLException caught from statement execution.
      */
     public static function doDeleteAll($tableName, PropelPDO $con, $databaseName = null)
@@ -211,8 +212,9 @@ class BasePeer
      *
      * @param  Criteria  $criteria Object containing values to insert.
      * @param  PropelPDO $con      A PropelPDO connection.
+     *
      * @return mixed     The primary key for the new row if (and only if!) the primary key
-     *				is auto-generated.  Otherwise will return <code>null</code>.
+     *                   is auto-generated.  Otherwise will return <code>null</code>.
      * @throws PropelException
      */
     public static function doInsert(Criteria $criteria, PropelPDO $con)
@@ -226,7 +228,7 @@ class BasePeer
         // key value.
         $keys = $criteria->keys();
         if (!empty($keys)) {
-            $tableName = $criteria->getTableName( $keys[0] );
+            $tableName = $criteria->getTableName($keys[0]);
         } else {
             throw new PropelException("Database insert attempted without anything specified to insert");
         }
@@ -275,9 +277,12 @@ class BasePeer
             . ' (' . implode(',', $columns) . ')'
             . ' VALUES (';
             // . substr(str_repeat("?,", count($columns)), 0, -1) .
-            for ($p=1, $cnt=count($columns); $p <= $cnt; $p++) {
-                $sql .= ':p'.$p;
-                if ($p !== $cnt) $sql .= ',';
+            for ($p = 1, $cnt = count($columns); $p <= $cnt; $p++) {
+                $sql .= ':p' . $p;
+
+                if ($p !== $cnt) {
+                    $sql .= ',';
+                }
             }
             $sql .= ')';
 
@@ -288,7 +293,6 @@ class BasePeer
             $stmt = $con->prepare($sql);
             $db->bindValues($stmt, $params, $dbMap, $db);
             $stmt->execute();
-
         } catch (Exception $e) {
             Propel::log($e->getMessage(), Propel::LOG_ERR);
             throw new PropelException(sprintf('Unable to execute INSERT statement [%s]', $sql), $e);
@@ -315,16 +319,15 @@ class BasePeer
      * WHERE some_column = some value AND could_have_another_column =
      * another value AND so on.
      *
-     * @param   $selectCriteria A Criteria object containing values used in where
-     *		clause.
-     * @param   $updateValues A Criteria object containing values used in set
-     *		clause.
+     * @param   $selectCriteria A Criteria object containing values used in where clause.
+     * @param   $updateValues A Criteria object containing values used in set clause.
      * @param  PropelPDO $con The PropelPDO connection object to use.
+     *
      * @return int       The number of rows affected by last update statement.  For most
-     * 				uses there is only one update statement executed, so this number
-     * 				will correspond to the number of rows affected by the call to this
-     * 				method.  Note that the return value does require that this information
-     * 				is returned (supported) by the Propel db driver.
+     *                   uses there is only one update statement executed, so this number
+     *                   will correspond to the number of rows affected by the call to this
+     *                   method.  Note that the return value does require that this information
+     *                   is returned (supported) by the Propel db driver.
      * @throws PropelException
      */
     public static function doUpdate(Criteria $selectCriteria, Criteria $updateValues, PropelPDO $con)
@@ -384,7 +387,7 @@ class BasePeer
                         $updateColumnName = $db->quoteIdentifier($updateColumnName);
                     }
                     if ($updateValues->getComparison($col) != Criteria::CUSTOM_EQUAL) {
-                        $sql .= $updateColumnName . '=:p'.$p++.', ';
+                        $sql .= $updateColumnName . '=:p' . $p++ . ', ';
                     } else {
                         $param = $updateValues->get($col);
                         $sql .= $updateColumnName . ' = ';
@@ -393,16 +396,16 @@ class BasePeer
                                 $raw = $param['raw'];
                                 $rawcvt = '';
                                 // parse the $params['raw'] for ? chars
-                                for ($r=0,$len=strlen($raw); $r < $len; $r++) {
+                                for ($r = 0, $len = strlen($raw); $r < $len; $r++) {
                                     if ($raw{$r} == '?') {
-                                        $rawcvt .= ':p'.$p++;
+                                        $rawcvt .= ':p' . $p++;
                                     } else {
                                         $rawcvt .= $raw{$r};
                                     }
                                 }
                                 $sql .= $rawcvt . ', ';
                             } else {
-                                $sql .= ':p'.$p++.', ';
+                                $sql .= ':p' . $p++ . ', ';
                             }
                             if (isset($param['value'])) {
                                 $updateValues->put($col, $param['value']);
@@ -423,7 +426,7 @@ class BasePeer
                         $selectCriteria->getCriterion($colName)->appendPsTo($sb, $params);
                         $whereClause[] = $sb;
                     }
-                    $sql .= " WHERE " .  implode(" AND ", $whereClause);
+                    $sql .= " WHERE " . implode(" AND ", $whereClause);
                 }
 
                 $db->cleanupSQL($sql, $params, $updateValues, $dbMap);
@@ -440,11 +443,12 @@ class BasePeer
                 $stmt = null; // close
 
             } catch (Exception $e) {
-                if ($stmt) $stmt = null; // close
+                if ($stmt) {
+                    $stmt = null;
+                } // close
                 Propel::log($e->getMessage(), Propel::LOG_ERR);
                 throw new PropelException(sprintf('Unable to execute UPDATE statement [%s]', $sql), $e);
             }
-
         } // foreach table in the criteria
 
         return $affectedRows;
@@ -455,6 +459,7 @@ class BasePeer
      *
      * @param  Criteria        $criteria A Criteria.
      * @param  PropelPDO       $con      A PropelPDO connection to use.
+     *
      * @return PDOStatement    The resultset.
      * @throws PropelException
      * @see        createSelectSql()
@@ -479,7 +484,6 @@ class BasePeer
             $db->bindValues($stmt, $params, $dbMap);
 
             $stmt->execute();
-
         } catch (Exception $e) {
             if ($stmt) {
                 $stmt = null; // close
@@ -497,6 +501,7 @@ class BasePeer
      *
      * @param  Criteria        $criteria A Criteria.
      * @param  PropelPDO       $con      A PropelPDO connection to use.
+     *
      * @return PDOStatement    The resultset statement.
      * @throws PropelException
      * @see        createSelectSql()
@@ -540,7 +545,6 @@ class BasePeer
             $stmt = $con->prepare($sql);
             $db->bindValues($stmt, $params, $dbMap);
             $stmt->execute();
-
         } catch (Exception $e) {
             if ($stmt !== null) {
                 $stmt = null;
@@ -590,8 +594,8 @@ class BasePeer
      * in the given Criteria object.
      *
      * @param  Criteria  $criteria A Criteria.
-     * @return ColumnMap If the Criteria object contains a primary
-     *		  key, or null if it doesn't.
+     *
+     * @return ColumnMap If the Criteria object contains a primary key, or null if it doesn't.
      * @throws PropelException
      */
     private static function getPrimaryKey(Criteria $criteria)
@@ -648,6 +652,7 @@ class BasePeer
      *
      * @param Criteria $criteria Criteria for the SELECT query.
      * @param      array &$params Parameters that are to be replaced in prepared statement.
+     *
      * @return string
      * @throws PropelException Trouble creating the query string.
      */
@@ -785,7 +790,7 @@ class BasePeer
 
                 if ($criteria->isIgnoreCase() && $column && $column->isText()) {
                     $ignoreCaseColumn = $db->ignoreCaseInOrderBy("$tableAlias.$columnAlias");
-                    $orderByClause[] =  $ignoreCaseColumn . $direction;
+                    $orderByClause[] = $ignoreCaseColumn . $direction;
                     $selectSql .= ', ' . $ignoreCaseColumn;
                 } else {
                     $orderByClause[] = $orderByColumn;
@@ -851,8 +856,10 @@ class BasePeer
     /**
      * Builds a params array, like the kind populated by Criterion::appendPsTo().
      * This is useful for building an array even when it is not using the appendPsTo() method.
+     *
      * @param  array    $columns
      * @param  Criteria $values
+     *
      * @return array    params array('column' => ..., 'table' => ..., 'value' => ...)
      */
     private static function buildParams($columns, Criteria $values)
@@ -873,6 +880,7 @@ class BasePeer
      * imports and caches it.
      *
      * @param  string         $classname The dot-path name of class (e.g. myapp.propel.MyValidator)
+     *
      * @return Validator|null object or null if not able to instantiate validator class (and error will be logged in this case)
      */
     public static function getValidator($classname)
@@ -887,10 +895,9 @@ class BasePeer
 
             return $v;
         } catch (Exception $e) {
-            Propel::log("BasePeer::getValidator(): failed trying to instantiate " . $classname . ": ".$e->getMessage(), Propel::LOG_ERR);
+            Propel::log("BasePeer::getValidator(): failed trying to instantiate " . $classname . ": " . $e->getMessage(), Propel::LOG_ERR);
         }
 
         return null;
     }
-
 }

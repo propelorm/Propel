@@ -35,6 +35,7 @@ class DBSQLite extends DBAdapter
      * This method is used to ignore case.
      *
      * @param  string $in The string to transform to upper case.
+     *
      * @return string The upper case string.
      */
     public function toUpperCase($in)
@@ -46,6 +47,7 @@ class DBSQLite extends DBAdapter
      * This method is used to ignore case.
      *
      * @param  string $in The string whose case to ignore.
+     *
      * @return string The string in a case that can be ignored.
      */
     public function ignoreCase($in)
@@ -84,6 +86,7 @@ class DBSQLite extends DBAdapter
      * Returns SQL which calculates the length (in chars) of a string.
      *
      * @param  string $s String to calculate length of.
+     *
      * @return string
      */
     public function strLength($s)
@@ -95,6 +98,7 @@ class DBSQLite extends DBAdapter
      * @see        DBAdapter::quoteIdentifier()
      *
      * @param  string $text
+     *
      * @return string
      */
     public function quoteIdentifier($text)
@@ -120,9 +124,10 @@ class DBSQLite extends DBAdapter
 
     /**
      * @param  string $seed
+     *
      * @return string
      */
-    public function random($seed = NULL)
+    public function random($seed = null)
     {
         return 'random()';
     }

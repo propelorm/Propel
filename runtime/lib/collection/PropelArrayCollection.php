@@ -82,6 +82,7 @@ class PropelArrayCollection extends PropelCollection
      * Get an array of the primary keys of all the objects in the collection
      *
      * @param  boolean $usePrefix
+     *
      * @return array   The list of the primary keys of the collection
      */
     public function getPrimaryKeys($usePrefix = true)
@@ -90,7 +91,7 @@ class PropelArrayCollection extends PropelCollection
         $ret = array();
         foreach ($this as $key => $element) {
             $key = $usePrefix ? ($this->getModel() . '_' . $key) : $key;
-            $ret[$key]= call_user_func($callable, array_values($element));
+            $ret[$key] = call_user_func($callable, array_values($element));
         }
 
         return $ret;
@@ -105,7 +106,7 @@ class PropelArrayCollection extends PropelCollection
      */
     public function fromArray($arr)
     {
-        $obj  = $this->getWorkerObject();
+        $obj = $this->getWorkerObject();
         foreach ($arr as $element) {
             $obj->clear();
             $obj->fromArray($element);

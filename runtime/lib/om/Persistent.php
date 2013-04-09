@@ -31,6 +31,7 @@ interface Persistent
      * Sets the PrimaryKey for the object.
      *
      * @param  mixed      $primaryKey The new PrimaryKey object or string (result of PrimaryKey.toString()).
+     *
      * @return void
      * @throws Exception, This method might throw an exceptions
      */
@@ -48,6 +49,7 @@ interface Persistent
      * Has specified column been modified?
      *
      * @param  string  $col
+     *
      * @return boolean True if $col has been modified.
      */
     public function isColumnModified($col);
@@ -78,20 +80,25 @@ interface Persistent
 
     /**
      * Whether this object has been deleted.
+     *
      * @return boolean The deleted state of this object.
      */
     public function isDeleted();
 
     /**
      * Specify whether this object has been deleted.
+     *
      * @param  boolean $b The deleted state of this object.
+     *
      * @return void
      */
     public function setDeleted($b);
 
     /**
      * Deletes the object.
+     *
      * @param  PropelPDO $con
+     *
      * @return void
      * @throws Exception
      */
@@ -99,7 +106,9 @@ interface Persistent
 
     /**
      * Saves the object.
+     *
      * @param  PropelPDO $con
+     *
      * @return void
      * @throws Exception
      */

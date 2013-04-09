@@ -29,6 +29,7 @@ class PHP5MultiExtendObjectBuilder extends ObjectBuilder
 
     /**
      * Returns the name of the current class being built.
+     *
      * @return string
      */
     public function getUnprefixedClassname()
@@ -38,6 +39,7 @@ class PHP5MultiExtendObjectBuilder extends ObjectBuilder
 
     /**
      * Override method to return child package, if specified.
+     *
      * @return string
      */
     public function getPackage()
@@ -47,6 +49,7 @@ class PHP5MultiExtendObjectBuilder extends ObjectBuilder
 
     /**
      * Set the child object that we're operating on currently.
+     *
      * @param   $child Inheritance
      */
     public function setChild(Inheritance $child)
@@ -56,6 +59,7 @@ class PHP5MultiExtendObjectBuilder extends ObjectBuilder
 
     /**
      * Returns the child object we're operating on currently.
+     *
      * @return Inheritance
      * @throws BuildException - if child was not set.
      */
@@ -70,6 +74,7 @@ class PHP5MultiExtendObjectBuilder extends ObjectBuilder
 
     /**
      * Returns classpath to parent class.
+     *
      * @return string
      */
     protected function getParentClasspath()
@@ -83,6 +88,7 @@ class PHP5MultiExtendObjectBuilder extends ObjectBuilder
 
     /**
      * Returns classname of parent class.
+     *
      * @return string
      */
     protected function getParentClassname()
@@ -92,6 +98,7 @@ class PHP5MultiExtendObjectBuilder extends ObjectBuilder
 
     /**
      * Gets the file path to the parent class.
+     *
      * @return string
      */
     protected function getParentClassFilePath()
@@ -101,6 +108,7 @@ class PHP5MultiExtendObjectBuilder extends ObjectBuilder
 
     /**
      * Adds the include() statements for files that this class depends on or utilizes.
+     *
      * @param      string &$script The script will be modified in this method.
      */
     protected function addIncludes(&$script)
@@ -109,17 +117,18 @@ class PHP5MultiExtendObjectBuilder extends ObjectBuilder
 
     /**
      * Adds class phpdoc comment and opening of class.
+     *
      * @param      string &$script The script will be modified in this method.
      */
     protected function addClassOpen(&$script)
     {
         if ($this->getChild()->getAncestor()) {
             $ancestorClassName = $this->getChild()->getAncestor();
-          if ($this->getDatabase()->hasTableByPhpName($ancestorClassName)) {
-            $this->declareClassFromBuilder($this->getNewStubObjectBuilder($this->getDatabase()->getTableByPhpName($ancestorClassName)));
-          } else {
-              $this->declareClassNamespace($ancestorClassName, $this->getNamespace());
-          }
+            if ($this->getDatabase()->hasTableByPhpName($ancestorClassName)) {
+                $this->declareClassFromBuilder($this->getNewStubObjectBuilder($this->getDatabase()->getTableByPhpName($ancestorClassName)));
+            } else {
+                $this->declareClassNamespace($ancestorClassName, $this->getNamespace());
+            }
         } else {
             $this->declareClassFromBuilder($this->getObjectBuilder());
         }
@@ -149,9 +158,9 @@ class PHP5MultiExtendObjectBuilder extends ObjectBuilder
  * application requirements.  This class will only be generated as
  * long as it does not already exist in the output directory.
  *
- * @package    propel.generator.".$this->getPackage()."
+ * @package    propel.generator." . $this->getPackage() . "
  */
-class ".$this->getClassname()." extends ".$this->getParentClassname()." {
+class " . $this->getClassname() . " extends " . $this->getParentClassname() . " {
 ";
     }
 
@@ -170,23 +179,24 @@ class ".$this->getClassname()." extends ".$this->getParentClassname()." {
         $col = $child->getColumn();
         $cfc = $col->getPhpName();
 
-        $const = "CLASSKEY_".strtoupper($child->getKey());
+        $const = "CLASSKEY_" . strtoupper($child->getKey());
 
         $script .= "
     /**
-     * Constructs a new ".$this->getChild()->getClassname()." class, setting the ".$col->getName()." column to ".$this->getPeerClassname()."::$const.
+     * Constructs a new " . $this->getChild()->getClassname() . " class, setting the " . $col->getName() . " column to " . $this->getPeerClassname() . "::$const.
      */
     public function __construct()
     {";
         $script .= "
         parent::__construct();
-        \$this->set$cfc(".$this->getPeerClassname()."::CLASSKEY_".strtoupper($child->getKey()).");
+        \$this->set$cfc(" . $this->getPeerClassname() . "::CLASSKEY_" . strtoupper($child->getKey()) . ");
     }
 ";
     }
 
     /**
      * Closes class.
+     *
      * @param      string &$script The script will be modified in this method.
      */
     protected function addClassClose(&$script)
@@ -195,5 +205,4 @@ class ".$this->getClassname()." extends ".$this->getParentClassname()." {
 } // " . $this->getClassname() . "
 ";
     }
-
 } // PHP5ExtensionObjectBuilder

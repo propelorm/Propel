@@ -176,12 +176,12 @@ public function findOneByRank(\$rank, " . ($useScope ? "\$scope = null, " : "") 
         $useScope = $this->behavior->useScope();
         $script .= "
 /**
- * Returns " . ($useScope ? 'a' : 'the') ." list of objects
+ * Returns " . ($useScope ? 'a' : 'the') . " list of objects
  *";
-         if ($useScope) {
-             $script .= "
+        if ($useScope) {
+            $script .= "
  * @param      int \$scope		Scope to determine which list to return";
-         }
+        }
         $script .= "
  * @param      PropelPDO \$con	Connection to use.
  *
@@ -226,7 +226,7 @@ public function getMaxRank(" . ($useScope ? "\$scope = null, " : "") . "PropelPD
     // shift the objects with a position lower than the one of object
     \$this->addSelectColumn('MAX(' . {$this->peerClassname}::RANK_COL . ')');";
         if ($useScope) {
-        $script .= "
+            $script .= "
     \$this->add({$this->peerClassname}::SCOPE_COL, \$scope, Criteria::EQUAL);";
         }
         $script .= "
@@ -281,5 +281,4 @@ public function reorder(array \$order, PropelPDO \$con = null)
 }
 ";
     }
-
 }

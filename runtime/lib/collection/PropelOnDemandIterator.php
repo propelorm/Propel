@@ -47,7 +47,7 @@ class PropelOnDemandIterator implements Iterator
     public function __construct(PropelFormatter $formatter, PDOStatement $stmt)
     {
         $this->formatter = $formatter;
-        $this->stmt      = $stmt;
+        $this->stmt = $stmt;
         $this->enableInstancePoolingOnFinish = Propel::disableInstancePooling();
     }
 

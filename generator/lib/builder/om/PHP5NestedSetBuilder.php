@@ -24,6 +24,7 @@ class PHP5NestedSetBuilder extends ObjectBuilder
 
     /**
      * Gets the package for the [base] object classes.
+     *
      * @return string
      */
     public function getPackage()
@@ -33,6 +34,7 @@ class PHP5NestedSetBuilder extends ObjectBuilder
 
     /**
      * Returns the name of the current class being built.
+     *
      * @return string
      */
     public function getUnprefixedClassname()
@@ -42,17 +44,19 @@ class PHP5NestedSetBuilder extends ObjectBuilder
 
     /**
      * Adds the include() statements for files that this class depends on or utilizes.
+     *
      * @param      string &$script The script will be modified in this method.
      */
     protected function addIncludes(&$script)
     {
-        $script .="
-require '".$this->getObjectBuilder()->getClassFilePath()."';
+        $script .= "
+require '" . $this->getObjectBuilder()->getClassFilePath() . "';
 ";
     } // addIncludes()
 
     /**
      * Adds class phpdoc comment and opening of class.
+     *
      * @param      string &$script The script will be modified in this method.
      */
     protected function addClassOpen(&$script)
@@ -78,15 +82,16 @@ require '".$this->getObjectBuilder()->getClassFilePath()."';
         }
         $script .= "
  * @deprecated  Since Propel 1.5. Use the nested_set behavior instead of the NestedSet treeMode
- * @package    propel.generator.".$this->getPackage()."
+ * @package    propel.generator." . $this->getPackage() . "
  */
-abstract class ".$this->getClassname()." extends ".$this->getObjectBuilder()->getClassname()." implements NodeObject {
+abstract class " . $this->getClassname() . " extends " . $this->getObjectBuilder()->getClassname() . " implements NodeObject {
 ";
     }
 
     /**
      * Specifies the methods that are added as part of the basic OM class.
      * This can be overridden by subclasses that wish to add more methods.
+     *
      * @see        ObjectBuilder::addClassBody()
      */
     protected function addClassBody(&$script)
@@ -158,6 +163,7 @@ abstract class ".$this->getClassname()." extends ".$this->getObjectBuilder()->ge
 
     /**
      * Closes class.
+     *
      * @param      string &$script The script will be modified in this method.
      */
     protected function addClassClose(&$script)
@@ -169,6 +175,7 @@ abstract class ".$this->getClassname()." extends ".$this->getObjectBuilder()->ge
 
     /**
      * Adds class attributes.
+     *
      * @param      string &$script The script will be modified in this method.
      */
     protected function addAttributes(&$script)
@@ -988,7 +995,7 @@ abstract class ".$this->getClassname()." extends ".$this->getObjectBuilder()->ge
 
         foreach ($table->getColumns() as $col) {
             if ($col->isNestedSetLeftKey()) {
-                $left_col_getter_name = 'get'.$col->getPhpName();
+                $left_col_getter_name = 'get' . $col->getPhpName();
                 break;
             }
         }
@@ -1012,7 +1019,7 @@ abstract class ".$this->getClassname()." extends ".$this->getObjectBuilder()->ge
 
         foreach ($table->getColumns() as $col) {
             if ($col->isNestedSetRightKey()) {
-                $right_col_getter_name = 'get'.$col->getPhpName();
+                $right_col_getter_name = 'get' . $col->getPhpName();
                 break;
             }
         }
@@ -1037,7 +1044,7 @@ abstract class ".$this->getClassname()." extends ".$this->getObjectBuilder()->ge
         $scope_col_getter_name = null;
         foreach ($table->getColumns() as $col) {
             if ($col->isTreeScopeKey()) {
-                $scope_col_getter_name = 'get'.$col->getPhpName();
+                $scope_col_getter_name = 'get' . $col->getPhpName();
                 break;
             }
         }
@@ -1071,7 +1078,7 @@ abstract class ".$this->getClassname()." extends ".$this->getObjectBuilder()->ge
 
         foreach ($table->getColumns() as $col) {
             if ($col->isNestedSetLeftKey()) {
-                $left_col_setter_name = 'set'.$col->getPhpName();
+                $left_col_setter_name = 'set' . $col->getPhpName();
                 break;
             }
         }
@@ -1099,7 +1106,7 @@ abstract class ".$this->getClassname()." extends ".$this->getObjectBuilder()->ge
 
         foreach ($table->getColumns() as $col) {
             if ($col->isNestedSetRightKey()) {
-                $right_col_setter_name = 'set'.$col->getPhpName();
+                $right_col_setter_name = 'set' . $col->getPhpName();
                 break;
             }
         }
@@ -1128,7 +1135,7 @@ abstract class ".$this->getClassname()." extends ".$this->getObjectBuilder()->ge
         $scope_col_setter_name = null;
         foreach ($table->getColumns() as $col) {
             if ($col->isTreeScopeKey()) {
-                $scope_col_setter_name = 'set'.$col->getPhpName();
+                $scope_col_setter_name = 'set' . $col->getPhpName();
                 break;
             }
         }
@@ -1151,7 +1158,5 @@ abstract class ".$this->getClassname()." extends ".$this->getObjectBuilder()->ge
         return \$this;
     }
 ";
-
     }
-
 } // PHP5NestedSetBuilder

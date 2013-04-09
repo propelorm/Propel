@@ -51,12 +51,14 @@ interface BasicLogger
      * @param mixed $message String or Exception object containing the message to log.
      */
     public function warning($message);
+
     /**
      * A convenience function for logging an critical event.
      *
      * @param mixed $message String or Exception object containing the message to log.
      */
     public function notice($message);
+
     /**
      * A convenience function for logging an critical event.
      *

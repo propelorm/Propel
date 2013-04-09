@@ -55,6 +55,8 @@ class VersionableBehaviorQueryBuilderModifier
     /**
      * Get the getter of the column of the behavior
      *
+     * @param string $name
+     *
      * @return string The related getter, e.g. 'getVersion'
      */
     protected function getColumnGetter($name = 'version_column')
@@ -64,6 +66,8 @@ class VersionableBehaviorQueryBuilderModifier
 
     /**
      * Get the setter of the column of the behavior
+     *
+     * @param string $name
      *
      * @return string The related setter, e.g. 'setVersion'
      */
@@ -116,5 +120,4 @@ public function orderByVersion(\$order = Criteria::ASC)
 }
 ";
     }
-
 }

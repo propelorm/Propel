@@ -26,18 +26,21 @@ class AppData
 
     /**
      * The list of databases for this application.
-     * @var        array Database[]
+     *
+     * @var        Database[]
      */
     private $dbList = array();
 
     /**
      * The platform class for our database(s).
+     *
      * @var        string
      */
     private $platform;
 
     /**
      * The generator configuration
+     *
      * @var        GeneratorConfig
      */
     protected $generatorConfig;
@@ -50,6 +53,7 @@ class AppData
 
     /**
      * Flag to ensure that initialization is performed only once.
+     *
      * @var        boolean
      */
     private $isInitialized = false;
@@ -79,7 +83,7 @@ class AppData
     /**
      * Gets the platform object to use for any databases added to this application model.
      *
-     * @return Platform
+     * @return PropelPlatformInterface
      */
     public function getPlatform()
     {
@@ -109,7 +113,7 @@ class AppData
     /**
      * Set the name of the database.
      *
-     * @param   $name of the database.
+     * @param string $name
      */
     public function setName($name)
     {
@@ -119,7 +123,7 @@ class AppData
     /**
      * Get the name of the database.
      *
-     * @return String name
+     * @return string name
      */
     public function getName()
     {
@@ -129,7 +133,7 @@ class AppData
     /**
      * Get the short name of the database (without the '-schema' postfix).
      *
-     * @return String name
+     * @return string name
      */
     public function getShortName()
     {
@@ -139,7 +143,7 @@ class AppData
     /**
      * Return an array of all databases
      *
-     * @return Array of Database objects
+     * @return Database[]
      */
     public function getDatabases($doFinalInit = true)
     {
@@ -165,8 +169,10 @@ class AppData
     /**
      * Return the database with the specified name.
      *
-     * @param      name database name
-     * @return A Database object.  If it does not exist it returns null
+     * @param string $name database name
+     * @param bool $doFinalInit
+     *
+     * @return Database|null
      */
     public function getDatabase($name = null, $doFinalInit = true)
     {
@@ -180,7 +186,7 @@ class AppData
             return $this->dbList[0];
         }
 
-        for ($i=0,$size=count($this->dbList); $i < $size; $i++) {
+        for ($i = 0, $size = count($this->dbList); $i < $size; $i++) {
             $db = $this->dbList[$i];
             if ($db->getName() === $name) {
                 return $db;
@@ -193,7 +199,8 @@ class AppData
     /**
      * Checks whether a database with the specified nam exists in this AppData
      *
-     * @param      name database name
+     * @param string $name database name
+     *
      * @return boolean
      */
     public function hasDatabase($name)
@@ -238,13 +245,12 @@ class AppData
 
             return $this->addDatabase($d); // calls self w/ different param type
         }
-
     }
 
     public function doFinalInitialization()
     {
         if (!$this->isInitialized) {
-            for ($i=0, $size=count($this->dbList); $i < $size; $i++) {
+            for ($i = 0, $size = count($this->dbList); $i < $size; $i++) {
                 $this->dbList[$i]->doFinalInitialization();
             }
             $this->isInitialized = true;
@@ -254,7 +260,7 @@ class AppData
     /**
      * Merge other appData objects into this object
      *
-     * @param array[AppData] $ads
+     * @param AppData[] $ads
      *
      * @throws Exception
      */
@@ -327,6 +333,7 @@ class AppData
 
     /**
      * Magic string method
+     *
      * @see toString()
      */
     public function __toString()

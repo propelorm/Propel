@@ -209,5 +209,4 @@ class I18nBehaviorObjectBuilderModifier
         $replacement = "\$0$addition";
         $script = preg_replace($pattern, $replacement, $script);
     }
-
 }

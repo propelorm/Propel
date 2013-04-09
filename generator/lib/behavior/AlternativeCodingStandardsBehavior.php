@@ -113,19 +113,23 @@ $1{";
 
     /**
      * Remove inline and codeblock comments from a PHP code string
+     *
      * @param  string $code The input code
+     *
      * @return string The input code, without comments
      */
     public static function stripComments($code)
     {
-        $output  = '';
+        $output = '';
         $commentTokens = array(T_COMMENT, T_DOC_COMMENT);
         foreach (token_get_all($code) as $token) {
             if (is_array($token)) {
-            if (in_array($token[0], $commentTokens)) continue;
+                if (in_array($token[0], $commentTokens)) {
+                    continue;
+                }
                 $token = $token[1];
-          }
-          $output .= $token;
+            }
+            $output .= $token;
         }
 
         return $output;

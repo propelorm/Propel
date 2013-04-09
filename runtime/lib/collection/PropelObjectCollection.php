@@ -76,6 +76,7 @@ class PropelObjectCollection extends PropelCollection
      * Get an array of the primary keys of all the objects in the collection
      *
      * @param  boolean $usePrefix
+     *
      * @return array   The list of the primary keys of the collection
      */
     public function getPrimaryKeys($usePrefix = true)
@@ -85,7 +86,7 @@ class PropelObjectCollection extends PropelCollection
         /** @var $obj BaseObject */
         foreach ($this as $key => $obj) {
             $key = $usePrefix ? ($this->getModel() . '_' . $key) : $key;
-            $ret[$key]= $obj->getPrimaryKey();
+            $ret[$key] = $obj->getPrimaryKey();
         }
 
         return $ret;
@@ -201,7 +202,7 @@ class PropelObjectCollection extends PropelCollection
         $value = $object;
 
         foreach ($columns as $eachKeyColumn) {
-            $keyGetterMethod = 'get'.$eachKeyColumn;
+            $keyGetterMethod = 'get' . $eachKeyColumn;
             $value = $value->$keyGetterMethod();
         }
 
@@ -254,7 +255,7 @@ class PropelObjectCollection extends PropelCollection
             $getMethod = 'get' . $symRelationMap->getName();
             $addMethod = 'add' . $relationName;
             foreach ($relatedObjects as $object) {
-                $mainObj = $object->$getMethod();  // instance pool is used here to avoid a query
+                $mainObj = $object->$getMethod(); // instance pool is used here to avoid a query
                 $mainObj->$addMethod($object);
             }
             $relatedObjects->clearIterator();

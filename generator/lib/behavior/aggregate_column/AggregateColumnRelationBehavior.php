@@ -155,6 +155,7 @@ class AggregateColumnRelationBehavior extends Behavior
         $foreignTable = $this->getForeignTable();
         // let's infer the relation from the foreign table
         $fks = $this->getTable()->getForeignKeysReferencingTable($foreignTable->getName());
+
         // FIXME doesn't work when more than one fk to the same table
         return array_shift($fks);
     }

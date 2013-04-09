@@ -88,5 +88,4 @@ class PropelForeignKeyComparator
 
         return false;
     }
-
 }

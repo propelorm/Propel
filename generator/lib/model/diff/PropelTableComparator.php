@@ -178,8 +178,7 @@ class PropelTableComparator
 
         // check for new pk columns in $toTable
         foreach ($toTablePk as $column) {
-            if (!$this->getFromTable()->hasColumn($column->getName(), $caseInsensitive) ||
-                    !$this->getFromTable()->getColumn($column->getName(), $caseInsensitive)->isPrimaryKey()) {
+            if (!$this->getFromTable()->hasColumn($column->getName(), $caseInsensitive) || !$this->getFromTable()->getColumn($column->getName(), $caseInsensitive)->isPrimaryKey()) {
                 $this->tableDiff->addAddedPkColumn($column->getName(), $column);
                 $pkDifferences++;
             }
@@ -187,8 +186,7 @@ class PropelTableComparator
 
         // check for removed pk columns in $toTable
         foreach ($fromTablePk as $column) {
-            if (!$this->getToTable()->hasColumn($column->getName(), $caseInsensitive) ||
-                    !$this->getToTable()->getColumn($column->getName(), $caseInsensitive)->isPrimaryKey()) {
+            if (!$this->getToTable()->hasColumn($column->getName(), $caseInsensitive) || !$this->getToTable()->getColumn($column->getName(), $caseInsensitive)->isPrimaryKey()) {
                 $this->tableDiff->addRemovedPkColumn($column->getName(), $column);
                 $pkDifferences++;
             }
@@ -311,5 +309,4 @@ class PropelTableComparator
 
         return $fkDifferences;
     }
-
 }

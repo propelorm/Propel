@@ -201,7 +201,7 @@ class PropelQuickBuilder
                     foreach (array('nestedsetpeer', 'nestedset') as $target) {
                         $script .= $this->getConfig()->getConfiguredBuilder($table, $target)->build();
                     }
-                break;
+                    break;
                 case 'MaterializedPath':
                     foreach (array('nodepeer', 'node') as $target) {
                         $script .= $this->getConfig()->getConfiguredBuilder($table, $target)->build();
@@ -209,11 +209,11 @@ class PropelQuickBuilder
                     foreach (array('nodepeerstub', 'nodestub') as $target) {
                         $script .= $this->getConfig()->getConfiguredBuilder($table, $target)->build();
                     }
-                break;
+                    break;
                 case 'AdjacencyList':
                     // No implementation for this yet.
                 default:
-                break;
+                    break;
             }
         }
 

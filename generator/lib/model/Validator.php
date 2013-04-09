@@ -8,7 +8,7 @@
  * @license    MIT License
  */
 
-require_once dirname(__FILE__) .  '/XMLElement.php';
+require_once dirname(__FILE__) . '/XMLElement.php';
 require_once dirname(__FILE__) . '/../exception/EngineException.php';
 require_once dirname(__FILE__) . '/PropelTypes.php';
 require_once dirname(__FILE__) . '/Rule.php';
@@ -56,6 +56,7 @@ class Validator extends XMLElement
 
     /**
      * Sets up the Validator object based on the attributes that were passed to loadFromXML().
+     *
      * @see        parent::loadFromXML()
      */
     protected function setupObject()
@@ -69,7 +70,9 @@ class Validator extends XMLElement
      * Supports two signatures:
      * - addRule(Rule $rule)
      * - addRule(array $attribs)
+     *
      * @param  mixed $data Rule object or XML attribs (array) from <rule/> element.
+     *
      * @return Rule  The added Rule.
      */
     public function addRule($data)
@@ -91,6 +94,7 @@ class Validator extends XMLElement
 
     /**
      * Gets an array of all added rules for this validator.
+     *
      * @return array Rule[]
      */
     public function getRules()
@@ -100,6 +104,7 @@ class Validator extends XMLElement
 
     /**
      * Gets the name of the column that this Validator applies to.
+     *
      * @return string
      */
     public function getColumnName()
@@ -109,7 +114,9 @@ class Validator extends XMLElement
 
     /**
      * Sets the Column object that this validator applies to.
+     *
      * @param Column $column
+     *
      * @see        Table::addValidator()
      */
     public function setColumn(Column $column)
@@ -119,6 +126,7 @@ class Validator extends XMLElement
 
     /**
      * Gets the Column object that this validator applies to.
+     *
      * @return Column
      */
     public function getColumn()
@@ -128,6 +136,7 @@ class Validator extends XMLElement
 
     /**
      * Set the owning Table.
+     *
      * @param Table $table
      */
     public function setTable(Table $table)
@@ -137,6 +146,7 @@ class Validator extends XMLElement
 
     /**
      * Get the owning Table.
+     *
      * @return Table
      */
     public function getTable()
@@ -147,6 +157,7 @@ class Validator extends XMLElement
     /**
      * Set the translation mode to use for the message.
      * Currently only "gettext" and "none" are supported.  The default is "none".
+     *
      * @param string $method Translation method ("gettext", "none").
      */
     public function setTranslate($method)
@@ -157,6 +168,7 @@ class Validator extends XMLElement
     /**
      * Get the translation mode to use for the message.
      * Currently only "gettext" and "none" are supported.  The default is "none".
+     *
      * @return string Translation method ("gettext", "none").
      */
     public function getTranslate()

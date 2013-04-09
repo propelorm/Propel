@@ -68,11 +68,11 @@ class BuildPropelPEARPackageTask extends MatchingTask
         }
 
         $pkg->setOptions($options);
-
     }
 
     /**
      * Main entry point.
+     *
      * @return void
      *
      * @throws BuildException
@@ -131,11 +131,11 @@ class BuildPropelPEARPackageTask extends MatchingTask
         if (PEAR::isError($e)) {
             throw new BuildException("Unable to write package file.", new Exception($e->getMessage()));
         }
-
     }
 
     /**
      * Used by the PEAR_PackageFileManager_PhingFileSet lister.
+     *
      * @return array FileSet[]
      */
     public function getFileSets()
@@ -156,12 +156,14 @@ class BuildPropelPEARPackageTask extends MatchingTask
     {
         $num = array_push($this->filesets, new FileSet());
 
-        return $this->filesets[$num-1];
+        return $this->filesets[$num - 1];
     }
 
     /**
      * Set the version we are building.
+     *
      * @param  string $v
+     *
      * @return void
      */
     public function setVersion($v)
@@ -171,7 +173,9 @@ class BuildPropelPEARPackageTask extends MatchingTask
 
     /**
      * Set the state we are building.
+     *
      * @param  string $v
+     *
      * @return void
      */
     public function setState($v)
@@ -181,16 +185,21 @@ class BuildPropelPEARPackageTask extends MatchingTask
 
     /**
      * Sets release notes field.
+     *
      * @param  string $v
+     *
      * @return void
      */
     public function setNotes($v)
     {
         $this->notes = $v;
     }
+
     /**
      * Sets "dir" property from XML.
+     *
      * @param  PhingFile $f
+     *
      * @return void
      */
     public function setDir(PhingFile $f)
@@ -205,5 +214,4 @@ class BuildPropelPEARPackageTask extends MatchingTask
     {
         $this->packageFile = $f;
     }
-
 }

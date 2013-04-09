@@ -51,6 +51,7 @@ class TimestampableBehavior extends Behavior
      * Get the setter of one of the columns of the behavior
      *
      * @param  string $column One of the behavior columns, 'create_column' or 'update_column'
+     *
      * @return string The related setter, 'setCreatedOn' or 'setUpdatedOn'
      */
     protected function getColumnSetter($column)
@@ -58,7 +59,15 @@ class TimestampableBehavior extends Behavior
         return 'set' . $this->getColumnForParameter($column)->getPhpName();
     }
 
-    protected function getColumnConstant($columnName, $builder)
+    /**
+     * Return the constant for a given column.
+     *
+     * @param string $columnName
+     * @param OMBuilder $builder
+     *
+     * @return string
+     */
+    protected function getColumnConstant($columnName, OMBuilder $builder)
     {
         return $builder->getColumnConstant($this->getColumnForParameter($columnName));
     }
@@ -66,23 +75,29 @@ class TimestampableBehavior extends Behavior
     /**
      * Add code in ObjectBuilder::preUpdate
      *
+     * @param PHP5ObjectBuilder $builder
+     *
      * @return string The code to put at the hook
      */
-    public function preUpdate($builder)
+    public function preUpdate(PHP5ObjectBuilder $builder)
     {
         if ($this->withUpdatedAt()) {
             return "if (\$this->isModified() && !\$this->isColumnModified(" . $this->getColumnConstant('update_column', $builder) . ")) {
     \$this->" . $this->getColumnSetter('update_column') . "(time());
 }";
         }
+
+        return '';
     }
 
     /**
      * Add code in ObjectBuilder::preInsert
      *
+     * @param PHP5ObjectBuilder $builder
+     *
      * @return string The code to put at the hook
      */
-    public function preInsert($builder)
+    public function preInsert(PHP5ObjectBuilder $builder)
     {
         $script = "if (!\$this->isColumnModified(" . $this->getColumnConstant('create_column', $builder) . ")) {
     \$this->" . $this->getColumnSetter('create_column') . "(time());
@@ -98,7 +113,7 @@ if (!\$this->isColumnModified(" . $this->getColumnConstant('update_column', $bui
         return $script;
     }
 
-    public function objectMethods($builder)
+    public function objectMethods(PHP5ObjectBuilder $builder)
     {
         if ($this->withUpdatedAt()) {
             return "
@@ -117,11 +132,11 @@ public function keepUpdateDateUnchanged()
         }
     }
 
-    public function queryMethods($builder)
+    public function queryMethods(QueryBuilder $builder)
     {
         $script = '';
 
-        $queryClassName		  = $builder->getStubQueryBuilder()->getClassname();
+        $queryClassName = $builder->getStubQueryBuilder()->getClassname();
         $createColumnConstant = $this->getColumnConstant('create_column', $builder);
 
         if ($this->withUpdatedAt()) {

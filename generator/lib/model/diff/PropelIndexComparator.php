@@ -56,5 +56,4 @@ class PropelIndexComparator
 
         return false;
     }
-
 }

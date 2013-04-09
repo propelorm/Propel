@@ -24,6 +24,7 @@ class DBMySQL extends DBAdapter
      * This method is used to ignore case.
      *
      * @param  string $in The string to transform to upper case.
+     *
      * @return string The upper case string.
      */
     public function toUpperCase($in)
@@ -35,6 +36,7 @@ class DBMySQL extends DBAdapter
      * This method is used to ignore case.
      *
      * @param  string $in The string whose case to ignore.
+     *
      * @return string The string in a case that can be ignored.
      */
     public function ignoreCase($in)
@@ -73,6 +75,7 @@ class DBMySQL extends DBAdapter
      * Returns SQL which calculates the length (in chars) of a string.
      *
      * @param  string $s String to calculate length of.
+     *
      * @return string
      */
     public function strLength($s)
@@ -110,6 +113,7 @@ class DBMySQL extends DBAdapter
      * @see       DBAdapter::quoteIdentifier()
      *
      * @param  string $text
+     *
      * @return string
      */
     public function quoteIdentifier($text)
@@ -121,6 +125,7 @@ class DBMySQL extends DBAdapter
      * @see       DBAdapter::quoteIdentifierTable()
      *
      * @param  string $table
+     *
      * @return string
      */
     public function quoteIdentifierTable($table)
@@ -159,11 +164,12 @@ class DBMySQL extends DBAdapter
      * @see       DBAdapter::random()
      *
      * @param  string $seed
+     *
      * @return string
      */
     public function random($seed = null)
     {
-        return 'rand('.((int) $seed).')';
+        return 'rand(' . ((int) $seed) . ')';
     }
 
     /**
@@ -203,6 +209,7 @@ class DBMySQL extends DBAdapter
      * See: http://www.propelorm.org/ticket/1360
      *
      * @param  array $params
+     *
      * @return array
      *
      * @throws PropelException
@@ -258,6 +265,7 @@ EXCEPTION
      *
      * @param  PropelPDO            $con   propel connection
      * @param  ModelCriteria|string $query query the criteria or the query string
+     *
      * @throws PropelException
      * @return PDOStatement         A PDO statement executed using the connection, ready to be fetched
      */

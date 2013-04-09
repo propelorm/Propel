@@ -20,7 +20,7 @@ class SortableBehaviorObjectBuilderModifier
 {
     protected $behavior, $table, $builder, $objectClassname, $peerClassname;
 
-    public function __construct($behavior)
+    public function __construct(SortableBehavior $behavior)
     {
         $this->behavior = $behavior;
         $this->table = $behavior->getTable();
@@ -41,7 +41,7 @@ class SortableBehaviorObjectBuilderModifier
         return $this->behavior->getColumnForParameter($name)->getPhpName();
     }
 
-    protected function setBuilder($builder)
+    protected function setBuilder(PHP5ObjectBuilder $builder)
     {
         $this->builder = $builder;
         $this->objectClassname = $builder->getStubObjectBuilder()->getClassname();
@@ -52,6 +52,8 @@ class SortableBehaviorObjectBuilderModifier
     /**
      * Get the getter of the column of the behavior
      *
+     * @param string $columnName
+     *
      * @return string The related getter, e.g. 'getRank'
      */
     protected function getColumnGetter($columnName = 'rank_column')
@@ -61,6 +63,8 @@ class SortableBehaviorObjectBuilderModifier
 
     /**
      * Get the setter of the column of the behavior
+     *
+     * @param string $columnName
      *
      * @return string The related setter, e.g. 'setRank'
      */
@@ -88,9 +92,9 @@ class SortableBehaviorObjectBuilderModifier
     public function preUpdate($builder)
     {
         if ($this->behavior->useScope()) {
-        $this->setBuilder($builder);
+            $this->setBuilder($builder);
 
-        return "// if scope has changed and rank was not modified (if yes, assuming superior action)
+            return "// if scope has changed and rank was not modified (if yes, assuming superior action)
 // insert object to the end of new scope and cleanup old one
 if (\$this->isColumnModified({$this->peerClassname}::SCOPE_COL) && !\$this->isColumnModified({$this->peerClassname}::RANK_COL)) { {$this->peerClassname}::shiftRank(-1, \$this->{$this->getColumnGetter()}() + 1, null, \$this->oldScope, \$con);
     \$this->insertAtBottom(\$con);
@@ -119,8 +123,8 @@ if (\$this->isColumnModified({$this->peerClassname}::SCOPE_COL) && !\$this->isCo
  */
 protected \$sortableQueries = array();
 ";
-    if ($this->behavior->useScope()) {
-        $script .= "
+        if ($this->behavior->useScope()) {
+            $script .= "
 /**
  * The old scope value.
  * @var        int
@@ -139,8 +143,7 @@ protected \$oldScope;
         if ($this->getParameter('rank_column') != 'rank') {
             $this->addRankAccessors($script);
         }
-        if ($this->behavior->useScope() &&
-                $this->getParameter('scope_column') != 'scope_value') {
+        if ($this->behavior->useScope() && $this->getParameter('scope_column') != 'scope_value') {
             $this->addScopeAccessors($script);
         }
         $this->addIsFirst($script);
@@ -492,7 +495,7 @@ public function swapWith(\$object, PropelPDO \$con = null)
             \$object->{$this->getColumnSetter('scope_column')}(\$oldScope);
         }";
         }
-$script .= "
+        $script .= "
         \$oldRank = \$this->{$this->getColumnGetter()}();
         \$newRank = \$object->{$this->getColumnGetter()}();
         \$this->{$this->getColumnSetter()}(\$newRank);
@@ -636,7 +639,7 @@ public function moveToBottom(PropelPDO \$con = null)
         $useScope = $this->behavior->useScope();
         $script .= "
 /**
- * Removes the current object from the list".($useScope ? ' (moves it to the null scope)' : '').".
+ * Removes the current object from the list" . ($useScope ? ' (moves it to the null scope)' : '') . ".
  * The modifications are not persisted until the object is saved.
  *
  * @param     PropelPDO \$con optional connection
@@ -646,7 +649,7 @@ public function moveToBottom(PropelPDO \$con = null)
 public function removeFromList(PropelPDO \$con = null)
 {";
         if ($useScope) {
-          $script .= "
+            $script .= "
     // check if object is already removed
     if (\$this->{$this->getColumnGetter('scope_column')}() === null) {
         throw new PropelException('Object is already removed (has null scope)');
@@ -656,7 +659,7 @@ public function removeFromList(PropelPDO \$con = null)
     \$this->{$this->getColumnSetter('scope_column')}(null);
 //    \$this->insertAtBottom(\$con);";
         } else {
-        $script .= "
+            $script .= "
     // Keep the list modification query for the save() transaction
     \$this->sortableQueries []= array(
         'callable'  => array(self::PEER, 'shiftRank'),

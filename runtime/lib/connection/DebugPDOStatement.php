@@ -52,6 +52,7 @@ class DebugPDOStatement extends PDOStatement
      * which this instance was created.
      *
      * @param  PropelPDO         $pdo Reference to the parent PDO instance.
+     *
      * @return DebugPDOStatement
      */
     protected function __construct(PropelPDO $pdo)
@@ -68,7 +69,7 @@ class DebugPDOStatement extends PDOStatement
         $matches = array();
         if (preg_match_all('/(:p[0-9]+\b)/', $sql, $matches)) {
             $size = count($matches[1]);
-            for ($i = $size-1; $i >= 0; $i--) {
+            for ($i = $size - 1; $i >= 0; $i--) {
                 $pos = $matches[1][$i];
                 $sql = str_replace($pos, $this->boundValues[$pos], $sql);
             }
@@ -82,12 +83,13 @@ class DebugPDOStatement extends PDOStatement
      * Overridden for query counting and logging.
      *
      * @param  string  $input_parameters
+     *
      * @return boolean
      */
     public function execute($input_parameters = null)
     {
-        $debug	= $this->pdo->getDebugSnapshot();
-        $return	= parent::execute($input_parameters);
+        $debug = $this->pdo->getDebugSnapshot();
+        $return = parent::execute($input_parameters);
 
         $sql = $this->getExecutedQueryString();
         $this->pdo->log($sql, null, __METHOD__, $debug);
@@ -109,11 +111,11 @@ class DebugPDOStatement extends PDOStatement
      */
     public function bindValue($pos, $value, $type = PDO::PARAM_STR)
     {
-        $debug    = $this->pdo->getDebugSnapshot();
-        $typestr  = isset(self::$typeMap[$type]) ? self::$typeMap[$type] : '(default)';
-        $return   = parent::bindValue($pos, $value, $type);
+        $debug = $this->pdo->getDebugSnapshot();
+        $typestr = isset(self::$typeMap[$type]) ? self::$typeMap[$type] : '(default)';
+        $return = parent::bindValue($pos, $value, $type);
         $valuestr = $type == PDO::PARAM_LOB ? '[LOB value]' : var_export($value, true);
-        $msg      = sprintf('Binding %s at position %s w/ PDO type %s', $valuestr, $pos, $typestr);
+        $msg = sprintf('Binding %s at position %s w/ PDO type %s', $valuestr, $pos, $typestr);
 
         $this->boundValues[$pos] = $valuestr;
 
@@ -138,11 +140,11 @@ class DebugPDOStatement extends PDOStatement
      */
     public function bindParam($pos, &$value, $type = PDO::PARAM_STR, $length = 0, $driver_options = null)
     {
-        $debug    = $this->pdo->getDebugSnapshot();
-        $typestr  = isset(self::$typeMap[$type]) ? self::$typeMap[$type] : '(default)';
-        $return   = parent::bindParam($pos, $value, $type, $length, $driver_options);
+        $debug = $this->pdo->getDebugSnapshot();
+        $typestr = isset(self::$typeMap[$type]) ? self::$typeMap[$type] : '(default)';
+        $return = parent::bindParam($pos, $value, $type, $length, $driver_options);
         $valuestr = $length > 100 ? '[Large value]' : var_export($value, true);
-        $msg      = sprintf('Binding %s at position %s w/ PDO type %s', $valuestr, $pos, $typestr);
+        $msg = sprintf('Binding %s at position %s w/ PDO type %s', $valuestr, $pos, $typestr);
 
         $this->boundValues[$pos] = $valuestr;
 

@@ -18,7 +18,7 @@ class ArchivableBehaviorObjectBuilderModifier
 {
     protected $behavior, $table, $builder;
 
-    public function __construct($behavior)
+    public function __construct(ArchivableBehavior $behavior)
     {
         $this->behavior = $behavior;
         $this->table = $behavior->getTable();
@@ -30,9 +30,13 @@ class ArchivableBehaviorObjectBuilderModifier
     }
 
     /**
-     * @return string the PHP code to be added to the builder
+     * Add object attributes to the built class.
+     *
+     * @param PHP5ObjectBuilder $builder
+     *
+     * @return string The PHP code to be added to the builder.
      */
-    public function objectAttributes($builder)
+    public function objectAttributes(PHP5ObjectBuilder $builder)
     {
         if (!$this->behavior->hasArchiveClass()) {
             $builder->declareClassFromBuilder($builder->getNewStubQueryBuilder($this->behavior->getArchiveTable()));
@@ -56,9 +60,13 @@ class ArchivableBehaviorObjectBuilderModifier
     }
 
     /**
-     * @return string the PHP code to be added to the builder
+     * Add code to the postInsert hook.
+     *
+     * @param PHP5ObjectBuilder $builder
+     *
+     * @return string The PHP code to be added to the builder.
      */
-    public function postInsert($builder)
+    public function postInsert(PHP5ObjectBuilder $builder)
     {
         if ($this->behavior->isArchiveOnInsert()) {
             return "if (\$this->archiveOnInsert) {
@@ -67,12 +75,18 @@ class ArchivableBehaviorObjectBuilderModifier
     \$this->archiveOnInsert = true;
 }";
         }
+
+        return '';
     }
 
     /**
-     * @return string the PHP code to be added to the builder
+     * Add code to the postUpdate hoook.
+     *
+     * @param PHP5ObjectBuilder $builder)
+     *
+     * @return string The PHP code to be added to the builder.
      */
-    public function postUpdate($builder)
+    public function postUpdate(PHP5ObjectBuilder $builder)
     {
         if ($this->behavior->isArchiveOnUpdate()) {
             return "if (\$this->archiveOnUpdate) {
@@ -81,6 +95,8 @@ class ArchivableBehaviorObjectBuilderModifier
     \$this->archiveOnUpdate = true;
 }";
         }
+
+        return '';
     }
 
     /**
@@ -112,9 +128,7 @@ class ArchivableBehaviorObjectBuilderModifier
         if ($this->behavior->hasArchiveClass()) {
             $this->builder->declareClass($this->behavior->getParameter('archive_class'));
         } else {
-            $this->builder->declareClassFromBuilder(
-                $builder->getNewStubObjectBuilder($this->behavior->getArchiveTable())
-            );
+            $this->builder->declareClassFromBuilder($builder->getNewStubObjectBuilder($this->behavior->getArchiveTable()));
         }
 
         $script = '';
@@ -203,12 +217,11 @@ class ArchivableBehaviorObjectBuilderModifier
             $tableName = $database->getTablePrefix() . $concrete_inheritance_behavior->getParameter('extends');
 
             if ($database->getPlatform()->supportsSchemas() && $concrete_inheritance_behavior->getParameter('schema')) {
-                $tableName = $concrete_inheritance_behavior->getParameter('schema').'.'.$tableName;
+                $tableName = $concrete_inheritance_behavior->getParameter('schema') . '.' . $tableName;
             }
 
-            if (( $parent_table = $database->getTable($tableName) )) {
-                return $parent_table->hasBehavior('archivable')
-                    && $parent_table->hasAutoIncrementPrimaryKey();
+            if (($parent_table = $database->getTable($tableName))) {
+                return $parent_table->hasBehavior('archivable') && $parent_table->hasAutoIncrementPrimaryKey();
             }
         }
 

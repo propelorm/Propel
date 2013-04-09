@@ -10,6 +10,7 @@
 
 /**
  * The base class of all exceptions thrown by Propel.
+ *
  * @author     Hans Lellelid <hans@xmpl.org>
  * @version    $Revision$
  * @package    propel.runtime.exception
@@ -39,7 +40,7 @@ class PropelException extends Exception
         }
 
         if ($previous !== null) {
-            $message .= " [wrapped: " . $previous->getMessage() ."]";
+            $message .= " [wrapped: " . $previous->getMessage() . "]";
             if (version_compare(PHP_VERSION, '5.3.0') >= 0) {
                 parent::__construct($message, 0, $previous);
             } else {

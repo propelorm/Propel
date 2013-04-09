@@ -24,6 +24,7 @@ class PHP5InterfaceBuilder extends ObjectBuilder
 
     /**
      * Returns the name of the current class being built.
+     *
      * @return string
      */
     public function getUnprefixedClassname()
@@ -33,15 +34,16 @@ class PHP5InterfaceBuilder extends ObjectBuilder
 
     /**
      * Adds the include() statements for files that this class depends on or utilizes.
+     *
      * @param      string &$script The script will be modified in this method.
      */
     protected function addIncludes(&$script)
     {
-
     } // addIncludes()
 
     /**
      * Adds class phpdoc comment and opening of class.
+     *
      * @param      string &$script The script will be modified in this method.
      */
     protected function addClassOpen(&$script)
@@ -72,9 +74,9 @@ class PHP5InterfaceBuilder extends ObjectBuilder
  * application requirements.  This interface will only be generated as
  * long as it does not already exist in the output directory.
  *
- * @package    propel.generator.".$this->getPackage()."
+ * @package    propel.generator." . $this->getPackage() . "
  */
-interface ".$this->getClassname()." {
+interface " . $this->getClassname() . " {
 ";
     }
 
@@ -93,6 +95,7 @@ interface ".$this->getClassname()." {
 
     /**
      * Closes class.
+     *
      * @param      string &$script The script will be modified in this method.
      */
     protected function addClassClose(&$script)
@@ -101,5 +104,4 @@ interface ".$this->getClassname()." {
 } // " . $this->getClassname() . "
 ";
     }
-
 } // PHP5ExtensionObjectBuilder

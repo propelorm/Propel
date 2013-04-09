@@ -156,7 +156,7 @@ END
             $script .= ' ON UPDATE ' . $fk->getOnUpdate();
         }
         if ($fk->hasOnDelete() && $fk->getOnDelete() != ForeignKey::SETNULL) {
-            $script .= ' ON DELETE '.  $fk->getOnDelete();
+            $script .= ' ON DELETE ' . $fk->getOnDelete();
         }
 
         return $script;
@@ -184,5 +184,4 @@ END
     {
         return 'Y-m-d H:i:s';
     }
-
 }

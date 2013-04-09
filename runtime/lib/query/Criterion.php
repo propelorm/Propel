@@ -27,6 +27,7 @@ class Criterion
     protected $value;
 
     /** Comparison value.
+     *
      * @var        SqlEnum
      */
     protected $comparison;
@@ -42,6 +43,7 @@ class Criterion
 
     /**
      * Binding type to be used for Criteria::RAW comparison
+     *
      * @var string any of the PDO::PARAM_ constant values
      */
     protected $type;
@@ -91,9 +93,10 @@ class Criterion
     }
 
     /**
-    * Init some properties with the help of outer class
-    * @param      Criteria $criteria The outer class
-    */
+     * Init some properties with the help of outer class
+     *
+     * @param      Criteria $criteria The outer class
+     */
     public function init(Criteria $criteria)
     {
         // init $this->db
@@ -109,7 +112,6 @@ class Criterion
         // init $this->realtable
         $realtable = $criteria->getTableForAlias($this->table);
         $this->realtable = $realtable ? $realtable : $this->table;
-
     }
 
     /**
@@ -126,6 +128,7 @@ class Criterion
      * Set the table name.
      *
      * @param  string $name A String with the table name.
+     *
      * @return void
      */
     public function setTable($name)
@@ -167,6 +170,7 @@ class Criterion
      * Get the value of db.
      * The DBAdapter which might be used to get db specific
      * variations of sql.
+     *
      * @return DBAdapter value of db.
      */
     public function getDB()
@@ -177,7 +181,9 @@ class Criterion
     /**
      * Set the value of db.
      * The DBAdapter might be used to get db specific variations of sql.
+     *
      * @param  DBAdapter $v Value to assign to db.
+     *
      * @return void
      */
     public function setDB(DBAdapter $v)
@@ -192,6 +198,7 @@ class Criterion
      * Sets ignore case.
      *
      * @param  boolean   $b True if case should be ignored.
+     *
      * @return Criterion A modified Criterion object.
      */
     public function setIgnoreCase($b)
@@ -206,13 +213,14 @@ class Criterion
      *
      * @return boolean True if case is ignored.
      */
-     public function isIgnoreCase()
-     {
-         return $this->ignoreStringCase;
-     }
+    public function isIgnoreCase()
+    {
+        return $this->ignoreStringCase;
+    }
 
     /**
      * Get the list of clauses in this Criterion.
+     *
      * @return array
      */
     private function getClauses()
@@ -222,6 +230,7 @@ class Criterion
 
     /**
      * Get the list of conjunctions in this Criterion
+     *
      * @return array
      */
     public function getConjunctions()
@@ -244,6 +253,7 @@ class Criterion
      * Append an OR Criterion onto this Criterion's list.
      *
      * @param  Criterion $criterion
+     *
      * @return Criterion
      */
     public function addOr(Criterion $criterion)
@@ -260,13 +270,14 @@ class Criterion
      *
      * @param      string &$sb The string that will receive the Prepared Statement
      * @param  array           $params A list to which Prepared Statement parameters will be appended
+     *
      * @return void
      * @throws PropelException - if the expression builder cannot figure out how to turn a specified
      *                           expression into proper SQL.
      */
     public function appendPsTo(&$sb, array &$params)
     {
-        $sb .= str_repeat ( '(', count($this->clauses) );
+        $sb .= str_repeat('(', count($this->clauses));
 
         $this->dispatchPsHandling($sb, $params);
 
@@ -404,9 +415,9 @@ class Criterion
         // If selection is case insensitive use SQL UPPER() function
         // on criteria or, if Postgres we are using ILIKE, so not necessary.
         if ($this->ignoreStringCase && !($db instanceof DBPostgres)) {
-            $sb .= $db->ignoreCase(':p'.count($params));
+            $sb .= $db->ignoreCase(':p' . count($params));
         } else {
-            $sb .= ':p'.count($params);
+            $sb .= ':p' . count($params);
         }
     }
 
@@ -436,11 +447,10 @@ class Criterion
                 // default case, it is a normal col = value expression; value
                 // will be replaced w/ '?' and will be inserted later using PDO bindValue()
                 if ($this->ignoreStringCase) {
-                    $sb .= $this->getDb()->ignoreCase($field) . $this->comparison . $this->getDb()->ignoreCase(':p'.count($params));
+                    $sb .= $this->getDb()->ignoreCase($field) . $this->comparison . $this->getDb()->ignoreCase(':p' . count($params));
                 } else {
-                    $sb .= $field . $this->comparison . ':p'.count($params);
+                    $sb .= $field . $this->comparison . ':p' . count($params);
                 }
-
             }
         } else {
 
@@ -454,7 +464,6 @@ class Criterion
                 // for now throw an exception, because not sure how to interpret this
                 throw new PropelException("Could not build SQL for expression: $field " . $this->comparison . " NULL");
             }
-
         }
     }
 
@@ -463,6 +472,7 @@ class Criterion
      * the same attributes and hashtable entries.
      *
      * @param  Criterion|null $obj
+     *
      * @return boolean
      */
     public function equals($obj)
@@ -490,7 +500,7 @@ class Criterion
         $isEquiv &= (count($crit->getClauses()) == $clausesLength);
         $critConjunctions = $crit->getConjunctions();
         $critClauses = $crit->getClauses();
-        for ($i=0; $i < $clausesLength && $isEquiv; $i++) {
+        for ($i = 0; $i < $clausesLength && $isEquiv; $i++) {
             $isEquiv &= ($this->conjunctions[$i] === $critConjunctions[$i]);
             $isEquiv &= ($this->clauses[$i] === $critClauses[$i]);
         }
@@ -524,9 +534,9 @@ class Criterion
             // $clause->appendPsTo($sb='',$params=array());
             $sb = '';
             $params = array();
-            $clause->appendPsTo($sb,$params);
-            $h ^= crc32(serialize(array($sb,$params)));
-            unset ( $sb, $params );
+            $clause->appendPsTo($sb, $params);
+            $h ^= crc32(serialize(array($sb, $params)));
+            unset ($sb, $params);
         }
 
         return $h;
@@ -534,6 +544,7 @@ class Criterion
 
     /**
      * Get all tables from nested criterion objects
+     *
      * @return array
      */
     public function getAllTables()
@@ -550,12 +561,13 @@ class Criterion
      *
      * @param Criterion $c
      * @param array &$s
+     *
      * @return void
      */
     private function addCriterionTable(Criterion $c, array &$s)
     {
         $s[] = $c->getTable();
-        foreach ( $c->getClauses() as $clause ) {
+        foreach ($c->getClauses() as $clause) {
             $this->addCriterionTable($clause, $s);
         }
     }
@@ -563,6 +575,7 @@ class Criterion
     /**
      * get an array of all criterion attached to this
      * recursing through all sub criterion
+     *
      * @return array Criterion[]
      */
     public function getAttachedCriterion()

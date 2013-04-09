@@ -41,5 +41,4 @@ class PropelStatementFormatter extends PropelFormatter
     {
         return false;
     }
-
 }

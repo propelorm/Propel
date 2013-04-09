@@ -101,7 +101,6 @@ class SqliteSchemaParser extends BaseSchemaParser
         }
 
         return count($tables);
-
     }
 
     /**
@@ -142,7 +141,7 @@ class SqliteSchemaParser extends BaseSchemaParser
             $propelType = $this->getMappedPropelType(strtolower($type));
             if (!$propelType) {
                 $propelType = Column::DEFAULT_TYPE;
-                $this->warn("Column [" . $table->getName() . "." . $name. "] has a column type (".$type.") that Propel does not support.");
+                $this->warn("Column [" . $table->getName() . "." . $name . "] has a column type (" . $type . ") that Propel does not support.");
             }
 
             $column = new Column($name);
@@ -163,9 +162,7 @@ class SqliteSchemaParser extends BaseSchemaParser
             }
 
             $table->addColumn($column);
-
         }
-
     } // addColumn()
 
     /**
@@ -180,15 +177,13 @@ class SqliteSchemaParser extends BaseSchemaParser
             $name = $row['name'];
             $index = new Index($name);
 
-            $stmt2 = $this->dbh->query("PRAGMA index_info('".$name."')");
+            $stmt2 = $this->dbh->query("PRAGMA index_info('" . $name . "')");
             while ($row2 = $stmt2->fetch(PDO::FETCH_ASSOC)) {
                 $colname = $row2['name'];
                 $index->addColumn($table->getColumn($colname));
             }
 
             $table->addIndex($index);
-
         }
     }
-
 }

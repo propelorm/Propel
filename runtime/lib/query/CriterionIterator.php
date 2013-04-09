@@ -56,5 +56,4 @@ class CriterionIterator implements Iterator
     {
         $this->idx++;
     }
-
 }

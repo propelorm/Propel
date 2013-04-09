@@ -40,7 +40,7 @@ class PropelObjectFormatter extends PropelFormatter
             $objectsByPks = array();
             while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
                 $object = $this->getAllObjectsFromRow($row);
-                $pk		= $object->getPrimaryKey();
+                $pk = $object->getPrimaryKey();
 
                 if (false === Propel::isInstancePoolingEnabled()) {
                     if (isset($objectsByPks[$pk])) {
@@ -59,7 +59,7 @@ class PropelObjectFormatter extends PropelFormatter
         } else {
             // only many-to-one relationships
             while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-                $collection[] =  $this->getAllObjectsFromRow($row);
+                $collection[] = $this->getAllObjectsFromRow($row);
             }
         }
         $stmt->closeCursor();
@@ -92,7 +92,7 @@ class PropelObjectFormatter extends PropelFormatter
      * The first object to hydrate is the model of the Criteria
      * The following objects (the ones added by way of ModelCriteria::with()) are linked to the first one
      *
-     *  @param    array  $row associative array indexed by column number,
+     * @param    array  $row associative array indexed by column number,
      *                   as returned by PDOStatement::fetch(PDO::FETCH_NUM)
      *
      * @return BaseObject

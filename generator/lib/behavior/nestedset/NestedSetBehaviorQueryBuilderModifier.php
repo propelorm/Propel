@@ -303,12 +303,12 @@ public function orderByLevel(\$reverse = false)
         $useScope = $this->behavior->useScope();
         $script .= "
 /**
- * Returns " . ($useScope ? 'a' : 'the') ." root node for the tree
+ * Returns " . ($useScope ? 'a' : 'the') . " root node for the tree
  *";
-         if ($useScope) {
-             $script .= "
+        if ($useScope) {
+            $script .= "
  * @param      int \$scope		Scope to determine which root node to return";
-         }
+        }
         $script .= "
  * @param      PropelPDO \$con	Connection to use.
  *
@@ -352,12 +352,12 @@ public function findRoots(\$con = null)
         $useScope = $this->behavior->useScope();
         $script .= "
 /**
- * Returns " . ($useScope ? 'a' : 'the') ." tree of objects
+ * Returns " . ($useScope ? 'a' : 'the') . " tree of objects
  *";
-         if ($useScope) {
-             $script .= "
+        if ($useScope) {
+            $script .= "
  * @param      int \$scope		Scope to determine which tree node to return";
-         }
+        }
         $script .= "
  * @param      PropelPDO \$con	Connection to use.
  *

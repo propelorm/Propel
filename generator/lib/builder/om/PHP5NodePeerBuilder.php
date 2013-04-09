@@ -24,6 +24,7 @@ class PHP5NodePeerBuilder extends PeerBuilder
 
     /**
      * Gets the package for the [base] object classes.
+     *
      * @return string
      */
     public function getPackage()
@@ -33,6 +34,7 @@ class PHP5NodePeerBuilder extends PeerBuilder
 
     /**
      * Returns the name of the current class being built.
+     *
      * @return string
      */
     public function getUnprefixedClassname()
@@ -42,6 +44,7 @@ class PHP5NodePeerBuilder extends PeerBuilder
 
     /**
      * Adds the include() statements for files that this class depends on or utilizes.
+     *
      * @param      string &$script The script will be modified in this method.
      */
     protected function addIncludes(&$script)
@@ -50,6 +53,7 @@ class PHP5NodePeerBuilder extends PeerBuilder
 
     /**
      * Adds class phpdoc comment and opening of class.
+     *
      * @param      string &$script The script will be modified in this method.
      */
     protected function addClassOpen(&$script)
@@ -74,15 +78,16 @@ class PHP5NodePeerBuilder extends PeerBuilder
  *";
         }
         $script .= "
- * @package    propel.generator.".$this->getPackage()."
+ * @package    propel.generator." . $this->getPackage() . "
  */
-abstract class ".$this->getClassname()." {
+abstract class " . $this->getClassname() . " {
 ";
     }
 
     /**
      * Specifies the methods that are added as part of the basic OM class.
      * This can be overridden by subclasses that wish to add more methods.
+     *
      * @see        ObjectBuilder::addClassBody()
      */
     protected function addClassBody(&$script)
@@ -108,11 +113,11 @@ abstract class ".$this->getClassname()." {
         $this->addBuildTree($script);
 
         $this->addPopulateNodes($script);
-
     }
 
     /**
      * Closes class.
+     *
      * @param      string &$script The script will be modified in this method.
      */
     protected function addClassClose(&$script)
@@ -271,7 +276,6 @@ abstract class ".$this->getClassname()." {
         $this->addRetrieveNodeByPK($script);
         $this->addRetrieveNodeByNP($script);
         $this->addRetrieveRootNode($script);
-
     }
 
     protected function addRetrieveNodes(&$script)
@@ -293,7 +297,7 @@ abstract class ".$this->getClassname()." {
     public static function retrieveNodes(\$criteria, \$ancestors = false, \$descendants = false, PropelPDO \$con = null)
     {
         \$criteria = $nodePeerClassname::buildFamilyCriteria(\$criteria, \$ancestors, \$descendants);
-        \$stmt = ".$this->getStubPeerBuilder()->getClassname()."::doSelectStmt(\$criteria, \$con);
+        \$stmt = " . $this->getStubPeerBuilder()->getClassname() . "::doSelectStmt(\$criteria, \$con);
 
         return self::populateNodes(\$stmt, \$criteria);
     }
@@ -367,7 +371,7 @@ abstract class ".$this->getClassname()." {
      * @param      string Node path to retrieve.
      * @param      boolean True if descendants should also be retrieved.
      * @param      PropelPDO Connection to use.
-     * @return   ".$this->getStubNodeBuilder()->getClassname()."
+     * @return   " . $this->getStubNodeBuilder()->getClassname() . "
      */
     public static function retrieveRootNode(\$descendants = false, PropelPDO \$con = null)
     {
@@ -731,5 +735,4 @@ abstract class ".$this->getClassname()." {
     }
 ";
     }
-
 } // PHP5NodePeerBuilder

@@ -30,8 +30,12 @@ class Database extends ScopedElement
 {
 
     private $platform;
+
+    /**
+     * @var Table[]
+     */
     private $tableList = array();
-    private $curColumn;
+
     private $name;
 
     private $baseClass;
@@ -39,10 +43,27 @@ class Database extends ScopedElement
     private $defaultIdMethod;
     private $defaultPhpNamingMethod;
     private $defaultTranslateMethod;
+
+    /**
+     * @var AppData
+     */
     private $dbParent;
+
+    /**
+     * @var Table[]
+     */
     private $tablesByName = array();
+
+    /**
+     * @var Table[]
+     */
     private $tablesByLowercaseName = array();
+
+    /**
+     * @var Table[]
+     */
     private $tablesByPhpName = array();
+
     private $heavyIndexing;
     protected $tablePrefix = '';
 
@@ -59,7 +80,7 @@ class Database extends ScopedElement
     /**
      * List of behaviors registered for this table
      *
-     * @var array
+     * @var Behavior[]
      */
     protected $behaviors = array();
 
@@ -75,6 +96,7 @@ class Database extends ScopedElement
 
     /**
      * Sets up the Database object based on the attributes that were passed to loadFromXML().
+     *
      * @see        parent::loadFromXML()
      */
     protected function setupObject()
@@ -129,7 +151,8 @@ class Database extends ScopedElement
 
     /**
      * Get the value of baseClass.
-     * @return value of baseClass.
+     *
+     * @return string
      */
     public function getBaseClass()
     {
@@ -138,7 +161,8 @@ class Database extends ScopedElement
 
     /**
      * Set the value of baseClass.
-     * @param   $v Value to assign to baseClass.
+     *
+     * @param string $v Value to assign to baseClass.
      */
     public function setBaseClass($v)
     {
@@ -147,7 +171,8 @@ class Database extends ScopedElement
 
     /**
      * Get the value of basePeer.
-     * @return value of basePeer.
+     *
+     * @return string
      */
     public function getBasePeer()
     {
@@ -156,7 +181,8 @@ class Database extends ScopedElement
 
     /**
      * Set the value of basePeer.
-     * @param   $v Value to assign to basePeer.
+     *
+     * @param string $v Value to assign to basePeer.
      */
     public function setBasePeer($v)
     {
@@ -165,7 +191,8 @@ class Database extends ScopedElement
 
     /**
      * Get the value of defaultIdMethod.
-     * @return value of defaultIdMethod.
+     *
+     * @return string
      */
     public function getDefaultIdMethod()
     {
@@ -174,7 +201,8 @@ class Database extends ScopedElement
 
     /**
      * Set the value of defaultIdMethod.
-     * @param   $v Value to assign to defaultIdMethod.
+     *
+     * @param string $v Value to assign to defaultIdMethod.
      */
     public function setDefaultIdMethod($v)
     {
@@ -184,7 +212,8 @@ class Database extends ScopedElement
     /**
      * Get the value of defaultPHPNamingMethod which specifies the
      * method for converting schema names for table and column to PHP names.
-     * @return string The default naming conversion used by this database.
+     *
+     * @return string
      */
     public function getDefaultPhpNamingMethod()
     {
@@ -193,6 +222,7 @@ class Database extends ScopedElement
 
     /**
      * Set the value of defaultPHPNamingMethod.
+     *
      * @param string $v The default naming conversion for this database to use.
      */
     public function setDefaultPhpNamingMethod($v)
@@ -203,7 +233,8 @@ class Database extends ScopedElement
     /**
      * Get the value of defaultTranslateMethod which specifies the
      * method for translate validator error messages.
-     * @return string The default translate method.
+     *
+     * @return string
      */
     public function getDefaultTranslateMethod()
     {
@@ -232,6 +263,7 @@ class Database extends ScopedElement
 
     /**
      * Set the value of defaultTranslateMethod.
+     *
      * @param string $v The default translate method to use.
      */
     public function setDefaultTranslateMethod($v)
@@ -264,6 +296,7 @@ class Database extends ScopedElement
 
     /**
      * Set the value of heavyIndexing.
+     *
      * @param boolean $v Value to assign to heavyIndexing.
      */
     public function setHeavyIndexing($v)
@@ -273,7 +306,8 @@ class Database extends ScopedElement
 
     /**
      * Return the list of all tables
-     * @return array
+     *
+     * @return Table[]
      */
     public function getTables()
     {
@@ -282,6 +316,7 @@ class Database extends ScopedElement
 
     /**
      * Return the number of tables in the database
+     *
      * @return integer
      */
     public function countTables()
@@ -298,6 +333,7 @@ class Database extends ScopedElement
 
     /**
      * Return the list of all tables that have a SQL representation
+     *
      * @return array
      */
     public function getTablesForSql()
@@ -305,7 +341,7 @@ class Database extends ScopedElement
         $tables = array();
         foreach ($this->tableList as $table) {
             if (!$table->isSkipSql()) {
-                $tables []= $table;
+                $tables [] = $table;
             }
         }
 
@@ -314,6 +350,7 @@ class Database extends ScopedElement
 
     /**
      * Check whether the database has a table.
+     *
      * @param string  $name            the name of the table (e.g. 'my_table')
      * @param boolean $caseInsensitive Whether the check is case insensitive. False by default.
      *
@@ -330,6 +367,7 @@ class Database extends ScopedElement
 
     /**
      * Return the table with the specified name.
+     *
      * @param string  $name            The name of the table (e.g. 'my_table')
      * @param boolean $caseInsensitive Whether the check is case insensitive. False by default.
      *
@@ -350,7 +388,9 @@ class Database extends ScopedElement
 
     /**
      * Check whether the database has a table.
+     *
      * @param  string  $phpName the PHP Name of the table (e.g. 'MyTable')
+     *
      * @return boolean
      */
     public function hasTableByPhpName($phpName)
@@ -360,7 +400,9 @@ class Database extends ScopedElement
 
     /**
      * Return the table with the specified phpName.
+     *
      * @param  string $phpName the PHP Name of the table (e.g. 'MyTable')
+     *
      * @return Table  a Table object or null if it doesn't exist
      */
     public function getTableByPhpName($phpName)
@@ -424,6 +466,8 @@ class Database extends ScopedElement
 
     /**
      * Get the parent of the table
+     *
+     * @return AppData
      */
     public function getAppData()
     {
@@ -432,6 +476,7 @@ class Database extends ScopedElement
 
     /**
      * Adds Domain object from <domain> tag.
+     *
      * @param Domain|string $data XML attributes (array) or Domain object.
      *
      * @return Domain
@@ -441,7 +486,7 @@ class Database extends ScopedElement
         if ($data instanceof Domain) {
             $domain = $data; // alias
             $domain->setDatabase($this);
-            $this->domainMap[ $domain->getName() ] = $domain;
+            $this->domainMap[$domain->getName()] = $domain;
 
             return $domain;
         } else {
@@ -455,6 +500,7 @@ class Database extends ScopedElement
 
     /**
      * Get already configured Domain object by name.
+     *
      * @return Domain
      */
     public function getDomain($domainName)
@@ -466,58 +512,61 @@ class Database extends ScopedElement
         return null; // just to be explicit
     }
 
-  public function getGeneratorConfig()
-  {
-      if ($this->getAppData()) {
-          return $this->getAppData()->getGeneratorConfig();
-      } else {
-          return null;
-      }
-  }
-
-  public function getBuildProperty($key)
-  {
-      if ($config = $this->getGeneratorConfig()) {
-          return $config->getBuildProperty($key);
-      } else {
-          return '';
-      }
-  }
-
-  /**
-   * Adds a new Behavior to the database
-   * @return Behavior A behavior instance
-   */
-  public function addBehavior($bdata)
-  {
-    if ($bdata instanceof Behavior) {
-      $behavior = $bdata;
-      $behavior->setDatabase($this);
-      $this->behaviors[$behavior->getName()] = $behavior;
-
-      return $behavior;
-    } else {
-      $class = $this->getConfiguredBehavior($bdata['name']);
-      $behavior = new $class();
-      $behavior->loadFromXML($bdata);
-
-      return $this->addBehavior($behavior);
+    public function getGeneratorConfig()
+    {
+        if ($this->getAppData()) {
+            return $this->getAppData()->getGeneratorConfig();
+        } else {
+            return null;
+        }
     }
-  }
 
-  /**
-   * Get the database behaviors
-   * @return Array of Behavior objects
-   */
-  public function getBehaviors()
-  {
-    return $this->behaviors;
-  }
+    public function getBuildProperty($key)
+    {
+        if ($config = $this->getGeneratorConfig()) {
+            return $config->getBuildProperty($key);
+        } else {
+            return '';
+        }
+    }
 
-  /**
+    /**
+     * Adds a new Behavior to the database
+     *
+     * @return Behavior A behavior instance
+     */
+    public function addBehavior($bdata)
+    {
+        if ($bdata instanceof Behavior) {
+            $behavior = $bdata;
+            $behavior->setDatabase($this);
+            $this->behaviors[$behavior->getName()] = $behavior;
+
+            return $behavior;
+        } else {
+            $class = $this->getConfiguredBehavior($bdata['name']);
+            $behavior = new $class();
+            $behavior->loadFromXML($bdata);
+
+            return $this->addBehavior($behavior);
+        }
+    }
+
+    /**
+     * Get the database behaviors
+     *
+     * @return Array of Behavior objects
+     */
+    public function getBehaviors()
+    {
+        return $this->behaviors;
+    }
+
+    /**
      * check if the database has a behavior by name
      *
      * @param  string  $name the behavior name
+     *
      * @return boolean True if the behavior exists
      */
     public function hasBehavior($name)
@@ -525,25 +574,27 @@ class Database extends ScopedElement
         return array_key_exists($name, $this->behaviors);
     }
 
-  /**
-   * Get one database behavior by name
-   * @param string $name the behavior name
-   * @return Behavior a behavior object
-   */
-  public function getBehavior($name)
-  {
-    return $this->behaviors[$name];
-  }
+    /**
+     * Get one database behavior by name
+     *
+     * @param string $name the behavior name
+     *
+     * @return Behavior a behavior object
+     */
+    public function getBehavior($name)
+    {
+        return $this->behaviors[$name];
+    }
 
-  /**
-   * Get the table prefix for this database
-   *
-   * @return string the table prefix
-   */
-  public function getTablePrefix()
-  {
-    return $this->tablePrefix;
-  }
+    /**
+     * Get the table prefix for this database
+     *
+     * @return string the table prefix
+     */
+    public function getTablePrefix()
+    {
+        return $this->tablePrefix;
+    }
 
     /**
      * Get the next behavior on all tables, ordered by behavior priority,
@@ -666,6 +717,5 @@ class Database extends ScopedElement
         foreach ($this->tableList as $table) {
             $table->appendXml($dbNode);
         }
-
     }
 }
