@@ -31,6 +31,7 @@ class QueryInheritanceBuilder extends OMBuilder
 
     /**
      * Returns the name of the current class being built.
+     *
      * @return string
      */
     public function getUnprefixedClassname()
@@ -40,6 +41,7 @@ class QueryInheritanceBuilder extends OMBuilder
 
     /**
      * Gets the package for the [base] object classes.
+     *
      * @return string
      */
     public function getPackage()
@@ -60,6 +62,7 @@ class QueryInheritanceBuilder extends OMBuilder
 
     /**
      * Set the child object that we're operating on currently.
+     *
      * @param   $child Inheritance
      */
     public function setChild(Inheritance $child)
@@ -69,6 +72,7 @@ class QueryInheritanceBuilder extends OMBuilder
 
     /**
      * Returns the child object we're operating on currently.
+     *
      * @return Inheritance
      * @throws BuildException - if child was not set.
      */
@@ -83,6 +87,7 @@ class QueryInheritanceBuilder extends OMBuilder
 
     /**
      * Returns classpath to parent class.
+     *
      * @return string
      */
     protected function getParentClassName()
@@ -102,19 +107,21 @@ class QueryInheritanceBuilder extends OMBuilder
 
     /**
      * Adds the include() statements for files that this class depends on or utilizes.
+     *
      * @param      string &$script The script will be modified in this method.
      */
     protected function addIncludes(&$script)
     {
         $requiredClassFilePath = $this->getStubQueryBuilder()->getClassFilePath();
 
-        $script .="
-require '".$requiredClassFilePath."';
+        $script .= "
+require '" . $requiredClassFilePath . "';
 ";
     } // addIncludes()
 
     /**
      * Adds class phpdoc comment and opening of class.
+     *
      * @param      string &$script The script will be modified in this method.
      */
     protected function addClassOpen(&$script)
@@ -146,9 +153,9 @@ require '".$requiredClassFilePath."';
  * application requirements.  This class will only be generated as
  * long as it does not already exist in the output directory.
  *
- * @package    propel.generator.".$this->getPackage()."
+ * @package    propel.generator." . $this->getPackage() . "
  */
-class "  .$this->getClassname() . " extends " . $baseClassname . " {
+class " . $this->getClassname() . " extends " . $baseClassname . " {
 ";
     }
 
@@ -174,6 +181,7 @@ class "  .$this->getClassname() . " extends " . $baseClassname . " {
 
     /**
      * Adds the factory for this object.
+     *
      * @param      string &$script The script will be modified in this method.
      */
     protected function addFactory(&$script)
@@ -259,9 +267,9 @@ class "  .$this->getClassname() . " extends " . $baseClassname . " {
     protected function getClassKeyCondition()
     {
         $child = $this->getChild();
-        $col   = $child->getColumn();
+        $col = $child->getColumn();
 
-        return "\$this->addUsingAlias(" . $this->getColumnConstant($col) . ", " . $this->getPeerClassname()."::CLASSKEY_".strtoupper($child->getKey()).");";
+        return "\$this->addUsingAlias(" . $this->getColumnConstant($col) . ", " . $this->getPeerClassname() . "::CLASSKEY_" . strtoupper($child->getKey()) . ");";
     }
 
     protected function addDoDeleteAll(&$script)
@@ -288,6 +296,7 @@ class "  .$this->getClassname() . " extends " . $baseClassname . " {
 
     /**
      * Closes class.
+     *
      * @param      string &$script The script will be modified in this method.
      */
     protected function addClassClose(&$script)
@@ -299,6 +308,7 @@ class "  .$this->getClassname() . " extends " . $baseClassname . " {
 
     /**
      * Adds findOneOrCreate function for this object.
+     *
      * @param unknown $script
      */
     protected function addFindOneOrCreate(&$script)
@@ -324,7 +334,7 @@ class "  .$this->getClassname() . " extends " . $baseClassname . " {
             throw new PropelException('findOneOrCreate() cannot be used on a query with a join, because Propel cannot transform a SQL JOIN into a subquery. You should split the query in two queries to avoid joins.');
         }
         if (!\$ret = \$this->findOne(\$con)) {
-            \$class = ".$this->getPeerClassname() . "::CLASSNAME_" . strtoupper($child->getKey()) . ";
+            \$class = " . $this->getPeerClassname() . "::CLASSNAME_" . strtoupper($child->getKey()) . ";
             \$obj = new \$class;
             foreach (\$this->keys() as \$key) {
                 \$obj->setByName(\$key, \$this->getValue(\$key), BasePeer::TYPE_COLNAME);
@@ -336,5 +346,4 @@ class "  .$this->getClassname() . " extends " . $baseClassname . " {
     }
 ";
     }
-
 } // MultiExtensionQueryBuilder

@@ -16,8 +16,8 @@ require_once dirname(__FILE__) . '/VersionableBehaviorPeerBuilderModifier.php';
  * Keeps tracks of all the modifications in an ActiveRecord object
  *
  * @author    Francois Zaninotto
- * @version		$Revision$
- * @package		propel.generator.behavior.versionable
+ * @version        $Revision$
+ * @package        propel.generator.behavior.versionable
  */
 class VersionableBehavior extends Behavior
 {
@@ -38,10 +38,7 @@ class VersionableBehavior extends Behavior
      */
     protected $versionTable;
 
-    protected
-        $objectBuilderModifier,
-        $queryBuilderModifier,
-        $peerBuilderModifier;
+    protected $objectBuilderModifier, $queryBuilderModifier, $peerBuilderModifier;
 
     protected $tableModificationOrder = 80;
 
@@ -86,19 +83,12 @@ class VersionableBehavior extends Behavior
     {
         $table = $this->getTable();
         if ($this->getParameter('log_created_at') == 'true' && !$table->hasColumn($this->getParameter('version_created_at_column'))) {
-            $table->addColumn(array(
-                'name' => $this->getParameter('version_created_at_column'),
-                'type' => 'TIMESTAMP'
-            ));
+            $table->addColumn(array('name' => $this->getParameter('version_created_at_column'), 'type' => 'TIMESTAMP'));
         }
         if ($this->getParameter('log_created_by') == 'true' && !$table->hasColumn($this->getParameter('version_created_by_column'))) {
-            $table->addColumn(array(
-                'name' => $this->getParameter('version_created_by_column'),
-                'type' => 'VARCHAR',
-                'size' => 100
-            ));
+            $table->addColumn(array('name' => $this->getParameter('version_created_by_column'), 'type' => 'VARCHAR', 'size' => 100));
         }
-        if ($this->getParameter('log_comment') == 'true'  && !$table->hasColumn($this->getParameter('version_comment_column'))) {
+        if ($this->getParameter('log_comment') == 'true' && !$table->hasColumn($this->getParameter('version_comment_column'))) {
             $table->addColumn(array(
                 'name' => $this->getParameter('version_comment_column'),
                 'type' => 'VARCHAR',
@@ -218,8 +208,8 @@ class VersionableBehavior extends Behavior
         $versionableFKs = array();
         if ($fks = $this->getTable()->getForeignKeys()) {
             foreach ($fks as $fk) {
-                if ($fk->getForeignTable()->hasBehavior($this->getName()) && ! $fk->isComposite()) {
-                    $versionableFKs []= $fk;
+                if ($fk->getForeignTable()->hasBehavior($this->getName()) && !$fk->isComposite()) {
+                    $versionableFKs[] = $fk;
                 }
             }
         }
@@ -235,8 +225,8 @@ class VersionableBehavior extends Behavior
         $versionableReferrers = array();
         if ($fks = $this->getTable()->getReferrers()) {
             foreach ($fks as $fk) {
-                if ($fk->getTable()->hasBehavior($this->getName()) && ! $fk->isComposite()) {
-                    $versionableReferrers []= $fk;
+                if ($fk->getTable()->hasBehavior($this->getName()) && !$fk->isComposite()) {
+                    $versionableReferrers[] = $fk;
                 }
             }
         }
@@ -296,5 +286,4 @@ class VersionableBehavior extends Behavior
 
         return $this->peerBuilderModifier;
     }
-
 }

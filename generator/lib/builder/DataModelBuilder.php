@@ -27,6 +27,7 @@ abstract class DataModelBuilder
 
     /**
      * The current table.
+     *
      * @var        Table
      */
     private $table;
@@ -40,120 +41,140 @@ abstract class DataModelBuilder
 
     /**
      * An array of warning messages that can be retrieved for display (e.g. as part of phing build process).
+     *
      * @var        array string[]
      */
     private $warnings = array();
 
     /**
      * Peer builder class for current table.
+     *
      * @var        DataModelBuilder
      */
     private $peerBuilder;
 
     /**
      * Stub Peer builder class for current table.
+     *
      * @var        DataModelBuilder
      */
     private $stubPeerBuilder;
 
     /**
      * Object builder class for current table.
+     *
      * @var        DataModelBuilder
      */
     private $objectBuilder;
 
     /**
      * Stub Object builder class for current table.
+     *
      * @var        DataModelBuilder
      */
     private $stubObjectBuilder;
 
     /**
      * Query builder class for current table.
+     *
      * @var        DataModelBuilder
      */
     private $queryBuilder;
 
     /**
      * Stub Query builder class for current table.
+     *
      * @var        DataModelBuilder
      */
     private $stubQueryBuilder;
 
     /**
      * TableMap builder class for current table.
+     *
      * @var        DataModelBuilder
      */
     protected $tablemapBuilder;
 
     /**
      * Stub Interface builder class for current table.
+     *
      * @var        DataModelBuilder
      */
     private $interfaceBuilder;
 
     /**
      * Stub child object for current table.
+     *
      * @var        DataModelBuilder
      */
     private $multiExtendObjectBuilder;
 
     /**
      * Node object builder for current table.
+     *
      * @var        DataModelBuilder
      */
     private $nodeBuilder;
 
     /**
      * Node peer builder for current table.
+     *
      * @var        DataModelBuilder
      */
     private $nodePeerBuilder;
 
     /**
      * Stub node object builder for current table.
+     *
      * @var        DataModelBuilder
      */
     private $stubNodeBuilder;
 
     /**
      * Stub node peer builder for current table.
+     *
      * @var        DataModelBuilder
      */
     private $stubNodePeerBuilder;
 
     /**
      * NestedSet object builder for current table.
+     *
      * @var        DataModelBuilder
      */
     private $nestedSetBuilder;
 
     /**
      * NestedSet peer builder for current table.
+     *
      * @var        DataModelBuilder
      */
     private $nestedSetPeerBuilder;
 
     /**
      * The Data-SQL builder for current table.
+     *
      * @var        DataSQLBuilder
      */
     private $dataSqlBuilder;
 
     /**
      * The Pluralizer class to use.
+     *
      * @var        Pluralizer
      */
     private $pluralizer;
 
     /**
      * The platform class
-     * @var 			PropelPlatformInterface
+     *
+     * @var            PropelPlatformInterface
      */
     protected $platform;
 
     /**
      * Creates new instance of DataModelBuilder subclass.
+     *
      * @param Table $table The Table which we are using to build [OM, DDL, etc.].
      */
     public function __construct(Table $table)
@@ -163,6 +184,7 @@ abstract class DataModelBuilder
 
     /**
      * Returns new or existing Peer builder class for this table.
+     *
      * @return PeerBuilder
      */
     public function getPeerBuilder()
@@ -176,6 +198,7 @@ abstract class DataModelBuilder
 
     /**
      * Returns new or existing Pluralizer class.
+     *
      * @return Pluralizer
      */
     public function getPluralizer()
@@ -189,6 +212,7 @@ abstract class DataModelBuilder
 
     /**
      * Returns new or existing stub Peer builder class for this table.
+     *
      * @return PeerBuilder
      */
     public function getStubPeerBuilder()
@@ -202,6 +226,7 @@ abstract class DataModelBuilder
 
     /**
      * Returns new or existing Object builder class for this table.
+     *
      * @return ObjectBuilder
      */
     public function getObjectBuilder()
@@ -215,6 +240,7 @@ abstract class DataModelBuilder
 
     /**
      * Returns new or existing stub Object builder class for this table.
+     *
      * @return ObjectBuilder
      */
     public function getStubObjectBuilder()
@@ -228,6 +254,7 @@ abstract class DataModelBuilder
 
     /**
      * Returns new or existing Query builder class for this table.
+     *
      * @return ObjectBuilder
      */
     public function getQueryBuilder()
@@ -241,6 +268,7 @@ abstract class DataModelBuilder
 
     /**
      * Returns new or existing stub Query builder class for this table.
+     *
      * @return ObjectBuilder
      */
     public function getStubQueryBuilder()
@@ -254,6 +282,7 @@ abstract class DataModelBuilder
 
     /**
      * Returns new or existing Object builder class for this table.
+     *
      * @return ObjectBuilder
      */
     public function getTableMapBuilder()
@@ -267,6 +296,7 @@ abstract class DataModelBuilder
 
     /**
      * Returns new or existing stub Interface builder class for this table.
+     *
      * @return ObjectBuilder
      */
     public function getInterfaceBuilder()
@@ -280,6 +310,7 @@ abstract class DataModelBuilder
 
     /**
      * Returns new or existing stub child object builder class for this table.
+     *
      * @return ObjectBuilder
      */
     public function getMultiExtendObjectBuilder()
@@ -293,6 +324,7 @@ abstract class DataModelBuilder
 
     /**
      * Returns new or existing node Object builder class for this table.
+     *
      * @return ObjectBuilder
      */
     public function getNodeBuilder()
@@ -306,6 +338,7 @@ abstract class DataModelBuilder
 
     /**
      * Returns new or existing node Peer builder class for this table.
+     *
      * @return PeerBuilder
      */
     public function getNodePeerBuilder()
@@ -319,6 +352,7 @@ abstract class DataModelBuilder
 
     /**
      * Returns new or existing stub node Object builder class for this table.
+     *
      * @return ObjectBuilder
      */
     public function getStubNodeBuilder()
@@ -332,6 +366,7 @@ abstract class DataModelBuilder
 
     /**
      * Returns new or existing stub node Peer builder class for this table.
+     *
      * @return PeerBuilder
      */
     public function getStubNodePeerBuilder()
@@ -345,6 +380,7 @@ abstract class DataModelBuilder
 
     /**
      * Returns new or existing nested set object builder class for this table.
+     *
      * @return ObjectBuilder
      */
     public function getNestedSetBuilder()
@@ -358,6 +394,7 @@ abstract class DataModelBuilder
 
     /**
      * Returns new or existing nested set Peer builder class for this table.
+     *
      * @return PeerBuilder
      */
     public function getNestedSetPeerBuilder()
@@ -371,6 +408,7 @@ abstract class DataModelBuilder
 
     /**
      * Returns new or existing data sql builder class for this table.
+     *
      * @return DataSQLBuilder
      */
     public function getDataSQLBuilder()
@@ -382,13 +420,14 @@ abstract class DataModelBuilder
         return $this->dataSqlBuilder;
     }
 
- /**
-    * Gets a new data model builder class for specified table and classname.
-    *
-    * @param      Table $table
-    * @param      string $classname The class of builder
-    * @return     DataModelBuilder
-    */
+    /**
+     * Gets a new data model builder class for specified table and classname.
+     *
+     * @param      Table $table
+     * @param      string $classname The class of builder
+     *
+     * @return     DataModelBuilder
+     */
     public function getNewBuilder(Table $table, $classname)
     {
         $builder = new $classname($table);
@@ -399,11 +438,12 @@ abstract class DataModelBuilder
 
     /**
      * Convenience method to return a NEW Peer class builder instance.
-   *
+     *
      * This is used very frequently from the peer and object builders to get
      * a peer builder for a RELATED table.
      *
      * @param  Table       $table
+     *
      * @return PeerBuilder
      */
     public function getNewPeerBuilder(Table $table)
@@ -418,6 +458,7 @@ abstract class DataModelBuilder
      * a peer builder for a RELATED table.
      *
      * @param  Table       $table
+     *
      * @return PeerBuilder
      */
     public function getNewStubPeerBuilder(Table $table)
@@ -432,6 +473,7 @@ abstract class DataModelBuilder
      * an object builder for a RELATED table.
      *
      * @param  Table         $table
+     *
      * @return ObjectBuilder
      */
     public function getNewObjectBuilder(Table $table)
@@ -446,6 +488,7 @@ abstract class DataModelBuilder
      * an object builder for a RELATED table.
      *
      * @param  Table         $table
+     *
      * @return ObjectBuilder
      */
     public function getNewStubObjectBuilder(Table $table)
@@ -460,6 +503,7 @@ abstract class DataModelBuilder
      * a query builder for a RELATED table.
      *
      * @param  Table        $table
+     *
      * @return QueryBuilder
      */
     public function getNewQueryBuilder(Table $table)
@@ -474,6 +518,7 @@ abstract class DataModelBuilder
      * a query builder for a RELATED table.
      *
      * @param  Table        $table
+     *
      * @return QueryBuilder
      */
     public function getNewStubQueryBuilder(Table $table)
@@ -483,6 +528,7 @@ abstract class DataModelBuilder
 
     /**
      * Returns new Query Inheritance builder class for this table.
+     *
      * @return ObjectBuilder
      */
     public function getNewQueryInheritanceBuilder($child)
@@ -495,6 +541,7 @@ abstract class DataModelBuilder
 
     /**
      * Returns new stub Query Inheritance builder class for this table.
+     *
      * @return ObjectBuilder
      */
     public function getNewStubQueryInheritanceBuilder($child)
@@ -519,6 +566,7 @@ abstract class DataModelBuilder
      * Get a specific [name transformed] build property.
      *
      * @param  string $name
+     *
      * @return string
      */
     public function getBuildProperty($name)
@@ -542,6 +590,7 @@ abstract class DataModelBuilder
 
     /**
      * Sets the table for this builder.
+     *
      * @param Table $table
      */
     public function setTable(Table $table)
@@ -551,6 +600,7 @@ abstract class DataModelBuilder
 
     /**
      * Returns the current Table object.
+     *
      * @return Table
      */
     public function getTable()
@@ -560,6 +610,7 @@ abstract class DataModelBuilder
 
     /**
      * Convenience method to returns the Platform class for this table (database).
+     *
      * @return PropelPlatformInterface
      */
     public function getPlatform()
@@ -586,6 +637,7 @@ abstract class DataModelBuilder
 
     /**
      * Convenience method to returns the database for current table.
+     *
      * @return Database
      */
     public function getDatabase()
@@ -597,6 +649,7 @@ abstract class DataModelBuilder
 
     /**
      * Pushes a message onto the stack of warnings.
+     *
      * @param string $msg The warning message.
      */
     protected function warn($msg)
@@ -606,6 +659,7 @@ abstract class DataModelBuilder
 
     /**
      * Gets array of warning messages.
+     *
      * @return array string[]
      */
     public function getWarnings()
@@ -621,6 +675,7 @@ abstract class DataModelBuilder
      * in the OM builders also, which is why it is defined in this class.
      *
      * @param  string $text The text to quote.
+     *
      * @return string Quoted text.
      */
     public function quoteIdentifier($text)
@@ -634,6 +689,7 @@ abstract class DataModelBuilder
 
     /**
      * Returns the name of the current class being built, with a possible prefix.
+     *
      * @return string
      * @see        OMBuilder#getClassname()
      */
@@ -641,5 +697,4 @@ abstract class DataModelBuilder
     {
         return $this->getBuildProperty('classPrefix') . $identifier;
     }
-
 }

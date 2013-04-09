@@ -36,12 +36,14 @@ interface PropelPlatformInterface
 
     /**
      * Sets a database connection to use (for quoting, etc.).
+     *
      * @param PDO $con The database connection to use in this Platform class.
      */
     public function setConnection(PDO $con = null);
 
     /**
      * Returns the database connection to use for this Platform class.
+     *
      * @return PDO The database connection or NULL if none has been set.
      */
     public function getConnection();
@@ -56,6 +58,7 @@ interface PropelPlatformInterface
     /**
      * Returns the short name of the database type that this platform represents.
      * For example MysqlPlatform->getDatabaseType() returns 'mysql'.
+     *
      * @return string
      */
     public function getDatabaseType();
@@ -78,6 +81,7 @@ interface PropelPlatformInterface
      * Returns the db specific domain for a propelType.
      *
      * @param  string $propelType the Propel type name.
+     *
      * @return Domain The db specific domain.
      */
     public function getDomainForType($propelType);
@@ -95,23 +99,27 @@ interface PropelPlatformInterface
 
     /**
      * Returns the DDL SQL for a Column object.
+     *
      * @return string
      */
     public function getColumnDDL(Column $col);
 
     /**
      * Returns the SQL for the default value of a Column object.
+     *
      * @return string
      */
     public function getColumnDefaultValueDDL(Column $col);
 
     /**
      * Creates a delimiter-delimited string list of column names, quoted using quoteIdentifier().
+     *
      * @example
      * <code>
      * echo $platform->getColumnListDDL(array('foo', 'bar');
      * // '"foo","bar"'
      * </code>
+     *
      * @param      array Column[] or string[]
      * @param string $delim The delimiter to use in separating the column names.
      *
@@ -121,6 +129,7 @@ interface PropelPlatformInterface
 
     /**
      * Returns the SQL for the primary key of a Table object
+     *
      * @return string
      */
     public function getPrimaryKeyDDL(Table $table);
@@ -129,6 +138,7 @@ interface PropelPlatformInterface
      * Returns if the RDBMS-specific SQL type has a size attribute.
      *
      * @param  string  $sqlType the SQL type
+     *
      * @return boolean True if the type has a size attribute
      */
     public function hasSize($sqlType);
@@ -137,50 +147,60 @@ interface PropelPlatformInterface
      * Returns if the RDBMS-specific SQL type has a scale attribute.
      *
      * @param  string  $sqlType the SQL type
+     *
      * @return boolean True if the type has a scale attribute
      */
     public function hasScale($sqlType);
 
     /**
      * Quote and escape needed characters in the string for underlying RDBMS.
+     *
      * @param  string $text
+     *
      * @return string
      */
     public function quote($text);
 
     /**
      * Quotes identifiers used in database SQL.
+     *
      * @param  string $text
+     *
      * @return string Quoted identifier.
      */
     public function quoteIdentifier($text);
 
     /**
      * Whether RDBMS supports native ON DELETE triggers (e.g. ON DELETE CASCADE).
+     *
      * @return boolean
      */
     public function supportsNativeDeleteTrigger();
 
     /**
      * Whether RDBMS supports INSERT null values in autoincremented primary keys
+     *
      * @return boolean
      */
     public function supportsInsertNullPk();
 
     /**
      * Whether RDBMS supports native schemas for table layout.
+     *
      * @return boolean
      */
     public function supportsSchemas();
 
     /**
      * Whether RDBMS supports migrations.
+     *
      * @return boolean
      */
     public function supportsMigrations();
 
     /**
      * Wether RDBMS supports VARCHAR without explicit size
+     *
      * @return boolean
      */
     public function supportsVarcharWithoutSize();
@@ -195,30 +215,35 @@ interface PropelPlatformInterface
      * SQL.
      *
      * @param  mixed $tf A boolean or string representation of boolean ('y', 'true').
+     *
      * @return mixed
      */
     public function getBooleanString($tf);
 
     /**
      * Whether the underlying PDO driver for this platform returns BLOB columns as streams (instead of strings).
+     *
      * @return boolean
      */
     public function hasStreamBlobImpl();
 
     /**
      * Gets the preferred timestamp formatter for setting date/time values.
+     *
      * @return string
      */
     public function getTimestampFormatter();
 
     /**
      * Gets the preferred date formatter for setting time values.
+     *
      * @return string
      */
     public function getDateFormatter();
 
     /**
      * Gets the preferred time formatter for setting time values.
+     *
      * @return string
      */
     public function getTimeFormatter();

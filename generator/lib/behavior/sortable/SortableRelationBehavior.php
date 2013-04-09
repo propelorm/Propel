@@ -87,5 +87,4 @@ public function {$this->getObjectMoveRelatedToNullScopeMethodName()}(PropelPDO \
 
         return $script;
     }
-
 }

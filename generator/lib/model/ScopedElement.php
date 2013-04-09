@@ -49,12 +49,13 @@ abstract class ScopedElement extends XMLElement
     /**
      * retrieves a build property.
      *
-     * @param unknown_type $name
+     * @param mixed $name
      */
     abstract protected function getBuildProperty($name);
 
     /**
      * Sets up the Rule object based on the attributes that were passed to loadFromXML().
+     *
      * @see       parent::loadFromXML()
      */
     protected function setupObject()
@@ -66,6 +67,7 @@ abstract class ScopedElement extends XMLElement
 
     /**
      * Get the value of the namespace.
+     *
      * @return value of namespace.
      */
     public function getNamespace()
@@ -75,6 +77,7 @@ abstract class ScopedElement extends XMLElement
 
     /**
      * Set the value of the namespace.
+     *
      * @param   $v Value to assign to namespace.
      */
     public function setNamespace($v)
@@ -91,6 +94,7 @@ abstract class ScopedElement extends XMLElement
 
     /**
      * Get the value of package.
+     *
      * @return value of package.
      */
     public function getPackage()
@@ -100,6 +104,7 @@ abstract class ScopedElement extends XMLElement
 
     /**
      * Set the value of package.
+     *
      * @param   $v Value to assign to package.
      */
     public function setPackage($v)
@@ -113,6 +118,7 @@ abstract class ScopedElement extends XMLElement
 
     /**
      * Get the value of schema.
+     *
      * @return value of schema.
      */
     public function getSchema()
@@ -122,6 +128,7 @@ abstract class ScopedElement extends XMLElement
 
     /**
      * Set the value of schema.
+     *
      * @param   $v Value to assign to schema.
      */
     public function setSchema($v)

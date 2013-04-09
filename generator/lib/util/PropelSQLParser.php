@@ -98,6 +98,7 @@ class PropelSQLParser
 
     /**
      * Explodes a SQL string into an array of SQL statements.
+     *
      * @example
      * <code>
      * echo PropelSQLParser::parseString("-- Table foo
@@ -117,6 +118,7 @@ class PropelSQLParser
      * //   ) ENGINE=InnoDB;"
      * // )
      * </code>
+     *
      * @param string $input The SQL code to parse
      *
      * @return array A list of SQL statement strings
@@ -133,6 +135,7 @@ class PropelSQLParser
 
     /**
      * Explodes a SQL file into an array of SQL statements.
+     *
      * @example
      * <code>
      * echo PropelSQLParser::parseFile('/var/tmp/foo.sql');
@@ -146,6 +149,7 @@ class PropelSQLParser
      * //   ) ENGINE=InnoDB;"
      * // )
      * </code>
+     *
      * @param string $input The absolute path to the file to parse
      *
      * @return array A list of SQL statement strings
@@ -257,5 +261,4 @@ class PropelSQLParser
 
         return trim($parsedString);
     }
-
 }

@@ -22,6 +22,7 @@ class MssqlSchemaParser extends BaseSchemaParser
 
     /**
      * Map MSSQL native types to Propel types.
+     *
      * @var        array
      */
     private static $mssqlTypeMap = array(
@@ -63,9 +64,9 @@ class MssqlSchemaParser extends BaseSchemaParser
         "sql_variant" => PropelTypes::VARCHAR,
     );
 
-  /**
-   * @see        BaseSchemaParser::getTypeMapping()
-   */
+    /**
+     * @see        BaseSchemaParser::getTypeMapping()
+     */
     protected function getTypeMapping()
     {
         return self::$mssqlTypeMap;
@@ -132,7 +133,7 @@ class MssqlSchemaParser extends BaseSchemaParser
             $propelType = $this->getMappedPropelType($type);
             if (!$propelType) {
                 $propelType = Column::DEFAULT_TYPE;
-                $this->warn("Column [" . $table->getName() . "." . $name. "] has a column type (".$type.") that Propel does not support.");
+                $this->warn("Column [" . $table->getName() . "." . $name . "] has a column type (" . $type . ") that Propel does not support.");
             }
 
             $column = new Column($name);
@@ -165,7 +166,7 @@ class MssqlSchemaParser extends BaseSchemaParser
                                             CONSTRAINT_TYPE = 'Foreign Key' INNER JOIN
                                             INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS rc1 ON rc1.CONSTRAINT_NAME = tc1.CONSTRAINT_NAME INNER JOIN
                                             INFORMATION_SCHEMA.CONSTRAINT_COLUMN_USAGE ccu2 ON ccu2.CONSTRAINT_NAME = rc1.UNIQUE_CONSTRAINT_NAME
-                                    WHERE (ccu1.table_name = '".$table->getName()."')");
+                                    WHERE (ccu1.table_name = '" . $table->getName() . "')");
 
         $foreignKeys = array(); // local store to avoid duplicates
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -176,7 +177,7 @@ class MssqlSchemaParser extends BaseSchemaParser
 
             $foreignTable = $database->getTable($ftbl);
             $foreignColumn = $foreignTable->getColumn($fcol);
-            $localColumn   = $table->getColumn($lcol);
+            $localColumn = $table->getColumn($lcol);
 
             if (!isset($foreignKeys[$name])) {
                 $fk = new ForeignKey($name);
@@ -189,7 +190,6 @@ class MssqlSchemaParser extends BaseSchemaParser
             }
             $foreignKeys[$name]->addReference($localColumn, $foreignColumn);
         }
-
     }
 
     /**
@@ -224,7 +224,7 @@ class MssqlSchemaParser extends BaseSchemaParser
                                 INNER JOIN INFORMATION_SCHEMA.CONSTRAINT_COLUMN_USAGE ON
                         INFORMATION_SCHEMA.TABLE_CONSTRAINTS.CONSTRAINT_NAME = INFORMATION_SCHEMA.CONSTRAINT_COLUMN_USAGE.constraint_name
                         WHERE     (INFORMATION_SCHEMA.TABLE_CONSTRAINTS.CONSTRAINT_TYPE = 'PRIMARY KEY') AND
-                        (INFORMATION_SCHEMA.TABLE_CONSTRAINTS.TABLE_NAME = '".$table->getName()."')");
+                        (INFORMATION_SCHEMA.TABLE_CONSTRAINTS.TABLE_NAME = '" . $table->getName() . "')");
 
         // Loop through the returned results, grouping the same key_name together
         // adding each column for that key.
@@ -234,17 +234,18 @@ class MssqlSchemaParser extends BaseSchemaParser
         }
     }
 
-  /**
-   * according to the identifier definition, we have to clean simple quote (') around the identifier name
-   * returns by mssql
-   * @see http://msdn.microsoft.com/library/ms175874.aspx
-   *
-   * @param string $identifier
-   * @return string
-   */
-  protected function cleanDelimitedIdentifiers($identifier)
-  {
-    return preg_replace('/^\'(.*)\'$/U', '$1', $identifier);
-  }
-
+    /**
+     * according to the identifier definition, we have to clean simple quote (') around the identifier name
+     * returns by mssql
+     *
+     * @see http://msdn.microsoft.com/library/ms175874.aspx
+     *
+     * @param string $identifier
+     *
+     * @return string
+     */
+    protected function cleanDelimitedIdentifiers($identifier)
+    {
+        return preg_replace('/^\'(.*)\'$/U', '$1', $identifier);
+    }
 }

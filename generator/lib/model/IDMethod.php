@@ -31,5 +31,4 @@ interface IDMethod
      * application).
      */
     const NO_ID_METHOD = "none";
-
 }

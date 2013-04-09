@@ -30,11 +30,13 @@ class PreOrderNodeIterator implements Iterator
         $this->topNode = $node;
         $this->curNode = $node;
 
-        if (isset($opts['con']))
+        if (isset($opts['con'])) {
             $this->con = $opts['con'];
+        }
 
-        if (isset($opts['querydb']))
+        if (isset($opts['querydb'])) {
             $this->querydb = $opts['querydb'];
+        }
     }
 
     public function rewind()
@@ -63,13 +65,15 @@ class PreOrderNodeIterator implements Iterator
             $nextNode = $this->curNode->getFirstChildNode($this->querydb, $this->con);
 
             while ($nextNode === null) {
-                if ($this->curNode === null || $this->curNode->equals($this->topNode))
+                if ($this->curNode === null || $this->curNode->equals($this->topNode)) {
                     break;
+                }
 
                 $nextNode = $this->curNode->getSiblingNode(false, $this->querydb, $this->con);
 
-                if ($nextNode === null)
+                if ($nextNode === null) {
                     $this->curNode = $this->curNode->getParentNode($this->querydb, $this->con);
+                }
             }
 
             $this->curNode = $nextNode;
@@ -77,5 +81,4 @@ class PreOrderNodeIterator implements Iterator
 
         return $this->curNode;
     }
-
 }

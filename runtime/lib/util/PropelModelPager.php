@@ -122,7 +122,7 @@ class PropelModelPager implements IteratorAggregate, Countable
     public function getLinks($nb_links = 5)
     {
         $links = array();
-        $tmp	 = $this->page - floor($nb_links / 2);
+        $tmp = $this->page - floor($nb_links / 2);
         $check = $this->lastPage - $nb_links + 1;
         $limit = ($check > 0) ? $check : 1;
         $begin = ($tmp > 0) ? (($tmp > $limit) ? $limit : $tmp) : 1;
@@ -334,6 +334,7 @@ class PropelModelPager implements IteratorAggregate, Countable
 
     /**
      * Check whether the internal pointer is at the beginning of the list
+     *
      * @see       PropelCollection
      *
      * @return boolean
@@ -345,6 +346,7 @@ class PropelModelPager implements IteratorAggregate, Countable
 
     /**
      * Check whether the internal pointer is at the end of the list
+     *
      * @see       PropelCollection
      *
      * @return boolean
@@ -356,6 +358,7 @@ class PropelModelPager implements IteratorAggregate, Countable
 
     /**
      * Check if the collection is empty
+     *
      * @see       PropelCollection
      *
      * @return boolean
@@ -367,6 +370,7 @@ class PropelModelPager implements IteratorAggregate, Countable
 
     /**
      * Check if the current index is an odd integer
+     *
      * @see       PropelCollection
      *
      * @return boolean
@@ -378,6 +382,7 @@ class PropelModelPager implements IteratorAggregate, Countable
 
     /**
      * Check if the current index is an even integer
+     *
      * @see       PropelCollection
      *
      * @return boolean
@@ -402,5 +407,4 @@ class PropelModelPager implements IteratorAggregate, Countable
     {
         return $this->getNbResults();
     }
-
 }

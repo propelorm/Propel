@@ -46,9 +46,13 @@ class XmlToAppData
 
     private $encoding;
 
-    /** two-dimensional array,
-        first dimension is for schemas(key is the path to the schema file),
-        second is for tags within the schema */
+    /**
+     * two-dimensional array,
+     * first dimension is for schemas(key is the path to the schema file),
+     * second is for tags within the schema
+     *
+     * @var array
+     */
     private $schemasTagsStack = array();
 
     /**
@@ -60,10 +64,10 @@ class XmlToAppData
      */
     public function __construct(PropelPlatformInterface $defaultPlatform = null, $defaultPackage = null, $encoding = 'iso-8859-1')
     {
-        $this->app            = new AppData($defaultPlatform);
+        $this->app = new AppData($defaultPlatform);
         $this->defaultPackage = $defaultPackage;
-        $this->firstPass      = true;
-        $this->encoding       = $encoding;
+        $this->firstPass = true;
+        $this->encoding = $encoding;
     }
 
     /**
@@ -81,6 +85,7 @@ class XmlToAppData
      * populated AppData structure.
      *
      * @param  string  $xmlFile The input file to parse.
+     *
      * @return AppData populated by <code>xmlFile</code>.
      */
     public function parseFile($xmlFile)
@@ -99,6 +104,7 @@ class XmlToAppData
      *
      * @param  string    $xmlString The input string to parse.
      * @param  string    $xmlFile   The input file name.
+     *
      * @return AppData   populated by <code>xmlFile</code>.
      * @throws Exception
      */
@@ -134,35 +140,34 @@ class XmlToAppData
      *
      * @param string $uri
      * @param string $localName The local name (without prefix), or the empty string if
-     *		 Namespace processing is not being performed.
+     *         Namespace processing is not being performed.
      * @param string $rawName The qualified name (with prefix), or the empty string if
-     *		 qualified names are not available.
+     *         qualified names are not available.
      * @param string $attributes The specified or defaulted attributes
      *
      * @throws SchemaException
      */
     public function startElement($parser, $name, $attributes)
     {
-      $parentTag = $this->peekCurrentSchemaTag();
+        $parentTag = $this->peekCurrentSchemaTag();
 
-      if ($parentTag === false) {
+        if ($parentTag === false) {
 
-                switch ($name) {
-                    case "database":
-                        if ($this->isExternalSchema()) {
-                            $this->currentPackage = @$attributes["package"];
-                            if ($this->currentPackage === null) {
-                                $this->currentPackage = $this->defaultPackage;
-                            }
-                        } else {
-                            $this->currDB = $this->app->addDatabase($attributes);
+            switch ($name) {
+                case "database":
+                    if ($this->isExternalSchema()) {
+                        $this->currentPackage = @$attributes["package"];
+                        if ($this->currentPackage === null) {
+                            $this->currentPackage = $this->defaultPackage;
                         }
+                    } else {
+                        $this->currDB = $this->app->addDatabase($attributes);
+                    }
                     break;
 
-                    default:
-                        $this->_throwInvalidTagException($parser, $name);
-                }
-
+                default:
+                    $this->_throwInvalidTagException($parser, $name);
+            }
         } elseif ($parentTag == "database") {
 
             switch ($name) {
@@ -185,11 +190,11 @@ class XmlToAppData
                     }
 
                     $this->parseFile($xmlFile);
-                break;
+                    break;
 
-            case "domain":
-                  $this->currDB->addDomain($attributes);
-              break;
+                case "domain":
+                    $this->currDB->addDomain($attributes);
+                    break;
 
                 case "table":
                     $this->currTable = $this->currDB->addTable($attributes);
@@ -197,114 +202,109 @@ class XmlToAppData
                         $this->currTable->setForReferenceOnly($this->isForReferenceOnly);
                         $this->currTable->setPackage($this->currentPackage);
                     }
-                break;
+                    break;
 
                 case "vendor":
                     $this->currVendorObject = $this->currDB->addVendorInfo($attributes);
-                break;
+                    break;
 
                 case "behavior":
-                  $this->currBehavior = $this->currDB->addBehavior($attributes);
-                break;
+                    $this->currBehavior = $this->currDB->addBehavior($attributes);
+                    break;
 
                 default:
                     $this->_throwInvalidTagException($parser, $name);
             }
-
         } elseif ($parentTag == "table") {
 
             switch ($name) {
                 case "column":
                     $this->currColumn = $this->currTable->addColumn($attributes);
-                break;
+                    break;
 
                 case "foreign-key":
                     $this->currFK = $this->currTable->addForeignKey($attributes);
-                break;
+                    break;
 
                 case "index":
                     $this->currIndex = $this->currTable->addIndex($attributes);
-                break;
+                    break;
 
                 case "unique":
                     $this->currUnique = $this->currTable->addUnique($attributes);
-                break;
+                    break;
 
                 case "vendor":
                     $this->currVendorObject = $this->currTable->addVendorInfo($attributes);
-                break;
+                    break;
 
-              case "validator":
-                  $this->currValidator = $this->currTable->addValidator($attributes);
-              break;
+                case "validator":
+                    $this->currValidator = $this->currTable->addValidator($attributes);
+                    break;
 
-              case "id-method-parameter":
+                case "id-method-parameter":
                     $this->currTable->addIdMethodParameter($attributes);
-                break;
+                    break;
 
                 case "behavior":
-                  $this->currBehavior = $this->currTable->addBehavior($attributes);
-                break;
+                    $this->currBehavior = $this->currTable->addBehavior($attributes);
+                    break;
 
                 default:
                     $this->_throwInvalidTagException($parser, $name);
             }
-
         } elseif ($parentTag == "column") {
 
             switch ($name) {
                 case "inheritance":
                     $this->currColumn->addInheritance($attributes);
-                break;
+                    break;
 
                 case "vendor":
                     $this->currVendorObject = $this->currColumn->addVendorInfo($attributes);
-                break;
+                    break;
 
                 default:
                     $this->_throwInvalidTagException($parser, $name);
             }
-
         } elseif ($parentTag == "foreign-key") {
 
             switch ($name) {
                 case "reference":
                     $this->currFK->addReference($attributes);
-                break;
+                    break;
 
                 case "vendor":
                     $this->currVendorObject = $this->currUnique->addVendorInfo($attributes);
-                break;
+                    break;
 
                 default:
                     $this->_throwInvalidTagException($parser, $name);
             }
-
         } elseif ($parentTag == "index") {
 
             switch ($name) {
                 case "index-column":
                     $this->currIndex->addColumn($attributes);
-                break;
+                    break;
 
                 case "vendor":
                     $this->currVendorObject = $this->currIndex->addVendorInfo($attributes);
-                break;
+                    break;
 
                 default:
                     $this->_throwInvalidTagException($parser, $name);
             }
-
         } elseif ($parentTag == "unique") {
 
             switch ($name) {
                 case "unique-column":
                     $this->currUnique->addColumn($attributes);
-                break;
+                    break;
 
                 case "vendor":
                     $this->currVendorObject = $this->currUnique->addVendorInfo($attributes);
-                break;
+                    break;
 
                 default:
                     $this->_throwInvalidTagException($parser, $name);
@@ -314,7 +314,7 @@ class XmlToAppData
             switch ($name) {
                 case "parameter":
                     $this->currBehavior->addParameter($attributes);
-                break;
+                    break;
 
                 default:
                     $this->_throwInvalidTagException($parser, $name);
@@ -323,7 +323,7 @@ class XmlToAppData
             switch ($name) {
                 case "rule":
                     $this->currValidator->addRule($attributes);
-                break;
+                    break;
                 default:
                     $this->_throwInvalidTagException($parser, $name);
             }
@@ -332,11 +332,10 @@ class XmlToAppData
             switch ($name) {
                 case "parameter":
                     $this->currVendorObject->addParameter($attributes);
-                break;
+                    break;
                 default:
                     $this->_throwInvalidTagException($parser, $name);
             }
-
         } else {
             // it must be an invalid tag
             $this->_throwInvalidTagException($parser, $name);
@@ -363,9 +362,9 @@ class XmlToAppData
      *
      * @param      uri
      * @param      localName The local name (without prefix), or the empty string if
-     *		 Namespace processing is not being performed.
+     *         Namespace processing is not being performed.
      * @param      rawName The qualified name (with prefix), or the empty string if
-     *		 qualified names are not available.
+     *         qualified names are not available.
      */
     public function endElement($parser, $name)
     {

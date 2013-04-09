@@ -38,10 +38,12 @@ class PhpNameGenerator implements NameGenerator
      * works the same as the <code>CONV_METHOD_PHPNAME</code> method
      * but will not lowercase any characters.
      *
-     * @param   $inputs list expected to contain two (optional: three) parameters,
+     * @param array $inputs list expected to contain two (optional: three) parameters,
      * element 0 contains name to convert, element 1 contains method for conversion,
      * optional element 2 contains prefix to be striped from name
-     * @return The generated name.
+     *
+     * @return string The generated name.
+     *
      * @see        NameGenerator
      */
     public function generateName($inputs)
@@ -49,7 +51,7 @@ class PhpNameGenerator implements NameGenerator
         $schemaName = $inputs[0];
         $method = $inputs[1];
 
-        if (count($inputs)>2) {
+        if (count($inputs) > 2) {
             $prefix = $inputs[2];
             if ($prefix != '' && substr($schemaName, 0, strlen($prefix)) == $prefix) {
                 $schemaName = substr($schemaName, strlen($prefix));
@@ -87,7 +89,9 @@ class PhpNameGenerator implements NameGenerator
      * my_CLASS_name -> MyClassName
      *
      * @param  string $schemaName name to be converted.
+     *
      * @return string Converted name.
+     *
      * @see        NameGenerator
      * @see        #underscoreMethod()
      */
@@ -112,7 +116,9 @@ class PhpNameGenerator implements NameGenerator
      * T$NAMA$RFO_max => TNamaRfoMax
      *
      * @param  string $schemaName name to be converted.
+     *
      * @return string Converted name.
+     *
      * @see        NameGenerator
      * @see        #underscoreMethod()
      */
@@ -140,7 +146,9 @@ class PhpNameGenerator implements NameGenerator
      * my_CLASS_name -> MyCLASSName
      *
      * @param  string $schemaName name to be converted.
+     *
      * @return string Converted name.
+     *
      * @see        NameGenerator
      * @see        #underscoreMethod(String)
      */
@@ -161,6 +169,7 @@ class PhpNameGenerator implements NameGenerator
      * case no conversion is made.
      *
      * @param  string $name name to be converted.
+     *
      * @return string The <code>name</code> parameter, unchanged.
      */
     protected function nochangeMethod($name)

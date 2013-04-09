@@ -14,4 +14,6 @@
  * @version    $Revision$
  * @package    propel.generator.exception
  */
-class SchemaException extends Exception {}
+class SchemaException extends Exception
+{
+}

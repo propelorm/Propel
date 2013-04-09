@@ -24,6 +24,7 @@ class PHP5ExtensionNodePeerBuilder extends PeerBuilder
 
     /**
      * Returns the name of the current class being built.
+     *
      * @return string
      */
     public function getUnprefixedClassname()
@@ -33,17 +34,19 @@ class PHP5ExtensionNodePeerBuilder extends PeerBuilder
 
     /**
      * Adds the include() statements for files that this class depends on or utilizes.
+     *
      * @param      string &$script The script will be modified in this method.
      */
     protected function addIncludes(&$script)
     {
-        $script .="
-require '".$this->getNodePeerBuilder()->getClassFilePath()."';
+        $script .= "
+require '" . $this->getNodePeerBuilder()->getClassFilePath() . "';
 ";
     } // addIncludes()
 
     /**
      * Adds class phpdoc comment and opening of class.
+     *
      * @param      string &$script The script will be modified in this method.
      */
     protected function addClassOpen(&$script)
@@ -75,13 +78,13 @@ require '".$this->getNodePeerBuilder()->getClassFilePath()."';
  * application requirements.  This class will only be generated as
  * long as it does not already exist in the output directory.
  *
- * @package    propel.generator.".$this->getPackage()."
+ * @package    propel.generator." . $this->getPackage() . "
  */
-class ".$this->getClassname()." extends $baseClassname {
+class " . $this->getClassname() . " extends $baseClassname {
 ";
     }
 
-        /**
+    /**
      * Specifies the methods that are added as part of the stub peer class.
      *
      * By default there are no methods for the empty stub classes; override this method
@@ -97,6 +100,7 @@ class ".$this->getClassname()." extends $baseClassname {
 
     /**
      * Closes class.
+     *
      * @param      string &$script The script will be modified in this method.
      */
     protected function addClassClose(&$script)
@@ -105,5 +109,4 @@ class ".$this->getClassname()." extends $baseClassname {
 } // " . $this->getClassname() . "
 ";
     }
-
 } // PHP5ExtensionPeerBuilder

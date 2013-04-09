@@ -103,7 +103,6 @@ public function cacheContains(\$key)
                 $script .= "
     throw new PropelException('You must override the cacheContains(), cacheStore(), and cacheFetch() methods to enable query cache');";
                 break;
-
         }
         $script .= "
 }
@@ -113,7 +112,7 @@ public function cacheContains(\$key)
     protected function addCacheStore(&$script)
     {
         $script .= "
-public function cacheStore(\$key, \$value, \$lifetime = " .$this->getParameter('lifetime') . ")
+public function cacheStore(\$key, \$value, \$lifetime = " . $this->getParameter('lifetime') . ")
 {";
         switch ($this->getParameter('backend')) {
             case 'apc':
@@ -173,8 +172,8 @@ protected function doSelect(\$con)
     }
     \$this->configureSelectColumns();
 
-    \$dbMap = Propel::getDatabaseMap(" . $this->peerClassname ."::DATABASE_NAME);
-    \$db = Propel::getDB(" . $this->peerClassname ."::DATABASE_NAME);
+    \$dbMap = Propel::getDatabaseMap(" . $this->peerClassname . "::DATABASE_NAME);
+    \$db = Propel::getDB(" . $this->peerClassname . "::DATABASE_NAME);
 
     \$key = \$this->getQueryKey();
     if (\$key && \$this->cacheContains(\$key)) {
@@ -262,5 +261,4 @@ protected function doCount(\$con)
 }
 ";
     }
-
 }

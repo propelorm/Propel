@@ -159,7 +159,6 @@ class MysqlSchemaParser extends BaseSchemaParser
             $column = $this->getColumnFromRow($row, $table);
             $table->addColumn($column);
         }
-
     } // addColumn()
 
     /**
@@ -168,6 +167,7 @@ class MysqlSchemaParser extends BaseSchemaParser
      *
      * @param array $row An associative array with the following keys:
      *                       Field, Type, Null, Key, Default, Extra.
+     *
      * @return Column
      */
     public function getColumnFromRow($row, Table $table)
@@ -224,7 +224,7 @@ class MysqlSchemaParser extends BaseSchemaParser
         if (!$propelType) {
             $propelType = Column::DEFAULT_TYPE;
             $sqlType = $row['Type'];
-            $this->warn("Column [" . $table->getName() . "." . $name. "] has a column type (".$nativeType.") that Propel does not support.");
+            $this->warn("Column [" . $table->getName() . "." . $name . "] has a column type (" . $nativeType . ") that Propel does not support.");
         }
 
         // Special case for TINYINT(1) which is a BOOLEAN
@@ -242,8 +242,12 @@ class MysqlSchemaParser extends BaseSchemaParser
         $column->getDomain()->replaceScale($scale);
         if ($default !== null) {
             if ($propelType == PropelTypes::BOOLEAN) {
-                if ($default == '1') $default = 'true';
-                if ($default == '0') $default = 'false';
+                if ($default == '1') {
+                    $default = 'true';
+                }
+                if ($default == '0') {
+                    $default = 'false';
+                }
             }
             if (in_array($default, array('CURRENT_TIMESTAMP'))) {
                 $type = ColumnDefaultValue::TYPE_EXPR;
@@ -270,14 +274,14 @@ class MysqlSchemaParser extends BaseSchemaParser
     {
         $database = $table->getDatabase();
 
-        $stmt = $this->dbh->query("SHOW CREATE TABLE `" . $table->getName(). "`");
+        $stmt = $this->dbh->query("SHOW CREATE TABLE `" . $table->getName() . "`");
         $row = $stmt->fetch(PDO::FETCH_NUM);
 
         $foreignKeys = array(); // local store to avoid duplicates
 
         // Get the information on all the foreign keys
         $regEx = '/CONSTRAINT `([^`]+)` FOREIGN KEY \((.+)\) REFERENCES `([^`]*)` \((.+)\)(.*)/';
-        if (preg_match_all($regEx,$row[1],$matches)) {
+        if (preg_match_all($regEx, $row[1], $matches)) {
             $tmpArray = array_keys($matches[0]);
             foreach ($tmpArray as $curKey) {
                 $name = $matches[1][$curKey];
@@ -305,7 +309,7 @@ class MysqlSchemaParser extends BaseSchemaParser
                 if ($fkey) {
                     //split foreign key information -> search for ON DELETE and afterwords for ON UPDATE action
                     foreach (array_keys($fkactions) as $fkaction) {
-                        $result = NULL;
+                        $result = null;
                         preg_match('/' . $fkaction . ' (' . ForeignKey::CASCADE . '|' . ForeignKey::SETNULL . ')/', $fkey, $result);
                         if ($result && is_array($result) && isset($result[1])) {
                             $fkactions[$fkaction] = $result[1];
@@ -322,7 +326,6 @@ class MysqlSchemaParser extends BaseSchemaParser
 
                 $localColumns = array();
                 $foreignColumns = array();
-                ;
                 $foreignTable = $database->getTable($ftbl, true);
 
                 foreach ($fcols as $fcol) {
@@ -342,14 +345,11 @@ class MysqlSchemaParser extends BaseSchemaParser
                     $foreignKeys[$name] = $fk;
                 }
 
-                for ($i=0; $i < count($localColumns); $i++) {
+                for ($i = 0; $i < count($localColumns); $i++) {
                     $foreignKeys[$name]->addReference($localColumns[$i], $foreignColumns[$i]);
                 }
-
             }
-
         }
-
     }
 
     /**

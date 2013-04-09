@@ -36,8 +36,10 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
 
     /**
      * Adds the lazy loader method.
+     *
      * @param      string &$script The script will be modified in this method.
      * @param Column $col The current column.
+     *
      * @see        parent::addColumnAccessors()
      */
     protected function addLazyLoader(&$script, Column $col)
@@ -50,8 +52,10 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
 
     /**
      * Adds the comment for the lazy loader method
+     *
      * @param      string &$script The script will be modified in this method.
      * @param Column $col The current column.
+     *
      * @see        addLazyLoader()
      **/
     protected function addLazyLoaderComment(&$script, Column $col)
@@ -74,8 +78,10 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
 
     /**
      * Adds the function declaration for the lazy loader method
+     *
      * @param      string &$script The script will be modified in this method.
      * @param Column $col The current column.
+     *
      * @see        addLazyLoader()
      **/
     protected function addLazyLoaderOpen(&$script, Column $col)
@@ -88,8 +94,10 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
 
     /**
      * Adds the function body for the lazy loader method
+     *
      * @param      string &$script The script will be modified in this method.
      * @param Column $col The current column.
+     *
      * @see        addLazyLoader()
      **/
     protected function addLazyLoaderBody(&$script, Column $col)
@@ -99,9 +107,9 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
 
         $script .= "
         \$c = \$this->buildPkeyCriteria();
-        \$c->addSelectColumn(".$this->getColumnConstant($col).");
+        \$c->addSelectColumn(" . $this->getColumnConstant($col) . ");
         try {
-            \$stmt = ".$this->getPeerClassname()."::doSelectStmt(\$c, \$con);
+            \$stmt = " . $this->getPeerClassname() . "::doSelectStmt(\$c, \$con);
             \$row = \$stmt->fetch(PDO::FETCH_NUM);
             \$stmt->closeCursor();";
 
@@ -120,17 +128,17 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
             }";
         } elseif ($col->isPhpPrimitiveType()) {
             $script .= "
-            \$this->$clo = (\$row[0] !== null) ? (".$col->getPhpType().") \$row[0] : null;";
+            \$this->$clo = (\$row[0] !== null) ? (" . $col->getPhpType() . ") \$row[0] : null;";
         } elseif ($col->isPhpObjectType()) {
             $script .= "
-            \$this->$clo = (\$row[0] !== null) ? new ".$col->getPhpType()."(\$row[0]) : null;";
+            \$this->$clo = (\$row[0] !== null) ? new " . $col->getPhpType() . "(\$row[0]) : null;";
         } else {
             $script .= "
             \$this->$clo = \$row[0];";
         }
 
         $script .= "
-            \$this->".$clo."_isLoaded = true;
+            \$this->" . $clo . "_isLoaded = true;
         } catch (Exception \$e) {
             throw new PropelException(\"Error loading value for [$clo] column on demand.\", \$e);
         }";
@@ -138,8 +146,10 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
 
     /**
      * Adds the function close for the lazy loader
+     *
      * @param      string &$script The script will be modified in this method.
      * @param Column $col The current column.
+     *
      * @see        addLazyLoader()
      **/
     protected function addLazyLoaderClose(&$script, Column $col)
@@ -150,6 +160,7 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
 
     /**
      * Adds the buildPkeyCriteria method
+     *
      * @param      string &$script The script will be modified in this method.
      **/
     protected function addBuildPkeyCriteria(&$script)
@@ -162,7 +173,9 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
 
     /**
      * Adds the comment for the buildPkeyCriteria method
+     *
      * @param      string &$script The script will be modified in this method.
+     *
      * @see        addBuildPkeyCriteria()
      **/
     protected function addBuildPkeyCriteriaComment(&$script)
@@ -180,7 +193,9 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
 
     /**
      * Adds the function declaration for the buildPkeyCriteria method
+     *
      * @param      string &$script The script will be modified in this method.
+     *
      * @see        addBuildPkeyCriteria()
      **/
     protected function addBuildPkeyCriteriaOpen(&$script)
@@ -192,25 +207,29 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
 
     /**
      * Adds the function body for the buildPkeyCriteria method
+     *
      * @param      string &$script The script will be modified in this method.
+     *
      * @see        addBuildPkeyCriteria()
      **/
     protected function addBuildPkeyCriteriaBody(&$script)
     {
         $script .= "
-        \$criteria = new Criteria(".$this->getPeerClassname()."::DATABASE_NAME);";
+        \$criteria = new Criteria(" . $this->getPeerClassname() . "::DATABASE_NAME);";
         foreach ($this->getTable()->getColumns() as $col) {
             $clo = strtolower($col->getName());
             if ($col->isPrimaryKey()) {
                 $script .= "
-        \$criteria->add(".$this->getColumnConstant($col).", \$this->$clo);";
+        \$criteria->add(" . $this->getColumnConstant($col) . ", \$this->$clo);";
             }
         }
     }
 
     /**
      * Adds the function close for the buildPkeyCriteria method
+     *
      * @param      string &$script The script will be modified in this method.
+     *
      * @see        addBuildPkeyCriteria()
      **/
     protected function addBuildPkeyCriteriaClose(&$script)
@@ -224,6 +243,7 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
 
     /**
      * Adds the buildCriteria method
+     *
      * @param      string &$script The script will be modified in this method.
      **/
     protected function addBuildCriteria(&$script)
@@ -236,7 +256,9 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
 
     /**
      * Adds comment for the buildCriteria method
+     *
      * @param      string &$script The script will be modified in this method.
+     *
      * @see        addBuildCriteria()
      **/
     protected function addBuildCriteriaComment(&$script)
@@ -251,7 +273,9 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
 
     /**
      * Adds the function declaration of the buildCriteria method
+     *
      * @param      string &$script The script will be modified in this method.
+     *
      * @see        addBuildCriteria()
      **/
     protected function addBuildCriteriaOpen(&$script)
@@ -263,24 +287,28 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
 
     /**
      * Adds the function body of the buildCriteria method
+     *
      * @param      string &$script The script will be modified in this method.
+     *
      * @see        addBuildCriteria()
      **/
     protected function addBuildCriteriaBody(&$script)
     {
         $script .= "
-        \$criteria = new Criteria(".$this->getPeerClassname()."::DATABASE_NAME);
+        \$criteria = new Criteria(" . $this->getPeerClassname() . "::DATABASE_NAME);
 ";
         foreach ($this->getTable()->getColumns() as $col) {
             $clo = strtolower($col->getName());
             $script .= "
-        if (\$this->isColumnModified(".$this->getColumnConstant($col).")) \$criteria->add(".$this->getColumnConstant($col).", \$this->$clo);";
+        if (\$this->isColumnModified(" . $this->getColumnConstant($col) . ")) \$criteria->add(" . $this->getColumnConstant($col) . ", \$this->$clo);";
         }
     }
 
     /**
      * Adds the function close of the buildCriteria method
+     *
      * @param      string &$script The script will be modified in this method.
+     *
      * @see        addBuildCriteria()
      **/
     protected function addBuildCriteriaClose(&$script)
@@ -294,7 +322,9 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
 
     /**
      * Adds the function body for the delete function
+     *
      * @param      string &$script The script will be modified in this method.
+     *
      * @see        addDelete()
      **/
     protected function addDeleteBody(&$script)
@@ -305,7 +335,7 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
         }
 
         if (\$con === null) {
-            \$con = Propel::getConnection(".$this->getPeerClassname()."::DATABASE_NAME, Propel::CONNECTION_WRITE);
+            \$con = Propel::getConnection(" . $this->getPeerClassname() . "::DATABASE_NAME, Propel::CONNECTION_WRITE);
         }
 
         \$con->beginTransaction();
@@ -317,7 +347,7 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
             $this->applyBehaviorModifier('preDelete', $script, "			");
             $script .= "
             if (\$ret) {
-                ".$this->getPeerClassname()."::doDelete(\$this, \$con);
+                " . $this->getPeerClassname() . "::doDelete(\$this, \$con);
                 \$this->postDelete(\$con);";
             // apply behaviors
             $this->applyBehaviorModifier('postDelete', $script, "				");
@@ -331,7 +361,7 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
             // apply behaviors
             $this->applyBehaviorModifier('preDelete', $script, "			");
             $script .= "
-            ".$this->getPeerClassname()."::doDelete(\$this, \$con);";
+            " . $this->getPeerClassname() . "::doDelete(\$this, \$con);";
             // apply behaviors
             $this->applyBehaviorModifier('postDelete', $script, "			");
             $script .= "
@@ -348,6 +378,7 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
 
     /**
      * Adds a reload() method to re-fetch the data for this object from the database.
+     *
      * @param      string &$script The script will be modified in this method.
      */
     protected function addReload(&$script)
@@ -375,13 +406,13 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
         }
 
         if (\$con === null) {
-            \$con = Propel::getConnection(".$this->getPeerClassname()."::DATABASE_NAME, Propel::CONNECTION_READ);
+            \$con = Propel::getConnection(" . $this->getPeerClassname() . "::DATABASE_NAME, Propel::CONNECTION_READ);
         }
 
         // We don't need to alter the object instance pool; we're just modifying this instance
         // already in the pool.
 
-        \$stmt = ".$this->getPeerClassname()."::doSelectStmt(\$this->buildPkeyCriteria(), \$con);
+        \$stmt = " . $this->getPeerClassname() . "::doSelectStmt(\$this->buildPkeyCriteria(), \$con);
         \$row = \$stmt->fetch(PDO::FETCH_NUM);
         \$stmt->closeCursor();
         if (!\$row) {
@@ -397,7 +428,7 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
                 $script .= "
         // Reset the $clo lazy-load column
         \$this->" . $clo . " = null;
-        \$this->".$clo."_isLoaded = false;
+        \$this->" . $clo . "_isLoaded = false;
 ";
             }
         }
@@ -409,18 +440,18 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
         foreach ($table->getForeignKeys() as $fk) {
             $varName = $this->getFKVarName($fk);
             $script .= "
-            \$this->".$varName." = null;";
+            \$this->" . $varName . " = null;";
         }
 
         foreach ($table->getReferrers() as $refFK) {
             if ($refFK->isLocalPrimaryKey()) {
                 $script .= "
-            \$this->".$this->getPKRefFKVarName($refFK)." = null;
+            \$this->" . $this->getPKRefFKVarName($refFK) . " = null;
 ";
             } else {
                 $script .= "
-            \$this->".$this->getRefFKCollVarName($refFK)." = null;
-            \$this->".$this->getRefFKLastCriteriaVarName($refFK)." = null;
+            \$this->" . $this->getRefFKCollVarName($refFK) . " = null;
+            \$this->" . $this->getRefFKLastCriteriaVarName($refFK) . " = null;
 ";
             }
         }
@@ -434,7 +465,9 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
     /**
      * Gets variable name for the Criteria which was used to fetch the objects which
      * referencing current table by specified foreign key.
+     *
      * @param  ForeignKey $fk
+     *
      * @return string
      */
     protected function getRefFKLastCriteriaVarName(ForeignKey $fk)
@@ -444,6 +477,7 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
 
     /**
      * Adds the accessor (getter) method for getting an fkey related object.
+     *
      * @param      string &$script The script will be modified in this method.
      */
     protected function addFKAccessor(&$script, ForeignKey $fk)
@@ -476,14 +510,14 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
             $column = $table->getColumn($columnName);
             $cptype = $column->getPhpType();
             $clo = strtolower($column->getName());
-            $localColumns[$foreignColumn->getPosition()] = '$this->'.$clo;
+            $localColumns[$foreignColumn->getPosition()] = '$this->' . $clo;
 
             if ($cptype == "integer" || $cptype == "float" || $cptype == "double") {
-                $conditional .= $and . "\$this->". $clo ." != 0";
+                $conditional .= $and . "\$this->" . $clo . " != 0";
             } elseif ($cptype == "string") {
-                $conditional .= $and . "(\$this->" . $clo ." !== \"\" && \$this->".$clo." !== null)";
+                $conditional .= $and . "(\$this->" . $clo . " !== \"\" && \$this->" . $clo . " !== null)";
             } else {
-                $conditional .= $and . "\$this->" . $clo ." !== null";
+                $conditional .= $and . "\$this->" . $clo . " !== null";
             }
 
             $argmap[] = array('foreign' => $foreignColumn, 'local' => $localColumn);
@@ -491,8 +525,7 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
         }
 
         ksort($localColumns); // restoring the order of the foreign PK
-        $localColumns = count($localColumns) > 1 ?
-                ('array('.implode(', ', $localColumns).')') : reset($localColumns);
+        $localColumns = count($localColumns) > 1 ? ('array(' . implode(', ', $localColumns) . ')') : reset($localColumns);
 
         // If the related column is a primary kay and if it's a simple association,
         // The use retrieveByPk() instead of doSelect() to take advantage of instance pooling
@@ -507,30 +540,30 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
      * @return                 $className The associated $className object.
      * @throws PropelException
      */
-    public function get".$this->getFKPhpNameAffix($fk, $plural = false)."(PropelPDO \$con = null)
+    public function get" . $this->getFKPhpNameAffix($fk, $plural = false) . "(PropelPDO \$con = null)
     {";
         $script .= "
         if (\$this->$varName === null && ($conditional)) {";
         if ($useRetrieveByPk) {
             $script .= "
-            \$this->$varName = ".$fkPeerBuilder->getPeerClassname()."::retrieveByPk($localColumns, \$con);";
+            \$this->$varName = " . $fkPeerBuilder->getPeerClassname() . "::retrieveByPk($localColumns, \$con);";
         } else {
             $script .= "
-            \$c = new Criteria(".$fkPeerBuilder->getPeerClassname()."::DATABASE_NAME);";
+            \$c = new Criteria(" . $fkPeerBuilder->getPeerClassname() . "::DATABASE_NAME);";
             foreach ($argmap as $el) {
                 $fcol = $el['foreign'];
                 $lcol = $el['local'];
                 $clo = strtolower($lcol->getName());
                 $script .= "
-            \$c->add(".$fkPeerBuilder->getColumnConstant($fcol).", \$this->".$clo.");";
+            \$c->add(" . $fkPeerBuilder->getColumnConstant($fcol) . ", \$this->" . $clo . ");";
             }
             $script .= "
-            \$this->$varName = ".$fkPeerBuilder->getPeerClassname()."::doSelectOne(\$c, \$con);";
+            \$this->$varName = " . $fkPeerBuilder->getPeerClassname() . "::doSelectOne(\$c, \$con);";
         }
         if ($fk->isLocalPrimaryKey()) {
             $script .= "
             // Because this foreign key represents a one-to-one relationship, we will create a bi-directional association.
-            \$this->{$varName}->set".$this->getRefFKPhpNameAffix($fk, $plural = false)."(\$this);";
+            \$this->{$varName}->set" . $this->getRefFKPhpNameAffix($fk, $plural = false) . "(\$this);";
         } else {
             $script .= "
             /* The following can be used additionally to
@@ -538,7 +571,7 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
                to this object.  This level of coupling may, however, be
                undesirable since it could result in an only partially populated collection
                in the referenced object.
-               \$this->{$varName}->add".$this->getRefFKPhpNameAffix($fk, $plural = true)."(\$this);
+               \$this->{$varName}->add" . $this->getRefFKPhpNameAffix($fk, $plural = true) . "(\$this);
              */";
         }
 
@@ -548,13 +581,14 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
         return \$this->$varName;
     }
 ";
-
     } // addFKAccessor
 
 
     /**
      * Adds the method that fetches fkey-related (referencing) objects but also joins in data from another table.
+     *
      * @param      string &$script The script will be modified in this method.
+     *
      * @throws EngineException
      */
     protected function addRefFKGetJoinMethods(&$script, ForeignKey $refFK)
@@ -564,7 +598,7 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
         $join_behavior = $this->getGeneratorConfig()->getBuildProperty('useLeftJoinsInDoJoinMethods') ? 'Criteria::LEFT_JOIN' : 'Criteria::INNER_JOIN';
 
         $peerClassname = $this->getStubPeerBuilder()->getClassname();
-        $relCol = $this->getRefFKPhpNameAffix($refFK, $plural=true);
+        $relCol = $this->getRefFKPhpNameAffix($refFK, $plural = true);
         $collName = $this->getRefFKCollVarName($refFK);
         $lastCriteriaName = $this->getRefFKLastCriteriaVarName($refFK);
 
@@ -584,8 +618,7 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
 
             $relCol2 = $this->getFKPhpNameAffix($fk2, $plural = false);
 
-            if ( $this->getRelatedBySuffix($refFK) != "" &&
-            ($this->getRelatedBySuffix($refFK) == $this->getRelatedBySuffix($fk2))) {
+            if ($this->getRelatedBySuffix($refFK) != "" && ($this->getRelatedBySuffix($refFK) == $this->getRelatedBySuffix($fk2))) {
                 $doJoinGet = false;
             }
 
@@ -595,15 +628,15 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
     /**
      * If this collection has already been initialized with
      * an identical criteria, it returns the collection.
-     * Otherwise if this ".$table->getPhpName()." is new, it will return
-     * an empty collection; or if this ".$table->getPhpName()." has previously
+     * Otherwise if this " . $table->getPhpName() . " is new, it will return
+     * an empty collection; or if this " . $table->getPhpName() . " has previously
      * been saved, it will retrieve related $relCol from storage.
      *
      * This method is protected by default in order to keep the public
      * api reasonable.  You can provide public methods for those you
-     * actually need in ".$table->getPhpName().".
+     * actually need in " . $table->getPhpName() . ".
      */
-    public function get".$relCol."Join".$relCol2."(\$criteria = null, \$con = null, \$join_behavior = $join_behavior)
+    public function get" . $relCol . "Join" . $relCol2 . "(\$criteria = null, \$con = null, \$join_behavior = $join_behavior)
     {";
                 $script .= "
         if (\$criteria === null) {
@@ -627,12 +660,12 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
                     }
                     $clo = strtolower($column->getName());
                     $script .= "
-                \$criteria->add(".$fkPeerBuilder->getColumnConstant($colFK).", \$this->$clo);
+                \$criteria->add(" . $fkPeerBuilder->getColumnConstant($colFK) . ", \$this->$clo);
 ";
                 } // end foreach ($fk->getForeignColumns()
 
                 $script .= "
-                \$this->$collName = ".$fkPeerBuilder->getPeerClassname()."::doSelectJoin$relCol2(\$criteria, \$con, \$join_behavior);
+                \$this->$collName = " . $fkPeerBuilder->getPeerClassname() . "::doSelectJoin$relCol2(\$criteria, \$con, \$join_behavior);
             }
         } else {
             // the following code is to determine if a new query is
@@ -646,13 +679,13 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
                     $colFK = $tblFK->getColumn($colFKName);
                     $clo = strtolower($column->getName());
                     $script .= "
-            \$criteria->add(".$fkPeerBuilder->getColumnConstant($colFK).", \$this->$clo);
+            \$criteria->add(" . $fkPeerBuilder->getColumnConstant($colFK) . ", \$this->$clo);
 ";
                 } /* end foreach ($fk->getForeignColumns() */
 
                 $script .= "
-            if (!isset(\$this->$lastCriteriaName) || !\$this->".$lastCriteriaName."->equals(\$criteria)) {
-                \$this->$collName = ".$fkPeerBuilder->getPeerClassname()."::doSelectJoin$relCol2(\$criteria, \$con, \$join_behavior);
+            if (!isset(\$this->$lastCriteriaName) || !\$this->" . $lastCriteriaName . "->equals(\$criteria)) {
+                \$this->$collName = " . $fkPeerBuilder->getPeerClassname() . "::doSelectJoin$relCol2(\$criteria, \$con, \$join_behavior);
             }
         }
         \$this->$lastCriteriaName = \$criteria;
@@ -661,13 +694,12 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
     }
 ";
             } /* end if ($doJoinGet) */
-
         } /* end foreach ($tblFK->getForeignKeys() as $fk2) { */
-
     } // function
 
     /**
      * Adds the method that initializes the referrer fkey collection.
+     *
      * @param      string &$script The script will be modified in this method.
      */
     protected function addRefFKInit(&$script, ForeignKey $refFK)
@@ -694,6 +726,7 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
 
     /**
      * Adds the method that adds an object into the referrer fkey collection.
+     *
      * @param      string &$script The script will be modified in this method.
      */
     protected function addRefFKAdd(&$script, ForeignKey $refFK)
@@ -714,14 +747,14 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
      * @return void
      * @throws PropelException
      */
-    public function add".$this->getRefFKPhpNameAffix($refFK, $plural = false)."($className \$l)
+    public function add" . $this->getRefFKPhpNameAffix($refFK, $plural = false) . "($className \$l)
     {
         if (\$this->$collName === null) {
-            \$this->init".$this->getRefFKPhpNameAffix($refFK, $plural = true)."();
+            \$this->init" . $this->getRefFKPhpNameAffix($refFK, $plural = true) . "();
         }
         if (!in_array(\$l, \$this->$collName, true)) { // only add it if the **same** object is not already associated
             array_push(\$this->$collName, \$l);
-            \$l->set".$this->getFKPhpNameAffix($refFK, $plural = false)."(\$this);
+            \$l->set" . $this->getFKPhpNameAffix($refFK, $plural = false) . "(\$this);
         }
     }
 ";
@@ -729,6 +762,7 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
 
     /**
      * Adds the method that returns the size of the referrer fkey collection.
+     *
      * @param      string &$script The script will be modified in this method.
      */
     protected function addRefFKCount(&$script, ForeignKey $refFK)
@@ -784,12 +818,12 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
             $colFK = $refFK->getTable()->getColumn($colFKName);
             $clo = strtolower($localColumn->getName());
             $script .= "
-                \$criteria->add(".$fkPeerBuilder->getColumnConstant($colFK).", \$this->$clo);
+                \$criteria->add(" . $fkPeerBuilder->getColumnConstant($colFK) . ", \$this->$clo);
 ";
         } // end foreach ($fk->getForeignColumns()
 
         $script .= "
-                \$count = ".$fkPeerBuilder->getPeerClassname()."::doCount(\$criteria, false, \$con);
+                \$count = " . $fkPeerBuilder->getPeerClassname() . "::doCount(\$criteria, false, \$con);
             }
         } else {
             // criteria has no effect for a new object
@@ -806,12 +840,12 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
             $clo = strtolower($localColumn->getName());
             $script .= "
 
-                \$criteria->add(".$fkPeerBuilder->getColumnConstant($colFK).", \$this->$clo);
+                \$criteria->add(" . $fkPeerBuilder->getColumnConstant($colFK) . ", \$this->$clo);
 ";
         } // foreach ($fk->getForeignColumns()
         $script .= "
-                if (!isset(\$this->$lastCriteriaName) || !\$this->".$lastCriteriaName."->equals(\$criteria)) {
-                    \$count = ".$fkPeerBuilder->getPeerClassname()."::doCount(\$criteria, false, \$con);
+                if (!isset(\$this->$lastCriteriaName) || !\$this->" . $lastCriteriaName . "->equals(\$criteria)) {
+                    \$count = " . $fkPeerBuilder->getPeerClassname() . "::doCount(\$criteria, false, \$con);
                 } else {
                     \$count = count(\$this->$collName);
                 }
@@ -827,6 +861,7 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
 
     /**
      * Adds the method that returns the referrer fkey collection.
+     *
      * @param      string &$script The script will be modified in this method.
      */
     protected function addRefFKGet(&$script, ForeignKey $refFK)
@@ -848,8 +883,8 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
      * Gets an array of $className objects which contain a foreign key that references this object.
      *
      * If this collection has already been initialized with an identical Criteria, it returns the collection.
-     * Otherwise if this ".$this->getObjectClassname()." has previously been saved, it will retrieve
-     * related $relCol from storage. If this ".$this->getObjectClassname()." is new, it will return
+     * Otherwise if this " . $this->getObjectClassname() . " has previously been saved, it will retrieve
+     * related $relCol from storage. If this " . $this->getObjectClassname() . " is new, it will return
      * an empty collection or the current collection, the criteria is ignored on a new object.
      *
      * @param      PropelPDO \$con
@@ -881,13 +916,13 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
             $clo = strtolower($localColumn->getName());
 
             $script .= "
-                \$criteria->add(".$fkPeerBuilder->getColumnConstant($colFK).", \$this->$clo);
+                \$criteria->add(" . $fkPeerBuilder->getColumnConstant($colFK) . ", \$this->$clo);
 ";
         } // end foreach ($fk->getForeignColumns()
 
         $script .= "
-                ".$fkPeerBuilder->getPeerClassname()."::addSelectColumns(\$criteria);
-                \$this->$collName = ".$fkPeerBuilder->getPeerClassname()."::doSelect(\$criteria, \$con);
+                " . $fkPeerBuilder->getPeerClassname() . "::addSelectColumns(\$criteria);
+                \$this->$collName = " . $fkPeerBuilder->getPeerClassname() . "::doSelect(\$criteria, \$con);
             }
         } else {
             // criteria has no effect for a new object
@@ -904,13 +939,13 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
             $clo = strtolower($localColumn->getName());
             $script .= "
 
-                \$criteria->add(".$fkPeerBuilder->getColumnConstant($colFK).", \$this->$clo);
+                \$criteria->add(" . $fkPeerBuilder->getColumnConstant($colFK) . ", \$this->$clo);
 ";
         } // foreach ($fk->getForeignColumns()
         $script .= "
-                ".$fkPeerBuilder->getPeerClassname()."::addSelectColumns(\$criteria);
-                if (!isset(\$this->$lastCriteriaName) || !\$this->".$lastCriteriaName."->equals(\$criteria)) {
-                    \$this->$collName = ".$fkPeerBuilder->getPeerClassname()."::doSelect(\$criteria, \$con);
+                " . $fkPeerBuilder->getPeerClassname() . "::addSelectColumns(\$criteria);
+                if (!isset(\$this->$lastCriteriaName) || !\$this->" . $lastCriteriaName . "->equals(\$criteria)) {
+                    \$this->$collName = " . $fkPeerBuilder->getPeerClassname() . "::doSelect(\$criteria, \$con);
                 }
             }
         }
@@ -924,6 +959,7 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
     /**
      * Adds the method that gets a one-to-one related referrer fkey.
      * This is for one-to-one relationship special case.
+     *
      * @param      string &$script The script will be modified in this method.
      */
     protected function addPKRefFKGet(&$script, ForeignKey $refFK)
@@ -945,7 +981,7 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
      * @return                 $className
      * @throws PropelException
      */
-    public function get".$this->getRefFKPhpNameAffix($refFK, $plural = false)."(PropelPDO \$con = null)
+    public function get" . $this->getRefFKPhpNameAffix($refFK, $plural = false) . "(PropelPDO \$con = null)
     {
 ";
         $script .= "
@@ -970,7 +1006,7 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
         }
 
         $script .= "
-            \$this->$varName = ".$joinedTableObjectBuilder->getPeerClassname()."::retrieveByPK(".implode(", ", $params).", \$con);
+            \$this->$varName = " . $joinedTableObjectBuilder->getPeerClassname() . "::retrieveByPK(" . implode(", ", $params) . ", \$con);
         }
 
         return \$this->$varName;

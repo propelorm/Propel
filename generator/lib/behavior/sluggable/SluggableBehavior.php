@@ -77,7 +77,7 @@ class SluggableBehavior extends Behavior
      *
      * @return string The code to put at the hook
      */
-    public function preSave($builder)
+    public function preSave(PHP5ObjectBuilder $builder)
     {
         $const = $builder->getColumnConstant($this->getColumnForParameter('slug_column'));
         $pattern = $this->getParameter('slug_pattern');
@@ -104,22 +104,22 @@ if (\$this->isColumnModified($const) && \$this->{$this->getColumnGetter()}()) {
     \$this->{$this->getColumnSetter()}(\$this->createSlug());";
         }
 
-    if (null == $pattern && false === $this->booleanValue($this->getParameter('permanent'))) {
-        $script .= "
+        if (null == $pattern && false === $this->booleanValue($this->getParameter('permanent'))) {
+            $script .= "
 } else {
     \$this->{$this->getColumnSetter()}(\$this->createSlug());
 }";
-    } else {
-        $script .= "
+        } else {
+            $script .= "
 } elseif (!\$this->{$this->getColumnGetter()}()) {
     \$this->{$this->getColumnSetter()}(\$this->createSlug());
 }";
-    }
+        }
 
         return $script;
     }
 
-    public function objectMethods($builder)
+    public function objectMethods(PHP5ObjectBuilder $builder)
     {
         $this->builder = $builder;
         $script = '';
@@ -201,7 +201,7 @@ protected function createRawSlug()
 {
     ";
         if ($pattern) {
-            $script .= "return '" . str_replace(array('{', '}'), array('\' . $this->cleanupSlugPart($this->get', '()) . \''), $pattern). "';";
+            $script .= "return '" . str_replace(array('{', '}'), array('\' . $this->cleanupSlugPart($this->get', '()) . \''), $pattern) . "';";
         } else {
             $script .= "return \$this->cleanupSlugPart(\$this->__toString());";
         }
@@ -292,10 +292,10 @@ protected static function limitSlugSize(\$slug, \$incrementReservedSpace = 3)
  * @param    int    \$alreadyExists   false for the first try, true for the second, and take the high count + 1
  * @return   string                   the unique slug
  */
-protected function makeSlugUnique(\$slug, \$separator = '" . $this->getParameter('separator') ."', \$alreadyExists = false)
+protected function makeSlugUnique(\$slug, \$separator = '" . $this->getParameter('separator') . "', \$alreadyExists = false)
 {";
-    $getter = $this->getColumnGetter();
-    $script .= "
+        $getter = $this->getColumnGetter();
+        $script .= "
     if (!\$alreadyExists) {
         \$slug2 = \$slug;
     } else {
@@ -323,7 +323,7 @@ protected function makeSlugUnique(\$slug, \$separator = '" . $this->getParameter
 
         if ($this->getParameter('scope_column')) {
             $getter = 'get' . $this->getColumnForParameter('scope_column')->getPhpName();
-            $script .="
+            $script .= "
             ->filterBy('{$this->getColumnForParameter('scope_column')->getPhpName()}', \$this->{$getter}())";
         }
         // watch out: some of the columns may be hidden by the soft_delete behavior
@@ -364,7 +364,7 @@ protected function makeSlugUnique(\$slug, \$separator = '" . $this->getParameter
 ";
     }
 
-    public function queryMethods($builder)
+    public function queryMethods(QueryBuilder $builder)
     {
         $this->builder = $builder;
         $script = '';

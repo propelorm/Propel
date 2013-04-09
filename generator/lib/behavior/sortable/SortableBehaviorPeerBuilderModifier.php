@@ -50,8 +50,8 @@ class SortableBehaviorPeerBuilderModifier
     {
         $this->builder = $builder;
         $this->objectClassname = $builder->getStubObjectBuilder()->getClassname();
-        $this->peerClassname   = $builder->getStubPeerBuilder()->getClassname();
-        $this->queryClassname  = $builder->getStubQueryBuilder()->getClassname();
+        $this->peerClassname = $builder->getStubPeerBuilder()->getClassname();
+        $this->queryClassname = $builder->getStubQueryBuilder()->getClassname();
 
         $builder->declareClassFromBuilder($builder->getStubObjectBuilder());
         $builder->declareClassFromBuilder($builder->getStubQueryBuilder());
@@ -68,7 +68,7 @@ const RANK_COL = '" . $tableName . '.' . $this->getColumnConstant('rank_column')
 ";
 
         if ($this->behavior->useScope()) {
-            $script .= 	"
+            $script .= "
 /**
  * Scope column for the set
  */
@@ -128,7 +128,7 @@ public static function getMaxRank(" . ($useScope ? "\$scope = null, " : "") . "P
     \$c = new Criteria();
     \$c->addSelectColumn('MAX(' . {$this->peerClassname}::RANK_COL . ')');";
         if ($useScope) {
-        $script .= "
+            $script .= "
     \$c->add({$this->peerClassname}::SCOPE_COL, \$scope, Criteria::EQUAL);";
         }
         $script .= "
@@ -324,6 +324,7 @@ public static function deleteList(\$scope, PropelPDO \$con = null)
 }
 ";
     }
+
     protected function addShiftRank(&$script)
     {
         $useScope = $this->behavior->useScope();

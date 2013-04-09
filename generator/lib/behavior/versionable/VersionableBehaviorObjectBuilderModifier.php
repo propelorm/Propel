@@ -67,7 +67,7 @@ class VersionableBehaviorObjectBuilderModifier
         return $this->builder->getStubObjectBuilder()->getClassname();
     }
 
-    protected function setBuilder($builder)
+    protected function setBuilder(PHP5ObjectBuilder $builder)
     {
         $this->builder = $builder;
         $this->objectClassname = $builder->getStubObjectBuilder()->getClassname();
@@ -77,6 +77,8 @@ class VersionableBehaviorObjectBuilderModifier
 
     /**
      * Get the getter of the column of the behavior
+     *
+     * @param string $name
      *
      * @return string The related getter, e.g. 'getVersion'
      */
@@ -88,6 +90,8 @@ class VersionableBehaviorObjectBuilderModifier
     /**
      * Get the setter of the column of the behavior
      *
+     * @param string $name
+     *
      * @return string The related setter, e.g. 'setVersion'
      */
     protected function getColumnSetter($name = 'version_column')
@@ -95,7 +99,7 @@ class VersionableBehaviorObjectBuilderModifier
         return 'set' . $this->getColumnPhpName($name);
     }
 
-    public function preSave($builder)
+    public function preSave(PHP5ObjectBuilder $builder)
     {
         $script = "if (\$this->isVersioningNecessary()) {
     \$this->set{$this->getColumnPhpName()}(\$this->isNew() ? 1 : \$this->getLastVersionNumber(\$con) + 1);";
@@ -122,14 +126,14 @@ class VersionableBehaviorObjectBuilderModifier
         return $script;
     }
 
-    public function postSave($builder)
+    public function postSave(PHP5ObjectBuilder $builder)
     {
         return "if (isset(\$createVersion)) {
     \$this->addVersion(\$con);
 }";
     }
 
-    public function postDelete($builder)
+    public function postDelete(PHP5ObjectBuilder $builder)
     {
         $this->builder = $builder;
         if (!$builder->getPlatform()->supportsNativeDeleteTrigger() && !$builder->getBuildProperty('emulateForeignKeyConstraints')) {
@@ -142,7 +146,7 @@ class VersionableBehaviorObjectBuilderModifier
         }
     }
 
-    public function objectAttributes($builder)
+    public function objectAttributes(PHP5ObjectBuilder $builder)
     {
         $script = '';
 
@@ -162,7 +166,7 @@ protected \$enforceVersion = false;
         ";
     }
 
-    public function objectMethods($builder)
+    public function objectMethods(PHP5ObjectBuilder $builder)
     {
         $this->setBuilder($builder);
         $script = '';
@@ -368,7 +372,7 @@ public function addVersion(\$con = null)
             }
         }
 
-            $script .= "
+        $script .= "
     \$version->save(\$con);
 
     return \$version;
@@ -696,7 +700,7 @@ protected function computeDiff(\$fromVersion, \$toVersion, \$keys = 'columns', \
     return \$diff;
 }
 ";
-  }
+    }
 
     protected function addCompareVersion(&$script)
     {
@@ -726,7 +730,7 @@ public function compareVersion(\$versionNumber, \$keys = 'columns', \$con = null
     return \$this->computeDiff(\$fromVersion, \$toVersion, \$keys, \$ignoredColumns);
 }
 ";
-  }
+    }
 
     protected function addCompareVersions(&$script)
     {
@@ -766,7 +770,7 @@ public function compareVersions(\$fromVersionNumber, \$toVersionNumber, \$keys =
         $versionForeignColumn = $versionTable->getColumn($this->behavior->getParameter('version_column'));
         $fks = $versionTable->getForeignKeysReferencingTable($this->table->getName());
         $relCol = $this->builder->getRefFKPhpNameAffix($fks[0], $plural = true);
-        $versionGetter = 'get'.$relCol;
+        $versionGetter = 'get' . $relCol;
         $versionPeerBuilder = $this->builder->getNewStubPeerBuilder($versionTable);
         $this->builder->declareClassFromBuilder($versionPeerBuilder);
         $versionPeer = $versionPeerBuilder->getClassname();
@@ -790,5 +794,5 @@ public function getLastVersions(\$number = 10, \$criteria = null, PropelPDO \$co
     return \$this->{$versionGetter}(\$criteria, \$con);
 }
 EOF;
-  }
+    }
 }

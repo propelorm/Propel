@@ -61,7 +61,7 @@ class PropelSchemaValidator
             if (in_array($table->getPhpName(), $list)) {
                 $this->errors[] = sprintf('Table "%s" declares a phpName already used in another table', $table->getName());
             }
-            $list[]= $table->getPhpName();
+            $list[] = $table->getPhpName();
             $this->validateTableAttributes($table);
             $this->validateTableColumns($table);
         }
@@ -97,7 +97,7 @@ class PropelSchemaValidator
             if (in_array($column->getPhpName(), $phpNames)) {
                 $this->errors[] = sprintf('Column "%s" declares a phpName already used in table "%s"', $column->getName(), $table->getName());
             }
-            $phpNames[]= $column->getPhpName();
+            $phpNames[] = $column->getPhpName();
         }
     }
 
@@ -108,5 +108,4 @@ class PropelSchemaValidator
     {
         return $this->errors;
     }
-
 }

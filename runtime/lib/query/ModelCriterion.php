@@ -36,14 +36,14 @@ class ModelCriterion extends Criterion
             $this->column = $column->getName();
             $this->table = $column->getTable()->getName();
         } else {
-            $dotPos = strrpos($column,'.');
+            $dotPos = strrpos($column, '.');
             if ($dotPos === false) {
                 // no dot => aliased column
                 $this->table = null;
                 $this->column = $column;
             } else {
                 $this->table = substr($column, 0, $dotPos);
-                $this->column = substr($column, $dotPos+1, strlen($column));
+                $this->column = substr($column, $dotPos + 1, strlen($column));
             }
         }
         $this->comparison = ($comparison === null ? Criteria::EQUAL : $comparison);
@@ -110,7 +110,6 @@ class ModelCriterion extends Criterion
             default:
                 // table.column = ? or table.column >= ? etc. (traditional expressions, the default)
                 $this->appendBasicToPs($sb, $params);
-
         }
     }
 
@@ -125,7 +124,7 @@ class ModelCriterion extends Criterion
     {
         if ($this->value !== null) {
             $params[] = array('table' => $this->realtable, 'column' => $this->column, 'value' => $this->value);
-            $sb .= str_replace('?', ':p'.count($params), $this->clause);
+            $sb .= str_replace('?', ':p' . count($params), $this->clause);
         } else {
             $sb .= $this->clause;
         }
@@ -169,7 +168,7 @@ class ModelCriterion extends Criterion
                 throw new PropelException('Null values are not supported inside BETWEEN clauses');
             }
             $params[] = array('table' => $this->realtable, 'column' => $this->column, 'value' => $value);
-            $clause = self::strReplaceOnce('?', ':p'.count($params), $clause);
+            $clause = self::strReplaceOnce('?', ':p' . count($params), $clause);
         }
         $sb .= $clause;
     }
@@ -186,17 +185,17 @@ class ModelCriterion extends Criterion
         $_bindParams = array(); // the param names used in query building
         $_idxstart = count($params);
         $valuesLength = 0;
-        foreach ( (array) $this->value as $value ) {
+        foreach ((array) $this->value as $value) {
             $valuesLength++; // increment this first to correct for wanting bind params to start with :p1
             $params[] = array('table' => $this->realtable, 'column' => $this->column, 'value' => $value);
-            $_bindParams[] = ':p'.($_idxstart + $valuesLength);
+            $_bindParams[] = ':p' . ($_idxstart + $valuesLength);
         }
         if ($valuesLength !== 0) {
             $sb .= str_replace('?', '(' . implode(',', $_bindParams) . ')', $this->clause);
         } else {
             $sb .= (stripos($this->clause, ' NOT IN ') === false) ? "1<>1" : "1=1";
         }
-        unset ( $value, $valuesLength );
+        unset($value, $valuesLength);
     }
 
     /**
@@ -220,6 +219,7 @@ class ModelCriterion extends Criterion
     /**
      * This method checks another Criteria to see if they contain
      * the same attributes and hashtable entries.
+     *
      * @return boolean
      */
     public function equals($obj)
@@ -248,7 +248,7 @@ class ModelCriterion extends Criterion
         $isEquiv &= (count($crit->getClauses()) == $clausesLength);
         $critConjunctions = $crit->getConjunctions();
         $critClauses = $crit->getClauses();
-        for ($i=0; $i < $clausesLength && $isEquiv; $i++) {
+        for ($i = 0; $i < $clausesLength && $isEquiv; $i++) {
             $isEquiv &= ($this->conjunctions[$i] === $critConjunctions[$i]);
             $isEquiv &= ($this->clauses[$i] === $critClauses[$i]);
         }
@@ -282,9 +282,9 @@ class ModelCriterion extends Criterion
             // $clause->appendPsTo($sb='',$params=array());
             $sb = '';
             $params = array();
-            $clause->appendPsTo($sb,$params);
-            $h ^= crc32(serialize(array($sb,$params)));
-            unset ( $sb, $params );
+            $clause->appendPsTo($sb, $params);
+            $h ^= crc32(serialize(array($sb, $params)));
+            unset($sb, $params);
         }
 
         return $h;
@@ -299,10 +299,10 @@ class ModelCriterion extends Criterion
     {
         $firstChar = strpos($subject, $search);
         if ($firstChar !== false) {
-            $beforeStr = substr($subject,0,$firstChar);
+            $beforeStr = substr($subject, 0, $firstChar);
             $afterStr = substr($subject, $firstChar + strlen($search));
 
-            return $beforeStr.$replace.$afterStr;
+            return $beforeStr . $replace . $afterStr;
         } else {
             return $subject;
         }

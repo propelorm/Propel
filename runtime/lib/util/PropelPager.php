@@ -114,6 +114,7 @@ class PropelPager implements Countable, Iterator
 
     /**
      * Create a new Propel Pager.
+     *
      * @param Criteria $c
      * @param string   $peerClass        The name of the static Peer class.
      * @param string   $peerSelectMethod The name of the static method for selecting content from the Peer class.
@@ -135,7 +136,9 @@ class PropelPager implements Countable, Iterator
 
     /**
      * Set the criteria for this pager.
+     *
      * @param  Criteria $c
+     *
      * @return void
      */
     public function setCriteria(Criteria $c)
@@ -145,6 +148,7 @@ class PropelPager implements Countable, Iterator
 
     /**
      * Return the Criteria object for this pager.
+     *
      * @return Criteria
      */
     public function getCriteria()
@@ -156,6 +160,7 @@ class PropelPager implements Countable, Iterator
      * Set the Peer Classname
      *
      * @param  string $class
+     *
      * @return void
      */
     public function setPeerClass($class)
@@ -165,6 +170,7 @@ class PropelPager implements Countable, Iterator
 
     /**
      * Return the Peer Classname.
+     *
      * @return string
      */
     public function getPeerClass()
@@ -175,7 +181,9 @@ class PropelPager implements Countable, Iterator
     /**
      * Set the Peer select method.
      * This exists for legacy support, please use setPeerSelectMethod().
+     *
      * @param  string $method The name of the static method to call on the Peer class.
+     *
      * @return void
      * @see        setPeerSelectMethod()
      * @deprecated
@@ -188,6 +196,7 @@ class PropelPager implements Countable, Iterator
     /**
      * Return the Peer select method.
      * This exists for legacy support, please use getPeerSelectMethod().
+     *
      * @return string
      * @see        getPeerSelectMethod()
      * @deprecated
@@ -201,6 +210,7 @@ class PropelPager implements Countable, Iterator
      * Set the Peer select method.
      *
      * @param  string $method The name of the static method to call on the Peer class.
+     *
      * @return void
      */
     public function setPeerSelectMethod($method)
@@ -210,6 +220,7 @@ class PropelPager implements Countable, Iterator
 
     /**
      * Return the Peer select method.
+     *
      * @return string
      */
     public function getPeerSelectMethod()
@@ -221,6 +232,7 @@ class PropelPager implements Countable, Iterator
      * Sets the Count method.
      * This is set based on the Peer method, for example if Peer method is doSelectJoin*() then the
      * count method will be doCountJoin*().
+     *
      * @param string $method The name of the static method to call on the Peer class.
      */
     public function setPeerCountMethod($method)
@@ -244,7 +256,7 @@ class PropelPager implements Countable, Iterator
         $selectMethod = $this->getPeerSelectMethod();
         if ($selectMethod == 'doSelect') {
             $countMethod = 'doCount';
-        } elseif ( ($pos = stripos($selectMethod, 'doSelectJoin')) === 0) {
+        } elseif (($pos = stripos($selectMethod, 'doSelectJoin')) === 0) {
             $countMethod = 'doCount' . substr($selectMethod, strlen('doSelect'));
         } else {
             // we will fall back to doCount() if we don't understand the join
@@ -341,9 +353,9 @@ class PropelPager implements Countable, Iterator
         if (!isset($this->pages)) {
             $recordCount = $this->getTotalRecordCount();
             if ($this->max > 0) {
-                    $this->pages = ceil($recordCount/$this->max);
+                $this->pages = ceil($recordCount / $this->max);
             } else {
-                    $this->pages = 0;
+                $this->pages = 0;
             }
         }
 
@@ -354,6 +366,7 @@ class PropelPager implements Countable, Iterator
      * get an array of previous id's
      *
      * @param  int   $range
+     *
      * @return array $links
      */
     public function getPrevLinks($range = 5)
@@ -361,11 +374,11 @@ class PropelPager implements Countable, Iterator
         $total = $this->getTotalPages();
         $start = $this->getPage() - 1;
         $end = $this->getPage() - $range;
-        $first =  $this->getFirstPage();
+        $first = $this->getFirstPage();
         $links = array();
-        for ($i=$start; $i>$end; $i--) {
+        for ($i = $start; $i > $end; $i--) {
             if ($i < $first) {
-                    break;
+                break;
             }
             $links[] = $i;
         }
@@ -377,6 +390,7 @@ class PropelPager implements Countable, Iterator
      * get an array of next id's
      *
      * @param  int   $range
+     *
      * @return array $links
      */
     public function getNextLinks($range = 5)
@@ -384,11 +398,11 @@ class PropelPager implements Countable, Iterator
         $total = $this->getTotalPages();
         $start = $this->getPage() + 1;
         $end = $this->getPage() + $range;
-        $last =  $this->getLastPage();
+        $last = $this->getLastPage();
         $links = array();
-        for ($i=$start; $i<$end; $i++) {
+        for ($i = $start; $i < $end; $i++) {
             if ($i > $last) {
-                    break;
+                break;
             }
             $links[] = $i;
         }
@@ -414,9 +428,9 @@ class PropelPager implements Countable, Iterator
     public function getPrev()
     {
         if ($this->getPage() != $this->getFirstPage()) {
-                $prev = $this->getPage() - 1;
+            $prev = $this->getPage() - 1;
         } else {
-                $prev = false;
+            $prev = false;
         }
 
         return $prev;
@@ -430,9 +444,9 @@ class PropelPager implements Countable, Iterator
     public function getNext()
     {
         if ($this->getPage() != $this->getLastPage()) {
-                $next = $this->getPage() + 1;
+            $next = $this->getPage() + 1;
         } else {
-                $next = false;
+            $next = false;
         }
 
         return $next;
@@ -440,7 +454,9 @@ class PropelPager implements Countable, Iterator
 
     /**
      * Set the current page number (First page is 1).
+     *
      * @param  int  $page
+     *
      * @return void
      */
     public function setPage($page)
@@ -452,6 +468,7 @@ class PropelPager implements Countable, Iterator
 
     /**
      * Get current page.
+     *
      * @return int
      */
     public function getPage()
@@ -461,6 +478,7 @@ class PropelPager implements Countable, Iterator
 
     /**
      * Set the number of rows per page.
+     *
      * @param int $r
      */
     public function setRowsPerPage($r)
@@ -472,6 +490,7 @@ class PropelPager implements Countable, Iterator
 
     /**
      * Get number of rows per page.
+     *
      * @return int
      */
     public function getRowsPerPage()
@@ -481,11 +500,12 @@ class PropelPager implements Countable, Iterator
 
     /**
      * Calculate startrow / max rows based on current page and rows-per-page.
+     *
      * @return void
      */
     private function calculateStart()
     {
-        $this->start = ( ($this->page - 1) * $this->max );
+        $this->start = (($this->page - 1) * $this->max);
     }
 
     /**
@@ -498,31 +518,24 @@ class PropelPager implements Countable, Iterator
     public function getTotalRecordCount()
     {
 
-                if (!isset($this->rs)) {
-                    $this->doRs();
-                }
+        if (!isset($this->rs)) {
+            $this->doRs();
+        }
 
-                if (empty($this->recordCount)) {
-                        $this->countCriteria = clone $this->criteria;
-                        $this->countCriteria->setLimit(0);
-                        $this->countCriteria->setOffset(0);
+        if (empty($this->recordCount)) {
+            $this->countCriteria = clone $this->criteria;
+            $this->countCriteria->setLimit(0);
+            $this->countCriteria->setOffset(0);
 
-                        $this->recordCount = call_user_func(
-                                        array(
-                                                $this->getPeerClass(),
-                                                $this->getPeerCountMethod()
-                                             ),
-                                        $this->countCriteria
-                                        );
+            $this->recordCount = call_user_func(array($this->getPeerClass(), $this->getPeerCountMethod()), $this->countCriteria);
+        }
 
-                }
-
-                return $this->recordCount;
-
+        return $this->recordCount;
     }
 
     /**
      * Sets the start row or offset.
+     *
      * @param int $v
      */
     public function setStart($v)
@@ -532,7 +545,9 @@ class PropelPager implements Countable, Iterator
 
     /**
      * Sets max rows (limit).
+     *
      * @param  int  $v
+     *
      * @return void
      */
     public function setMax($v)
@@ -542,6 +557,7 @@ class PropelPager implements Countable, Iterator
 
     /**
      * Returns the count of the current page's records
+     *
      * @return int
      */
     public function count()
@@ -551,6 +567,7 @@ class PropelPager implements Countable, Iterator
 
     /**
      * Returns the current element of the iterator
+     *
      * @return mixed
      */
     public function current()
@@ -564,6 +581,7 @@ class PropelPager implements Countable, Iterator
 
     /**
      * Returns the current key of the iterator
+     *
      * @return int
      */
     public function key()
@@ -573,6 +591,7 @@ class PropelPager implements Countable, Iterator
 
     /**
      * Advances the iterator to the next element
+     *
      * @return void
      */
     public function next()
@@ -582,6 +601,7 @@ class PropelPager implements Countable, Iterator
 
     /**
      * Resets the iterator to the first element
+     *
      * @return void
      */
     public function rewind()
@@ -591,6 +611,7 @@ class PropelPager implements Countable, Iterator
 
     /**
      * Checks if the current key exists in the container
+     *
      * @return boolean
      */
     public function valid()
@@ -601,5 +622,4 @@ class PropelPager implements Countable, Iterator
 
         return in_array($this->currentKey, array_keys($this->rs));
     }
-
 }

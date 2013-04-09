@@ -36,10 +36,7 @@ class PropelMigrationDownTask extends BasePropelMigrationTask
 
             return false;
         }
-        $this->log(sprintf(
-            'Executing migration %s down',
-            $manager->getMigrationClassName($nextMigrationTimestamp)
-        ));
+        $this->log(sprintf('Executing migration %s down', $manager->getMigrationClassName($nextMigrationTimestamp)));
 
         if ($nbPreviousTimestamps = count($previousTimestamps)) {
             $previousTimestamp = array_pop($previousTimestamps);

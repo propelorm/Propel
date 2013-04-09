@@ -43,16 +43,20 @@ class DefaultPlatform implements PropelPlatformInterface
 
     /**
      * Default constructor.
+     *
      * @param PDO $con Optional database connection to use in this platform.
      */
     public function __construct(PDO $con = null)
     {
-        if ($con) $this->setConnection($con);
+        if ($con) {
+            $this->setConnection($con);
+        }
         $this->initialize();
     }
 
     /**
      * Set the database connection to use for this Platform class.
+     *
      * @param PDO $con Database connection to use in this platform.
      */
     public function setConnection(PDO $con = null)
@@ -62,6 +66,7 @@ class DefaultPlatform implements PropelPlatformInterface
 
     /**
      * Returns the database connection to use for this Platform class.
+     *
      * @return PDO The database connection or NULL if none has been set.
      */
     public function getConnection()
@@ -83,6 +88,7 @@ class DefaultPlatform implements PropelPlatformInterface
      * Gets a specific propel (renamed) property from the build.
      *
      * @param  string $name
+     *
      * @return mixed
      */
     protected function getBuildProperty($name)
@@ -113,6 +119,7 @@ class DefaultPlatform implements PropelPlatformInterface
 
     /**
      * Adds a mapping entry for specified Domain.
+     *
      * @param Domain $domain
      */
     protected function setSchemaDomainMapping(Domain $domain)
@@ -123,6 +130,7 @@ class DefaultPlatform implements PropelPlatformInterface
     /**
      * Returns the short name of the database type that this platform represents.
      * For example MysqlPlatform->getDatabaseType() returns 'mysql'.
+     *
      * @return string
      */
     public function getDatabaseType()
@@ -130,7 +138,7 @@ class DefaultPlatform implements PropelPlatformInterface
         $clazz = get_class($this);
         $pos = strpos($clazz, 'Platform');
 
-        return strtolower(substr($clazz,0,$pos));
+        return strtolower(substr($clazz, 0, $pos));
     }
 
     /**
@@ -162,6 +170,7 @@ class DefaultPlatform implements PropelPlatformInterface
      * Returns the db specific domain for a propelType.
      *
      * @param  string          $propelType the Propel type name.
+     *
      * @return Domain          The db specific domain.
      * @throws EngineException
      */
@@ -215,7 +224,7 @@ class DefaultPlatform implements PropelPlatformInterface
                     }
                     $result = substr($table->getName(), 0, $maxIdentifierLength - strlen("_SEQ_" . $longNamesMap[$table->getName()])) . "_SEQ_" . $longNamesMap[$table->getName()];
                 } else {
-                    $result = substr($table->getName(), 0, $maxIdentifierLength -4) . "_SEQ";
+                    $result = substr($table->getName(), 0, $maxIdentifierLength - 4) . "_SEQ";
                 }
             } else {
                 $result = substr($idMethodParams[0]->getValue(), 0, $maxIdentifierLength);
@@ -266,6 +275,7 @@ class DefaultPlatform implements PropelPlatformInterface
 
     /**
      * Builds the DDL SQL to drop a table
+     *
      * @return string
      */
     public function getDropTableDDL(Table $table)
@@ -309,21 +319,18 @@ DROP TABLE " . $this->quoteIdentifier($table->getName()) . ";
 );
 ";
 
-        return sprintf($pattern,
-            $tableDescription,
-            $this->quoteIdentifier($table->getName()),
-            implode($sep, $lines)
-        );
+        return sprintf($pattern, $tableDescription, $this->quoteIdentifier($table->getName()), implode($sep, $lines));
     }
 
     /**
      * Builds the DDL SQL for a Column object.
+     *
      * @return string
      */
     public function getColumnDDL(Column $col)
     {
-        $domain  = $col->getDomain();
-        $ddl     = array($this->quoteIdentifier($col->getName()));
+        $domain = $col->getDomain();
+        $ddl = array($this->quoteIdentifier($col->getName()));
         $sqlType = $domain->getSqlType();
 
         if ($this->hasSize($sqlType) && $col->isDefaultSqlType($this)) {
@@ -349,6 +356,7 @@ DROP TABLE " . $this->quoteIdentifier($table->getName()) . ";
 
     /**
      * Returns the SQL for the default value of a Column object
+     *
      * @return string
      */
     public function getColumnDefaultValueDDL(Column $col)
@@ -385,11 +393,13 @@ DROP TABLE " . $this->quoteIdentifier($table->getName()) . ";
 
     /**
      * Creates a delimiter-delimited string list of column names, quoted using quoteIdentifier().
+     *
      * @example
      * <code>
      * echo $platform->getColumnListDDL(array('foo', 'bar');
      * // '"foo","bar"'
      * </code>
+     *
      * @param      array Column[] or string[]
      * @param string $delim The delimiter to use in separating the column names.
      *
@@ -410,6 +420,7 @@ DROP TABLE " . $this->quoteIdentifier($table->getName()) . ";
 
     /**
      * Returns the name of a table primary key
+     *
      * @return string
      */
     public function getPrimaryKeyName(Table $table)
@@ -421,6 +432,7 @@ DROP TABLE " . $this->quoteIdentifier($table->getName()) . ";
 
     /**
      * Returns the SQL for the primary key of a Table object
+     *
      * @return string
      */
     public function getPrimaryKeyDDL(Table $table)
@@ -434,6 +446,7 @@ DROP TABLE " . $this->quoteIdentifier($table->getName()) . ";
      * Builds the DDL SQL to drop the primary key of a table.
      *
      * @param  Table  $table
+     *
      * @return string
      */
     public function getDropPrimaryKeyDDL(Table $table)
@@ -452,6 +465,7 @@ ALTER TABLE %s DROP CONSTRAINT %s;
      * Builds the DDL SQL to add the primary key of a table.
      *
      * @param  Table  $table
+     *
      * @return string
      */
     public function getAddPrimaryKeyDDL(Table $table)
@@ -470,6 +484,7 @@ ALTER TABLE %s ADD %s;
      * Builds the DDL SQL to add the indices of a table.
      *
      * @param  Table  $table
+     *
      * @return string
      */
     public function getAddIndicesDDL(Table $table)
@@ -486,6 +501,7 @@ ALTER TABLE %s ADD %s;
      * Builds the DDL SQL to add an Index.
      *
      * @param  Index  $index
+     *
      * @return string
      */
     public function getAddIndexDDL(Index $index)
@@ -506,6 +522,7 @@ CREATE %sINDEX %s ON %s (%s);
      * Builds the DDL SQL to drop an Index.
      *
      * @param  Index  $index
+     *
      * @return string
      */
     public function getDropIndexDDL(Index $index)
@@ -514,41 +531,38 @@ CREATE %sINDEX %s ON %s (%s);
 DROP INDEX %s;
 ";
 
-        return sprintf($pattern,
-            $this->quoteIdentifier($index->getName())
-        );
+        return sprintf($pattern, $this->quoteIdentifier($index->getName()));
     }
 
     /**
      * Builds the DDL SQL for an Index object.
      *
      * @param  Index  $index
+     *
      * @return string
      */
     public function getIndexDDL(Index $index)
     {
-        return sprintf('%sINDEX %s (%s)',
-            $index->getIsUnique() ? 'UNIQUE ' : '',
-            $this->quoteIdentifier($index->getName()),
-            $this->getColumnListDDL($index->getColumns())
-        );
+        return sprintf('%sINDEX %s (%s)', $index->getIsUnique() ? 'UNIQUE ' : '', $this->quoteIdentifier($index->getName()), $this->getColumnListDDL($index->getColumns()));
     }
 
     /**
      * Builds the DDL SQL for a Unique constraint object.
      *
      * @param  Unique $unique
+     *
      * @return string
      */
     public function getUniqueDDL(Unique $unique)
     {
-        return sprintf('UNIQUE (%s)' , $this->getColumnListDDL($unique->getColumns()));
+        return sprintf('UNIQUE (%s)', $this->getColumnListDDL($unique->getColumns()));
     }
 
     /**
      * Builds the DDL SQL to add the foreign keys of a table.
      *
      * @param  Table  $table
+     *
      * @return string
      */
     public function getAddForeignKeysDDL(Table $table)
@@ -565,6 +579,7 @@ DROP INDEX %s;
      * Builds the DDL SQL to add a foreign key.
      *
      * @param  ForeignKey $fk
+     *
      * @return string
      */
     public function getAddForeignKeyDDL(ForeignKey $fk)
@@ -586,6 +601,7 @@ ALTER TABLE %s ADD %s;
      * Builds the DDL SQL to drop a foreign key.
      *
      * @param  ForeignKey $fk
+     *
      * @return string
      */
     public function getDropForeignKeyDDL(ForeignKey $fk)
@@ -605,6 +621,7 @@ ALTER TABLE %s DROP CONSTRAINT %s;
 
     /**
      * Builds the DDL SQL for a ForeignKey object.
+     *
      * @return string
      */
     public function getForeignKeyDDL(ForeignKey $fk)
@@ -690,6 +707,7 @@ ALTER TABLE %s DROP CONSTRAINT %s;
 
     /**
      * Builds the DDL SQL to rename a table
+     *
      * @return string
      */
     public function getRenameTableDDL($fromTableName, $toTableName)
@@ -889,6 +907,7 @@ ALTER TABLE %s DROP COLUMN %s;
 
     /**
      * Builds the DDL SQL to rename a column
+     *
      * @return string
      */
     public function getRenameColumnDDL($fromColumn, $toColumn)
@@ -936,7 +955,7 @@ ALTER TABLE %s MODIFY %s;
             if (null === $tableName) {
                 $tableName = $toColumn->getTable()->getName();
             }
-            $lines []= $this->getColumnDDL($toColumn);
+            $lines[] = $this->getColumnDDL($toColumn);
         }
 
         $sep = ",
@@ -985,7 +1004,7 @@ ALTER TABLE %s ADD %s;
             if (null === $tableName) {
                 $tableName = $column->getTable()->getName();
             }
-            $lines []= $this->getColumnDDL($column);
+            $lines[] = $this->getColumnDDL($column);
         }
 
         $sep = ",
@@ -998,16 +1017,14 @@ ALTER TABLE %s ADD
 );
 ";
 
-        return sprintf($pattern,
-            $this->quoteIdentifier($tableName),
-            implode($sep, $lines)
-        );
+        return sprintf($pattern, $this->quoteIdentifier($tableName), implode($sep, $lines));
     }
 
     /**
      * Returns if the RDBMS-specific SQL type has a size attribute.
      *
      * @param  string  $sqlType the SQL type
+     *
      * @return boolean True if the type has a size attribute
      */
     public function hasSize($sqlType)
@@ -1019,6 +1036,7 @@ ALTER TABLE %s ADD
      * Returns if the RDBMS-specific SQL type has a scale attribute.
      *
      * @param  string  $sqlType the SQL type
+     *
      * @return boolean True if the type has a scale attribute
      */
     public function hasScale($sqlType)
@@ -1028,7 +1046,9 @@ ALTER TABLE %s ADD
 
     /**
      * Quote and escape needed characters in the string for underlying RDBMS.
+     *
      * @param  string $text
+     *
      * @return string
      */
     public function quote($text)
@@ -1047,6 +1067,7 @@ ALTER TABLE %s ADD
      * or native DB methods.
      *
      * @param  string $text Text that needs to be escaped.
+     *
      * @return string
      */
     protected function disconnectedEscapeText($text)
@@ -1056,7 +1077,9 @@ ALTER TABLE %s ADD
 
     /**
      * Quotes identifiers used in database SQL.
+     *
      * @param  string $text
+     *
      * @return string Quoted identifier.
      */
     public function quoteIdentifier($text)
@@ -1076,6 +1099,7 @@ ALTER TABLE %s ADD
 
     /**
      * Whether RDBMS supports native ON DELETE triggers (e.g. ON DELETE CASCADE).
+     *
      * @return boolean
      */
     public function supportsNativeDeleteTrigger()
@@ -1085,6 +1109,7 @@ ALTER TABLE %s ADD
 
     /**
      * Whether RDBMS supports INSERT null values in autoincremented primary keys
+     *
      * @return boolean
      */
     public function supportsInsertNullPk()
@@ -1094,6 +1119,7 @@ ALTER TABLE %s ADD
 
     /**
      * Whether the underlying PDO driver for this platform returns BLOB columns as streams (instead of strings).
+     *
      * @return boolean
      */
     public function hasStreamBlobImpl()
@@ -1122,6 +1148,7 @@ ALTER TABLE %s ADD
     {
         return false;
     }
+
     /**
      * Returns the boolean value for the RDBMS.
      *
@@ -1132,6 +1159,7 @@ ALTER TABLE %s ADD
      * SQL.
      *
      * @param  mixed $tf A boolean or string representation of boolean ('y', 'true').
+     *
      * @return mixed
      */
     public function getBooleanString($b)
@@ -1164,6 +1192,7 @@ ALTER TABLE %s ADD
 
     /**
      * Gets the preferred timestamp formatter for setting date/time values.
+     *
      * @return string
      */
     public function getTimestampFormatter()
@@ -1173,6 +1202,7 @@ ALTER TABLE %s ADD
 
     /**
      * Gets the preferred time formatter for setting date/time values.
+     *
      * @return string
      */
     public function getTimeFormatter()
@@ -1182,6 +1212,7 @@ ALTER TABLE %s ADD
 
     /**
      * Gets the preferred date formatter for setting date/time values.
+     *
      * @return string
      */
     public function getDateFormatter()

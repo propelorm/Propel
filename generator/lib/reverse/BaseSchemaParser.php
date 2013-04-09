@@ -22,6 +22,7 @@ abstract class BaseSchemaParser implements SchemaParser
 
     /**
      * The database connection.
+     *
      * @var        PDO
      */
     protected $dbh;
@@ -43,6 +44,7 @@ abstract class BaseSchemaParser implements SchemaParser
     /**
      * Map native DB types to Propel types.
      * (Override in subclasses.)
+     *
      * @var        array
      */
     protected $nativeToPropelTypeMap;
@@ -68,7 +70,9 @@ abstract class BaseSchemaParser implements SchemaParser
      */
     public function __construct(PDO $dbh = null)
     {
-        if ($dbh) $this->setConnection($dbh);
+        if ($dbh) {
+            $this->setConnection($dbh);
+        }
     }
 
     /**
@@ -83,6 +87,7 @@ abstract class BaseSchemaParser implements SchemaParser
 
     /**
      * Gets the database connection.
+     *
      * @return PDO
      */
     public function getConnection()
@@ -154,6 +159,7 @@ abstract class BaseSchemaParser implements SchemaParser
      * Gets a specific propel (renamed) property from the build.
      *
      * @param  string $name
+     *
      * @return mixed
      */
     public function getBuildProperty($name)
@@ -176,6 +182,7 @@ abstract class BaseSchemaParser implements SchemaParser
      * Gets a mapped Propel type for specified native type.
      *
      * @param  string $nativeType
+     *
      * @return string The mapped Propel type.
      */
     protected function getMappedPropelType($nativeType)
@@ -194,6 +201,7 @@ abstract class BaseSchemaParser implements SchemaParser
      * Give a best guess at the native type.
      *
      * @param  string $propelType
+     *
      * @return string The native SQL type that best matches the specified Propel type.
      */
     protected function getMappedNativeType($propelType)
@@ -223,15 +231,15 @@ abstract class BaseSchemaParser implements SchemaParser
 
     public function setPlatform($platform)
     {
-      $this->platform = $platform;
+        $this->platform = $platform;
     }
 
     public function getPlatform()
     {
-      if (null === $this->platform) {
-        $this->platform = $this->getGeneratorConfig()->getConfiguredPlatform();
-      }
+        if (null === $this->platform) {
+            $this->platform = $this->getGeneratorConfig()->getConfiguredPlatform();
+        }
 
-      return $this->platform;
+        return $this->platform;
     }
 }

@@ -111,7 +111,6 @@ class ConcreteInheritanceBehavior extends Behavior
             $copiedBehavior->setTableModified(false);
             $this->getTable()->addBehavior($copiedBehavior);
         }
-
     }
 
     protected function getParentTable()
@@ -119,7 +118,7 @@ class ConcreteInheritanceBehavior extends Behavior
         $database = $this->getTable()->getDatabase();
         $tableName = $database->getTablePrefix() . $this->getParameter('extends');
         if ($database->getPlatform()->supportsSchemas() && $this->getParameter('schema')) {
-            $tableName = $this->getParameter('schema').'.'.$tableName;
+            $tableName = $this->getParameter('schema') . '.' . $tableName;
         }
 
         return $database->getTable($tableName);
@@ -204,7 +203,7 @@ public function getParentOrCreate(\$con = null)
     if (\$this->isNew()) {
         if (\$this->isPrimaryKeyNull()) {
             //this prevent issue with deep copy & save parent object
-            if (null === (\$parent = \$this->get". $parentClass . "(\$con))) {
+            if (null === (\$parent = \$this->get" . $parentClass . "(\$con))) {
                 \$parent = new " . $parentClass . "();
             }
             \$parent->set" . $this->getParentTable()->getColumn($this->getParameter('descendant_column'))->getPhpName() . "('" . $this->builder->getStubObjectBuilder()->getFullyQualifiedClassname() . "');
@@ -266,5 +265,4 @@ public function getSyncParent(\$con = null)
 }
 ";
     }
-
 }

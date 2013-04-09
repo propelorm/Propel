@@ -271,7 +271,7 @@ class Propel
         // check whether the generated model has the same version as the runtime, see gh-#577
         // we need to check for existance first, because tasks which rely on the runtime.xml conf will not provide a generator_version
         if (isset(self::$configuration['generator_version']) && self::$configuration['generator_version'] != self::VERSION) {
-            $warning = "Version mismatch: The generated model was build using propel '". self::$configuration['generator_version'] ."' while the current runtime is at version '". self::VERSION ."'";
+            $warning = "Version mismatch: The generated model was build using propel '" . self::$configuration['generator_version'] . "' while the current runtime is at version '" . self::VERSION . "'";
             if (self::$logger) {
                 self::$logger->warning($warning);
             } else {
@@ -374,6 +374,7 @@ class Propel
      *                 - PropelConfiguration::TYPE_ARRAY_FLAT: return the configuration as a flat array
      *                   ($config['name.space.item'])
      *                 - PropelConfiguration::TYPE_OBJECT: return the configuration as a PropelConfiguration instance
+     *
      * @return mixed The Configuration (array or PropelConfiguration)
      */
     public static function getConfiguration($type = PropelConfiguration::TYPE_ARRAY)
@@ -434,22 +435,22 @@ class Propel
         if (self::hasLogger()) {
             $logger = self::logger();
             switch ($level) {
-            case self::LOG_EMERG:
-                return $logger->log($message, $level);
-            case self::LOG_ALERT:
-                return $logger->alert($message);
-            case self::LOG_CRIT:
-                return $logger->crit($message);
-            case self::LOG_ERR:
-                return $logger->err($message);
-            case self::LOG_WARNING:
-                return $logger->warning($message);
-            case self::LOG_NOTICE:
-                return $logger->notice($message);
-            case self::LOG_INFO:
-                return $logger->info($message);
-            default:
-                return $logger->debug($message);
+                case self::LOG_EMERG:
+                    return $logger->log($message, $level);
+                case self::LOG_ALERT:
+                    return $logger->alert($message);
+                case self::LOG_CRIT:
+                    return $logger->crit($message);
+                case self::LOG_ERR:
+                    return $logger->err($message);
+                case self::LOG_WARNING:
+                    return $logger->warning($message);
+                case self::LOG_NOTICE:
+                    return $logger->notice($message);
+                case self::LOG_INFO:
+                    return $logger->info($message);
+                default:
+                    return $logger->debug($message);
             }
         }
 
@@ -562,7 +563,6 @@ class Propel
         } else {
             return self::getSlaveConnection($name);
         }
-
     }
 
     /**
@@ -581,7 +581,7 @@ class Propel
             // load connection parameter for master connection
             $conparams = isset(self::$configuration['datasources'][$name]['connection']) ? self::$configuration['datasources'][$name]['connection'] : null;
             if (empty($conparams)) {
-                throw new PropelException('No connection information in your runtime configuration file for datasource ['.$name.']');
+                throw new PropelException('No connection information in your runtime configuration file for datasource [' . $name . ']');
             }
             // initialize master connection
             $con = Propel::initConnection($conparams, $name);
@@ -622,7 +622,7 @@ class Propel
                     $randkey = array_rand($slaveconfigs['connection']);
                     $conparams = $slaveconfigs['connection'][$randkey];
                     if (empty($conparams)) {
-                        throw new PropelException('No connection information in your runtime configuration file for SLAVE ['.$randkey.'] to datasource ['.$name.']');
+                        throw new PropelException('No connection information in your runtime configuration file for SLAVE [' . $randkey . '] to datasource [' . $name . ']');
                     }
                 }
 
@@ -630,7 +630,6 @@ class Propel
                 $con = Propel::initConnection($conparams, $name);
                 self::$connectionMap[$name]['slave'] = $con;
             }
-
         } // if datasource slave not set
 
         return self::$connectionMap[$name]['slave'];
@@ -642,7 +641,7 @@ class Propel
      * @param array  $conparams    Connection paramters.
      * @param string $name         Datasource name.
      * @param string $defaultClass The PDO subclass to instantiate if there is no explicit classname
-     * 									specified in the connection params (default is Propel::CLASS_PROPEL_PDO)
+     *                             specified in the connection params (default is Propel::CLASS_PROPEL_PDO)
      *
      * @return PDO A database connection of the given class (PDO, PropelPDO, SlavePDO or user-defined)
      *
@@ -653,7 +652,7 @@ class Propel
         $adapter = self::getDB($name);
 
         if (null === $conparams['dsn']) {
-            throw new PropelException('No dsn specified in your connection parameters for datasource ['.$name.']');
+            throw new PropelException('No dsn specified in your connection parameters for datasource [' . $name . ']');
         }
 
         $conparams = $adapter->prepareParams($conparams);
@@ -667,18 +666,18 @@ class Propel
             $classname = $defaultClass;
         }
 
-        $dsn	  = $conparams['dsn'];
-        $user	  = isset($conparams['user']) ? $conparams['user'] : null;
+        $dsn = $conparams['dsn'];
+        $user = isset($conparams['user']) ? $conparams['user'] : null;
         $password = isset($conparams['password']) ? $conparams['password'] : null;
 
         // load any driver options from the config file
         // driver options are those PDO settings that have to be passed during the connection construction
         $driver_options = array();
-        if ( isset($conparams['options']) && is_array($conparams['options']) ) {
+        if (isset($conparams['options']) && is_array($conparams['options'])) {
             try {
-                self::processDriverOptions( $conparams['options'], $driver_options );
+                self::processDriverOptions($conparams['options'], $driver_options);
             } catch (PropelException $e) {
-                throw new PropelException('Error processing driver options for datasource ['.$name.']', $e);
+                throw new PropelException('Error processing driver options for datasource [' . $name . ']', $e);
             }
         }
 
@@ -695,9 +694,9 @@ class Propel
         if (isset($conparams['attributes']) && is_array($conparams['attributes'])) {
             $attributes = array();
             try {
-                self::processDriverOptions( $conparams['attributes'], $attributes );
+                self::processDriverOptions($conparams['attributes'], $attributes);
             } catch (PropelException $e) {
-                throw new PropelException('Error processing connection attributes for datasource ['.$name.']', $e);
+                throw new PropelException('Error processing connection attributes for datasource [' . $name . ']', $e);
             }
             foreach ($attributes as $key => $value) {
                 $con->setAttribute($key, $value);
@@ -729,14 +728,14 @@ class Propel
                 $key = 'PropelPDO::' . $option;
             }
             if (!defined($key)) {
-                throw new PropelException("Invalid PDO option/attribute name specified: ".$key);
+                throw new PropelException("Invalid PDO option/attribute name specified: " . $key);
             }
             $key = constant($key);
 
             $value = $optiondata['value'];
             if (is_string($value) && strpos($value, '::') !== false) {
                 if (!defined($value)) {
-                    throw new PropelException("Invalid PDO option/attribute value specified: ".$value);
+                    throw new PropelException("Invalid PDO option/attribute value specified: " . $value);
                 }
                 $value = constant($value);
             }
@@ -853,6 +852,7 @@ class Propel
      * class via autoload and then relative to a location on the include_path.
      *
      * @param  string $class dot-path to clas (e.g. path.to.my.ClassName).
+     *
      * @return string unqualified classname
      *
      * @throws PropelException
@@ -867,7 +867,7 @@ class Propel
         }
 
         // check if class exists, using autoloader to attempt to load it.
-        if (class_exists($class, $useAutoload=true)) {
+        if (class_exists($class, $useAutoload = true)) {
             return $class;
         }
 

@@ -117,5 +117,4 @@ class PropelColumnDiff
 
         return $ret;
     }
-
 }

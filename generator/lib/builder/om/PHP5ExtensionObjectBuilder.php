@@ -24,6 +24,7 @@ class PHP5ExtensionObjectBuilder extends ObjectBuilder
 
     /**
      * Returns the name of the current class being built.
+     *
      * @return string
      */
     public function getUnprefixedClassname()
@@ -33,6 +34,7 @@ class PHP5ExtensionObjectBuilder extends ObjectBuilder
 
     /**
      * Adds the include() statements for files that this class depends on or utilizes.
+     *
      * @param      string &$script The script will be modified in this method.
      */
     protected function addIncludes(&$script)
@@ -40,22 +42,23 @@ class PHP5ExtensionObjectBuilder extends ObjectBuilder
         switch ($this->getTable()->treeMode()) {
             case 'NestedSet':
                 $requiredClassFilePath = $this->getNestedSetBuilder()->getClassFilePath();
-            break;
+                break;
 
             case 'MaterializedPath':
             case 'AdjacencyList':
             default:
                 $requiredClassFilePath = $this->getObjectBuilder()->getClassFilePath();
-            break;
+                break;
         }
 
-        $script .="
-require '".$requiredClassFilePath."';
+        $script .= "
+require '" . $requiredClassFilePath . "';
 ";
     } // addIncludes()
 
     /**
      * Adds class phpdoc comment and opening of class.
+     *
      * @param      string &$script The script will be modified in this method.
      */
     protected function addClassOpen(&$script)
@@ -68,13 +71,13 @@ require '".$requiredClassFilePath."';
         switch ($table->treeMode()) {
             case 'NestedSet':
                 $baseClassname = $this->getNestedSetBuilder()->getClassname();
-            break;
+                break;
 
             case 'MaterializedPath':
             case "AdjacencyList":
             default:
                 $baseClassname = $this->getObjectBuilder()->getClassname();
-            break;
+                break;
         }
 
         if ($this->getBuildProperty('addClassLevelComment')) {
@@ -98,12 +101,12 @@ require '".$requiredClassFilePath."';
  * application requirements.  This class will only be generated as
  * long as it does not already exist in the output directory.
  *
- * @package    propel.generator.".$this->getPackage()."
+ * @package    propel.generator." . $this->getPackage() . "
  */";
         }
 
         $script .= "
-".($table->isAbstract() ? "abstract " : "")."class ".$this->getClassname()." extends $baseClassname
+" . ($table->isAbstract() ? "abstract " : "") . "class " . $this->getClassname() . " extends $baseClassname
 {";
     }
 
@@ -121,6 +124,7 @@ require '".$requiredClassFilePath."';
 
     /**
      * Closes class.
+     *
      * @param      string &$script The script will be modified in this method.
      */
     protected function addClassClose(&$script)

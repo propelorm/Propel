@@ -16,6 +16,7 @@ if (!defined('T_ML_COMMENT')) {
 
 /**
  * Service class for parsing PHP code strings and editing them
+ *
  * @example Basic usage:
  * <code>
  * $script = file_get_contents($fileName);
@@ -59,12 +60,12 @@ class PropelPHPParser
 
     protected function addPhp($code)
     {
-      return '<?php '. $code;
+        return '<?php ' . $code;
     }
 
     protected function removePhp($code)
     {
-      return substr($code, 6);
+        return substr($code, 6);
     }
 
     /**
@@ -192,7 +193,7 @@ class PropelPHPParser
     public function addMethodAfter($methodName, $newCode)
     {
         if ($methodCode = $this->findMethod($methodName)) {
-            $this->code = str_replace($methodCode, $methodCode. $newCode, $this->code);
+            $this->code = str_replace($methodCode, $methodCode . $newCode, $this->code);
 
             return $methodCode;
         }

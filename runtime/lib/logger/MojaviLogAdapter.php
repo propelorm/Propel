@@ -82,6 +82,7 @@ class MojaviLogAdapter implements BasicLogger
     {
         $this->log($message, 'notice');
     }
+
     /**
      * A convenience function for logging an critical event.
      *
@@ -111,8 +112,9 @@ class MojaviLogAdapter implements BasicLogger
      */
     public function log($message, $severity = null)
     {
-        if (is_null($this->logger))
+        if (is_null($this->logger)) {
             $this->logger = LogManager::getLogger('propel');
+        }
 
         switch ($severity) {
             case 'crit':

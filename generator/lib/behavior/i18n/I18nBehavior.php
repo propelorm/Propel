@@ -227,7 +227,7 @@ class I18nBehavior extends Behavior
         if ($columnNames = $this->getI18nColumnNamesFromConfig()) {
             // Strategy 1: use the i18n_columns parameter
             foreach ($columnNames as $columnName) {
-                $columns []= $i18nTable->getColumn($columnName);
+                $columns[] = $i18nTable->getColumn($columnName);
             }
         } else {
             // strategy 2: use the columns of the i18n table
@@ -235,7 +235,7 @@ class I18nBehavior extends Behavior
             // (such as timestampable behavior)
             foreach ($i18nTable->getColumns() as $column) {
                 if (!$column->isPrimaryKey()) {
-                    $columns []= $column;
+                    $columns[] = $column;
                 }
             }
         }
@@ -279,5 +279,4 @@ class I18nBehavior extends Behavior
 
         return $this->peerBuilderModifier;
     }
-
 }

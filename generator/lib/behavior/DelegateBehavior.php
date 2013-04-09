@@ -38,11 +38,7 @@ class DelegateBehavior extends Behavior
         foreach ($delegates as $delegate) {
             $delegate = $database->getTablePrefix() . trim($delegate);
             if (!$database->hasTable($delegate)) {
-                throw new InvalidArgumentException(sprintf(
-                    'No delegate table "%s" found for table "%s"',
-                    $delegate,
-                    $table->getName()
-                ));
+                throw new InvalidArgumentException(sprintf('No delegate table "%s" found for table "%s"', $delegate, $table->getName()));
             }
             if (in_array($delegate, $table->getForeignTableNames())) {
                 // existing many-to-one relationship
@@ -55,11 +51,7 @@ class DelegateBehavior extends Behavior
                     $fks = $delegateTable->getForeignKeysReferencingTable($this->getTable()->getName());
                     $fk = $fks[0];
                     if (!$fk->isLocalPrimaryKey()) {
-                        throw new InvalidArgumentException(sprintf(
-                            'Delegate table "%s" has a relationship with table "%s", but it\'s a one-to-many relationship. The `delegate` behavior only supports one-to-one relationships in this case.',
-                            $delegate,
-                            $table->getName()
-                        ));
+                        throw new InvalidArgumentException(sprintf('Delegate table "%s" has a relationship with table "%s", but it\'s a one-to-many relationship. The `delegate` behavior only supports one-to-one relationships in this case.', $delegate, $table->getName()));
                     }
                 } else {
                     // no relationship yet: must be created
@@ -118,7 +110,7 @@ class DelegateBehavior extends Behavior
                 $ARClassName = $builder->getNewStubObjectBuilder($delegateTable)->getClassname();
                 $relationName = $builder->getFKPhpNameAffix($fk);
             }
-                $script .= "
+            $script .= "
 if (is_callable(array('$ARFQCN', \$name))) {
     if (!\$delegate = \$this->get$relationName()) {
         \$delegate = new $ARClassName();
@@ -131,5 +123,4 @@ if (is_callable(array('$ARFQCN', \$name))) {
 
         return $script;
     }
-
 }
