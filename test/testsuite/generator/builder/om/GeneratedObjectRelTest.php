@@ -103,7 +103,7 @@ class GeneratedObjectRelTest extends BookstoreEmptyTestBase
 
     /**
      * Tests reverse setting of relationships, saving one of the objects first.
-     * @link       http://propel.phpdb.org/trac/ticket/508
+     * @link       http://trac.propelorm.org/ticket/508
      */
     public function testManyToMany_Dir2_Saved()
     {
@@ -237,7 +237,7 @@ class GeneratedObjectRelTest extends BookstoreEmptyTestBase
 
     /**
      * Test behavior of columns that are implicated in multiple foreign keys.
-     * @link       http://propel.phpdb.org/trac/ticket/228
+     * @link       http://trac.propelorm.org/ticket/228
      */
     public function testMultiFkImplication()
     {
@@ -314,7 +314,7 @@ class GeneratedObjectRelTest extends BookstoreEmptyTestBase
 
     /**
      * This tests to see whether modified objects are being silently overwritten by calls to fk accessor methods.
-     * @link       http://propel.phpdb.org/trac/ticket/509#comment:5
+     * @link       http://trac.propelorm.org/ticket/509#comment:5
      */
     public function testModifiedObjectOverwrite()
     {

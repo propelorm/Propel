@@ -101,7 +101,7 @@ class PHP5ObjectBuilder extends ObjectBuilder
         // Check foreign keys to see if there are any foreign keys that
         // are also matched with an inversed referencing foreign key
         // (this is currently unsupported behavior)
-        // see: http://propel.phpdb.org/trac/ticket/549
+        // see: http://trac.propelorm.org/ticket/549
 
         foreach ($table->getForeignKeys() as $fk) {
             if ($fk->isMatchedByInverseFK()) {
@@ -746,7 +746,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
     {
         $table = $this->getTable();
         // FIXME - Apply support for PHP default expressions here
-        // see: http://propel.phpdb.org/trac/ticket/378
+        // see: http://trac.propelorm.org/ticket/378
 
         $colsWithDefaults = array();
         foreach ($table->getColumns() as $col) {

@@ -48,7 +48,7 @@ EOF;
     }
 
     /**
-     * @link       http://propel.phpdb.org/trac/ticket/586
+     * @link       http://trac.propelorm.org/ticket/586
      */
     public function testEmptyValue()
     {

@@ -246,7 +246,7 @@
 	</table>
 
 	<!--  book_reader, book_opinion, and reader_favorite test some foreign key issues
-		(see: http://propel.phpdb.org/trac/ticket/228) -->
+		(see: http://trac.propelorm.org/ticket/228) -->
 	<table name="book_reader">
 		<column name="id" type="INTEGER" primaryKey="true" autoIncrement="true" description="Book reader ID number" />
 		<column name="name" type="VARCHAR" size="50" />

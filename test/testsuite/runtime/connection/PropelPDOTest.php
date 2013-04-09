@@ -140,7 +140,7 @@ class PropelPDOTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @link       http://propel.phpdb.org/trac/ticket/699
+     * @link       http://trac.propelorm.org/ticket/699
      */
     public function testNestedTransactionRollBackRethrow()
     {
@@ -186,7 +186,7 @@ class PropelPDOTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @link       http://propel.phpdb.org/trac/ticket/699
+     * @link       http://trac.propelorm.org/ticket/699
      */
     public function testNestedTransactionRollBackSwallow()
     {

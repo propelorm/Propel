@@ -111,7 +111,7 @@ class GeneratedPeerDoDeleteTest extends BookstoreEmptyTestBase
 
     /**
      * Test that cascading deletes are happening correctly for composite pk.
-     * @link       http://propel.phpdb.org/trac/ticket/544
+     * @link       http://trac.propelorm.org/ticket/544
      */
     public function testDoDelete_Cascade_CompositePK()
     {
@@ -306,7 +306,7 @@ class GeneratedPeerDoDeleteTest extends BookstoreEmptyTestBase
     }
 
     /**
-     * @link       http://propel.phpdb.org/trac/ticket/519
+     * @link       http://trac.propelorm.org/ticket/519
      */
     public function testDoDeleteCompositePK()
     {
@@ -478,7 +478,7 @@ class GeneratedPeerDoDeleteTest extends BookstoreEmptyTestBase
 
     /**
      * Test doCountJoin*() methods with ORDER BY columns in Criteria.
-     * @link http://propel.phpdb.org/trac/ticket/627
+     * @link http://trac.propelorm.org/ticket/627
      */
     public function testDoCountJoinWithOrderBy()
     {

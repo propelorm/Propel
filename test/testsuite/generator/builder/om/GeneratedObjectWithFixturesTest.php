@@ -162,7 +162,7 @@ class GeneratedObjectWithFixturesTest extends BookstoreEmptyTestBase
 
     /**
      * This is a test for expected exceptions when saving UNIQUE.
-     * See http://propel.phpdb.org/trac/ticket/2
+     * See http://trac.propelorm.org/ticket/2
      */
     public function testSaveUnique()
     {
@@ -271,7 +271,7 @@ class GeneratedObjectWithFixturesTest extends BookstoreEmptyTestBase
 
     /**
      * Test the toArray() method with new lazyLoad param.
-     * @link       http://propel.phpdb.org/trac/ticket/527
+     * @link       http://trac.propelorm.org/ticket/527
      */
     public function testToArrayLazyLoad()
     {
