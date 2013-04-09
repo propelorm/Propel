@@ -208,6 +208,7 @@ class PropelCollection extends ArrayObject implements Serializable
      * Alias for ArrayObject::offsetGet()
      *
      * @param  mixed $key
+     *
      * @return mixed The element
      *
      * @throws PropelException
@@ -258,6 +259,7 @@ class PropelCollection extends ArrayObject implements Serializable
      * Prepend one or more elements to the beginning of the collection
      *
      * @param  mixed   $value the element to prepend
+     *
      * @return integer The number of new elements in the array
      */
     public function prepend($value)
@@ -288,6 +290,7 @@ class PropelCollection extends ArrayObject implements Serializable
      * Alias for ArrayObject::offsetUnset()
      *
      * @param  mixed $key
+     *
      * @return mixed The removed element
      *
      * @throws PropelException
@@ -315,6 +318,7 @@ class PropelCollection extends ArrayObject implements Serializable
      * Whether or not this collection contains a specified element
      *
      * @param  mixed   $element
+     *
      * @return boolean
      */
     public function contains($element)
@@ -326,6 +330,7 @@ class PropelCollection extends ArrayObject implements Serializable
      * Search an element in the collection
      *
      * @param  mixed $element
+     *
      * @return mixed Returns the key for the element if it is found in the collection, FALSE otherwise
      */
     public function search($element)
@@ -338,6 +343,7 @@ class PropelCollection extends ArrayObject implements Serializable
      * are not presents in the given collection.
      *
      * @param  PropelCollection $collection A Propel collection.
+     *
      * @return PropelCollection An array of Propel objects from the collection that are not presents in the given collection.
      */
     public function diff(PropelCollection $collection)
@@ -412,6 +418,7 @@ class PropelCollection extends ArrayObject implements Serializable
      * Clear the internal Iterator.
      * PHP 5.3 doesn't know how to free a PropelCollection object if it has an attached
      * Iterator, so this must be done manually to avoid memory leaks.
+     *
      * @see http://www.propelorm.org/ticket/1232
      */
     public function clearIterator()
@@ -477,6 +484,7 @@ class PropelCollection extends ArrayObject implements Serializable
      * Get a connection object for the database containing the elements of the collection
      *
      * @param  string    $type The connection type (Propel::CONNECTION_READ by default; can be Propel::connection_WRITE)
+     *
      * @return PropelPDO A PropelPDO connection object
      */
     public function getConnection($type = Propel::CONNECTION_READ)
@@ -526,6 +534,7 @@ class PropelCollection extends ArrayObject implements Serializable
      * @param boolean $includeLazyLoadColumns (optional) Whether to include lazy load(ed) columns. Defaults to TRUE.
      *                                            Not supported by PropelArrayCollection, as PropelArrayFormatter has
      *                                            already included lazy-load columns in the array used here.
+     *
      * @return string The exported data
      */
     public function exportTo($parser, $usePrefix = true, $includeLazyLoadColumns = true)

@@ -59,6 +59,7 @@ class DatabaseMap
      * Add a new table to the database by name.
      *
      * @param  string   $tableName The name of the table.
+     *
      * @return TableMap The newly created TableMap.
      */
     public function addTable($tableName)
@@ -84,6 +85,7 @@ class DatabaseMap
      * Add a new table to the database, using the tablemap class name.
      *
      * @param  string   $tableMapClass The name of the table map to add
+     *
      * @return TableMap The TableMap object
      */
     public function addTableFromMapClass($tableMapClass)
@@ -102,6 +104,7 @@ class DatabaseMap
      * Does this database contain this specific table?
      *
      * @param  string  $name The String representation of the table.
+     *
      * @return boolean True if the database contains the table.
      */
     public function hasTable($name)
@@ -113,13 +116,14 @@ class DatabaseMap
      * Get a TableMap for the table by name.
      *
      * @param  string          $name Name of the table.
+     *
      * @return TableMap        A TableMap
      * @throws PropelException if the table is undefined
      */
     public function getTable($name)
     {
         if (!isset($this->tables[$name])) {
-            throw new PropelException("Cannot fetch TableMap for undefined table: " . $name );
+            throw new PropelException("Cannot fetch TableMap for undefined table: " . $name);
         }
 
         return $this->tables[$name];
@@ -140,6 +144,7 @@ class DatabaseMap
      * Name must be fully qualified, e.g. book.AUTHOR_ID
      *
      * @param                  $qualifiedColumnName Name of the column.
+     *
      * @return ColumnMap       A TableMap
      * @throws PropelException if the table is undefined, or if the table is undefined
      */
@@ -156,7 +161,9 @@ class DatabaseMap
      * Does this database contain this specific table?
      *
      * @deprecated Use hasTable() instead
+     *
      * @param  string  $name The String representation of the table.
+     *
      * @return boolean True if the database contains the table.
      */
     public function containsTable($name)
@@ -183,6 +190,7 @@ class DatabaseMap
 
     /**
      * Convenience method to get the DBAdapter registered with Propel for this database.
+     *
      * @return DBAdapter
      * @see     Propel::getDB(string)
      */

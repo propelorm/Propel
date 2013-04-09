@@ -25,6 +25,7 @@ class PropelGraphvizTask extends AbstractPropelDataModelTask
 
     /**
      * The properties file that maps an SQL file to a particular database.
+     *
      * @var        PhingFile
      */
     private $sqldbmap;
@@ -41,6 +42,7 @@ class PropelGraphvizTask extends AbstractPropelDataModelTask
 
     /**
      * Set the sqldbmap.
+     *
      * @param PhingFile $out The db map.
      */
     public function setOutputDirectory(PhingFile $out)
@@ -53,6 +55,7 @@ class PropelGraphvizTask extends AbstractPropelDataModelTask
 
     /**
      * Set the sqldbmap.
+     *
      * @param PhingFile $sqldbmap The db map.
      */
     public function setSqlDbMap(PhingFile $sqldbmap)
@@ -62,6 +65,7 @@ class PropelGraphvizTask extends AbstractPropelDataModelTask
 
     /**
      * Get the sqldbmap.
+     *
      * @return PhingFile $sqldbmap.
      */
     public function getSqlDbMap()
@@ -71,6 +75,7 @@ class PropelGraphvizTask extends AbstractPropelDataModelTask
 
     /**
      * Set the database name.
+     *
      * @param string $database
      */
     public function setDatabase($database)
@@ -80,6 +85,7 @@ class PropelGraphvizTask extends AbstractPropelDataModelTask
 
     /**
      * Get the database name.
+     *
      * @return string
      */
     public function getDatabase()
@@ -91,8 +97,8 @@ class PropelGraphvizTask extends AbstractPropelDataModelTask
     {
         foreach ($this->getDataModels() as $dataModel) {
             foreach ($dataModel->getDatabases() as $database) {
-                 $this->log("db: " . $database->getName());
-                 $this->writeDot(PropelDotGenerator::create($database), $this->outDir, $database->getName());
+                $this->log("db: " . $database->getName());
+                $this->writeDot(PropelDotGenerator::create($database), $this->outDir, $database->getName());
             }
         }
     }
@@ -106,5 +112,4 @@ class PropelGraphvizTask extends AbstractPropelDataModelTask
         $this->log("Writing dot file to " . $file->getAbsolutePath());
         file_put_contents($file->getAbsolutePath(), $dotSyntax);
     }
-
 }

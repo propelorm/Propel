@@ -155,5 +155,4 @@ class PropelDatabaseComparator
 
         return $databaseDifferences;
     }
-
 }

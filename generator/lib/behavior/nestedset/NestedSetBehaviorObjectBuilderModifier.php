@@ -45,8 +45,8 @@ class NestedSetBehaviorObjectBuilderModifier
         $this->builder = $builder;
 
         $this->objectClassname = $builder->getStubObjectBuilder()->getClassname();
-        $this->queryClassname  = $builder->getStubQueryBuilder()->getClassname();
-        $this->peerClassname   = $builder->getStubPeerBuilder()->getClassname();
+        $this->queryClassname = $builder->getStubQueryBuilder()->getClassname();
+        $this->peerClassname = $builder->getStubPeerBuilder()->getClassname();
 
         $this->builder->declareClass($builder->getStubObjectBuilder()->getFullyQualifiedClassname());
         $this->builder->declareClass($builder->getStubQueryBuilder()->getFullyQualifiedClassname());
@@ -159,8 +159,7 @@ if (\$this->isInTree()) {
         if ($this->getColumnPhpName('level_column') != 'Level') {
             $this->addGetLevel($script);
         }
-        if ($this->getParameter('use_scope') == 'true'
-            && $this->getColumnPhpName('scope_column') != 'ScopeValue') {
+        if ($this->getParameter('use_scope') == 'true' && $this->getColumnPhpName('scope_column') != 'ScopeValue') {
             $this->addGetScope($script);
         }
 
@@ -173,8 +172,7 @@ if (\$this->isInTree()) {
         if ($this->getColumnPhpName('level_column') != 'Level') {
             $this->addSetLevel($script);
         }
-        if ($this->getParameter('use_scope') == 'true'
-            && $this->getColumnPhpName('scope_column') != 'ScopeValue') {
+        if ($this->getParameter('use_scope') == 'true' && $this->getColumnPhpName('scope_column') != 'ScopeValue') {
             $this->addSetScope($script);
         }
 
@@ -250,6 +248,7 @@ protected function processNestedSetQueries(\$con)
 }
 ";
     }
+
     protected function addGetLeft(&$script)
     {
         $script .= "
@@ -1389,7 +1388,6 @@ protected function moveSubtreeTo(\$destLeft, \$levelDelta" . ($this->behavior->u
             \$preventDefault = true;
         }
         ";
-
         }
 
         $script .= "

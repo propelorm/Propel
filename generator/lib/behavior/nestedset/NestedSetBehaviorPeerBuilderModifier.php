@@ -79,7 +79,7 @@ const LEVEL_COL = '" . $tableName . '.' . $this->getColumnConstant('level_column
 ";
 
         if ($this->behavior->useScope()) {
-            $script .= 	"
+            $script .= "
 /**
  * Scope column for the set
  */
@@ -299,7 +299,7 @@ public static function deleteTree(" . ($useScope ? "\$scope = null, " : "") . "P
         $script .= "
  * @param      PropelPDO \$con		Connection to use.
  */
-public static function shiftRLValues(\$delta, \$first, \$last = null" . ($useScope ? ", \$scope = null" : ""). ", PropelPDO \$con = null)
+public static function shiftRLValues(\$delta, \$first, \$last = null" . ($useScope ? ", \$scope = null" : "") . ", PropelPDO \$con = null)
 {
     if (\$con === null) {
         \$con = Propel::getConnection($peerClassname::DATABASE_NAME, Propel::CONNECTION_WRITE);
@@ -363,7 +363,7 @@ public static function shiftRLValues(\$delta, \$first, \$last = null" . ($useSco
         $script .= "
  * @param      PropelPDO \$con		Connection to use.
  */
-public static function shiftLevel(\$delta, \$first, \$last" . ($useScope ? ", \$scope = null" : ""). ", PropelPDO \$con = null)
+public static function shiftLevel(\$delta, \$first, \$last" . ($useScope ? ", \$scope = null" : "") . ", PropelPDO \$con = null)
 {
     if (\$con === null) {
         \$con = Propel::getConnection($peerClassname::DATABASE_NAME, Propel::CONNECTION_WRITE);
@@ -415,7 +415,7 @@ public static function updateLoadedNodes(\$prune = null, PropelPDO \$con = null)
             $pkey = $this->table->getPrimaryKey();
             $col = array_shift($pkey);
             $script .= "
-            \$criteria->add(".$this->builder->getColumnConstant($col).", \$keys, Criteria::IN);";
+            \$criteria->add(" . $this->builder->getColumnConstant($col) . ", \$keys, Criteria::IN);";
         } else {
             $fields = array();
             foreach ($this->table->getPrimaryKey() as $k => $col) {
@@ -450,7 +450,9 @@ public static function updateLoadedNodes(\$prune = null, PropelPDO \$con = null)
                 if (null !== (\$object = $peerClassname::getInstanceFromPool(\$key))) {";
         $n = 0;
         foreach ($this->table->getColumns() as $col) {
-            if ($col->isLazyLoad()) continue;
+            if ($col->isLazyLoad()) {
+                continue;
+            }
             if ($col->getPhpName() == $this->getColumnPhpName('left_column')) {
                 $script .= "
                     \$object->setLeftValue(\$row[$n]);";
@@ -494,7 +496,7 @@ public static function updateLoadedNodes(\$prune = null, PropelPDO \$con = null)
  * @param      mixed \$prune	Object to prune from the shift
  * @param      PropelPDO \$con	Connection to use.
  */
-public static function makeRoomForLeaf(\$left" . ($useScope ? ", \$scope" : ""). ", \$prune = null, PropelPDO \$con = null)
+public static function makeRoomForLeaf(\$left" . ($useScope ? ", \$scope" : "") . ", \$prune = null, PropelPDO \$con = null)
 {
     // Update database nodes
     $peerClassname::shiftRLValues(2, \$left, null" . ($useScope ? ", \$scope" : "") . ", \$con);
@@ -520,7 +522,7 @@ public static function makeRoomForLeaf(\$left" . ($useScope ? ", \$scope" : "").
         $script .= "
  * @param      PropelPDO \$con	Connection to use.
  */
-public static function fixLevels(" . ($useScope ? "\$scope, " : ""). "PropelPDO \$con = null)
+public static function fixLevels(" . ($useScope ? "\$scope, " : "") . "PropelPDO \$con = null)
 {
     \$c = new Criteria();";
         if ($useScope) {

@@ -31,6 +31,7 @@ abstract class AbstractPropelDataModelTask extends Task
 
     /**
      * Fileset of XML schemas which represent our data models.
+     *
      * @var        array Fileset[]
      */
     protected $schemaFilesets = array();
@@ -42,6 +43,7 @@ abstract class AbstractPropelDataModelTask extends Task
 
     /**
      * Have datamodels been initialized?
+     *
      * @var        boolean
      */
     private $dataModelsLoaded = false;
@@ -79,54 +81,63 @@ abstract class AbstractPropelDataModelTask extends Task
 
     /**
      * Destination directory for results of template scripts.
+     *
      * @var        PhingFile
      */
     protected $outputDirectory;
 
     /**
      * Whether to package the datamodels or not
+     *
      * @var        PhingFile
      */
     protected $packageObjectModel;
 
     /**
      * Whether to perform validation (XSD) on the schema.xml file(s).
+     *
      * @var        boolean
      */
     protected $validate;
 
     /**
      * The XSD schema file to use for validation.
+     *
      * @var        PhingFile
      */
     protected $xsdFile;
 
     /**
      * XSL file to use to normalize (or otherwise transform) schema before validation.
+     *
      * @var        PhingFile
      */
     protected $xslFile;
 
     /**
      * Optional database connection url.
+     *
      * @var        string
      */
     private $url = null;
 
     /**
      * Optional database connection user name.
+     *
      * @var        string
      */
     private $userId = null;
 
     /**
      * Optional database connection password.
+     *
      * @var        string
      */
     private $password = null;
 
     /**
      * PDO Connection.
+     *
      * @var        PDO
      */
     private $conn = false;
@@ -230,6 +241,7 @@ abstract class AbstractPropelDataModelTask extends Task
 
     /**
      * Set whether to perform validation on the datamodel schema.xml file(s).
+     *
      * @param boolean $v
      */
     public function setValidate($v)
@@ -239,6 +251,7 @@ abstract class AbstractPropelDataModelTask extends Task
 
     /**
      * Set the XSD schema to use for validation of any datamodel schema.xml file(s).
+     *
      * @param   $v PhingFile
      */
     public function setXsd(PhingFile $v)
@@ -248,6 +261,7 @@ abstract class AbstractPropelDataModelTask extends Task
 
     /**
      * Set the normalization XSLT to use to transform datamodel schema.xml file(s) before validation and parsing.
+     *
      * @param   $v PhingFile
      */
     public function setXsl(PhingFile $v)
@@ -258,7 +272,9 @@ abstract class AbstractPropelDataModelTask extends Task
     /**
      * [REQUIRED] Set the output directory. It will be
      * created if it doesn't exist.
+     *
      * @param  PhingFile      $outputDirectory
+     *
      * @return void
      * @throws BuildException
      */
@@ -266,7 +282,7 @@ abstract class AbstractPropelDataModelTask extends Task
     {
         try {
             if (!$outputDirectory->exists()) {
-                $this->log("Output directory does not exist, creating: " . $outputDirectory->getPath(),Project::MSG_VERBOSE);
+                $this->log("Output directory does not exist, creating: " . $outputDirectory->getPath(), Project::MSG_VERBOSE);
                 if (!$outputDirectory->mkdirs()) {
                     throw new IOException("Unable to create Output directory: " . $outputDirectory->getAbsolutePath());
                 }
@@ -319,6 +335,7 @@ abstract class AbstractPropelDataModelTask extends Task
 
     /**
      * Get the output directory.
+     *
      * @return string
      */
     public function getOutputDirectory()
@@ -344,7 +361,9 @@ abstract class AbstractPropelDataModelTask extends Task
 
     /**
      * Maps the passed in name to a new filename & returns resolved File object.
+     *
      * @param  string         $from
+     *
      * @return PhingFile      Resolved File object.
      * @throws BuildException - if no Mapper element se
      *                          - if unable to map new filename.
@@ -369,6 +388,7 @@ abstract class AbstractPropelDataModelTask extends Task
 
     /**
      * Gets the PDO connection, if URL specified.
+     *
      * @return PDO Connection to use (for quoting, Platform class, etc.) or NULL if no connection params were specified.
      */
     public function getConnection()
@@ -384,8 +404,12 @@ abstract class AbstractPropelDataModelTask extends Task
                 $this->log($buf, Project::MSG_VERBOSE);
 
                 // Set user + password to null if they are empty strings
-                if (!$this->userId) { $this->userId = null; }
-                if (!$this->password) { $this->password = null; }
+                if (!$this->userId) {
+                    $this->userId = null;
+                }
+                if (!$this->password) {
+                    $this->password = null;
+                }
                 try {
                     $this->conn = new PDO($this->url, $this->userId, $this->password);
                     $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -400,6 +424,7 @@ abstract class AbstractPropelDataModelTask extends Task
 
     /**
      * Gets all matching XML schema files and loads them into data models for class.
+     *
      * @return void
      * @throws EngineException
      * @throws BuildException
@@ -422,7 +447,7 @@ abstract class AbstractPropelDataModelTask extends Task
             // Make a transaction for each file
             foreach ($dataModelFiles as $dmFilename) {
 
-                $this->log("Processing: ".$dmFilename, Project::MSG_VERBOSE);
+                $this->log("Processing: " . $dmFilename, Project::MSG_VERBOSE);
                 $xmlFile = new PhingFile($srcDir, $dmFilename);
 
                 $dom = new DomDocument('1.0', 'UTF-8');
@@ -450,7 +475,7 @@ abstract class AbstractPropelDataModelTask extends Task
                 if ($this->validate && $this->xsdFile) {
                     $this->log("  Validating XML using schema " . $this->xsdFile->getPath(), Project::MSG_VERBOSE);
                     if (!$dom->schemaValidate($this->xsdFile->getAbsolutePath())) {
-                        throw new EngineException("XML schema file (".$xmlFile->getPath().") does not validate. See warnings above for reasons validation failed (make sure error_reporting is set to show E_WARNING if you don't see any).", $this->getLocation());
+                        throw new EngineException("XML schema file (" . $xmlFile->getPath() . ") does not validate. See warnings above for reasons validation failed (make sure error_reporting is set to show E_WARNING if you don't see any).", $this->getLocation());
                     }
                 }
 
@@ -476,7 +501,7 @@ abstract class AbstractPropelDataModelTask extends Task
             $this->dataModelDbMap[$ad->getName()] = $ad->getDatabase(null, false)->getName();
         }
 
-        if (count($ads)>1 && $this->packageObjectModel) {
+        if (count($ads) > 1 && $this->packageObjectModel) {
             $ad = $this->joinDataModels($ads);
             $this->dataModels = array($ad);
         } else {
@@ -508,6 +533,7 @@ abstract class AbstractPropelDataModelTask extends Task
      *
      * @param  DomDocument $dom
      * @param  string      $srcDir
+     *
      * @return void        (objects, DomDocument, are references by default in PHP 5, so returning it is useless)
      **/
     protected function includeExternalSchemas(DomDocument $dom, $srcDir)
@@ -544,6 +570,7 @@ abstract class AbstractPropelDataModelTask extends Task
      * that point to tables in different packages.
      *
      * @param  array[AppData] $ads The datamodels to join
+     *
      * @return AppData        The single datamodel with all other datamodels joined in
      */
     protected function joinDataModels($ads)
@@ -556,6 +583,7 @@ abstract class AbstractPropelDataModelTask extends Task
 
     /**
      * Gets the GeneratorConfig object for this task or creates it on-demand.
+     *
      * @return GeneratorConfig
      */
     protected function getGeneratorConfig()
@@ -572,7 +600,7 @@ abstract class AbstractPropelDataModelTask extends Task
      * Checks this class against Basic requirements of any propel datamodel task.
      *
      * @throws BuildException - if schema fileset was not defined
-     * 							- if no output directory was specified
+     *                        - if no output directory was specified
      */
     protected function validate()
     {
@@ -590,7 +618,5 @@ abstract class AbstractPropelDataModelTask extends Task
                 throw new BuildException("'validate' set to TRUE, but no XSD specified (use 'xsd' attribute).", $this->getLocation());
             }
         }
-
     }
-
 }

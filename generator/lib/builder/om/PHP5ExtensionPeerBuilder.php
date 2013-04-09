@@ -24,6 +24,7 @@ class PHP5ExtensionPeerBuilder extends PeerBuilder
 
     /**
      * Returns the name of the current class being built.
+     *
      * @return string
      */
     public function getUnprefixedClassname()
@@ -33,6 +34,7 @@ class PHP5ExtensionPeerBuilder extends PeerBuilder
 
     /**
      * Adds the include() statements for files that this class depends on or utilizes.
+     *
      * @param      string &$script The script will be modified in this method.
      */
     protected function addIncludes(&$script)
@@ -40,22 +42,23 @@ class PHP5ExtensionPeerBuilder extends PeerBuilder
         switch ($this->getTable()->treeMode()) {
             case 'NestedSet':
                 $requiredClassFilePath = $this->getNestedSetPeerBuilder()->getClassFilePath();
-            break;
+                break;
 
             case 'MaterializedPath':
             case 'AdjacencyList':
             default:
                 $requiredClassFilePath = $this->getPeerBuilder()->getClassFilePath();
-            break;
+                break;
         }
 
-        $script .="
-require '".$requiredClassFilePath."';
+        $script .= "
+require '" . $requiredClassFilePath . "';
 ";
     } // addIncludes()
 
     /**
      * Adds class phpdoc comment and opening of class.
+     *
      * @param      string &$script The script will be modified in this method.
      */
     protected function addClassOpen(&$script)
@@ -68,13 +71,13 @@ require '".$requiredClassFilePath."';
         switch ($table->treeMode()) {
             case 'NestedSet':
                 $baseClassname = $this->getNestedSetPeerBuilder()->getClassname();
-            break;
+                break;
 
             case 'MaterializedPath':
             case 'AdjacencyList':
             default:
                 $baseClassname = $this->getPeerBuilder()->getClassname();
-            break;
+                break;
         }
 
         if ($this->getBuildProperty('addClassLevelComment')) {
@@ -98,16 +101,16 @@ require '".$requiredClassFilePath."';
  * application requirements.  This class will only be generated as
  * long as it does not already exist in the output directory.
  *
- * @package    propel.generator.".$this->getPackage()."
+ * @package    propel.generator." . $this->getPackage() . "
  */";
         }
 
         $script .= "
-class ".$this->getClassname()." extends $baseClassname
+class " . $this->getClassname() . " extends $baseClassname
 {";
     }
 
-        /**
+    /**
      * Specifies the methods that are added as part of the stub peer class.
      *
      * By default there are no methods for the empty stub classes; override this method
@@ -123,6 +126,7 @@ class ".$this->getClassname()." extends $baseClassname
 
     /**
      * Closes class.
+     *
      * @param      string &$script The script will be modified in this method.
      */
     protected function addClassClose(&$script)
@@ -132,5 +136,4 @@ class ".$this->getClassname()." extends $baseClassname
 ";
         $this->applyBehaviorModifier('extensionPeerFilter', $script, "");
     }
-
 } // PHP5ExtensionPeerBuilder

@@ -48,6 +48,7 @@ abstract class ObjectBuilder extends OMBuilder
      * Adds the getter methods for the column values.
      * This is here because it is probably generic enough to apply to templates being generated
      * in different languages (e.g. PHP4 and PHP5).
+     *
      * @param      string &$script The script will be modified in this method.
      */
     protected function addColumnAccessorMethods(&$script)
@@ -82,6 +83,7 @@ abstract class ObjectBuilder extends OMBuilder
      * Adds the mutator (setter) methods for setting column values.
      * This is here because it is probably generic enough to apply to templates being generated
      * in different langauges (e.g. PHP4 and PHP5).
+     *
      * @param      string &$script The script will be modified in this method.
      */
     protected function addColumnMutatorMethods(&$script)
@@ -113,6 +115,7 @@ abstract class ObjectBuilder extends OMBuilder
     /**
      * Gets the baseClass path if specified for table/db.
      * If not, will return 'propel.om.BaseObject'
+     *
      * @return string
      */
     protected function getBaseClass()
@@ -128,6 +131,7 @@ abstract class ObjectBuilder extends OMBuilder
     /**
      * Gets the interface path if specified for current table.
      * If not, will return 'propel.om.Persistent'.
+     *
      * @return string
      */
     protected function getInterface()
@@ -176,7 +180,9 @@ abstract class ObjectBuilder extends OMBuilder
     protected function hasDefaultValues()
     {
         foreach ($this->getTable()->getColumns() as $col) {
-            if($col->getDefaultValue() !== null) return true;
+            if ($col->getDefaultValue() !== null) {
+                return true;
+            }
         }
 
         return false;
@@ -184,16 +190,19 @@ abstract class ObjectBuilder extends OMBuilder
 
     /**
      * Checks whether any registered behavior on that table has a modifier for a hook
+     *
      * @param  string  $hookName The name of the hook as called from one of this class methods, e.g. "preSave"
+     *
      * @return boolean
      */
     public function hasBehaviorModifier($hookName, $modifier = null)
     {
-         return parent::hasBehaviorModifier($hookName, 'ObjectBuilderModifier');
+        return parent::hasBehaviorModifier($hookName, 'ObjectBuilderModifier');
     }
 
     /**
      * Checks whether any registered behavior on that table has a modifier for a hook
+     *
      * @param string $hookName The name of the hook as called from one of this class methods, e.g. "preSave"
      * @param string &$script The script will be modified in this method.
      */
@@ -204,11 +213,11 @@ abstract class ObjectBuilder extends OMBuilder
 
     /**
      * Checks whether any registered behavior content creator on that table exists a contentName
+     *
      * @param string $contentName The name of the content as called from one of this class methods, e.g. "parentClassname"
      */
     public function getBehaviorContent($contentName)
     {
         return $this->getBehaviorContentBase($contentName, 'ObjectBuilderModifier');
     }
-
 }

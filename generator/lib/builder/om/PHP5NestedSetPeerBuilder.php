@@ -24,6 +24,7 @@ class PHP5NestedSetPeerBuilder extends PeerBuilder
 
     /**
      * Gets the package for the [base] object classes.
+     *
      * @return string
      */
     public function getPackage()
@@ -33,6 +34,7 @@ class PHP5NestedSetPeerBuilder extends PeerBuilder
 
     /**
      * Returns the name of the current class being built.
+     *
      * @return string
      */
     public function getUnprefixedClassname()
@@ -42,17 +44,19 @@ class PHP5NestedSetPeerBuilder extends PeerBuilder
 
     /**
      * Adds the include() statements for files that this class depends on or utilizes.
+     *
      * @param      string &$script The script will be modified in this method.
      */
     protected function addIncludes(&$script)
     {
-        $script .="
-require '".$this->getPeerBuilder()->getClassFilePath()."';
+        $script .= "
+require '" . $this->getPeerBuilder()->getClassFilePath() . "';
 ";
     } // addIncludes()
 
     /**
      * Adds class phpdoc comment and opening of class.
+     *
      * @param      string &$script The script will be modified in this method.
      */
     protected function addClassOpen(&$script)
@@ -78,15 +82,16 @@ require '".$this->getPeerBuilder()->getClassFilePath()."';
         }
         $script .= "
  * @deprecated  Since Propel 1.5. Use the nested_set behavior instead of the NestedSet treeMode
- * @package    propel.generator.".$this->getPackage()."
+ * @package    propel.generator." . $this->getPackage() . "
  */
-abstract class ".$this->getClassname()." extends ".$this->getPeerBuilder()->getClassName()." implements NodePeer {
+abstract class " . $this->getClassname() . " extends " . $this->getPeerBuilder()->getClassName() . " implements NodePeer {
 ";
     }
 
     /**
      * Specifies the methods that are added as part of the basic OM class.
      * This can be overridden by subclasses that wish to add more methods.
+     *
      * @see        ObjectBuilder::addClassBody()
      */
     protected function addClassBody(&$script)
@@ -166,6 +171,7 @@ abstract class ".$this->getClassname()." extends ".$this->getPeerBuilder()->getC
 
     /**
      * Closes class.
+     *
      * @param      string &$script The script will be modified in this method.
      */
     protected function addClassClose(&$script)
@@ -799,8 +805,8 @@ abstract class ".$this->getClassname()." extends ".$this->getPeerBuilder()->getC
             \$omClass = $peerClassname::getOMClass(\$row, 0);
             \$cls = substr('.'.\$omClass, strrpos('.'.\$omClass, '.') + 1);
 
-            \$key = ".$peerClassname."::getPrimaryKeyHashFromRow(\$row, 0);
-            if (null === (\$root = ".$peerClassname."::getInstanceFromPool(\$key))) {
+            \$key = " . $peerClassname . "::getPrimaryKeyHashFromRow(\$row, 0);
+            if (null === (\$root = " . $peerClassname . "::getInstanceFromPool(\$key))) {
                 " . $this->buildObjectInstanceCreationCode('$root', '$cls') . "
                 \$root->hydrate(\$row);
             }
@@ -1343,13 +1349,13 @@ abstract class ".$this->getClassname()." extends ".$this->getPeerBuilder()->getC
 
         $script .= "
         while (\$row = \$stmt->fetch(PDO::FETCH_NUM)) {
-            \$key = ".$peerClassname."::getPrimaryKeyHashFromRow(\$row, 0);
-            if (null === (\$child = ".$peerClassname."::getInstanceFromPool(\$key))) {";
+            \$key = " . $peerClassname . "::getPrimaryKeyHashFromRow(\$row, 0);
+            if (null === (\$child = " . $peerClassname . "::getInstanceFromPool(\$key))) {";
 
         if ($table->getChildrenColumn()) {
             $script .= "
                 // class must be set each time from the record row
-                \$cls = ".$peerClassname."::getOMClass(\$row, 0);
+                \$cls = " . $peerClassname . "::getOMClass(\$row, 0);
                 \$cls = substr('.'.\$cls, strrpos('.'.\$cls, '.') + 1);
 ";
         }
@@ -1417,13 +1423,13 @@ abstract class ".$this->getClassname()." extends ".$this->getPeerBuilder()->getC
 
         $script .= "
         while (\$row = \$stmt->fetch(PDO::FETCH_NUM)) {
-            \$key = ".$peerClassname."::getPrimaryKeyHashFromRow(\$row, 0);
-            if (null === (\$child = ".$peerClassname."::getInstanceFromPool(\$key))) {";
+            \$key = " . $peerClassname . "::getPrimaryKeyHashFromRow(\$row, 0);
+            if (null === (\$child = " . $peerClassname . "::getInstanceFromPool(\$key))) {";
 
         if ($table->getChildrenColumn()) {
             $script .= "
                 // class must be set each time from the record row
-                \$cls = ".$peerClassname."::getOMClass(\$row, 0);
+                \$cls = " . $peerClassname . "::getOMClass(\$row, 0);
                 \$cls = substr('.'.\$cls, strrpos('.'.\$cls, '.') + 1);
 ";
         }
@@ -1511,7 +1517,7 @@ abstract class ".$this->getClassname()." extends ".$this->getPeerBuilder()->getC
             $pkey = $table->getPrimaryKey();
             $col = array_shift($pkey);
             $script .= "
-                \$criteria->add(".$this->getColumnConstant($col).", \$keys, Criteria::IN);
+                \$criteria->add(" . $this->getColumnConstant($col) . ", \$keys, Criteria::IN);
 ";
         } else {
             $fields = array();
@@ -1538,25 +1544,25 @@ abstract class ".$this->getClassname()." extends ".$this->getPeerBuilder()->getC
                     // Add final Criterion to Criteria
                     \$criteria->addOr(\$cton);
                 }";
-            }
+        }
 
-            $script .= "
+        $script .= "
                 \$stmt = $peerClassname::doSelectStmt(\$criteria, \$con);
                 while (\$row = \$stmt->fetch(PDO::FETCH_NUM)) {
                     \$key = $peerClassname::getPrimaryKeyHashFromRow(\$row, 0);
                     if (null !== (\$object = $peerClassname::getInstanceFromPool(\$key))) {";
-            $n = 0;
-            foreach ($table->getColumns() as $col) {
-                if ($col->isNestedSetLeftKey()) {
-                    $script .= "
+        $n = 0;
+        foreach ($table->getColumns() as $col) {
+            if ($col->isNestedSetLeftKey()) {
+                $script .= "
                         \$object->setLeftValue(\$row[$n]);";
-                } elseif ($col->isNestedSetRightKey()) {
-                    $script .= "
+            } elseif ($col->isNestedSetRightKey()) {
+                $script .= "
                         \$object->setRightValue(\$row[$n]);";
-                }
-                $n++;
             }
-            $script .= "
+            $n++;
+        }
+        $script .= "
                     }
                 }
                 \$stmt->closeCursor();
@@ -1732,5 +1738,4 @@ abstract class ".$this->getClassname()." extends ".$this->getPeerBuilder()->getC
     }
 ";
     }
-
 } // PHP5NestedSetPeerBuilder

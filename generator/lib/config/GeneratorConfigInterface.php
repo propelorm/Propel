@@ -5,7 +5,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @license		 MIT License
+ * @license         MIT License
  */
 
 /**
@@ -18,21 +18,23 @@ interface GeneratorConfigInterface
      *
      * @param  Table            $table
      * @param  string           $type  The type of builder ('ddl', 'sql', etc.)
+     *
      * @return DataModelBuilder
      */
     public function getConfiguredBuilder(Table $table, $type);
 
     /**
-    * Gets a configured Pluralizer class.
-    *
-    * @return     Pluralizer
-    */
+     * Gets a configured Pluralizer class.
+     *
+     * @return     Pluralizer
+     */
     public function getConfiguredPluralizer();
 
     /**
      * Gets a specific propel (renamed) property from the build.
      *
      * @param  string $name
+     *
      * @return mixed
      */
     public function getBuildProperty($name);

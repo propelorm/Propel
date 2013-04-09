@@ -58,6 +58,7 @@ class PropelOnDemandCollection extends PropelCollection
 
     /**
      * @throws PropelException
+     *
      * @param  integer         $offset
      *
      * @return boolean
@@ -69,6 +70,7 @@ class PropelOnDemandCollection extends PropelCollection
 
     /**
      * @throws PropelException
+     *
      * @param  integer         $offset
      *
      * @return mixed
@@ -91,6 +93,7 @@ class PropelOnDemandCollection extends PropelCollection
 
     /**
      * @throws PropelException
+     *
      * @param  integer         $offset
      */
     public function offsetUnset($offset)
@@ -110,6 +113,7 @@ class PropelOnDemandCollection extends PropelCollection
 
     /**
      * @throws PropelException
+     *
      * @param  string          $data
      *
      * @return void

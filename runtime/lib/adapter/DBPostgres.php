@@ -25,6 +25,7 @@ class DBPostgres extends DBAdapter
      * This method is used to ignore case.
      *
      * @param  string $in The string to transform to upper case.
+     *
      * @return string The upper case string.
      */
     public function toUpperCase($in)
@@ -36,6 +37,7 @@ class DBPostgres extends DBAdapter
      * This method is used to ignore case.
      *
      * @param  string $in The string whose case to ignore.
+     *
      * @return string The string in a case that can be ignored.
      */
     public function ignoreCase($in)
@@ -74,6 +76,7 @@ class DBPostgres extends DBAdapter
      * Returns SQL which calculates the length (in chars) of a string.
      *
      * @param  string $s String to calculate length of.
+     *
      * @return string
      */
     public function strLength($s)
@@ -108,7 +111,7 @@ class DBPostgres extends DBAdapter
         if ($name === null) {
             throw new PropelException("Unable to fetch next sequence ID without sequence name.");
         }
-        $stmt = $con->query("SELECT nextval(".$con->quote($name).")");
+        $stmt = $con->query("SELECT nextval(" . $con->quote($name) . ")");
         $row = $stmt->fetch(PDO::FETCH_NUM);
 
         return $row[0];
@@ -116,6 +119,7 @@ class DBPostgres extends DBAdapter
 
     /**
      * Returns timestamp formatter string for use in date() function.
+     *
      * @return string
      */
     public function getTimestampFormatter()
@@ -143,10 +147,10 @@ class DBPostgres extends DBAdapter
     public function applyLimit(&$sql, $offset, $limit)
     {
         if ($limit > 0) {
-            $sql .= " LIMIT ".$limit;
+            $sql .= " LIMIT " . $limit;
         }
         if ($offset > 0) {
-            $sql .= " OFFSET ".$offset;
+            $sql .= " OFFSET " . $offset;
         }
     }
 
@@ -154,9 +158,10 @@ class DBPostgres extends DBAdapter
      * @see       DBAdapter::random()
      *
      * @param  string $seed
+     *
      * @return string
      */
-    public function random($seed=NULL)
+    public function random($seed = null)
     {
         return 'random()';
     }
@@ -194,6 +199,7 @@ class DBPostgres extends DBAdapter
      * @see        DBAdapter::quoteIdentifierTable()
      *
      * @param  string $table
+     *
      * @return string
      */
     public function quoteIdentifierTable($table)
@@ -202,44 +208,45 @@ class DBPostgres extends DBAdapter
         return '"' . strtr($table, array('.' => '"."', ' ' => '" "')) . '"';
     }
 
-  /**
-   * Do Explain Plan for query object or query string
-   *
-   * @param PropelPDO $con propel connection
-   * @param ModelCriteria|string $query query the criteria or the query string
-   * @throws PropelException
-   * @return PDOStatement A PDO statement executed using the connection, ready to be fetched
-   */
-  public function doExplainPlan(PropelPDO $con, $query)
-  {
-    if ($query instanceof ModelCriteria) {
-      $params = array();
-      $dbMap = Propel::getDatabaseMap($query->getDbName());
-      $sql = BasePeer::createSelectSql($query, $params);
-    } else {
-      $sql = $query;
+    /**
+     * Do Explain Plan for query object or query string
+     *
+     * @param PropelPDO $con propel connection
+     * @param ModelCriteria|string $query query the criteria or the query string
+     *
+     * @throws PropelException
+     * @return PDOStatement A PDO statement executed using the connection, ready to be fetched
+     */
+    public function doExplainPlan(PropelPDO $con, $query)
+    {
+        if ($query instanceof ModelCriteria) {
+            $params = array();
+            $dbMap = Propel::getDatabaseMap($query->getDbName());
+            $sql = BasePeer::createSelectSql($query, $params);
+        } else {
+            $sql = $query;
+        }
+
+        $stmt = $con->prepare($this->getExplainPlanQuery($sql));
+
+        if ($query instanceof ModelCriteria) {
+            $this->bindValues($stmt, $params, $dbMap);
+        }
+
+        $stmt->execute();
+
+        return $stmt;
     }
 
-    $stmt = $con->prepare($this->getExplainPlanQuery($sql));
-
-    if ($query instanceof ModelCriteria) {
-      $this->bindValues($stmt, $params, $dbMap);
+    /**
+     * Explain Plan compute query getter
+     *
+     * @param string $query query to explain
+     *
+     * @return string
+     */
+    public function getExplainPlanQuery($query)
+    {
+        return 'EXPLAIN ' . $query;
     }
-
-    $stmt->execute();
-
-    return $stmt;
-  }
-
-  /**
-   * Explain Plan compute query getter
-   *
-   * @param string $query query to explain
-   *
-   * @return string
-   */
-  public function getExplainPlanQuery($query)
-  {
-    return 'EXPLAIN ' . $query;
-  }
 }

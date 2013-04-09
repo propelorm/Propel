@@ -24,6 +24,7 @@ class PHP5ExtensionNodeBuilder extends ObjectBuilder
 
     /**
      * Returns the name of the current class being built.
+     *
      * @return string
      */
     public function getUnprefixedClassname()
@@ -33,17 +34,19 @@ class PHP5ExtensionNodeBuilder extends ObjectBuilder
 
     /**
      * Adds the include() statements for files that this class depends on or utilizes.
+     *
      * @param      string &$script The script will be modified in this method.
      */
     protected function addIncludes(&$script)
     {
         $script .= "
-require '".$this->getNodeBuilder()->getClassFilePath()."';
+require '" . $this->getNodeBuilder()->getClassFilePath() . "';
 ";
     } // addIncludes()
 
     /**
      * Adds class phpdoc comment and opening of class.
+     *
      * @param      string &$script The script will be modified in this method.
      */
     protected function addClassOpen(&$script)
@@ -75,9 +78,9 @@ require '".$this->getNodeBuilder()->getClassFilePath()."';
  * application requirements.  This class will only be generated as
  * long as it does not already exist in the output directory.
  *
- * @package    propel.generator.".$this->getPackage()."
+ * @package    propel.generator." . $this->getPackage() . "
  */
-class ".$this->getClassname()." extends $baseClassname {
+class " . $this->getClassname() . " extends $baseClassname {
 ";
     }
 
@@ -96,6 +99,7 @@ class ".$this->getClassname()." extends $baseClassname {
 
     /**
      * Closes class.
+     *
      * @param      string &$script The script will be modified in this method.
      */
     protected function addClassClose(&$script)
@@ -104,5 +108,4 @@ class ".$this->getClassname()." extends $baseClassname {
 } // " . $this->getClassname() . "
 ";
     }
-
 } // PHP5ExtensionObjectBuilder

@@ -50,7 +50,7 @@ class ModelCriteria extends Criteria
     protected $isWithOneToMany = false;
     protected $previousJoin = null; // this is introduced to prevent useQuery->join from going wrong
     protected $isKeepQuery = true; // whether to clone the current object before termination methods
-    protected $select = null;  // this is for the select method
+    protected $select = null; // this is for the select method
 
     /**
      * Creates a new instance with the default capacity which corresponds to
@@ -148,6 +148,7 @@ class ModelCriteria extends Criteria
      * </code>
      *
      * @param  string|PropelFormatter $formatter a formatter class name, or a formatter instance
+     *
      * @return ModelCriteria          The current object, for fluid interface
      *
      * @throws PropelException
@@ -519,7 +520,7 @@ class ModelCriteria extends Criteria
         if ($columnArray == '*') {
             $columnArray = array();
             foreach (call_user_func(array($this->modelPeerName, 'getFieldNames'), BasePeer::TYPE_PHPNAME) as $column) {
-                $columnArray []= $this->modelName . '.' . $column;
+                $columnArray[] = $this->modelName . '.' . $column;
             }
         }
 
@@ -530,6 +531,7 @@ class ModelCriteria extends Criteria
 
     /**
      * Retrieves the columns defined by a previous call to select().
+     *
      * @see       select()
      *
      * @return array|string A list of column names (e.g. array('Title', 'Category.Name', 'c.Content')) or a single column name (e.g. 'Name')
@@ -548,7 +550,7 @@ class ModelCriteria extends Criteria
 
         // select() needs the PropelSimpleArrayFormatter if no formatter given
         if (is_null($this->formatter)) {
-                $this->setFormatter('PropelSimpleArrayFormatter');
+            $this->setFormatter('PropelSimpleArrayFormatter');
         }
 
         // clear only the selectColumns, clearSelectColumns() clears asColumns too
@@ -669,7 +671,7 @@ class ModelCriteria extends Criteria
 
         // find the RelationMap in the TableMap using the $relationName
         if (!$tableMap->hasRelation($relationName)) {
-            throw new PropelException('Unknown relation ' . $relationName . ' on the ' . $leftName .' table');
+            throw new PropelException('Unknown relation ' . $relationName . ' on the ' . $leftName . ' table');
         }
         $relationMap = $tableMap->getRelation($relationName);
 
@@ -694,6 +696,7 @@ class ModelCriteria extends Criteria
 
     /**
      * Add another condition to an already added join
+     *
      * @example
      * <code>
      * $query->join('Book.Author');
@@ -728,6 +731,7 @@ class ModelCriteria extends Criteria
 
     /**
      * Replace the condition of an already added join
+     *
      * @example
      * <code>
      * $query->join('Book.Author');
@@ -762,7 +766,9 @@ class ModelCriteria extends Criteria
 
     /**
      * Add a join object to the Criteria
+     *
      * @see   Criteria::addJoinObject()
+     *
      * @param Join   $join A join object
      * @param string $name
      *
@@ -924,6 +930,7 @@ class ModelCriteria extends Criteria
      * Initializes a secondary ModelCriteria object, to be later merged with the current object
      *
      * @see       ModelCriteria::endUse()
+     *
      * @param string $relationName           Relation name or alias
      * @param string $secondaryCriteriaClass Classname for the ModelCriteria to be used
      *
@@ -971,6 +978,7 @@ class ModelCriteria extends Criteria
     /**
      * Add the content of a Criteria to the current Criteria
      * In case of conflict, the current Criteria keeps its properties
+     *
      * @see Criteria::mergeWith()
      *
      * @param Criteria $criteria The criteria to read properties from
@@ -1003,10 +1011,11 @@ class ModelCriteria extends Criteria
 
         $this->with = array();
         $this->primaryCriteria = null;
-        $this->formatter=null;
+        $this->formatter = null;
 
         return $this;
     }
+
     /**
      * Sets the primary Criteria for this secondary Criteria
      *
@@ -1112,6 +1121,7 @@ class ModelCriteria extends Criteria
      * The input looks like '$leftName.$relationName $relationAlias'
      *
      * @param  string $relation Relation to use for the join
+     *
      * @return string the relationName used in the join
      */
     public static function getRelationName($relation)
@@ -1250,6 +1260,7 @@ class ModelCriteria extends Criteria
      * // composite primary key
      * $bookOpinion = $c->findPk(array(34, 634), $con);
      * </code>
+     *
      * @param mixed     $key Primary key to use for the query
      * @param PropelPDO $con an optional connection object
      *
@@ -1289,6 +1300,7 @@ class ModelCriteria extends Criteria
      * // composite primary key
      * $bookOpinion = $c->findPks(array(array(34, 634), array(45, 518), array(34, 765)), $con);
      * </code>
+     *
      * @param array     $keys Primary keys to use for the query
      * @param PropelPDO $con  an optional connection object
      *
@@ -1460,7 +1472,7 @@ class ModelCriteria extends Criteria
         // We need to set the primary table name, since in the case that there are no WHERE columns
         // it will be impossible for the BasePeer::createSelectSql() method to determine which
         // tables go into the FROM clause.
-        $criteria->setPrimaryTableName(constant($this->modelPeerName.'::TABLE_NAME'));
+        $criteria->setPrimaryTableName(constant($this->modelPeerName . '::TABLE_NAME'));
 
         $stmt = $criteria->doCount($con);
         if ($row = $stmt->fetch(PDO::FETCH_NUM)) {
@@ -1699,19 +1711,19 @@ class ModelCriteria extends Criteria
     }
 
     /**
-    * Issue an UPDATE query based the current ModelCriteria and a list of changes.
-    * An optional hook on basePreUpdate() can prevent the actual update.
-    * Beware that behaviors based on hooks in the object's save() method
-    * will only be triggered if you force individual saves, i.e. if you pass true as second argument.
-    *
-    * @param      array $values Associative array of keys and values to replace
-    * @param      PropelPDO $con an optional connection object
-    * @param      boolean $forceIndividualSaves If false (default), the resulting call is a BasePeer::doUpdate(), otherwise it is a series of save() calls on all the found objects
-    *
-    * @return     Integer Number of updated rows
-    *
-    * @throws PropelException
-    */
+     * Issue an UPDATE query based the current ModelCriteria and a list of changes.
+     * An optional hook on basePreUpdate() can prevent the actual update.
+     * Beware that behaviors based on hooks in the object's save() method
+     * will only be triggered if you force individual saves, i.e. if you pass true as second argument.
+     *
+     * @param      array $values Associative array of keys and values to replace
+     * @param      PropelPDO $con an optional connection object
+     * @param      boolean $forceIndividualSaves If false (default), the resulting call is a BasePeer::doUpdate(), otherwise it is a series of save() calls on all the found objects
+     *
+     * @return     Integer Number of updated rows
+     *
+     * @throws PropelException
+     */
     public function update($values, $con = null, $forceIndividualSaves = false)
     {
         if (!is_array($values)) {
@@ -1726,7 +1738,7 @@ class ModelCriteria extends Criteria
         }
 
         $criteria = $this->isKeepQuery() ? clone $this : $this;
-        $criteria->setPrimaryTableName(constant($this->modelPeerName.'::TABLE_NAME'));
+        $criteria->setPrimaryTableName(constant($this->modelPeerName . '::TABLE_NAME'));
 
         $con->beginTransaction();
         try {
@@ -1746,15 +1758,15 @@ class ModelCriteria extends Criteria
     }
 
     /**
-    * Issue an UPDATE query based the current ModelCriteria and a list of changes.
-    * This method is called by ModelCriteria::update() inside a transaction.
-    *
-    * @param      array $values Associative array of keys and values to replace
-    * @param      PropelPDO $con a connection object
-    * @param      boolean $forceIndividualSaves If false (default), the resulting call is a BasePeer::doUpdate(), otherwise it is a series of save() calls on all the found objects
-    *
-    * @return     Integer Number of updated rows
-    */
+     * Issue an UPDATE query based the current ModelCriteria and a list of changes.
+     * This method is called by ModelCriteria::update() inside a transaction.
+     *
+     * @param      array $values Associative array of keys and values to replace
+     * @param      PropelPDO $con a connection object
+     * @param      boolean $forceIndividualSaves If false (default), the resulting call is a BasePeer::doUpdate(), otherwise it is a series of save() calls on all the found objects
+     *
+     * @return     Integer Number of updated rows
+     */
     public function doUpdate($values, $con, $forceIndividualSaves = false)
     {
         if ($forceIndividualSaves) {
@@ -1768,7 +1780,6 @@ class ModelCriteria extends Criteria
             }
             $objects->save($con);
             $affectedRows = count($objects);
-
         } else {
 
             // update rows in a single query
@@ -1848,7 +1859,6 @@ class ModelCriteria extends Criteria
             } else {
                 $criterion = new Criterion($this, null, $clause, Criteria::CUSTOM);
             }
-
         }
 
         return $criterion;
@@ -1859,6 +1869,7 @@ class ModelCriteria extends Criteria
      *
      * @param  mixed     $value  The value to convert
      * @param  ColumnMap $colMap The ColumnMap object
+     *
      * @return mixed     The converted value
      */
     protected function convertValueForColumn($value, ColumnMap $colMap)
@@ -1959,7 +1970,7 @@ class ModelCriteria extends Criteria
         $key = $matches[0];
         list($column, $realColumnName) = $this->getColumnFromName($key);
         if ($column instanceof ColumnMap) {
-            $this->replacedColumns[]= $column;
+            $this->replacedColumns[] = $column;
             $this->foundMatch = true;
 
             return $realColumnName;
@@ -2020,8 +2031,8 @@ class ModelCriteria extends Criteria
             }
 
             return array($column, $realColumnName);
-        } elseif ($tableMap->hasColumn($phpName,false)) {
-            $column = $tableMap->getColumn($phpName,false);
+        } elseif ($tableMap->hasColumn($phpName, false)) {
+            $column = $tableMap->getColumn($phpName, false);
             $realColumnName = $column->getFullyQualifiedName();
 
             return array($column, $realColumnName);
@@ -2116,6 +2127,7 @@ class ModelCriteria extends Criteria
      * Overrides Criteria::add() to force the use of a true table alias if it exists
      *
      * @see        Criteria::add()
+     *
      * @param string $column   The colName of column to run the condition on (e.g. BookPeer::ID)
      * @param mixed  $value
      * @param string $operator A String, like Criteria::EQUAL.
@@ -2252,6 +2264,7 @@ class ModelCriteria extends Criteria
      * Make explain plan of the query
      *
      * @param  PropelPDO       $con propel connection
+     *
      * @throws PropelException on error
      * @return array           array of the explain plan
      */
@@ -2281,6 +2294,7 @@ class ModelCriteria extends Criteria
 
     /**
      * @param  PropelPDO $con = null
+     *
      * @return boolean
      */
     public function exists($con = null)

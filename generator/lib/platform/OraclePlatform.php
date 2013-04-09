@@ -50,7 +50,6 @@ class OraclePlatform extends DefaultPlatform
         $this->setSchemaDomainMapping(new Domain(PropelTypes::OBJECT, "NVARCHAR2", "2000"));
         $this->setSchemaDomainMapping(new Domain(PropelTypes::PHP_ARRAY, "NVARCHAR2", "2000"));
         $this->setSchemaDomainMapping(new Domain(PropelTypes::ENUM, "NUMBER", "3", "0"));
-
     }
 
     public function getMaxColumnNameLength()
@@ -226,6 +225,7 @@ DROP SEQUENCE " . $this->quoteIdentifier($this->getSequenceName($table)) . ";
 
     /**
      * Whether the underlying PDO driver for this platform returns BLOB columns as streams (instead of strings).
+     *
      * @return boolean
      */
     public function hasStreamBlobImpl()
@@ -279,35 +279,35 @@ USING INDEX
             $prefix = "";
         }
 
-        if ($vendorSpecific->hasParameter($prefix.'PCTFree')) {
-            $physicalParameters .= "PCTFREE " . $vendorSpecific->getParameter($prefix.'PCTFree') . "
+        if ($vendorSpecific->hasParameter($prefix . 'PCTFree')) {
+            $physicalParameters .= "PCTFREE " . $vendorSpecific->getParameter($prefix . 'PCTFree') . "
 ";
         }
-        if ($vendorSpecific->hasParameter($prefix.'InitTrans')) {
-            $physicalParameters .= "INITRANS " . $vendorSpecific->getParameter($prefix.'InitTrans') . "
+        if ($vendorSpecific->hasParameter($prefix . 'InitTrans')) {
+            $physicalParameters .= "INITRANS " . $vendorSpecific->getParameter($prefix . 'InitTrans') . "
 ";
         }
-        if ($vendorSpecific->hasParameter($prefix.'MinExtents') || $vendorSpecific->hasParameter($prefix.'MaxExtents') || $vendorSpecific->hasParameter($prefix.'PCTIncrease')) {
+        if ($vendorSpecific->hasParameter($prefix . 'MinExtents') || $vendorSpecific->hasParameter($prefix . 'MaxExtents') || $vendorSpecific->hasParameter($prefix . 'PCTIncrease')) {
             $physicalParameters .= "STORAGE
 (
 ";
-            if ($vendorSpecific->hasParameter($prefix.'MinExtents')) {
-                $physicalParameters .= "	MINEXTENTS " . $vendorSpecific->getParameter($prefix.'MinExtents') . "
+            if ($vendorSpecific->hasParameter($prefix . 'MinExtents')) {
+                $physicalParameters .= "	MINEXTENTS " . $vendorSpecific->getParameter($prefix . 'MinExtents') . "
 ";
             }
-            if ($vendorSpecific->hasParameter($prefix.'MaxExtents')) {
-                $physicalParameters .= "	MAXEXTENTS " . $vendorSpecific->getParameter($prefix.'MaxExtents') . "
+            if ($vendorSpecific->hasParameter($prefix . 'MaxExtents')) {
+                $physicalParameters .= "	MAXEXTENTS " . $vendorSpecific->getParameter($prefix . 'MaxExtents') . "
 ";
             }
-            if ($vendorSpecific->hasParameter($prefix.'PCTIncrease')) {
-                $physicalParameters .= "	PCTINCREASE " . $vendorSpecific->getParameter($prefix.'PCTIncrease') . "
+            if ($vendorSpecific->hasParameter($prefix . 'PCTIncrease')) {
+                $physicalParameters .= "	PCTINCREASE " . $vendorSpecific->getParameter($prefix . 'PCTIncrease') . "
 ";
             }
             $physicalParameters .= ")
 ";
         }
-        if ($vendorSpecific->hasParameter($prefix.'Tablespace')) {
-            $physicalParameters .= "TABLESPACE " . $vendorSpecific->getParameter($prefix.'Tablespace');
+        if ($vendorSpecific->hasParameter($prefix . 'Tablespace')) {
+            $physicalParameters .= "TABLESPACE " . $vendorSpecific->getParameter($prefix . 'Tablespace');
         }
 
         return $physicalParameters;
@@ -317,6 +317,7 @@ USING INDEX
      * Builds the DDL SQL to add an Index.
      *
      * @param  Index  $index
+     *
      * @return string
      */
     public function getAddIndexDDL(Index $index)

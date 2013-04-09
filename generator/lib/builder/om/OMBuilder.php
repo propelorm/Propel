@@ -24,8 +24,9 @@ abstract class OMBuilder extends DataModelBuilder
 {
     /**
      * Declared fully qualified classnames, to build the 'namespace' statements
-   * according to this table's namespace.
-   * @var array
+     * according to this table's namespace.
+     *
+     * @var array
      */
     protected $declaredClasses = array();
 
@@ -95,12 +96,14 @@ abstract class OMBuilder extends DataModelBuilder
     /**
      * Returns the qualified (prefixed) classname that is being built by the current class.
      * This method must be implemented by child classes.
+     *
      * @return string
      */
     abstract public function getUnprefixedClassname();
 
     /**
      * Returns the prefixed classname that is being built by the current class.
+     *
      * @return string
      * @see        DataModelBuilder#prefixClassname()
      */
@@ -111,6 +114,7 @@ abstract class OMBuilder extends DataModelBuilder
 
     /**
      * Returns the namespaced classname if there is a namespace, and the raw classname otherwise
+     *
      * @return string
      */
     public function getFullyQualifiedClassname()
@@ -124,6 +128,7 @@ abstract class OMBuilder extends DataModelBuilder
 
     /**
      * Gets the dot-path representation of current class being built.
+     *
      * @return string
      */
     public function getClasspath()
@@ -139,6 +144,7 @@ abstract class OMBuilder extends DataModelBuilder
 
     /**
      * Gets the full path to the file for the current class.
+     *
      * @return string
      */
     public function getClassFilePath()
@@ -149,6 +155,7 @@ abstract class OMBuilder extends DataModelBuilder
     /**
      * Gets package name for this table.
      * This is overridden by child classes that have different packages.
+     *
      * @return string
      */
     public function getPackage()
@@ -163,6 +170,7 @@ abstract class OMBuilder extends DataModelBuilder
 
     /**
      * Returns filesystem path for current package.
+     *
      * @return string
      */
     public function getPackagePath()
@@ -193,8 +201,7 @@ abstract class OMBuilder extends DataModelBuilder
 
     public function declareClassNamespace($class, $namespace = '')
     {
-        if (isset($this->declaredClasses[$namespace])
-         && in_array($class, $this->declaredClasses[$namespace])) {
+        if (isset($this->declaredClasses[$namespace]) && in_array($class, $this->declaredClasses[$namespace])) {
             return;
         }
         $this->declaredClasses[$namespace][] = $class;
@@ -264,6 +271,7 @@ abstract class OMBuilder extends DataModelBuilder
      * Shortcut method to return the [stub] peer classname for current table.
      * This is the classname that is used whenever object or peer classes want
      * to invoke methods of the peer classes.
+     *
      * @return string (e.g. 'MyPeer')
      * @see        StubPeerBuilder::getClassname()
      */
@@ -276,6 +284,7 @@ abstract class OMBuilder extends DataModelBuilder
      * Shortcut method to return the [stub] query classname for current table.
      * This is the classname that is used whenever object or peer classes want
      * to invoke methods of the query classes.
+     *
      * @return string (e.g. 'Myquery')
      * @see        StubQueryBuilder::getClassname()
      */
@@ -288,6 +297,7 @@ abstract class OMBuilder extends DataModelBuilder
      * Returns the object classname for current table.
      * This is the classname that is used whenever object or peer classes want
      * to invoke methods of the object classes.
+     *
      * @return string (e.g. 'My')
      * @see        StubPeerBuilder::getClassname()
      */
@@ -323,12 +333,13 @@ abstract class OMBuilder extends DataModelBuilder
             $const = strtoupper($col->getName());
         }
 
-        return $classname.'::'.$const;
+        return $classname . '::' . $const;
     }
 
     /**
      * Gets the basePeer path if specified for table/db.
      * If not, will return 'propel.util.BasePeer'
+     *
      * @return string
      */
     public function getBasePeer(Table $table)
@@ -343,6 +354,7 @@ abstract class OMBuilder extends DataModelBuilder
 
     /**
      * Convenience method to get the foreign Table object for an fkey.
+     *
      * @deprecated use ForeignKey::getForeignTable() instead
      * @return Table
      */
@@ -357,6 +369,7 @@ abstract class OMBuilder extends DataModelBuilder
      * unless the schema is provided with the DefaultJoin attribute, which overrules the default Join Type
      *
      * @param  ForeignKey $fk
+     *
      * @return string
      */
     protected function getJoinType(ForeignKey $fk)
@@ -379,6 +392,7 @@ abstract class OMBuilder extends DataModelBuilder
      *
      * @param  ForeignKey $fk     The local FK that we need a name for.
      * @param  boolean    $plural Whether the php name should be plural (e.g. initRelatedObjs() vs. addRelatedObj()
+     *
      * @return string
      */
     public function getFKPhpNameAffix(ForeignKey $fk, $plural = false)
@@ -414,7 +428,7 @@ abstract class OMBuilder extends DataModelBuilder
     {
         $relCol = '';
         foreach ($fk->getLocalForeignMapping() as $localColumnName => $foreignColumnName) {
-            $localTable  = $fk->getTable();
+            $localTable = $fk->getTable();
             $localColumn = $localTable->getColumn($localColumnName);
             if (!$localColumn) {
                 throw new Exception("Could not fetch column: $columnName in table " . $localTable->getName());
@@ -442,6 +456,7 @@ abstract class OMBuilder extends DataModelBuilder
      *
      * @param  ForeignKey $fk     The referrer FK that we need a name for.
      * @param  boolean    $plural Whether the php name should be plural (e.g. initRelatedObjs() vs. addRelatedObj()
+     *
      * @return string
      */
     public function getRefFKPhpNameAffix(ForeignKey $fk, $plural = false)
@@ -503,8 +518,10 @@ abstract class OMBuilder extends DataModelBuilder
 
     /**
      * Checks whether any registered behavior on that table has a modifier for a hook
+     *
      * @param  string  $hookName The name of the hook as called from one of this class methods, e.g. "preSave"
      * @param  string  $modifier The name of the modifier object providing the method in the behavior
+     *
      * @return boolean
      */
     public function hasBehaviorModifier($hookName, $modifier)
@@ -521,6 +538,7 @@ abstract class OMBuilder extends DataModelBuilder
 
     /**
      * Checks whether any registered behavior on that table has a modifier for a hook
+     *
      * @param string $hookName The name of the hook as called from one of this class methods, e.g. "preSave"
      * @param string $modifier The name of the modifier object providing the method in the behavior
      * @param string &$script The script will be modified in this method.
@@ -553,6 +571,7 @@ abstract class OMBuilder extends DataModelBuilder
 
     /**
      * Checks whether any registered behavior content creator on that table exists a contentName
+     *
      * @param string $contentName The name of the content as called from one of this class methods, e.g. "parentClassname"
      * @param string $modifier    The name of the modifier object providing the method in the behavior
      */
@@ -591,15 +610,15 @@ abstract class OMBuilder extends DataModelBuilder
                 $short = array_pop($parts);
             }
 
-            preg_match_all('/\b'.$short.'\b/i', str_replace($match[0]."\n", '', $content), $m);
+            preg_match_all('/\b' . $short . '\b/i', str_replace($match[0] . "\n", '', $content), $m);
             if (!count($m[0])) {
-                $content = str_replace($match[0]."\n", '', $content);
+                $content = str_replace($match[0] . "\n", '', $content);
             }
         }
 
         // end of line
         if (strlen($content) && "\n" != substr($content, -1)) {
-            $content = $content."\n";
+            $content = $content . "\n";
         }
 
         return $content;

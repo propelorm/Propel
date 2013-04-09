@@ -27,7 +27,7 @@
  */
 class Join
 {
-  // default comparison type
+    // default comparison type
     const EQUAL = "=";
     const INNER_JOIN = 'INNER JOIN';
 
@@ -97,7 +97,7 @@ class Join
     public function addCondition($left, $right, $operator = self::EQUAL)
     {
         if ($pos = strrpos($left, '.')) {
-            list($this->leftTableName,  $this->left[]) = explode('.', $left);
+            list($this->leftTableName, $this->left[]) = explode('.', $left);
         } else {
             $this->left[] = $left;
         }
@@ -121,7 +121,7 @@ class Join
      */
     public function addConditions($lefts, $rights, $operators = array())
     {
-        if (count($lefts) != count($rights) ) {
+        if (count($lefts) != count($rights)) {
             throw new PropelException("Unable to create join because the left column count isn't equal to the right column count");
         }
         foreach ($lefts as $key => $left) {
@@ -131,6 +131,7 @@ class Join
 
     /**
      * Join condition definition.
+     *
      * @example
      * <code>
      * $join = new Join();
@@ -150,13 +151,13 @@ class Join
      */
     public function addExplicitCondition($leftTableName, $leftColumnName, $leftTableAlias = null, $rightTableName, $rightColumnName, $rightTableAlias = null, $operator = self::EQUAL)
     {
-        $this->leftTableName   = $leftTableName;
-        $this->leftTableAlias  = $leftTableAlias;
-        $this->rightTableName  = $rightTableName;
+        $this->leftTableName = $leftTableName;
+        $this->leftTableAlias = $leftTableAlias;
+        $this->rightTableName = $rightTableName;
         $this->rightTableAlias = $rightTableAlias;
-        $this->left     []= $leftColumnName;
-        $this->right    []= $rightColumnName;
-        $this->operator []= $operator;
+        $this->left[] = $leftColumnName;
+        $this->right[] = $rightColumnName;
+        $this->operator[] = $operator;
         $this->count++;
     }
 
@@ -167,7 +168,7 @@ class Join
      */
     public function countConditions()
     {
-      return $this->count;
+        return $this->count;
     }
 
     /**
@@ -177,38 +178,39 @@ class Join
      */
     public function getConditions()
     {
-      $conditions = array();
-      for ($i=0; $i < $this->count; $i++) {
-        $conditions[] = array(
-          'left'     => $this->getLeftColumn($i),
-          'operator' => $this->getOperator($i),
-          'right'    => $this->getRightColumn($i)
-        );
-      }
+        $conditions = array();
+        for ($i = 0; $i < $this->count; $i++) {
+            $conditions[] = array(
+                'left'     => $this->getLeftColumn($i),
+                'operator' => $this->getOperator($i),
+                'right'    => $this->getRightColumn($i)
+            );
+        }
 
-      return $conditions;
+        return $conditions;
     }
 
-  /**
-   * @param     string $operator the comparison operator for the join condition
-   */
-  public function addOperator($operator = null)
-  {
-    $this->operator []= $operator;
-  }
+    /**
+     * @param     string $operator the comparison operator for the join condition
+     */
+    public function addOperator($operator = null)
+    {
+        $this->operator [] = $operator;
+    }
 
-  /**
-   * @param int $index
-   * @return string    the comparison operator for the join condition
-   */
-  public function getOperator($index = 0)
-  {
-    return $this->operator[$index];
-  }
+    /**
+     * @param int $index
+     *
+     * @return string    the comparison operator for the join condition
+     */
+    public function getOperator($index = 0)
+    {
+        return $this->operator[$index];
+    }
 
     public function getOperators()
     {
-      return $this->operator;
+        return $this->operator;
     }
 
     /**
@@ -220,7 +222,7 @@ class Join
      */
     public function setJoinType($joinType = null)
     {
-      $this->joinType = $joinType;
+        $this->joinType = $joinType;
     }
 
     /**
@@ -241,11 +243,12 @@ class Join
      * $join->setLeftTableName('book');
      * $join->addLeftColumnName('AUTHOR_ID');
      * </code>
+     *
      * @param string $left The name of the left column to add
      */
     public function addLeftColumnName($left)
     {
-        $this->left []= $left;
+        $this->left[] = $left;
     }
 
     /**
@@ -256,7 +259,9 @@ class Join
      * $join->addCondition('book.AUTHOR_ID', 'author.ID');
      * echo $join->getLeftColumn(); // 'book.AUTHOR_ID'
      * </code>
+     *
      * @param  integer $index The number of the condition to use
+     *
      * @return string
      */
     public function getLeftColumn($index = 0)
@@ -274,7 +279,9 @@ class Join
      * $join->addCondition('book.AUTHOR_ID', 'author.ID');
      * echo $join->getLeftColumnName(); // 'AUTHOR_ID'
      * </code>
+     *
      * @param  integer $index The number of the condition to use
+     *
      * @return string
      */
     public function getLeftColumnName($index = 0)
@@ -284,13 +291,14 @@ class Join
 
     /**
      * Get the list of all the names of left columns of the join condition
+     *
      * @return array
      */
     public function getLeftColumns()
     {
         $columns = array();
         foreach ($this->left as $index => $column) {
-            $columns []= $this->getLeftColumn($index);
+            $columns[] = $this->getLeftColumn($index);
         }
 
         return $columns;
@@ -343,11 +351,12 @@ class Join
      * $join->setRightTableName('author');
      * $join->addRightColumnName('ID');
      * </code>
+     *
      * @param string $right The name of the right column to add
      */
     public function addRightColumnName($right)
     {
-        $this->right []= $right;
+        $this->right[] = $right;
     }
 
     /**
@@ -358,7 +367,9 @@ class Join
      * $join->addCondition('book.AUTHOR_ID', 'author.ID');
      * echo $join->getLeftColumn(); // 'author.ID'
      * </code>
+     *
      * @param  integer $index The number of the condition to use
+     *
      * @return string
      */
     public function getRightColumn($index = 0)
@@ -376,7 +387,9 @@ class Join
      * $join->addCondition('book.AUTHOR_ID', 'author.ID');
      * echo $join->getLeftColumn(); // 'ID'
      * </code>
+     *
      * @param  integer $index The number of the condition to use
+     *
      * @return string
      */
     public function getRightColumnName($index = 0)
@@ -391,7 +404,7 @@ class Join
     {
         $columns = array();
         foreach ($this->right as $index => $column) {
-            $columns []= $this->getRightColumn($index);
+            $columns[] = $this->getRightColumn($index);
         }
 
         return $columns;
@@ -440,6 +453,7 @@ class Join
      * Get the value of db.
      * The DBAdapter which might be used to get db specific
      * variations of sql.
+     *
      * @return DBAdapter value of db.
      */
     public function getDB()
@@ -450,7 +464,9 @@ class Join
     /**
      * Set the value of db.
      * The DBAdapter might be used to get db specific variations of sql.
+     *
      * @param  DBAdapter $db Value to assign to db.
+     *
      * @return void
      */
     public function setDB(DBAdapter $db)
@@ -486,7 +502,7 @@ class Join
     public function buildJoinCondition(Criteria $c)
     {
         $joinCondition = null;
-        for ($i=0; $i < $this->count; $i++) {
+        for ($i = 0; $i < $this->count; $i++) {
             $criterion = $c->getNewCriterion($this->getLeftColumn($i), $this->getLeftColumn($i) . $this->getOperator($i) . $this->getRightColumn($i), Criteria::CUSTOM);
             if (null === $joinCondition) {
                 $joinCondition = $criterion;
@@ -500,6 +516,7 @@ class Join
     /**
      * Get the join clause for this Join.
      * If the join condition needs binding, uses the passed params array.
+     *
      * @example
      * <code>
      * $join = new Join();
@@ -517,8 +534,8 @@ class Join
     {
         if (null === $this->joinCondition) {
             $conditions = array();
-            for ($i=0; $i < $this->count; $i++) {
-                $conditions []= $this->getLeftColumn($i) . $this->getOperator($i) . $this->getRightColumn($i);
+            for ($i = 0; $i < $this->count; $i++) {
+                $conditions [] = $this->getLeftColumn($i) . $this->getOperator($i) . $this->getRightColumn($i);
             }
             $joinCondition = sprintf('(%s)', implode($conditions, ' AND '));
         } else {
@@ -541,6 +558,7 @@ class Join
 
     /**
      * @param  Join $join
+     *
      * @return bool
      */
     public function equals($join)

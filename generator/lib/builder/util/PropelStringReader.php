@@ -25,8 +25,8 @@ class PropelStringReader extends Reader
     protected $_string;
 
     /**
-    * @var int
-    */
+     * @var int
+     */
     protected $mark = 0;
 
     /**
@@ -74,11 +74,17 @@ class PropelStringReader extends Reader
         $this->currPos = $this->mark;
     }
 
-    public function close() {}
+    public function close()
+    {
+    }
 
-    public function open() {}
+    public function open()
+    {
+    }
 
-    public function ready() {}
+    public function ready()
+    {
+    }
 
     public function markSupported()
     {
@@ -87,6 +93,6 @@ class PropelStringReader extends Reader
 
     public function getResource()
     {
-        return '(string) "'.$this->_string . '"';
+        return '(string) "' . $this->_string . '"';
     }
 }

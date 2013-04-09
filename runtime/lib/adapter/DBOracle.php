@@ -49,6 +49,7 @@ class DBOracle extends DBAdapter
      * This method is used to ignore case.
      *
      * @param  string $in The string to transform to upper case.
+     *
      * @return string The upper case string.
      */
     public function toUpperCase($in)
@@ -60,6 +61,7 @@ class DBOracle extends DBAdapter
      * This method is used to ignore case.
      *
      * @param  string $in The string whose case to ignore.
+     *
      * @return string The string in a case that can be ignored.
      */
     public function ignoreCase($in)
@@ -98,6 +100,7 @@ class DBOracle extends DBAdapter
      * Returns SQL which calculates the length (in chars) of a string.
      *
      * @param  string $s String to calculate length of.
+     *
      * @return string
      */
     public function strLength($s)
@@ -127,7 +130,7 @@ class DBOracle extends DBAdapter
         if ($offset > 0) {
             $sql .= ' B.PROPEL_ROWNUM > ' . $offset;
             if ($limit > 0) {
-                $sql .= ' AND B.PROPEL_ROWNUM <= ' . ( $offset + $limit );
+                $sql .= ' AND B.PROPEL_ROWNUM <= ' . ($offset + $limit);
             }
         } else {
             $sql .= ' B.PROPEL_ROWNUM <= ' . $limit;
@@ -163,9 +166,10 @@ class DBOracle extends DBAdapter
 
     /**
      * @param  string $seed
+     *
      * @return string
      */
-    public function random($seed=NULL)
+    public function random($seed = null)
     {
         return 'dbms_random.value';
     }
@@ -177,6 +181,7 @@ class DBOracle extends DBAdapter
      * @see http://propel.phpdb.org/trac/ticket/795
      *
      * @param  Criteria $criteria
+     *
      * @return Criteria The input, with Select columns replaced by aliases
      */
     public function turnSelectColumnsToAliases(Criteria $criteria)
@@ -189,7 +194,7 @@ class DBOracle extends DBAdapter
         // add the select columns back
         foreach ($selectColumns as $id => $clause) {
             // Generate a unique alias
-            $baseAlias = "ORA_COL_ALIAS_".$id;
+            $baseAlias = "ORA_COL_ALIAS_" . $id;
             $alias = $baseAlias;
             // If it already exists, add a unique suffix
             $i = 0;
@@ -227,7 +232,7 @@ class DBOracle extends DBAdapter
         if ($cMap->isTemporal()) {
             $value = $this->formatTemporalValue($value, $cMap);
         } elseif ($cMap->getType() == PropelColumnTypes::CLOB_EMU) {
-            return $stmt->bindParam(':p'.$position, $value, $cMap->getPdoType(), strlen($value));
+            return $stmt->bindParam(':p' . $position, $value, $cMap->getPdoType(), strlen($value));
         } elseif (is_resource($value) && $cMap->isLob()) {
             // we always need to make sure that the stream is rewound, otherwise nothing will
             // get written to database.
@@ -242,6 +247,7 @@ class DBOracle extends DBAdapter
      *
      * @param  PropelPDO            $con   propel connection
      * @param  ModelCriteria|string $query query the criteria or the query string
+     *
      * @throws PropelException
      * @return PDOStatement         A PDO statement executed using the connection, ready to be fetched
      */
@@ -291,6 +297,7 @@ class DBOracle extends DBAdapter
      * Explain Plan read query
      *
      * @param  string $uniqueId
+     *
      * @return string query unique id
      */
     public function getExplainPlanReadQuery($uniqueId)

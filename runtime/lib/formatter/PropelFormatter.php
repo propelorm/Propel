@@ -198,5 +198,4 @@ abstract class PropelFormatter
 
         return $obj;
     }
-
 }

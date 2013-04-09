@@ -32,12 +32,14 @@ abstract class BaseObject
 
     /**
      * attribute to determine if this object has previously been saved.
+     *
      * @var        boolean
      */
     protected $_new = true;
 
     /**
      * attribute to determine whether this object has been deleted.
+     *
      * @var        boolean
      */
     protected $_deleted = false;
@@ -45,6 +47,7 @@ abstract class BaseObject
     /**
      * The columns that have been modified in current object.
      * Tracking modified columns allows us to only update modified columns.
+     *
      * @var        array
      */
     protected $modifiedColumns = array();
@@ -52,6 +55,7 @@ abstract class BaseObject
     /**
      * The (virtual) columns that are added at runtime
      * The formatters can add supplementary columns based on a resultset
+     *
      * @var        array
      */
     protected $virtualColumns = array();
@@ -77,6 +81,7 @@ abstract class BaseObject
      * Has specified column been modified?
      *
      * @param  string  $col column fully qualified name (BasePeer::TYPE_COLNAME), e.g. Book::AUTHOR_ID
+     *
      * @return boolean True if $col has been modified.
      */
     public function isColumnModified($col)
@@ -86,6 +91,7 @@ abstract class BaseObject
 
     /**
      * Get the columns that have been modified in this object.
+     *
      * @return array A unique list of the modified column names for this object.
      */
     public function getModifiedColumns()
@@ -118,6 +124,7 @@ abstract class BaseObject
 
     /**
      * Whether this object has been deleted.
+     *
      * @return boolean The deleted state of this object.
      */
     public function isDeleted()
@@ -127,7 +134,9 @@ abstract class BaseObject
 
     /**
      * Specify whether this object has been deleted.
+     *
      * @param  boolean $b The deleted state of this object.
+     *
      * @return void
      */
     public function setDeleted($b)
@@ -137,7 +146,9 @@ abstract class BaseObject
 
     /**
      * Code to be run before persisting the object
+     *
      * @param  PropelPDO $con
+     *
      * @return boolean
      */
     public function preSave(PropelPDO $con = null)
@@ -147,6 +158,7 @@ abstract class BaseObject
 
     /**
      * Code to be run after persisting the object
+     *
      * @param PropelPDO $con
      */
     public function postSave(PropelPDO $con = null)
@@ -155,7 +167,9 @@ abstract class BaseObject
 
     /**
      * Code to be run before inserting to database
+     *
      * @param  PropelPDO $con
+     *
      * @return boolean
      */
     public function preInsert(PropelPDO $con = null)
@@ -165,6 +179,7 @@ abstract class BaseObject
 
     /**
      * Code to be run after inserting to database
+     *
      * @param PropelPDO $con
      */
     public function postInsert(PropelPDO $con = null)
@@ -173,7 +188,9 @@ abstract class BaseObject
 
     /**
      * Code to be run before updating the object in database
+     *
      * @param  PropelPDO $con
+     *
      * @return boolean
      */
     public function preUpdate(PropelPDO $con = null)
@@ -183,6 +200,7 @@ abstract class BaseObject
 
     /**
      * Code to be run after updating the object in database
+     *
      * @param PropelPDO $con
      */
     public function postUpdate(PropelPDO $con = null)
@@ -191,7 +209,9 @@ abstract class BaseObject
 
     /**
      * Code to be run before deleting the object in database
+     *
      * @param  PropelPDO $con
+     *
      * @return boolean
      */
     public function preDelete(PropelPDO $con = null)
@@ -201,6 +221,7 @@ abstract class BaseObject
 
     /**
      * Code to be run after deleting the object in database
+     *
      * @param PropelPDO $con
      */
     public function postDelete(PropelPDO $con = null)
@@ -209,6 +230,7 @@ abstract class BaseObject
 
     /**
      * Code to be run after object hydration
+     *
      * @param PropelPDO $con
      */
     public function postHydrate($row, $startcol = 0, $rehydrate = false)
@@ -217,7 +239,9 @@ abstract class BaseObject
 
     /**
      * Sets the modified state for the object to be false.
+     *
      * @param  string $col If supplied, only the specified column is reset.
+     *
      * @return void
      */
     public function resetModified($col = null)
@@ -237,6 +261,7 @@ abstract class BaseObject
      * <code>equals(BaseObject)</code>.  Otherwise, returns <code>false</code>.
      *
      * @param      obj The object to compare to.
+     *
      * @return Whether equal to the object specified.
      */
     public function equals($obj)
@@ -328,6 +353,7 @@ abstract class BaseObject
      *
      * @param  string  $msg
      * @param  int     $priority One of the Propel::LOG_* logging levels
+     *
      * @return boolean
      */
     protected function log($msg, $priority = Propel::LOG_INFO)
@@ -367,6 +393,7 @@ abstract class BaseObject
      *
      * @param  mixed   $parser                 A PropelParser instance, or a format name ('XML', 'YAML', 'JSON', 'CSV')
      * @param  boolean $includeLazyLoadColumns (optional) Whether to include lazy load(ed) columns. Defaults to TRUE.
+     *
      * @return string  The exported data
      */
     public function exportTo($parser, $includeLazyLoadColumns = true)

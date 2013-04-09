@@ -38,7 +38,9 @@ class PgsqlDataSQLBuilder extends DataSQLBuilder
 
     /**
      * The main method in this class, returns the SQL for INSERTing data into a row.
+     *
      * @param  DataRow $row The row to process.
+     *
      * @return string
      */
     public function buildRowSql(DataRow $row)
@@ -66,7 +68,7 @@ class PgsqlDataSQLBuilder extends DataSQLBuilder
         $sql = "";
         if ($table->hasAutoIncrementPrimaryKey() && $table->getIdMethod() == IDMethod::NATIVE) {
             $seqname = $this->getPlatform()->getSequenceName($table);
-            $sql .= "SELECT pg_catalog.setval('$seqname', ".((int) $this->maxSeqVal).");
+            $sql .= "SELECT pg_catalog.setval('$seqname', " . ((int) $this->maxSeqVal) . ");
 ";
         }
 
@@ -75,7 +77,9 @@ class PgsqlDataSQLBuilder extends DataSQLBuilder
 
     /**
      * Get SQL value to insert for Postgres BOOLEAN column.
+     *
      * @param  boolean $value
+     *
      * @return string  The representation of boolean for Postgres ('t' or 'f').
      */
     protected function getBooleanSql($value)
@@ -90,6 +94,7 @@ class PgsqlDataSQLBuilder extends DataSQLBuilder
     /**
      *
      * @param  mixed  $blob Blob object or string containing data.
+     *
      * @return string
      */
     protected function getBlobSql($blob)
@@ -101,5 +106,4 @@ class PgsqlDataSQLBuilder extends DataSQLBuilder
 
         return "'" . pg_escape_bytea($blob) . "'";
     }
-
 }

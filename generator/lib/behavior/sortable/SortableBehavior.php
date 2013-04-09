@@ -46,8 +46,7 @@ class SortableBehavior extends Behavior
                 'type' => 'INTEGER'
             ));
         }
-        if ($this->useScope() &&
-             !$table->containsColumn($this->getParameter('scope_column'))) {
+        if ($this->useScope() && !$table->containsColumn($this->getParameter('scope_column'))) {
             $table->addColumn(array(
                 'name' => $this->getParameter('scope_column'),
                 'type' => 'INTEGER'
@@ -100,5 +99,4 @@ class SortableBehavior extends Behavior
     {
         return $this->getParameter('use_scope') == 'true';
     }
-
 }

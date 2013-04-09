@@ -63,10 +63,10 @@ class SqlitePlatform extends DefaultPlatform
         }
 
         if ($table->hasPrimaryKey()) {
-          $pk = $table->getPrimaryKey();
-          if (count($pk) > 1 || !$pk[0]->isAutoIncrement()) {
-            $lines[] = $this->getPrimaryKeyDDL($table);
-          }
+            $pk = $table->getPrimaryKey();
+            if (count($pk) > 1 || !$pk[0]->isAutoIncrement()) {
+                $lines[] = $this->getPrimaryKeyDDL($table);
+            }
         }
 
         foreach ($table->getUnices() as $unique) {
@@ -136,14 +136,14 @@ DROP TABLE IF EXISTS " . $this->quoteIdentifier($table->getName()) . ";
 
     public function hasSize($sqlType)
     {
-        return !("MEDIUMTEXT" == $sqlType || "LONGTEXT" == $sqlType
-                || "BLOB" == $sqlType || "MEDIUMBLOB" == $sqlType
-                || "LONGBLOB" == $sqlType);
+        return !("MEDIUMTEXT" == $sqlType || "LONGTEXT" == $sqlType || "BLOB" == $sqlType || "MEDIUMBLOB" == $sqlType || "LONGBLOB" == $sqlType);
     }
 
     /**
      * Escape the string for RDBMS.
+     *
      * @param  string $text
+     *
      * @return string
      */
     public function disconnectedEscapeText($text)

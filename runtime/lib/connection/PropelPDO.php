@@ -40,11 +40,12 @@ class PropelPDO extends PDO
      */
     const PROPEL_ATTR_CONNECTION_NAME = -2;
 
-    const DEFAULT_SLOW_THRESHOLD        = 0.1;
-    const DEFAULT_ONLYSLOW_ENABLED      = false;
+    const DEFAULT_SLOW_THRESHOLD = 0.1;
+    const DEFAULT_ONLYSLOW_ENABLED = false;
 
     /**
      * The current transaction depth.
+     *
      * @var       integer
      */
     protected $nestedTransactionCount = 0;
@@ -193,6 +194,7 @@ class PropelPDO extends PDO
 
     /**
      * Set the current transaction depth.
+     *
      * @param int $v The new depth.
      */
     protected function setNestedTransactionCount($v)
@@ -301,11 +303,11 @@ class PropelPDO extends PDO
     }
 
     /**
-    * Rollback the whole transaction, even if this is a nested rollback
-    * and reset the nested transaction count to 0.
+     * Rollback the whole transaction, even if this is a nested rollback
+     * and reset the nested transaction count to 0.
      *
-    * @return    boolean  Whether operation was successful.
-    */
+     * @return    boolean  Whether operation was successful.
+     */
     public function forceRollBack()
     {
         $return = true;
@@ -357,6 +359,7 @@ class PropelPDO extends PDO
      * This is overridden here to provide support for setting Propel-specific attributes too.
      *
      * @param  integer $attribute The attribute to get (e.g. PropelPDO::PROPEL_ATTR_CACHE_PREPARES).
+     *
      * @return mixed
      */
     public function getAttribute($attribute)
@@ -415,6 +418,7 @@ class PropelPDO extends PDO
      * Overrides PDO::exec() to log queries when required
      *
      * @param  string  $sql
+     *
      * @return integer
      */
     public function exec($sql)
@@ -626,7 +630,9 @@ class PropelPDO extends PDO
         // Determine if this query is slow enough to warrant logging
         if ($this->getLoggingConfig("onlyslow", self::DEFAULT_ONLYSLOW_ENABLED)) {
             $now = $this->getDebugSnapshot();
-            if ($now['microtime'] - $debugSnapshot['microtime'] < $this->getLoggingConfig("details.slow.threshold", self::DEFAULT_SLOW_THRESHOLD)) return;
+            if ($now['microtime'] - $debugSnapshot['microtime'] < $this->getLoggingConfig("details.slow.threshold", self::DEFAULT_SLOW_THRESHOLD)) {
+                return;
+            }
         }
 
         // If the necessary additional parameters were given, get the debug log prefix for the log line
@@ -702,11 +708,11 @@ class PropelPDO extends PDO
         if (!isset($config['debugpdo']['logging']['details'])) {
             return '';
         }
-        $prefix     = '';
+        $prefix = '';
         $logDetails = $config['debugpdo']['logging']['details'];
-        $now        = $this->getDebugSnapshot();
-        $innerGlue  = $this->getLoggingConfig('innerglue', ': ');
-        $outerGlue  = $this->getLoggingConfig('outerglue', ' | ');
+        $now = $this->getDebugSnapshot();
+        $innerGlue = $this->getLoggingConfig('innerglue', ': ');
+        $outerGlue = $this->getLoggingConfig('outerglue', ' | ');
 
         // Iterate through each detail that has been configured to be enabled
         foreach ($logDetails as $detailName => $details) {
@@ -757,11 +763,9 @@ class PropelPDO extends PDO
                 default:
                     $value = 'n/a';
                     break;
-
             }
 
             $prefix .= $detailName . $innerGlue . $value . $outerGlue;
-
         }
 
         return $prefix;

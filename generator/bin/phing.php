@@ -5,6 +5,7 @@
  * This is the Phing command line launcher. It starts up the system environment
  * tests for all important paths and properties and kicks of the main command-
  * line entry point of phing located in phing.Phing
+ *
  * @version $Revision: 552 $
  */
 
@@ -15,7 +16,7 @@ $dirname = dirname(__FILE__);
 $autoloaded = false;
 foreach (array($dirname . '/../../', $dirname . '/../../../../../') as $dir) {
     if (file_exists($file = realpath($dir) . '/vendor/autoload.php')) {
-        set_include_path($dir . '/vendor/phing/phing/classes' . PATH_SEPARATOR . get_include_path() );
+        set_include_path($dir . '/vendor/phing/phing/classes' . PATH_SEPARATOR . get_include_path());
         include_once $file;
 
         $autoloaded = true;
@@ -26,12 +27,12 @@ foreach (array($dirname . '/../../', $dirname . '/../../../../../') as $dir) {
 /* set classpath */
 if (getenv('PHP_CLASSPATH')) {
     if (!defined('PHP_CLASSPATH')) {
-        define('PHP_CLASSPATH',  getenv('PHP_CLASSPATH') . PATH_SEPARATOR . get_include_path());
+        define('PHP_CLASSPATH', getenv('PHP_CLASSPATH') . PATH_SEPARATOR . get_include_path());
     }
     ini_set('include_path', PHP_CLASSPATH);
 } else {
     if (!defined('PHP_CLASSPATH')) {
-        define('PHP_CLASSPATH',  get_include_path());
+        define('PHP_CLASSPATH', get_include_path());
     }
 }
 

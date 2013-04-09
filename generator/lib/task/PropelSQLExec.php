@@ -110,6 +110,7 @@ class PropelSQLExec extends Task
      * Get the buildtime connection settings for a given database name.
      *
      * @param  string $database
+     *
      * @return array  $buildConnections
      */
     public function getBuildConnection($database)
@@ -160,6 +161,7 @@ class PropelSQLExec extends Task
      * Set the user name for the DB connection.
      *
      * @param string $userId database user
+     *
      * @deprecated Specify userid in the DSN URL.
      */
     public function setUserid($userId)
@@ -171,6 +173,7 @@ class PropelSQLExec extends Task
      * Set the password for the DB connection.
      *
      * @param string $password database password
+     *
      * @deprecated Specify password in the DSN URL.
      */
     public function setPassword($password)
@@ -210,8 +213,7 @@ class PropelSQLExec extends Task
         $this->setBuildConnections($conf->getBuildConnections());
 
         if ($this->sqldbmap === null || $this->getSqlDbMap()->exists() === false) {
-            throw new BuildException("You haven't provided an sqldbmap, or "
-                    . "the one you specified doesn't exist: " . $this->sqldbmap->getPath());
+            throw new BuildException("You haven't provided an sqldbmap, or " . "the one you specified doesn't exist: " . $this->sqldbmap->getPath());
         }
 
         if ($this->url === null) {
@@ -308,7 +310,6 @@ class PropelSQLExec extends Task
                     $this->conn->commit();
                 }
             }
-
         } catch (IOException $e) {
             if (!$this->autocommit && $this->conn !== null && $this->onError == "abort") {
                 try {
@@ -340,6 +341,7 @@ class PropelSQLExec extends Task
      * Execute a SQL statement using the current connection property.
      *
      * @param  string       $sql SQL statement to execute
+     *
      * @throws PDOException
      */
     protected function execSQL($sql)
@@ -352,14 +354,18 @@ class PropelSQLExec extends Task
         try {
             $this->totalSql++;
 
-            if (!$this->autocommit) $this->conn->beginTransaction();
+            if (!$this->autocommit) {
+                $this->conn->beginTransaction();
+            }
 
             $stmt = $this->conn->prepare($sql);
-            $this->log(sprintf('    Executing statement "%s"',$sql), Project::MSG_VERBOSE);
+            $this->log(sprintf('    Executing statement "%s"', $sql), Project::MSG_VERBOSE);
             $stmt->execute();
             $this->log(sprintf('    %d rows affected', $stmt->rowCount()), Project::MSG_VERBOSE);
 
-            if (!$this->autocommit) $this->conn->commit();
+            if (!$this->autocommit) {
+                $this->conn->commit();
+            }
 
             $this->goodSql++;
         } catch (PDOException $e) {
@@ -370,5 +376,4 @@ class PropelSQLExec extends Task
             $this->log($e->getMessage(), Project::MSG_ERR);
         }
     }
-
 }

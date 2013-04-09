@@ -185,7 +185,7 @@ class PropelSqlManager
             $sqlDbMapContent .= sprintf("%s=%s\n", $filename, $datasource);
         }
 
-        file_put_contents ($this->getSqlDbMapFilename(), $sqlDbMapContent);
+        file_put_contents($this->getSqlDbMapFilename(), $sqlDbMapContent);
     }
 
     /**
@@ -266,6 +266,7 @@ class PropelSqlManager
      * Returns an array of properties as key/value pairs from an input file.
      *
      * @param  string    $file A file properties.
+     *
      * @return array     An array of properties as key/value pairs.
      * @throws Exception
      */

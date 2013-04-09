@@ -89,7 +89,7 @@ class PropelXMLParser extends PropelParser
     }
 
     /**
-      * @param  array $array
+     * @param  array $array
      * @param DOMElement $rootElement
      * @param string     $charset
      * @param boolean    $removeNumbersFromKeys
@@ -129,6 +129,7 @@ class PropelXMLParser extends PropelParser
      * Converts data from XML to an associative array.
      *
      * @param  string $data Source data to convert, as an XML string
+     *
      * @return array  Converted data
      */
     public function toArray($data)
@@ -144,6 +145,7 @@ class PropelXMLParser extends PropelParser
      * Alias for PropelXMLParser::toArray()
      *
      * @param  string $data Source data to convert, as an XML string
+     *
      * @return array  Converted data
      */
     public function fromXML($data)
@@ -153,6 +155,7 @@ class PropelXMLParser extends PropelParser
 
     /**
      * @param  DOMNode $data
+     *
      * @return array
      */
     protected function convertDOMElementToArray(DOMNode $data)
@@ -192,6 +195,7 @@ class PropelXMLParser extends PropelParser
 
     /**
      * @param  DomNode $node
+     *
      * @return boolean
      */
     protected function hasOnlyTextNodes(DomNode $node)

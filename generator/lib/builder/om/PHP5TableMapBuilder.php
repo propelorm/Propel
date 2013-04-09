@@ -21,6 +21,7 @@ class PHP5TableMapBuilder extends OMBuilder
 
     /**
      * Gets the package for the map builder classes.
+     *
      * @return string
      */
     public function getPackage()
@@ -41,6 +42,7 @@ class PHP5TableMapBuilder extends OMBuilder
 
     /**
      * Returns the name of the current class being built.
+     *
      * @return string
      */
     public function getUnprefixedClassname()
@@ -50,6 +52,7 @@ class PHP5TableMapBuilder extends OMBuilder
 
     /**
      * Adds the include() statements for files that this class depends on or utilizes.
+     *
      * @param      string &$script The script will be modified in this method.
      */
     protected function addIncludes(&$script)
@@ -58,6 +61,7 @@ class PHP5TableMapBuilder extends OMBuilder
 
     /**
      * Adds class phpdoc comment and opening of class.
+     *
      * @param      string &$script The script will be modified in this method.
      */
     protected function addClassOpen(&$script)
@@ -66,7 +70,7 @@ class PHP5TableMapBuilder extends OMBuilder
         $script .= "
 
 /**
- * This class defines the structure of the '".$table->getName()."' table.
+ * This class defines the structure of the '" . $table->getName() . "' table.
  *
  *";
         if ($this->getBuildProperty('addTimeStamp')) {
@@ -84,9 +88,9 @@ class PHP5TableMapBuilder extends OMBuilder
  * ORDER BY clause to know whether it needs to apply SQL to make the ORDER BY case-insensitive
  * (i.e. if it's a text column type).
  *
- * @package    propel.generator.".$this->getPackage()."
+ * @package    propel.generator." . $this->getPackage() . "
  */
-class ".$this->getClassname()." extends TableMap
+class " . $this->getClassname() . " extends TableMap
 {
 ";
     }
@@ -94,6 +98,7 @@ class ".$this->getClassname()." extends TableMap
     /**
      * Specifies the methods that are added as part of the map builder class.
      * This can be overridden by subclasses that wish to add more methods.
+     *
      * @see        ObjectBuilder::addClassBody()
      */
     protected function addClassBody(&$script)
@@ -108,6 +113,7 @@ class ".$this->getClassname()." extends TableMap
 
     /**
      * Adds any constants needed for this TableMap class.
+     *
      * @param      string &$script The script will be modified in this method.
      */
     protected function addConstants(&$script)
@@ -116,12 +122,13 @@ class ".$this->getClassname()." extends TableMap
     /**
      * The (dot-path) name of this class
      */
-    const CLASS_NAME = '".$this->getClasspath()."';
+    const CLASS_NAME = '" . $this->getClasspath() . "';
 ";
     }
 
     /**
      * Adds any attributes needed for this TableMap class.
+     *
      * @param      string &$script The script will be modified in this method.
      */
     protected function addAttributes(&$script)
@@ -130,6 +137,7 @@ class ".$this->getClassname()." extends TableMap
 
     /**
      * Closes class.
+     *
      * @param      string &$script The script will be modified in this method.
      */
     protected function addClassClose(&$script)
@@ -142,6 +150,7 @@ class ".$this->getClassname()." extends TableMap
 
     /**
      * Adds the addInitialize() method to the  table map class.
+     *
      * @param      string &$script The script will be modified in this method.
      */
     protected function addInitialize(&$script)
@@ -161,8 +170,8 @@ class ".$this->getClassname()." extends TableMap
     public function initialize()
     {
         // attributes
-        \$this->setName('".$table->getName()."');
-        \$this->setPhpName('".$table->getPhpName()."');
+        \$this->setName('" . $table->getName() . "');
+        \$this->setPhpName('" . $table->getPhpName() . "');
         \$this->setClassname('" . addslashes($this->getStubObjectBuilder()->getFullyQualifiedClassname()) . "');
         \$this->setPackage('" . parent::getPackage() . "');";
         if ($table->getIdMethod() == "native") {
@@ -177,10 +186,10 @@ class ".$this->getClassname()." extends TableMap
             $params = $table->getIdMethodParameters();
             $imp = $params[0];
             $script .= "
-        \$this->setPrimaryKeyMethodInfo('".$imp->getValue()."');";
+        \$this->setPrimaryKeyMethodInfo('" . $imp->getValue() . "');";
         } elseif ($table->getIdMethod() == IDMethod::NATIVE && ($platform->getNativeIdMethod() == PropelPlatformInterface::SEQUENCE || $platform->getNativeIdMethod() == PropelPlatformInterface::SERIAL)) {
             $script .= "
-        \$this->setPrimaryKeyMethodInfo('".$platform->getSequenceName($table)."');";
+        \$this->setPrimaryKeyMethodInfo('" . $platform->getSequenceName($table) . "');";
         }
 
         if ($this->getTable()->getChildrenColumn()) {
@@ -194,11 +203,11 @@ class ".$this->getClassname()." extends TableMap
         }
 
         // Add columns to map
-            $script .= "
+        $script .= "
         // columns";
         foreach ($table->getColumns() as $col) {
-            $cup=$col->getName();
-            $cfc=$col->getPhpName();
+            $cup = $col->getName();
+            $cfc = $col->getPhpName();
             if (!$col->getSize()) {
                 $size = "null";
             } else {
@@ -209,26 +218,26 @@ class ".$this->getClassname()." extends TableMap
                 if ($col->isForeignKey()) {
                     foreach ($col->getForeignKeys() as $fk) {
                         $script .= "
-        \$this->addForeignPrimaryKey('$cup', '$cfc', '".$col->getType()."' , '".$fk->getForeignTableName()."', '".$fk->getMappedForeignColumn($col->getName())."', ".($col->isNotNull() ? 'true' : 'false').", ".$size.", $default);";
+        \$this->addForeignPrimaryKey('$cup', '$cfc', '" . $col->getType() . "' , '" . $fk->getForeignTableName() . "', '" . $fk->getMappedForeignColumn($col->getName()) . "', " . ($col->isNotNull() ? 'true' : 'false') . ", " . $size . ", $default);";
                     }
                 } else {
                     $script .= "
-        \$this->addPrimaryKey('$cup', '$cfc', '".$col->getType()."', ".var_export($col->isNotNull(), true).", ".$size.", $default);";
+        \$this->addPrimaryKey('$cup', '$cfc', '" . $col->getType() . "', " . var_export($col->isNotNull(), true) . ", " . $size . ", $default);";
                 }
             } else {
                 if ($col->isForeignKey()) {
                     foreach ($col->getForeignKeys() as $fk) {
                         $script .= "
-        \$this->addForeignKey('$cup', '$cfc', '".$col->getType()."', '".$fk->getForeignTableName()."', '".$fk->getMappedForeignColumn($col->getName())."', ".($col->isNotNull() ? 'true' : 'false').", ".$size.", $default);";
+        \$this->addForeignKey('$cup', '$cfc', '" . $col->getType() . "', '" . $fk->getForeignTableName() . "', '" . $fk->getMappedForeignColumn($col->getName()) . "', " . ($col->isNotNull() ? 'true' : 'false') . ", " . $size . ", $default);";
                     }
                 } else {
                     $script .= "
-        \$this->addColumn('$cup', '$cfc', '".$col->getType()."', ".var_export($col->isNotNull(), true).", ".$size.", $default);";
+        \$this->addColumn('$cup', '$cfc', '" . $col->getType() . "', " . var_export($col->isNotNull(), true) . ", " . $size . ", $default);";
                 }
             } // if col-is prim key
             if ($col->getValueSet()) {
                 $script .= "
-        \$this->getColumn('$cup', false)->setValueSet(" . var_export($col->getValueSet(), true). ");";
+        \$this->getColumn('$cup', false)->setValueSet(" . var_export($col->getValueSet(), true) . ");";
             }
             if ($col->isPrimaryString()) {
                 $script .= "
@@ -245,22 +254,22 @@ class ".$this->getClassname()." extends TableMap
             foreach ($val->getRules() as $rule) {
                 if ($val->getTranslate() !== Validator::TRANSLATE_NONE) {
                     $script .= "
-        \$this->addValidator('$cup', '".$rule->getName()."', '".$rule->getClass()."', '".str_replace("'", "\'", $rule->getValue())."', ".$val->getTranslate()."('".str_replace("'", "\'", $rule->getMessage())."'));";
+        \$this->addValidator('$cup', '" . $rule->getName() . "', '" . $rule->getClass() . "', '" . str_replace("'", "\'", $rule->getValue()) . "', " . $val->getTranslate() . "('" . str_replace("'", "\'", $rule->getMessage()) . "'));";
                 } else {
                     $script .= "
-        \$this->addValidator('$cup', '".$rule->getName()."', '".$rule->getClass()."', '".str_replace("'", "\'", $rule->getValue())."', '".str_replace("'", "\'", $rule->getMessage())."');";
+        \$this->addValidator('$cup', '" . $rule->getName() . "', '" . $rule->getClass() . "', '" . str_replace("'", "\'", $rule->getValue()) . "', '" . str_replace("'", "\'", $rule->getMessage()) . "');";
                 } // if ($rule->getTranslation() ...
-                } // foreach rule
-        }  // foreach validator
+            } // foreach rule
+        } // foreach validator
 
         $script .= "
     } // initialize()
 ";
-
     }
 
     /**
      * Adds the method that build the RelationMap objects
+     *
      * @param      string &$script The script will be modified in this method.
      */
     protected function addBuildRelations(&$script)
@@ -292,9 +301,9 @@ class ".$this->getClassname()." extends TableMap
             $onDelete = $fkey->hasOnDelete() ? "'" . $fkey->getOnDelete() . "'" : 'null';
             $onUpdate = $fkey->hasOnUpdate() ? "'" . $fkey->getOnUpdate() . "'" : 'null';
             $script .= "
-        \$this->addRelation('$relationName', '" . addslashes($this->getNewStubObjectBuilder($fkey->getTable())->getFullyQualifiedClassname()) . "', RelationMap::ONE_TO_" . ($fkey->isLocalPrimaryKey() ? "ONE" : "MANY") .", $columnMapping, $onDelete, $onUpdate";
+        \$this->addRelation('$relationName', '" . addslashes($this->getNewStubObjectBuilder($fkey->getTable())->getFullyQualifiedClassname()) . "', RelationMap::ONE_TO_" . ($fkey->isLocalPrimaryKey() ? "ONE" : "MANY") . ", $columnMapping, $onDelete, $onUpdate";
             if ($fkey->isLocalPrimaryKey()) {
-                 $script .= ");";
+                $script .= ");";
             } else {
                 $script .= ", '" . $this->getRefFKPhpNameAffix($fkey, true) . "');";
             }
@@ -315,12 +324,13 @@ class ".$this->getClassname()." extends TableMap
 
     /**
      * Adds the behaviors getter
+     *
      * @param      string &$script The script will be modified in this method.
      */
     protected function addGetBehaviors(&$script)
     {
-      if ($behaviors = $this->getTable()->getBehaviors()) {
-          $script .= "
+        if ($behaviors = $this->getTable()->getBehaviors()) {
+            $script .= "
     /**
      *
      * Gets the list of behaviors registered for this table
@@ -332,7 +342,7 @@ class ".$this->getClassname()." extends TableMap
         return array(";
             foreach ($behaviors as $behavior) {
                 $script .= "
-            '{$behavior->getName()}' =>  ". var_export($behavior->getParameters(), true) . ",";
+            '{$behavior->getName()}' =>  " . var_export($behavior->getParameters(), true) . ",";
             }
             $script .= "
         );
@@ -343,7 +353,9 @@ class ".$this->getClassname()." extends TableMap
 
     /**
      * Checks whether any registered behavior on that table has a modifier for a hook
+     *
      * @param  string  $hookName The name of the hook as called from one of this class methods, e.g. "preSave"
+     *
      * @return boolean
      */
     public function hasBehaviorModifier($hookName, $modifier = null)
@@ -353,6 +365,7 @@ class ".$this->getClassname()." extends TableMap
 
     /**
      * Checks whether any registered behavior on that table has a modifier for a hook
+     *
      * @param string $hookName The name of the hook as called from one of this class methods, e.g. "preSave"
      * @param string &$script The script will be modified in this method.
      */

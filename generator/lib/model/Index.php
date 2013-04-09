@@ -26,12 +26,16 @@ class Index extends XMLElement
     const DEBUG = false;
 
     private $indexName;
+
+    /**
+     * @var Table
+     */
     private $parentTable;
 
-    /** @var        array string[] */
+    /** @var string[] */
     private $indexColumns;
 
-    /** @var        array  */
+    /** @var int[] */
     private $indexColumnSizes = array();
 
     /**
@@ -39,7 +43,7 @@ class Index extends XMLElement
      *
      * @param string $name
      */
-    public function __construct($name=null)
+    public function __construct($name = null)
     {
         $this->indexName = $name;
     }
@@ -62,12 +66,12 @@ class Index extends XMLElement
             $inputs[] = count($table->getIndices()) + 1;
         }
 
-        $this->indexName = NameFactory::generateName(
-        NameFactory::CONSTRAINT_GENERATOR, $inputs);
+        $this->indexName = NameFactory::generateName(NameFactory::CONSTRAINT_GENERATOR, $inputs);
     }
 
     /**
      * Sets up the Index object based on the attributes that were passed to loadFromXML().
+     *
      * @see        parent::loadFromXML()
      */
     protected function setupObject()
@@ -164,6 +168,7 @@ class Index extends XMLElement
 
     /**
      * Adds a new column to an index.
+     *
      * @param mixed $data Column or attributes from XML.
      */
     public function addColumn($data)
@@ -200,7 +205,9 @@ class Index extends XMLElement
 
     /**
      * Whether there is a size for the specified column.
+     *
      * @param  string  $name
+     *
      * @return boolean
      */
     public function hasColumnSize($name)
@@ -210,7 +217,9 @@ class Index extends XMLElement
 
     /**
      * Returns the size for the specified column, if given.
+     *
      * @param  string  $name
+     *
      * @return numeric The size or NULL
      */
     public function getColumnSize($name)
@@ -241,6 +250,7 @@ class Index extends XMLElement
 
     /**
      * Return a comma delimited string of the columns which compose this index.
+     *
      * @deprecated because Column::makeList() is deprecated; use the array-returning getColumns() instead.
      */
     public function getColumnList()
@@ -288,6 +298,7 @@ class Index extends XMLElement
 
     /**
      * Check whether the index has columns.
+     *
      * @return boolean
      */
     public function hasColumns()
@@ -297,6 +308,7 @@ class Index extends XMLElement
 
     /**
      * Return the list of local columns. You should not edit this list.
+     *
      * @return array string[]
      */
     public function getColumns()
