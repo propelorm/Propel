@@ -1586,9 +1586,20 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
         $this->addMutatorOpenBody($script, $col);
 
         $fmt = var_export($this->getTemporalFormatter($col), true);
-
+        
+    	// Default date/time formatter strings are specified in build.properties
+		if ($col->getType() === PropelTypes::DATE) {
+			$defaultfmt = $this->getBuildProperty('defaultDateFormat');
+		} elseif ($col->getType() === PropelTypes::TIME) {
+			$defaultfmt = $this->getBuildProperty('defaultTimeFormat');
+		} elseif ($col->getType() === PropelTypes::TIMESTAMP) {
+			$defaultfmt = $this->getBuildProperty('defaultTimeStampFormat');
+		}
+		if (empty($defaultfmt)) { $defaultfmt = null; }
+		$defaultfmtvar = var_export($defaultfmt, true);
+        
         $script .= "
-        \$dt = PropelDateTime::newInstance(\$v, null, '$dateTimeClass');
+        \$dt = PropelDateTime::newInstance(\$v, null, '$dateTimeClass',$defaultfmtvar);
         if (\$this->$clo !== null || \$dt !== null) {
             \$currentDateAsString = (\$this->$clo !== null && \$tmpDt = new $dateTimeClass(\$this->$clo)) ? \$tmpDt->format($fmt) : null;
             \$newDateAsString = \$dt ? \$dt->format($fmt) : null;";
