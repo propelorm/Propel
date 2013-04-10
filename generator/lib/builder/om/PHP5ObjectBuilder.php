@@ -4016,13 +4016,8 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
         $relatedName = $this->getRefFKPhpNameAffix($refFK, $plural = true);
         $relatedObjectClassName = $this->getRefFKPhpNameAffix($refFK, $plural = false);
 
-        // No lcfirst() in PHP < 5.3
-        $inputCollection = $relatedName;
-        $inputCollection[0] = strtolower($inputCollection[0]);
-
-        // No lcfirst() in PHP < 5.3
-        $inputCollectionEntry = $this->getRefFKPhpNameAffix($refFK, $plural = false);
-        $inputCollectionEntry[0] = strtolower($inputCollectionEntry[0]);
+        $inputCollection = lcfirst($relatedName);
+        $inputCollectionEntry = lcfirst($this->getRefFKPhpNameAffix($refFK, $plural = false));
 
         $collName = $this->getRefFKCollVarName($refFK);
         $relCol = $this->getFKPhpNameAffix($refFK, $plural = false);
@@ -4084,9 +4079,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
     {
         $relatedObjectClassName = $this->getRefFKPhpNameAffix($refFK, $plural = false);
 
-        // lcfirst() doesn't exist in PHP < 5.3
-        $lowerRelatedObjectClassName = $relatedObjectClassName;
-        $lowerRelatedObjectClassName[0] = strtolower($lowerRelatedObjectClassName[0]);
+        $lowerRelatedObjectClassName = lcfirst($relatedObjectClassName);
 
         $collName = $this->getRefFKCollVarName($refFK);
 
@@ -4112,13 +4105,8 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
         $relatedName = $this->getRefFKPhpNameAffix($refFK, $plural = true);
         $relatedObjectClassName = $this->getRefFKPhpNameAffix($refFK, $plural = false);
 
-        // No lcfirst() in PHP < 5.3
-        $inputCollection = $relatedName . 'ScheduledForDeletion';
-        $inputCollection[0] = strtolower($inputCollection[0]);
-
-        // lcfirst() doesn't exist in PHP < 5.3
-        $lowerRelatedObjectClassName = $relatedObjectClassName;
-        $lowerRelatedObjectClassName[0] = strtolower($lowerRelatedObjectClassName[0]);
+        $inputCollection = lcfirst($relatedName . 'ScheduledForDeletion');
+        $lowerRelatedObjectClassName = lcfirst($relatedObjectClassName);
 
         $collName = $this->getRefFKCollVarName($refFK);
         $relCol = $this->getFKPhpNameAffix($refFK, $plural = false);
@@ -4248,8 +4236,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
 
     protected function addScheduledForDeletionAttribute(&$script, $fkName)
     {
-        // No lcfirst() in PHP < 5.3
-        $fkName[0] = strtolower($fkName[0]);
+        $fkName = lcfirst($fkName);
 
         $script .= "
     /**
@@ -4264,12 +4251,9 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
     {
         $queryClassName = $this->getRefFKPhpNameAffix($refFK, $plural = false) . 'Query';
         $relatedName = $this->getFKPhpNameAffix($crossFK, $plural = true);
-        // No lcfirst() in PHP < 5.3
-        $lowerRelatedName = $relatedName;
-        $lowerRelatedName[0] = strtolower($lowerRelatedName[0]);
-        // No lcfirst() in PHP < 5.3
-        $lowerSingleRelatedName = $this->getFKPhpNameAffix($crossFK, $plural = false);
-        $lowerSingleRelatedName[0] = strtolower($lowerSingleRelatedName[0]);
+
+        $lowerRelatedName = lcfirst($relatedName);
+        $lowerSingleRelatedName = lcfirst($this->getFKPhpNameAffix($crossFK, $plural = false));
 
         $middelFks = $refFK->getTable()->getForeignKeys();
         $isFirstPk = ($middelFks[0]->getForeignTableCommonName() == $this->getTable()->getCommonName());
@@ -4314,12 +4298,8 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
     {
         $relatedName = $this->getRefFKPhpNameAffix($refFK, $plural = true);
 
-        // No lcfirst() in PHP < 5.3
-        $lowerRelatedName = $relatedName;
-        $lowerRelatedName[0] = strtolower($lowerRelatedName[0]);
-        // No lcfirst() in PHP < 5.3
-        $lowerSingleRelatedName = $this->getRefFKPhpNameAffix($refFK, $plural = false);
-        $lowerSingleRelatedName[0] = strtolower($lowerSingleRelatedName[0]);
+        $lowerRelatedName = lcfirst($relatedName);
+        $lowerSingleRelatedName = lcfirst($this->getRefFKPhpNameAffix($refFK, $plural = false));
 
         $queryClassName = $this->getNewStubQueryBuilder($refFK->getTable())->getClassname();
 
@@ -4483,13 +4463,8 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
         $crossRefTableName = $crossFK->getTableName();
         $collName = $this->getCrossFKVarName($crossFK);
 
-        // No lcfirst() in PHP < 5.3
-        $inputCollection = $relatedNamePlural;
-        $inputCollection[0] = strtolower($inputCollection[0]);
-
-        // No lcfirst() in PHP < 5.3
-        $inputCollectionEntry = $this->getFKPhpNameAffix($crossFK, $plural = false);
-        $inputCollectionEntry[0] = strtolower($inputCollectionEntry[0]);
+        $inputCollection = lcfirst($relatedNamePlural);
+        $inputCollectionEntry = lcfirst($this->getFKPhpNameAffix($crossFK, $plural = false));
 
         $script .= "
     /**
@@ -4616,9 +4591,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
     {
         $relatedObjectClassName = $this->getFKPhpNameAffix($crossFK, $plural = false);
 
-        // lcfirst() doesn't exist in PHP < 5.3
-        $lowerRelatedObjectClassName = $relatedObjectClassName;
-        $lowerRelatedObjectClassName[0] = strtolower($lowerRelatedObjectClassName[0]);
+        $lowerRelatedObjectClassName = lcfirst($relatedObjectClassName);
 
         $joinedTableObjectBuilder = $this->getNewObjectBuilder($refFK->getTable());
         $className = $joinedTableObjectBuilder->getObjectClassname();

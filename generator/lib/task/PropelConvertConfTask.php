@@ -8,7 +8,7 @@
  * @license    MIT License
  */
 
-require_once 'phing/Task.php';
+require_once 'task/AbstractPropelTask.php';
 require_once 'task/AbstractPropelDataModelTask.php';
 require_once 'builder/om/OMBuilder.php';
 require_once 'builder/om/ClassTools.php';

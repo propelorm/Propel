@@ -8,7 +8,7 @@
  * @license    MIT License
  */
 
-require_once 'phing/Task.php';
+require_once 'task/AbstractPropelTask.php';
 
 /**
  * This Task lists the migrations yet to be executed
@@ -16,7 +16,7 @@ require_once 'phing/Task.php';
  * @author     Francois Zaninotto
  * @package    propel.generator.task
  */
-abstract class BasePropelMigrationTask extends Task
+abstract class BasePropelMigrationTask extends AbstractPropelTask
 {
     /**
      * Destination directory for results of template scripts.
