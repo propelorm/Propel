@@ -20,6 +20,10 @@
  * @method     ModelCriteria leftJoin($relation) Adds a LEFT JOIN clause to the query
  * @method     ModelCriteria rightJoin($relation) Adds a RIGHT JOIN clause to the query
  * @method     ModelCriteria innerJoin($relation) Adds a INNER JOIN clause to the query
+ * @method     ModelCriteria getSelectQuery($alias) Get the Criteria for a specific subQuery
+ * @method     ModelCriteria _or()
+ *
+ * @property   ModelJoin[] $joins
  *
  * @author     François Zaninotto
  * @version    $Revision$
@@ -40,17 +44,24 @@ class ModelCriteria extends Criteria
 
     protected $modelName;
     protected $modelPeerName;
+    protected $originalModelAlias;
     protected $modelAlias;
     protected $useAliasInSQL = false;
+    public    $replacedColumns = array();
+    /**
+     * @var DatabaseMap
+     */
     protected $tableMap;
-    protected $primaryCriteria;
-    protected $formatter;
+    protected $primaryCriteria = null;
+    protected $formatter = null;
     protected $defaultFormatterClass = ModelCriteria::FORMAT_OBJECT;
     protected $with = array();
     protected $isWithOneToMany = false;
     protected $previousJoin = null; // this is introduced to prevent useQuery->join from going wrong
     protected $isKeepQuery = true; // whether to clone the current object before termination methods
     protected $select = null; // this is for the select method
+    protected $currentAlias = null;
+    protected $foundMatch = false;
 
     /**
      * Creates a new instance with the default capacity which corresponds to
@@ -66,6 +77,7 @@ class ModelCriteria extends Criteria
         $this->originalDbName = $dbName;
         $this->modelName = $modelName;
         $this->modelPeerName = constant($this->modelName . '::PEER');
+        $this->originalModelAlias = $modelAlias;
         $this->modelAlias = $modelAlias;
         $this->tableMap = Propel::getDatabaseMap($this->getDbName())->getTableByPhpName($this->modelName);
     }
@@ -371,7 +383,7 @@ class ModelCriteria extends Criteria
      */
     public function orderBy($columnName, $order = Criteria::ASC)
     {
-        list($column, $realColumnName) = $this->getColumnFromName($columnName, false);
+        list(, $realColumnName) = $this->getColumnFromName($columnName, false);
         $order = strtoupper($order);
         switch ($order) {
             case Criteria::ASC:
@@ -401,7 +413,7 @@ class ModelCriteria extends Criteria
      */
     public function groupBy($columnName)
     {
-        list($column, $realColumnName) = $this->getColumnFromName($columnName, false);
+        list(, $realColumnName) = $this->getColumnFromName($columnName, false);
         $this->addGroupByColumn($realColumnName);
 
         return $this;
@@ -1012,6 +1024,16 @@ class ModelCriteria extends Criteria
         $this->with = array();
         $this->primaryCriteria = null;
         $this->formatter = null;
+        $this->select = null;
+        $this->modelAlias = $this->originalModelAlias;
+        $this->currentAlias = null;
+        $this->setDbName($this->originalDbName);
+        $this->useAliasInSQL = false;
+        $this->isKeepQuery = true;
+        $this->previousJoin = null;
+        $this->isWithOneToMany = false;
+        $this->replacedColumns = array();
+        $this->foundMatch = false;
 
         return $this;
     }
@@ -1051,6 +1073,7 @@ class ModelCriteria extends Criteria
      */
     public function addSelectQuery(Criteria $subQueryCriteria, $alias = null, $addAliasAndSelectColumns = true)
     {
+        /* @var $subQueryCriteria ModelCriteria */
         if (!$subQueryCriteria->hasSelectClause()) {
             $subQueryCriteria->addSelfSelectColumns();
         }
@@ -1133,7 +1156,7 @@ class ModelCriteria extends Criteria
         } elseif (false === strpos($fullName, '.')) {
             $relationName = $fullName;
         } else {
-            list($leftName, $relationName) = explode('.', $fullName);
+            list(, $relationName) = explode('.', $fullName);
         }
 
         return $relationName;
@@ -1170,12 +1193,17 @@ class ModelCriteria extends Criteria
      * Code to execute before every SELECT statement
      *
      * @param PropelPDO $con The connection object used by the query
+     * @return null
      */
     protected function basePreSelect(PropelPDO $con)
     {
         return $this->preSelect($con);
     }
 
+    /**
+     * @param PropelPDO $con
+     * @return null
+     */
     protected function preSelect(PropelPDO $con)
     {
     }
@@ -1485,6 +1513,11 @@ class ModelCriteria extends Criteria
         return $count;
     }
 
+    /**
+     * @param $con
+     * @return PDOStatement
+     * @throws PropelException
+     */
     protected function doCount($con)
     {
         $dbMap = Propel::getDatabaseMap($this->getDbName());
@@ -1520,6 +1553,7 @@ class ModelCriteria extends Criteria
             $sql = BasePeer::createSelectSql($this, $params);
         }
         try {
+            /* @var $con PDO */
             $stmt = $con->prepare($sql);
             $db->bindValues($stmt, $params, $dbMap);
             $stmt->execute();
@@ -1556,12 +1590,17 @@ class ModelCriteria extends Criteria
      * Code to execute before every DELETE statement
      *
      * @param PropelPDO $con The connection object used by the query
+     * @return null
      */
     protected function basePreDelete(PropelPDO $con)
     {
         return $this->preDelete($con);
     }
 
+    /**
+     * @param PropelPDO $con
+     * @return null
+     */
     protected function preDelete(PropelPDO $con)
     {
     }
@@ -1571,12 +1610,18 @@ class ModelCriteria extends Criteria
      *
      * @param int       $affectedRows the number of deleted rows
      * @param PropelPDO $con          The connection object used by the query
+     * @return null
      */
     protected function basePostDelete($affectedRows, PropelPDO $con)
     {
         return $this->postDelete($affectedRows, $con);
     }
 
+    /**
+     * @param $affectedRows
+     * @param PropelPDO $con
+     * @return null
+     */
     protected function postDelete($affectedRows, PropelPDO $con)
     {
     }
@@ -1613,6 +1658,7 @@ class ModelCriteria extends Criteria
             $con->commit();
         } catch (PropelException $e) {
             $con->rollback();
+            /* @var $e PropelException*/
             throw $e;
         }
 
@@ -1642,7 +1688,7 @@ class ModelCriteria extends Criteria
      *
      * @return integer the number of deleted rows
      *
-     * @throws PropelException
+     * @throws Exception|PropelException
      */
     public function deleteAll($con = null)
     {
@@ -1737,6 +1783,7 @@ class ModelCriteria extends Criteria
             $con = Propel::getConnection($this->getDbName(), Propel::CONNECTION_WRITE);
         }
 
+        /* @var $criteria ModelCriteria */
         $criteria = $this->isKeepQuery() ? clone $this : $this;
         $criteria->setPrimaryTableName(constant($this->modelPeerName . '::TABLE_NAME'));
 

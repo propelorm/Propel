@@ -2570,6 +2570,178 @@ class ModelCriteriaTest extends BookstoreTestBase
         $result = BasePeer::createSelectSql($c, $params);
         $this->assertEquals($result, $sql);
     }
+
+    public function testClear()
+    {
+        // initial
+        $c1 = BookQuery::create();
+        $c2 = BookQuery::create();
+
+        $this->assertEquals($c1, $c2);
+        $this->assertNotSame($c1, $c2);
+
+        $c1->clear();
+        $this->assertEquals($c1, $c2);
+
+        $c1 = BookQuery::create();
+        $c2 = BookQuery::create();
+
+        $c1->clear();
+        $c2->clear();
+        $this->assertEquals($c1, $c2);
+
+        // preserve alias
+        $c1 = BookQuery::create('alias1');
+        $c2 = BookQuery::create('alias1');
+        $this->assertEquals($c1, $c2);
+        $c1->clear();
+        $this->assertEquals($c1, $c2);
+
+        $c1 = BookQuery::create();
+        $c2 = BookQuery::create();
+
+        // filters
+        $c1->filterBy('Title', '%title%');
+        $this->assertNotEquals($c1, $c2);
+        $c1->clear();
+        $this->assertEquals($c1, $c2);
+
+        $c1->filterByPrice(1);
+        $this->assertNotEquals($c1, $c2);
+        $c1->clear();
+        $this->assertEquals($c1, $c2);
+
+        // where conditions
+        $c1->setModelAlias('b');
+        $c1->where('b.Title = ?', 'foo');
+        $this->assertNotEquals($c1, $c2);
+        $c1->clear();
+        $this->assertEquals($c1, $c2);
+
+        $c1->condition('u1', 'book.title LIKE ?', '%test1%');
+        $c1->condition('u2', 'book.isbn LIKE ?', '%test2%');
+        $c1->combine(array('u1', 'u2'), 'or');
+        $this->assertNotEquals($c1, $c2);
+        $c1->clear();
+        $this->assertEquals($c1, $c2);
+
+        $c1->where('Book.Id = ?', 12);
+        $c1->condition('cond1', 'Book.Title <> ?', 'foo');
+        $c1->condition('cond2', 'Book.Title like ?', '%bar%');
+        $c1->orWhere(array('cond1', 'cond2'), Criteria::LOGICAL_OR);
+        $this->assertNotEquals($c1, $c2);
+        $c1->clear();
+        $this->assertEquals($c1, $c2);
+
+        $c1->where('Book.Id = ?', 12);
+        $c1->_or();
+        $c1->where('Book.Title = ?', 'foo');
+        $this->assertNotEquals($c1, $c2);
+        $c1->clear();
+        $this->assertEquals($c1, $c2);
+
+        // select columns
+        $c1->select(array('ISBN', 'Price'));
+        $this->assertNotEquals($c1, $c2);
+        $c1->clear();
+        $this->assertEquals($c1, $c2);
+
+        $c1->add(BookPeer::TITLE, 'foo');
+        $this->assertNotEquals($c1, $c2);
+        $c1->clear();
+        $this->assertEquals($c1, $c2);
+
+        // joins
+        $c1->leftJoinAuthor('alias');
+        $this->assertNotEquals($c1, $c2);
+        $c1->clear();
+        $this->assertEquals($c1, $c2);
+
+        $c1->rightJoinAuthor('alias');
+        $this->assertNotEquals($c1, $c2);
+        $c1->clear();
+        $this->assertEquals($c1, $c2);
+
+        $c1->innerJoinAuthor('alias');
+        $this->assertNotEquals($c1, $c2);
+        $c1->clear();
+        $this->assertEquals($c1, $c2);
+
+        $c1->join('Book.Author a');
+        $c1->with('a');
+        $this->assertNotEquals($c1, $c2);
+        $c1->clear();
+        $this->assertEquals($c1, $c2);
+
+        $c3 = AuthorQuery::create();
+        $c4 = AuthorQuery::create();
+
+        $c3->join('Book');
+        $c3->withColumn('COUNT(Book.Id)', 'NbBooks');
+        $this->assertNotEquals($c3, $c4);
+        $c3->clear();
+        $this->assertEquals($c3, $c4);
+
+        // query use
+        $c1
+            ->useAuthorQuery()
+                ->filterByFirstName('Leo')
+            ->endUse()
+        ;
+        $this->assertNotEquals($c1, $c2);
+        $c1->clear();
+        $this->assertEquals($c1, $c2);
+
+        // modifiers & flags
+        $c1->setModelAlias('b', true);
+        $c1->addUsingAlias(BookPeer::TITLE, 'foo');
+        $this->assertNotEquals($c1, $c2);
+        $c1->clear();
+        $this->assertEquals($c1, $c2);
+
+        $c1->setLimit(1);
+        $this->assertNotEquals($c1, $c2);
+        $c1->clear();
+        $this->assertEquals($c1, $c2);
+
+        $c1->setOffset(1);
+        $this->assertNotEquals($c1, $c2);
+        $c1->clear();
+        $this->assertEquals($c1, $c2);
+
+        $c1->setDistinct();
+        $this->assertNotEquals($c1, $c2);
+        $c1->clear();
+        $this->assertEquals($c1, $c2);
+
+        // meta
+        $c1->setIgnoreCase(true);
+        $this->assertNotEquals($c1, $c2);
+        $c1->clear();
+        $this->assertEquals($c1, $c2);
+
+        $c1->setComment('comment');
+        $this->assertNotEquals($c1, $c2);
+        $c1->clear();
+        $this->assertEquals($c1, $c2);
+
+        $formatter = new PropelArrayFormatter();
+        $formatter->diff = true;
+        $c1->setFormatter($formatter);
+        $this->assertNotEquals($c1, $c2);
+        $c1->clear();
+        $this->assertEquals($c1, $c2);
+
+        $c1->setSingleRecord(true);
+        $this->assertNotEquals($c1, $c2);
+        $c1->clear();
+        $this->assertEquals($c1, $c2);
+
+        $c1->setUseTransaction(true);
+        $this->assertNotEquals($c1, $c2);
+        $c1->clear();
+        $this->assertEquals($c1, $c2);
+    }
 }
 
 class TestableModelCriteria extends ModelCriteria

@@ -362,15 +362,14 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . "
      */
     protected function addFactoryBody(&$script)
     {
+        $table = $this->getTable();
         $classname = $this->getNewStubQueryBuilder($this->getTable())->getClassname();
         $script .= "
         if (\$criteria instanceof " . $classname . ") {
             return \$criteria;
         }
-        \$query = new " . $classname . "();
-        if (null !== \$modelAlias) {
-            \$query->setModelAlias(\$modelAlias);
-        }
+        \$query = new " . $classname . "('" . $table->getDatabase()->getName() . "', '" . addslashes($this->getNewStubObjectBuilder($table)->getFullyQualifiedClassname()) . "', \$modelAlias);
+
         if (\$criteria instanceof Criteria) {
             \$query->mergeWith(\$criteria);
         }
