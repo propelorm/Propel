@@ -942,3 +942,7 @@ class Propel
 // Since the Propel class is not a true singleton, this code cannot go into the __construct()
 Propel::initBaseDir();
 spl_autoload_register(array('Propel', 'autoload'));
+
+if (version_compare(PHP_VERSION, '5.3.0', '<')) {
+    require_once __DIR__ . '/../stubs/functions.php';
+}

@@ -2235,9 +2235,7 @@ class ModelCriteria extends Criteria
                     $arguments[0] = null;
                 }
                 array_push($arguments, $joinType);
-                $method = substr($name, $pos);
-                // no lcfirst in php<5.3...
-                $method[0] = strtolower($method[0]);
+                $method = lcfirst(substr($name, $pos));
 
                 return call_user_func_array(array($this, $method), $arguments);
             }

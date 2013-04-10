@@ -9,7 +9,7 @@
  */
 
 //include_once 'phing/tasks/ext/CapsuleTask.php';
-require_once 'phing/Task.php';
+require_once 'task/AbstractPropelTask.php';
 include_once 'config/GeneratorConfig.php';
 include_once 'model/AppData.php';
 include_once 'model/Database.php';
@@ -26,7 +26,7 @@ include_once 'util/PropelSchemaValidator.php';
  * @author     Daniel Rall <dlr@finemaltcoding.com> (Torque)
  * @package    propel.generator.task
  */
-abstract class AbstractPropelDataModelTask extends Task
+abstract class AbstractPropelDataModelTask extends AbstractPropelTask
 {
 
     /**

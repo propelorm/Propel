@@ -8,7 +8,7 @@
  * @license    MIT License
  */
 
-require_once 'phing/Task.php';
+require_once 'task/AbstractPropelTask.php';
 require_once dirname(__FILE__) . '/../util/PropelSQLParser.php';
 
 /**
@@ -27,7 +27,7 @@ require_once dirname(__FILE__) . '/../util/PropelSQLParser.php';
  * @version    $Revision$
  * @package    propel.generator.task
  */
-class PropelSQLExec extends Task
+class PropelSQLExec extends AbstractPropelTask
 {
 
     private $goodSql = 0;
