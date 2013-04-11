@@ -16,8 +16,19 @@
  */
 class ModelJoin extends Join
 {
+    /**
+     * @var RelationMap
+     */
     protected $relationMap;
+
+    /**
+     * @var TableMap
+     */
     protected $tableMap;
+
+    /**
+     * @var ModelJoin
+     */
     protected $previousJoin;
 
     public function setRelationMap(RelationMap $relationMap, $leftTableAlias = null, $relationAlias = null)
