@@ -61,10 +61,14 @@ class SoftDeleteBehavior extends Behavior
  */
 public function forceDelete(PropelPDO \$con = null)
 {
-    if (\$isSoftDeleteEnabled = {$peerClassName}::isSoftDeleteEnabled()) { {$peerClassName}::disableSoftDelete();
+    if (\$isSoftDeleteEnabled = {$peerClassName}::isSoftDeleteEnabled()) {
+        {$peerClassName}::disableSoftDelete();
     }
+
     \$this->delete(\$con);
-    if (\$isSoftDeleteEnabled) { {$peerClassName}::enableSoftDelete();
+
+    if (\$isSoftDeleteEnabled) {
+        {$peerClassName}::enableSoftDelete();
     }
 }
 ";
