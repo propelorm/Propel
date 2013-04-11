@@ -282,9 +282,8 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . "
      **/
     protected function addConstructorOpen(&$script)
     {
-        $table = $this->getTable();
         $script .= "
-    public function __construct(\$dbName = '" . $table->getDatabase()->getName() . "', \$modelName = '" . addslashes($this->getNewStubObjectBuilder($table)->getFullyQualifiedClassname()) . "', \$modelAlias = null)
+    public function __construct(\$dbName = null, \$modelName = null, \$modelAlias = null)
     {";
     }
 
@@ -295,7 +294,14 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . "
      **/
     protected function addConstructorBody(&$script)
     {
+        $table = $this->getTable();
         $script .= "
+        if (null === \$dbName) {
+            \$dbName = '" . $table->getDatabase()->getName() . "';
+        }
+        if (null === \$modelName) {
+            \$modelName = '" . addslashes($this->getNewStubObjectBuilder($table)->getFullyQualifiedClassname()) . "';
+        }
         parent::__construct(\$dbName, \$modelName, \$modelAlias);";
     }
 
@@ -362,13 +368,12 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . "
      */
     protected function addFactoryBody(&$script)
     {
-        $table = $this->getTable();
         $classname = $this->getNewStubQueryBuilder($this->getTable())->getClassname();
         $script .= "
         if (\$criteria instanceof " . $classname . ") {
             return \$criteria;
         }
-        \$query = new " . $classname . "('" . $table->getDatabase()->getName() . "', '" . addslashes($this->getNewStubObjectBuilder($table)->getFullyQualifiedClassname()) . "', \$modelAlias);
+        \$query = new " . $classname . "(null, null, \$modelAlias);
 
         if (\$criteria instanceof Criteria) {
             \$query->mergeWith(\$criteria);
