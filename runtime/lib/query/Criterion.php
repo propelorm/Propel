@@ -28,7 +28,7 @@ class Criterion
 
     /** Comparison value.
      *
-     * @var        SqlEnum
+     * @var string
      */
     protected $comparison;
 
@@ -59,6 +59,8 @@ class Criterion
 
     /**
      * other connected criteria and their conjunctions.
+     *
+     * @var Criterion[]
      */
     protected $clauses = array();
     protected $conjunctions = array();
@@ -576,12 +578,13 @@ class Criterion
      * get an array of all criterion attached to this
      * recursing through all sub criterion
      *
-     * @return array Criterion[]
+     * @return Criterion[]
      */
     public function getAttachedCriterion()
     {
         $criterions = array($this);
         foreach ($this->getClauses() as $criterion) {
+            /* @var $criterion Criterion */
             $criterions = array_merge($criterions, $criterion->getAttachedCriterion());
         }
 

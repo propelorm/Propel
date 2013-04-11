@@ -29,25 +29,29 @@ class TableMap
     /**
      * Columns in the table
      *
-     * @var array TableMap[]
+     * @var ColumnMap[]
      */
     protected $columns = array();
 
     /**
      * Columns in the table, using table phpName as key
      *
-     * @var array TableMap[]
+     * @var ColumnMap[]
      */
     protected $columnsByPhpName = array();
 
     /**
      * Columns in the table, using  as key
      *
-     * @var array TableMap[]
+     * @var ColumnMap[]
      */
     protected $columnsByInsensitiveCase = array();
 
-    // The database this table belongs to
+    /**
+     * The database this table belongs to
+     *
+     * @var DatabaseMap
+     */
     protected $dbMap;
 
     // The name of the table
@@ -77,7 +81,11 @@ class TableMap
     // The foreign key columns in the table
     protected $foreignKeys = array();
 
-    // The relationships in the table
+    /**
+     * The relationships in the table
+     *
+     * @var RelationMap[]
+     */
     protected $relations = array();
 
     // Relations are lazy loaded. This property tells if the relations are loaded or not
@@ -283,13 +291,14 @@ class TableMap
     /**
      * Add a column to the table.
      *
-     * @param      string name A String with the column name.
+     * @param  string    $name         A string with the column name.
+     * @param  string    $phpName      A string specifying php name.
      * @param  string    $type         A string specifying the Propel type.
      * @param  boolean   $isNotNull    Whether column does not allow NULL values.
      * @param  int       $size         An int specifying the size.
      * @param  boolean   $pk           True if column is a primary key.
      * @param  string    $fkTable      A String with the foreign key table name.
-     * @param            $fkColumn     A String with the foreign key column name.
+     * @param  string    $fkColumn     A String with the foreign key column name.
      * @param  string    $defaultValue The default value for this column.
      *
      * @return ColumnMap The newly created column.
@@ -422,7 +431,7 @@ class TableMap
     /**
      * Get a ColumnMap[] of the columns in this table.
      *
-     * @return array A ColumnMap[].
+     * @return ColumnMap[]
      */
     public function getColumns()
     {
@@ -432,10 +441,12 @@ class TableMap
     /**
      * Add a primary key column to this Table.
      *
-     * @param  string    $columnName A String with the column name.
-     * @param  string    $type       A string specifying the Propel type.
-     * @param  boolean   $isNotNull  Whether column does not allow NULL values.
-     * @param            $size       An int specifying the size.
+     * @param  string    $columnName    A string with the column name.
+     * @param  string    $phpName       A string with the php name.
+     * @param  string    $type          A string specifying the Propel type.
+     * @param  boolean   $isNotNull     Whether column does not allow NULL values.
+     * @param  int       $size          An int specifying the size.
+     * @param  string    $defaultValue
      *
      * @return ColumnMap Newly added PrimaryKey column.
      */
@@ -448,6 +459,7 @@ class TableMap
      * Add a foreign key column to the table.
      *
      * @param  string    $columnName   A String with the column name.
+     * @param  string    $phpName       A string with the php name.
      * @param  string    $type         A string specifying the Propel type.
      * @param  string    $fkTable      A String with the foreign key table name.
      * @param  string    $fkColumn     A String with the foreign key column name.
@@ -466,6 +478,7 @@ class TableMap
      * Add a foreign primary key column to the table.
      *
      * @param  string    $columnName   A String with the column name.
+     * @param  string    $phpName      A string with the php name.
      * @param  string    $type         A string specifying the Propel type.
      * @param  string    $fkTable      A String with the foreign key table name.
      * @param  string    $fkColumn     A String with the foreign key column name.
@@ -635,7 +648,7 @@ class TableMap
      * Gets the RelationMap objects of the table
      * This method will build the relations if they are not built yet
      *
-     * @return Array list of RelationMap objects
+     * @return RelationMap[]
      */
     public function getRelations()
     {
@@ -720,7 +733,7 @@ class TableMap
      * Returns array of ColumnMap objects that make up the primary key for this table.
      *
      * @deprecated Use getPrimaryKeys instead
-     * @return array ColumnMap[]
+     * @return ColumnMap[]
      */
     public function getPrimaryKeyColumns()
     {
@@ -767,7 +780,7 @@ class TableMap
      *
      * @deprecated Not used anywhere in Propel
      *
-     * @param      data A String.
+     * @param string $data
      *
      * @return boolean True if prefix is contained in data.
      */
@@ -798,7 +811,7 @@ class TableMap
      *
      * @deprecated Not used anywhere in Propel. At buildtime, use Column::generatePhpName() for that purpose
      *
-     * @param      data A String.
+     * @param string $data
      *
      * @return string A String with data processed.
      */

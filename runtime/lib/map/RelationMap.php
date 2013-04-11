@@ -24,13 +24,31 @@
  */
 class RelationMap
 {
+    // types
+    const MANY_TO_ONE = 1;
+    const ONE_TO_MANY = 2;
+    const ONE_TO_ONE = 3;
+    const MANY_TO_MANY = 4;
 
-    const
-        // types
-        MANY_TO_ONE = 1, ONE_TO_MANY = 2, ONE_TO_ONE = 3, MANY_TO_MANY = 4, // representations
-        LOCAL_TO_FOREIGN = 0, LEFT_TO_RIGHT = 1;
+    // representations
+    const LOCAL_TO_FOREIGN = 0;
+    const LEFT_TO_RIGHT = 1;
 
-    protected $name, $pluralName, $type, $localTable, $foreignTable, $localColumns = array(), $foreignColumns = array(), $onUpdate, $onDelete;
+    protected $name;
+    protected $pluralName;
+    protected $type;
+    protected $localTable;
+    protected $foreignTable;
+    /**
+     * @var ColumnMap[]
+     */
+    protected $localColumns = array();
+    /**
+     * @var ColumnMap[]
+     */
+    protected $foreignColumns = array();
+    protected $onUpdate;
+    protected $onDelete;
 
     /**
      * Constructor.
@@ -229,7 +247,7 @@ class RelationMap
     /**
      * Get the left columns of the relation
      *
-     * @return    array of ColumnMap objects
+     * @return ColumnMap[]
      */
     public function getLeftColumns()
     {
@@ -239,7 +257,7 @@ class RelationMap
     /**
      * Get the right columns of the relation
      *
-     * @return    array of ColumnMap objects
+     * @return ColumnMap[]
      */
     public function getRightColumns()
     {
