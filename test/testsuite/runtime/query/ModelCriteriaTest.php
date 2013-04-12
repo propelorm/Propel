@@ -2583,13 +2583,6 @@ class ModelCriteriaTest extends BookstoreTestBase
         $c1->clear();
         $this->assertEquals($c1, $c2);
 
-        $c1 = BookQuery::create();
-        $c2 = BookQuery::create();
-
-        $c1->clear();
-        $c2->clear();
-        $this->assertEquals($c1, $c2);
-
         // alias is one of initialization parameters and as such should be preserved
         // no matter how criteria object was created
         $c1 = BookQuery::create('alias1');
