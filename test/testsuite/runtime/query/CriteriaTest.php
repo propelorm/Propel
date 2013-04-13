@@ -874,6 +874,32 @@ class CriteriaTest extends BookstoreTestBase
         $this->assertEquals($expect, $result);
     }
 
+    public function testAddJoinMultipleWithInOperator()
+    {
+        $con = Propel::getConnection(BookPeer::DATABASE_NAME);
+        $c = new Criteria();
+        $c->addMultipleJoin(array(
+                array(AuthorPeer::ID, BookPeer::AUTHOR_ID),
+                array(BookPeer::ISBN, array(1, 7, 42), Criteria::IN)
+            ), Criteria::LEFT_JOIN);
+        AuthorPeer::doSelectOne($c, $con);
+        $expectedSQL = 'SELECT author.id, author.first_name, author.last_name, author.email, author.age FROM author LEFT JOIN book ON (author.id=book.author_id AND book.isbn IN (1,7,42)) LIMIT 1';
+        $this->assertEquals($expectedSQL, $con->getLastExecutedQuery());
+    }
+
+    public function testAddJoinMultipleWithNotInOperator()
+    {
+        $con = Propel::getConnection(BookPeer::DATABASE_NAME);
+        $c = new Criteria();
+        $c->addMultipleJoin(array(
+                array(AuthorPeer::ID, BookPeer::AUTHOR_ID),
+                array(BookPeer::ISBN, array(1, 7, 42), Criteria::NOT_IN)
+            ), Criteria::LEFT_JOIN);
+        AuthorPeer::doSelectOne($c, $con);
+        $expectedSQL = 'SELECT author.id, author.first_name, author.last_name, author.email, author.age FROM author LEFT JOIN book ON (author.id=book.author_id AND book.isbn NOT IN (1,7,42)) LIMIT 1';
+        $this->assertEquals($expectedSQL, $con->getLastExecutedQuery());
+    }
+
     /**
      * Tests adding duplicate joins.
      * @link       http://trac.propelorm.org/ticket/613
