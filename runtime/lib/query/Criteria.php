@@ -963,7 +963,7 @@ class Criteria implements IteratorAggregate
                 list($leftTableName, $leftTableAlias) = array(null, null);
                 $leftColumnName = $left;
             }
-            if (!is_array($right) && $pos = strrpos($right, '.')) {
+            if (is_string($right) && $pos = strrpos($right, '.')) {
                 $rightTableAlias = substr($right, 0, $pos);
                 $rightColumnName = substr($right, $pos + 1);
                 list($rightTableName, $rightTableAlias) = $this->getTableNameAndAlias($rightTableAlias);

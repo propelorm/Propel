@@ -800,7 +800,7 @@ class CriteriaTest extends BookstoreTestBase
                 addSelectColumn("TABLE_A.id");
 
         $expect = 'SELECT TABLE_A.id FROM TABLE_A INNER JOIN TABLE_B '
-            . 'ON (TABLE_A.FOO_ID=TABLE_B.id AND TABLE_A.BAR=3)';
+            . 'ON (TABLE_A.FOO_ID=TABLE_B.id AND TABLE_A.BAR=:p1)';
         $params = array();
         $result = BasePeer::createSelectSql($c, $params);
         $this->assertEquals($expect, $result);
