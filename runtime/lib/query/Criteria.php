@@ -954,6 +954,7 @@ class Criteria implements IteratorAggregate
         foreach ($conditions as $condition) {
             $left = $condition[0];
             $right = $condition[1];
+            $operator = isset($condition[2]) ? $condition[2] : JOIN::EQUAL;
             if ($pos = strrpos($left, '.')) {
                 $leftTableAlias = substr($left, 0, $pos);
                 $leftColumnName = substr($left, $pos + 1);
@@ -962,13 +963,20 @@ class Criteria implements IteratorAggregate
                 list($leftTableName, $leftTableAlias) = array(null, null);
                 $leftColumnName = $left;
             }
-            if ($pos = strrpos($right, '.')) {
+            if (is_string($right) && $pos = strrpos($right, '.')) {
                 $rightTableAlias = substr($right, 0, $pos);
                 $rightColumnName = substr($right, $pos + 1);
                 list($rightTableName, $rightTableAlias) = $this->getTableNameAndAlias($rightTableAlias);
+                $conditionClause = $leftTableAlias ? $leftTableAlias . '.' : ($leftTableName ? $leftTableName . '.' : '');
+                $conditionClause .= $leftColumnName;
+                $conditionClause .= $operator;
+                $conditionClause .= $rightTableAlias ? $rightTableAlias . '.' : ($rightTableName ? $rightTableName . '.' : '');
+                $conditionClause .= $rightColumnName;
+                $comparison = Criteria::CUSTOM;
             } else {
                 list($rightTableName, $rightTableAlias) = array(null, null);
-                $rightColumnName = $right;
+                $conditionClause = $right;
+                $comparison = $operator;
             }
             if (!$join->getRightTableName()) {
                 $join->setRightTableName($rightTableName);
@@ -976,12 +984,7 @@ class Criteria implements IteratorAggregate
             if (!$join->getRightTableAlias()) {
                 $join->setRightTableAlias($rightTableAlias);
             }
-            $conditionClause = $leftTableAlias ? $leftTableAlias . '.' : ($leftTableName ? $leftTableName . '.' : '');
-            $conditionClause .= $leftColumnName;
-            $conditionClause .= isset($condition[2]) ? $condition[2] : JOIN::EQUAL;
-            $conditionClause .= $rightTableAlias ? $rightTableAlias . '.' : ($rightTableName ? $rightTableName . '.' : '');
-            $conditionClause .= $rightColumnName;
-            $criterion = $this->getNewCriterion($leftTableName . '.' . $leftColumnName, $conditionClause, Criteria::CUSTOM);
+            $criterion = $this->getNewCriterion($leftTableName . '.' . $leftColumnName, $conditionClause, $comparison);
             if (null === $joinCondition) {
                 $joinCondition = $criterion;
             } else {
