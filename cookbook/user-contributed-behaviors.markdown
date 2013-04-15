@@ -51,6 +51,7 @@ Here is a list of Propel behaviors contributed by users. Feel free to use them o
 
 * [ncPropelChangeLogBehaviorPlugin](https://github.com/CraftyShadow/ncPropelChangeLogBehaviorPlugin) Provides a Behavior for Propel objects that allows you to track any changes made to them. 
 
+* [sfPropelEventBehavior](https://github.com/Tschebel/sfPropelEventBehavior) Propel 1.6 behavior which fires lifecycle events through the Symfony 1.4 event dispatcher.
 
 ## Symfony2 2.x Behaviors ##
 
