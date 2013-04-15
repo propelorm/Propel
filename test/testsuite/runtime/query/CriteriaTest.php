@@ -800,10 +800,20 @@ class CriteriaTest extends BookstoreTestBase
                 addSelectColumn("TABLE_A.id");
 
         $expect = 'SELECT TABLE_A.id FROM TABLE_A INNER JOIN TABLE_B '
-            . 'ON (TABLE_A.FOO_ID=TABLE_B.id AND TABLE_A.BAR=3)';
+            . 'ON (TABLE_A.FOO_ID=TABLE_B.id AND TABLE_A.BAR=:p1)';
         $params = array();
         $result = BasePeer::createSelectSql($c, $params);
         $this->assertEquals($expect, $result);
+
+        $con = Propel::getConnection(BookPeer::DATABASE_NAME);
+        $c = new Criteria();
+        $c->addMultipleJoin(array(
+                array(AuthorPeer::ID, BookPeer::AUTHOR_ID),
+                array(BookPeer::ISBN, 3)
+            ));
+        AuthorPeer::doSelectOne($c, $con);
+        $expectedSQL = 'SELECT author.id, author.first_name, author.last_name, author.email, author.age FROM author INNER JOIN book ON (author.id=book.author_id AND book.isbn=3) LIMIT 1';
+        $this->assertEquals($expectedSQL, $con->getLastExecutedQuery());
     }
 
     /**
@@ -872,6 +882,32 @@ class CriteriaTest extends BookstoreTestBase
         $params = array();
         $result = BasePeer::createSelectSql($c, $params);
         $this->assertEquals($expect, $result);
+    }
+
+    public function testAddJoinMultipleWithInOperator()
+    {
+        $con = Propel::getConnection(BookPeer::DATABASE_NAME);
+        $c = new Criteria();
+        $c->addMultipleJoin(array(
+                array(AuthorPeer::ID, BookPeer::AUTHOR_ID),
+                array(BookPeer::ISBN, array(1, 7, 42), Criteria::IN)
+            ), Criteria::LEFT_JOIN);
+        AuthorPeer::doSelectOne($c, $con);
+        $expectedSQL = 'SELECT author.id, author.first_name, author.last_name, author.email, author.age FROM author LEFT JOIN book ON (author.id=book.author_id AND book.isbn IN (1,7,42)) LIMIT 1';
+        $this->assertEquals($expectedSQL, $con->getLastExecutedQuery());
+    }
+
+    public function testAddJoinMultipleWithNotInOperator()
+    {
+        $con = Propel::getConnection(BookPeer::DATABASE_NAME);
+        $c = new Criteria();
+        $c->addMultipleJoin(array(
+                array(AuthorPeer::ID, BookPeer::AUTHOR_ID),
+                array(BookPeer::ISBN, array(1, 7, 42), Criteria::NOT_IN)
+            ), Criteria::LEFT_JOIN);
+        AuthorPeer::doSelectOne($c, $con);
+        $expectedSQL = 'SELECT author.id, author.first_name, author.last_name, author.email, author.age FROM author LEFT JOIN book ON (author.id=book.author_id AND book.isbn NOT IN (1,7,42)) LIMIT 1';
+        $this->assertEquals($expectedSQL, $con->getLastExecutedQuery());
     }
 
     /**
