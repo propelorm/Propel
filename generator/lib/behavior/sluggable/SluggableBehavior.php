@@ -368,10 +368,11 @@ protected function makeSlugUnique(\$slug, \$separator = '" . $this->getParameter
     {
         $this->builder = $builder;
         $script = '';
+
         if ($this->getParameter('slug_column') != 'slug') {
             $this->addFilterBySlug($script);
+            $this->addFindOneBySlug($script);
         }
-        $this->addFindOneBySlug($script);
 
         return $script;
     }
