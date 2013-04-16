@@ -364,53 +364,6 @@ protected function makeSlugUnique(\$slug, \$separator = '" . $this->getParameter
 ";
     }
 
-    public function queryMethods(QueryBuilder $builder)
-    {
-        $this->builder = $builder;
-        $script = '';
-        if ($this->getParameter('slug_column') != 'slug') {
-            $this->addFilterBySlug($script);
-        }
-        $this->addFindOneBySlug($script);
-
-        return $script;
-    }
-
-    protected function addFilterBySlug(&$script)
-    {
-        $script .= "
-/**
- * Filter the query on the slug column
- *
- * @param     string \$slug The value to use as filter.
- *
- * @return    " . $this->builder->getStubQueryBuilder()->getClassname() . " The current query, for fluid interface
- */
-public function filterBySlug(\$slug)
-{
-    return \$this->addUsingAlias(" . $this->builder->getColumnConstant($this->getColumnForParameter('slug_column')) . ", \$slug, Criteria::EQUAL);
-}
-";
-    }
-
-    protected function addFindOneBySlug(&$script)
-    {
-        $script .= "
-/**
- * Find one object based on its slug
- *
- * @param     string \$slug The value to use as filter.
- * @param     PropelPDO \$con The optional connection object
- *
- * @return    " . $this->builder->getStubObjectBuilder()->getClassname() . " the result, formatted by the current formatter
- */
-public function findOneBySlug(\$slug, \$con = null)
-{
-    return \$this->filterBySlug(\$slug)->findOne(\$con);
-}
-";
-    }
-
     /**
      * @param string $string
      *
