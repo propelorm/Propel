@@ -26,7 +26,6 @@ class ConcreteInheritanceExcludedParentBehaviorTest extends BookstoreTestBase
         $article = new ConcreteTag(); // to autoload the BaseConcreteArticle class
         $r = new ReflectionClass('BaseConcreteTag');
         $p =$r->getMethod('addChild')->getParameters();
-        print_r($p[0]->getClass()->getName());
         $this->assertEquals('ConcreteCategory', $p[0]->getClass()->getName(), 'concrete_inheritance does not generate addChild method child object class');
     }
 
@@ -34,7 +33,6 @@ class ConcreteInheritanceExcludedParentBehaviorTest extends BookstoreTestBase
     {
         $r = new ReflectionClass('BaseConcreteTagPeer');
         $p =$r->getMethod('isValid')->getParameters();
-        print_r($p[0]->getClass()->getName());
         $this->assertEquals('ConcreteCategory', $p[0]->getClass()->getName(), 'concrete_inheritance does not generate isValid method child peer class');
     }
 
