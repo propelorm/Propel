@@ -4,6 +4,13 @@
 	<table name="concrete_category">
 		<column name="id" required="true" primaryKey="true" autoIncrement="true" type="INTEGER" />
 		<column name="name" type="VARCHAR" size="100" primaryString="true" />
+		<behavior name="nested_set" />
+	</table>
+
+	<table name="concrete_tag">
+		<behavior name="concrete_inheritance">
+			<parameter name="extends" value="concrete_category" />
+		</behavior>
 	</table>
 
 	<table name="concrete_content">
