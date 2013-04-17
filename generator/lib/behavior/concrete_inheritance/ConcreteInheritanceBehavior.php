@@ -28,13 +28,15 @@ class ConcreteInheritanceBehavior extends Behavior
         'extends'             => '',
         'descendant_column'   => 'descendant_class',
         'copy_data_to_parent' => 'true',
-        'schema'              => ''
+        'schema'              => '',
+        'excluded_parent_behavior' => 'nested_set',
     );
 
     public function modifyTable()
     {
         $table = $this->getTable();
         $parentTable = $this->getParentTable();
+        $excludedParentBehavior = explode(',', $this->parameters['excluded_parent_behavior']);
 
         if ($this->isCopyData()) {
             // tell the parent table that it has a descendant
@@ -104,7 +106,7 @@ class ConcreteInheritanceBehavior extends Behavior
 
         // add the Behaviors of the parent table
         foreach ($parentTable->getBehaviors() as $behavior) {
-            if ($behavior->getName() == 'concrete_inheritance_parent' || $behavior->getName() == 'concrete_inheritance') {
+            if (in_array($behavior->getName(), $excludedParentBehavior) || $behavior->getName() == 'concrete_inheritance_parent' || $behavior->getName() == 'concrete_inheritance') {
                 continue;
             }
             $copiedBehavior = clone $behavior;
