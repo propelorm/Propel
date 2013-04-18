@@ -384,4 +384,14 @@ CREATE %sINDEX %s ON %s (%s)%s;
 
         return preg_replace('/^/m', $tab, $script);
     }
+
+    public function getDefaultFKOnDeleteBehavior()
+    {
+        return ForeignKey::NOACTION;
+    }
+
+    public function getDefaultFKOnUpdateBehavior()
+    {
+        return ForeignKey::NOACTION;
+    }
 }

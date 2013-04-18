@@ -249,6 +249,12 @@ EOF;
             <reference local="bar" foreign="bar" />
             <reference local="baz" foreign="baz" />
         </foreign-key>
+        <foreign-key name="foo1_FK_3" foreignTable="foo2" onDelete="RESTRICT">
+            <reference local="id" foreign="id" />
+        </foreign-key>
+        <foreign-key name="foo1_FK_4" foreignTable="foo2" onDelete="CASCADE">
+            <reference local="bar" foreign="bar" />
+        </foreign-key>
     </table>
     <table name="foo2">
         <column name="id" primaryKey="true" type="INTEGER" autoIncrement="true" />
@@ -267,7 +273,13 @@ EOF;
             <reference local="bar" foreign="bar" />
             <reference local="id" foreign="id" />
         </foreign-key>
-        <foreign-key name="foo1_FK_3" foreignTable="foo2">
+        <foreign-key name="foo1_FK_3" foreignTable="foo2" onDelete="RESTRICT">
+            <reference local="id" foreign="id" />
+        </foreign-key>
+        <foreign-key name="foo1_FK_4" foreignTable="foo2" onDelete="CASCADE">
+            <reference local="bar" foreign="bar" />
+        </foreign-key>
+        <foreign-key name="foo1_FK_5" foreignTable="foo2">
             <reference local="baz" foreign="baz" />
         </foreign-key>
     </table>

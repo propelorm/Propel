@@ -90,8 +90,19 @@ class ForeignKey extends XMLElement
         $this->phpName = $this->getAttribute("phpName");
         $this->refPhpName = $this->getAttribute("refPhpName");
         $this->defaultJoin = $this->getAttribute('defaultJoin');
-        $this->onUpdate = $this->normalizeFKey($this->getAttribute("onUpdate"));
-        $this->onDelete = $this->normalizeFKey($this->getAttribute("onDelete"));
+
+        $onUpdate = $this->getAttribute("onUpdate");
+        if($onUpdate === null) {
+          $onUpdate = $this->getTable()->getDatabase()->getPlatform()->getDefaultFKOnUpdateBehavior();
+        }
+        $onDelete = $this->getAttribute("onDelete");
+        if($onDelete === null) {
+          $onDelete = $this->getTable()->getDatabase()->getPlatform()->getDefaultFKOnUpdateBehavior();
+        }
+
+        $this->onUpdate = $this->normalizeFKey($onUpdate);
+        $this->onDelete = $this->normalizeFKey($onDelete);
+
         $this->skipSql = $this->booleanValue($this->getAttribute("skipSql"));
     }
 
@@ -116,6 +127,11 @@ class ForeignKey extends XMLElement
      */
     public function hasOnUpdate()
     {
+        $database = $this->getTable()->getDatabase();
+        if($database instanceof Database &&
+               $this->onUpdate === $database->getPlatform()->getDefaultFKOnUpdateBehavior()) {
+          return false;
+        }
         return ($this->onUpdate !== self::NONE);
     }
 
@@ -124,6 +140,11 @@ class ForeignKey extends XMLElement
      */
     public function hasOnDelete()
     {
+        $database = $this->getTable()->getDatabase();
+        if($database instanceof Database &&
+               $this->onDelete === $database->getPlatform()->getDefaultFKOnDeleteBehavior()) {
+          return false;
+        }
         return ($this->onDelete !== self::NONE);
     }
 
