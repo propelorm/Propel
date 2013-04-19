@@ -490,7 +490,7 @@ class Table extends ScopedElement implements IDMethod
         foreach ($this->getReferrers() as $foreignKey) {
             $referencedColumns = $foreignKey->getForeignColumnObjects();
             $referencedColumnsHash = $this->getColumnList($referencedColumns);
-            if (!empty($localColumnsHash) && !array_key_exists($referencedColumnsHash, $_indices)) {
+            if (!empty($referencedColumns) && !array_key_exists($referencedColumnsHash, $_indices)) {
                 // no matching index defined in the schema, so we have to create one
 
                 $name = sprintf('I_referenced_%s_%s', $foreignKey->getName(), ++$counter);
