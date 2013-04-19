@@ -28,7 +28,7 @@ class SortableBehavior extends Behavior
     protected $parameters = array(
         'rank_column'  => 'sortable_rank',
         'use_scope'    => 'false',
-        'scope_column' => 'sortable_scope',
+        'scope_column' => '',
     );
 
     protected $objectBuilderModifier, $queryBuilderModifier, $peerBuilderModifier;
@@ -46,7 +46,8 @@ class SortableBehavior extends Behavior
                 'type' => 'INTEGER'
             ));
         }
-        if ($this->useScope() && !$table->containsColumn($this->getParameter('scope_column'))) {
+        if ($this->useScope() && !$this->hasMultipleScopes() &&
+             !$table->containsColumn($this->getParameter('scope_column'))) {
             $table->addColumn(array(
                 'name' => $this->getParameter('scope_column'),
                 'type' => 'INTEGER'
@@ -54,18 +55,136 @@ class SortableBehavior extends Behavior
         }
 
         if ($this->useScope()) {
-            $keys = $table->getColumnForeignKeys($this->getParameter('scope_column'));
-            foreach ($keys as $key) {
-                if ($key->isForeignPrimaryKey() && $key->getOnDelete() == ForeignKey::SETNULL) {
-                    $foreignTable = $key->getForeignTable();
-                    $relationBehavior = new SortableRelationBehavior();
-                    $relationBehavior->addParameter(array('name' => 'foreign_table', 'value' => $table->getName()));
-                    $relationBehavior->addParameter(array('name' => 'foreign_scope_column', 'value' => $this->getParameter('scope_column')));
-                    $relationBehavior->addParameter(array('name' => 'foreign_rank_column', 'value' => $this->getParameter('rank_column')));
-                    $foreignTable->addBehavior($relationBehavior);
+            $scopes = $this->getScopes();
+            if (0 === count($scopes)) {
+                throw new \InvalidArgumentException(sprintf(
+                    'The sortable behavior in `%s` needs a `scope_column` parameter.',
+                    $this->getTable()->getName()
+                ));
+            }
+            foreach ($scopes as $scope) {
+                $keys = $table->getColumnForeignKeys($scope);
+                foreach ($keys as $key) {
+                    if ($key->isForeignPrimaryKey() && $key->getOnDelete() == ForeignKey::SETNULL) {
+                        $foreignTable = $key->getForeignTable();
+                        $relationBehavior = new SortableRelationBehavior();
+                        $relationBehavior->addParameter(array('name' => 'foreign_table', 'value' => $table->getName()));
+                        $relationBehavior->addParameter(array('name' => 'foreign_scope_column', 'value' => $scope));
+                        $relationBehavior->addParameter(array('name' => 'foreign_rank_column', 'value' => $this->getParameter('rank_column')));
+                        $foreignTable->addBehavior($relationBehavior);
+                    }
                 }
             }
         }
+    }
+
+    /**
+     * Generates the method argument signature, the appropriate phpDoc for @params,
+     * the scope builder php code and the scope variable builder php code/
+     *
+     * @return array ($methodSignature, $paramsDoc, $scopeBuilder, $buildScopeVars)
+     */
+    public function generateScopePhp()
+    {
+
+        $methodSignature = '';
+        $paramsDoc       = '';
+        $buildScope      = '';
+        $buildScopeVars  = '';
+
+        if ($this->hasMultipleScopes()) {
+
+            $methodSignature = array();
+            $buildScope      = array();
+            $paramsDoc       = array();
+
+            foreach ($this->getScopes() as $idx => $scope) {
+
+                $column = $this->table->getColumn($scope);
+                $param  = '$scope'.$column->getPhpName();
+
+                $buildScope[]     = "    \$scope[] = $param;\n";
+                $buildScopeVars[] = "    $param = \$scope[$idx];\n";
+                $paramsDoc[]      = " * @param     ".$column->getPhpType()." $param Scope value for column `".$column->getPhpName()."`";
+
+                if (!$column->isNotNull()) {
+                    $param .= ' = null';
+                }
+                $methodSignature[] = $param;
+            }
+
+            $methodSignature = implode(', ', $methodSignature);
+            $paramsDoc       = implode("\n", $paramsDoc);
+            $buildScope      = "\n".implode('', $buildScope)."\n";
+            $buildScopeVars  = "\n".implode('', $buildScopeVars)."\n";
+
+        } else if ($this->useScope()){
+            $methodSignature = '$scope';
+            if ($column = $this->table->getColumn($this->getParameter('scope_column'))) {
+                if (!$column->isNotNull()) {
+                    $methodSignature .= ' = null';
+                }
+                $paramsDoc .= ' * @param '.$column->getPhpType().' $scope Scope to determine which objects node to return';
+            }
+        }
+
+        return array($methodSignature, $paramsDoc, $buildScope, $buildScopeVars);
+    }
+
+    /**
+     * Returns the getter method name.
+     *
+     * @param  string $name
+     * @return string
+     */
+    public function getColumnGetter($name)
+    {
+        return 'get' . $this->getTable()->getColumn($name)->getPhpName();
+    }
+
+    /**
+     * Returns the setter method name.
+     *
+     * @param  string $name
+     * @return string
+     */
+    public function getColumnSetter($name)
+    {
+        return 'set' . $this->getTable()->getColumn($name)->getPhpName();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function addParameter($attribute)
+    {
+        if ('scope_column' === $attribute['name']) {
+            $this->parameters['scope_column'] .= ($this->parameters['scope_column'] ? ',' : '') . $attribute['value'];
+        } else {
+            parent::addParameter($attribute);
+        }
+    }
+
+    /**
+     * Returns all scope columns as array.
+     *
+     * @return string[]
+     */
+    public function getScopes()
+    {
+        return $this->getParameter('scope_column')
+            ? explode(',', str_replace(' ', '', trim($this->getParameter('scope_column'))))
+            : array();
+    }
+
+    /**
+     * Returns true if the behavior has multiple scope columns.
+     *
+     * @return bool
+     */
+    public function hasMultipleScopes()
+    {
+        return count($this->getScopes()) > 1;
     }
 
     public function getObjectBuilderModifier()
@@ -99,4 +218,5 @@ class SortableBehavior extends Behavior
     {
         return $this->getParameter('use_scope') == 'true';
     }
+
 }

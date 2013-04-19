@@ -18,7 +18,30 @@
  */
 class SortableBehaviorPeerBuilderModifier
 {
-    protected $behavior, $table, $builder, $objectClassname, $peerClassname;
+    /**
+     * @var SortableBehavior
+     */
+    protected $behavior;
+
+    /**
+     * @var Table
+     */
+    protected $table;
+
+    /**
+     * @var OMBuilder
+     */
+    protected $builder;
+
+    /**
+     * @var String
+     */
+    protected $objectClassname;
+
+    /**
+     * @var String
+     */
+    protected $peerClassname;
 
     public function __construct($behavior)
     {
@@ -50,8 +73,8 @@ class SortableBehaviorPeerBuilderModifier
     {
         $this->builder = $builder;
         $this->objectClassname = $builder->getStubObjectBuilder()->getClassname();
-        $this->peerClassname = $builder->getStubPeerBuilder()->getClassname();
-        $this->queryClassname = $builder->getStubQueryBuilder()->getClassname();
+        $this->peerClassname   = $builder->getStubPeerBuilder()->getClassname();
+        $this->queryClassname  = $builder->getStubQueryBuilder()->getClassname();
 
         $builder->declareClassFromBuilder($builder->getStubObjectBuilder());
         $builder->declareClassFromBuilder($builder->getStubQueryBuilder());
@@ -68,14 +91,36 @@ const RANK_COL = '" . $tableName . '.' . $this->getColumnConstant('rank_column')
 ";
 
         if ($this->behavior->useScope()) {
-            $script .= "
+
+            if ($this->behavior->hasMultipleScopes()) {
+                foreach ($this->behavior->getScopes() as $scope) {
+                    $col[] = "$tableName.".strtoupper($scope);
+                }
+                $col = json_encode($col);
+                $col = "'$col'";
+
+                $script .=   "
+/**
+ * If defined, the `SCOPE_COL` contains a json_encoded array with all columns.
+ * @var boolean
+ */
+const MULTI_SCOPE_COL = true;
+";
+
+            } else {
+                $colNames = $this->getColumnConstant('scope_column');
+
+                $col =  "'$tableName.$colNames'";
+            }
+
+            $script .=   "
 /**
  * Scope column for the set
  */
-const SCOPE_COL = '" . $tableName . '.' . $this->getColumnConstant('scope_column') . "';
+const SCOPE_COL = $col;
 ";
-        }
 
+        }
         return $script;
     }
 
@@ -97,10 +142,43 @@ const SCOPE_COL = '" . $tableName . '.' . $this->getColumnConstant('scope_column
             $this->addRetrieveList($script);
             $this->addCountList($script);
             $this->addDeleteList($script);
+            $this->addSortableApplyScopeCriteria($script);
         }
         $this->addShiftRank($script);
 
         return $script;
+    }
+
+    public function addSortableApplyScopeCriteria(&$script)
+    {
+        $script .= "
+/**
+ * Applies all scope fields to the given criteria.
+ *
+ * @param  Criteria \$criteria Applies the values directly to this criteria.
+ * @param  mixed    \$scope    The scope value as scalar type or array(\$value1, ...).
+ * @param  string   \$method   The method we use to apply the values.
+ *
+ */
+public static function sortableApplyScopeCriteria(Criteria \$criteria, \$scope, \$method = 'add')
+{
+";
+        if ($this->behavior->hasMultipleScopes()) {
+            foreach ($this->behavior->getScopes() as $idx => $scope) {
+                $script .= "
+    \$criteria->\$method({$this->peerClassname}::".strtoupper($scope).", \$scope[$idx], Criteria::EQUAL);
+";
+            }
+        } else {
+            $script .= "
+    \$criteria->\$method({$this->peerClassname}::".strtoupper(current($this->behavior->getScopes())).", \$scope, Criteria::EQUAL);
+";
+        }
+
+        $script .= "
+}
+";
+
     }
 
     protected function addGetMaxRank(&$script)
@@ -128,8 +206,8 @@ public static function getMaxRank(" . ($useScope ? "\$scope = null, " : "") . "P
     \$c = new Criteria();
     \$c->addSelectColumn('MAX(' . {$this->peerClassname}::RANK_COL . ')');";
         if ($useScope) {
-            $script .= "
-    \$c->add({$this->peerClassname}::SCOPE_COL, \$scope, Criteria::EQUAL);";
+        $script .= "
+    {$this->peerClassname}::sortableApplyScopeCriteria(\$c, \$scope);";
         }
         $script .= "
     \$stmt = {$this->peerClassname}::doSelectStmt(\$c, \$con);
@@ -167,7 +245,7 @@ public static function retrieveByRank(\$rank, " . ($useScope ? "\$scope = null, 
     \$c->add($peerClassname::RANK_COL, \$rank);";
         if ($useScope) {
             $script .= "
-    \$c->add($peerClassname::SCOPE_COL, \$scope, Criteria::EQUAL);";
+    {$this->peerClassname}::sortableApplyScopeCriteria(\$c, \$scope);";
         }
         $script .= "
 
@@ -265,7 +343,7 @@ public static function doSelectOrderByRank(Criteria \$criteria = null, \$order =
 /**
  * Return an array of sortable objects in the given scope ordered by position
  *
- * @param     int       \$scope  the scope of the list
+ * @param     mixed     \$scope  the scope of the list
  * @param     string    \$order  sorting order, to be chosen between Criteria::ASC (default) and Criteria::DESC
  * @param     PropelPDO \$con    optional connection
  *
@@ -274,7 +352,7 @@ public static function doSelectOrderByRank(Criteria \$criteria = null, \$order =
 public static function retrieveList(\$scope, \$order = Criteria::ASC, PropelPDO \$con = null)
 {
     \$c = new Criteria();
-    \$c->add($peerClassname::SCOPE_COL, \$scope);
+    {$this->peerClassname}::sortableApplyScopeCriteria(\$c, \$scope);
 
     return $peerClassname::doSelectOrderByRank(\$c, \$order, \$con);
 }
@@ -288,7 +366,7 @@ public static function retrieveList(\$scope, \$order = Criteria::ASC, PropelPDO 
 /**
  * Return the number of sortable objects in the given scope
  *
- * @param     int       \$scope  the scope of the list
+ * @param     mixed     \$scope  the scope of the list
  * @param     PropelPDO \$con    optional connection
  *
  * @return    array list of sortable objects
@@ -296,7 +374,7 @@ public static function retrieveList(\$scope, \$order = Criteria::ASC, PropelPDO 
 public static function countList(\$scope, PropelPDO \$con = null)
 {
     \$c = new Criteria();
-    \$c->add($peerClassname::SCOPE_COL, \$scope);
+    {$this->peerClassname}::sortableApplyScopeCriteria(\$c, \$scope);
 
     return $peerClassname::doCount(\$c, \$con);
 }
@@ -310,7 +388,7 @@ public static function countList(\$scope, PropelPDO \$con = null)
 /**
  * Deletes the sortable objects in the given scope
  *
- * @param     int       \$scope  the scope of the list
+ * @param     mixed     \$scope  the scope of the list
  * @param     PropelPDO \$con    optional connection
  *
  * @return    int number of deleted objects
@@ -318,13 +396,12 @@ public static function countList(\$scope, PropelPDO \$con = null)
 public static function deleteList(\$scope, PropelPDO \$con = null)
 {
     \$c = new Criteria();
-    \$c->add($peerClassname::SCOPE_COL, \$scope);
+    {$this->peerClassname}::sortableApplyScopeCriteria(\$c, \$scope);
 
     return $peerClassname::doDelete(\$c, \$con);
 }
 ";
     }
-
     protected function addShiftRank(&$script)
     {
         $useScope = $this->behavior->useScope();
@@ -339,7 +416,7 @@ public static function deleteList(\$scope, PropelPDO \$con = null)
  * @param      int \$last  Last node to be shifted";
         if ($useScope) {
             $script .= "
- * @param      int \$scope Scope to use for the shift";
+ * @param      mixed \$scope Scope to use for the shift. Scalar value (single scope) or array";
         }
         $script .= "
  * @param      PropelPDO \$con Connection to use.
@@ -359,7 +436,7 @@ public static function shiftRank(\$delta, \$first = null, \$last = null, " . ($u
     }";
         if ($useScope) {
             $script .= "
-    \$whereCriteria->add($peerClassname::SCOPE_COL, \$scope, Criteria::EQUAL);";
+    {$this->peerClassname}::sortableApplyScopeCriteria(\$whereCriteria, \$scope);";
         }
         $script .= "
 
