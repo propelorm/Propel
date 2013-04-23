@@ -153,7 +153,7 @@ class MysqlSchemaParser extends BaseSchemaParser
      */
     protected function addColumns(Table $table)
     {
-        $stmt = $this->dbh->query("SHOW COLUMNS FROM `" . $table->getName() . "`");
+        $stmt = $this->dbh->query("SHOW FULL COLUMNS FROM `" . $table->getName() . "`");
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $column = $this->getColumnFromRow($row, $table);
@@ -179,6 +179,7 @@ class MysqlSchemaParser extends BaseSchemaParser
         $precision = null;
         $scale = null;
         $sqlType = false;
+        $desc = $row['Comment'];
 
         $regexp = '/^
             (\w+)        # column type [1]
@@ -235,6 +236,9 @@ class MysqlSchemaParser extends BaseSchemaParser
         $column = new Column($name);
         $column->setTable($table);
         $column->setDomainForType($propelType);
+        if ($desc) {
+            $column->setDescription(utf8_encode($desc));
+        }
         if ($sqlType) {
             $column->getDomain()->replaceSqlType($sqlType);
         }
