@@ -12,6 +12,7 @@ Many applications need to store hierarchical data in the model. For instance, a 
 ## Basic Usage ##
 
 In the `schema.xml`, use the `<behavior>` tag to add the `nested_set` behavior to a table:
+
 ```xml
 <table name="section">
   <column name="id" required="true" primaryKey="true" autoIncrement="true" type="INTEGER" />
@@ -40,12 +41,16 @@ $s4 = new Section();
 $s4->setTitle('Business');
 $s4->insertAsNextSiblingOf($s2); // insert the node in the tree
 $s4->save();
-/* The sections are now stored in the database as a tree:
-    $s1:Home
+
+/*
+The sections are now stored in the database as a tree:
+
+$s1:Home
     |
 $s2:World
     |     \
 $s3:Europe  $s4:Business
+
 */
 ```
 
