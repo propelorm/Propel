@@ -275,5 +275,4 @@ class SortableBehaviorObjectBuilderModifierTest extends BookstoreSortableTestBas
         $expected = array(null => 'row2', 1 => 'row1', 2 => 'row3', 3 => 'row4');
         $this->assertEquals($expected, $this->getFixturesArray(), 'removeFromList() changes the list once the object is saved');
     }
-
 }

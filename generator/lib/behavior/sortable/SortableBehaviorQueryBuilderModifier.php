@@ -16,7 +16,30 @@
  */
 class SortableBehaviorQueryBuilderModifier
 {
-    protected $behavior, $table, $builder, $objectClassname, $peerClassname;
+    /**
+     * @var SortableBehavior
+     */
+    protected $behavior;
+
+    /**
+     * @var Table
+     */
+    protected $table;
+
+    /**
+     * @var OMBuilder
+     */
+    protected $builder;
+
+    /**
+     * @var String
+     */
+    protected $objectClassname;
+
+    /**
+     * @var String
+     */
+    protected $peerClassname;
 
     public function __construct($behavior)
     {
@@ -64,6 +87,7 @@ class SortableBehaviorQueryBuilderModifier
 
         // utilities
         $this->addGetMaxRank($script);
+        $this->addGetMaxRankArray($script);
         $this->addReorder($script);
 
         return $script;
@@ -71,17 +95,22 @@ class SortableBehaviorQueryBuilderModifier
 
     protected function addInList(&$script)
     {
+        list($methodSignature, $paramsDoc, $buildScope) = $this->behavior->generateScopePhp();
+
         $script .= "
 /**
  * Returns the objects in a certain list, from the list scope
  *
- * @param     int \$scope		Scope to determine which objects node to return
+$paramsDoc
  *
- * @return    {$this->queryClassname} The current query, for fluid interface
+ * @return {$this->queryClassname} The current query, for fluid interface
  */
-public function inList(\$scope = null)
+public function inList($methodSignature)
 {
-    return \$this->addUsingAlias({$this->peerClassname}::SCOPE_COL, \$scope, Criteria::EQUAL);
+    $buildScope
+    {$this->peerClassname}::sortableApplyScopeCriteria(\$this, \$scope, 'addUsingAlias');
+
+    return \$this;
 }
 ";
     }
@@ -90,6 +119,11 @@ public function inList(\$scope = null)
     {
         $useScope = $this->behavior->useScope();
         $peerClassname = $this->peerClassname;
+
+        if ($useScope) {
+            list($methodSignature, $paramsDoc, $buildScope) = $this->behavior->generateScopePhp();
+        }
+
         $script .= "
 /**
  * Filter the query based on a rank in the list
@@ -97,18 +131,25 @@ public function inList(\$scope = null)
  * @param     integer   \$rank rank";
         if ($useScope) {
             $script .= "
- * @param     int \$scope		Scope to determine which suite to consider";
+$paramsDoc
+";
         }
         $script .= "
  *
  * @return    " . $this->queryClassname . " The current query, for fluid interface
  */
-public function filterByRank(\$rank" . ($useScope ? ", \$scope = null" : "") . ")
+public function filterByRank(\$rank" . ($useScope ? ", $methodSignature" : "") . ")
 {
+";
+        if ($useScope) {
+            $methodSignature = str_replace(' = null', '', $methodSignature);
+        }
+
+        $script .= "
     return \$this";
         if ($useScope) {
             $script .= "
-        ->inList(\$scope)";
+        ->inList($methodSignature)";
         }
         $script .= "
         ->addUsingAlias($peerClassname::RANK_COL, \$rank, Criteria::EQUAL);
@@ -147,7 +188,11 @@ public function orderByRank(\$order = Criteria::ASC)
     protected function addFindOneByRank(&$script)
     {
         $useScope = $this->behavior->useScope();
-        $peerClassname = $this->peerClassname;
+
+        if ($useScope) {
+            list($methodSignature, $paramsDoc, $buildScope) = $this->behavior->generateScopePhp();
+        }
+
         $script .= "
 /**
  * Get an item from the list based on its rank
@@ -155,17 +200,23 @@ public function orderByRank(\$order = Criteria::ASC)
  * @param     integer   \$rank rank";
         if ($useScope) {
             $script .= "
- * @param     int \$scope		Scope to determine which suite to consider";
+$paramsDoc";
         }
         $script .= "
  * @param     PropelPDO \$con optional connection
  *
  * @return    {$this->objectClassname}
  */
-public function findOneByRank(\$rank, " . ($useScope ? "\$scope = null, " : "") . "PropelPDO \$con = null)
-{
+public function findOneByRank(\$rank, " . ($useScope ? "$methodSignature, " : "") . "PropelPDO \$con = null)
+{";
+
+        if ($useScope) {
+            $methodSignature = str_replace(' = null', '', $methodSignature);
+        }
+
+        $script .= "
     return \$this
-        ->filterByRank(\$rank" . ($useScope ? ", \$scope" : "") . ")
+        ->filterByRank(\$rank" . ($useScope ? ", $methodSignature" : "") . ")
         ->findOne(\$con);
 }
 ";
@@ -174,25 +225,38 @@ public function findOneByRank(\$rank, " . ($useScope ? "\$scope = null, " : "") 
     protected function addFindList(&$script)
     {
         $useScope = $this->behavior->useScope();
+
+        if ($useScope) {
+            list($methodSignature, $paramsDoc, $buildScope) = $this->behavior->generateScopePhp();
+        }
+
         $script .= "
 /**
- * Returns " . ($useScope ? 'a' : 'the') . " list of objects
+ * Returns " . ($useScope ? 'a' : 'the') ." list of objects
  *";
-        if ($useScope) {
-            $script .= "
- * @param      int \$scope		Scope to determine which list to return";
-        }
+         if ($useScope) {
+             $script .= "
+$paramsDoc
+";
+         }
         $script .= "
  * @param      PropelPDO \$con	Connection to use.
  *
  * @return     mixed the list of results, formatted by the current formatter
  */
-public function findList(" . ($useScope ? "\$scope = null, " : "") . "\$con = null)
+public function findList(" . ($useScope ? "$methodSignature, " : "") . "\$con = null)
 {
+";
+
+        if ($useScope) {
+            $methodSignature = str_replace(' = null', '', $methodSignature);
+        }
+
+        $script .= "
     return \$this";
         if ($useScope) {
             $script .= "
-        ->inList(\$scope)";
+        ->inList($methodSignature)";
         }
         $script .= "
         ->orderByRank()
@@ -205,20 +269,26 @@ public function findList(" . ($useScope ? "\$scope = null, " : "") . "\$con = nu
     {
         $this->builder->declareClasses('Propel');
         $useScope = $this->behavior->useScope();
+
+        if ($useScope) {
+            list($methodSignature, $paramsDoc, $buildScope) = $this->behavior->generateScopePhp();
+        }
+
         $script .= "
 /**
  * Get the highest rank
  * ";
         if ($useScope) {
             $script .= "
- * @param      int \$scope		Scope to determine which suite to consider";
+$paramsDoc
+";
         }
         $script .= "
  * @param     PropelPDO optional connection
  *
  * @return    integer highest position
  */
-public function getMaxRank(" . ($useScope ? "\$scope = null, " : "") . "PropelPDO \$con = null)
+public function getMaxRank(" . ($useScope ? "$methodSignature, " : "") . "PropelPDO \$con = null)
 {
     if (\$con === null) {
         \$con = Propel::getConnection({$this->peerClassname}::DATABASE_NAME);
@@ -226,8 +296,47 @@ public function getMaxRank(" . ($useScope ? "\$scope = null, " : "") . "PropelPD
     // shift the objects with a position lower than the one of object
     \$this->addSelectColumn('MAX(' . {$this->peerClassname}::RANK_COL . ')');";
         if ($useScope) {
+        $script .= "
+        $buildScope
+    {$this->peerClassname}::sortableApplyScopeCriteria(\$this, \$scope);";
+        }
+        $script .= "
+    \$stmt = \$this->doSelect(\$con);
+
+    return \$stmt->fetchColumn();
+}
+";
+    }
+
+    protected function addGetMaxRankArray(&$script)
+    {
+        $this->builder->declareClasses('Propel');
+        $useScope = $this->behavior->useScope();
+
+        $script .= "
+/**
+ * Get the highest rank by a scope with a array format.
+ * ";
+        if ($useScope) {
             $script .= "
-    \$this->add({$this->peerClassname}::SCOPE_COL, \$scope, Criteria::EQUAL);";
+ * @param     int \$scope		The scope value as scalar type or array(\$value1, ...).
+";
+        }
+        $script .= "
+ * @param     PropelPDO optional connection
+ *
+ * @return    integer highest position
+ */
+public function getMaxRankArray(" . ($useScope ? "\$scope, " : "") . "PropelPDO \$con = null)
+{
+    if (\$con === null) {
+        \$con = Propel::getConnection({$this->peerClassname}::DATABASE_NAME);
+    }
+    // shift the objects with a position lower than the one of object
+    \$this->addSelectColumn('MAX(' . {$this->peerClassname}::RANK_COL . ')');";
+        if ($useScope) {
+        $script .= "
+    {$this->peerClassname}::sortableApplyScopeCriteria(\$this, \$scope);";
         }
         $script .= "
     \$stmt = \$this->doSelect(\$con);
@@ -281,4 +390,5 @@ public function reorder(array \$order, PropelPDO \$con = null)
 }
 ";
     }
+
 }
