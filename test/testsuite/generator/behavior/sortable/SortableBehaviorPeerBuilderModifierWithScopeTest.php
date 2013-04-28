@@ -59,7 +59,7 @@ class SortableBehaviorPeerBuilderModifierWithScopeTest extends BookstoreSortable
     public function testReorder()
     {
         $c = new Criteria();
-        $c->add(Table12Peer::SCOPE_COL, 1);
+        Table12Peer::sortableApplyScopeCriteria($c, 1);
         $objects = Table12Peer::doSelectOrderByRank($c);
         $ids = array();
         foreach ($objects as $object) {
@@ -77,7 +77,7 @@ class SortableBehaviorPeerBuilderModifierWithScopeTest extends BookstoreSortable
     public function testDoSelectOrderByRank()
     {
         $c = new Criteria();
-        $c->add(Table12Peer::SCOPE_COL, 1);
+        Table12Peer::sortableApplyScopeCriteria($c, 1);
         $objects = Table12Peer::doSelectOrderByRank($c);
         $oldRank = 0;
         while ($object = array_shift($objects)) {
@@ -85,7 +85,7 @@ class SortableBehaviorPeerBuilderModifierWithScopeTest extends BookstoreSortable
             $oldRank = $object->getRank();
         }
         $c = new Criteria();
-        $c->add(Table12Peer::SCOPE_COL, 1);
+        Table12Peer::sortableApplyScopeCriteria($c, 1);
         $objects = Table12Peer::doSelectOrderByRank($c, Criteria::DESC);
         $oldRank = 10;
         while ($object = array_shift($objects)) {
