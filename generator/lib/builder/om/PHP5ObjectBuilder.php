@@ -270,15 +270,22 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
 
         if ($table->hasCrossForeignKeys()) {
             foreach ($table->getCrossFks() as $fkList) {
+                /* @var $refFK ForeignKey */
                 list($refFK, $crossFK) = $fkList;
                 $fkName = $this->getFKPhpNameAffix($crossFK, $plural = true);
-                $this->addScheduledForDeletionAttribute($script, $fkName);
+
+                if (!$refFK->isLocalPrimaryKey()) {
+                    $this->addScheduledForDeletionAttribute($script, $fkName);
+                }
             }
         }
 
         foreach ($table->getReferrers() as $refFK) {
             $fkName = $this->getRefFKPhpNameAffix($refFK, $plural = true);
-            $this->addScheduledForDeletionAttribute($script, $fkName);
+
+            if (!$refFK->isLocalPrimaryKey()) {
+                $this->addScheduledForDeletionAttribute($script, $fkName);
+            }
         }
 
         if ($this->hasDefaultValues()) {
@@ -4307,9 +4314,8 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
             if (\$this->{$lowerRelatedName}ScheduledForDeletion !== null) {
                 if (!\$this->{$lowerRelatedName}ScheduledForDeletion->isEmpty()) {";
 
-        if ($refFK->getOnDelete() == ForeignKey::CASCADE) {
+        if ($refFK->isLocalColumnsRequired() || ForeignKey::CASCADE === $refFK->getOnDelete()) {
             $script .= "
-                    //the foreign key is flagged as `CASCADE`, so we delete the items
                     $queryClassName::create()
                         ->filterByPrimaryKeys(\$this->{$lowerRelatedName}ScheduledForDeletion->getPrimaryKeys(false))
                         ->delete(\$con);";
@@ -4781,8 +4787,6 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
         }
 
         foreach ($table->getReferrers() as $refFK) {
-            $this->addRefFkScheduledForDeletion($script, $refFK);
-
             if ($refFK->isLocalPrimaryKey()) {
                 $varName = $this->getPKRefFKVarName($refFK);
                 $script .= "
@@ -4793,6 +4797,8 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
             }
 ";
             } else {
+                $this->addRefFkScheduledForDeletion($script, $refFK);
+
                 $collName = $this->getRefFKCollVarName($refFK);
                 $script .= "
             if (\$this->$collName !== null) {
