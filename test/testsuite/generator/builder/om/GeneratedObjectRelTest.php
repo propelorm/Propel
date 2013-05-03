@@ -178,6 +178,43 @@ class GeneratedObjectRelTest extends BookstoreEmptyTestBase
         $this->assertNotNull($books->getCurrent(), 'getRelCol() initialize the internal iterator at the beginning');
     }
 
+    public function testOneToManySetterIsNotLoosingRelation()
+    {
+        $author = new Author();
+        $author->setFirstName('John');
+        $author->setLastName('Doe');
+        $book = new Book();
+        $book->setTitle('Foo4');
+        $book->setISBN('1234');
+
+        $book->setAuthor($author);
+
+        $this->assertNotNull($book->getAuthor(), 'setRel is clearing reference on object');
+    }
+
+    public function testOneToManySetterColelctionIsNotLoosingRelation()
+    {
+        $author = new Author();
+        $author->setFirstName('John');
+        $author->setLastName('Doe');
+        $book1 = new Book();
+        $book1->setTitle('Foo4');
+        $book1->setISBN('1234');
+        $book2 = new Book();
+        $book2->setTitle('Foo6');
+        $book2->setISBN('1239');
+
+        $author->addBook($book1);
+        $author->addBook($book2);
+
+        $books = $author->getBooks();
+        $this->assertCount(2, $books, 'setRelCol is losing references to object');
+
+        foreach ($books as $book) {
+            $this->assertNotNull($book->getAuthor(), 'setRelCol is losing backreference on set object');
+        }
+    }
+
     public function testManyToManyCounterExists()
     {
         $this->assertTrue(method_exists('BookClubList', 'countBooks'), 'Object generator correcly adds counter for the crossRefFk');
