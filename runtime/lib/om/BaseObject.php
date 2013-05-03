@@ -292,7 +292,7 @@ abstract class BaseObject
             return crc32(serialize($this->getPrimaryKey()));
         }
 
-        return crc32(serialize(clone $this));
+        return crc32(serialize($this));
     }
 
     /**
