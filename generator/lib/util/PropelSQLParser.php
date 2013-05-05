@@ -18,6 +18,7 @@
 class PropelSQLParser
 {
     protected $delimiter = ';';
+    protected $delimiterLength = 1;
 
     protected $sql = '';
     protected $len = 0;
@@ -204,6 +205,7 @@ class PropelSQLParser
         $isInString = false;
         $stringQuotes = '';
         $parsedString = '';
+        $lowercaseString = ''; // helper variable for performance sake
         while ($this->pos <= $this->len) {
             $char = isset($this->sql[$this->pos]) ? $this->sql[$this->pos] : '';
 
@@ -232,28 +234,47 @@ class PropelSQLParser
             }
 
             if (!$isInString) {
-                // TODO: add support for multi character delimiters
-                if (preg_match('/DELIMITER (.+)$/i', $parsedString, $matches)) {
-                    // check if 2nd character after delimiter exists and is a new line
-                    if ($char && $char != "\n") {
-                        throw new PropelException("Delimiters with more than 1 character are not supported yet.");
-                    }
-
+                if (false !== strpos($lowercaseString, 'delimiter ')) {
                     // remove DELIMITER from string because it's a command-line keyword only
-                    $parsedString = trim(str_replace($matches[0], '', $parsedString));
-                    $this->prevDelimiter = $this->delimiter; // save previous delimiter
-                    $this->delimiter = $matches[1]; // set new delimiter
+                    $parsedString = trim(str_ireplace('delimiter ', '', $parsedString));
+
+                    // set new delimiter
+                    $this->delimiter = $char;
+                    // append other delimiter characters if any
+                    while (isset($this->sql[$this->pos]) && $this->sql[$this->pos] != "\n") {
+                        $this->delimiter .= $this->sql[$this->pos++]; // increase position
+                    }
+                    $this->delimiter = trim($this->delimiter);
+                    // store delimiter length for better performance
+                    $this->delimiterLength = strlen($this->delimiter);
 
                     // delimiter has changed so return current sql if any
-                    if ($matches[1] != $this->prevDelimiter && $parsedString) {
+                    if ($parsedString) {
                         return $parsedString;
+                    } else {
+                        // reset helper variable
+                        $lowercaseString = '';
+                        continue;
                     }
+                }
+
+                // get next characters if we have multiple characters in delimiter
+                $nextChars = '';
+                for ($i = 0; $i < $this->delimiterLength - 1; $i++) {
+                    if (!isset($this->sql[$this->pos + $i])) break;
+                    $nextChars .= $this->sql[$this->pos + $i];
                 }
 
                 // check for end of statement
-                if ($char == $this->delimiter) {
+                if ($char.$nextChars == $this->delimiter) {
+                    $this->pos += $i; // increase position
+
                     return trim($parsedString);
                 }
+
+                // avoid using strtolower on the whole parsed string every time new character is added
+                // there is also no point in adding characters which are in the string
+                $lowercaseString .= strtolower($char);
             }
 
             $parsedString .= $char;
