@@ -205,6 +205,7 @@ class PropelSQLParser
         $isInString = false;
         $stringQuotes = '';
         $parsedString = '';
+        $lowercaseString = ''; // helper variable for performance sake
         while ($this->pos <= $this->len) {
             $char = isset($this->sql[$this->pos]) ? $this->sql[$this->pos] : '';
 
@@ -233,22 +234,17 @@ class PropelSQLParser
             }
 
             if (!$isInString) {
-                if (preg_match('/DELIMITER (.+)$/i', $parsedString, $matches)) {
+                if (false !== strpos($lowercaseString, 'delimiter ')) {
                     // remove DELIMITER from string because it's a command-line keyword only
-                    $parsedString = trim(str_replace($matches[0], '', $parsedString));
+                    $parsedString = trim(str_ireplace('delimiter ', '', $parsedString));
 
                     // set new delimiter
-                    $this->delimiter = $matches[1];
+                    $this->delimiter = $char;
                     // append other delimiter characters if any
-                    if ($char && $char != "\n") {
-                        $this->delimiter .= $char;
-
-                        while (isset($this->sql[$this->pos]) && $this->sql[$this->pos] != "\n") {
-                            $this->delimiter .= $this->sql[$this->pos++]; // increase position
-                        }
-                        $this->delimiter = trim($this->delimiter);
+                    while (isset($this->sql[$this->pos]) && $this->sql[$this->pos] != "\n") {
+                        $this->delimiter .= $this->sql[$this->pos++]; // increase position
                     }
-
+                    $this->delimiter = trim($this->delimiter);
                     // store delimiter length for better performance
                     $this->delimiterLength = strlen($this->delimiter);
 
@@ -256,7 +252,9 @@ class PropelSQLParser
                     if ($parsedString) {
                         return $parsedString;
                     } else {
-                      continue;
+                        // reset helper variable
+                        $lowercaseString = '';
+                        continue;
                     }
                 }
 
@@ -273,6 +271,10 @@ class PropelSQLParser
 
                     return trim($parsedString);
                 }
+
+                // avoid using strtolower on the whole parsed string every time new character is added
+                // there is also no point in adding characters which are in the string
+                $lowercaseString .= strtolower($char);
             }
 
             $parsedString .= $char;
