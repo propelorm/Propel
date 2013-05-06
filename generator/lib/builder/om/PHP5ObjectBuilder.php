@@ -4579,8 +4579,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
         }
         if (!\$this->" . $collName . "->contains(" . $crossObjectName . ")) { // only add it if the **same** object is not already associated
             \$this->doAdd{$relatedObjectClassName}($crossObjectName);
-
-            \$this->" . $collName . "[]= " . $crossObjectName . ";
+            \$this->" . $collName . "[] = " . $crossObjectName . ";
         }
 
         return \$this;
@@ -4596,6 +4595,8 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
     protected function addCrossFKDoAdd(&$script, ForeignKey $refFK, ForeignKey $crossFK)
     {
         $relatedObjectClassName = $this->getFKPhpNameAffix($crossFK, $plural = false);
+
+        $selfRelationNamePlural = $this->getFKPhpNameAffix($refFK, $plural = true);
 
         $lowerRelatedObjectClassName = lcfirst($relatedObjectClassName);
 
@@ -4615,6 +4616,12 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
         {$foreignObjectName} = new {$className}();
         {$foreignObjectName}->set{$relatedObjectClassName}(\${$lowerRelatedObjectClassName});
         \$this->add{$refKObjectClassName}({$foreignObjectName});
+        // set the back reference to this object directly as using provided method either results
+        // in endless loop or in multiple relations
+        if (!\${$lowerRelatedObjectClassName}->get{$selfRelationNamePlural}()->contains(\$this)) {
+            \$foreignCollection = \${$lowerRelatedObjectClassName}->get{$selfRelationNamePlural}();
+            \$foreignCollection[] = \$this;
+        }
     }
 ";
     }
