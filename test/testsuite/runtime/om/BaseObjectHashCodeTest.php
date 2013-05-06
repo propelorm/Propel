@@ -34,7 +34,7 @@ class BaseObjectHashCodeTest extends BookstoreTestBase
         $a = clone $author;
         $a->hashCode();
 
-        $this->assertEquals($a, $author);
+        $this->assertEquals($author, $a);
     }
 
     public function testSavedObjectCallingHashCodeIsNotChangingObject()
@@ -52,7 +52,7 @@ class BaseObjectHashCodeTest extends BookstoreTestBase
         $a = clone $author;
         $a->hashCode();
 
-        $this->assertEquals($a, $author);
+        $this->assertEquals($author, $a);
     }
 
     public function testUnsavedObjectCreatesSameHashForIdenticalObjects()
