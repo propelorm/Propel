@@ -370,7 +370,7 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
         }
 
         $script .= "
-        } catch (PropelException \$e) {
+        } catch (Exception \$e) {
             \$con->rollBack();
             throw \$e;
         }";

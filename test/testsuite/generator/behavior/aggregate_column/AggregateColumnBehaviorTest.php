@@ -274,7 +274,7 @@ class TestableComment extends AggregateComment
             $con->commit();
 
             return $affectedRows;
-        } catch (PropelException $e) {
+        } catch (Exception $e) {
             $con->rollBack();
             throw $e;
         }
@@ -290,7 +290,7 @@ class TestableComment extends AggregateComment
                 ->delete($con);
             $con->commit();
             $this->setDeleted(true);
-        } catch (PropelException $e) {
+        } catch (Exception $e) {
             $con->rollBack();
             throw $e;
         }

@@ -1493,7 +1493,7 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
             \$con->beginTransaction();
             \$pk = " . $this->basePeerClassname . "::doInsert(\$criteria, \$con);
             \$con->commit();
-        } catch (PropelException \$e) {
+        } catch (Exception \$e) {
             \$con->rollBack();
             throw \$e;
         }
@@ -1604,7 +1604,7 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
             \$con->commit();
 
             return \$affectedRows;
-        } catch (PropelException \$e) {
+        } catch (Exception \$e) {
             \$con->rollBack();
             throw \$e;
         }
@@ -1766,7 +1766,7 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
             \$con->commit();
 
             return \$affectedRows;
-        } catch (PropelException \$e) {
+        } catch (Exception \$e) {
             \$con->rollBack();
             throw \$e;
         }

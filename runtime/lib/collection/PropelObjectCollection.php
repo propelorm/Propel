@@ -38,7 +38,7 @@ class PropelObjectCollection extends PropelCollection
                 $element->save($con);
             }
             $con->commit();
-        } catch (PropelException $e) {
+        } catch (Exception $e) {
             $con->rollback();
             throw $e;
         }
@@ -66,7 +66,7 @@ class PropelObjectCollection extends PropelCollection
                 $element->delete($con);
             }
             $con->commit();
-        } catch (PropelException $e) {
+        } catch (Exception $e) {
             $con->rollback();
             throw $e;
         }
