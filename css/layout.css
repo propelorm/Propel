@@ -350,3 +350,8 @@ a.anchor_link {
 a.anchor_link:hover {
     color: #666;
 }
+
+p.author {
+    color: #666;
+    font-size: 14px;
+}
