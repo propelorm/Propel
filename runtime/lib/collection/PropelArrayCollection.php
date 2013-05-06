@@ -43,7 +43,7 @@ class PropelArrayCollection extends PropelCollection
                 $obj->save($con);
             }
             $con->commit();
-        } catch (PropelException $e) {
+        } catch (Exception $e) {
             $con->rollback();
         }
     }
@@ -72,7 +72,7 @@ class PropelArrayCollection extends PropelCollection
                 $obj->delete($con);
             }
             $con->commit();
-        } catch (PropelException $e) {
+        } catch (Exception $e) {
             $con->rollback();
             throw $e;
         }

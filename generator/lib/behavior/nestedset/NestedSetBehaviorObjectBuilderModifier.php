@@ -1418,7 +1418,7 @@ protected function moveSubtreeTo(\$destLeft, \$levelDelta" . ($this->behavior->u
         $peerClassname::updateLoadedNodes(null, \$con);
 
         \$con->commit();
-    } catch (PropelException \$e) {
+    } catch (Exception \$e) {
         \$con->rollback();
         throw \$e;
     }

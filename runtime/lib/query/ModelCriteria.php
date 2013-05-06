@@ -1656,9 +1656,8 @@ class ModelCriteria extends Criteria
             }
             $criteria->basePostDelete($affectedRows, $con);
             $con->commit();
-        } catch (PropelException $e) {
+        } catch (Exception $e) {
             $con->rollback();
-            /* @var $e PropelException*/
             throw $e;
         }
 
@@ -1704,7 +1703,7 @@ class ModelCriteria extends Criteria
             $con->commit();
 
             return $affectedRows;
-        } catch (PropelException $e) {
+        } catch (Exception $e) {
             $con->rollBack();
             throw $e;
         }
@@ -1796,7 +1795,7 @@ class ModelCriteria extends Criteria
             $criteria->basePostUpdate($affectedRows, $con);
 
             $con->commit();
-        } catch (PropelException $e) {
+        } catch (Exception $e) {
             $con->rollBack();
             throw $e;
         }
