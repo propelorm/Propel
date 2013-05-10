@@ -85,7 +85,7 @@ $book->setAuthor($author);
 $book->save();
 ```
 
-The namespace is used for the ActiveRecord class, but also for the Query and Peer classes. Just remember that when you use relation names ina query, the namespace should not appear:
+The namespace is used for the ActiveRecord class, but also for the Query and Peer classes. Just remember that when you use relation names in a query, the namespace should not appear:
 
 ```php
 <?php
