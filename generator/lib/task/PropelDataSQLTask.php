@@ -177,7 +177,7 @@ class PropelDataSQLTask extends AbstractPropelDataModelTask
                     $dataXmlParser = new XmlToDataSQL($db, $this->getGeneratorConfig(), $this->dbEncoding);
                     $dataXmlParser->transform($dataXMLFile, $sqlWriter);
                 } catch (Exception $e) {
-                    throw new BuildException("Exception parsing data XML: " . $e->getMessage(), $x);
+                    throw new BuildException("Exception parsing data XML: " . $e->getMessage());
                 }
 
                 // Place the generated SQL file(s)

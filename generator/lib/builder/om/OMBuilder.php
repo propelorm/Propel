@@ -431,7 +431,7 @@ abstract class OMBuilder extends DataModelBuilder
             $localTable = $fk->getTable();
             $localColumn = $localTable->getColumn($localColumnName);
             if (!$localColumn) {
-                throw new Exception("Could not fetch column: $columnName in table " . $localTable->getName());
+                throw new Exception("Could not fetch column: $localColumnName in table " . $localTable->getName());
             }
             if (count($localTable->getForeignKeysReferencingTable($fk->getForeignTableName())) > 1
              || count($fk->getForeignTable()->getForeignKeysReferencingTable($fk->getTableName())) > 0
@@ -484,7 +484,7 @@ abstract class OMBuilder extends DataModelBuilder
             $localTable = $fk->getTable();
             $localColumn = $localTable->getColumn($localColumnName);
             if (!$localColumn) {
-                throw new Exception("Could not fetch column: $columnName in table " . $localTable->getName());
+                throw new Exception("Could not fetch column: $localColumnName in table " . $localTable->getName());
             }
             $foreignKeysToForeignTable = $localTable->getForeignKeysReferencingTable($fk->getForeignTableName());
             if ($fk->getForeignTableName() == $fk->getTableName()) {
