@@ -57,7 +57,7 @@ class PropelMigrationManager
 
     public function getPdoConnection($datasource)
     {
-        if (!isset($pdoConnections[$datasource])) {
+        if (!isset($this->pdoConnections[$datasource])) {
             $buildConnection = $this->getConnection($datasource);
             $dsn = str_replace("@DB@", $datasource, $buildConnection['dsn']);
 
@@ -68,10 +68,10 @@ class PropelMigrationManager
             $pdo = new PDO($dsn, $username, $password);
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-            $pdoConnections[$datasource] = $pdo;
+            $this->pdoConnections[$datasource] = $pdo;
         }
 
-        return $pdoConnections[$datasource];
+        return $this->pdoConnections[$datasource];
     }
 
     public function getPlatform($datasource)
