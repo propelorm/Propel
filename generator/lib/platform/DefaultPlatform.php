@@ -1272,4 +1272,14 @@ if (is_resource($columnValueAccessor)) {
             $sequenceName ? ("'" . $sequenceName . "'") : ''
         );
     }
+
+    public function getDefaultFKOnDeleteBehavior()
+    {
+      return ForeignKey::NONE;
+    }
+
+    public function getDefaultFKOnUpdateBehavior()
+    {
+      return ForeignKey::NONE;
+    }
 }

@@ -317,13 +317,6 @@ class MysqlSchemaParser extends BaseSchemaParser
                     }
                 }
 
-                // restrict is the default
-                foreach ($fkactions as $key => $action) {
-                    if ($action == ForeignKey::RESTRICT) {
-                        $fkactions[$key] = null;
-                    }
-                }
-
                 $localColumns = array();
                 $foreignColumns = array();
                 $foreignTable = $database->getTable($ftbl, true);

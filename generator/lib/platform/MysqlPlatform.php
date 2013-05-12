@@ -775,4 +775,14 @@ ALTER TABLE %s
 
         return parent::getColumnBindingPHP($column, $identifier, $columnValueAccessor, $tab);
     }
+
+    public function getDefaultFKOnDeleteBehavior()
+    {
+      return ForeignKey::RESTRICT;
+    }
+
+    public function getDefaultFKOnUpdateBehavior()
+    {
+      return ForeignKey::RESTRICT;
+    }
 }
