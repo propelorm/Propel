@@ -149,7 +149,7 @@ class Join
      * @param string $rightTableAlias
      * @param string $operator        The comparison operator of the join condition, default Join::EQUAL
      */
-    public function addExplicitCondition($leftTableName, $leftColumnName, $leftTableAlias = null, $rightTableName, $rightColumnName, $rightTableAlias = null, $operator = self::EQUAL)
+    public function addExplicitCondition($leftTableName, $leftColumnName, $leftTableAlias, $rightTableName, $rightColumnName, $rightTableAlias = null, $operator = self::EQUAL)
     {
         $this->leftTableName = $leftTableName;
         $this->leftTableAlias = $leftTableAlias;

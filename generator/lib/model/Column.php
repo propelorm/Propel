@@ -215,7 +215,7 @@ class Column extends XMLElement
             $this->isNestedSetRightKey = $this->booleanValue($this->getAttribute("nestedSetRightKey"));
             $this->isTreeScopeKey = $this->booleanValue($this->getAttribute("treeScopeKey"));
 
-            $this->isNotNull = ($this->booleanValue($this->getAttribute("required"), false) || $this->isPrimaryKey); // primary keys are required
+            $this->isNotNull = ($this->booleanValue($this->getAttribute("required")) || $this->isPrimaryKey); // primary keys are required
 
             //AutoIncrement/Sequences
             $this->isAutoIncrement = $this->booleanValue($this->getAttribute("autoIncrement"));
