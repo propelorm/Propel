@@ -146,6 +146,7 @@ public function filterByRank(\$rank" . ($useScope ? ", $methodSignature" : "") .
         }
 
         $script .= "
+
     return \$this";
         if ($useScope) {
             $script .= "
@@ -215,6 +216,7 @@ public function findOneByRank(\$rank, " . ($useScope ? "$methodSignature, " : ""
         }
 
         $script .= "
+
     return \$this
         ->filterByRank(\$rank" . ($useScope ? ", $methodSignature" : "") . ")
         ->findOne(\$con);
@@ -253,6 +255,7 @@ public function findList(" . ($useScope ? "$methodSignature, " : "") . "\$con = 
         }
 
         $script .= "
+
     return \$this";
         if ($useScope) {
             $script .= "

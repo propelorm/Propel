@@ -58,7 +58,7 @@ class DatabaseMap
     /**
      * Add a new table to the database by name.
      *
-     * @param  string   $tableName The name of the table.
+     * @param string $tableName The name of the table.
      *
      * @return TableMap The newly created TableMap.
      */
@@ -84,7 +84,7 @@ class DatabaseMap
     /**
      * Add a new table to the database, using the tablemap class name.
      *
-     * @param  string   $tableMapClass The name of the table map to add
+     * @param string $tableMapClass The name of the table map to add
      *
      * @return TableMap The TableMap object
      */
@@ -103,7 +103,7 @@ class DatabaseMap
     /**
      * Does this database contain this specific table?
      *
-     * @param  string  $name The String representation of the table.
+     * @param string $name The String representation of the table.
      *
      * @return boolean True if the database contains the table.
      */
@@ -115,7 +115,7 @@ class DatabaseMap
     /**
      * Get a TableMap for the table by name.
      *
-     * @param  string          $name Name of the table.
+     * @param string $name Name of the table.
      *
      * @return TableMap        A TableMap
      * @throws PropelException if the table is undefined
@@ -143,7 +143,7 @@ class DatabaseMap
      * Get a ColumnMap for the column by name.
      * Name must be fully qualified, e.g. book.AUTHOR_ID
      *
-     * @param                  $qualifiedColumnName Name of the column.
+     * @param   $qualifiedColumnName Name of the column.
      *
      * @return ColumnMap       A TableMap
      * @throws PropelException if the table is undefined, or if the table is undefined
@@ -162,7 +162,7 @@ class DatabaseMap
      *
      * @deprecated Use hasTable() instead
      *
-     * @param  string  $name The String representation of the table.
+     * @param string $name The String representation of the table.
      *
      * @return boolean True if the database contains the table.
      */

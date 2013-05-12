@@ -16,8 +16,8 @@ interface GeneratorConfigInterface
     /**
      * Gets a configured data model builder class for specified table and based on type.
      *
-     * @param  Table            $table
-     * @param  string           $type  The type of builder ('ddl', 'sql', etc.)
+     * @param Table  $table
+     * @param string $type  The type of builder ('ddl', 'sql', etc.)
      *
      * @return DataModelBuilder
      */
@@ -26,14 +26,14 @@ interface GeneratorConfigInterface
     /**
      * Gets a configured Pluralizer class.
      *
-     * @return     Pluralizer
+     * @return Pluralizer
      */
     public function getConfiguredPluralizer();
 
     /**
      * Gets a specific propel (renamed) property from the build.
      *
-     * @param  string $name
+     * @param string $name
      *
      * @return mixed
      */

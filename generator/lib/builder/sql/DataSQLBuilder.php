@@ -73,7 +73,7 @@ abstract class DataSQLBuilder extends DataModelBuilder
     /**
      * The main method in this class, returns the SQL for INSERTing data into a row.
      *
-     * @param  DataRow $row The row to process.
+     * @param DataRow $row The row to process.
      *
      * @return string
      */
@@ -110,9 +110,9 @@ abstract class DataSQLBuilder extends DataModelBuilder
     /**
      * Gets the property escaped (and quoted) value for a column.
      *
-     * @param  ColumnValue $colValue
+     * @param ColumnValue $colValue
      *
-     * @return mixed       The proper value to be added to the string.
+     * @return mixed The proper value to be added to the string.
      */
     protected function getColumnValueSql(ColumnValue $colValue)
     {
@@ -126,7 +126,7 @@ abstract class DataSQLBuilder extends DataModelBuilder
      * Gets a representation of a binary value suitable for use in a SQL statement.
      * Default behavior is true = 1, false = 0.
      *
-     * @param  boolean $value
+     * @param boolean $value
      *
      * @return int
      */
@@ -138,7 +138,7 @@ abstract class DataSQLBuilder extends DataModelBuilder
     /**
      * Gets a representation of a BLOB/LONGVARBINARY value suitable for use in a SQL statement.
      *
-     * @param  mixed  $blob Blob object or string data.
+     * @param mixed $blob Blob object or string data.
      *
      * @return string
      */
@@ -155,7 +155,7 @@ abstract class DataSQLBuilder extends DataModelBuilder
     /**
      * Gets a representation of a CLOB/LONGVARCHAR value suitable for use in a SQL statement.
      *
-     * @param  mixed  $clob Clob object or string data.
+     * @param mixed $clob Clob object or string data.
      *
      * @return string
      */
@@ -172,7 +172,7 @@ abstract class DataSQLBuilder extends DataModelBuilder
     /**
      * Gets a representation of a date value suitable for use in a SQL statement.
      *
-     * @param  string $value
+     * @param string $value
      *
      * @return string
      */
@@ -184,7 +184,7 @@ abstract class DataSQLBuilder extends DataModelBuilder
     /**
      * Gets a representation of a decimal value suitable for use in a SQL statement.
      *
-     * @param  double $value
+     * @param double $value
      *
      * @return float
      */
@@ -196,7 +196,7 @@ abstract class DataSQLBuilder extends DataModelBuilder
     /**
      * Gets a representation of a double value suitable for use in a SQL statement.
      *
-     * @param  double $value
+     * @param double $value
      *
      * @return double
      */
@@ -208,7 +208,7 @@ abstract class DataSQLBuilder extends DataModelBuilder
     /**
      * Gets a representation of a float value suitable for use in a SQL statement.
      *
-     * @param  float $value
+     * @param float $value
      *
      * @return float
      */
@@ -220,7 +220,7 @@ abstract class DataSQLBuilder extends DataModelBuilder
     /**
      * Gets a representation of an integer value suitable for use in a SQL statement.
      *
-     * @param  int $value
+     * @param int $value
      *
      * @return int
      */
@@ -242,7 +242,7 @@ abstract class DataSQLBuilder extends DataModelBuilder
     /**
      * Gets a representation of a string value suitable for use in a SQL statement.
      *
-     * @param  string $value
+     * @param string $value
      *
      * @return string
      */
@@ -254,7 +254,7 @@ abstract class DataSQLBuilder extends DataModelBuilder
     /**
      * Gets a representation of a time value suitable for use in a SQL statement.
      *
-     * @param  string $value
+     * @param string $value
      *
      * @return string
      */
@@ -266,7 +266,7 @@ abstract class DataSQLBuilder extends DataModelBuilder
     /**
      * Gets a representation of a timestamp value suitable for use in a SQL statement.
      *
-     * @param  string $value
+     * @param string $value
      *
      * @return string
      */

@@ -283,7 +283,7 @@ class PropelSchemaReverseTask extends PDOTask
     /**
      * Sets set validator bitfield from a comma-separated list of "validator bit" names.
      *
-     * @param  string         $v The comma-separated list of which validators to add.
+     * @param string $v The comma-separated list of which validators to add.
      *
      * @return void
      * @throws BuildException
@@ -314,7 +314,7 @@ class PropelSchemaReverseTask extends PDOTask
     /**
      * Checks whether to add validators of specified type or not
      *
-     * @param  int     $type The validator type constant.
+     * @param int $type The validator type constant.
      *
      * @return boolean
      */
@@ -425,7 +425,7 @@ class PropelSchemaReverseTask extends PDOTask
      *      for integer and timestamp types: notMatch validator with [^\d]+ (BIGINT, SMALLINT, TINYINT, INTEGER, TIMESTAMP)
      *      for float types: notMatch validator with [^\d\.]+ (FLOAT, DOUBLE, NUMERIC, DECIMAL, REAL)
      *
-     * @param  Database $database The Database model.
+     * @param Database $database The Database model.
      *
      * @return void
      * @todo       find out how to evaluate the appropriate size and adjust maxValue rule values appropriate
@@ -542,7 +542,7 @@ class PropelSchemaReverse_ValidatorSet
     /**
      * Gets a single validator for specified column name.
      *
-     * @param  Column    $column
+     * @param Column $column
      *
      * @return Validator
      */

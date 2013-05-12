@@ -67,7 +67,7 @@ interface NameGenerator
      *
      * @param string[] $inputs Inputs used to generate a name.
      *
-     * @return string The generated name.
+     * @return string          The generated name.
      * @throws EngineException
      */
     public function generateName($inputs);

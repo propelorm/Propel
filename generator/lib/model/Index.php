@@ -206,7 +206,7 @@ class Index extends XMLElement
     /**
      * Whether there is a size for the specified column.
      *
-     * @param  string  $name
+     * @param string $name
      *
      * @return boolean
      */
@@ -218,7 +218,7 @@ class Index extends XMLElement
     /**
      * Returns the size for the specified column, if given.
      *
-     * @param  string  $name
+     * @param string $name
      *
      * @return numeric The size or NULL
      */

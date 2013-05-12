@@ -316,7 +316,7 @@ USING INDEX
     /**
      * Builds the DDL SQL to add an Index.
      *
-     * @param  Index  $index
+     * @param Index $index
      *
      * @return string
      */

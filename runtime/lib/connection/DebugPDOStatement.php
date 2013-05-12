@@ -51,7 +51,7 @@ class DebugPDOStatement extends PDOStatement
      * Construct a new statement class with reference to main DebugPDO object from
      * which this instance was created.
      *
-     * @param  PropelPDO         $pdo Reference to the parent PDO instance.
+     * @param PropelPDO $pdo Reference to the parent PDO instance.
      *
      * @return DebugPDOStatement
      */
@@ -82,7 +82,7 @@ class DebugPDOStatement extends PDOStatement
      * Executes a prepared statement.  Returns a boolean value indicating success.
      * Overridden for query counting and logging.
      *
-     * @param  string  $input_parameters
+     * @param string $input_parameters
      *
      * @return boolean
      */

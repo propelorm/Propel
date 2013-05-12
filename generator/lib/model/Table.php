@@ -368,7 +368,7 @@ class Table extends ScopedElement implements IDMethod
     /**
      * get a build property for the database this table belongs to
      *
-     * @param  string $key key of the build property
+     * @param string $key key of the build property
      *
      * @return string value of the property
      */
@@ -573,7 +573,7 @@ class Table extends ScopedElement implements IDMethod
      * @see        Platform::getColumnList() if quoting is required
      *
      * @param      array Column[] or string[]
-     * @param  string $delim The delimiter to use in separating the column names.
+     * @param string $delim The delimiter to use in separating the column names.
      *
      * @return string
      */
@@ -710,7 +710,7 @@ class Table extends ScopedElement implements IDMethod
      * A utility function to create a new column from attrib and add it to this
      * table.
      *
-     * @param  Column|string   $coldata xml attributes or Column class for the column to add
+     * @param Column|string $coldata xml attributes or Column class for the column to add
      *
      * @return Column          the added column
      * @throws EngineException
@@ -749,7 +749,7 @@ class Table extends ScopedElement implements IDMethod
     /**
      * Removed a column from the table
      *
-     * @param  Column|string   $col the column to remove
+     * @param Column|string $col the column to remove
      *
      * @throws EngineException
      */
@@ -786,7 +786,7 @@ class Table extends ScopedElement implements IDMethod
      * - addValidator(Validator $validator)
      * - addValidator(array $attribs)
      *
-     * @param  mixed           $data Validator object or XML attribs (array) from <validator /> element.
+     * @param mixed $data Validator object or XML attribs (array) from <validator /> element.
      *
      * @return Validator       The added Validator.
      * @throws EngineException
@@ -1073,7 +1073,7 @@ class Table extends ScopedElement implements IDMethod
     /**
      * check if the table has a index by name
      *
-     * @param  string $name
+     * @param string $name
      *
      * @return bool
      */
@@ -1192,7 +1192,7 @@ class Table extends ScopedElement implements IDMethod
     /**
      * check if the table has a behavior by name
      *
-     * @param  string  $name the behavior name
+     * @param string $name the behavior name
      *
      * @return boolean True if the behavior exists
      */
@@ -1204,7 +1204,7 @@ class Table extends ScopedElement implements IDMethod
     /**
      * Get one table behavior by name
      *
-     * @param  string   $name the behavior name
+     * @param string $name the behavior name
      *
      * @return Behavior a behavior object
      */
@@ -1722,9 +1722,9 @@ class Table extends ScopedElement implements IDMethod
      * Return the foreign keys that includes col in it's list of local columns.
      * Eg. Foreign key (a,b,c) references tbl(x,y,z) will be returned of col is either a,b or c.
      *
-     * @param  string $col
+     * @param string $col
      *
-     * @return array  ForeignKey[] or null if there is no FK for specified column.
+     * @return array ForeignKey[] or null if there is no FK for specified column.
      */
     public function getColumnForeignKeys($colname)
     {
@@ -2045,9 +2045,9 @@ class Table extends ScopedElement implements IDMethod
     /**
      * Returns the elements of the list, separated by commas.
      *
-     * @param  array $list
+     * @param array $list
      *
-     * @return A     CSV list.
+     * @return A CSV list.
      * @deprecated Use the Platform::getColumnListDDL() method.
      */
     private function printList($list)

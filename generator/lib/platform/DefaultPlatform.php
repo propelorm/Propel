@@ -87,7 +87,7 @@ class DefaultPlatform implements PropelPlatformInterface
     /**
      * Gets a specific propel (renamed) property from the build.
      *
-     * @param  string $name
+     * @param string $name
      *
      * @return mixed
      */
@@ -169,7 +169,7 @@ class DefaultPlatform implements PropelPlatformInterface
     /**
      * Returns the db specific domain for a propelType.
      *
-     * @param  string          $propelType the Propel type name.
+     * @param string $propelType the Propel type name.
      *
      * @return Domain          The db specific domain.
      * @throws EngineException
@@ -445,7 +445,7 @@ DROP TABLE " . $this->quoteIdentifier($table->getName()) . ";
     /**
      * Builds the DDL SQL to drop the primary key of a table.
      *
-     * @param  Table  $table
+     * @param Table $table
      *
      * @return string
      */
@@ -464,7 +464,7 @@ ALTER TABLE %s DROP CONSTRAINT %s;
     /**
      * Builds the DDL SQL to add the primary key of a table.
      *
-     * @param  Table  $table
+     * @param Table $table
      *
      * @return string
      */
@@ -483,7 +483,7 @@ ALTER TABLE %s ADD %s;
     /**
      * Builds the DDL SQL to add the indices of a table.
      *
-     * @param  Table  $table
+     * @param Table $table
      *
      * @return string
      */
@@ -500,7 +500,7 @@ ALTER TABLE %s ADD %s;
     /**
      * Builds the DDL SQL to add an Index.
      *
-     * @param  Index  $index
+     * @param Index $index
      *
      * @return string
      */
@@ -521,7 +521,7 @@ CREATE %sINDEX %s ON %s (%s);
     /**
      * Builds the DDL SQL to drop an Index.
      *
-     * @param  Index  $index
+     * @param Index $index
      *
      * @return string
      */
@@ -537,7 +537,7 @@ DROP INDEX %s;
     /**
      * Builds the DDL SQL for an Index object.
      *
-     * @param  Index  $index
+     * @param Index $index
      *
      * @return string
      */
@@ -549,7 +549,7 @@ DROP INDEX %s;
     /**
      * Builds the DDL SQL for a Unique constraint object.
      *
-     * @param  Unique $unique
+     * @param Unique $unique
      *
      * @return string
      */
@@ -561,7 +561,7 @@ DROP INDEX %s;
     /**
      * Builds the DDL SQL to add the foreign keys of a table.
      *
-     * @param  Table  $table
+     * @param Table $table
      *
      * @return string
      */
@@ -578,7 +578,7 @@ DROP INDEX %s;
     /**
      * Builds the DDL SQL to add a foreign key.
      *
-     * @param  ForeignKey $fk
+     * @param ForeignKey $fk
      *
      * @return string
      */
@@ -600,7 +600,7 @@ ALTER TABLE %s ADD %s;
     /**
      * Builds the DDL SQL to drop a foreign key.
      *
-     * @param  ForeignKey $fk
+     * @param ForeignKey $fk
      *
      * @return string
      */
@@ -1023,7 +1023,7 @@ ALTER TABLE %s ADD
     /**
      * Returns if the RDBMS-specific SQL type has a size attribute.
      *
-     * @param  string  $sqlType the SQL type
+     * @param string $sqlType the SQL type
      *
      * @return boolean True if the type has a size attribute
      */
@@ -1035,7 +1035,7 @@ ALTER TABLE %s ADD
     /**
      * Returns if the RDBMS-specific SQL type has a scale attribute.
      *
-     * @param  string  $sqlType the SQL type
+     * @param string $sqlType the SQL type
      *
      * @return boolean True if the type has a scale attribute
      */
@@ -1047,7 +1047,7 @@ ALTER TABLE %s ADD
     /**
      * Quote and escape needed characters in the string for underlying RDBMS.
      *
-     * @param  string $text
+     * @param string $text
      *
      * @return string
      */
@@ -1066,7 +1066,7 @@ ALTER TABLE %s ADD
      * The subclasses can implement this using string replacement functions
      * or native DB methods.
      *
-     * @param  string $text Text that needs to be escaped.
+     * @param string $text Text that needs to be escaped.
      *
      * @return string
      */
@@ -1078,7 +1078,7 @@ ALTER TABLE %s ADD
     /**
      * Quotes identifiers used in database SQL.
      *
-     * @param  string $text
+     * @param string $text
      *
      * @return string Quoted identifier.
      */
@@ -1158,7 +1158,7 @@ ALTER TABLE %s ADD
      * This function is used to set default column values when building
      * SQL.
      *
-     * @param  mixed $tf A boolean or string representation of boolean ('y', 'true').
+     * @param mixed $tf A boolean or string representation of boolean ('y', 'true').
      *
      * @return mixed
      */

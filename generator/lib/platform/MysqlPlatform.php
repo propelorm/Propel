@@ -381,7 +381,7 @@ DROP TABLE IF EXISTS " . $this->quoteIdentifier($table->getName()) . ";
      * For MySQL unique indexes there is the option of specifying size, so we cannot simply use
      * the getColumnsList() method.
      *
-     * @param  Index  $index
+     * @param Index $index
      *
      * @return string
      */
@@ -398,7 +398,7 @@ DROP TABLE IF EXISTS " . $this->quoteIdentifier($table->getName()) . ";
     /**
      * Builds the DDL SQL to drop the primary key of a table.
      *
-     * @param  Table  $table
+     * @param Table $table
      *
      * @return string
      */
@@ -416,7 +416,7 @@ ALTER TABLE %s DROP PRIMARY KEY;
     /**
      * Builds the DDL SQL to add an Index.
      *
-     * @param  Index  $index
+     * @param Index $index
      *
      * @return string
      */
@@ -437,7 +437,7 @@ CREATE %sINDEX %s ON %s (%s);
     /**
      * Builds the DDL SQL to drop an Index.
      *
-     * @param  Index  $index
+     * @param Index $index
      *
      * @return string
      */
@@ -726,7 +726,7 @@ ALTER TABLE %s
     /**
      * Escape the string for RDBMS.
      *
-     * @param  string $text
+     * @param string $text
      *
      * @return string
      */
@@ -745,7 +745,7 @@ ALTER TABLE %s
      * should be safe to split the string by '.' and quote each part individually
      * to allow for a <schema>.<table> or <table>.<column> syntax.
      *
-     * @param  string $text the identifier
+     * @param string $text the identifier
      *
      * @return string the quoted identifier
      */

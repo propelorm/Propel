@@ -306,7 +306,7 @@ class PropelPDO extends PDO
      * Rollback the whole transaction, even if this is a nested rollback
      * and reset the nested transaction count to 0.
      *
-     * @return    boolean  Whether operation was successful.
+     * @return boolean Whether operation was successful.
      */
     public function forceRollBack()
     {
@@ -358,7 +358,7 @@ class PropelPDO extends PDO
      *
      * This is overridden here to provide support for setting Propel-specific attributes too.
      *
-     * @param  integer $attribute The attribute to get (e.g. PropelPDO::PROPEL_ATTR_CACHE_PREPARES).
+     * @param integer $attribute The attribute to get (e.g. PropelPDO::PROPEL_ATTR_CACHE_PREPARES).
      *
      * @return mixed
      */
@@ -417,7 +417,7 @@ class PropelPDO extends PDO
      * Execute an SQL statement and return the number of affected rows.
      * Overrides PDO::exec() to log queries when required
      *
-     * @param  string  $sql
+     * @param string $sql
      *
      * @return integer
      */

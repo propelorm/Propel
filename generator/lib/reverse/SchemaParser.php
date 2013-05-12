@@ -42,7 +42,7 @@ interface SchemaParser
     /**
      * Gets a specific propel (renamed) property from the build.
      *
-     * @param  string $name
+     * @param string $name
      *
      * @return mixed
      */

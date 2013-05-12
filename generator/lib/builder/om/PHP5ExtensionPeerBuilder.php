@@ -35,7 +35,7 @@ class PHP5ExtensionPeerBuilder extends PeerBuilder
     /**
      * Adds the include() statements for files that this class depends on or utilizes.
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      */
     protected function addIncludes(&$script)
     {
@@ -59,7 +59,7 @@ require '" . $requiredClassFilePath . "';
     /**
      * Adds class phpdoc comment and opening of class.
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      */
     protected function addClassOpen(&$script)
     {
@@ -127,7 +127,7 @@ class " . $this->getClassname() . " extends $baseClassname
     /**
      * Closes class.
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      */
     protected function addClassClose(&$script)
     {

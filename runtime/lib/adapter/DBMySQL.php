@@ -23,7 +23,7 @@ class DBMySQL extends DBAdapter
     /**
      * This method is used to ignore case.
      *
-     * @param  string $in The string to transform to upper case.
+     * @param string $in The string to transform to upper case.
      *
      * @return string The upper case string.
      */
@@ -35,7 +35,7 @@ class DBMySQL extends DBAdapter
     /**
      * This method is used to ignore case.
      *
-     * @param  string $in The string whose case to ignore.
+     * @param string $in The string whose case to ignore.
      *
      * @return string The string in a case that can be ignored.
      */
@@ -74,7 +74,7 @@ class DBMySQL extends DBAdapter
     /**
      * Returns SQL which calculates the length (in chars) of a string.
      *
-     * @param  string $s String to calculate length of.
+     * @param string $s String to calculate length of.
      *
      * @return string
      */
@@ -112,7 +112,7 @@ class DBMySQL extends DBAdapter
     /**
      * @see       DBAdapter::quoteIdentifier()
      *
-     * @param  string $text
+     * @param string $text
      *
      * @return string
      */
@@ -124,7 +124,7 @@ class DBMySQL extends DBAdapter
     /**
      * @see       DBAdapter::quoteIdentifierTable()
      *
-     * @param  string $table
+     * @param string $table
      *
      * @return string
      */
@@ -163,7 +163,7 @@ class DBMySQL extends DBAdapter
     /**
      * @see       DBAdapter::random()
      *
-     * @param  string $seed
+     * @param string $seed
      *
      * @return string
      */
@@ -208,7 +208,7 @@ class DBMySQL extends DBAdapter
      * Prepare connection parameters.
      * See: http://www.propelorm.org/ticket/1360
      *
-     * @param  array $params
+     * @param array $params
      *
      * @return array
      *
@@ -263,11 +263,11 @@ EXCEPTION
     /**
      * Do Explain Plan for query object or query string
      *
-     * @param  PropelPDO            $con   propel connection
-     * @param  ModelCriteria|string $query query the criteria or the query string
+     * @param PropelPDO            $con   propel connection
+     * @param ModelCriteria|string $query query the criteria or the query string
      *
      * @throws PropelException
-     * @return PDOStatement         A PDO statement executed using the connection, ready to be fetched
+     * @return PDOStatement    A PDO statement executed using the connection, ready to be fetched
      */
     public function doExplainPlan(PropelPDO $con, $query)
     {

@@ -69,8 +69,8 @@ class OracleSchemaParser extends BaseSchemaParser
     /**
      * Searches for tables in the database. Maybe we want to search also the views.
      *
-     * @param  Database $database The Database model class to add tables to.
-     * @param  Task     $task
+     * @param Database $database The Database model class to add tables to.
+     * @param Task     $task
      *
      * @return int
      */

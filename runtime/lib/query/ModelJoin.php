@@ -81,7 +81,7 @@ class ModelJoin extends Join
     }
 
     /**
-     * @param  ModelJoin $join
+     * @param ModelJoin $join
      *
      * @return ModelJoin
      */
@@ -131,7 +131,7 @@ class ModelJoin extends Join
      * This method only works if PreviousJoin has been defined,
      * which only happens when you provide dotted relations when calling join
      *
-     * @param  Object $startObject the start object all joins originate from and which has already hydrated
+     * @param Object $startObject the start object all joins originate from and which has already hydrated
      *
      * @return Object the base Object of this join
      */
@@ -149,7 +149,7 @@ class ModelJoin extends Join
     }
 
     /**
-     * @param  ModelJoin $join
+     * @param ModelJoin $join
      *
      * @return bool
      */

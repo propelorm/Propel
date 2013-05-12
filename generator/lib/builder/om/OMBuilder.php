@@ -368,7 +368,7 @@ abstract class OMBuilder extends DataModelBuilder
      * If the key is required, an INNER JOIN will be returned, else a LEFT JOIN will be suggested,
      * unless the schema is provided with the DefaultJoin attribute, which overrules the default Join Type
      *
-     * @param  ForeignKey $fk
+     * @param ForeignKey $fk
      *
      * @return string
      */
@@ -390,8 +390,8 @@ abstract class OMBuilder extends DataModelBuilder
      * The difference between this method and the getRefFKPhpNameAffix() method is that in this method the
      * classname in the affix is the foreign table classname.
      *
-     * @param  ForeignKey $fk     The local FK that we need a name for.
-     * @param  boolean    $plural Whether the php name should be plural (e.g. initRelatedObjs() vs. addRelatedObj()
+     * @param ForeignKey $fk     The local FK that we need a name for.
+     * @param boolean    $plural Whether the php name should be plural (e.g. initRelatedObjs() vs. addRelatedObj()
      *
      * @return string
      */
@@ -454,8 +454,8 @@ abstract class OMBuilder extends DataModelBuilder
      * The difference between this method and the getFKPhpNameAffix() method is that in this method the
      * classname in the affix is the classname of the local fkey table.
      *
-     * @param  ForeignKey $fk     The referrer FK that we need a name for.
-     * @param  boolean    $plural Whether the php name should be plural (e.g. initRelatedObjs() vs. addRelatedObj()
+     * @param ForeignKey $fk     The referrer FK that we need a name for.
+     * @param boolean    $plural Whether the php name should be plural (e.g. initRelatedObjs() vs. addRelatedObj()
      *
      * @return string
      */
@@ -519,8 +519,8 @@ abstract class OMBuilder extends DataModelBuilder
     /**
      * Checks whether any registered behavior on that table has a modifier for a hook
      *
-     * @param  string  $hookName The name of the hook as called from one of this class methods, e.g. "preSave"
-     * @param  string  $modifier The name of the modifier object providing the method in the behavior
+     * @param string $hookName The name of the hook as called from one of this class methods, e.g. "preSave"
+     * @param string $modifier The name of the modifier object providing the method in the behavior
      *
      * @return boolean
      */
@@ -541,7 +541,7 @@ abstract class OMBuilder extends DataModelBuilder
      *
      * @param string $hookName The name of the hook as called from one of this class methods, e.g. "preSave"
      * @param string $modifier The name of the modifier object providing the method in the behavior
-     * @param string &$script The script will be modified in this method.
+     * @param string &$script  The script will be modified in this method.
      * @param string $tab
      */
     public function applyBehaviorModifierBase($hookName, $modifier, &$script, $tab = "		")

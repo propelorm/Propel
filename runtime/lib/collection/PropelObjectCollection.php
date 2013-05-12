@@ -75,9 +75,9 @@ class PropelObjectCollection extends PropelCollection
     /**
      * Get an array of the primary keys of all the objects in the collection
      *
-     * @param  boolean $usePrefix
+     * @param boolean $usePrefix
      *
-     * @return array   The list of the primary keys of the collection
+     * @return array The list of the primary keys of the collection
      */
     public function getPrimaryKeys($usePrefix = true)
     {

@@ -47,7 +47,7 @@ class ModelCriteria extends Criteria
     protected $originalModelAlias;
     protected $modelAlias;
     protected $useAliasInSQL = false;
-    public    $replacedColumns = array();
+    public $replacedColumns = array();
     /**
      * @var DatabaseMap
      */
@@ -159,9 +159,9 @@ class ModelCriteria extends Criteria
      * $c->setFormatter(ModelCriteria::FORMAT_ARRAY);
      * </code>
      *
-     * @param  string|PropelFormatter $formatter a formatter class name, or a formatter instance
+     * @param string|PropelFormatter $formatter a formatter class name, or a formatter instance
      *
-     * @return ModelCriteria          The current object, for fluid interface
+     * @return ModelCriteria The current object, for fluid interface
      *
      * @throws PropelException
      */
@@ -1143,7 +1143,7 @@ class ModelCriteria extends Criteria
      * Returns the name of a relation from a string.
      * The input looks like '$leftName.$relationName $relationAlias'
      *
-     * @param  string $relation Relation to use for the join
+     * @param string $relation Relation to use for the join
      *
      * @return string the relationName used in the join
      */
@@ -1192,7 +1192,7 @@ class ModelCriteria extends Criteria
     /**
      * Code to execute before every SELECT statement
      *
-     * @param PropelPDO $con The connection object used by the query
+     * @param  PropelPDO $con The connection object used by the query
      * @return null
      */
     protected function basePreSelect(PropelPDO $con)
@@ -1201,7 +1201,7 @@ class ModelCriteria extends Criteria
     }
 
     /**
-     * @param PropelPDO $con
+     * @param  PropelPDO $con
      * @return null
      */
     protected function preSelect(PropelPDO $con)
@@ -1589,7 +1589,7 @@ class ModelCriteria extends Criteria
     /**
      * Code to execute before every DELETE statement
      *
-     * @param PropelPDO $con The connection object used by the query
+     * @param  PropelPDO $con The connection object used by the query
      * @return null
      */
     protected function basePreDelete(PropelPDO $con)
@@ -1598,7 +1598,7 @@ class ModelCriteria extends Criteria
     }
 
     /**
-     * @param PropelPDO $con
+     * @param  PropelPDO $con
      * @return null
      */
     protected function preDelete(PropelPDO $con)
@@ -1608,8 +1608,8 @@ class ModelCriteria extends Criteria
     /**
      * Code to execute after every DELETE statement
      *
-     * @param int       $affectedRows the number of deleted rows
-     * @param PropelPDO $con          The connection object used by the query
+     * @param  int       $affectedRows the number of deleted rows
+     * @param  PropelPDO $con          The connection object used by the query
      * @return null
      */
     protected function basePostDelete($affectedRows, PropelPDO $con)
@@ -1619,7 +1619,7 @@ class ModelCriteria extends Criteria
 
     /**
      * @param $affectedRows
-     * @param PropelPDO $con
+     * @param  PropelPDO $con
      * @return null
      */
     protected function postDelete($affectedRows, PropelPDO $con)
@@ -1761,11 +1761,11 @@ class ModelCriteria extends Criteria
      * Beware that behaviors based on hooks in the object's save() method
      * will only be triggered if you force individual saves, i.e. if you pass true as second argument.
      *
-     * @param      array $values Associative array of keys and values to replace
-     * @param      PropelPDO $con an optional connection object
-     * @param      boolean $forceIndividualSaves If false (default), the resulting call is a BasePeer::doUpdate(), otherwise it is a series of save() calls on all the found objects
+     * @param array     $values               Associative array of keys and values to replace
+     * @param PropelPDO $con                  an optional connection object
+     * @param boolean   $forceIndividualSaves If false (default), the resulting call is a BasePeer::doUpdate(), otherwise it is a series of save() calls on all the found objects
      *
-     * @return     Integer Number of updated rows
+     * @return Integer Number of updated rows
      *
      * @throws PropelException
      */
@@ -1807,11 +1807,11 @@ class ModelCriteria extends Criteria
      * Issue an UPDATE query based the current ModelCriteria and a list of changes.
      * This method is called by ModelCriteria::update() inside a transaction.
      *
-     * @param      array $values Associative array of keys and values to replace
-     * @param      PropelPDO $con a connection object
-     * @param      boolean $forceIndividualSaves If false (default), the resulting call is a BasePeer::doUpdate(), otherwise it is a series of save() calls on all the found objects
+     * @param array     $values               Associative array of keys and values to replace
+     * @param PropelPDO $con                  a connection object
+     * @param boolean   $forceIndividualSaves If false (default), the resulting call is a BasePeer::doUpdate(), otherwise it is a series of save() calls on all the found objects
      *
-     * @return     Integer Number of updated rows
+     * @return Integer Number of updated rows
      */
     public function doUpdate($values, $con, $forceIndividualSaves = false)
     {
@@ -1913,10 +1913,10 @@ class ModelCriteria extends Criteria
     /**
      * Converts value for some column types
      *
-     * @param  mixed     $value  The value to convert
-     * @param  ColumnMap $colMap The ColumnMap object
+     * @param mixed     $value  The value to convert
+     * @param ColumnMap $colMap The ColumnMap object
      *
-     * @return mixed     The converted value
+     * @return mixed The converted value
      */
     protected function convertValueForColumn($value, ColumnMap $colMap)
     {
@@ -2307,7 +2307,7 @@ class ModelCriteria extends Criteria
     /**
      * Make explain plan of the query
      *
-     * @param  PropelPDO       $con propel connection
+     * @param PropelPDO $con propel connection
      *
      * @throws PropelException on error
      * @return array           array of the explain plan
@@ -2337,7 +2337,7 @@ class ModelCriteria extends Criteria
     }
 
     /**
-     * @param  PropelPDO $con = null
+     * @param PropelPDO $con = null
      *
      * @return boolean
      */

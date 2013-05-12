@@ -66,9 +66,9 @@ class NameFactory
      *
      * @param string $algorithmName The fully qualified class name of the {@link NameGenerator}
      *             implementation to use to generate names.
-     * @param  array           $inputs Inputs used to generate a name.
+     * @param array $inputs Inputs used to generate a name.
      *
-     * @return string The generated name.
+     * @return string          The generated name.
      * @throws EngineException
      */
     public static function generateName($algorithmName, $inputs)

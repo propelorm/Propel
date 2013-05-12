@@ -291,15 +291,15 @@ class TableMap
     /**
      * Add a column to the table.
      *
-     * @param  string    $name         A string with the column name.
-     * @param  string    $phpName      A string specifying php name.
-     * @param  string    $type         A string specifying the Propel type.
-     * @param  boolean   $isNotNull    Whether column does not allow NULL values.
-     * @param  int       $size         An int specifying the size.
-     * @param  boolean   $pk           True if column is a primary key.
-     * @param  string    $fkTable      A String with the foreign key table name.
-     * @param  string    $fkColumn     A String with the foreign key column name.
-     * @param  string    $defaultValue The default value for this column.
+     * @param string  $name         A string with the column name.
+     * @param string  $phpName      A string specifying php name.
+     * @param string  $type         A string specifying the Propel type.
+     * @param boolean $isNotNull    Whether column does not allow NULL values.
+     * @param int     $size         An int specifying the size.
+     * @param boolean $pk           True if column is a primary key.
+     * @param string  $fkTable      A String with the foreign key table name.
+     * @param string  $fkColumn     A String with the foreign key column name.
+     * @param string  $defaultValue The default value for this column.
      *
      * @return ColumnMap The newly created column.
      */
@@ -333,7 +333,7 @@ class TableMap
      * Add a pre-created column to this table. It will replace any
      * existing column.
      *
-     * @param  ColumnMap $cmap A ColumnMap.
+     * @param ColumnMap $cmap A ColumnMap.
      *
      * @return ColumnMap The added column map.
      */
@@ -347,8 +347,8 @@ class TableMap
     /**
      * Does this table contain the specified column?
      *
-     * @param  mixed   $name      name of the column or ColumnMap instance
-     * @param  boolean $normalize Normalize the column name (if column name not like FIRST_NAME)
+     * @param mixed   $name      name of the column or ColumnMap instance
+     * @param boolean $normalize Normalize the column name (if column name not like FIRST_NAME)
      *
      * @return boolean True if the table contains the column.
      */
@@ -366,8 +366,8 @@ class TableMap
     /**
      * Get a ColumnMap for the table.
      *
-     * @param  string          $name      A String with the name of the table.
-     * @param  boolean         $normalize Normalize the column name (if column name not like FIRST_NAME)
+     * @param string  $name      A String with the name of the table.
+     * @param boolean $normalize Normalize the column name (if column name not like FIRST_NAME)
      *
      * @return ColumnMap       A ColumnMap.
      * @throws PropelException if the column is undefined
@@ -387,7 +387,7 @@ class TableMap
     /**
      * Does this table contain the specified column?
      *
-     * @param  mixed   $phpName name of the column
+     * @param mixed $phpName name of the column
      *
      * @return boolean True if the table contains the column.
      */
@@ -399,7 +399,7 @@ class TableMap
     /**
      * Get a ColumnMap for the table.
      *
-     * @param  string          $phpName A String with the name of the table.
+     * @param string $phpName A String with the name of the table.
      *
      * @return ColumnMap       A ColumnMap.
      * @throws PropelException if the column is undefined
@@ -441,12 +441,12 @@ class TableMap
     /**
      * Add a primary key column to this Table.
      *
-     * @param  string    $columnName    A string with the column name.
-     * @param  string    $phpName       A string with the php name.
-     * @param  string    $type          A string specifying the Propel type.
-     * @param  boolean   $isNotNull     Whether column does not allow NULL values.
-     * @param  int       $size          An int specifying the size.
-     * @param  string    $defaultValue
+     * @param string  $columnName   A string with the column name.
+     * @param string  $phpName      A string with the php name.
+     * @param string  $type         A string specifying the Propel type.
+     * @param boolean $isNotNull    Whether column does not allow NULL values.
+     * @param int     $size         An int specifying the size.
+     * @param string  $defaultValue
      *
      * @return ColumnMap Newly added PrimaryKey column.
      */
@@ -458,14 +458,14 @@ class TableMap
     /**
      * Add a foreign key column to the table.
      *
-     * @param  string    $columnName   A String with the column name.
-     * @param  string    $phpName       A string with the php name.
-     * @param  string    $type         A string specifying the Propel type.
-     * @param  string    $fkTable      A String with the foreign key table name.
-     * @param  string    $fkColumn     A String with the foreign key column name.
-     * @param  boolean   $isNotNull    Whether column does not allow NULL values.
-     * @param  int       $size         An int specifying the size.
-     * @param  string    $defaultValue The default value for this column.
+     * @param string  $columnName   A String with the column name.
+     * @param string  $phpName      A string with the php name.
+     * @param string  $type         A string specifying the Propel type.
+     * @param string  $fkTable      A String with the foreign key table name.
+     * @param string  $fkColumn     A String with the foreign key column name.
+     * @param boolean $isNotNull    Whether column does not allow NULL values.
+     * @param int     $size         An int specifying the size.
+     * @param string  $defaultValue The default value for this column.
      *
      * @return ColumnMap Newly added ForeignKey column.
      */
@@ -477,14 +477,14 @@ class TableMap
     /**
      * Add a foreign primary key column to the table.
      *
-     * @param  string    $columnName   A String with the column name.
-     * @param  string    $phpName      A string with the php name.
-     * @param  string    $type         A string specifying the Propel type.
-     * @param  string    $fkTable      A String with the foreign key table name.
-     * @param  string    $fkColumn     A String with the foreign key column name.
-     * @param  boolean   $isNotNull    Whether column does not allow NULL values.
-     * @param  int       $size         An int specifying the size.
-     * @param  string    $defaultValue The default value for this column.
+     * @param string  $columnName   A String with the column name.
+     * @param string  $phpName      A string with the php name.
+     * @param string  $type         A string specifying the Propel type.
+     * @param string  $fkTable      A String with the foreign key table name.
+     * @param string  $fkColumn     A String with the foreign key column name.
+     * @param boolean $isNotNull    Whether column does not allow NULL values.
+     * @param int     $size         An int specifying the size.
+     * @param string  $defaultValue The default value for this column.
      *
      * @return ColumnMap Newly created foreign pkey column.
      */
@@ -534,11 +534,11 @@ class TableMap
     /**
      * Add a validator to a table's column
      *
-     * @param  string $columnName The name of the validator's column
-     * @param  string $name       The rule name of this validator
-     * @param  string $classname  The dot-path name of class to use (e.g. myapp.propel.MyValidator)
-     * @param  string $value
-     * @param  string $message    The error message which is returned on invalid values
+     * @param string $columnName The name of the validator's column
+     * @param string $name       The rule name of this validator
+     * @param string $classname  The dot-path name of class to use (e.g. myapp.propel.MyValidator)
+     * @param string $value
+     * @param string $message    The error message which is returned on invalid values
      *
      * @return void
      */
@@ -571,13 +571,13 @@ class TableMap
     /**
      * Adds a RelationMap to the table
      *
-     * @param  string      $name          The relation name
-     * @param  string      $tablePhpName  The related table name
-     * @param  integer     $type          The relation type (either RelationMap::MANY_TO_ONE, RelationMap::ONE_TO_MANY, or RelationMAp::ONE_TO_ONE)
-     * @param  array       $columnMapping An associative array mapping column names (local => foreign)
-     * @param  string      $onDelete      SQL behavior upon deletion ('SET NULL', 'CASCADE', ...)
-     * @param  string      $onUpdate      SQL behavior upon update ('SET NULL', 'CASCADE', ...)
-     * @param  string      $pluralName    Optional plural name for *_TO_MANY relationships
+     * @param string  $name          The relation name
+     * @param string  $tablePhpName  The related table name
+     * @param integer $type          The relation type (either RelationMap::MANY_TO_ONE, RelationMap::ONE_TO_MANY, or RelationMAp::ONE_TO_ONE)
+     * @param array   $columnMapping An associative array mapping column names (local => foreign)
+     * @param string  $onDelete      SQL behavior upon deletion ('SET NULL', 'CASCADE', ...)
+     * @param string  $onUpdate      SQL behavior upon update ('SET NULL', 'CASCADE', ...)
+     * @param string  $pluralName    Optional plural name for *_TO_MANY relationships
      *
      * @return RelationMap the built RelationMap object
      */
@@ -617,7 +617,7 @@ class TableMap
      * Gets a RelationMap of the table by relation name
      * This method will build the relations if they are not built yet
      *
-     * @param  String  $name The relation name
+     * @param String $name The relation name
      *
      * @return boolean true if the relation exists
      */
@@ -630,7 +630,7 @@ class TableMap
      * Gets a RelationMap of the table by relation name
      * This method will build the relations if they are not built yet
      *
-     * @param  String          $name The relation name
+     * @param String $name The relation name
      *
      * @return RelationMap     The relation object
      * @throws PropelException When called on an inexistent relation
@@ -704,8 +704,8 @@ class TableMap
      *
      * @deprecated Use hasColumn instead
      *
-     * @param  mixed   $name      name of the column or ColumnMap instance
-     * @param  boolean $normalize Normalize the column name (if column name not like FIRST_NAME)
+     * @param mixed   $name      name of the column or ColumnMap instance
+     * @param boolean $normalize Normalize the column name (if column name not like FIRST_NAME)
      *
      * @return boolean True if the table contains the column.
      */
@@ -720,7 +720,7 @@ class TableMap
      *
      * @deprecated Use ColumnMap::normalizeColumnName() instead
      *
-     * @param  string $name
+     * @param string $name
      *
      * @return string Normalized column name.
      */
@@ -794,7 +794,7 @@ class TableMap
      *
      * @deprecated Not used anywhere in Propel
      *
-     * @param  string $data A String.
+     * @param string $data A String.
      *
      * @return string A String with data, but with prefix removed.
      */
@@ -833,7 +833,7 @@ class TableMap
      *
      * @deprecated Not used anywhere in Propel.
      *
-     * @param  string $data A String.
+     * @param string $data A String.
      *
      * @return string A String with data processed.
      */

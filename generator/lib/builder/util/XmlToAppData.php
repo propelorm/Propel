@@ -84,7 +84,7 @@ class XmlToAppData
      * Parses a XML input file and returns a newly created and
      * populated AppData structure.
      *
-     * @param  string  $xmlFile The input file to parse.
+     * @param string $xmlFile The input file to parse.
      *
      * @return AppData populated by <code>xmlFile</code>.
      */
@@ -102,8 +102,8 @@ class XmlToAppData
      * Parses a XML input string and returns a newly created and
      * populated AppData structure.
      *
-     * @param  string    $xmlString The input string to parse.
-     * @param  string    $xmlFile   The input file name.
+     * @param string $xmlString The input string to parse.
+     * @param string $xmlFile   The input file name.
      *
      * @return AppData   populated by <code>xmlFile</code>.
      * @throws Exception

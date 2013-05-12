@@ -50,7 +50,7 @@ class PropelDataSQLTask extends AbstractPropelDataModelTask
     /**
      * Set the file that maps between SQL files and databases.
      *
-     * @param  PhingFile $sqldbmap the sql -> db map.
+     * @param PhingFile $sqldbmap the sql -> db map.
      *
      * @return void
      */
@@ -72,7 +72,7 @@ class PropelDataSQLTask extends AbstractPropelDataModelTask
     /**
      * Set the file that maps between data XML files and databases.
      *
-     * @param  PhingFile $datadbmap the db map
+     * @param PhingFile $datadbmap the db map
      *
      * @return void
      */

@@ -115,7 +115,6 @@ CREATE TABLE `module`
 SET FOREIGN_KEY_CHECKS = 1;
 ";
 
-
         $platform = new MysqlPlatform();
         $platform->setDefaultTableEngine('InnoDb');
         $updatedBuilder = new PropelQuickBuilder();

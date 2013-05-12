@@ -80,7 +80,7 @@ abstract class BaseObject
     /**
      * Has specified column been modified?
      *
-     * @param  string  $col column fully qualified name (BasePeer::TYPE_COLNAME), e.g. Book::AUTHOR_ID
+     * @param string $col column fully qualified name (BasePeer::TYPE_COLNAME), e.g. Book::AUTHOR_ID
      *
      * @return boolean True if $col has been modified.
      */
@@ -135,7 +135,7 @@ abstract class BaseObject
     /**
      * Specify whether this object has been deleted.
      *
-     * @param  boolean $b The deleted state of this object.
+     * @param boolean $b The deleted state of this object.
      *
      * @return void
      */
@@ -147,7 +147,7 @@ abstract class BaseObject
     /**
      * Code to be run before persisting the object
      *
-     * @param  PropelPDO $con
+     * @param PropelPDO $con
      *
      * @return boolean
      */
@@ -168,7 +168,7 @@ abstract class BaseObject
     /**
      * Code to be run before inserting to database
      *
-     * @param  PropelPDO $con
+     * @param PropelPDO $con
      *
      * @return boolean
      */
@@ -189,7 +189,7 @@ abstract class BaseObject
     /**
      * Code to be run before updating the object in database
      *
-     * @param  PropelPDO $con
+     * @param PropelPDO $con
      *
      * @return boolean
      */
@@ -210,7 +210,7 @@ abstract class BaseObject
     /**
      * Code to be run before deleting the object in database
      *
-     * @param  PropelPDO $con
+     * @param PropelPDO $con
      *
      * @return boolean
      */
@@ -240,7 +240,7 @@ abstract class BaseObject
     /**
      * Sets the modified state for the object to be false.
      *
-     * @param  string $col If supplied, only the specified column is reset.
+     * @param string $col If supplied, only the specified column is reset.
      *
      * @return void
      */
@@ -351,8 +351,8 @@ abstract class BaseObject
     /**
      * Logs a message using Propel::log().
      *
-     * @param  string  $msg
-     * @param  int     $priority One of the Propel::LOG_* logging levels
+     * @param string $msg
+     * @param int    $priority One of the Propel::LOG_* logging levels
      *
      * @return boolean
      */
@@ -391,10 +391,10 @@ abstract class BaseObject
      *  => {"Id":9012,"Title":"Don Juan","ISBN":"0140422161","Price":12.99,"PublisherId":1234,"AuthorId":5678}');
      * </code>
      *
-     * @param  mixed   $parser                 A PropelParser instance, or a format name ('XML', 'YAML', 'JSON', 'CSV')
-     * @param  boolean $includeLazyLoadColumns (optional) Whether to include lazy load(ed) columns. Defaults to TRUE.
+     * @param mixed   $parser                 A PropelParser instance, or a format name ('XML', 'YAML', 'JSON', 'CSV')
+     * @param boolean $includeLazyLoadColumns (optional) Whether to include lazy load(ed) columns. Defaults to TRUE.
      *
-     * @return string  The exported data
+     * @return string The exported data
      */
     public function exportTo($parser, $includeLazyLoadColumns = true)
     {

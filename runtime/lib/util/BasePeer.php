@@ -97,10 +97,10 @@ class BasePeer
      * Method to perform deletes based on values and keys in a
      * Criteria.
      *
-     * @param  Criteria  $criteria The criteria to use.
-     * @param  PropelPDO $con      A PropelPDO connection object.
+     * @param Criteria  $criteria The criteria to use.
+     * @param PropelPDO $con      A PropelPDO connection object.
      *
-     * @return int       The number of rows affected by last statement execution.  For most
+     * @return int The number of rows affected by last statement execution.  For most
      *                   uses there is only one delete statement executed, so this number
      *                   will correspond to the number of rows affected by the call to this
      *                   method.  Note that the return value does require that this information
@@ -166,11 +166,11 @@ class BasePeer
      * }
      * </code>
      *
-     * @param  string    $tableName    The name of the table to empty.
-     * @param  PropelPDO $con          A PropelPDO connection object.
-     * @param  string    $databaseName the name of the database.
+     * @param string    $tableName    The name of the table to empty.
+     * @param PropelPDO $con          A PropelPDO connection object.
+     * @param string    $databaseName the name of the database.
      *
-     * @return int       The number of rows affected by the statement.  Note
+     * @return int The number of rows affected by the statement.  Note
      *                   that the return value does require that this information
      *                   is returned (supported) by the Propel db driver.
      * @throws PropelException - wrapping SQLException caught from statement execution.
@@ -210,10 +210,10 @@ class BasePeer
      * If no primary key is defined for the table the values will be
      * inserted as specified in Criteria and null will be returned.
      *
-     * @param  Criteria  $criteria Object containing values to insert.
-     * @param  PropelPDO $con      A PropelPDO connection.
+     * @param Criteria  $criteria Object containing values to insert.
+     * @param PropelPDO $con      A PropelPDO connection.
      *
-     * @return mixed     The primary key for the new row if (and only if!) the primary key
+     * @return mixed The primary key for the new row if (and only if!) the primary key
      *                   is auto-generated.  Otherwise will return <code>null</code>.
      * @throws PropelException
      */
@@ -319,11 +319,11 @@ class BasePeer
      * WHERE some_column = some value AND could_have_another_column =
      * another value AND so on.
      *
-     * @param   $selectCriteria A Criteria object containing values used in where clause.
-     * @param   $updateValues A Criteria object containing values used in set clause.
-     * @param  PropelPDO $con The PropelPDO connection object to use.
+     * @param           $selectCriteria A Criteria object containing values used in where clause.
+     * @param           $updateValues   A Criteria object containing values used in set clause.
+     * @param PropelPDO $con            The PropelPDO connection object to use.
      *
-     * @return int       The number of rows affected by last update statement.  For most
+     * @return int The number of rows affected by last update statement.  For most
      *                   uses there is only one update statement executed, so this number
      *                   will correspond to the number of rows affected by the call to this
      *                   method.  Note that the return value does require that this information
@@ -457,8 +457,8 @@ class BasePeer
     /**
      * Executes query build by createSelectSql() and returns the resultset statement.
      *
-     * @param  Criteria        $criteria A Criteria.
-     * @param  PropelPDO       $con      A PropelPDO connection to use.
+     * @param Criteria  $criteria A Criteria.
+     * @param PropelPDO $con      A PropelPDO connection to use.
      *
      * @return PDOStatement    The resultset.
      * @throws PropelException
@@ -499,8 +499,8 @@ class BasePeer
      * Executes a COUNT query using either a simple SQL rewrite or, for more complex queries, a
      * sub-select of the SQL created by createSelectSql() and returns the statement.
      *
-     * @param  Criteria        $criteria A Criteria.
-     * @param  PropelPDO       $con      A PropelPDO connection to use.
+     * @param Criteria  $criteria A Criteria.
+     * @param PropelPDO $con      A PropelPDO connection to use.
      *
      * @return PDOStatement    The resultset statement.
      * @throws PropelException
@@ -593,9 +593,9 @@ class BasePeer
      * Helper method which returns the primary key contained
      * in the given Criteria object.
      *
-     * @param  Criteria  $criteria A Criteria.
+     * @param Criteria $criteria A Criteria.
      *
-     * @return ColumnMap If the Criteria object contains a primary key, or null if it doesn't.
+     * @return ColumnMap       If the Criteria object contains a primary key, or null if it doesn't.
      * @throws PropelException
      */
     private static function getPrimaryKey(Criteria $criteria)
@@ -651,7 +651,7 @@ class BasePeer
      * is to let the PDO layer handle all escaping & value formatting.
      *
      * @param Criteria $criteria Criteria for the SELECT query.
-     * @param      array &$params Parameters that are to be replaced in prepared statement.
+     * @param array    &$params  Parameters that are to be replaced in prepared statement.
      *
      * @return string
      * @throws PropelException Trouble creating the query string.
@@ -857,10 +857,10 @@ class BasePeer
      * Builds a params array, like the kind populated by Criterion::appendPsTo().
      * This is useful for building an array even when it is not using the appendPsTo() method.
      *
-     * @param  array    $columns
-     * @param  Criteria $values
+     * @param array    $columns
+     * @param Criteria $values
      *
-     * @return array    params array('column' => ..., 'table' => ..., 'value' => ...)
+     * @return array params array('column' => ..., 'table' => ..., 'value' => ...)
      */
     private static function buildParams($columns, Criteria $values)
     {
@@ -879,7 +879,7 @@ class BasePeer
      * This function searches for the given validator $name under propel/validator/$name.php,
      * imports and caches it.
      *
-     * @param  string         $classname The dot-path name of class (e.g. myapp.propel.MyValidator)
+     * @param string $classname The dot-path name of class (e.g. myapp.propel.MyValidator)
      *
      * @return Validator|null object or null if not able to instantiate validator class (and error will be logged in this case)
      */

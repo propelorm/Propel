@@ -80,7 +80,7 @@ interface PropelPlatformInterface
     /**
      * Returns the db specific domain for a propelType.
      *
-     * @param  string $propelType the Propel type name.
+     * @param string $propelType the Propel type name.
      *
      * @return Domain The db specific domain.
      */
@@ -137,7 +137,7 @@ interface PropelPlatformInterface
     /**
      * Returns if the RDBMS-specific SQL type has a size attribute.
      *
-     * @param  string  $sqlType the SQL type
+     * @param string $sqlType the SQL type
      *
      * @return boolean True if the type has a size attribute
      */
@@ -146,7 +146,7 @@ interface PropelPlatformInterface
     /**
      * Returns if the RDBMS-specific SQL type has a scale attribute.
      *
-     * @param  string  $sqlType the SQL type
+     * @param string $sqlType the SQL type
      *
      * @return boolean True if the type has a scale attribute
      */
@@ -155,7 +155,7 @@ interface PropelPlatformInterface
     /**
      * Quote and escape needed characters in the string for underlying RDBMS.
      *
-     * @param  string $text
+     * @param string $text
      *
      * @return string
      */
@@ -164,7 +164,7 @@ interface PropelPlatformInterface
     /**
      * Quotes identifiers used in database SQL.
      *
-     * @param  string $text
+     * @param string $text
      *
      * @return string Quoted identifier.
      */
@@ -214,7 +214,7 @@ interface PropelPlatformInterface
      * This function is used to set default column values when building
      * SQL.
      *
-     * @param  mixed $tf A boolean or string representation of boolean ('y', 'true').
+     * @param mixed $tf A boolean or string representation of boolean ('y', 'true').
      *
      * @return mixed
      */

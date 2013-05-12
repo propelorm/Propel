@@ -37,8 +37,8 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
     /**
      * Adds the lazy loader method.
      *
-     * @param      string &$script The script will be modified in this method.
-     * @param Column $col The current column.
+     * @param string &$script The script will be modified in this method.
+     * @param Column $col     The current column.
      *
      * @see        parent::addColumnAccessors()
      */
@@ -53,8 +53,8 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
     /**
      * Adds the comment for the lazy loader method
      *
-     * @param      string &$script The script will be modified in this method.
-     * @param Column $col The current column.
+     * @param string &$script The script will be modified in this method.
+     * @param Column $col     The current column.
      *
      * @see        addLazyLoader()
      **/
@@ -79,8 +79,8 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
     /**
      * Adds the function declaration for the lazy loader method
      *
-     * @param      string &$script The script will be modified in this method.
-     * @param Column $col The current column.
+     * @param string &$script The script will be modified in this method.
+     * @param Column $col     The current column.
      *
      * @see        addLazyLoader()
      **/
@@ -95,8 +95,8 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
     /**
      * Adds the function body for the lazy loader method
      *
-     * @param      string &$script The script will be modified in this method.
-     * @param Column $col The current column.
+     * @param string &$script The script will be modified in this method.
+     * @param Column $col     The current column.
      *
      * @see        addLazyLoader()
      **/
@@ -147,8 +147,8 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
     /**
      * Adds the function close for the lazy loader
      *
-     * @param      string &$script The script will be modified in this method.
-     * @param Column $col The current column.
+     * @param string &$script The script will be modified in this method.
+     * @param Column $col     The current column.
      *
      * @see        addLazyLoader()
      **/
@@ -161,7 +161,7 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
     /**
      * Adds the buildPkeyCriteria method
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      **/
     protected function addBuildPkeyCriteria(&$script)
     {
@@ -174,7 +174,7 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
     /**
      * Adds the comment for the buildPkeyCriteria method
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      *
      * @see        addBuildPkeyCriteria()
      **/
@@ -194,7 +194,7 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
     /**
      * Adds the function declaration for the buildPkeyCriteria method
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      *
      * @see        addBuildPkeyCriteria()
      **/
@@ -208,7 +208,7 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
     /**
      * Adds the function body for the buildPkeyCriteria method
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      *
      * @see        addBuildPkeyCriteria()
      **/
@@ -228,7 +228,7 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
     /**
      * Adds the function close for the buildPkeyCriteria method
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      *
      * @see        addBuildPkeyCriteria()
      **/
@@ -244,7 +244,7 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
     /**
      * Adds the buildCriteria method
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      **/
     protected function addBuildCriteria(&$script)
     {
@@ -257,7 +257,7 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
     /**
      * Adds comment for the buildCriteria method
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      *
      * @see        addBuildCriteria()
      **/
@@ -274,7 +274,7 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
     /**
      * Adds the function declaration of the buildCriteria method
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      *
      * @see        addBuildCriteria()
      **/
@@ -288,7 +288,7 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
     /**
      * Adds the function body of the buildCriteria method
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      *
      * @see        addBuildCriteria()
      **/
@@ -307,7 +307,7 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
     /**
      * Adds the function close of the buildCriteria method
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      *
      * @see        addBuildCriteria()
      **/
@@ -323,7 +323,7 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
     /**
      * Adds the function body for the delete function
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      *
      * @see        addDelete()
      **/
@@ -379,7 +379,7 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
     /**
      * Adds a reload() method to re-fetch the data for this object from the database.
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      */
     protected function addReload(&$script)
     {
@@ -466,7 +466,7 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
      * Gets variable name for the Criteria which was used to fetch the objects which
      * referencing current table by specified foreign key.
      *
-     * @param  ForeignKey $fk
+     * @param ForeignKey $fk
      *
      * @return string
      */
@@ -478,7 +478,7 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
     /**
      * Adds the accessor (getter) method for getting an fkey related object.
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      */
     protected function addFKAccessor(&$script, ForeignKey $fk)
     {
@@ -587,7 +587,7 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
     /**
      * Adds the method that fetches fkey-related (referencing) objects but also joins in data from another table.
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      *
      * @throws EngineException
      */
@@ -700,7 +700,7 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
     /**
      * Adds the method that initializes the referrer fkey collection.
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      */
     protected function addRefFKInit(&$script, ForeignKey $refFK)
     {
@@ -727,7 +727,7 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
     /**
      * Adds the method that adds an object into the referrer fkey collection.
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      */
     protected function addRefFKAdd(&$script, ForeignKey $refFK)
     {
@@ -763,7 +763,7 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
     /**
      * Adds the method that returns the size of the referrer fkey collection.
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      */
     protected function addRefFKCount(&$script, ForeignKey $refFK)
     {
@@ -862,7 +862,7 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
     /**
      * Adds the method that returns the referrer fkey collection.
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      */
     protected function addRefFKGet(&$script, ForeignKey $refFK)
     {
@@ -960,7 +960,7 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
      * Adds the method that gets a one-to-one related referrer fkey.
      * This is for one-to-one relationship special case.
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      */
     protected function addPKRefFKGet(&$script, ForeignKey $refFK)
     {

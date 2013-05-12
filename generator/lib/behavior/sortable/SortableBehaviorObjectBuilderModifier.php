@@ -123,8 +123,7 @@ class SortableBehaviorObjectBuilderModifier
 
             $script = "// if scope has changed and rank was not modified (if yes, assuming superior action)
 // insert object to the end of new scope and cleanup old one
-if (($condition) && !\$this->isColumnModified({$this->peerClassname}::RANK_COL)) {
-    {$this->peerClassname}::shiftRank(-1, \$this->{$this->getColumnGetter()}() + 1, null, \$this->oldScope, \$con);
+if (($condition) && !\$this->isColumnModified({$this->peerClassname}::RANK_COL)) { {$this->peerClassname}::shiftRank(-1, \$this->{$this->getColumnGetter()}() + 1, null, \$this->oldScope, \$con);
     \$this->insertAtBottom(\$con);
 }
 ";
@@ -403,6 +402,7 @@ public function getNext(PropelPDO \$con = null)
         }
 
         $script .= "
+
     return \$query->findOne(\$con);
 }
 ";
@@ -445,6 +445,7 @@ public function getPrevious(PropelPDO \$con = null)
         }
 
         $script .= "
+
     return \$query->findOne(\$con);
 }
 ";

@@ -851,7 +851,7 @@ class Propel
      * classname of a validator in the schema.xml.  This method will attempt to include that
      * class via autoload and then relative to a location on the include_path.
      *
-     * @param  string $class dot-path to clas (e.g. path.to.my.ClassName).
+     * @param string $class dot-path to clas (e.g. path.to.my.ClassName).
      *
      * @return string unqualified classname
      *

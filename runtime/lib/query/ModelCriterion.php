@@ -65,8 +65,8 @@ class ModelCriterion extends Criterion
      * first, and that is not possible through inheritance ; that's why the parent
      * code is duplicated here.
      *
-     * @param      string &$sb The string that will receive the Prepared Statement
-     * @param array $params A list to which Prepared Statement parameters will be appended
+     * @param string &$sb    The string that will receive the Prepared Statement
+     * @param array  $params A list to which Prepared Statement parameters will be appended
      */
     protected function dispatchPsHandling(&$sb, array &$params)
     {
@@ -117,8 +117,8 @@ class ModelCriterion extends Criterion
      * Appends a Prepared Statement representation of the ModelCriterion onto the buffer
      * For regular model clauses, e.g. 'book.TITLE = ?'
      *
-     * @param      string &$sb The string that will receive the Prepared Statement
-     * @param array $params A list to which Prepared Statement parameters will be appended
+     * @param string &$sb    The string that will receive the Prepared Statement
+     * @param array  $params A list to which Prepared Statement parameters will be appended
      */
     public function appendModelClauseToPs(&$sb, array &$params)
     {
@@ -135,8 +135,8 @@ class ModelCriterion extends Criterion
      * For LIKE model clauses, e.g. 'book.TITLE LIKE ?'
      * Handles case insensitivity for VARCHAR columns
      *
-     * @param      string &$sb The string that will receive the Prepared Statement
-     * @param array $params A list to which Prepared Statement parameters will be appended
+     * @param string &$sb    The string that will receive the Prepared Statement
+     * @param array  $params A list to which Prepared Statement parameters will be appended
      */
     public function appendModelClauseLikeToPs(&$sb, array &$params)
     {
@@ -152,8 +152,8 @@ class ModelCriterion extends Criterion
      * Appends a Prepared Statement representation of the ModelCriterion onto the buffer
      * For ternary model clauses, e.G 'book.ID BETWEEN ? AND ?'
      *
-     * @param      string &$sb The string that will receive the Prepared Statement
-     * @param array $params A list to which Prepared Statement parameters will be appended
+     * @param string &$sb    The string that will receive the Prepared Statement
+     * @param array  $params A list to which Prepared Statement parameters will be appended
      *
      * @throws PropelException
      */
@@ -177,8 +177,8 @@ class ModelCriterion extends Criterion
      * Appends a Prepared Statement representation of the ModelCriterion onto the buffer
      * For IN or NOT IN model clauses, e.g. 'book.TITLE NOT IN ?'
      *
-     * @param      string &$sb The string that will receive the Prepared Statement
-     * @param array $params A list to which Prepared Statement parameters will be appended
+     * @param string &$sb    The string that will receive the Prepared Statement
+     * @param array  $params A list to which Prepared Statement parameters will be appended
      */
     public function appendModelClauseArrayToPs(&$sb, array &$params)
     {
@@ -202,8 +202,8 @@ class ModelCriterion extends Criterion
      * Appends a Prepared Statement representation of the Criterion onto the buffer
      * For custom expressions with a typed binding, e.g. 'foobar = ?'
      *
-     * @param      string &$sb The string that will receive the Prepared Statement
-     * @param array $params A list to which Prepared Statement parameters will be appended
+     * @param string &$sb    The string that will receive the Prepared Statement
+     * @param array  $params A list to which Prepared Statement parameters will be appended
      *
      * @throws PropelException
      */

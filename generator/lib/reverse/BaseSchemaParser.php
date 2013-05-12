@@ -158,7 +158,7 @@ abstract class BaseSchemaParser implements SchemaParser
     /**
      * Gets a specific propel (renamed) property from the build.
      *
-     * @param  string $name
+     * @param string $name
      *
      * @return mixed
      */
@@ -181,7 +181,7 @@ abstract class BaseSchemaParser implements SchemaParser
     /**
      * Gets a mapped Propel type for specified native type.
      *
-     * @param  string $nativeType
+     * @param string $nativeType
      *
      * @return string The mapped Propel type.
      */
@@ -200,7 +200,7 @@ abstract class BaseSchemaParser implements SchemaParser
     /**
      * Give a best guess at the native type.
      *
-     * @param  string $propelType
+     * @param string $propelType
      *
      * @return string The native SQL type that best matches the specified Propel type.
      */

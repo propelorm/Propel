@@ -45,7 +45,7 @@ class PHP5NodePeerBuilder extends PeerBuilder
     /**
      * Adds the include() statements for files that this class depends on or utilizes.
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      */
     protected function addIncludes(&$script)
     {
@@ -54,7 +54,7 @@ class PHP5NodePeerBuilder extends PeerBuilder
     /**
      * Adds class phpdoc comment and opening of class.
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      */
     protected function addClassOpen(&$script)
     {
@@ -118,7 +118,7 @@ abstract class " . $this->getClassname() . " {
     /**
      * Closes class.
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      */
     protected function addClassClose(&$script)
     {
@@ -371,7 +371,7 @@ abstract class " . $this->getClassname() . " {
      * @param      string Node path to retrieve.
      * @param      boolean True if descendants should also be retrieved.
      * @param      PropelPDO Connection to use.
-     * @return   " . $this->getStubNodeBuilder()->getClassname() . "
+     * @return " . $this->getStubNodeBuilder()->getClassname() . "
      */
     public static function retrieveRootNode(\$descendants = false, PropelPDO \$con = null)
     {

@@ -82,7 +82,7 @@ class PropelDataDumpTask extends AbstractPropelDataModelTask
     /**
      * Set the file that maps between data XML files and databases.
      *
-     * @param  PhingFile $datadbmap the db map
+     * @param PhingFile $datadbmap the db map
      *
      * @return void
      */
@@ -309,8 +309,8 @@ class PropelDataDumpTask extends AbstractPropelDataModelTask
     /**
      * Gets PDOStatement of query to fetch all data from a table.
      *
-     * @param  string                  $tableName
-     * @param  PropelPlatformInterface $platform
+     * @param string                  $tableName
+     * @param PropelPlatformInterface $platform
      *
      * @return PDOStatement
      */
@@ -322,7 +322,7 @@ class PropelDataDumpTask extends AbstractPropelDataModelTask
     /**
      * Creates a DOM document containing data for specified database.
      *
-     * @param  Database    $database
+     * @param Database $database
      *
      * @return DOMDocument
      */

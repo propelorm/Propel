@@ -116,7 +116,7 @@ class Column extends XMLElement
     /**
      * Return a comma delimited string listing the specified columns.
      *
-     * @param Column[]|string[]   $columns Either a list of <code>Column</code> objects, or a list of <code>string</code> with column names.
+     * @param Column[]|string[] $columns Either a list of <code>Column</code> objects, or a list of <code>string</code> with column names.
      *
      * @deprecated Use the Platform::getColumnListDDL() method instead
      *
@@ -420,7 +420,7 @@ class Column extends XMLElement
     /**
      * Set the visibility of the accessor methods for this column / attribute
      *
-     * @param    $newVisibility string
+     * @param   $newVisibility string
      */
     public function setAccessorVisibility($newVisibility)
     {
@@ -448,7 +448,7 @@ class Column extends XMLElement
     /**
      * Set the visibility of the mutator methods for this column / attribute
      *
-     * @param    $newVisibility string
+     * @param   $newVisibility string
      */
     public function setMutatorVisibility($newVisibility)
     {
@@ -495,7 +495,7 @@ class Column extends XMLElement
     /**
      * Set the Peer constant name that will identify this column.
      *
-     * @param    $name string
+     * @param   $name string
      */
     public function setPeerName($name)
     {

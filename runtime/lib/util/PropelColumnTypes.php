@@ -84,7 +84,7 @@ class PropelColumnTypes
     /**
      * Returns the PDO type (PDO::PARAM_* constant) value for the Propel type provided.
      *
-     * @param  string $propelType
+     * @param string $propelType
      *
      * @return int
      */

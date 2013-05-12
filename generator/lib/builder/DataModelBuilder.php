@@ -423,10 +423,10 @@ abstract class DataModelBuilder
     /**
      * Gets a new data model builder class for specified table and classname.
      *
-     * @param      Table $table
-     * @param      string $classname The class of builder
+     * @param Table  $table
+     * @param string $classname The class of builder
      *
-     * @return     DataModelBuilder
+     * @return DataModelBuilder
      */
     public function getNewBuilder(Table $table, $classname)
     {
@@ -442,7 +442,7 @@ abstract class DataModelBuilder
      * This is used very frequently from the peer and object builders to get
      * a peer builder for a RELATED table.
      *
-     * @param  Table       $table
+     * @param Table $table
      *
      * @return PeerBuilder
      */
@@ -457,7 +457,7 @@ abstract class DataModelBuilder
      * This is used from the peer and object builders to get
      * a peer builder for a RELATED table.
      *
-     * @param  Table       $table
+     * @param Table $table
      *
      * @return PeerBuilder
      */
@@ -472,7 +472,7 @@ abstract class DataModelBuilder
      * This is used very frequently from the peer and object builders to get
      * an object builder for a RELATED table.
      *
-     * @param  Table         $table
+     * @param Table $table
      *
      * @return ObjectBuilder
      */
@@ -487,7 +487,7 @@ abstract class DataModelBuilder
      * This is used from the query builders to get
      * an object builder for a RELATED table.
      *
-     * @param  Table         $table
+     * @param Table $table
      *
      * @return ObjectBuilder
      */
@@ -502,7 +502,7 @@ abstract class DataModelBuilder
      * This is used from the query builders to get
      * a query builder for a RELATED table.
      *
-     * @param  Table        $table
+     * @param Table $table
      *
      * @return QueryBuilder
      */
@@ -517,7 +517,7 @@ abstract class DataModelBuilder
      * This is used from the query builders to get
      * a query builder for a RELATED table.
      *
-     * @param  Table        $table
+     * @param Table $table
      *
      * @return QueryBuilder
      */
@@ -565,7 +565,7 @@ abstract class DataModelBuilder
     /**
      * Get a specific [name transformed] build property.
      *
-     * @param  string $name
+     * @param string $name
      *
      * @return string
      */
@@ -674,7 +674,7 @@ abstract class DataModelBuilder
      * method directly.  This method is used by both DataSQLBuilder and DDLBuilder, and potentially
      * in the OM builders also, which is why it is defined in this class.
      *
-     * @param  string $text The text to quote.
+     * @param string $text The text to quote.
      *
      * @return string Quoted text.
      */

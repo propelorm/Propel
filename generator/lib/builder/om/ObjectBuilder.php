@@ -40,7 +40,7 @@ abstract class ObjectBuilder extends OMBuilder
      * Hint: Override this method in your subclass if you want to reorganize or
      * drastically change the contents of the generated peer class.
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      */
     abstract protected function addClassBody(&$script);
 
@@ -49,7 +49,7 @@ abstract class ObjectBuilder extends OMBuilder
      * This is here because it is probably generic enough to apply to templates being generated
      * in different languages (e.g. PHP4 and PHP5).
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      */
     protected function addColumnAccessorMethods(&$script)
     {
@@ -84,7 +84,7 @@ abstract class ObjectBuilder extends OMBuilder
      * This is here because it is probably generic enough to apply to templates being generated
      * in different langauges (e.g. PHP4 and PHP5).
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      */
     protected function addColumnMutatorMethods(&$script)
     {
@@ -191,7 +191,7 @@ abstract class ObjectBuilder extends OMBuilder
     /**
      * Checks whether any registered behavior on that table has a modifier for a hook
      *
-     * @param  string  $hookName The name of the hook as called from one of this class methods, e.g. "preSave"
+     * @param string $hookName The name of the hook as called from one of this class methods, e.g. "preSave"
      *
      * @return boolean
      */
@@ -204,7 +204,7 @@ abstract class ObjectBuilder extends OMBuilder
      * Checks whether any registered behavior on that table has a modifier for a hook
      *
      * @param string $hookName The name of the hook as called from one of this class methods, e.g. "preSave"
-     * @param string &$script The script will be modified in this method.
+     * @param string &$script  The script will be modified in this method.
      */
     public function applyBehaviorModifier($hookName, &$script, $tab = "		")
     {

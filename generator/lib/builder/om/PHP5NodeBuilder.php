@@ -45,7 +45,7 @@ class PHP5NodeBuilder extends ObjectBuilder
     /**
      * Adds the include() statements for files that this class depends on or utilizes.
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      */
     protected function addIncludes(&$script)
     {
@@ -54,7 +54,7 @@ class PHP5NodeBuilder extends ObjectBuilder
     /**
      * Adds class phpdoc comment and opening of class.
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      */
     protected function addClassOpen(&$script)
     {
@@ -140,7 +140,7 @@ abstract class " . $this->getClassname() . " implements IteratorAggregate {
     /**
      * Closes class.
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      */
     protected function addClassClose(&$script)
     {
@@ -152,7 +152,7 @@ abstract class " . $this->getClassname() . " implements IteratorAggregate {
     /**
      * Adds class attributes.
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      */
     protected function addAttributes(&$script)
     {
@@ -179,7 +179,7 @@ abstract class " . $this->getClassname() . " implements IteratorAggregate {
     /**
      * Adds the constructor.
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      */
     protected function addConstructor(&$script)
     {
@@ -187,7 +187,7 @@ abstract class " . $this->getClassname() . " implements IteratorAggregate {
     /**
      * Constructor.
      *
-     * @param      " . $this->getStubObjectBuilder()->getClassname() . " \$obj Object wrapped by this node.
+     * @param " . $this->getStubObjectBuilder()->getClassname() . " \$obj Object wrapped by this node.
      */
     public function __construct(\$obj = null)
     {
@@ -281,7 +281,7 @@ abstract class " . $this->getClassname() . " implements IteratorAggregate {
         $script .= "
     /**
      * Returns the object wrapped by this class.
-     * @return   " . $this->getStubObjectBuilder()->getClassname() . "
+     * @return " . $this->getStubObjectBuilder()->getClassname() . "
      */
     public function getNodeObj()
     {
@@ -344,7 +344,7 @@ abstract class " . $this->getClassname() . " implements IteratorAggregate {
      * Returns true if specified node is a child of this node. If recurse is
      * true, checks if specified node is a descendant of this node.
      *
-     * @param      " . $this->getStubNodeBuilder()->getClassname() . " \$node Node to look for.
+     * @param " . $this->getStubNodeBuilder()->getClassname() . " \$node Node to look for.
      * @param      boolean \$strict  True if strict comparison should be used.
      * @param      boolean \$recurse True if all descendants should be checked.
      * @return boolean
@@ -374,7 +374,7 @@ abstract class " . $this->getClassname() . " implements IteratorAggregate {
      * @param      int       \$i       One-based child node index.
      * @param      boolean   \$querydb True if child should be retrieved from database.
      * @param      PropelPDO \$con     Connection to use if retrieving from database.
-     * @return   " . $this->getStubNodeBuilder()->getClassname() . "
+     * @return " . $this->getStubNodeBuilder()->getClassname() . "
      */
     public function getChildNodeAt(\$i, \$querydb = false, PropelPDO \$con = null)
     {
@@ -403,7 +403,7 @@ abstract class " . $this->getClassname() . " implements IteratorAggregate {
      *
      * @param      boolean   \$querydb True if child should be retrieved from database.
      * @param      PropelPDO \$con     Connection to use if retrieving from database.
-     * @return   " . $this->getStubNodeBuilder()->getClassname() . "
+     * @return " . $this->getStubNodeBuilder()->getClassname() . "
      */
     public function getFirstChildNode(\$querydb = false, PropelPDO \$con = null)
     {
@@ -477,7 +477,7 @@ abstract class " . $this->getClassname() . " implements IteratorAggregate {
      * @param      boolean   \$prev    True if previous sibling should be returned.
      * @param      boolean   \$querydb True if sibling should be retrieved from database.
      * @param      PropelPDO \$con     Connection to use if retrieving from database.
-     * @return   " . $this->getStubNodeBuilder()->getClassname() . "
+     * @return " . $this->getStubNodeBuilder()->getClassname() . "
      */
     public function getSiblingNode(\$prev = false, \$querydb = false, PropelPDO \$con = null)
     {
@@ -511,7 +511,7 @@ abstract class " . $this->getClassname() . " implements IteratorAggregate {
      *
      * @param      boolean   \$querydb True if parent should be retrieved from database.
      * @param      PropelPDO \$con     Connection to use if retrieving from database.
-     * @return   " . $this->getStubNodeBuilder()->getClassname() . "
+     * @return " . $this->getStubNodeBuilder()->getClassname() . "
      */
     public function getParentNode(\$querydb = true, PropelPDO \$con = null)
     {
@@ -624,8 +624,8 @@ abstract class " . $this->getClassname() . " implements IteratorAggregate {
      * \$beforeNode. If \$beforeNode is not specified the node will be appended to
      * the end of the child nodes.
      *
-     * @param      " . $this->getStubNodeBuilder()->getClassname() . " \$node       Node to add.
-     * @param      " . $this->getStubNodeBuilder()->getClassname() . " \$beforeNode Node to insert before.
+     * @param " . $this->getStubNodeBuilder()->getClassname() . " \$node       Node to add.
+     * @param " . $this->getStubNodeBuilder()->getClassname() . " \$beforeNode Node to insert before.
      * @param      PropelPDO \$con Connection to use.
      */
     public function addChildNode(\$node, \$beforeNode = null, PropelPDO \$con = null)
@@ -704,7 +704,7 @@ abstract class " . $this->getClassname() . " implements IteratorAggregate {
     /**
      * Moves the specified child node in the specified direction.
      *
-     * @param      " . $this->getStubNodeBuilder()->getClassname() . " \$node      Node to move.
+     * @param " . $this->getStubNodeBuilder()->getClassname() . " \$node      Node to move.
      * @param      int       \$direction Number of spaces to move among siblings (may be negative).
      * @param      PropelPDO \$con       Connection to use.
      * @throws PropelException
@@ -898,7 +898,7 @@ abstract class " . $this->getClassname() . " implements IteratorAggregate {
     /**
      * This method is used internally when deleting nodes. It is used to break
      * the link to this between this node and the specified child.
-     * @param      " . $this->getStubNodeBuilder()->getClassname() . " \$node Child node to detach.
+     * @param  " .             $this->getStubNodeBuilder()->getClassname() . " \$node Child node to detach.
      * @return void
      * @throws PropelException
      */

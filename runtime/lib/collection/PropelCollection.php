@@ -207,7 +207,7 @@ class PropelCollection extends ArrayObject implements Serializable
      * Get an element from its key
      * Alias for ArrayObject::offsetGet()
      *
-     * @param  mixed $key
+     * @param mixed $key
      *
      * @return mixed The element
      *
@@ -258,7 +258,7 @@ class PropelCollection extends ArrayObject implements Serializable
     /**
      * Prepend one or more elements to the beginning of the collection
      *
-     * @param  mixed   $value the element to prepend
+     * @param mixed $value the element to prepend
      *
      * @return integer The number of new elements in the array
      */
@@ -289,7 +289,7 @@ class PropelCollection extends ArrayObject implements Serializable
      * Removes a specified collection element
      * Alias for ArrayObject::offsetUnset()
      *
-     * @param  mixed $key
+     * @param mixed $key
      *
      * @return mixed The removed element
      *
@@ -317,7 +317,7 @@ class PropelCollection extends ArrayObject implements Serializable
     /**
      * Whether or not this collection contains a specified element
      *
-     * @param  mixed   $element
+     * @param mixed $element
      *
      * @return boolean
      */
@@ -329,7 +329,7 @@ class PropelCollection extends ArrayObject implements Serializable
     /**
      * Search an element in the collection
      *
-     * @param  mixed $element
+     * @param mixed $element
      *
      * @return mixed Returns the key for the element if it is found in the collection, FALSE otherwise
      */
@@ -342,7 +342,7 @@ class PropelCollection extends ArrayObject implements Serializable
      * Returns an array of objects present in the collection that
      * are not presents in the given collection.
      *
-     * @param  PropelCollection $collection A Propel collection.
+     * @param PropelCollection $collection A Propel collection.
      *
      * @return PropelCollection An array of Propel objects from the collection that are not presents in the given collection.
      */
@@ -483,7 +483,7 @@ class PropelCollection extends ArrayObject implements Serializable
     /**
      * Get a connection object for the database containing the elements of the collection
      *
-     * @param  string    $type The connection type (Propel::CONNECTION_READ by default; can be Propel::connection_WRITE)
+     * @param string $type The connection type (Propel::CONNECTION_READ by default; can be Propel::connection_WRITE)
      *
      * @return PropelPDO A PropelPDO connection object
      */

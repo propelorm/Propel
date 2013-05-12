@@ -121,6 +121,7 @@ const SCOPE_COL = $col;
 ";
 
         }
+
         return $script;
     }
 

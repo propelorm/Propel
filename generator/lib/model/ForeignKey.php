@@ -92,11 +92,11 @@ class ForeignKey extends XMLElement
         $this->defaultJoin = $this->getAttribute('defaultJoin');
 
         $onUpdate = $this->getAttribute("onUpdate");
-        if($onUpdate === null) {
+        if ($onUpdate === null) {
           $onUpdate = $this->getTable()->getDatabase()->getPlatform()->getDefaultFKOnUpdateBehavior();
         }
         $onDelete = $this->getAttribute("onDelete");
-        if($onDelete === null) {
+        if ($onDelete === null) {
           $onDelete = $this->getTable()->getDatabase()->getPlatform()->getDefaultFKOnUpdateBehavior();
         }
 
@@ -132,6 +132,7 @@ class ForeignKey extends XMLElement
                $this->onUpdate === $database->getPlatform()->getDefaultFKOnUpdateBehavior()) {
           return false;
         }
+
         return ($this->onUpdate !== self::NONE);
     }
 
@@ -145,6 +146,7 @@ class ForeignKey extends XMLElement
                $this->onDelete === $database->getPlatform()->getDefaultFKOnDeleteBehavior()) {
           return false;
         }
+
         return ($this->onDelete !== self::NONE);
     }
 
@@ -718,7 +720,7 @@ class ForeignKey extends XMLElement
      * by foreign keys on both tables.  I don't know if that's good practice ... but hell, why not
      * support it.
      *
-     * @param  ForeignKey $fk
+     * @param ForeignKey $fk
      *
      * @return boolean
      * @link       http://propel.phpdb.org/trac/ticket/549

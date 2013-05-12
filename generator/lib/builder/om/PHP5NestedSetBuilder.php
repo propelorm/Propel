@@ -45,7 +45,7 @@ class PHP5NestedSetBuilder extends ObjectBuilder
     /**
      * Adds the include() statements for files that this class depends on or utilizes.
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      */
     protected function addIncludes(&$script)
     {
@@ -57,7 +57,7 @@ require '" . $this->getObjectBuilder()->getClassFilePath() . "';
     /**
      * Adds class phpdoc comment and opening of class.
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      */
     protected function addClassOpen(&$script)
     {
@@ -164,7 +164,7 @@ abstract class " . $this->getClassname() . " extends " . $this->getObjectBuilder
     /**
      * Closes class.
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      */
     protected function addClassClose(&$script)
     {
@@ -176,7 +176,7 @@ abstract class " . $this->getClassname() . " extends " . $this->getObjectBuilder
     /**
      * Adds class attributes.
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      */
     protected function addAttributes(&$script)
     {

@@ -364,7 +364,7 @@ class Criteria implements IteratorAggregate
     /**
      * Returns the column name associated with an alias (AS-column).
      *
-     * @param  string      $as
+     * @param string $as
      *
      * @return string|null $string The name if found, null otherwise.
      */
@@ -420,7 +420,7 @@ class Criteria implements IteratorAggregate
     /**
      * Returns the table name associated with an alias.
      *
-     * @param  string      $alias
+     * @param string $alias
      *
      * @return string|null $string The name if given, null otherwise.
      */
@@ -438,9 +438,9 @@ class Criteria implements IteratorAggregate
      * Use this method to get the details of a table name that comes in a clause,
      * which can be either a table name or an alias name.
      *
-     * @param  string $tableAliasOrName
+     * @param string $tableAliasOrName
      *
-     * @return        array($tableName, $tableAlias)
+     * @return   array($tableName, $tableAlias)
      */
     public function getTableNameAndAlias($tableAliasOrName)
     {
@@ -468,7 +468,7 @@ class Criteria implements IteratorAggregate
     /**
      * Does this Criteria object contain the specified key?
      *
-     * @param  string  $column [table.]column
+     * @param string $column [table.]column
      *
      * @return boolean True if this Criteria object contain the specified key.
      */
@@ -482,7 +482,7 @@ class Criteria implements IteratorAggregate
     /**
      * Does this Criteria object contain the specified key and does it have a value set for the key
      *
-     * @param  string  $column [table.]column
+     * @param string $column [table.]column
      *
      * @return boolean True if this Criteria object contain the specified key and a value for that key
      */
@@ -512,7 +512,7 @@ class Criteria implements IteratorAggregate
      * postgresql.  Though it can be used to require any single sql statement
      * to use a transaction.
      *
-     * @param  bool $v
+     * @param bool $v
      *
      * @return void
      */
@@ -538,7 +538,7 @@ class Criteria implements IteratorAggregate
      * Make sure you call containsKey($column) prior to calling this method,
      * since no check on the existence of the $column is made in this method.
      *
-     * @param  string    $column Column name.
+     * @param string $column Column name.
      *
      * @return Criterion A Criterion object.
      */
@@ -568,9 +568,9 @@ class Criteria implements IteratorAggregate
      * to this Criteria.  This can be used to chain the
      * Criterions to form a more complex where clause.
      *
-     * @param  string    $column     Full name of column (for example TABLE.COLUMN).
-     * @param  mixed     $value
-     * @param  string    $comparison
+     * @param string $column     Full name of column (for example TABLE.COLUMN).
+     * @param mixed  $value
+     * @param string $comparison
      *
      * @return Criterion
      */
@@ -582,7 +582,7 @@ class Criteria implements IteratorAggregate
     /**
      * Method to return a String table name.
      *
-     * @param  string $name Name of the key.
+     * @param string $name Name of the key.
      *
      * @return string The value of the object at key.
      */
@@ -621,7 +621,7 @@ class Criteria implements IteratorAggregate
     /**
      * Method to return a comparison String.
      *
-     * @param  string $key String name of the key.
+     * @param string $key String name of the key.
      *
      * @return string A String with the value of the object at key.
      */
@@ -648,7 +648,7 @@ class Criteria implements IteratorAggregate
      * Set the DatabaseMap name.  If <code>null</code> is supplied, uses value
      * provided by <code>Propel::getDefaultDB()</code>.
      *
-     * @param  string $dbName The Database (Map) name.
+     * @param string $dbName The Database (Map) name.
      *
      * @return void
      */
@@ -688,7 +688,7 @@ class Criteria implements IteratorAggregate
     /**
      * Method to return a String table name.
      *
-     * @param  string $name The name of the key.
+     * @param string $name The name of the key.
      *
      * @return string The value of table for criterion at key.
      */
@@ -704,9 +704,9 @@ class Criteria implements IteratorAggregate
     /**
      * Method to return the value that was added to Criteria.
      *
-     * @param  string $name A String with the name of the key.
+     * @param string $name A String with the name of the key.
      *
-     * @return mixed  The value of object at key.
+     * @return mixed The value of object at key.
      */
     public function getValue($name)
     {
@@ -720,9 +720,9 @@ class Criteria implements IteratorAggregate
     /**
      * An alias to getValue() -- exposing a Hashtable-like interface.
      *
-     * @param  string $key An Object.
+     * @param string $key An Object.
      *
-     * @return mixed  The value within the Criterion (not the Criterion object).
+     * @return mixed The value within the Criterion (not the Criterion object).
      */
     public function get($key)
     {
@@ -739,8 +739,8 @@ class Criteria implements IteratorAggregate
      * throw a NPE. The reason for this is that none of the add()
      * methods support adding anything other than a String as a key.
      *
-     * @param  string   $key
-     * @param  mixed    $value
+     * @param string $key
+     * @param mixed  $value
      *
      * @return Criteria A modified Criteria object.
      */
@@ -1073,7 +1073,7 @@ class Criteria implements IteratorAggregate
     /**
      * Get the Criteria for a specific subQuery.
      *
-     * @param  string   $alias alias for the subQuery
+     * @param string $alias alias for the subQuery
      *
      * @return Criteria
      */
@@ -1085,7 +1085,7 @@ class Criteria implements IteratorAggregate
     /**
      * checks if the Criteria for a specific subQuery is set.
      *
-     * @param  string  $alias alias for the subQuery
+     * @param string $alias alias for the subQuery
      *
      * @return boolean
      */
@@ -1179,7 +1179,7 @@ class Criteria implements IteratorAggregate
     /**
      * Sets ignore case.
      *
-     * @param  boolean  $b True if case should be ignored.
+     * @param boolean $b True if case should be ignored.
      *
      * @return Criteria Modified Criteria object (for fluent API)
      */
@@ -1209,7 +1209,7 @@ class Criteria implements IteratorAggregate
      * multiple records but you are only interested in the first one then you
      * should be using setLimit(1).
      *
-     * @param  boolean  $b Set to TRUE if you expect the query to select just one record.
+     * @param boolean $b Set to TRUE if you expect the query to select just one record.
      *
      * @return Criteria Modified Criteria object (for fluent API)
      */
@@ -1233,7 +1233,7 @@ class Criteria implements IteratorAggregate
     /**
      * Set limit.
      *
-     * @param  int      $limit An int with the value for limit.
+     * @param int $limit An int with the value for limit.
      *
      * @return Criteria Modified Criteria object (for fluent API)
      */
@@ -1283,7 +1283,7 @@ class Criteria implements IteratorAggregate
     /**
      * Add select column.
      *
-     * @param  string   $name Name of the select column.
+     * @param string $name Name of the select column.
      *
      * @return Criteria Modified Criteria object (for fluent API)
      */
@@ -1297,7 +1297,7 @@ class Criteria implements IteratorAggregate
     /**
      * Set the query comment, that appears after the first verb in the SQL query
      *
-     * @param  string   $comment The comment to add to the query, without comment sign
+     * @param string $comment The comment to add to the query, without comment sign
      *
      * @return Criteria Modified Criteria object (for fluent API)
      */
@@ -1367,7 +1367,7 @@ class Criteria implements IteratorAggregate
     /**
      * Add group by column name.
      *
-     * @param  string   $groupBy The name of the column to group by.
+     * @param string $groupBy The name of the column to group by.
      *
      * @return Criteria Modified Criteria object (for fluent API)
      */
@@ -1381,7 +1381,7 @@ class Criteria implements IteratorAggregate
     /**
      * Add order by column name, explicitly specifying ascending.
      *
-     * @param  string   $name The name of the column to order by.
+     * @param string $name The name of the column to order by.
      *
      * @return Criteria Modified Criteria object (for fluent API)
      */
@@ -1395,7 +1395,7 @@ class Criteria implements IteratorAggregate
     /**
      * Add order by column name, explicitly specifying descending.
      *
-     * @param  string   $name The name of the column to order by.
+     * @param string $name The name of the column to order by.
      *
      * @return Criteria Modified Criteria object (for fluent API)
      */
@@ -1463,7 +1463,7 @@ class Criteria implements IteratorAggregate
     /**
      * Remove an object from the criteria.
      *
-     * @param  string     $key A string with the key to be removed.
+     * @param string $key A string with the key to be removed.
      *
      * @return mixed|null The removed value, null if not set.
      */
@@ -1524,7 +1524,7 @@ class Criteria implements IteratorAggregate
      * This method checks another Criteria to see if they contain
      * the same attributes and hashtable entries.
      *
-     * @param  Criteria|null $crit
+     * @param Criteria|null $crit
      *
      * @return boolean
      */
