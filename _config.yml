@@ -1,5 +1,5 @@
 pygments:    true
-permalink:   none
+permalink:   /blog/:year/:month/:day/:title.html
 markdown:    redcarpet
 redcarpet:
     extensions: [ "tables", "no_intra_emphasis" ]
