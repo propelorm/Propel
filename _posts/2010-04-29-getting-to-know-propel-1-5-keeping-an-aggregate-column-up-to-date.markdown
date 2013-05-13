@@ -8,7 +8,7 @@ published: true
 
 <h3>The Model</h3>
 <p>The model is simple: for a poll widget, a <code>PollQuestion</code> and a <code>PollAnswer</code> class share a one-to-many relationship. The <code>PollAnswer</code> class features a <code>NbVotes</code> property, incremented each time a user votes for this question. The <code>PollQuestion</code> also needs a <code>TotalNbVotes</code>, which is the sum of the <code>NbVotes</code> of all the related <code>PollAnswers</code>, in order to display answer ratings as percentages. Let’s see how to manage this <code>TotalNbVotes</code> column automatically.</p>
-<p><img src="images/pollER.png" /></p>
+<p><img src="/images/blog/pollER.png" /></p>
 
 <h3>The Easy Part: Using ActiveRecord Hooks</h3>
 <p>Each time the <code>PollAnswer</code>’s <code>NbVotes</code> is incremented, the parent <code>PollQuestion</code>’s <code>TotalNbVotes</code> should be incremented as well. In fact, the use case is larger than than: each time a <code>PollAnswer</code> is added, deleted, or modified, the parent’s <code>TotalNbVotes</code> should be recalculated.</p>
