@@ -36,7 +36,7 @@ else) ([#33](https://github.com/propelorm/Propel2/pull/33),
 * **Removing PEER classes**
 ([#359](https://github.com/propelorm/Propel2/pull/359) and a lot of commits);
 * Moved `Base*` classes to a better location, with a better name
-(Om/BaseBook.php => Base/Book.php for instance)
+(`Om/BaseBook.php` => `Base/Book.php` for instance)
 ([#175](https://github.com/propelorm/Propel2/pull/175));
 * Removing the old validation system, and use a behavior to **integrate the
 Symfony2 Validator component**
