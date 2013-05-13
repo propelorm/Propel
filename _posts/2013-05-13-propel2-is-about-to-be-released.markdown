@@ -45,7 +45,7 @@ Symfony2 Validator component**
 [#227](https://github.com/propelorm/Propel2/pull/227)).
 
 That was the plan I announced at [Symfony Live
-2012](/blog/2012/07/09/propel2-what-why-when.html). In the meanwhile, we changed
+2012](/blog/2012/07/09/propel2-what-why-when.html). In the meantime, we changed
 our mind, and decided to [embrace **PHP
 5.4**](/blog/2012/08/08/propel2-and-php-5-4-here-we-go-.html).
 But we actually did a lot more, closing [more than 300
