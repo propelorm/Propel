@@ -14,10 +14,12 @@ The recommended way to install this bundle is to rely on [Composer](http://getco
 {
     "require": {
         // ...
-        "propel/propel-bundle": "1.1.*"
+        "propel/propel-bundle": "1.2.*"
     }
 }
 {% endhighlight %}
+
+>**Tip**<br />Different bundle version may be needed for different Symfony2 version. Check [PropelBundle](https://github.com/propelorm/PropelBundle) for details.
 
 Alternatively, you can use Git, SVN, Git submodules, or the Symfony vendor management (deps file):
 
