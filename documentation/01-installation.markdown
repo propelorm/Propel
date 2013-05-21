@@ -11,7 +11,7 @@ Propel is available as a [composer package](https://packagist.org/packages/prope
 
 Propel runs on most PHP platforms. It just requires:
 
-* [PHP 5.2.4](http://www.php.net/) or newer, with the DOM (libxml2) module enabled
+* [PHP 5.2.4+](http://www.php.net/) or newer, with the DOM (libxml2) module enabled
 * A supported database (MySQL, MS SQL Server, PostgreSQL, SQLite, Oracle)
 
 >**Tip**<br />Propel uses the PDO and SPL components, which are bundled and enabled by default in PHP5.
@@ -35,6 +35,8 @@ The only thing you need to do is, to drop the following line into your projects'
 ```
 
 composer will also take care to download all dependencies which are required by Propel.
+
+>**Note**<br />Composer requires [PHP 5.3.2+](http://www.php.net/). In case you are running PHP5.2.X you should stick to the "Manual Installation"
 
 ### Manual Installation ###
 
