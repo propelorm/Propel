@@ -876,7 +876,7 @@ class GeneratedObjectTest extends BookstoreTestBase
     {
         $book = BookQuery::create()->withColumn('Title', 'TitleCopy')->findOne();
         $bookArray = $book->toArray();
-        $this->assertTrue($book->getTitleCopy(), $bookArray['TitleCopy']);
+        $this->assertEquals($book->getTitleCopy(), $bookArray['TitleCopy']);
     }
 
     public function testToArrayKeyType()
