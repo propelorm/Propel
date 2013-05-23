@@ -91,8 +91,12 @@ if (\$this->isColumnModified($const) && \$this->{$this->getColumnGetter()}()) {
             $count = preg_match_all('/{([a-zA-Z]+)}/', $pattern, $matches, PREG_PATTERN_ORDER);
 
             foreach ($matches[1] as $key => $match) {
-
-                $column = $this->getTable()->getColumn($this->underscore(ucfirst($match)));
+                $columnName = $this->underscore(ucfirst($match));
+                $column = $this->getTable()->getColumn($columnName);
+                if ((null == $column) && $this->getTable()->hasBehavior('symfony_i18n')) {
+                    $i18n = $this->getTable()->getBehavior('symfony_i18n');
+                    $column = $i18n->getI18nTable()->getColumn($columnName);
+                }
                 if (null == $column) {
                     throw new \InvalidArgumentException(sprintf('The pattern %s is invalid  the column %s is not found', $pattern, $match));
                 }
