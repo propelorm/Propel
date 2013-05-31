@@ -1778,7 +1778,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
         $script .= "
         if (\$this->$cloUnserialized !== \$v) {
             \$this->$cloUnserialized = \$v;
-            \$this->$clo = '| ' . implode(' | ', \$v) . ' |';
+            \$this->$clo = '| ' . implode(' | ', (array)\$v) . ' |';
             \$this->modifiedColumns[] = " . $this->getColumnConstant($col) . ";
         }
 ";
