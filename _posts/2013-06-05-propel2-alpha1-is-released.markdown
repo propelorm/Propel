@@ -38,4 +38,4 @@ soon as possible ("release early, release often" they said).
 Note that the [PropelBundle](http://github.com/propelorm/PropelBundle) does not
 support Propel2 yet.
 
-So, let's celebrate now!
+Thank you to all contributors, and now, let's celebrate!
