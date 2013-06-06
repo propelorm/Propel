@@ -4263,7 +4263,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
 
     protected function addCrossFkScheduledForDeletion(&$script, $refFK, $crossFK)
     {
-        $queryClassName = $this->getRefFKPhpNameAffix($refFK, $plural = false) . 'Query';
+        $queryClassName = $this->getNewStubQueryBuilder($refFK->getTable())->getClassname();
         $relatedName = $this->getFKPhpNameAffix($crossFK, $plural = true);
 
         $lowerRelatedName = lcfirst($relatedName);
