@@ -47,7 +47,7 @@ class PropelDateTime extends DateTime
      *
      * @throws PropelException
      */
-    public static function newInstance($value, DateTimeZone $timeZone = null, $dateTimeClass = 'DateTime',$format = 'Y-m-d H:i:s')
+    public static function newInstance($value, DateTimeZone $timeZone = null, $dateTimeClass = 'DateTime',$format = null)
     {
         if ($value instanceof DateTime) {
             return $value;
@@ -66,9 +66,19 @@ class PropelDateTime extends DateTime
             } else {
                 if ($timeZone === null) {
                     // stupid DateTime constructor signature
-                    $dateTimeObject = $dateTimeClass::createFromFormat($format,$value);
+    				if($format === null)
+					{
+						$dateTimeObject = new $dateTimeClass($value);
+					}else{
+						$dateTimeObject = $dateTimeClass::createFromFormat($format,$value);
+					}
                 } else {
-                    $dateTimeObject = $dateTimeClass::createFromFormat($format,$value,$timeZone);
+    				if($format === null)
+					{
+						$dateTimeObject = new $dateTimeClass($value,  $timeZone);
+					}else{
+						$dateTimeObject = $dateTimeClass::createFromFormat($format,$value,$timeZone);
+					}
                 }
             }
         } catch (Exception $e) {
