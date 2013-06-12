@@ -284,8 +284,8 @@ class PgsqlSchemaParser extends BaseSchemaParser
             return $arrRetVal;
         } // if ($intTypmod == -1)
 
-        // Numeric Datatype?
-        if ($strName == $this->getMappedNativeType(PropelTypes::NUMERIC)) {
+        // Decimal Datatype?
+        if ($strName == $this->getMappedNativeType(PropelTypes::DECIMAL)) {
             $intLen = ($intTypmod - 4) >> 16;
             $intPrec = ($intTypmod - 4) & 0xffff;
             $intLen = sprintf("%ld", $intLen);
