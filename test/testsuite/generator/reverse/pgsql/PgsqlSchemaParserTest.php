@@ -59,16 +59,18 @@ class PgsqlSchemaParserTest extends PHPUnit_Framework_TestCase
     public function parseDataProvider()
     {
         return array(
-            // columnDDL, expectedColumnPhpName, expectedColumnDefaultType, expectedColumnDefaultValue
-            array("my_column varchar(20) default null", "MyColumn", ColumnDefaultValue::TYPE_VALUE, "NULL"),
-            array("my_column varchar(20) default ''", "MyColumn", ColumnDefaultValue::TYPE_VALUE, ""),
+            // columnDDL, expectedColumnPhpName, expectedColumnDefaultType, expectedColumnDefaultValue, expectedSize, expectedScale
+            array("my_column varchar(20) default null", "MyColumn", ColumnDefaultValue::TYPE_VALUE, "NULL", 20, null),
+            array("my_column varchar(20) default ''", "MyColumn", ColumnDefaultValue::TYPE_VALUE, "", 20, null),
+            array("my_column numeric(11,0) default 0", "MyColumn", ColumnDefaultValue::TYPE_VALUE, 0, 11, 0),
+            array("my_column numeric(55,8) default 0", "MyColumn", ColumnDefaultValue::TYPE_VALUE, 0, 55, 8),
         );
     }
 
     /**
      * @dataProvider parseDataProvider
      */
-    public function testParse($columnDDL, $expectedColumnPhpName, $expectedColumnDefaultType, $expectedColumnDefaultValue)
+    public function testParse($columnDDL, $expectedColumnPhpName, $expectedColumnDefaultType, $expectedColumnDefaultValue, $expectedSize, $expectedScale)
     {
         $this->con->query("create table foo ( {$columnDDL} );");
         $parser = new PgsqlSchemaParser($this->con);
@@ -90,6 +92,8 @@ class PgsqlSchemaParserTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($expectedColumnPhpName, $columns[0]->getPhpName());
         $this->assertEquals($expectedColumnDefaultType, $defaultValue->getType());
         $this->assertEquals($expectedColumnDefaultValue, $defaultValue->getValue());
+        $this->assertEquals($expectedSize, $columns[0]->getSize());
+        $this->assertEquals($expectedScale, $columns[0]->getScale());
     }
 }
 
