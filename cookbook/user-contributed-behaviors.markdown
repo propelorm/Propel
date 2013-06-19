@@ -57,7 +57,7 @@ Here is a list of Propel behaviors contributed by users. Feel free to use them o
 
 * [GlorpenPropelBundle](https://bitbucket.org/glorpen/glorpenpropelbundle) Add a way of extending Propel model classes from other Bundles and using Symfony2 DIC in them through events. 
 
-* [BazingaPropelEventDispatcherBundle](https://github.com/willdurand/BazingaPropelEventDispatcherBundle) An alternative of GlorpenPropelBundle Symfony2 DIC events
+* [BazingaPropelEventDispatcherBundle](https://github.com/willdurand/BazingaPropelEventDispatcherBundle) An alternative to GlorpenPropelBundle Symfony2 DIC events
 
 * [TaggableBehaviorBundle](https://bitbucket.org/glorpen/taggablebehaviorbundle) A behavior and a widget for propel 1.6 and Symfony2.0 to tag your objects.
 
