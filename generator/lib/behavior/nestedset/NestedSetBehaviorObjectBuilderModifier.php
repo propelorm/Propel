@@ -1484,6 +1484,7 @@ public function deleteDescendants(PropelPDO \$con = null)
 
     protected function addGetIterator(&$script)
     {
+        $this->builder->declareClassNamespace('NestedSetRecursiveIterator');
         $script .= "
 /**
  * Returns a pre-order iterator for this node and its children.
