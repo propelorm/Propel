@@ -987,19 +987,27 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
             return null;
         }
 
-        try {
-            \$dt = new $dateTimeClass(\$this->$clo);
-        } catch (Exception \$x) {
-            throw new PropelException(\"Internally stored date/time/timestamp value could not be converted to $dateTimeClass: \" . var_export(\$this->$clo, true), \$x);
+        if (\$this->$clo instanceof $dateTimeClass) {
+            \$dt = \$this->$clo;
+        } else {
+            try {
+                \$dt = new $dateTimeClass(\$this->$clo);
+            } catch (Exception \$x) {
+                throw new PropelException(\"Internally stored date/time/timestamp value could not be converted to $dateTimeClass: \" . var_export(\$this->$clo, true), \$x);
+            }
         }
 ";
         } else {
             $script .= "
 
-        try {
-            \$dt = new $dateTimeClass(\$this->$clo);
-        } catch (Exception \$x) {
-            throw new PropelException(\"Internally stored date/time/timestamp value could not be converted to $dateTimeClass: \" . var_export(\$this->$clo, true), \$x);
+        if (\$this->$clo instanceof $dateTimeClass) {
+            \$dt = \$this->$clo;
+        } else {
+            try {
+                \$dt = new $dateTimeClass(\$this->$clo);
+            } catch (Exception \$x) {
+                throw new PropelException(\"Internally stored date/time/timestamp value could not be converted to $dateTimeClass: \" . var_export(\$this->$clo, true), \$x);
+            }
         }
 ";
         } // if handleMyqlDate
