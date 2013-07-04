@@ -1708,7 +1708,8 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
         \$dt = PropelDateTime::newInstance(\$v, null, '$dateTimeClass');
         if (\$this->$clo !== null || \$dt !== null) {
             if (\$this->$clo instanceof $dateTimeClass) {
-                \$currentDateAsString = \$this->$clo->format($fmt);
+                \$tmpDt = \$this->$clo;
+                \$currentDateAsString =\$tmpDt->format($fmt);
             } else {
                 \$currentDateAsString = (\$this->$clo !== null && \$tmpDt = new $dateTimeClass(\$this->$clo)) ? \$tmpDt->format($fmt) : null;
             }
