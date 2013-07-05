@@ -185,7 +185,7 @@ For instance, to display an entire tree structure, you can use the following cod
 ```php
 <?php
 $root = SectionQuery::create()->findRoot();
-foreach ($root->getIterator() as $node) {
+foreach (new RecursiveIteratorIterator($root->getIterator(), RecursiveIteratorIterator::SELF_FIRST) as $node) {
   echo str_repeat(' ', $node->getLevel()) . $node->getTitle() . "\n";
 }
 ```
