@@ -134,7 +134,6 @@ class GeneratedObjectRelTest extends BookstoreEmptyTestBase
         $this->assertEquals(1, count($list->getBookListRels()) );
         $this->assertEquals(1, count($book->getBookListRels()) );
         $this->assertEquals(1, count(BookListRelPeer::doSelect(new Criteria())) );
-
     }
 
     public function testManyToManyGetterExists()
@@ -966,5 +965,36 @@ class GeneratedObjectRelTest extends BookstoreEmptyTestBase
 
         $book->setTitle('Propel2 Book');
         $book->save();
+    }
+
+    public function testAddAfterRemoveKeepsReferences()
+    {
+        $list = new BookClubList();
+        $list->setGroupLeader('Archimedes Q. Porter');
+
+        $book = new Book();
+        $book->setTitle( "Jungle Expedition Handbook" );
+        $book->setIsbn('TEST');
+
+        $xref = new BookListRel();
+        $xref->setBook($book);
+        $xref->setBookClubList($list);
+        $xref->save();
+
+        $book->removeBookListRel($xref);
+        $book->addBookListRel($xref);
+        $book->save();
+
+        $this->assertCount(1, $list->getBookListRels());
+        $this->assertCount(1, $book->getBookListRels());
+        $this->assertCount(1, BookListRelPeer::doSelect(new Criteria()));
+
+        $book->removeBookClubList($list);
+        $book->addBookClubList($list);
+        $book->save();
+
+        $this->assertCount(1, $list->getBookListRels());
+        $this->assertCount(1, $book->getBookListRels());
+        $this->assertCount(1, BookListRelPeer::doSelect(new Criteria()));
     }
 }
