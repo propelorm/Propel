@@ -397,7 +397,7 @@ public function toVersion(\$versionNumber, \$con = null)
 {
     \$version = \$this->getOneVersion(\$versionNumber, \$con);
     if (!\$version) {
-        throw new PropelException(sprintf('No {$ARclassName} object found with version %d', \$version));
+        throw new PropelException(sprintf('No {$ARclassName} object found with version %d', \$versionNumber));
     }
     \$this->populateFromVersion(\$version, \$con);
 
