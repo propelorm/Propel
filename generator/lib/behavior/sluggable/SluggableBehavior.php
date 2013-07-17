@@ -329,7 +329,7 @@ protected function makeSlugUnique(\$slug, \$separator = '" . $this->getParameter
         } elseif ( $platform instanceof MssqlPlatform ) {
             $script .= "->where('q." . $this->getColumnForParameter('slug_column')->getPhpName() . " ' . (\$alreadyExists ? 'like' : '=') . ' ?', \$alreadyExists ? '^' . \$slug2 . '[0-9]+$' : \$slug2)";
         } elseif ( $platform instanceof OraclePlatform ) {
-            $script .= "->where((\$alreadyExists ? 'REGEXP_LIKE(' : '')'q." . $this->getColumnForParameter('slug_column')->getPhpName() . " ' . (\$alreadyExists ? ',' : '=') . ' ?' . (\$alreadyExists ? ')' : ''), \$alreadyExists ? '^' . \$slug2 . '[0-9]+$' : \$slug2)";
+            $script .= "->where((\$alreadyExists ? 'REGEXP_LIKE(' : '') . 'q." . $this->getColumnForParameter('slug_column')->getPhpName() . " ' . (\$alreadyExists ? ',' : '=') . ' ?' . (\$alreadyExists ? ')' : ''), \$alreadyExists ? '^' . \$slug2 . '[0-9]+$' : \$slug2)";
         } else {
             $script .= "->where('q." . $this->getColumnForParameter('slug_column')->getPhpName() . " ' . (\$alreadyExists ? 'REGEXP' : '=') . ' ?', \$alreadyExists ? '^' . \$slug2 . '[0-9]+$' : \$slug2)";
         }
