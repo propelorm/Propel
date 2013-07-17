@@ -322,13 +322,24 @@ protected function makeSlugUnique(\$slug, \$separator = '" . $this->getParameter
     }
 
     \$query = " . $this->builder->getStubQueryBuilder()->getClassname() . "::create('q')
-        ->where('q." . $this->getColumnForParameter('slug_column')->getPhpName() . " ' . (\$alreadyExists ? 'REGEXP' : '=') . ' ?', \$alreadyExists ? '^' . \$slug2 . '[0-9]+$' : \$slug2)
-        ->prune(\$this)";
+    ";
+        $platform = $this->getTable()->getDatabase()->getPlatform();
+        if ( $platform instanceof PgsqlPlatform ) {
+            $script .= "->where('q." . $this->getColumnForParameter('slug_column')->getPhpName() . " ' . (\$alreadyExists ? '~*' : '=') . ' ?', \$alreadyExists ? '^' . \$slug2 . '[0-9]+$' : \$slug2)";
+        } elseif ( $platform instanceof MssqlPlatform ) {
+            $script .= "->where('q." . $this->getColumnForParameter('slug_column')->getPhpName() . " ' . (\$alreadyExists ? 'like' : '=') . ' ?', \$alreadyExists ? '^' . \$slug2 . '[0-9]+$' : \$slug2)";
+        } elseif ( $platform instanceof OraclePlatform ) {
+            $script .= "->where((\$alreadyExists ? 'REGEXP_LIKE(' : '') . 'q." . $this->getColumnForParameter('slug_column')->getPhpName() . " ' . (\$alreadyExists ? ',' : '=') . ' ?' . (\$alreadyExists ? ')' : ''), \$alreadyExists ? '^' . \$slug2 . '[0-9]+$' : \$slug2)";
+        } else {
+            $script .= "->where('q." . $this->getColumnForParameter('slug_column')->getPhpName() . " ' . (\$alreadyExists ? 'REGEXP' : '=') . ' ?', \$alreadyExists ? '^' . \$slug2 . '[0-9]+$' : \$slug2)";
+        }
 
-        if ($this->getParameter('scope_column')) {
-            $getter = 'get' . $this->getColumnForParameter('scope_column')->getPhpName();
+        $script .="->prune(\$this)";
+
+         if ($this->getParameter('scope_column')) {
+            $scopeGetter = 'get' . $this->getColumnForParameter('scope_column')->getPhpName();
             $script .= "
-            ->filterBy('{$this->getColumnForParameter('scope_column')->getPhpName()}', \$this->{$getter}())";
+            ->filterBy('{$this->getColumnForParameter('scope_column')->getPhpName()}', \$this->{$scopeGetter}())";
         }
         // watch out: some of the columns may be hidden by the soft_delete behavior
         if ($this->table->hasBehavior('soft_delete')) {
