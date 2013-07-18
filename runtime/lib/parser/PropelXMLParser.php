@@ -115,6 +115,9 @@ class PropelXMLParser extends PropelParser
                 $value = htmlspecialchars($value, ENT_COMPAT, 'UTF-8');
                 $child = $element->ownerDocument->createCDATASection($value);
                 $element->appendChild($child);
+            } elseif (is_object($value)) {
+                $value = serialize($value);
+                $child = $element->ownerDocument->createTextNode($value);
             } else {
                 $child = $element->ownerDocument->createTextNode($value);
                 $element->appendChild($child);
