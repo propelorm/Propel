@@ -118,6 +118,7 @@ class PropelXMLParser extends PropelParser
             } elseif (is_object($value)) {
                 $value = serialize($value);
                 $child = $element->ownerDocument->createTextNode($value);
+                $element->appendChild($child);
             } else {
                 $child = $element->ownerDocument->createTextNode($value);
                 $element->appendChild($child);
