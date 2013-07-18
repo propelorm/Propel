@@ -130,6 +130,21 @@ class SluggableBehaviorTest extends BookstoreTestBase
         $t->save();
         $t = new TestableTable13();
         $this->assertEquals('foo-2', $t->makeSlugUnique('foo'), 'makeSlugUnique() returns an incremented input when it already exists');
+
+        TableWithScopeQuery::create()->deleteAll();
+        $t = new TestTableWithScope();
+        $this->assertEquals('foo', $t->makeSlugUnique('foo'), 'makeSlugUnique() returns the input slug when the table is empty');
+        $t->setSlug('foo');
+        $t->setScope(1);
+        $t->save();
+        $t = new TestTableWithScope();
+        $t->setScope(1);
+        $this->assertEquals('foo-1', $t->makeSlugUnique('foo'), 'makeSlugUnique() returns an incremented input when it already exists');
+        $t->setSlug('foo-1');
+        $t->save();
+        $t = new TestTableWithScope();
+        $t->setScope(1);
+        $this->assertEquals('foo-2', $t->makeSlugUnique('foo'), 'makeSlugUnique() returns an incremented input when it already exists');
     }
 
     public function testObjectCreateSlug()
@@ -423,5 +438,28 @@ class TestableTable14 extends Table14
     public static function limitSlugSize($slug, $incrementReservedSpace = 3)
     {
         return parent::limitSlugSize($slug, $incrementReservedSpace);
+    }
+}
+
+class TestTableWithScope extends TableWithScope
+{
+    public function createSlug()
+    {
+        return parent::createSlug();
+    }
+
+    public function createRawSlug()
+    {
+        return parent::createRawSlug();
+    }
+
+    public static function cleanupSlugPart($slug, $separator = '-')
+    {
+        return parent::cleanupSlugPart($slug, $separator);
+    }
+
+    public function makeSlugUnique($slug, $separator = '-', $increment = 0)
+    {
+        return parent::makeSlugUnique($slug, $separator, $increment);
     }
 }
