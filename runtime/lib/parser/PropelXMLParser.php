@@ -190,7 +190,11 @@ class PropelXMLParser extends PropelParser
             } elseif (!$element->hasChildNodes()) {
                 $array[$index] = null;
             } else {
-                $array[$index] = $element->textContent;
+                if (false !== ($unserialized_content = @unserialize($element->textContent))) {
+                    $array[$index] = $unserialized_content;
+                } else {
+                    $array[$index] = $element->textContent;
+                }
             }
         }
 
