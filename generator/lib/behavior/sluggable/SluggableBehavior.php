@@ -324,11 +324,11 @@ protected function makeSlugUnique(\$slug, \$separator = '" . $this->getParameter
      \$query = " . $this->builder->getStubQueryBuilder()->getClassname() . "::create('q')
     ";
         $platform = $this->getTable()->getDatabase()->getPlatform();
-        if ( $platform instanceof PgsqlPlatform ) {
+        if ($platform instanceof PgsqlPlatform) {
             $script .= "->where('q." . $this->getColumnForParameter('slug_column')->getPhpName() . " ' . (\$alreadyExists ? '~*' : '=') . ' ?', \$alreadyExists ? '^' . \$slug2 . '[0-9]+$' : \$slug2)";
-        } elseif ( $platform instanceof MssqlPlatform ) {
+        } elseif ($platform instanceof MssqlPlatform) {
             $script .= "->where('q." . $this->getColumnForParameter('slug_column')->getPhpName() . " ' . (\$alreadyExists ? 'like' : '=') . ' ?', \$alreadyExists ? '^' . \$slug2 . '[0-9]+$' : \$slug2)";
-        } elseif ( $platform instanceof OraclePlatform ) {
+        } elseif ($platform instanceof OraclePlatform) {
             $script .= "->where((\$alreadyExists ? 'REGEXP_LIKE(' : '') . 'q." . $this->getColumnForParameter('slug_column')->getPhpName() . " ' . (\$alreadyExists ? ',' : '=') . ' ?' . (\$alreadyExists ? ')' : ''), \$alreadyExists ? '^' . \$slug2 . '[0-9]+$' : \$slug2)";
         } else {
             $script .= "->where('q." . $this->getColumnForParameter('slug_column')->getPhpName() . " ' . (\$alreadyExists ? 'REGEXP' : '=') . ' ?', \$alreadyExists ? '^' . \$slug2 . '[0-9]+$' : \$slug2)";
