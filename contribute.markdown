@@ -53,7 +53,9 @@ Once done, you can submit the Pull Request by pushing your branch to your fork:
 $ git push origin fix-my-patch
 ```
 
-Go to www.github.com and press the _Pull Request_ button. Add a short description to this Pull Request and submit it.
+Go to your fork on Github, switch to your patch's branch (in the above example,
+it's `fix-my-patch`) and click on the "Compare and pull request" button. Add a
+short description to this Pull Request and submit it!
 
 ## Running Unit Tests ##
 
