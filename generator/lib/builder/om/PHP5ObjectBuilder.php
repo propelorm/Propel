@@ -3866,6 +3866,8 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
 
         $collName = $this->getRefFKCollVarName($refFK);
 
+        $scheduledForDeletion = lcfirst($this->getRefFKPhpNameAffix($refFK, $plural = true)) . "ScheduledForDeletion";
+
         $script .= "
     /**
      * Method called to associate a $className object to this object
@@ -3880,8 +3882,13 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
             \$this->init" . $this->getRefFKPhpNameAffix($refFK, $plural = true) . "();
             \$this->{$collName}Partial = true;
         }
+
         if (!in_array(\$l, \$this->{$collName}->getArrayCopy(), true)) { // only add it if the **same** object is not already associated
             \$this->doAdd" . $this->getRefFKPhpNameAffix($refFK, $plural = false) . "(\$l);
+
+            if (\$this->{$scheduledForDeletion} and \$this->{$scheduledForDeletion}->contains(\$l)) {
+                \$this->{$scheduledForDeletion}->remove(\$this->{$scheduledForDeletion}->search(\$l));
+            }
         }
 
         return \$this;
@@ -4571,6 +4578,8 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
 
         $relatedObjectClassName = $this->getFKPhpNameAffix($crossFK, $plural = false);
 
+        $scheduledForDeletion = lcfirst($relCol) . "ScheduledForDeletion";
+
         $script .= "
     /**
      * Associate a " . $crossObjectClassName . " object to this object
@@ -4584,9 +4593,14 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
         if (\$this->" . $collName . " === null) {
             \$this->init" . $relCol . "();
         }
+
         if (!\$this->" . $collName . "->contains(" . $crossObjectName . ")) { // only add it if the **same** object is not already associated
             \$this->doAdd{$relatedObjectClassName}($crossObjectName);
             \$this->" . $collName . "[] = " . $crossObjectName . ";
+
+            if (\$this->" . $scheduledForDeletion . " and \$this->" . $scheduledForDeletion . "->contains(" . $crossObjectName . ")) {
+                \$this->" . $scheduledForDeletion . "->remove(\$this->" . $scheduledForDeletion . "->search(" . $crossObjectName . "));
+            }
         }
 
         return \$this;
@@ -4620,12 +4634,13 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      */
     protected function doAdd{$relatedObjectClassName}(\${$lowerRelatedObjectClassName})
     {
-        {$foreignObjectName} = new {$className}();
-        {$foreignObjectName}->set{$relatedObjectClassName}(\${$lowerRelatedObjectClassName});
-        \$this->add{$refKObjectClassName}({$foreignObjectName});
         // set the back reference to this object directly as using provided method either results
         // in endless loop or in multiple relations
         if (!\${$lowerRelatedObjectClassName}->get{$selfRelationNamePlural}()->contains(\$this)) {
+            {$foreignObjectName} = new {$className}();
+            {$foreignObjectName}->set{$relatedObjectClassName}(\${$lowerRelatedObjectClassName});
+            \$this->add{$refKObjectClassName}({$foreignObjectName});
+
             \$foreignCollection = \${$lowerRelatedObjectClassName}->get{$selfRelationNamePlural}();
             \$foreignCollection[] = \$this;
         }
