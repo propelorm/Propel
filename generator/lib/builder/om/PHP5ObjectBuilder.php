@@ -3841,7 +3841,9 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
             return;
         }
         \$this->$collName = new PropelObjectCollection();
-        \$this->{$collName}->setModel('" . $this->getNewStubObjectBuilder($refFK->getTable())->getClassname() . "');
+        // \$this->{$collName}->setModel('" . $this->getNewStubObjectBuilder($refFK->getTable())->getClassname() . "');
+        /* Use the fully qualified classname, to prevent class-loading problems in PropelObjectCollection-Functions like 'delete()' */
+        \$this->{$collName}->setModel('" . $this->getNewStubObjectBuilder($refFK->getTable())->getFullyQualifiedClassname() . "');
     }
 ";
     } // addRefererInit()
