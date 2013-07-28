@@ -32,6 +32,8 @@ Here is a list of Propel behaviors contributed by users. Feel free to use them o
 
 * [MultipleAggregateColumnBehavior](https://github.com/natecj/PropelMultipleAggregateColumnBehavior) A replacement to aggregate_column behavior that allows multiple aggregate columns on a single table.
 
+* [VisibilityBehavior] (https://github.com/cedriclombardot/VisibilityBehavior) Add a visibility column for each column you specify and manage visibility of data depends a visibility hierarchy.
+
 
 ## symfony 1.x Behaviors ##
 
