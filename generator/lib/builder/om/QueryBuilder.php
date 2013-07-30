@@ -798,7 +798,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . "
      * <code>
      * \$query->filterBy$colPhpName('2011-03-14'); // WHERE $colName = '2011-03-14'
      * \$query->filterBy$colPhpName('now'); // WHERE $colName = '2011-03-14'
-     * \$query->filterBy$colPhpName(array('max' => 'yesterday')); // WHERE $colName > '2011-03-13'
+     * \$query->filterBy$colPhpName(array('max' => 'yesterday')); // WHERE $colName < '2011-03-13'
      * </code>
      *
      * @param     mixed \$$variableName The value to use as filter.
