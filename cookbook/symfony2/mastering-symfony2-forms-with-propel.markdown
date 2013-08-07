@@ -149,7 +149,7 @@ then persisting it after a form submission can be done when the form is valid:
 }
 {% endhighlight %}
 
->**Note**: `handleRequest` has been introduced in Symfony 2.3. Be sure to use
+>**Note**<br/>`handleRequest` has been introduced in Symfony 2.3. Be sure to use
 `bindRequest` instead in previous versions of Symfony.
 
 If, for some reason, you don't have access to your original `$book` object,
