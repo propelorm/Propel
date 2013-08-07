@@ -133,7 +133,7 @@ then persisting it after a form submission can be done when the form is valid:
         $request = $this->getRequest();
 
         if ('POST' === $request->getMethod()) {
-            $form->bindRequest($request);
+            $form->handleRequest($request);
 
             if ($form->isValid()) {
                 $book->save();
