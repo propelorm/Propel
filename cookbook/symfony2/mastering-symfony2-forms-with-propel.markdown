@@ -407,7 +407,9 @@ doesn't handle the add/remove abilities in the view. You have to write some Java
 
 In the previous example, you always create new objects.
 
-If you want to select existing authors when you create new books, you'll have to use a `model` type:
+If you want to select existing authors when you create new books, you'll have to use a `model` type.
+
+You can change the text wich be displayed by passing the `property` argument. If left blank, the __toString() method will be used.
 
 {% highlight php %}
 <?php
@@ -429,6 +431,7 @@ class BookType extends AbstractType
         //$builder->add('author', new AuthorType());
         $builder->add('author', 'model', array(
             'class' => 'Acme\LibraryBundle\Model\Author',
+            'property' => 'fullname',
         ));
     }
 
