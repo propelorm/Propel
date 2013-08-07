@@ -35,7 +35,7 @@ In Symfony2, you deal with `Type` so let's create a `BookType` to manage
 our books. For the moment, just ignore the relation with `Author` objects.
 
 
->**Quickly generate a form type with Symfony2**<br />If you want a form type generated from a model, you can use the Symfony2 console. For the following example, the command is : `php app/console propel:form:generate @AcmeLibraryBundle Book`.
+>**Quickly generate a form type with Symfony2**<br />If you want a form type generated from a Model, you can use the Symfony2 console. For the following example, the command is : `php app/console propel:form:generate @AcmeLibraryBundle Book`.
 
 {% highlight php %}
 <?php
