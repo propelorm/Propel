@@ -37,7 +37,7 @@ our books. For the moment, just ignore the relation with `Author` objects.
 
 >**Quickly generate a `Type` with Symfony2**<br/>
 If you want a `Type` generated from a `Model`, you can use the Symfony2 console.
-For the following example, the command is : 
+For the following example, the command is: 
 `php app/console propel:form:generate @AcmeLibraryBundle Book`
 
 {% highlight php %}
