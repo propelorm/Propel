@@ -299,9 +299,16 @@ class PropelObjectCollection extends PropelCollection
 
     private function getIdenticalObject(BaseObject $object)
     {
+        $objectHashCode = null;
         foreach ($this as $obj) {
-            if ($obj instanceof BaseObject && $obj->hashCode() === $object->hashCode()) {
-                return $obj;
+            if ($obj instanceof BaseObject) {
+                if (null === $objectHashCode) {
+                    $objectHashCode = $object->hashCode();
+                }
+
+                if($obj->hashCode() === $objectHashCode) {
+                    return $obj;
+                }
             }
         }
 
