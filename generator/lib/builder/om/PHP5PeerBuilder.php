@@ -182,7 +182,14 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
 
     public function getTableMapClass()
     {
-        return $this->getStubObjectBuilder()->getClassname() . 'TableMap';
+        // Trim first backslash for php 5.3.{0,1,2} compatibility
+        $fullyQualifiedClassname = ltrim($this->getStubObjectBuilder()->getFullyQualifiedClassname(), '\\');
+
+        if (($pos = strrpos($fullyQualifiedClassname, '\\')) !== false) {
+            return substr_replace($fullyQualifiedClassname, '\\map\\', $pos, 1) . 'TableMap';
+        } else {
+            return $fullyQualifiedClassname . 'TableMap';
+        }
     }
 
     public function getTablePhpName()
@@ -213,7 +220,7 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
     const OM_CLASS = '$tablePhpName';
 
     /** the related TableMap class for this table */
-    const TM_CLASS = '" . $this->getTableMapClass() . "';
+    const TM_CLASS = '" . addslashes($this->getTableMapClass()) . "';
 
     /** The total number of columns. */
     const NUM_COLUMNS = " . $this->getTable()->getNumColumns() . ";
@@ -590,7 +597,7 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
     {
       \$dbMap = Propel::getDatabaseMap(" . $this->getClassname() . "::DATABASE_NAME);
       if (!\$dbMap->hasTable(" . $this->getClassname() . "::TABLE_NAME)) {
-        \$dbMap->addTableObject(new " . $this->getTableMapClass() . "());
+        \$dbMap->addTableObject(new \\" . $this->getTableMapClass() . "());
       }
     }
 ";
