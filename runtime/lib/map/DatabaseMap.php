@@ -175,13 +175,11 @@ class DatabaseMap
     {
         if (array_key_exists($phpName, $this->tablesByPhpName)) {
             return $this->tablesByPhpName[$phpName];
-        } elseif (class_exists($tmClass = substr_replace($phpName, '\\map\\', strrpos($phpName, '\\'), strrpos($phpName, '\\') === false ? 0 : 1) . 'TableMap')) {
-            $this->addTableFromMapClass($tmClass);
+        } elseif (defined($phpName . '::PEER')) {
+            $peerClass = constant($phpName . '::PEER');
+            $tmClass = constant($peerClass . '::TM_CLASS');
 
-            return $this->tablesByPhpName[$phpName];
-        } elseif (class_exists($tmClass = $phpName . 'TableMap')) {
             $this->addTableFromMapClass($tmClass);
-
             return $this->tablesByPhpName[$phpName];
         } else {
             throw new PropelException("Cannot fetch TableMap for undefined table phpName: " . $phpName);
