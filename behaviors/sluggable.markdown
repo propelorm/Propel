@@ -10,6 +10,7 @@ The `sluggable` behavior allows a model to offer a human readable identifier tha
 ## Basic Usage ##
 
 In the `schema.xml`, use the `<behavior>` tag to add the `sluggable` behavior to a table:
+
 ```xml
 <table name="post">
   <column name="id" required="true" primaryKey="true" autoIncrement="true" type="INTEGER" />
