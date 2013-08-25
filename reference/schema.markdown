@@ -142,7 +142,7 @@ According to the schema, `name` is the only required attribute.  Also, the `idMe
 * `phpName` specifies object model class name. By default, Propel uses a CamelCase version of the table name as phpName.
 * `package` specifies the "package" (or subdirectory) in which model classes get generated.
 * `schema` specifies the default SQL schema containing the table. Ignored on RDBMS not supporting database schemas.
-* `namespace` specifies the namespace that the generated model classes will use (PHP 5.3 only). If the table namespace starts with a `\\`, it overrides the namespace defined in the `<database>` tag; otherwise, the actual table namespace is the concatenation of the database namespace and the table namespace.
+* `namespace` specifies the namespace that the generated model classes will use (PHP 5.3 only). If the table namespace starts with a `\`, it overrides the namespace defined in the `<database>` tag; otherwise, the actual table namespace is the concatenation of the database namespace and the table namespace.
 * `skipSql` instructs Propel not to generate DDL SQL for the specified table. This can be used together with `readOnly` for supporting VIEWS in Propel.
 * `abstract` Whether the generated _stub_ class will be abstract (e.g. if you're using inheritance)
 * `isCrossRef` Whether this is a cross-reference table (or "junction" table) for a [many-to-many relationship](../documentation/04-relationships.html#manytomany_relationships)
