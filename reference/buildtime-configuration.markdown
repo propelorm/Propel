@@ -317,8 +317,9 @@ As you can see, you can specify your own builder and platform classes if you wan
 ```ini
 # Define the path to the class to be used for the `timestampable` behavior.
 # This behavior is bundled with Propel, but if you want to override it, you can
-# specify a different path.
-propel.behavior.timestampable.class = propel.engine.behavior.TimestampableBehavior
+# specify a different path. Note that your `timestampable` behavior must have a
+# different classname from the one bundled with Propel.
+propel.behavior.timestampable.class = propel.engine.behavior.MyTimestampableBehavior
 # Other behaviors use similar settings
 
 # If you want to add more behaviors, write their path following the same model:
