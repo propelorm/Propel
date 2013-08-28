@@ -97,7 +97,10 @@ class QueryBuilder extends OMBuilder
 /**";
         }
 
-        // magic orderBy() methods, for IDE completion
+        /**
+         * magic orderBy() methods, for IDE completion
+         * @var Column $column
+         */
         foreach ($this->getTable()->getColumns() as $column) {
             $script .= "
  * @method $queryClass orderBy" . $column->getPhpName() . "(\$order = Criteria::ASC) Order by the " . $column->getName() . " column";
@@ -139,13 +142,24 @@ class QueryBuilder extends OMBuilder
  *";
         }
 
+
+        $absoluteNameSpacePrefix = NULL;
+        $absoluteNameSpacePosfix = NULL;
+        if ($this->getBuildProperty('namespaceUseAbsolute')) {
+            $absoluteNameSpacePrefix = '\\' .  $this->getTable()->getNamespace() . '\\';
+            $absoluteNameSpacePosfix = '';
+        }
+
         // override the signature of ModelCriteria::findOne() to specify the class of the returned object, for IDE completion
         $script .= "
- * @method $modelClass findOne(PropelPDO \$con = null) Return the first $modelClass matching the query
- * @method $modelClass findOneOrCreate(PropelPDO \$con = null) Return the first $modelClass matching the query, or a new $modelClass object populated from the query conditions when no match is found
+ * @method {$absoluteNameSpacePrefix}$modelClass{$absoluteNameSpacePosfix} findOne(PropelPDO \$con = null) Return the first $modelClass matching the query
+ * @method {$absoluteNameSpacePrefix}$modelClass{$absoluteNameSpacePosfix} findOneOrCreate(PropelPDO \$con = null) Return the first $modelClass matching the query, or a new $modelClass object populated from the query conditions when no match is found
  *";
 
-        // magic findBy() methods, for IDE completion
+        /**
+         * magic findBy() methods, for IDE completion
+         * @var Table $table
+         */
         foreach ($this->getTable()->getColumns() as $column) {
             // skip "findPk" alias method
             if (!$this->getTable()->hasCompositePrimaryKey() && $column->isPrimaryKey()) {
@@ -153,7 +167,7 @@ class QueryBuilder extends OMBuilder
             }
 
             $script .= "
- * @method $modelClass findOneBy" . $column->getPhpName() . "(" . $column->getPhpType() . " \$" . $column->getName() . ") Return the first $modelClass filtered by the " . $column->getName() . " column";
+ * @method {$absoluteNameSpacePrefix}$modelClass{$absoluteNameSpacePosfix} findOneBy" . $column->getPhpName() . "(" . $column->getPhpType() . " \$" . $column->getName() . ") Return the first $modelClass filtered by the " . $column->getName() . " column";
         }
         $script .= "
  *";
