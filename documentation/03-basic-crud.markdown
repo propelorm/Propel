@@ -186,11 +186,12 @@ $books = $formatter->format($stmt);
 // $books contains a collection of Book objects
 ```
 
-There are a few important things to remember when using custom SQL to populate Propel:
-
-* The resultset columns must be numerically indexed
-* The resultset must contain all the columns of the table (except lazy-load columns)
-* The resultset must have columns _in the same order_ as they are defined in the `schema.xml` file
+>**Tip**<br />
+>There are a few important things to remember when using custom SQL to populate Propel:
+>
+> * The resultset columns must be numerically indexed
+> * The resultset must contain all the columns of the table (except lazy-load columns)
+> * The resultset must have columns _in the same order_ as they are defined in the `schema.xml` file
 
 ## Updating Objects ##
 
