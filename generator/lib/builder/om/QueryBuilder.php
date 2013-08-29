@@ -77,6 +77,16 @@ class QueryBuilder extends OMBuilder
         $parentClass = $this->getBehaviorContent('parentClass');
         $parentClass = null === $parentClass ? 'ModelCriteria' : $parentClass;
 
+        // preparing class names with prefix
+        $absoluteNameSpacePrefix = NULL;
+        $absoluteNameSpacePosfix = NULL;
+        if ($this->getBuildProperty('namespaceUseAbsolute')) {
+            $absoluteNameSpacePrefix = '\\' .  $this->getTable()->getNamespace() . '\\';
+            $absoluteNameSpacePosfix = '';
+        }
+        $nameSpacedQueryClass = $absoluteNameSpacePrefix.$queryClass.$absoluteNameSpacePosfix;
+        $nameSpacedModelClass = $absoluteNameSpacePrefix.$modelClass.$absoluteNameSpacePosfix;
+
         if ($this->getBuildProperty('addClassLevelComment')) {
             $script .= "
 /**
@@ -103,7 +113,7 @@ class QueryBuilder extends OMBuilder
          */
         foreach ($this->getTable()->getColumns() as $column) {
             $script .= "
- * @method $queryClass orderBy" . $column->getPhpName() . "(\$order = Criteria::ASC) Order by the " . $column->getName() . " column";
+ * @method $nameSpacedQueryClass orderBy" . $column->getPhpName() . "(\$order = Criteria::ASC) Order by the " . $column->getName() . " column";
         }
         $script .= "
  *";
@@ -111,15 +121,15 @@ class QueryBuilder extends OMBuilder
         // magic groupBy() methods, for IDE completion
         foreach ($this->getTable()->getColumns() as $column) {
             $script .= "
- * @method $queryClass groupBy" . $column->getPhpName() . "() Group by the " . $column->getName() . " column";
+ * @method $nameSpacedQueryClass groupBy" . $column->getPhpName() . "() Group by the " . $column->getName() . " column";
         }
 
         // override the signature of ModelCriteria::left-, right- and innerJoin to specify the class of the returned object, for IDE completion
         $script .= "
  *
- * @method $queryClass leftJoin(\$relation) Adds a LEFT JOIN clause to the query
- * @method $queryClass rightJoin(\$relation) Adds a RIGHT JOIN clause to the query
- * @method $queryClass innerJoin(\$relation) Adds a INNER JOIN clause to the query
+ * @method $nameSpacedQueryClass leftJoin(\$relation) Adds a LEFT JOIN clause to the query
+ * @method $nameSpacedQueryClass rightJoin(\$relation) Adds a RIGHT JOIN clause to the query
+ * @method $nameSpacedQueryClass innerJoin(\$relation) Adds a INNER JOIN clause to the query
  *";
 
         // magic XXXjoinYYY() methods, for IDE completion
@@ -127,33 +137,25 @@ class QueryBuilder extends OMBuilder
             $relationName = $this->getFKPhpNameAffix($fk);
 
             $script .= "
- * @method $queryClass leftJoin" . $relationName . "(\$relationAlias = null) Adds a LEFT JOIN clause to the query using the " . $relationName . " relation
- * @method $queryClass rightJoin" . $relationName . "(\$relationAlias = null) Adds a RIGHT JOIN clause to the query using the " . $relationName . " relation
- * @method $queryClass innerJoin" . $relationName . "(\$relationAlias = null) Adds a INNER JOIN clause to the query using the " . $relationName . " relation
+ * @method $nameSpacedQueryClass leftJoin" . $relationName . "(\$relationAlias = null) Adds a LEFT JOIN clause to the query using the " . $relationName . " relation
+ * @method $nameSpacedQueryClass rightJoin" . $relationName . "(\$relationAlias = null) Adds a RIGHT JOIN clause to the query using the " . $relationName . " relation
+ * @method $nameSpacedQueryClass innerJoin" . $relationName . "(\$relationAlias = null) Adds a INNER JOIN clause to the query using the " . $relationName . " relation
  *";
         }
         foreach ($this->getTable()->getReferrers() as $refFK) {
             $relationName = $this->getRefFKPhpNameAffix($refFK);
 
             $script .= "
- * @method $queryClass leftJoin" . $relationName . "(\$relationAlias = null) Adds a LEFT JOIN clause to the query using the " . $relationName . " relation
- * @method $queryClass rightJoin" . $relationName . "(\$relationAlias = null) Adds a RIGHT JOIN clause to the query using the " . $relationName . " relation
- * @method $queryClass innerJoin" . $relationName . "(\$relationAlias = null) Adds a INNER JOIN clause to the query using the " . $relationName . " relation
+ * @method $nameSpacedQueryClass leftJoin" . $relationName . "(\$relationAlias = null) Adds a LEFT JOIN clause to the query using the " . $relationName . " relation
+ * @method $nameSpacedQueryClass rightJoin" . $relationName . "(\$relationAlias = null) Adds a RIGHT JOIN clause to the query using the " . $relationName . " relation
+ * @method $nameSpacedQueryClass innerJoin" . $relationName . "(\$relationAlias = null) Adds a INNER JOIN clause to the query using the " . $relationName . " relation
  *";
-        }
-
-
-        $absoluteNameSpacePrefix = NULL;
-        $absoluteNameSpacePosfix = NULL;
-        if ($this->getBuildProperty('namespaceUseAbsolute')) {
-            $absoluteNameSpacePrefix = '\\' .  $this->getTable()->getNamespace() . '\\';
-            $absoluteNameSpacePosfix = '';
         }
 
         // override the signature of ModelCriteria::findOne() to specify the class of the returned object, for IDE completion
         $script .= "
- * @method {$absoluteNameSpacePrefix}$modelClass{$absoluteNameSpacePosfix} findOne(PropelPDO \$con = null) Return the first $modelClass matching the query
- * @method {$absoluteNameSpacePrefix}$modelClass{$absoluteNameSpacePosfix} findOneOrCreate(PropelPDO \$con = null) Return the first $modelClass matching the query, or a new $modelClass object populated from the query conditions when no match is found
+ * @method $nameSpacedModelClass findOne(PropelPDO \$con = null) Return the first $modelClass matching the query
+ * @method $nameSpacedModelClass findOneOrCreate(PropelPDO \$con = null) Return the first $modelClass matching the query, or a new $modelClass object populated from the query conditions when no match is found
  *";
 
         /**
@@ -167,7 +169,7 @@ class QueryBuilder extends OMBuilder
             }
 
             $script .= "
- * @method {$absoluteNameSpacePrefix}$modelClass{$absoluteNameSpacePosfix} findOneBy" . $column->getPhpName() . "(" . $column->getPhpType() . " \$" . $column->getName() . ") Return the first $modelClass filtered by the " . $column->getName() . " column";
+ * @method $nameSpacedModelClass findOneBy" . $column->getPhpName() . "(" . $column->getPhpType() . " \$" . $column->getName() . ") Return the first $modelClass filtered by the " . $column->getName() . " column";
         }
         $script .= "
  *";
