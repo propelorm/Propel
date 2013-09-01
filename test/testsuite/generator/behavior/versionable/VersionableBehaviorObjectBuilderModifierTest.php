@@ -986,4 +986,36 @@ XML;
 
         $this->assertEquals('Something', $foo->getVersionableBehaviorTest14()->getValue());
     }
+
+    public function testVersionColumnNameCaseInsensitivity()
+    {
+        $schema = <<<XML
+        <database name="versionable_behavior_test_case_insensitivity">
+            <table name="VersionableBehaviorTestCaseInsensitivity">
+                <column name="id" primaryKey="true" type="INTEGER" autoIncrement="true" />
+                <column name="name" type="varchar" size="64" />
+
+                <behavior name="versionable">
+                    <parameter name="version_column" value="Version"/>
+                </behavior>
+            </table>
+        </database>
+XML;
+
+        $builder = new PropelQuickBuilder();
+        $builder->setSchema($schema);
+
+        $classes = $builder->getClasses();
+
+        preg_match_all('/public function getVersion\(/', $classes, $getterMatches);
+        preg_match_all('/public function filterByVersion\(/', $classes, $filterMatches);
+
+        // there should be two versions of this getter in the source.  one for the main
+        // class and one for the version class
+        $this->assertEquals(2, sizeof($getterMatches[0]));
+
+        // there should be two versions of the filter.  one for the main query class 
+        // and one for the version query class
+        $this->assertEquals(2, sizeof($filterMatches[0]));
+    }
 }

@@ -80,7 +80,7 @@ class VersionableBehaviorQueryBuilderModifier
     {
         $this->setBuilder($builder);
         $script = '';
-        if ($this->getParameter('version_column') != 'version') {
+        if (strcasecmp($this->getParameter('version_column'), 'version') != 0) {
             $this->addFilterByVersion($script);
             $this->addOrderByVersion($script);
         }
