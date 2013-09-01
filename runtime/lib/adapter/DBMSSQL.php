@@ -207,7 +207,7 @@ class DBMSSQL extends DBAdapter
             $selColCount = count($selColArr) - 1;
 
             //make sure the current column isn't * or an aggregate
-            if ($selColArr[0] != '*' && !strstr($selColArr[0], '(')) {
+            if ($selColArr[0] != '*' && !strstr($selColArr[0], '(') && strtoupper($selColArr[0]) !== 'CASE') {
 
                 // Aliases can be used in ORDER BY clauses on a SELECT,
                 // but aliases are not valid in the ORDER BY clause of ROW_NUMBER() OVER (...),

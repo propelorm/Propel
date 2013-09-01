@@ -32,4 +32,12 @@ class DBMSSQLTest extends DBAdapterTestAbstract
         $db = new DBMSSQL();
         $this->assertEquals('[Book ISBN]', $db->quoteIdentifier('Book ISBN'));
     }
+
+    public function testCaseQuery()
+    {
+        $adapter = new DBMSSQL();
+        $sql = "SELECT Field1, CASE WHEN Field2 = 'non-relevant' THEN 0 ELSE 1 END AS [Relevant] FROM Record ORDER BY [Relevant] ASC";
+        $adapter->applyLimit($sql, 10, 5);
+        $this->assertEquals("SELECT [Field1], [Relevant] FROM (SELECT ROW_NUMBER() OVER(ORDER BY CASE WHEN Field2 = 'non-relevant' THEN 0 ELSE 1 END ASC) AS [RowNumber], Field1 AS [Field1], CASE WHEN Field2 = 'non-relevant' THEN 0 ELSE 1 END AS [Relevant] FROM Record) AS derivedb WHERE RowNumber BETWEEN 11 AND 15", $sql);
+    }
 }
