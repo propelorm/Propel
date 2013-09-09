@@ -7,7 +7,7 @@ layout: base
     {{ content }}
 </div>
 
-<script type="text/javascript" src="/js/anchorify.min.js"></script>
+<script type="text/javascript" src="{{ site.base_url }}js/anchorify.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function(){
         $('.toc').tableOfContents(null, { startLevel: 2 });

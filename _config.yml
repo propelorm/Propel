@@ -2,3 +2,5 @@ pygments:  true
 permalink: /blog/:year/:month/:day/:title.html
 markdown:  redcarpet
 exclude:   [ README.md, Gemfile ]
+
+base_url:  /Propel/
