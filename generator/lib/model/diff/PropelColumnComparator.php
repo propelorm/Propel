@@ -56,7 +56,13 @@ class PropelColumnComparator
         $fromDomain = $fromColumn->getDomain();
         $toDomain = $toColumn->getDomain();
         if ($fromDomain->getType() != $toDomain->getType()) {
-            $changedProperties['type'] = array($fromDomain->getType(), $toDomain->getType());
+            if ($toDomain->getType() == 'ENUM') {
+                if ($toDomain->getSqlType() != $fromDomain->getType() ) {
+                    $changedProperties['type'] = array($fromDomain->getType(), $toDomain->getType());
+                }
+            } else {
+                $changedProperties['type'] = array($fromDomain->getType(), $toDomain->getType());
+            }
         }
         if ($fromDomain->getScale() != $toDomain->getScale()) {
             $changedProperties['scale'] = array($fromDomain->getScale(), $toDomain->getScale());
@@ -86,7 +92,15 @@ class PropelColumnComparator
                     $changedProperties['defaultValueType'] = array($fromDefaultValue->getType(), $toDefaultValue->getType());
                 }
                 if ($fromDefaultValue->getValue() != $toDefaultValue->getValue()) {
-                    $changedProperties['defaultValueValue'] = array($fromDefaultValue->getValue(), $toDefaultValue->getValue());
+                    if ($toDomain->getType() == 'ENUM') {
+                        $values = $toColumn->getValueSet();
+                        if (!isset($values[$fromDefaultValue->getValue()]) ||
+                            $values[$fromDefaultValue->getValue()] != $toDefaultValue->getValue()) {
+                            $changedProperties['defaultValueValue'] = array($fromDefaultValue->getValue(), $toDefaultValue->getValue());
+                        }
+                    } else {
+                        $changedProperties['defaultValueValue'] = array($fromDefaultValue->getValue(), $toDefaultValue->getValue());
+                    }
                 }
             }
         }
