@@ -448,8 +448,13 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . "
         }
         $pkHash = $this->getPeerBuilder()->getInstancePoolKeySnippet($pks);
         $script .= "
-        if ((null !== (\$obj = {$peerClassname}::getInstanceFromPool({$pkHash}))) && !\$this->formatter) {
-            // the object is already in the instance pool
+        \$objFormatter = self::FORMAT_OBJECT;
+        if (
+            (is_null(\$this->select) && (is_a(\$this->defaultFormatterClass, \$objFormatter, true) && !\$this->formatter) ||
+                (\$this->formatter instanceof \$objFormatter)) &&
+            (null !== (\$obj = {$peerClassname}::getInstanceFromPool({$pkHash})))
+        ) {
+            // the object is alredy in the instance pool
             return \$obj;
         }
         if (\$con === null) {
