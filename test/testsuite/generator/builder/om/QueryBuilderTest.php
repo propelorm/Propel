@@ -1090,10 +1090,10 @@ class QueryBuilderTest extends BookstoreTestBase
         $b->setTitle('foo');
         $b->save($this->con);
         BookQuery::create()->findPk($b->getId(), $this->con);
-        $book = BookQuery::create()->select(['Id', 'Title'])->findPk($b->getId(), $this->con);
+        $book = BookQuery::create()->select(array('Id', 'Title'))->findPk($b->getId(), $this->con);
         $this->assertEquals(array('Id' => $b->getId(), 'Title' => 'foo'), $book);
 
-        $book2 = BookQuery::create()->setFormatter('PropelSimpleArrayFormatter')->select(['Id', 'Title'])->findPk($b->getId(), $this->con);
+        $book2 = BookQuery::create()->setFormatter('PropelSimpleArrayFormatter')->select(array('Id', 'Title'))->findPk($b->getId(), $this->con);
         $this->assertEquals(array('Id' => $b->getId(), 'Title' => 'foo'), $book2);
     }
 
