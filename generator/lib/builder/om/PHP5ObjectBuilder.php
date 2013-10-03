@@ -4616,6 +4616,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
     protected function addCrossFKDoAdd(&$script, ForeignKey $refFK, ForeignKey $crossFK)
     {
         $relatedObjectClassName = $this->getFKPhpNameAffix($crossFK, $plural = false);
+        $relatedObjectName = $this->getNewStubObjectBuilder($crossFK->getForeignTable())->getClassname();
 
         $selfRelationNamePlural = $this->getFKPhpNameAffix($refFK, $plural = true);
 
@@ -4632,7 +4633,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
     /**
      * @param	{$relatedObjectClassName} \${$lowerRelatedObjectClassName} The $lowerRelatedObjectClassName object to add.
      */
-    protected function doAdd{$relatedObjectClassName}(\${$lowerRelatedObjectClassName})
+    protected function doAdd{$relatedObjectClassName}({$relatedObjectName} \${$lowerRelatedObjectClassName})
     {
         // set the back reference to this object directly as using provided method either results
         // in endless loop or in multiple relations
