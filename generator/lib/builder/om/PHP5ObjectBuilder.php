@@ -1987,7 +1987,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
         // checking in mutators.
         if ($col->isPhpPrimitiveType()) {
             $script .= "
-        if (\$v !== null && is_numeric(\$v)) {
+        if (\$v !== null) {
             \$v = (" . $col->getPhpType() . ") \$v;
         }
 ";
