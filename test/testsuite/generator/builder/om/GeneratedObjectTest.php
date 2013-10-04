@@ -100,6 +100,31 @@ class GeneratedObjectTest extends BookstoreTestBase
         $acct->setPassword("testpass");
         $this->assertTrue($acct->isModified());
     }
+    
+    
+    public function testTypeHintingValues()
+    {
+      $a = new Author();
+      
+      $a->setAge(2);
+      $this->assertEquals(2, $a->getAge());
+      $this->assertTrue(is_int($a->getAge()));
+      
+      $a->setAge('wrong integer');
+      $this->assertTrue(is_int($a->getAge()));
+      
+      
+      $a->setFirstName('test name');
+      $this->assertEquals('test name', $a->getFirstName());
+      $this->assertTrue(is_string($a->getFirstName()));
+      
+      
+      $a->setFirstName(true);
+      $this->assertTrue(is_string($a->getFirstName()));
+      
+      $a->setFirstName(array());
+      $this->assertTrue(is_string($a->getFirstName()));
+    }
 
     /**
      * Tests the use of default expressions and the reloadOnInsert and reloadOnUpdate attributes.
