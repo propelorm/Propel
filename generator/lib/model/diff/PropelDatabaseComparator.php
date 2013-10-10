@@ -130,7 +130,7 @@ class PropelDatabaseComparator
 
         // check for table differences
         foreach ($fromDatabaseTables as $fromTable) {
-            if ($this->toDatabase->hasTable($fromTable->getName(), $caseInsensitive)) {
+            if ($this->toDatabase->hasTable($fromTable->getName(), $caseInsensitive) && !$fromTable->isSkipSql()) {
                 $toTable = $this->toDatabase->getTable($fromTable->getName(), $caseInsensitive);
                 $databaseDiff = PropelTableComparator::computeDiff($fromTable, $toTable, $caseInsensitive);
                 if ($databaseDiff) {
