@@ -143,7 +143,7 @@ class PropelDatabaseComparator
         // check for table renamings
         foreach ($this->databaseDiff->getAddedTables() as $addedTableName => $addedTable) {
             foreach ($this->databaseDiff->getRemovedTables() as $removedTableName => $removedTable) {
-                if (!$addedTable->isSkipSql() && !$removedTable->isSkipSql() && !PropelTableComparator::computeDiff($addedTable, $removedTable, $caseInsensitive)) {
+                if (!PropelTableComparator::computeDiff($addedTable, $removedTable, $caseInsensitive)) {
                     // no difference except the name, that's probably a renaming
                     $this->databaseDiff->addRenamedTable($removedTableName, $addedTableName);
                     $this->databaseDiff->removeAddedTable($addedTableName);
