@@ -1588,6 +1588,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
         $fmt = var_export($this->getTemporalFormatter($col), true);
         
         // Default date/time formatter strings are specified in build.properties
+        $defaultfmt = null;
         if ($col->getType() === PropelTypes::DATE) {
             $defaultfmt = $this->getBuildProperty('defaultDateFormat');
         } elseif ($col->getType() === PropelTypes::TIME) {
@@ -1595,12 +1596,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
         } elseif ($col->getType() === PropelTypes::TIMESTAMP) {
             $defaultfmt = $this->getBuildProperty('defaultTimeStampFormat');
         }
-
-        if (empty($defaultfmt)) {
-            $defaultfmt = null;
-        }else{
-            $defaultfmt = "'".$defaultfmt."'";
-        }
+        $defaultfmt = var_export($defaultfmt, true);
         
         $script .= "
         \$dt = PropelDateTime::newInstance(\$v, null, '$dateTimeClass',$defaultfmt);
