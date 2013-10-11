@@ -1599,7 +1599,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
         if (empty($defaultfmt)) { $defaultfmt = null; }
     
         $script .= "
-        \$dt = PropelDateTime::newInstance( \$v, null, '$dateTimeClass',\$defaultfmt );
+        \$dt = PropelDateTime::newInstance( \$v, null, '$dateTimeClass',$defaultfmt );
         if (\$this->$clo !== null || \$dt !== null) {
             \$currentDateAsString = (\$this->$clo !== null && \$tmpDt = new $dateTimeClass(\$this->$clo)) ? \$tmpDt->format($fmt) : null;
             \$newDateAsString = \$dt ? \$dt->format($fmt) : null;";
