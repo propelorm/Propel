@@ -1587,8 +1587,6 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
 
         $fmt = var_export($this->getTemporalFormatter($col), true);
         
-        $defaultfmtvar = var_export($defaultfmt, true);
-        
         // Default date/time formatter strings are specified in build.properties
         if ($col->getType() === PropelTypes::DATE) {
             $defaultfmt = $this->getBuildProperty('defaultDateFormat');
