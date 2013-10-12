@@ -61,17 +61,20 @@ class DebugPDOStatement extends PDOStatement
     }
 
     /**
+     * @param array $values Parameters which were passed to execute(), if any. Default: bound parameters.
+     *
      * @return string
      */
-    public function getExecutedQueryString()
+    public function getExecutedQueryString(array $values = array())
     {
         $sql = $this->queryString;
+        $boundValues = empty($values) ? $this->boundValues : $values;
         $matches = array();
         if (preg_match_all('/(:p[0-9]+\b)/', $sql, $matches)) {
             $size = count($matches[1]);
             for ($i = $size - 1; $i >= 0; $i--) {
                 $pos = $matches[1][$i];
-                $sql = str_replace($pos, $this->boundValues[$pos], $sql);
+                $sql = str_replace($pos, $boundValues[$pos], $sql);
             }
         }
 
@@ -91,7 +94,7 @@ class DebugPDOStatement extends PDOStatement
         $debug = $this->pdo->getDebugSnapshot();
         $return = parent::execute($input_parameters);
 
-        $sql = $this->getExecutedQueryString();
+        $sql = $this->getExecutedQueryString($input_parameters?:array());
         $this->pdo->log($sql, null, __METHOD__, $debug);
         $this->pdo->setLastExecutedQuery($sql);
         $this->pdo->incrementQueryCount();
