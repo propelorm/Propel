@@ -64,7 +64,7 @@ The `MatchValidator` is used to run a regular expression of choice against the c
 </validator>
 ```
 
->**Tip**<br />Propel expects your pattern defined within `value` either without delimiters or in case you need a delimitier to be sorrounded by `/`. Other pattern delimiters are not supported.
+>**Tip**<br />Propel expects your pattern defined within `value` either without delimiters or in case you need a delimitier to be surrounded by `/`. Other pattern delimiters are not supported.
 
 ### NotMatchValidator ###
 
@@ -81,7 +81,7 @@ Opposite of `MatchValidator`, this validator returns false if the regex returns 
 </validator>
 ```
 
->**Tip**<br />Propel expects your pattern defined within `value` either without delimiters or in case you need a delimitier to be sorrounded by `/`. Other pattern delimiters are not supported.
+>**Tip**<br />Propel expects your pattern defined within `value` either without delimiters or in case you need a delimitier to be surrounded by `/`. Other pattern delimiters are not supported.
 
 ### MaxLengthValidator ###
 
