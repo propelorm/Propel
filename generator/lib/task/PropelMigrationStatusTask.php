@@ -74,12 +74,13 @@ class PropelMigrationStatusTask extends BasePropelMigrationTask
                 }
             }
             foreach ($migrationTimestamps as $timestamp) {
+                $executed = !in_array($timestamp, $validTimestamps);
                 $this->log(sprintf(
                     ' %s %s %s',
                     $timestamp == $oldestMigrationTimestamp ? '>' : ' ',
                     $manager->getMigrationClassName($timestamp),
-                    $timestamp <= $oldestMigrationTimestamp ? '(executed)' : ''
-                ), $timestamp <= $oldestMigrationTimestamp ? Project::MSG_VERBOSE : Project::MSG_INFO);
+                    $executed ? '(executed)' : ''
+                ), $executed ? Project::MSG_VERBOSE : Project::MSG_INFO);
             }
         } else {
             $this->log(sprintf('No migration file found in "%s".', $dir));

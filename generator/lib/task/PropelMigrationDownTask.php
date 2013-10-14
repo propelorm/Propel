@@ -89,7 +89,7 @@ class PropelMigrationDownTask extends BasePropelMigrationTask
                 $datasource
             ));
 
-            $manager->updateLatestMigrationTimestamp($datasource, $previousTimestamp);
+            $manager->removeMigrationTimestamp($datasource, $nextMigrationTimestamp);
             $this->log(sprintf(
                 'Downgraded migration date to %d for datasource "%s"',
                 $previousTimestamp,
