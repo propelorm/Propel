@@ -136,6 +136,9 @@ require '" . $requiredClassFilePath . "';
         $baseBuilder = $this->getStubQueryBuilder();
         $this->declareClassFromBuilder($baseBuilder);
         $baseClassname = $this->getParentClassName();
+        
+        //[noofaq] add peer class declaration to have "use" statement available
+        $this->declareClassFromBuilder($this->getStubPeerBuilder());
 
         $script .= "
 /**
