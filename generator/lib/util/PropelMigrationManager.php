@@ -287,8 +287,7 @@ class PropelMigrationManager
     {
         if ($this->getMigrationParallel()) {
             $migrationTimestamps = array_diff($this->getMigrationTimestamps(), $this->getAllDatabaseVersions());
-        }
-        else {
+        } else {
             $oldestMigrationTimestamp = $this->getOldestDatabaseVersion();
             $migrationTimestamps = $this->getMigrationTimestamps();
             // removing already executed migrations
