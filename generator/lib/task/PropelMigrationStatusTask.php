@@ -25,6 +25,7 @@ class PropelMigrationStatusTask extends BasePropelMigrationTask
         $manager->setConnections($this->getGeneratorConfig()->getBuildConnections());
         $manager->setMigrationTable($this->getMigrationTable());
         $manager->setMigrationDir($this->getOutputDirectory());
+        $manager->setMigrationParallel($this->getGeneratorConfig()->getBuildProperty('migrationParallel'));
 
         // the following is a verbose version of PropelMigrationManager::getValidMigrationTimestamps()
         // mostly for explicit output
@@ -74,7 +75,11 @@ class PropelMigrationStatusTask extends BasePropelMigrationTask
                 }
             }
             foreach ($migrationTimestamps as $timestamp) {
-                $executed = !in_array($timestamp, $validTimestamps);
+                if ($manager->getMigrationParallel()) {
+                    $executed = !in_array($timestamp, $validTimestamps);
+                } else {
+                    $executed = $timestamp <= $oldestMigrationTimestamp;
+                }
                 $this->log(sprintf(
                     ' %s %s %s',
                     $timestamp == $oldestMigrationTimestamp ? '>' : ' ',

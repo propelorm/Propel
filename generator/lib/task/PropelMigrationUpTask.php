@@ -28,6 +28,7 @@ class PropelMigrationUpTask extends BasePropelMigrationTask
         $manager->setConnections($this->getGeneratorConfig()->getBuildConnections());
         $manager->setMigrationTable($this->getMigrationTable());
         $manager->setMigrationDir($this->getOutputDirectory());
+        $manager->setMigrationParallel($this->getGeneratorConfig()->getBuildProperty('migrationParallel'));
 
         if (!$nextMigrationTimestamp = $manager->getFirstUpMigrationTimestamp()) {
             $this->log('All migrations were already executed - nothing to migrate.');

@@ -29,6 +29,7 @@ class PropelMigrationDownTask extends BasePropelMigrationTask
         $manager->setConnections($this->getGeneratorConfig()->getBuildConnections());
         $manager->setMigrationTable($this->getMigrationTable());
         $manager->setMigrationDir($this->getOutputDirectory());
+        $manager->setMigrationParallel($this->getGeneratorConfig()->getBuildProperty('migrationParallel'));
 
         $previousTimestamps = $manager->getAlreadyExecutedMigrationTimestamps();
         if (!$nextMigrationTimestamp = array_pop($previousTimestamps)) {
@@ -89,7 +90,11 @@ class PropelMigrationDownTask extends BasePropelMigrationTask
                 $datasource
             ));
 
-            $manager->removeMigrationTimestamp($datasource, $nextMigrationTimestamp);
+            if ($manager->getMigrationParallel()) {
+                $manager->removeMigrationTimestamp($datasource, $nextMigrationTimestamp);
+            } else {
+                $manager->updateLatestMigrationTimestamp($datasource, $previousTimestamp);
+            }
             $this->log(sprintf(
                 'Downgraded migration date to %d for datasource "%s"',
                 $previousTimestamp,
