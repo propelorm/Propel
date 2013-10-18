@@ -74,7 +74,14 @@ class DebugPDOStatement extends PDOStatement
             $size = count($matches[1]);
             for ($i = $size - 1; $i >= 0; $i--) {
                 $pos = $matches[1][$i];
-                $sql = str_replace($pos, $boundValues[$pos], $sql);
+
+                // trimming extra quotes, making sure value is properly quoted afterwards
+                $boundValue = $boundValues[$pos];
+                if (is_string($boundValue)) { // quoting only needed for string values
+                    $boundValue = trim($boundValue, "'");
+                    $boundValue = $this->pdo->quote($boundValue);
+                }
+                $sql = str_replace($pos, $boundValue, $sql);
             }
         }
 
@@ -120,7 +127,7 @@ class DebugPDOStatement extends PDOStatement
         $valuestr = $type == PDO::PARAM_LOB ? '[LOB value]' : var_export($value, true);
         $msg = sprintf('Binding %s at position %s w/ PDO type %s', $valuestr, $pos, $typestr);
 
-        $this->boundValues[$pos] = $valuestr;
+        $this->boundValues[$pos] = $value;
 
         $this->pdo->log($msg, null, __METHOD__, $debug);
 
@@ -143,13 +150,14 @@ class DebugPDOStatement extends PDOStatement
      */
     public function bindParam($pos, &$value, $type = PDO::PARAM_STR, $length = 0, $driver_options = null)
     {
+        $originalValue = $value;
         $debug = $this->pdo->getDebugSnapshot();
         $typestr = isset(self::$typeMap[$type]) ? self::$typeMap[$type] : '(default)';
         $return = parent::bindParam($pos, $value, $type, $length, $driver_options);
         $valuestr = $length > 100 ? '[Large value]' : var_export($value, true);
         $msg = sprintf('Binding %s at position %s w/ PDO type %s', $valuestr, $pos, $typestr);
 
-        $this->boundValues[$pos] = $valuestr;
+        $this->boundValues[$pos] = $originalValue;
 
         $this->pdo->log($msg, null, __METHOD__, $debug);
 
