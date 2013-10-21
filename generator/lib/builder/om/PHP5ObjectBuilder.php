@@ -4500,7 +4500,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
     public function set{$relatedNamePlural}(PropelCollection \${$inputCollection}, PropelPDO \$con = null)
     {
         \$this->clear{$relatedNamePlural}();
-        \$current{$relatedNamePlural} = \$this->get{$relatedNamePlural}();
+        \$current{$relatedNamePlural} = \$this->get{$relatedNamePlural}(null, \$con);
 
         \$this->{$inputCollection}ScheduledForDeletion = \$current{$relatedNamePlural}->diff(\${$inputCollection});
 
