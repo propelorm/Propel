@@ -1,5 +1,9 @@
 # Changelog Of The Propel 1.x Branch #
 
+## ????-??-??: Version 1.7.1 ##
+
+n/a
+
 ## 2013-10-21: Version 1.7.0 ##
 
 067dad2 reworked approach for better handling of executed queries in DebugPDO
