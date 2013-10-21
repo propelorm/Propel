@@ -19,7 +19,7 @@ require_once dirname(__FILE__) . '/DBAdapterTestAbstract.php';
  */
 class DBMSSQLTest extends DBAdapterTestAbstract
 {
-    public function testSelectJoinOrderAlias ()
+    public function testSelectJoinOrderAlias()
     {
         $adapter = new DBMSSQL();
         $sql = 'SELECT Field, Related.Field AS [RelatedField] FROM Record LEFT JOIN Related ON Record.RelatedID = Related.ID ORDER BY [RelatedField] ASC';

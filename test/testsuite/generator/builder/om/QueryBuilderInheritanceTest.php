@@ -134,7 +134,7 @@ class QueryBuilderInheritanceTest extends BookstoreTestBase
         $manager->delete();
     }
 
-    public function  testFindPkSimpleWithAbstractSingleTableInheritanceReturnCorrectClass()
+    public function testFindPkSimpleWithAbstractSingleTableInheritanceReturnCorrectClass()
     {
         Propel::disableInstancePooling();
 

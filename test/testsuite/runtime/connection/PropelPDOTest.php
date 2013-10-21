@@ -492,7 +492,6 @@ class PropelPDOTest extends PHPUnit_Framework_TestCase
         $prepStmt->execute(array(':p1' => '%Harry%'));
         $this->assertEquals($expectedQuery, $con->getLastExecutedQuery(), 'DebugPDO failed to quote prepared statement on execute properly');
 
-
         // statement with named placeholder, this one won't get substituted
         $expectedNotSubstitutedQuery = "SELECT book.id FROM `book` WHERE book.title LIKE :name";
         $prepStmt = $con->prepare($expectedNotSubstitutedQuery);
@@ -528,8 +527,8 @@ class PropelPDOTest extends PHPUnit_Framework_TestCase
     /**
      * Testing if integer values will be quoted correctly by DebugPDOStatement::getExecutedQueryString
      */
-    public function testDebugExecutedQueryIntegerValue() {
-
+    public function testDebugExecutedQueryIntegerValue()
+    {
         /**
          * @var DebugPDO $con
          */
@@ -557,7 +556,6 @@ class PropelPDOTest extends PHPUnit_Framework_TestCase
         // passing params directly
         $prepStmt->execute(array(':p1' => 123));
         $this->assertEquals($expectedQuery, $con->getLastExecutedQuery(), 'DebugPDO failed to quote prepared statement on execute properly');
-
 
         // statement with named placeholder, this one won't get substituted
         $expectedNotSubstitutedQuery = "SELECT book.title FROM `book` WHERE book.id = :name";
@@ -595,8 +593,8 @@ class PropelPDOTest extends PHPUnit_Framework_TestCase
      * Testing if numeric values will be quoted correctly by DebugPDOStatement::getExecutedQueryString
      * Numeric values sometimes will get handled differently, since there are numeric values which are non-integer
      */
-    public function testDebugExecutedQueryNumericValue() {
-
+    public function testDebugExecutedQueryNumericValue()
+    {
         /**
          * @var DebugPDO $con
          */
@@ -624,7 +622,6 @@ class PropelPDOTest extends PHPUnit_Framework_TestCase
         // passing params directly
         $prepStmt->execute(array(':p1' => 0002000));
         $this->assertEquals($expectedQuery, $con->getLastExecutedQuery(), 'DebugPDO failed to quote prepared statement on execute properly');
-
 
         // statement with named placeholder, this one won't get substituted
         $expectedNotSubstitutedQuery = "SELECT book.title FROM `book` WHERE book.id = :name";

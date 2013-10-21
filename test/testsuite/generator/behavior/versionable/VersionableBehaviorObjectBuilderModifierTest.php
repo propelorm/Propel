@@ -1014,7 +1014,7 @@ XML;
         // class and one for the version class
         $this->assertEquals(2, sizeof($getterMatches[0]));
 
-        // there should be two versions of the filter.  one for the main query class 
+        // there should be two versions of the filter.  one for the main query class
         // and one for the version query class
         $this->assertEquals(2, sizeof($filterMatches[0]));
     }

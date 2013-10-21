@@ -43,7 +43,7 @@ class FieldnameRelatedTest extends PHPUnit_Framework_TestCase
     /**
      * Tests if fieldname type constants are defined
      */
-    public function testFieldNameTypeConstants ()
+    public function testFieldNameTypeConstants()
     {
         $result = defined('BasePeer::TYPE_PHPNAME');
         $this->assertTrue($result);
@@ -52,7 +52,7 @@ class FieldnameRelatedTest extends PHPUnit_Framework_TestCase
     /**
      * Tests the Base[Object]Peer::getFieldNames() method
      */
-    public function testGetFieldNames ()
+    public function testGetFieldNames()
     {
         $types = array(
             BasePeer::TYPE_PHPNAME,
@@ -117,7 +117,7 @@ class FieldnameRelatedTest extends PHPUnit_Framework_TestCase
     /**
      * Tests the Base[Object]Peer::translateFieldName() method
      */
-    public function testTranslateFieldName ()
+    public function testTranslateFieldName()
     {
         $types = array(
             BasePeer::TYPE_PHPNAME,
@@ -146,7 +146,7 @@ class FieldnameRelatedTest extends PHPUnit_Framework_TestCase
     /**
      * Tests the BasePeer::getFieldNames() method
      */
-    public function testGetFieldNamesStatic ()
+    public function testGetFieldNamesStatic()
     {
         $types = array(
             BasePeer::TYPE_PHPNAME,
@@ -212,7 +212,7 @@ class FieldnameRelatedTest extends PHPUnit_Framework_TestCase
     /**
      * Tests the BasePeer::translateFieldName() method
      */
-    public function testTranslateFieldNameStatic ()
+    public function testTranslateFieldNameStatic()
     {
         $types = array(
             BasePeer::TYPE_PHPNAME,

@@ -526,7 +526,7 @@ class CriteriaTest extends BookstoreTestBase
         $this->assertEquals($expected, $params);
     }
 
-    public function testJoinObject ()
+    public function testJoinObject()
     {
         $j = new Join('TABLE_A.COL_1', 'TABLE_B.COL_2');
         $this->assertEquals('INNER JOIN', $j->getJoinType());
@@ -559,7 +559,7 @@ class CriteriaTest extends BookstoreTestBase
         $this->assertEquals('TABLE_B.COL_2', $j->getRightColumn(1));
     }
 
-    public function testAddStraightJoin ()
+    public function testAddStraightJoin()
     {
         $c = new Criteria();
         $c->addSelectColumn("*");
@@ -576,7 +576,7 @@ class CriteriaTest extends BookstoreTestBase
         $this->assertEquals($expect, $result);
     }
 
-    public function testAddSeveralJoins ()
+    public function testAddSeveralJoins()
     {
         $c = new Criteria();
         $c->addSelectColumn("*");
@@ -595,7 +595,7 @@ class CriteriaTest extends BookstoreTestBase
         $this->assertEquals($expect, $result);
     }
 
-    public function testAddLeftJoin ()
+    public function testAddLeftJoin()
     {
         $c = new Criteria();
         $c->addSelectColumn("TABLE_A.*");
@@ -613,7 +613,7 @@ class CriteriaTest extends BookstoreTestBase
         $this->assertEquals($expect, $result);
     }
 
-    public function testAddSeveralLeftJoins ()
+    public function testAddSeveralLeftJoins()
     {
         // Fails.. Suspect answer in the chunk starting at BasePeer:605
         $c = new Criteria();
@@ -634,7 +634,7 @@ class CriteriaTest extends BookstoreTestBase
         $this->assertEquals($expect, $result);
     }
 
-    public function testAddRightJoin ()
+    public function testAddRightJoin()
     {
         $c = new Criteria();
         $c->addSelectColumn("*");
@@ -651,7 +651,7 @@ class CriteriaTest extends BookstoreTestBase
         $this->assertEquals($expect, $result);
     }
 
-    public function testAddSeveralRightJoins ()
+    public function testAddSeveralRightJoins()
     {
         // Fails.. Suspect answer in the chunk starting at BasePeer:605
         $c = new Criteria();
@@ -672,7 +672,7 @@ class CriteriaTest extends BookstoreTestBase
         $this->assertEquals($expect, $result);
     }
 
-    public function testAddInnerJoin ()
+    public function testAddInnerJoin()
     {
         $c = new Criteria();
         $c->addSelectColumn("*");
@@ -689,7 +689,7 @@ class CriteriaTest extends BookstoreTestBase
         $this->assertEquals($expect, $result);
     }
 
-    public function testAddSeveralInnerJoin ()
+    public function testAddSeveralInnerJoin()
     {
         $c = new Criteria();
         $c->addSelectColumn("*");

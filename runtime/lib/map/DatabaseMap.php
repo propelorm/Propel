@@ -180,6 +180,7 @@ class DatabaseMap
             $tmClass = constant($peerClass . '::TM_CLASS');
 
             $this->addTableFromMapClass($tmClass);
+
             return $this->tablesByPhpName[$phpName];
         } else {
             throw new PropelException("Cannot fetch TableMap for undefined table phpName: " . $phpName);

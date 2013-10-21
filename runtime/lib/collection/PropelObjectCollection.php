@@ -306,7 +306,7 @@ class PropelObjectCollection extends PropelCollection
                     $objectHashCode = $object->hashCode();
                 }
 
-                if($obj->hashCode() === $objectHashCode) {
+                if ($obj->hashCode() === $objectHashCode) {
                     return $obj;
                 }
             }

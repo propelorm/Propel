@@ -532,7 +532,7 @@ EOF;
         $this->assertFalse($table3->getIsCrossRef());
     }
 
-    public function testPrefixDoesntAffectPhpName ()
+    public function testPrefixDoesntAffectPhpName()
     {
         $xmlToAppData = new XmlToAppData();
         $schema = <<<EOF
