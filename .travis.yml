@@ -1,5 +1,11 @@
 language: php
 
+branches:
+  only:
+    - 1.6
+    - master
+    - gh-pages
+
 php:
   - 5.3
   - 5.4
