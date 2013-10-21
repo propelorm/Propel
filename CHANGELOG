@@ -1,8 +1,100 @@
-# Changelog Of The Propel 1.6 Branch #
+# Changelog Of The Propel 1.x Branch #
 
-## 2013-??-??: Version 1.7.0 ##
+## 2013-10-21: Version 1.7.0 ##
 
-n/a
+067dad2 reworked approach for better handling of executed queries in DebugPDO
+2bb6d2d fix DebugPDOStatement for usage with execute
+041af74 Added unit test for modified table case
+c15c239 Added type-hinting on doAdd crossFK generated functions
+ceee8a9 fixed a getter function without '$con'
+f30aa35 Fixed diff task combined with skipSql
+57cde74 [README] Add packagist badge to show project popularity
+9087851 Fix namespace support
+83841e5 Get TableMap class name from Peer class
+3b0b2cc Added test for version column case insensitivity
+46b5a9c Added case-insensitive check for the version column
+b9a8ad7 Fix small error in the QueryBuilder Doc for TemporalType
+3ac9f0c Update SluggableBehavior.php
+a2f4f92 unit test
+2355979 slugable behavior - scope column overrides $getter
+38742c4 Support for regexp on different platforms
+148aeb2 [VersionableBehavior] Fix exception message got toVersion
+a5226c9 fix bug when adding previously removed relations
+115f6de add missing import for nested set
+252da4c test added
+52d8a76 fix for CASE expression in query with offset in ms sql
+2b2c4da code style fix
+f20f99b PropelObjectCollection::getIdenticalObject optimalization
+0cfa3db Fix accidental type conversion in sluggable behavior.
+e7ecc97 added Unit Test
+c1fc85d Fixed issue with migrations and decimal or numeric table size
+a6c3218 fix scheduledForDeletion for CrossFK w/ refPhpName
+70c18d2 Undefined index fix
+2193ba4 Fixed MigrationManager to use queries and charset settings
+d37b4cd Fixed object builder toArray withColumn
+7e173bc Fixed test assertion
+20f66c0 Minor spelling corrections
+2e50ea8 Failing testcase in toArray withColumn
+4a5eba2 Fixed Sluggable behavior combining with symfony_i18n
+c4b61cc Bugfix for PHP < 5.3.0
+f6031de Foreign Keys default behaviors managment (resolves issue #390)
+130429f Fix some issues. Closes #684
+193f736 Fix a couple of mistakes
+171211c Expected and actual values where in wrong order
+52b072b Improved SQLParser performance
+9687fe5 Tests for multiple character delimiters support
+cfa8222 Added multiple character delimiters support
+0272ba3 clone object in hashCode() function so the original object is not changed when calling hashCode provided test for the hasCode() function
+3ea2f2d Issue #677: Set back reference when calling add Provided tests for testing if all references are set for crossreferences before saving
+4495b9f fixed transaction leak when exception different from PropelException is thrown
+3bf0689 fix deleting related objects
+8fe41e5 Added multiple scope support in Sortable behavior.
+8f75133 Fixed #651. Stupid typo.
+5b7878a clean
+f72c534 add an excluded_parent_behavior to concret_inheritance behavior
+2606549 only generate findOneBySlug if required
+cb913c3 Add test for ModelCriteria to prove it support IN operator in JOIN conditions
+80179d6 Additional assertion to ensure binding params doesn't change actual result
+a6a20bd Use Criterion always when possible Using Criterion allows to bind values in statements. You can't use Criterion only for strings because in this method you can't distinguish if it is a table name or value provided by user.
+0ad1698 Add to Criteria support for IN and NOT IN operators in JOIN conditions e.g. JOIN x ON (x.id = y.x_id AND y.foo IN (42, 51))
+61f9368 removed duplicated assertion, refs #653
+54362ae fixed urls to trac tickets propel.phpdb.org/trac/ticket -> trac.propelorm.org/ticket
+75a15f1 fix generated CS of SoftDelete in forceDelete()
+27ea1df make ModelCriteria::create() changes more backward compatible
+cd22e0b reduced ModelCriteria::clear() tests
+937ff8b fix timing issues in TimestampableBehaviorTest
+11c1841 add lcfirst function stub
+aef6049 full list of changes below:
+fbc1b3a fix some introspections, coding style
+0379f34 add one-to-one handling to VersionableBehavior
+5b3ad51 Update .travis.yml
+38ec08d Revert bad CS fix (alternative CS behavior)
+93c6a0f Fixes JOIN duplication issue when default join type equals given join type (issue #373)
+dcace44 Bugfix for join equality when default join type is used
+86760fe Make `testQuotingIdentifiers()` abstract and allow each `DB<Adapter>Test` to implement it
+16926a5 Remove unnecessary .''
+fa98c50 Remove not valid anymore comment
+07da31f Support for quoting aliases
+3a91f81 add tests for issue #621
+5bab81d Update generator/lib/reverse/mysql/MysqlSchemaParser.php
+577df2d Don't null size field when scale specified
+644931d Fixed typos
+c116afc add test for issue #622
+423f354 Merge branch 'master' of git://github.com/ciromattia/Propel into ciromattia-master
+c1047df Merge branch '1.6'
+5f503ea Correctly add map namespace when $phpName has no backslash (e.g. namespaces are not used) - fixes #614
+82aa016 allow withColumn() and select() again. fixes #608.
+9798365 added failing testcase for issue #608
+622b9fe expect PropelException when cloning PropelOnDemandCollection's
+0890783 separate tests for __clone() using objects and scalars
+efb83ee fixed __clone() for PropelCollections containing scalar values
+e1dbfa9 added tests for PropelCollection new __clone() magic method
+f268cb0 removed unused properties from OnDemandCollection which were never set.
+366e1df fixed test
+48ebeb9 order by alias is not supported in mssql. fixes #596 by @chuck-jove
+c85111f added test provided for issue 596
+288e91d Fixed #603
+866378d Removed the `extend <BasePeer>` in PHP5PeerBuilder since it's a bug.
 
 ## 2013-03-31: Version 1.6.9 ##
 
