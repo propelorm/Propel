@@ -1,9 +1,0 @@
----
-layout: post
-title: Propel2 and PHP 5.4, Here We Go!
-published: true
----
-<p>A few months ago, I gave a talk about&nbsp;<a href="https://github.com/propelorm/Propel2">Propel2</a>&nbsp;at Symfony Live 2012 where I announced a first release scheduled for this summer. We are almost ready, and we've refactored more code than expected, so Propel2 is getting better each day. We could actually release a version at the end of this month.</p>
-<p>We already have early adopters on Propel2, even if I recommend to wait the first release. They gave us very positive feedback but they still miss one of the best Propel2 features: the&nbsp;<strong>traits</strong>. Actually, everyone misses it, and here we learnt a very interesting fact: people wants to use PHP 5.4 new features.<!--more--></p>
-<p>Following&nbsp;<a href="https://groups.google.com/d/topic/propel-development/2NfeMCJJQ5U/discussion">the discussion on the propel-development Mailing-List</a>, we are glad to announce a major change for Propel2. Yes, <strong>Propel2 will require PHP 5.4, and will generate PHP 5.4 code</strong>. Both the core and the generated code will use <a href="http://php.net/manual/en/migration54.new-features.php">PHP 5.4 killer features</a>.</p>
-<p>Thing is, <strong>when will we be able to release Propel2 then?</strong> I'm quite confident here. Propel 1.6 works fine, and as I use to say, we don't need to release something early to replace Propel 1.6. Propel2 is a new project, based on Propel 1.6 and we plan <strong>a release before the end of this year</strong>. We will spend this time to refactor the core with PHP 5.4 features, so that there won't be any BC breaks after a first release. Propel 1.6 works with PHP 5.2.4 as well as with PHP 5.4, we want to do the same with Propel2, and that's also why we decided to use PHP 5.4 as the minimum requirement.</p>

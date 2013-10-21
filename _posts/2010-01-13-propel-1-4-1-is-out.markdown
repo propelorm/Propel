@@ -1,6 +1,0 @@
----
-layout: post
-title: Propel 1.4.1 Is Out
-published: true
----
-The first maintenance release for the 1.4 branch has just been published, in all your favorite formats:<br /><ul><li>Subversion tag</li></ul><span style="font-family: courier new,monospace;">    &gt; svn checkout <a href="http://svn.phpdb.org/propel/tags/1.4.1">http://svn.phpdb.org/propel/tags/1.4.1</a> </span><br /> <ul><li>Tarball</li></ul><span style="font-family: courier new,monospace;">    <a href="http://propel.phpdb.org/propel-1.4.1.tar.gz">http://propel.phpdb.org/propel-1.4.1.tar.gz</a></span><br /><ul><li>PEAR Package</li></ul> <span style="font-family: courier new,monospace;">    &gt; sudo pear upgrade phpdb/propel-generator</span><br style="font-family: courier new,monospace;" /><span style="font-family: courier new,monospace;">    &gt; sudo pear upgrade phpdb/propel-runtime</span><p /> This release contains only bugfixes - no new feature - and is backwards compatible with 1.4.0. The changelog is available at <a href="http://propel.phpdb.org/trac/wiki/Users/Documentation/1.4/CHANGELOG">http://propel.phpdb.org/trac/wiki/Users/Documentation/1.4/CHANGELOG</a>. The online API documentation has been updated to reflect the latest changes.<p /> The next maintenance release is scheduled for mid-April.

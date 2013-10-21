@@ -1,6 +1,0 @@
----
-layout: post
-title: The Propel2 development has begun
-published: true
----
-Back in September 2010, we <a href="http://propel.posterous.com/propel2-will-be-an-activerecord-implementatio">announced</a> what the future of Propel would be once the 1.6 branch is released.<p /><div>It turns out that 1.6 took a long time to finish, but now that it&#39;s <a href="http://propel.posterous.com/propel-160rc1-is-released">coming to an end</a>, I can dedicate some time to laying the foundations of the next major iteration of Propel.</div> <p /><div>As expected, Propel2 is built on top of <a href="http://www.doctrine-project.org/projects/orm/2.0/docs/en">Doctrine2</a>, and uses <a href="http://www.twig-project.org/">Twig</a> for code generation. You can follow the development on <a href="https://github.com/fzaninotto/Propel2">GitHub</a> - we&#39;re still at the early stage, but the generator runs and generates working ActiveRecord objects.</div> <p /><div>You&#39;re welcome to comment and/or contribute anytime you want. GitHub is a great collaboration platform, so contributing to Propel2 should be even easier than with Propel1.</div><p /><div> We see a great future for the Propel ecosystem!</div>

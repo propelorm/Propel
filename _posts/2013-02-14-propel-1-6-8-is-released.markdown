@@ -1,9 +1,0 @@
----
-layout: post
-title: Propel 1.6.8 is Released
-published: true
----
-<p><strong>Propel 1.6.8</strong>&nbsp;is now available, and it's&nbsp;<strong>the fifth bug fixes only release</strong>.</p>
-<p>The release is available on&nbsp;<a href="https://github.com/propelorm/Propel" style="margin: 0px; padding: 0px; color: #003f99; text-decoration: initial;">GitHub</a>&nbsp;under the&nbsp;<a href="https://github.com/propelorm/Propel/tree/1.6.8" style="margin: 0px; padding: 0px; color: #003f99; text-decoration: initial;">1.6.8 tag</a>&nbsp;on GitHub, as PEAR package (<a href="http://pear.propelorm.org/index.php?package=propel_runtime&amp;release=1.6.8&amp;downloads" style="margin: 0px; padding: 0px; color: #003f99; text-decoration: initial;">runtime</a>&nbsp;&amp;&nbsp;<a href="http://pear.propelorm.org/index.php?package=propel_generator&amp;release=1.6.8&amp;downloads" style="margin: 0px; padding: 0px; color: #003f99; text-decoration: initial;">generator</a>), as archives (<a href="https://github.com/propelorm/Propel/zipball/1.6.8" style="margin: 0px; padding: 0px; color: #003f99; text-decoration: initial;">ZIP</a>&nbsp;and&nbsp;<a href="https://github.com/propelorm/Propel/tarball/1.6.8" style="margin: 0px; padding: 0px; color: #003f99; text-decoration: initial;">TAR</a>), and also available through&nbsp;<strong>Composer</strong>:&nbsp;<a href="http://packagist.org/packages/propel/propel1" style="margin: 0px; padding: 0px; color: #003f99; text-decoration: initial;">propel/propel1</a>.</p>
-<p>As usual, the&nbsp;API documentation is at:&nbsp;<a href="http://api.propelorm.org/" style="margin: 0px; padding: 0px; color: #003f99; text-decoration: initial;">http://api.propelorm.org/</a>, and here is the huge&nbsp;<a href="https://raw.github.com/propelorm/Propel/1.6.8/CHANGELOG" style="margin: 0px; padding: 0px; color: #003f99; text-decoration: initial;">CHANGELOG</a>. Thanks to all contributors.</p>
-<p>&nbsp;</p>

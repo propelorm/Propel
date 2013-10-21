@@ -1,6 +1,0 @@
----
-layout: post
-title: ! 'Propel2, Week #2'
-published: true
----
-<p>Last week, <a href="http://github.com/propelorm/Propel2">Propel2</a> got some love!&nbsp;<a href="https://github.com/propelorm/Propel2/commit/24b0e35c2fcf8ce7885e42857577c40e63afafbe">Propel2 adopted PSR-3</a>, the one that defines a <em><a href="https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-3-logger-interface.md">Logger Interface</a>. </em>Also, we started to work on PEER classes thanks to <a href="https://twitter.com/pixeljer">J&eacute;r&eacute;mie</a>.&nbsp;It's <strong>the last thing to do before an alpha release</strong>. It's quite complicated, but once it will be done, we will be able to decouple more things like the behaviours. Stay tuned!</p>
