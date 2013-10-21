@@ -80,4 +80,11 @@ and here are the statuses:
         <td><img src="https://travis-ci.org/propelorm/PropelBundle.png" /></td>
         <td><img src="https://travis-ci.org/propelorm/PropelServiceProvider.png" /></td>
     </tr>
+    <tr>
+        <td><img src="https://poser.pugx.org/propel/propel1/v/stable.png" /></td>
+        <td><img src="https://poser.pugx.org/propel/propel/v/stable.png" /></td>
+        <td>n/a</td>
+        <td><img src="https://poser.pugx.org/propel/propel-bundle/v/stable.png" /></td>
+        <td><img src="https://poser.pugx.org/propel/propel-service-provider/v/stable.png" /></td>
+    </tr>
 </table>
