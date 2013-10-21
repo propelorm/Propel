@@ -83,7 +83,7 @@ and here are the statuses:
     <tr>
         <td><img src="https://poser.pugx.org/propel/propel1/v/stable.png" /></td>
         <td><img src="https://poser.pugx.org/propel/propel/v/stable.png" /></td>
-        <td>n/a</td>
+        <td><img src="https://poser.pugx.org/propel/sf-propel-o-r-m-plugin/v/stable.png" /></td>
         <td><img src="https://poser.pugx.org/propel/propel-bundle/v/stable.png" /></td>
         <td><img src="https://poser.pugx.org/propel/propel-service-provider/v/stable.png" /></td>
     </tr>
