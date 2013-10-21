@@ -370,7 +370,7 @@ protected function makeSlugUnique(\$slug, \$separator = '" . $this->getParameter
     }
 
     \$slugNum = substr(\$object->" . $getter . "(), strlen(\$slug) + 1);
-    if (0 == \$slugNum[0]) {
+    if ('0' === \$slugNum[0]) {
         \$slugNum[0] = 1;
     }
 
