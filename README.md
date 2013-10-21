@@ -1,7 +1,7 @@
-The Propel Documentation
-========================
+The Propel 1.x Documentation
+============================
 
 [![Build
-Status](https://travis-ci.org/propelorm/propelorm.github.com.png?branch=master)](https://travis-ci.org/propelorm/propelorm.github.com)
+Status](https://travis-ci.org/propelorm/Propel?branch=gh-pages)](https://travis-ci.org/propelorm/Propel)
 
 Written in Markdown, built using [Jekyll](jekyllrb.com).
