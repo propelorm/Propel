@@ -94,4 +94,4 @@ You can also look at [user contributed behaviors](../cookbook/user-contributed-b
 
 * [Working with Silex](../cookbook/silex/working-with-silex.html)
 
->**Tip**<br />This is the documentation for the latest Propel **1.x** version. To access the old documentation, please visit [trac.propelorm.org](http://trac.propelorm.org).
+>**Tip**<br />This is the documentation for the latest Propel _1.x_ version. To access the old documentation, please visit [trac.propelorm.org](http://trac.propelorm.org).
