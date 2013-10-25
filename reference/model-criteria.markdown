@@ -419,7 +419,9 @@ $articles = ArticleQuery::create()
   ->join('Category')
   ->select('Title')
   ->find();
-// returns array('foo', 'bar')
+// returns PropelArrayCollection(
+//   array('foo', 'bar')
+// )
 
 // When you need only one column from one record, use select() and findOne()
 $articles = ArticleQuery::create()
