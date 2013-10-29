@@ -116,13 +116,14 @@ class GeneratedObjectTest extends BookstoreTestBase
         
         
         $a->clear();
-        $a->setAge('wrong integer');
+        $a->setAge('2');
+        $this->assertEquals(2, $a->getAge());
         $this->assertTrue(is_int($a->getAge()));
         
         
         $a->clear();
-        $a->setAge(true);
-        $this->assertTrue(is_int($a->getAge()));
+        $a->setAge('wrong integer');
+        $this->assertTrue(!is_int($a->getAge()));
         
         
         $a->clear();
@@ -140,13 +141,6 @@ class GeneratedObjectTest extends BookstoreTestBase
         $a->clear();
         $a->setFirstName(true);
         $this->assertTrue(is_string($a->getFirstName()));
-        
-        
-        /* php 5.4+ fail generate Notice: Array to string conversion  
-        $a->clear();
-        $a->setFirstName(array());
-        $this->assertTrue(is_string($a->getFirstName()));
-        */
     }
 
     /**
