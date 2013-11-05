@@ -514,8 +514,8 @@ To use it is in a `validation.yml` file just add those few lines in your validat
 BundleNamespace\Model\User:
   constraints:
     - Propel\PropelBundle\Validator\Constraints\UniqueObject:
-      fields: username
-      message: User already exists ({{ fields }}).
+        fields: username
+        message: User already exists ({{ fields }}).
 {% endhighlight %}
 
 In order to validate the unicity of more than just one fields:
