@@ -524,7 +524,7 @@ In order to validate the unicity of more than just one fields:
 BundleNamespace\Model\User:
   constraints:
     - Propel\PropelBundle\Validator\Constraints\UniqueObject:
-      fields: [username, login]
+        fields: [username, login]
 {% endhighlight %}
 
 As many validator of this type as you want can be used.
