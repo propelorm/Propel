@@ -60,7 +60,7 @@ short description to this Pull Request and submit it!
 
 ## Running Unit Tests ##
 
-See [Working with unit tests](../cookbook/working-with-unit-tests.html) How to setup propel's required environment and use PHPUnit.
+See [Working with unit tests](cookbook/working-with-unit-tests.html) How to setup propel's required environment and use PHPUnit.
 
 
 ## Improve the documentation ##
