@@ -1986,8 +1986,16 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
         // Perform type-casting to ensure that we can use type-sensitive
         // checking in mutators.
         if ($col->isPhpPrimitiveType()) {
+            if($col->isTextType()) {
+              $script .= "
+        if (\$v !== null) {";
+            } else {
+              $script .= "
+        if (\$v !== null && is_numeric(\$v)) {"; 
+            }
+            
+            
             $script .= "
-        if (\$v !== null && is_numeric(\$v)) {
             \$v = (" . $col->getPhpType() . ") \$v;
         }
 ";
