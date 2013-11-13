@@ -308,21 +308,37 @@ class PropelMigrationManager
 class $migrationClassName
 {
 
+    /**
+     * @param PropelMigrationManager \$manager
+     *
+     * @return bool|void
+     */
     public function preUp(\$manager)
     {
         // add the pre-migration code here
     }
 
+    /**
+     * @param PropelMigrationManager \$manager
+     */
     public function postUp(\$manager)
     {
         // add the post-migration code here
     }
 
+    /**
+     * @param PropelMigrationManager \$manager
+     *
+     * @return bool|void
+     */
     public function preDown(\$manager)
     {
         // add the pre-migration code here
     }
 
+    /**
+     * @param PropelMigrationManager \$manager
+     */
     public function postDown(\$manager)
     {
         // add the post-migration code here
