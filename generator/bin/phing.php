@@ -14,9 +14,9 @@
 
 $dirname = dirname(__FILE__);
 $autoloaded = false;
-foreach (array($dirname . '/../../', $dirname . '/../../../../../') as $dir) {
-    if (file_exists($file = realpath($dir) . '/vendor/autoload.php')) {
-        set_include_path($dir . '/vendor/phing/phing/classes' . PATH_SEPARATOR . get_include_path());
+foreach (array($dirname . '/../', $dirname . '/../../../../') as $dir) {
+    if (file_exists($file = realpath($dir) . '/autoload.php')) {
+        set_include_path($dir . '/phing/phing/classes' . PATH_SEPARATOR . get_include_path());
         include_once $file;
 
         $autoloaded = true;
