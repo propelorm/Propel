@@ -12,6 +12,7 @@ The `soft_delete` behavior overrides the deletion methods of a model object to m
 ## Basic Usage ##
 
 In the `schema.xml`, use the `<behavior>` tag to add the `soft_delete` behavior to a table:
+
 ```xml
 <table name="book">
   <column name="id" required="true" primaryKey="true" autoIncrement="true" type="INTEGER" />
