@@ -28,7 +28,7 @@ $b = new Book();
 $b->setTitle('War And Peace');
 $b->save();
 $b->delete();
-echo $b->isDeleted(); // false
+echo $b->isDeleted(); // true
 echo $b->getDeletedAt(); // 2009-10-02 18:14:23
 $books = BookQuery::create()->find(); // empty collection
 ```
