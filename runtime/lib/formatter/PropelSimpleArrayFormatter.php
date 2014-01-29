@@ -35,7 +35,9 @@ class PropelSimpleArrayFormatter extends PropelFormatter
             throw new PropelException('Cannot use limit() in conjunction with with() on a one-to-many relationship. Please remove the with() call, or the limit() call.');
         }
         while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-            $collection[] = $this->getStructuredArrayFromRow($row);
+            if (false !== $rowArray = $this->getStructuredArrayFromRow($row)) {
+                $collection[] = $rowArray;
+            }
         }
         $stmt->closeCursor();
 
@@ -47,7 +49,9 @@ class PropelSimpleArrayFormatter extends PropelFormatter
         $this->checkInit();
         $result = null;
         while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-            $result = $this->getStructuredArrayFromRow($row);
+            if (false !== $rowArray = $this->getStructuredArrayFromRow($row)) {
+                $result = $rowArray;
+            }
         }
         $stmt->closeCursor();
 
