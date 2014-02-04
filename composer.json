@@ -1,5 +1,5 @@
 {
-  "name": "propel/propel1",
+  "name": "eelkevdbos/propel1",
   "description": "Propel is an open-source Object-Relational Mapping (ORM) for PHP5.",
   "keywords": ["orm", "active record", "mapping", "database", "persistence"],
   "homepage": "http://www.propelorm.org/",
