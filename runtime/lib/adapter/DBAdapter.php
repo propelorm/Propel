@@ -439,7 +439,7 @@ abstract class DBAdapter
 
                 $tableName = null;
 
-                $selectClause[] = $columnName; // the full column name: e.g. MAX(books.price)
+                $selectClause[] = $this->quoteIdentifier($columnName); // the full column name: e.g. MAX(books.price)
 
                 $parenPos = strrpos($columnName, '(');
                 $dotPos = strrpos($columnName, '.', ($parenPos !== false ? $parenPos : 0));
