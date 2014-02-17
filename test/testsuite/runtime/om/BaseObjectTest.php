@@ -68,7 +68,7 @@ class BaseObjectTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf('TestableBaseObject', $b->setNew(true));
     }
     
-    public fucntion testSetDeletedReturnsSelf()
+    public function testSetDeletedReturnsSelf()
     {
         $b = new TestableBaseObject();
         $this->assertInstanceOf('TestableBaseObject', $b->setDeleted(false));
