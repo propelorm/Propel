@@ -788,15 +788,7 @@ class ModelCriteria extends Criteria
      */
     public function addJoinObject(Join $join, $name = null)
     {
-        $isAlreadyAdded = false;
-        foreach ($this->joins as $alreadyAddedJoin) {
-            if ($join->equals($alreadyAddedJoin)) {
-                $isAlreadyAdded = true;
-                break;
-            }
-        }
-
-        if (!$isAlreadyAdded) {
+        if (!in_array($join, $this->joins)) { // compare equality, NOT identity
             if (null === $name) {
                 $this->joins[] = $join;
             } else {
