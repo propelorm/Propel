@@ -1986,15 +1986,14 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
         // Perform type-casting to ensure that we can use type-sensitive
         // checking in mutators.
         if ($col->isPhpPrimitiveType()) {
-            if($col->isTextType()) {
+            if ($col->isTextType()) {
               $script .= "
         if (\$v !== null) {";
             } else {
               $script .= "
-        if (\$v !== null && is_numeric(\$v)) {"; 
+        if (\$v !== null && is_numeric(\$v)) {";
             }
-            
-            
+
             $script .= "
             \$v = (" . $col->getPhpType() . ") \$v;
         }
@@ -4644,8 +4643,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
     {
         // set the back reference to this object directly as using provided method either results
         // in endless loop or in multiple relations
-        if (!\${$lowerRelatedObjectClassName}->get{$selfRelationNamePlural}()->contains(\$this)) {
-            {$foreignObjectName} = new {$className}();
+        if (!\${$lowerRelatedObjectClassName}->get{$selfRelationNamePlural}()->contains(\$this)) { {$foreignObjectName} = new {$className}();
             {$foreignObjectName}->set{$relatedObjectClassName}(\${$lowerRelatedObjectClassName});
             \$this->add{$refKObjectClassName}({$foreignObjectName});
 

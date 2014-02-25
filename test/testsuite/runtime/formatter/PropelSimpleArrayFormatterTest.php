@@ -80,7 +80,7 @@ class PropelSimpleArrayFormatterTest extends BookstoreEmptyTestBase
 
         $book = $formatter->formatOne($stmt);
         $this->assertNotNull($book);
-        $this->assertSame(false, (bool)$book);
+        $this->assertSame(false, (bool) $book);
     }
 
     public function testFormatWithOneRowAndValueBooleanEqualsFalse()
@@ -94,6 +94,6 @@ class PropelSimpleArrayFormatterTest extends BookstoreEmptyTestBase
         $books = $formatter->format($stmt);
         $this->assertInstanceOf('PropelCollection', $books);
         $this->assertCount(4, $books);
-        $this->assertSame(false, (bool)$books[0]);
+        $this->assertSame(false, (bool) $books[0]);
     }
 }
