@@ -177,7 +177,7 @@ echo $book->getTitle(); // 'War and Peace'
 echo $book->getAuthor()->getLastName(); // 'Tolstoi'
 ```
 
->**Tip**<br />Versioning of related objects is only possible for simple foreign keys. Relationships based on composite foreign keys cannot preserve relation versionning for now.
+>**Tip**<br />Versioning of related objects is only possible for simple foreign keys. Relationships based on composite foreign keys cannot preserve relation versioning for now.
 
 ## Parameters ##
 
