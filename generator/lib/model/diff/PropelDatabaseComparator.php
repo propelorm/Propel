@@ -149,6 +149,8 @@ class PropelDatabaseComparator
                     $this->databaseDiff->removeAddedTable($addedTableName);
                     $this->databaseDiff->removeRemovedTable($removedTableName);
                     $databaseDifferences--;
+                    // skip to the next added table
+                    break;
                 }
             }
         }
