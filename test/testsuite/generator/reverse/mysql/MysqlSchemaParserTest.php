@@ -92,7 +92,7 @@ class MysqlSchemaParserTest extends PHPUnit_Framework_TestCase
 
     public function testDescColumn()
     {
-        $schema = '<database name="reverse_bookstore"><table name="book"><column name="title" type="VARCHAR" size="255" description="Book Title" /></table></database>';
+        $schema = '<database name="reverse_bookstore"><table name="book"><column name="title" type="VARCHAR" size="255" description="Book Title with accent éài" /></table></database>';
         $xtad = new XmlToAppData();
         $appData = $xtad->parseString($schema);
         $database = $appData->getDatabase();
