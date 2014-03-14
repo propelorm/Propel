@@ -682,9 +682,11 @@ class ModelCriteria extends Criteria
         $leftTableAlias = isset($this->aliases[$leftName]) ? $leftName : null;
 
         // find the RelationMap in the TableMap using the $relationName
-        if (!$tableMap->hasRelation($relationName)) {
-            throw new PropelException('Unknown relation ' . $relationName . ' on the ' . $leftName . ' table');
-        }
+        // commented out to avoid running getRelations() - and therefore loading more relation classes than usually necessary
+        // see also: TableMap's getRelation() method
+//        if (!$tableMap->hasRelation($relationName)) {
+//            throw new PropelException('Unknown relation ' . $relationName . ' on the ' . $leftName . ' table');
+//        }
         $relationMap = $tableMap->getRelation($relationName);
 
         // create a ModelJoin object for this join

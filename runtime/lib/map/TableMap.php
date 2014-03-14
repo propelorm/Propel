@@ -637,8 +637,17 @@ class TableMap
      */
     public function getRelation($name)
     {
-        if (!array_key_exists($name, $this->getRelations())) {
-            throw new PropelException('Calling getRelation() on an unknown relation, ' . $name);
+        // rewritten from Propel's original code which called getRelations() and therefore loading more relation
+        // classes than usually necessary just for this lookup
+
+        if (!array_key_exists($name, $this->relations)) {
+            $callable = array($this, "add{$name}Relation");
+
+            if (!is_callable($callable)) {
+                throw new PropelException('Calling getRelation() on an unknown relation, ' . $name);
+            }
+
+            call_user_func($callable);
         }
 
         return $this->relations[$name];
