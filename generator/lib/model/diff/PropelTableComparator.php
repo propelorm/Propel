@@ -153,6 +153,8 @@ class PropelTableComparator
                     $this->tableDiff->removeAddedColumn($addedColumnName);
                     $this->tableDiff->removeRemovedColumn($removedColumnName);
                     $columnDifferences--;
+                    // skip to the next added column
+                    break;
                 }
             }
         }
@@ -201,6 +203,8 @@ class PropelTableComparator
                     $this->tableDiff->removeAddedPkColumn($addedColumnName);
                     $this->tableDiff->removeRemovedPkColumn($removedColumnName);
                     $pkDifferences--;
+                    // skip to the next added column
+                    break;
                 }
             }
         }
