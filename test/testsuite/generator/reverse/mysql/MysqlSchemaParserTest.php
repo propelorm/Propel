@@ -89,6 +89,28 @@ class MysqlSchemaParserTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($c1->getSize(), $c2->getSize());
         $this->assertEquals($c1->getScale(), $c2->getScale());
     }
+
+    public function testDescColumn()
+    {
+        $schema = '<database name="reverse_bookstore"><table name="book"><column name="title" type="VARCHAR" size="255" description="Book Title with accent éài" /></table></database>';
+        $xtad = new XmlToAppData();
+        $appData = $xtad->parseString($schema);
+        $database = $appData->getDatabase();
+        $table = $database->getTable('book');
+        $c1 = $table->getColumn('title');
+
+        $parser = new MysqlSchemaParser(Propel::getConnection('reverse-bookstore'));
+        $parser->setGeneratorConfig(new QuickGeneratorConfig());
+
+        $database = new Database();
+        $database->setPlatform(new DefaultPlatform());
+        $parser->parse($database);
+
+        $c2 = $database->getTable('book')->getColumn('title');
+
+        $this->assertEquals($c1->getDescription(), $c2->getDescription());
+
+    }
 }
 
 class OpenedPropelConvertConfTask extends PropelConvertConfTask
