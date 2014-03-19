@@ -20,10 +20,13 @@ require_once dirname(__FILE__) . '/../../../../../runtime/lib/Propel.php';
  */
 class GeneratedObjectConstantNameTest extends PHPUnit_Framework_TestCase
 {
+    /**
+     * Test normal string as single inheritance key
+     */
     public function testSingleInheritanceKeyNormalString()
     {
         $schema = <<<XML
-<database name="constant_name_test" namespace="ConstantNameTest" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd">
+<database name="constant_name_test" namespace="ConstantNameTest1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd">
   <table name="radcheck" phpName="UserCheck">
     <column name="id" type="INTEGER" sqlType="int(11) unsigned" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="attribute" type="VARCHAR" size="64" required="true" inheritance="single">
@@ -32,21 +35,17 @@ class GeneratedObjectConstantNameTest extends PHPUnit_Framework_TestCase
   </table>
 </database>
 XML;
-
-        $builder = new PropelQuickBuilder();
-        $builder->setSchema($schema);
-
-        ob_start();
-        $builder->buildClasses();
-        $output = preg_replace('/[\r|\n]/', '', ob_get_contents());
-        ob_end_clean();
-        $this->assertEquals('', $output);
+        $this->assertEmptyBuilderOutput($schema);
     }
+
+    /**
+     * Test string with dashes as single inheritance key (original cause for this whole test)
+     */
 
     public function testSingleInheritanceKeyStringWithDashes()
     {
         $schema = <<<XML
-<database name="constant_name_test" namespace="ConstantNameTest" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd">
+<database name="constant_name_test" namespace="ConstantNameTest2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd">
   <table name="radcheck" phpName="UserCheck2">
     <column name="id" type="INTEGER" sqlType="int(11) unsigned" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="attribute" type="VARCHAR" size="64" required="true" inheritance="single">
@@ -55,21 +54,17 @@ XML;
   </table>
 </database>
 XML;
-
-        $builder = new PropelQuickBuilder();
-        $builder->setSchema($schema);
-
-        ob_start();
-        $builder->buildClasses();
-        $output = preg_replace('/[\r|\n]/', '', ob_get_contents());
-        ob_end_clean();
-        $this->assertEquals('', $output);
+        $this->assertEmptyBuilderOutput($schema);
     }
+
+    /**
+     * Test string with special characters as single inheritance key
+     */
 
     public function testSingleInheritanceKeyStringWithSpecialChars()
     {
         $schema = <<<XML
-<database name="constant_name_test" namespace="ConstantNameTest" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd">
+<database name="constant_name_test" namespace="ConstantNameTest3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd">
   <table name="radcheck" phpName="UserCheck3">
     <column name="id" type="INTEGER" sqlType="int(11) unsigned" primaryKey="true" autoIncrement="true" required="true"/>
     <column name="attribute" type="VARCHAR" size="64" required="true" inheritance="single">
@@ -78,7 +73,11 @@ XML;
   </table>
 </database>
 XML;
+        $this->assertEmptyBuilderOutput($schema);
+    }
 
+    protected function assertEmptyBuilderOutput($schema)
+    {
         $builder = new PropelQuickBuilder();
         $builder->setSchema($schema);
 
