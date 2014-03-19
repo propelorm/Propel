@@ -464,6 +464,25 @@ class GeneratedObjectTest extends BookstoreTestBase
         $affected = $book->save();
         $this->assertEquals(2, $affected, "Expected 2 affected rows when saving updated book with updated author.");
 
+        // delete the author from the book (book is updated)
+        $author->removeBook($book);
+        $affected = $author->save();
+        $this->assertEquals(1, $affected, "Expected 1 affected row when removing author from book");
+
+        // add a review to the book
+        $review = new Review();
+        $review->setReviewedBy('Reviewer name');
+        $review->setReviewDate('now');
+        $review->setRecommended(true);
+        $review->setStatus('new');
+        $book->addReview($review);
+        $affected = $book->save();
+        $this->assertEquals(1, $affected, "Expected 1 affected row when saving book with new review.");
+
+        // remove a review from the book (review is deleted, book in unchanged)
+        $book->removeReview($review);
+        $affected = $book->save();
+        $this->assertEquals(1, $affected, "Expected 1 affected row when removing review from book");
     }
 
     /*
