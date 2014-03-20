@@ -83,7 +83,7 @@ XML;
 
         ob_start();
         $builder->buildClasses();
-        $output = preg_replace('/[\r|\n]/', '', ob_get_contents());
+        $output = preg_replace('/[\r\n]/', '', ob_get_contents());
         ob_end_clean();
         $this->assertEquals('', $output);
     }
