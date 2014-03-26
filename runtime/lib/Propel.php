@@ -378,7 +378,11 @@ class Propel
      */
     public static function getConfiguration($type = PropelConfiguration::TYPE_ARRAY)
     {
-        return self::$configuration->getParameters($type);
+        if( self::$configuration instanceof PropelConfiguration ){
+            return self::$configuration->getParameters($type);
+        }else{
+            return self::$configuration;
+        }
     }
 
     /**
