@@ -374,15 +374,11 @@ class Propel
      *                   ($config['name.space.item'])
      *                 - PropelConfiguration::TYPE_OBJECT: return the configuration as a PropelConfiguration instance
      *
-     * @return mixed The Configuration (array or PropelConfiguration)
+     * @return mixed The Configuration (array, PropelConfiguration or null if ther's not configuration yet).
      */
     public static function getConfiguration($type = PropelConfiguration::TYPE_ARRAY)
     {
-        if( self::$configuration instanceof PropelConfiguration ){
-            return self::$configuration->getParameters($type);
-        }else{
-            return self::$configuration;
-        }
+        return self::$configuration ? self::$configuration->getParameters($type) : null;
     }
 
     /**
