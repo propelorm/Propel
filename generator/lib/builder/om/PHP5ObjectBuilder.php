@@ -4512,7 +4512,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
 
         foreach (\${$inputCollection} as \${$inputCollectionEntry}) {
             if (!\$current{$relatedNamePlural}->contains(\${$inputCollectionEntry})) {
-                \$this->doAdd{$relatedName}(\${$inputCollectionEntry});
+                \$this->doAdd{$relatedName}(\${$inputCollectionEntry}, \$con);
             }
         }
 
@@ -4638,16 +4638,18 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
         $script .= "
     /**
      * @param	{$relatedObjectClassName} \${$lowerRelatedObjectClassName} The $lowerRelatedObjectClassName object to add.
+     * @param PropelPDO \$con Optional connection object
      */
-    protected function doAdd{$relatedObjectClassName}({$relatedObjectName} \${$lowerRelatedObjectClassName})
+    protected function doAdd{$relatedObjectClassName}({$relatedObjectName} \${$lowerRelatedObjectClassName}, PropelPDO \$con = null)
     {
         // set the back reference to this object directly as using provided method either results
         // in endless loop or in multiple relations
-        if (!\${$lowerRelatedObjectClassName}->get{$selfRelationNamePlural}()->contains(\$this)) { {$foreignObjectName} = new {$className}();
+        if (!\${$lowerRelatedObjectClassName}->get{$selfRelationNamePlural}(null, \$con)->contains(\$this)) { {$foreignObjectName} = new {$className}();
             {$foreignObjectName}->set{$relatedObjectClassName}(\${$lowerRelatedObjectClassName});
             \$this->add{$refKObjectClassName}({$foreignObjectName});
 
-            \$foreignCollection = \${$lowerRelatedObjectClassName}->get{$selfRelationNamePlural}();
+            \$foreignCollection = \${$lowerRelatedObjectClassName}->get{$selfRelationNamePlural}(null, \$con);
+
             \$foreignCollection[] = \$this;
         }
     }
