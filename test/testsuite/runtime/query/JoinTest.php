@@ -186,6 +186,10 @@ class JoinTest extends BaseTestCase
         $j7 = new Join('foo', 'bar', 'INNER JOIN');
         $this->assertTrue($j5->equals($j7), 'Join without specified join type should be equal
                                                 to INNER JOIN, as it fallback to default join type');
+
+        $j8 = new Join('foo', 'bar', 'INNER JOIN');
+        $j8->addCondition('baz.foo', 'baz.bar');
+        $this->assertFalse($j5->equals($j8));
     }
 
   public function testCountConditions()
