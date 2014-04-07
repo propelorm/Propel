@@ -442,6 +442,7 @@ class BookType extends AbstractType
         $builder->add('author', 'model', array(
             'class' => 'Acme\LibraryBundle\Model\Author',
             'property' => 'fullname',
+            'index_property' => 'slug' /** If you want to use a specifiq unique column for key to not expose the PK **/
         ));
     }
 
