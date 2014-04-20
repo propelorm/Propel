@@ -129,7 +129,7 @@ WHERE book.IS_PUBLISHED = :p1
 ```php
 <?php
 $books = BookQuery::create()
-  ->filterByPublishedAt(array('max' => time())
+  ->filterByPublishedAt(array('max' => time()))
   ->find();
 // example Query generated for a MySQL database
 $query = 'SELECT book.* from `book`
