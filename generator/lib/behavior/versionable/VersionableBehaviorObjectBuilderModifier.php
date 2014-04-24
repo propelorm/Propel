@@ -451,14 +451,17 @@ public function populateFromVersion(\$version, \$con = null, &\$loadedObjects = 
     if (\$fkValue = \$version->get{$fkColumnPhpName}()) {
         if (isset(\$loadedObjects['{$relatedClassname}']) && isset(\$loadedObjects['{$relatedClassname}'][\$fkValue]) && isset(\$loadedObjects['{$relatedClassname}'][\$fkValue][\$version->get{$fkVersionColumnPhpName}()])) {
             \$related = \$loadedObjects['{$relatedClassname}'][\$fkValue][\$version->get{$fkVersionColumnPhpName}()];
-        } else {
-            \$related = new {$relatedClassname}();
+		} else {
             \$relatedVersion = {$relatedVersionQueryClassname}::create()
                 ->filterBy{$fk->getForeignColumn()->getPhpName()}(\$fkValue)
                 ->filterByVersion(\$version->get{$fkVersionColumnPhpName}())
                 ->findOne(\$con);
-            \$related->populateFromVersion(\$relatedVersion, \$con, \$loadedObjects);
-            \$related->setNew(false);
+            \$related = null;
+            if (\$relatedVersion){
+                \$related = new {$relatedClassname}();
+                \$related->populateFromVersion(\$relatedVersion, \$con, \$loadedObjects);
+                \$related->setNew(false);
+            }
         }
         \$this->set{$fkPhpname}(\$related);
     }";
@@ -520,6 +523,9 @@ public function populateFromVersion(\$version, \$con = null, &\$loadedObjects = 
             \$query->addOr(\$c1);
         }
         foreach (\$query->find(\$con) as \$relatedVersion) {
+			if (!\$relatedVersion){
+                continue;
+            }
             if (isset(\$loadedObjects['{$relatedClassname}']) && isset(\$loadedObjects['{$relatedClassname}'][\$relatedVersion->get{$fkColumn->getPhpName()}()]) && isset(\$loadedObjects['{$relatedClassname}'][\$relatedVersion->get{$fkColumn->getPhpName()}()][\$relatedVersion->get{$fkVersionColumn->getPhpName()}()])) {
                 \$related = \$loadedObjects['{$relatedClassname}'][\$relatedVersion->get{$fkColumn->getPhpName()}()][\$relatedVersion->get{$fkVersionColumn->getPhpName()}()];
             } else {
