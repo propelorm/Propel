@@ -491,16 +491,13 @@ public function populateFromVersion(\$version, \$con = null, &\$loadedObjects = 
         if (isset(\$loadedObjects['{$relatedClassname}']) && isset(\$loadedObjects['{$relatedClassname}'][\$fkValue]) && isset(\$loadedObjects['{$relatedClassname}'][\$fkValue][\$version->get{$fkColumnVersionPhpName}()])) {
             \$related = \$loadedObjects['{$relatedClassname}'][\$fkValue][\$version->get{$fkColumnVersionPhpName}()];
         } else {
+            \$related = new {$relatedClassname}();
             \$relatedVersion = {$relatedVersionQueryClassname}::create()
-                ->filterBy{$fk->getForeignColumn()->getPhpName()}(\$fkValue)
-                ->filterByVersion(\$version->get{$fkVersionColumnPhpName}())
+                ->filterBy{$fk->getLocalColumn()->getPhpName()}(\$fkValue)
+                ->filterByVersion(\$version->get{$fkColumnVersionPhpName}())
                 ->findOne(\$con);
-            \$related = null;
-            if (\$relatedVersion){
-                \$related = new {$relatedClassname}();
-                \$related->populateFromVersion(\$relatedVersion, \$con, \$loadedObjects);
-                \$related->setNew(false);
-            }
+            \$related->populateFromVersion(\$relatedVersion, \$con, \$loadedObjects);
+            \$related->setNew(false);
         }
         \$this->set{$fkPhpName}(\$related);
     }";
@@ -523,9 +520,6 @@ public function populateFromVersion(\$version, \$con = null, &\$loadedObjects = 
             \$query->addOr(\$c1);
         }
         foreach (\$query->find(\$con) as \$relatedVersion) {
-            if (!\$relatedVersion){
-                continue;
-            }		
             if (isset(\$loadedObjects['{$relatedClassname}']) && isset(\$loadedObjects['{$relatedClassname}'][\$relatedVersion->get{$fkColumn->getPhpName()}()]) && isset(\$loadedObjects['{$relatedClassname}'][\$relatedVersion->get{$fkColumn->getPhpName()}()][\$relatedVersion->get{$fkVersionColumn->getPhpName()}()])) {
                 \$related = \$loadedObjects['{$relatedClassname}'][\$relatedVersion->get{$fkColumn->getPhpName()}()][\$relatedVersion->get{$fkVersionColumn->getPhpName()}()];
             } else {
