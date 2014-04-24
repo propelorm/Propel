@@ -520,6 +520,9 @@ public function populateFromVersion(\$version, \$con = null, &\$loadedObjects = 
             \$query->addOr(\$c1);
         }
         foreach (\$query->find(\$con) as \$relatedVersion) {
+            if (!\$relatedVersion instanceof $relatedClassname){
+                continue;
+            }
             if (isset(\$loadedObjects['{$relatedClassname}']) && isset(\$loadedObjects['{$relatedClassname}'][\$relatedVersion->get{$fkColumn->getPhpName()}()]) && isset(\$loadedObjects['{$relatedClassname}'][\$relatedVersion->get{$fkColumn->getPhpName()}()][\$relatedVersion->get{$fkVersionColumn->getPhpName()}()])) {
                 \$related = \$loadedObjects['{$relatedClassname}'][\$relatedVersion->get{$fkColumn->getPhpName()}()][\$relatedVersion->get{$fkVersionColumn->getPhpName()}()];
             } else {
