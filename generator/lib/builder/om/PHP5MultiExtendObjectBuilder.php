@@ -179,7 +179,7 @@ class " . $this->getClassname() . " extends " . $this->getParentClassname() . " 
         $col = $child->getColumn();
         $cfc = $col->getPhpName();
 
-        $const = "CLASSKEY_" . strtoupper($child->getKey());
+        $const = "CLASSKEY_" . $child->getSanitizedKey();
 
         $script .= "
     /**
@@ -189,7 +189,7 @@ class " . $this->getClassname() . " extends " . $this->getParentClassname() . " 
     {";
         $script .= "
         parent::__construct();
-        \$this->set$cfc(" . $this->getPeerClassname() . "::CLASSKEY_" . strtoupper($child->getKey()) . ");
+        \$this->set$cfc(" . $this->getPeerClassname() . "::CLASSKEY_" . $child->getSanitizedKey() . ");
     }
 ";
     }

@@ -630,10 +630,10 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
 
                     $script .= "
     /** A key representing a particular subclass */
-    const CLASSKEY_" . strtoupper($child->getKey()) . " = '" . $child->getKey() . "';
+    const CLASSKEY_" . $child->getSanitizedKey() . " = '" . $child->getKey() . "';
 ";
 
-                    if (strtoupper($child->getClassname()) != strtoupper($child->getKey())) {
+                    if (strtoupper($child->getClassname()) != $child->getSanitizedKey()) {
                         $script .= "
     /** A key representing a particular subclass */
     const CLASSKEY_" . strtoupper($child->getClassname()) . " = '" . $child->getKey() . "';
@@ -642,7 +642,7 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
 
                     $script .= "
     /** A class that can be returned by this peer. */
-    const CLASSNAME_" . strtoupper($child->getKey()) . " = '" . $fqcn . "';
+    const CLASSNAME_" . $child->getSanitizedKey() . " = '" . $fqcn . "';
 ";
                 } /* foreach children */
             } /* if col->isenumerated...() */
@@ -1357,8 +1357,8 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
 ";
             foreach ($col->getChildren() as $child) {
                 $script .= "
-                case " . $this->getPeerClassname() . "::CLASSKEY_" . strtoupper($child->getKey()) . ":
-                    \$omClass = " . $this->getPeerClassname() . "::CLASSNAME_" . strtoupper($child->getKey()) . ";
+                case " . $this->getPeerClassname() . "::CLASSKEY_" . $child->getSanitizedKey() . ":
+                    \$omClass = " . $this->getPeerClassname() . "::CLASSNAME_" . $child->getSanitizedKey() . ";
                     break;
 ";
             } /* foreach */

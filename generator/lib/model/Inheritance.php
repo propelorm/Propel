@@ -35,7 +35,7 @@ class Inheritance extends XMLElement
     protected function setupObject()
     {
         // Clean key from special characters not allowed in constant names
-        $this->key = rtrim(preg_replace('/(\W|_)+/', '_', $this->getAttribute("key")), '_');
+        $this->key = $this->getAttribute("key");
         $this->className = $this->getAttribute("class");
         $this->pkg = $this->getAttribute("package");
         $this->ancestor = $this->getAttribute("extends");
@@ -49,6 +49,16 @@ class Inheritance extends XMLElement
     public function getKey()
     {
         return $this->key;
+    }
+
+    /**
+     * Get the sanitized (safe for constant names) value of key.
+     *
+     * @return sanitized value of key.
+     */
+    public function getSanitizedKey()
+    {
+        return strtoupper(rtrim(preg_replace('/(\W|_)+/', NameGenerator::STD_SEPARATOR_CHAR, $this->key), NameGenerator::STD_SEPARATOR_CHAR));
     }
 
     /**
