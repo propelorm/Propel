@@ -589,6 +589,8 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
     protected function addBuildTableMap(&$script)
     {
         $this->declareClassFromBuilder($this->getTableMapBuilder());
+        // support for namespaces requires global namespace prefix
+        $ns = version_compare(PHP_VERSION, '5.3.0', '>=') ? "\\": "";        
         $script .= "
     /**
      * Add a TableMap instance to the database for this peer class.
@@ -597,7 +599,7 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
     {
       \$dbMap = Propel::getDatabaseMap(" . $this->getClassname() . "::DATABASE_NAME);
       if (!\$dbMap->hasTable(" . $this->getClassname() . "::TABLE_NAME)) {
-        \$dbMap->addTableObject(new \\" . $this->getTableMapClass() . "());
+        \$dbMap->addTableObject(new " . $ns . $this->getTableMapClass() . "());
       }
     }
 ";
