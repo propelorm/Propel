@@ -94,7 +94,10 @@ class QueryInheritanceBuilder extends OMBuilder
     {
         $ancestorClassName = ClassTools::classname($this->getChild()->getAncestor());
         if ($this->getDatabase()->hasTableByPhpName($ancestorClassName)) {
-            return $this->getNewStubQueryBuilder($this->getDatabase()->getTableByPhpName($ancestorClassName))->getClassname();
+            //fix for lack of "use" statement for parent class in query subclasses
+            $builder = $this->getNewStubQueryBuilder($this->getDatabase()->getTableByPhpName($ancestorClassName));
+            $this->declareClassFromBuilder($builder);
+            return $builder->getClassname();
         } else {
             // find the inheritance for the parent class
             foreach ($this->getTable()->getChildrenColumn()->getChildren() as $child) {
@@ -133,6 +136,9 @@ require '" . $requiredClassFilePath . "';
         $baseBuilder = $this->getStubQueryBuilder();
         $this->declareClassFromBuilder($baseBuilder);
         $baseClassname = $this->getParentClassName();
+        
+        //add peer class declaration to have "use" statement available
+        $this->declareClassFromBuilder($this->getStubPeerBuilder());
 
         $script .= "
 /**
