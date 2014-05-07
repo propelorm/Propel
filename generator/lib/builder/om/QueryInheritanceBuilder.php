@@ -269,7 +269,7 @@ class " . $this->getClassname() . " extends " . $baseClassname . " {
         $child = $this->getChild();
         $col = $child->getColumn();
 
-        return "\$this->addUsingAlias(" . $this->getColumnConstant($col) . ", " . $this->getPeerClassname() . "::CLASSKEY_" . strtoupper($child->getKey()) . ");";
+        return "\$this->addUsingAlias(" . $this->getColumnConstant($col) . ", " . $this->getPeerClassname() . "::CLASSKEY_" . $child->getSanitizedKey() . ");";
     }
 
     protected function addDoDeleteAll(&$script)
@@ -334,7 +334,7 @@ class " . $this->getClassname() . " extends " . $baseClassname . " {
             throw new PropelException('findOneOrCreate() cannot be used on a query with a join, because Propel cannot transform a SQL JOIN into a subquery. You should split the query in two queries to avoid joins.');
         }
         if (!\$ret = \$this->findOne(\$con)) {
-            \$class = " . $this->getPeerClassname() . "::CLASSNAME_" . strtoupper($child->getKey()) . ";
+            \$class = " . $this->getPeerClassname() . "::CLASSNAME_" . $child->getSanitizedKey() . ";
             \$obj = new \$class;
             foreach (\$this->keys() as \$key) {
                 \$obj->setByName(\$key, \$this->getValue(\$key), BasePeer::TYPE_COLNAME);

@@ -55,6 +55,7 @@ XML;
 </database>
 XML;
         $this->assertEmptyBuilderOutput($schema);
+        $this->assertEquals('Calling-Station-Id', \ConstantNameTest2\UserCheck2Peer::CLASSKEY_CALLING_STATION_ID);
     }
 
     /**
