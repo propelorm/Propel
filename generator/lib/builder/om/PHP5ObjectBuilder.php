@@ -2462,9 +2462,11 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
         $script .= "
         );";
         $script .= "
-        \$virtualColumns = \$this->virtualColumns;
-        foreach (\$virtualColumns as \$key => \$virtualColumn) {
-            \$result[\$key] = \$virtualColumn;
+        if(isset(\$this->virtualColumns)) {
+            \$virtualColumns = \$this->virtualColumns;
+            foreach (\$virtualColumns as \$key => \$virtualColumn) {
+                \$result[\$key] = \$virtualColumn;
+            }
         }
         ";
         if ($hasFks) {
