@@ -101,7 +101,7 @@ class VersionableBehaviorObjectBuilderModifier
 
     public function preSave(PHP5ObjectBuilder $builder)
     {
-        $script = "if (\$this->isVersioningNecessary()) {
+        $script = "if (\$this->isVersioningNecessary(\$con)) {
     \$this->set{$this->getColumnPhpName()}(\$this->isNew() ? 1 : \$this->getLastVersionNumber(\$con) + 1);";
         if ($this->behavior->getParameter('log_created_at') == 'true') {
             $col = $this->behavior->getTable()->getColumn($this->getParameter('version_created_at_column'));
