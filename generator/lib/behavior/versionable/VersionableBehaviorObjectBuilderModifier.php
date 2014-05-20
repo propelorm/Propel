@@ -350,6 +350,7 @@ public function addVersion(\$con = null)
         \$version->set{$fkVersionColumnPhpName}(\$related->getVersion());
     }";
         }
+
         foreach ($this->behavior->getVersionableReferrers() as $fk) {
             if ($fk->isLocalPrimaryKey()) {
                 $fkGetter = $this->builder->getRefFKPhpNameAffix($fk);
@@ -364,10 +365,16 @@ public function addVersion(\$con = null)
                 $fkGetter = $this->builder->getRefFKPhpNameAffix($fk, $plural = true);
                 $idsColumn = $this->behavior->getReferrerIdsColumn($fk);
                 $versionsColumn = $this->behavior->getReferrerVersionsColumn($fk);
+                $idColumnName = rtrim($idsColumn->getPhpName(), 's');
+                $versionColumnName = rtrim($versionsColumn->getPhpName(), 's');
                 $script .= "
     if (\$relateds = \$this->get{$fkGetter}(\$con)->toKeyValue('{$fk->getTable()->getFirstPrimaryKeyColumn()->getPhpName()}', 'Version')) {
-        \$version->set{$idsColumn->getPhpName()}(array_keys(\$relateds));
-        \$version->set{$versionsColumn->getPhpName()}(array_values(\$relateds));
+        foreach(array_keys(\$relateds) as \$id) {
+            \$version->add{$idColumnName}(\$id);
+        }
+        foreach(array_values(\$relateds) as \$version_num) {
+            \$version->add{$versionColumnName}(\$version_num);
+        }
     }";
             }
         }
