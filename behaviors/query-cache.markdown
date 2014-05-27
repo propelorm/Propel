@@ -10,6 +10,7 @@ The `query_cache` behavior gives a speed boost to Propel queries by caching the 
 ## Basic Usage ##
 
 In the `schema.xml`, use the `<behavior>` tag to add the `query_cache` behavior to a table:
+
 ```xml
 <table name="book">
   <column name="id" required="true" primaryKey="true" autoIncrement="true" type="INTEGER" />
