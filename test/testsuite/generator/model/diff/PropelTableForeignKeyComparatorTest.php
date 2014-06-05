@@ -169,4 +169,40 @@ class PropelTableForeignKeyComparatorTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(1, count($tableDiff->getModifiedFks()));
         $this->assertEquals(array('Baz_FK_1' => array($fk1, $fk2)), $tableDiff->getModifiedFks());
     }
+
+    public function testCompareRenamedFks()
+    {
+        $db1 = new Database();
+        $db1->setPlatform($this->platform);
+        $c1 = new Column('Foo');
+        $c2 = new Column('Bar');
+        $fk1 = new ForeignKey('Baz_FK_1');
+        $fk1->addReference($c1, $c2);
+        $t1 = new Table('Baz');
+        $t1->addForeignKey($fk1);
+        $db1->addTable($t1);
+        $t1->doNaming();
+
+        $db2 = new Database();
+        $db2->setPlatform($this->platform);
+        $c3 = new Column('Foo');
+        $c4 = new Column('Bar');
+        $fk2 = new ForeignKey('Baz_FK_2');
+        $fk2->addReference($c3, $c4);
+        $t2 = new Table('Baz');
+        $t2->addForeignKey($fk2);
+        $db2->addTable($t2);
+        $t2->doNaming();
+
+        $tc = new PropelTableComparator();
+        $tc->setFromTable($t1);
+        $tc->setToTable($t2);
+        $nbDiffs = $tc->compareForeignKeys();
+        $tableDiff = $tc->getTableDiff();
+        $this->assertEquals(2, $nbDiffs);
+        $this->assertEquals(1, count($tableDiff->getRemovedFks()));
+        $this->assertEquals(1, count($tableDiff->getAddedFks()));
+        $this->assertEquals(array('Baz_FK_1' => $fk1), $tableDiff->getRemovedFks());
+        $this->assertEquals(array('Baz_FK_2' => $fk2), $tableDiff->getAddedFks());
+    }
 }
