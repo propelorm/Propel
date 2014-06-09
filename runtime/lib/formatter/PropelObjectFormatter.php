@@ -20,7 +20,7 @@ class PropelObjectFormatter extends PropelFormatter
 {
     protected $collectionName = 'PropelObjectCollection';
 
-    protected $mainObject;
+    private $mainObject;
 
     public function format(PDOStatement $stmt)
     {
