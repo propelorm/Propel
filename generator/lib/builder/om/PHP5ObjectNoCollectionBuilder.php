@@ -472,7 +472,7 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
      */
     protected function getRefFKLastCriteriaVarName(ForeignKey $fk)
     {
-        return 'last' . $this->getRefFKPhpNameAffix($fk, $plural = false) . 'Criteria';
+        return 'last' . $this->getRefFKPhpNameAffix($fk, false) . 'Criteria';
     }
 
     /**
@@ -540,7 +540,7 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
      * @return                 $className The associated $className object.
      * @throws PropelException
      */
-    public function get" . $this->getFKPhpNameAffix($fk, $plural = false) . "(PropelPDO \$con = null)
+    public function get" . $this->getFKPhpNameAffix($fk, false) . "(PropelPDO \$con = null)
     {";
         $script .= "
         if (\$this->$varName === null && ($conditional)) {";
@@ -563,7 +563,7 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
         if ($fk->isLocalPrimaryKey()) {
             $script .= "
             // Because this foreign key represents a one-to-one relationship, we will create a bi-directional association.
-            \$this->{$varName}->set" . $this->getRefFKPhpNameAffix($fk, $plural = false) . "(\$this);";
+            \$this->{$varName}->set" . $this->getRefFKPhpNameAffix($fk, false) . "(\$this);";
         } else {
             $script .= "
             /* The following can be used additionally to
@@ -571,7 +571,7 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
                to this object.  This level of coupling may, however, be
                undesirable since it could result in an only partially populated collection
                in the referenced object.
-               \$this->{$varName}->add" . $this->getRefFKPhpNameAffix($fk, $plural = true) . "(\$this);
+               \$this->{$varName}->add" . $this->getRefFKPhpNameAffix($fk, true) . "(\$this);
              */";
         }
 
@@ -598,7 +598,7 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
         $join_behavior = $this->getGeneratorConfig()->getBuildProperty('useLeftJoinsInDoJoinMethods') ? 'Criteria::LEFT_JOIN' : 'Criteria::INNER_JOIN';
 
         $peerClassname = $this->getStubPeerBuilder()->getClassname();
-        $relCol = $this->getRefFKPhpNameAffix($refFK, $plural = true);
+        $relCol = $this->getRefFKPhpNameAffix($refFK, true);
         $collName = $this->getRefFKCollVarName($refFK);
         $lastCriteriaName = $this->getRefFKLastCriteriaVarName($refFK);
 
@@ -616,7 +616,7 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
                 $doJoinGet = false;
             }
 
-            $relCol2 = $this->getFKPhpNameAffix($fk2, $plural = false);
+            $relCol2 = $this->getFKPhpNameAffix($fk2, false);
 
             if ($this->getRelatedBySuffix($refFK) != "" && ($this->getRelatedBySuffix($refFK) == $this->getRelatedBySuffix($fk2))) {
                 $doJoinGet = false;
@@ -704,7 +704,7 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
      */
     protected function addRefFKInit(&$script, ForeignKey $refFK)
     {
-        $relCol = $this->getRefFKPhpNameAffix($refFK, $plural = true);
+        $relCol = $this->getRefFKPhpNameAffix($refFK, true);
         $collName = $this->getRefFKCollVarName($refFK);
 
         $script .= "
@@ -747,14 +747,14 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
      * @return void
      * @throws PropelException
      */
-    public function add" . $this->getRefFKPhpNameAffix($refFK, $plural = false) . "($className \$l)
+    public function add" . $this->getRefFKPhpNameAffix($refFK, false) . "($className \$l)
     {
         if (\$this->$collName === null) {
-            \$this->init" . $this->getRefFKPhpNameAffix($refFK, $plural = true) . "();
+            \$this->init" . $this->getRefFKPhpNameAffix($refFK, true) . "();
         }
         if (!in_array(\$l, \$this->$collName, true)) { // only add it if the **same** object is not already associated
             array_push(\$this->$collName, \$l);
-            \$l->set" . $this->getFKPhpNameAffix($refFK, $plural = false) . "(\$this);
+            \$l->set" . $this->getFKPhpNameAffix($refFK, false) . "(\$this);
         }
     }
 ";
@@ -773,7 +773,7 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
         $peerClassname = $this->getStubPeerBuilder()->getClassname();
 
         $fkPeerBuilder = $this->getNewPeerBuilder($refFK->getTable());
-        $relCol = $this->getRefFKPhpNameAffix($refFK, $plural = true);
+        $relCol = $this->getRefFKPhpNameAffix($refFK, true);
 
         $collName = $this->getRefFKCollVarName($refFK);
         $lastCriteriaName = $this->getRefFKLastCriteriaVarName($refFK);
@@ -871,7 +871,7 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
 
         $peerClassname = $this->getStubPeerBuilder()->getClassname();
         $fkPeerBuilder = $this->getNewPeerBuilder($refFK->getTable());
-        $relCol = $this->getRefFKPhpNameAffix($refFK, $plural = true);
+        $relCol = $this->getRefFKPhpNameAffix($refFK, true);
 
         $collName = $this->getRefFKCollVarName($refFK);
         $lastCriteriaName = $this->getRefFKLastCriteriaVarName($refFK);
@@ -981,7 +981,7 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
      * @return                 $className
      * @throws PropelException
      */
-    public function get" . $this->getRefFKPhpNameAffix($refFK, $plural = false) . "(PropelPDO \$con = null)
+    public function get" . $this->getRefFKPhpNameAffix($refFK, false) . "(PropelPDO \$con = null)
     {
 ";
         $script .= "
