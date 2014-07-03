@@ -235,7 +235,7 @@ class AuthorType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => 'Acme\LibraryBundle\Model\Author',
-        );
+        ));
     }
 
     public function getName()
@@ -283,7 +283,7 @@ class AuthorType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => 'Acme\LibraryBundle\Model\Author',
-        );
+        ));
     }
 
     public function getName()
@@ -317,7 +317,7 @@ class BookType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => 'Acme\LibraryBundle\Model\Book',
-        );
+        ));
     }
 
     public function getName()
@@ -391,7 +391,7 @@ class BookClubListType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => 'Acme\LibraryBundle\Model\BookClubList',
-        );
+        ));
     }
 
     public function getName()
@@ -450,7 +450,7 @@ class BookType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => 'Acme\LibraryBundle\Model\Book',
-        );
+        ));
     }
 
     public function getName()
