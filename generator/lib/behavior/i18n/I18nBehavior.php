@@ -130,7 +130,6 @@ class I18nBehavior extends Behavior
                 'name'       => $localeColumnName,
                 'type'       => PropelTypes::VARCHAR,
                 'size'       => $this->getParameter('locale_length') ? (int) $this->getParameter('locale_length') : 6,
-                'size'       => 6,
                 'default'    => $this->getDefaultLocale(),
                 'primaryKey' => 'true',
             ));
