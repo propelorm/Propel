@@ -1274,9 +1274,9 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . "
         $fkPhpName = $foreignTable->getPhpName();
         $crossTableName = $crossRefTable->getName();
         $this->declareClassFromBuilder($this->getNewStubObjectBuilder($foreignTable));
-        $relName = $this->getFKPhpNameAffix($crossFK, $plural = false);
+        $relName = $this->getFKPhpNameAffix($crossFK, /* plural */ false);
         $objectName = '$' . $foreignTable->getStudlyPhpName();
-        $relationName = $this->getRefFKPhpNameAffix($refFK, $plural = false);
+        $relationName = $this->getRefFKPhpNameAffix($refFK, /* plural */ false);
         $script .= "
     /**
      * Filter the query by a related $fkPhpName object

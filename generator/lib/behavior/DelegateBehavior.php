@@ -102,7 +102,7 @@ class DelegateBehavior extends Behavior
                 $fk = $fks[0];
                 $ARFQCN = $builder->getNewStubObjectBuilder($fk->getTable())->getFullyQualifiedClassname();
                 $ARClassName = $builder->getNewStubObjectBuilder($fk->getTable())->getClassname();
-                $relationName = $builder->getRefFKPhpNameAffix($fk, $plural = false);
+                $relationName = $builder->getRefFKPhpNameAffix($fk, /* plural */ false);
             } else {
                 $fks = $this->getTable()->getForeignKeysReferencingTable($delegate);
                 $fk = $fks[0];
