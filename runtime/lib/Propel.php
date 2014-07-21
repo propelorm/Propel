@@ -254,10 +254,10 @@ class Propel
         'ValidationFailed'    => 'validator/ValidationFailed.php',
     );
 
-	/**
-	 * @var Closure A callback to run after initialising a connection
-	 */
-	public static $postInitConnectionCallback;
+    /**
+     * @var Closure A callback to run after initialising a connection
+     */
+    public static $postInitConnectionCallback;
 
     /**
      * Initializes Propel
