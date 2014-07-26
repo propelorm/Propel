@@ -1,8 +1,26 @@
 # Changelog Of The Propel 1.x Branch #
 
-## ????-??-??: Version 1.7.1 ##
+## ????-??-??: Version 1.7.2 ##
 
 n/a
+
+## 2014-02-25: Version 1.7.1 ##
+
+81a7125 Fix CS
+19ac478 fix bug with boolean value because no return FALSE value
+af82270 changed fucntion to function
+48089c0 Add yield keyword in getPhpReservedWords
+82a7a32 First try to load platform from the user provided build properties try to fix #815 With test
+d3136b1 Added hhvm to travis
+30690de Providing tests for proposal #804
+13505a8 setters should provide fluent interface
+39bb8fb Removed nested dirname :)
+899cf90 Fixes Issue #724
+7b073a2 adapted this fix to new specifications
+e7f7c9f fixed type-hinting in addDefaultMutator and added tests for it
+fbf302f Update links to the 1.x documentation
+5c4ece0 Allow gh-pages to be tested
+584e2a4 use datasource connection(buildtime-conf.xml) instead of globals (build.properties) while performing datadump task
 
 ## 2013-10-21: Version 1.7.0 ##
 
