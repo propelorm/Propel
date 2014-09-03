@@ -98,7 +98,7 @@ if (\$this->isColumnModified($const) && \$this->{$this->getColumnGetter()}()) {
                     $column = $i18n->getI18nTable()->getColumn($columnName);
                 }
                 if (null == $column) {
-                    throw new \InvalidArgumentException(sprintf('The pattern %s is invalid  the column %s is not found', $pattern, $match));
+                    throw new InvalidArgumentException(sprintf('The pattern %s is invalid  the column %s is not found', $pattern, $match));
                 }
                 $columnConst = $builder->getColumnConstant($column);
                 $script .= "\$this->isColumnModified($columnConst)" . ($key < $count - 1 ? " || " : "");
