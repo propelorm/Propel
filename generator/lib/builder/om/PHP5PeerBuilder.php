@@ -597,7 +597,7 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
     {
       \$dbMap = Propel::getDatabaseMap(" . $this->getClassname() . "::DATABASE_NAME);
       if (!\$dbMap->hasTable(" . $this->getClassname() . "::TABLE_NAME)) {
-        \$dbMap->addTableObject(new \\" . $this->getTableMapClass() . "());
+        \$dbMap->addTableObject(new " . $this->getTableMapClass() . "());
       }
     }
 ";
