@@ -15,8 +15,18 @@
 $dirname = dirname(__FILE__);
 $autoloaded = false;
 foreach (array($dirname . '/../../', $dirname . '/../../../../../') as $dir) {
-    if (file_exists($file = realpath($dir) . '/vendor/autoload.php')) {
-        set_include_path($dir . '/vendor/phing/phing/classes' . PATH_SEPARATOR . get_include_path());
+    $vendor_dir = 'vendor';
+    if (file_exists($composer_config_file = realpath($dir) . '/composer.json')) {
+        $composer_settings = json_decode( file_get_contents($composer_config_file) );
+        if (isset($composer_settings->config) && $composer_settings->config instanceof stdClass) {
+            $config = (array)$composer_settings->config;
+            if (isset($config['vendor-dir'])) {
+                $vendor_dir = $config['vendor-dir'];
+            }
+        }
+    }
+    if (file_exists($file = realpath($dir) . "/$vendor_dir/autoload.php")) {
+        set_include_path($dir . "/$vendor_dir/phing/phing/classes" . PATH_SEPARATOR . get_include_path());
         include_once $file;
 
         $autoloaded = true;
