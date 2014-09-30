@@ -201,13 +201,14 @@ class PHP5ObjectBuilder extends ObjectBuilder
         $tableDesc = $table->getDescription();
         $parentClass = $this->getBehaviorContent('parentClass');
         if (null === $parentClass) {
-            $parentClass = ClassTools::classname($this->getBaseClass());
+          $parentClass = ClassTools::classname($this->getBaseClass());
 
-            if (false === strpos($this->getBaseClass(), '.')) {
-                $this->declareClass($this->getBaseClass());
-            } else {
-                $this->declareClass($parentClass);
-            }
+          if (false === strpos($this->getBaseClass(), '.') || 'BaseObject' === $parentClass) {
+            $this->declareClass($parentClass);
+          } else {
+            $parentClassFQCN = '\\'.str_replace('.', '\\', $this->getBaseClass());
+            $this->declareClass($parentClassFQCN);
+          }
         }
 
         if ($this->getBuildProperty('addClassLevelComment')) {
