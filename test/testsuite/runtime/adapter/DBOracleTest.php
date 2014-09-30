@@ -84,7 +84,9 @@ class DBOracleTest extends DBAdapterTestAbstract
 
     public function testQuotingIdentifiers()
     {
-        $db = new DBOracle();
+        $db = new DBPostgres();
         $this->assertEquals('"Book ISBN"', $db->quoteIdentifier('Book ISBN'));
+
+        $this->assertEquals('foo', $db->quoteIdentifier('foo'), 'identifier without <space>/. should not be quoted');
     }
 }
