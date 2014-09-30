@@ -316,9 +316,7 @@ START WITH ID = 0 AND STATEMENT_ID = \'%s\' ORDER BY ID', $uniqueId);
      */
     public function quoteIdentifier($text)
     {
-        if (false === strpos($text, '.')
-            && false === strpos($text, ' ')
-        ) {
+        if (ctype_alnum($text)) {
             return $text;
         }
 

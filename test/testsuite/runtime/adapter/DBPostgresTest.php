@@ -32,8 +32,10 @@ class DBPostgresTest extends DBAdapterTestAbstract
     public function testQuotingIdentifiers()
     {
         $db = new DBPostgres();
-        $this->assertEquals('"Book ISBN"', $db->quoteIdentifier('Book ISBN'));
 
-        $this->assertEquals('foo', $db->quoteIdentifier('foo'), 'identifier without <space>/. should not be quoted');
+        $this->assertEquals('"Book ISBN"', $db->quoteIdentifier('Book ISBN'));
+        $this->assertEquals('"propel.book"', $db->quoteIdentifier('propel.book'));
+        $this->assertEquals('"some$string"', $db->quoteIdentifier('some$string'));
+        $this->assertEquals('foo1', $db->quoteIdentifier('foo1'), 'identifier with alphanum only should not be quoted');
     }
 }
