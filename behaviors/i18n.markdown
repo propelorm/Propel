@@ -106,7 +106,7 @@ $t2->setName('Four micro-ondes');
 $item->save(); // already saves the two translations
 ```
 
->**Tip**<br />Or course, if a translation already exists for a given locale, `getTranslation()` returns the existing translation and not a new one.
+>**Tip**<br />Of course, if a translation already exists for a given locale, `getTranslation()` returns the existing translation and not a new one.
 
 You can remove a translation using `removeTranslation()` and a locale:
 
