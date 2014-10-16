@@ -226,10 +226,7 @@ class PropelCSVParser extends PropelParser
 
     protected function getColumns($row)
     {
-        $delim = preg_quote($this->delimiter, '/');
-        preg_match_all('/(".+?"|[^' . $delim . ']+)(' . $delim . '|$)/', $row, $matches);
-
-        return $matches[1];
+        return str_getcsv($row, $this->delimiter);
     }
 
     /**
