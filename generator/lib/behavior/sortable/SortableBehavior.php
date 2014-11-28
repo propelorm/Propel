@@ -57,7 +57,7 @@ class SortableBehavior extends Behavior
         if ($this->useScope()) {
             $scopes = $this->getScopes();
             if (0 === count($scopes)) {
-                throw new \InvalidArgumentException(sprintf(
+                throw new InvalidArgumentException(sprintf(
                     'The sortable behavior in `%s` needs a `scope_column` parameter.',
                     $this->getTable()->getName()
                 ));
