@@ -1365,7 +1365,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
     /**
      * Set the value of [$clo] column.
      * ".$col->getDescription()."
-     * @param      ".$col->getPhpType()." \$v new value
+     * @param    ".$col->getPhpType()." \$v new value
      * @return   ".$this->getObjectClassname()." The current object (for fluent API support)
      */";
     }
@@ -1821,11 +1821,23 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
         // Perform type-casting to ensure that we can use type-sensitive
         // checking in mutators.
         if ($col->isPhpPrimitiveType()) {
-            $script .= "
+            if ($col->isNumericType()) {
+                $script .=
+<<<BLOCK
+
+        \$v = is_numeric(\$v) ? ({$col->getPhpType()}) \$v : null;
+
+BLOCK;
+            } else {
+                $script .=
+<<<BLOCK
+
         if (\$v !== null) {
-            \$v = (".$col->getPhpType().") \$v;
+            \$v = ({$col->getPhpType()}) \$v;
         }
-";
+
+BLOCK;
+            }
         }
 
         $script .= "
