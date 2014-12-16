@@ -15,7 +15,7 @@
   "include-path": ["runtime/lib", "generator/lib"],
   "require": {
     "php": ">=5.2.4",
-    "phing/phing": "~2.4"
+    "phing/phing": "~2.4, <2.9"
   },
   "require-dev": {
     "pear-pear.php.net/PEAR_PackageFileManager2": "@stable"
