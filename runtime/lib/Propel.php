@@ -254,6 +254,11 @@ class Propel
     );
 
     /**
+     * @var Closure A callback to run after initialising a connection
+     */
+    public static $postInitConnectionCallback;
+
+    /**
      * Initializes Propel
      *
      * @throws PropelException Any exceptions caught during processing will be
@@ -704,6 +709,10 @@ class Propel
 
         // initialize the connection using the settings provided in the config file. this could be a "SET NAMES <charset>" query for MySQL, for instance
         $adapter->initConnection($con, isset($conparams['settings']) && is_array($conparams['settings']) ? $conparams['settings'] : array());
+
+        if (self::$postInitConnectionCallback !== null) {
+            call_user_func(self::$postInitConnectionCallback, $con);
+        }
 
         return $con;
     }

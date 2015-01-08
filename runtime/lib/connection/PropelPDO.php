@@ -44,13 +44,6 @@ class PropelPDO extends PDO
     const DEFAULT_ONLYSLOW_ENABLED = false;
 
     /**
-     * The current transaction depth.
-     *
-     * @var       integer
-     */
-    protected $nestedTransactionCount = 0;
-
-    /**
      * Cache of prepared statements (PDOStatement) keyed by md5 of SQL.
      *
      * @var       array  [md5(sql) => PDOStatement]
@@ -63,12 +56,6 @@ class PropelPDO extends PDO
      * @var       boolean
      */
     protected $cachePreparedStatements = false;
-
-    /**
-     * Whether the final commit is possible
-     * Is false if a nested transaction is rolled back
-     */
-    protected $isUncommitable = false;
 
     /**
      * Count of queries performed.
@@ -183,63 +170,16 @@ class PropelPDO extends PDO
     }
 
     /**
-     * Gets the current transaction depth.
-     *
-     * @return integer
-     */
-    public function getNestedTransactionCount()
-    {
-        return $this->nestedTransactionCount;
-    }
-
-    /**
-     * Set the current transaction depth.
-     *
-     * @param int $v The new depth.
-     */
-    protected function setNestedTransactionCount($v)
-    {
-        $this->nestedTransactionCount = $v;
-    }
-
-    /**
-     * Is this PDO connection currently in-transaction?
-     * This is equivalent to asking whether the current nested transaction count is greater than 0.
-     *
-     * @return boolean
-     */
-    public function isInTransaction()
-    {
-        return ($this->getNestedTransactionCount() > 0);
-    }
-
-    /**
-     * Check whether the connection contains a transaction that can be committed.
-     * To be used in an environment where Propelexceptions are caught.
-     *
-     * @return boolean True if the connection is in a committable transaction
-     */
-    public function isCommitable()
-    {
-        return $this->isInTransaction() && !$this->isUncommitable;
-    }
-
-    /**
      * Overrides PDO::beginTransaction() to prevent errors due to already-in-progress transaction.
      *
      * @return boolean
      */
     public function beginTransaction()
     {
-        $return = true;
-        if (!$this->nestedTransactionCount) {
-            $return = parent::beginTransaction();
-            if ($this->useDebug) {
-                $this->log('Begin transaction', null, __METHOD__);
-            }
-            $this->isUncommitable = false;
+        $return = parent::beginTransaction();
+        if ($this->useDebug) {
+            $this->log('Begin transaction', null, __METHOD__);
         }
-        $this->nestedTransactionCount++;
 
         return $return;
     }
@@ -254,22 +194,9 @@ class PropelPDO extends PDO
      */
     public function commit()
     {
-        $return = true;
-        $opcount = $this->nestedTransactionCount;
-
-        if ($opcount > 0) {
-            if ($opcount === 1) {
-                if ($this->isUncommitable) {
-                    throw new PropelException('Cannot commit because a nested transaction was rolled back');
-                } else {
-                    $return = parent::commit();
-                    if ($this->useDebug) {
-                        $this->log('Commit transaction', null, __METHOD__);
-                    }
-                }
-            }
-
-            $this->nestedTransactionCount--;
+        $return = parent::commit();
+        if ($this->useDebug) {
+            $this->log('Commit transaction', null, __METHOD__);
         }
 
         return $return;
@@ -283,20 +210,9 @@ class PropelPDO extends PDO
      */
     public function rollBack()
     {
-        $return = true;
-        $opcount = $this->nestedTransactionCount;
-
-        if ($opcount > 0) {
-            if ($opcount === 1) {
-                $return = parent::rollBack();
-                if ($this->useDebug) {
-                    $this->log('Rollback transaction', null, __METHOD__);
-                }
-            } else {
-                $this->isUncommitable = true;
-            }
-
-            $this->nestedTransactionCount--;
+        $return = parent::rollBack();
+        if ($this->useDebug) {
+            $this->log('Rollback transaction', null, __METHOD__);
         }
 
         return $return;
@@ -310,20 +226,12 @@ class PropelPDO extends PDO
      */
     public function forceRollBack()
     {
-        $return = true;
+        // If we're in a transaction, always roll it back
+        // regardless of nesting level.
+        $return = parent::rollBack();
 
-        if ($this->nestedTransactionCount) {
-            // If we're in a transaction, always roll it back
-            // regardless of nesting level.
-            $return = parent::rollBack();
-
-            // reset nested transaction count to 0 so that we don't
-            // try to commit (or rollback) the transaction outside this scope.
-            $this->nestedTransactionCount = 0;
-
-            if ($this->useDebug) {
-                $this->log('Rollback transaction', null, __METHOD__);
-            }
+        if ($this->useDebug) {
+            $this->log('Rollback transaction', null, __METHOD__);
         }
 
         return $return;

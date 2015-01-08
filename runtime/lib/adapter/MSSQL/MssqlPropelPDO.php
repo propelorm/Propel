@@ -25,16 +25,10 @@ class MssqlPropelPDO extends PropelPDO
      */
     public function beginTransaction()
     {
-        $return = true;
-        $opcount = $this->getNestedTransactionCount();
-        if ($opcount === 0) {
-            $return = self::exec('BEGIN TRANSACTION');
-            if ($this->useDebug) {
-                $this->log('Begin transaction', null, __METHOD__);
-            }
-            $this->isUncommitable = false;
+        $return = self::exec('BEGIN TRANSACTION');
+        if ($this->useDebug) {
+            $this->log('Begin transaction', null, __METHOD__);
         }
-        $this->nestedTransactionCount++;
 
         return $return;
     }
@@ -51,20 +45,9 @@ class MssqlPropelPDO extends PropelPDO
      */
     public function commit()
     {
-        $return = true;
-        $opcount = $this->getNestedTransactionCount();
-        if ($opcount > 0) {
-            if ($opcount === 1) {
-                if ($this->isUncommitable) {
-                    throw new PropelException('Cannot commit because a nested transaction was rolled back');
-                } else {
-                    $return = self::exec('COMMIT TRANSACTION');
-                    if ($this->useDebug) {
-                        $this->log('Commit transaction', null, __METHOD__);
-                    }
-                }
-            }
-            $this->nestedTransactionCount--;
+        $return = self::exec('COMMIT TRANSACTION');
+        if ($this->useDebug) {
+            $this->log('Commit transaction', null, __METHOD__);
         }
 
         return $return;
@@ -80,18 +63,9 @@ class MssqlPropelPDO extends PropelPDO
      */
     public function rollBack()
     {
-        $return = true;
-        $opcount = $this->getNestedTransactionCount();
-        if ($opcount > 0) {
-            if ($opcount === 1) {
-                $return = self::exec('ROLLBACK TRANSACTION');
-                if ($this->useDebug) {
-                    $this->log('Rollback transaction', null, __METHOD__);
-                }
-            } else {
-                $this->isUncommitable = true;
-            }
-            $this->nestedTransactionCount--;
+        $return = self::exec('ROLLBACK TRANSACTION');
+        if ($this->useDebug) {
+            $this->log('Rollback transaction', null, __METHOD__);
         }
 
         return $return;
@@ -108,20 +82,12 @@ class MssqlPropelPDO extends PropelPDO
      */
     public function forceRollBack()
     {
-        $return = true;
-        $opcount = $this->getNestedTransactionCount();
-        if ($opcount > 0) {
-            // If we're in a transaction, always roll it back
-            // regardless of nesting level.
-            $return = self::exec('ROLLBACK TRANSACTION');
+        // If we're in a transaction, always roll it back
+        // regardless of nesting level.
+        $return = self::exec('ROLLBACK TRANSACTION');
 
-            // reset nested transaction count to 0 so that we don't
-            // try to commit (or rollback) the transaction outside this scope.
-            $this->nestedTransactionCount = 0;
-
-            if ($this->useDebug) {
-                $this->log('Rollback transaction', null, __METHOD__);
-            }
+        if ($this->useDebug) {
+            $this->log('Rollback transaction', null, __METHOD__);
         }
 
         return $return;

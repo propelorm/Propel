@@ -682,9 +682,11 @@ class ModelCriteria extends Criteria
         $leftTableAlias = isset($this->aliases[$leftName]) ? $leftName : null;
 
         // find the RelationMap in the TableMap using the $relationName
-        if (!$tableMap->hasRelation($relationName)) {
-            throw new PropelException('Unknown relation ' . $relationName . ' on the ' . $leftName . ' table');
-        }
+        // commented out to avoid running getRelations() - and therefore loading more relation classes than usually necessary
+        // see also: TableMap's getRelation() method
+//        if (!$tableMap->hasRelation($relationName)) {
+//            throw new PropelException('Unknown relation ' . $relationName . ' on the ' . $leftName . ' table');
+//        }
         $relationMap = $tableMap->getRelation($relationName);
 
         // create a ModelJoin object for this join
@@ -788,15 +790,7 @@ class ModelCriteria extends Criteria
      */
     public function addJoinObject(Join $join, $name = null)
     {
-        $isAlreadyAdded = false;
-        foreach ($this->joins as $alreadyAddedJoin) {
-            if ($join->equals($alreadyAddedJoin)) {
-                $isAlreadyAdded = true;
-                break;
-            }
-        }
-
-        if (!$isAlreadyAdded) {
+        if (!in_array($join, $this->joins)) { // compare equality, NOT identity
             if (null === $name) {
                 $this->joins[] = $join;
             } else {
