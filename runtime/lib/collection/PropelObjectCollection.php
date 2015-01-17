@@ -260,6 +260,15 @@ class PropelObjectCollection extends PropelCollection
             }
             $relatedObjects->clearIterator();
         } elseif ($relationMap->getType() == RelationMap::MANY_TO_ONE) {
+	    $mainObj = current($this);
+            if (method_exists('initRelation', $mainObj)) {
+                $relationName = $relationMap->getName();
+                $setMethod = 'set' . $relationName;
+                $mainObj->initRelation($relationName);
+                foreach ($relatedObjects as $object) {
+                    $mainObj->$setMethod($object);
+                }
+            }
             // nothing to do; the instance pool will catch all calls to getRelatedObject()
             // and return the object in memory
         } else {
