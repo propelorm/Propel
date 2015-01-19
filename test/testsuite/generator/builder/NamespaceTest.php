@@ -302,4 +302,44 @@ class NamespaceTest extends PHPUnit_Framework_TestCase
             $this->assertEquals('findOneOrCreate() cannot be used on a query with a join, because Propel cannot transform a SQL JOIN into a subquery. You should split the query in two queries to avoid joins.', $e->getMessage());
         }
     }
+    
+    public function testIssue929()
+    {
+        $book = new \Foo\Bar\NamespacedBook();
+        $book->setTitle('Book 1');
+        $book->setISBN('111223344');
+        
+        $bookClub = new \Baz\NamespacedBookClub();
+        $bookClub->setGroupLeader('Foo');
+        $bookClub->setTheme('Foo theme');
+        
+        $bookClub1 = new \Baz\NamespacedBookClub();
+        $bookClub1->setGroupLeader('Baz');
+        $bookClub1->setTheme('Baz theme');
+        
+        $book->addNamespacedBookClub($bookClub);
+        $book->addNamespacedBookClub($bookClub1);
+        
+        $bookClubs = $book->getNamespacedBookClubs();
+        $stringBook1Clubs = (string)$bookClubs;
+        
+        $expected = <<<EOF
+Baz\\NamespacedBookClub_0:
+  Id: null
+  GroupLeader: Foo
+  Theme: 'Foo theme'
+  CreatedAt: null
+  NamespacedBookListRels:
+    NamespacedBookListRel_0: { BookId: null, BookClubListId: null, NamespacedBook: { Id: null, Title: 'Book 1', ISBN: '111223344', Price: null, PublisherId: null, AuthorId: null, NamespacedBookListRels: { NamespacedBookListRel_0: '*RECURSION*', NamespacedBookListRel_1: '*RECURSION*' } }, NamespacedBookClub: '*RECURSION*' }
+Baz\\NamespacedBookClub_1:
+  Id: null
+  GroupLeader: Baz
+  Theme: 'Baz theme'
+  CreatedAt: null
+  NamespacedBookListRels:
+    NamespacedBookListRel_0: { BookId: null, BookClubListId: null, NamespacedBook: { Id: null, Title: 'Book 1', ISBN: '111223344', Price: null, PublisherId: null, AuthorId: null, NamespacedBookListRels: { NamespacedBookListRel_0: '*RECURSION*', NamespacedBookListRel_1: '*RECURSION*' } }, NamespacedBookClub: '*RECURSION*' }
+
+EOF;
+        $this->assertEquals($expected, $stringBook1Clubs);
+    }
 }
