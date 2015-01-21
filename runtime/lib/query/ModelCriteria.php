@@ -420,6 +420,26 @@ class ModelCriteria extends Criteria
     }
 
     /**
+     * Adds a GROUB BY clause for certain columns to the query
+     * Examples:
+     *   $c->groupByArray(array('Book.AuthorId', 'Book.AuthorName'))
+     *    => $c->addGroupByColumn(BookPeer::AUTHOR_ID)
+     *    => $c->addGroupByColumn(BookPeer::AUTHOR_NAME)
+     *
+     * @param array $columns The array column to group by
+     *
+     * @return ModelCriteria The current object, for fluid interface
+     */
+    public function groupByArray(array $columns)
+    {
+        foreach ($columns as $column) {
+            $this->groupBy($column);
+        }
+        
+        return $this;
+    }
+    
+    /**
      * Adds a GROUB BY clause for all columns of a model to the query
      * Examples:
      *   $c->groupBy('Book');
