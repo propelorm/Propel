@@ -1643,17 +1643,11 @@ class ModelCriteria extends Criteria
         $criteria = $this->isKeepQuery() ? clone $this : $this;
         $criteria->setDbName($this->getDbName());
 
-        $con->beginTransaction();
-        try {
-            if (!$affectedRows = $criteria->basePreDelete($con)) {
-                $affectedRows = $criteria->doDelete($con);
-            }
-            $criteria->basePostDelete($affectedRows, $con);
-            $con->commit();
-        } catch (Exception $e) {
-            $con->rollback();
-            throw $e;
+        if (!$affectedRows = $criteria->basePreDelete($con)) {
+            $affectedRows = $criteria->doDelete($con);
         }
+
+        $criteria->basePostDelete($affectedRows, $con);
 
         return $affectedRows;
     }
@@ -1688,19 +1682,14 @@ class ModelCriteria extends Criteria
         if ($con === null) {
             $con = Propel::getConnection($this->getDbName(), Propel::CONNECTION_WRITE);
         }
-        $con->beginTransaction();
-        try {
-            if (!$affectedRows = $this->basePreDelete($con)) {
-                $affectedRows = $this->doDeleteAll($con);
-            }
-            $this->basePostDelete($affectedRows, $con);
-            $con->commit();
 
-            return $affectedRows;
-        } catch (Exception $e) {
-            $con->rollBack();
-            throw $e;
+        if (!$affectedRows = $this->basePreDelete($con)) {
+            $affectedRows = $this->doDeleteAll($con);
         }
+
+        $this->basePostDelete($affectedRows, $con);
+
+        return $affectedRows;
     }
 
     /**
@@ -1780,19 +1769,11 @@ class ModelCriteria extends Criteria
         $criteria = $this->isKeepQuery() ? clone $this : $this;
         $criteria->setPrimaryTableName(constant($this->modelPeerName . '::TABLE_NAME'));
 
-        $con->beginTransaction();
-        try {
-
-            if (!$affectedRows = $criteria->basePreUpdate($values, $con, $forceIndividualSaves)) {
-                $affectedRows = $criteria->doUpdate($values, $con, $forceIndividualSaves);
-            }
-            $criteria->basePostUpdate($affectedRows, $con);
-
-            $con->commit();
-        } catch (Exception $e) {
-            $con->rollBack();
-            throw $e;
+        if (!$affectedRows = $criteria->basePreUpdate($values, $con, $forceIndividualSaves)) {
+            $affectedRows = $criteria->doUpdate($values, $con, $forceIndividualSaves);
         }
+
+        $criteria->basePostUpdate($affectedRows, $con);
 
         return $affectedRows;
     }
