@@ -682,9 +682,11 @@ class ModelCriteria extends Criteria
         $leftTableAlias = isset($this->aliases[$leftName]) ? $leftName : null;
 
         // find the RelationMap in the TableMap using the $relationName
-        if (!$tableMap->hasRelation($relationName)) {
-            throw new PropelException('Unknown relation ' . $relationName . ' on the ' . $leftName . ' table');
-        }
+        // commented out to avoid running getRelations() - and therefore loading more relation classes than usually necessary
+        // see also: TableMap's getRelation() method
+//        if (!$tableMap->hasRelation($relationName)) {
+//            throw new PropelException('Unknown relation ' . $relationName . ' on the ' . $leftName . ' table');
+//        }
         $relationMap = $tableMap->getRelation($relationName);
 
         // create a ModelJoin object for this join
@@ -788,15 +790,7 @@ class ModelCriteria extends Criteria
      */
     public function addJoinObject(Join $join, $name = null)
     {
-        $isAlreadyAdded = false;
-        foreach ($this->joins as $alreadyAddedJoin) {
-            if ($join->equals($alreadyAddedJoin)) {
-                $isAlreadyAdded = true;
-                break;
-            }
-        }
-
-        if (!$isAlreadyAdded) {
+        if (!in_array($join, $this->joins)) { // compare equality, NOT identity
             if (null === $name) {
                 $this->joins[] = $join;
             } else {
@@ -1649,17 +1643,11 @@ class ModelCriteria extends Criteria
         $criteria = $this->isKeepQuery() ? clone $this : $this;
         $criteria->setDbName($this->getDbName());
 
-        $con->beginTransaction();
-        try {
-            if (!$affectedRows = $criteria->basePreDelete($con)) {
-                $affectedRows = $criteria->doDelete($con);
-            }
-            $criteria->basePostDelete($affectedRows, $con);
-            $con->commit();
-        } catch (Exception $e) {
-            $con->rollback();
-            throw $e;
+        if (!$affectedRows = $criteria->basePreDelete($con)) {
+            $affectedRows = $criteria->doDelete($con);
         }
+
+        $criteria->basePostDelete($affectedRows, $con);
 
         return $affectedRows;
     }
@@ -1694,19 +1682,14 @@ class ModelCriteria extends Criteria
         if ($con === null) {
             $con = Propel::getConnection($this->getDbName(), Propel::CONNECTION_WRITE);
         }
-        $con->beginTransaction();
-        try {
-            if (!$affectedRows = $this->basePreDelete($con)) {
-                $affectedRows = $this->doDeleteAll($con);
-            }
-            $this->basePostDelete($affectedRows, $con);
-            $con->commit();
 
-            return $affectedRows;
-        } catch (Exception $e) {
-            $con->rollBack();
-            throw $e;
+        if (!$affectedRows = $this->basePreDelete($con)) {
+            $affectedRows = $this->doDeleteAll($con);
         }
+
+        $this->basePostDelete($affectedRows, $con);
+
+        return $affectedRows;
     }
 
     /**
@@ -1786,19 +1769,11 @@ class ModelCriteria extends Criteria
         $criteria = $this->isKeepQuery() ? clone $this : $this;
         $criteria->setPrimaryTableName(constant($this->modelPeerName . '::TABLE_NAME'));
 
-        $con->beginTransaction();
-        try {
-
-            if (!$affectedRows = $criteria->basePreUpdate($values, $con, $forceIndividualSaves)) {
-                $affectedRows = $criteria->doUpdate($values, $con, $forceIndividualSaves);
-            }
-            $criteria->basePostUpdate($affectedRows, $con);
-
-            $con->commit();
-        } catch (Exception $e) {
-            $con->rollBack();
-            throw $e;
+        if (!$affectedRows = $criteria->basePreUpdate($values, $con, $forceIndividualSaves)) {
+            $affectedRows = $criteria->doUpdate($values, $con, $forceIndividualSaves);
         }
+
+        $criteria->basePostUpdate($affectedRows, $con);
 
         return $affectedRows;
     }
