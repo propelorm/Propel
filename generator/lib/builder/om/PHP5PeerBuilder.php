@@ -1712,8 +1712,7 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
         \$criteria->setDbName(" . $this->getPeerClassname() . "::DATABASE_NAME);
 
         \$affectedRows = 0; // initialize var to track total num of affected rows
-
-        ";
+";
 
         if ($this->isDeleteCascadeEmulationNeeded()) {
             $script .= "
