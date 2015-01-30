@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <log>
+        <level>7</level>
+    </log>
+    <propel>
+        <datasources>
+            <datasource id="default">
+                <!-- I want to use this platform but with my custom platform -->
+                <adapter>pgsql</adapter>
+                <connection>
+                    <dsn>pgsql:host=localhost;port=5432;dbname=postgres;</dsn>
+                    <user>postgres</user>
+                    <password>password</password>
+                </connection>
+            </datasource>
+        </datasources>
+    </propel>
+</config>

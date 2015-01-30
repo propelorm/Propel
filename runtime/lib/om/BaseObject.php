@@ -115,11 +115,14 @@ abstract class BaseObject
      * Setter for the isNew attribute.  This method will be called
      * by Propel-generated children and Peers.
      *
-     * @param boolean $b the state of the object.
+     * @param  boolean $b the state of the object.
+     * @return self
      */
     public function setNew($b)
     {
         $this->_new = (boolean) $b;
+
+        return $this;
     }
 
     /**
@@ -137,11 +140,13 @@ abstract class BaseObject
      *
      * @param boolean $b The deleted state of this object.
      *
-     * @return void
+     * @return self
      */
     public function setDeleted($b)
     {
         $this->_deleted = (boolean) $b;
+
+        return $this;
     }
 
     /**
@@ -242,7 +247,7 @@ abstract class BaseObject
      *
      * @param string $col If supplied, only the specified column is reset.
      *
-     * @return void
+     * @return self
      */
     public function resetModified($col = null)
     {
@@ -253,6 +258,8 @@ abstract class BaseObject
         } else {
             $this->modifiedColumns = array();
         }
+
+        return $this;
     }
 
     /**

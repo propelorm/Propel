@@ -10,6 +10,7 @@ php:
   - 5.3
   - 5.4
   - 5.5
+  - hhvm
 
 env:
   - DB=mysql DB_USER=root
@@ -26,3 +27,7 @@ before_script:
   - ./test/reset_tests.sh
 
 script: phpunit
+
+matrix:
+  allow_failures:
+    - php: hhvm
