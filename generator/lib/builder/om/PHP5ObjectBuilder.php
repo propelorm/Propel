@@ -2265,7 +2265,7 @@ abstract class ".$this->getClassname()." extends ".$parentClass." ";
         }
         $script .= "
      *
-     * @return array an associative array containing the field names (as keys) and field values
+     * @return array|string an associative array containing the field names (as keys) and field values or *RECURSION* string if object was already exported
      */
     public function toArray(\$keyType = BasePeer::$defaultKeyType, \$includeLazyLoadColumns = true, \$alreadyDumpedObjects = array()" . ($hasFks ? ", \$includeForeignObjects = false" : '') . ")
     {
