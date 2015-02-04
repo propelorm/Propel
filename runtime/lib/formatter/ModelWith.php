@@ -52,6 +52,7 @@ class ModelWith
         $relationName = $relation->getName();
         if ($relation->getType() == RelationMap::ONE_TO_MANY) {
             $this->isAdd = $this->isWithOneToMany == true;
+            $this->isWithOneToMany = true;
             $this->relationName = $relation->getPluralName();
             $this->relationMethod = 'add' . $relationName;
             $this->initMethod = 'init' . $this->relationName;
