@@ -795,7 +795,7 @@ class Criteria implements IteratorAggregate
      *
      * @return Criteria A modified Criteria object.
      */
-    public function add($critOrColumn, $value = null, $comparison = null)
+    public function add($critOrColumn, $value = null, $comparison = self::EQUAL)
     {
         $criterion = $this->getCriterionForCondition($critOrColumn, $value, $comparison);
         if ($critOrColumn instanceof Criterion) {

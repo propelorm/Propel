@@ -849,7 +849,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . "
 
         $script .= "
      */
-    public function filterBy$colPhpName(\$$variableName = null, \$comparison = null)
+    public function filterBy$colPhpName(\$$variableName = null, \$comparison = Criteria::EQUAL)
     {";
         if ($col->isNumericType() || $col->isTemporalType()) {
             $script .= "
