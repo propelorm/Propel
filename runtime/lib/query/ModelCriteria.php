@@ -98,7 +98,7 @@ class ModelCriteria extends Criteria
      * @param string  $modelAlias    The model alias
      * @param boolean $useAliasInSQL Whether to use the alias in the SQL code (false by default)
      *
-     * @return ModelCriteria The current object, for fluid interface
+     * @return $this The current object, for fluid interface
      */
     public function setModelAlias($modelAlias, $useAliasInSQL = false)
     {
@@ -161,7 +161,7 @@ class ModelCriteria extends Criteria
      *
      * @param string|PropelFormatter $formatter a formatter class name, or a formatter instance
      *
-     * @return ModelCriteria The current object, for fluid interface
+     * @return $this The current object, for fluid interface
      *
      * @throws PropelException
      */
@@ -210,7 +210,7 @@ class ModelCriteria extends Criteria
      * @param mixed  $value         A value for the condition
      * @param mixed  $bindingType   A value for the condition
      *
-     * @return ModelCriteria The current object, for fluid interface
+     * @return $this The current object, for fluid interface
      */
     public function condition($conditionName, $clause, $value = null, $bindingType = null)
     {
@@ -233,7 +233,7 @@ class ModelCriteria extends Criteria
      * @param mixed  $value      A value for the condition
      * @param string $comparison What to use for the column comparison, defaults to Criteria::EQUAL
      *
-     * @return ModelCriteria The current object, for fluid interface
+     * @return $this The current object, for fluid interface
      */
     public function filterBy($column, $value, $comparison = Criteria::EQUAL)
     {
@@ -255,7 +255,7 @@ class ModelCriteria extends Criteria
      *
      * @param mixed $conditions An array of conditions, using column phpNames as key
      *
-     * @return ModelCriteria The current object, for fluid interface
+     * @return $this The current object, for fluid interface
      */
     public function filterByArray($conditions)
     {
@@ -285,7 +285,7 @@ class ModelCriteria extends Criteria
      * @param mixed  $value       A value for the condition
      * @param string $bindingType
      *
-     * @return ModelCriteria The current object, for fluid interface
+     * @return $this The current object, for fluid interface
      */
     public function where($clause, $value = null, $bindingType = null)
     {
@@ -320,7 +320,7 @@ class ModelCriteria extends Criteria
      * @param mixed  $value       A value for the condition
      * @param string $bindingType
      *
-     * @return ModelCriteria The current object, for fluid interface
+     * @return $this The current object, for fluid interface
      */
     public function orWhere($clause, $value = null, $bindingType = null)
     {
@@ -348,7 +348,7 @@ class ModelCriteria extends Criteria
      * @param mixed  $value       A value for the condition
      * @param string $bindingType
      *
-     * @return ModelCriteria The current object, for fluid interface
+     * @return $this The current object, for fluid interface
      */
     public function having($clause, $value = null, $bindingType = null)
     {
@@ -377,7 +377,7 @@ class ModelCriteria extends Criteria
      * @param string $columnName The column to order by
      * @param string $order      The sorting order. Criteria::ASC by default, also accepts Criteria::DESC
      *
-     * @return ModelCriteria The current object, for fluid interface
+     * @return $this The current object, for fluid interface
      *
      * @throws PropelException
      */
@@ -409,7 +409,7 @@ class ModelCriteria extends Criteria
      *
      * @param string $columnName The column to group by
      *
-     * @return ModelCriteria The current object, for fluid interface
+     * @return $this The current object, for fluid interface
      */
     public function groupBy($columnName)
     {
@@ -430,7 +430,7 @@ class ModelCriteria extends Criteria
      *
      * @param string $class The class name or alias
      *
-     * @return ModelCriteria The current object, for fluid interface
+     * @return $this The current object, for fluid interface
      *
      * @throws PropelException
      */
@@ -460,7 +460,7 @@ class ModelCriteria extends Criteria
      * Adds a DISTINCT clause to the query
      * Alias for Criteria::setDistinct()
      *
-     * @return ModelCriteria The current object, for fluid interface
+     * @return $this The current object, for fluid interface
      */
     public function distinct()
     {
@@ -475,7 +475,7 @@ class ModelCriteria extends Criteria
      *
      * @param int $limit Maximum number of results to return by the query
      *
-     * @return ModelCriteria The current object, for fluid interface
+     * @return $this The current object, for fluid interface
      */
     public function limit($limit)
     {
@@ -490,7 +490,7 @@ class ModelCriteria extends Criteria
      *
      * @param int $offset Offset of the first result to return
      *
-     * @return ModelCriteria The current object, for fluid interface
+     * @return $this The current object, for fluid interface
      */
     public function offset($offset)
     {
@@ -519,7 +519,7 @@ class ModelCriteria extends Criteria
      *
      * @param mixed $columnArray A list of column names (e.g. array('Title', 'Category.Name', 'c.Content')) or a single column name (e.g. 'Name')
      *
-     * @return ModelCriteria The current object, for fluid interface
+     * @return $this The current object, for fluid interface
      *
      * @throws PropelException
      */
@@ -652,7 +652,7 @@ class ModelCriteria extends Criteria
      * @param string $relation Relation to use for the join
      * @param string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
      *
-     * @return ModelCriteria The current object, for fluid interface
+     * @return $this The current object, for fluid interface
      *
      * @throws PropelException
      */
@@ -721,7 +721,7 @@ class ModelCriteria extends Criteria
      * @param string $operator    The operator to use to add the condition. Defaults to 'AND'
      * @param string $bindingType
      *
-     * @return ModelCriteria The current object, for fluid interface
+     * @return $this The current object, for fluid interface
      *
      * @throws PropelException
      */
@@ -756,7 +756,7 @@ class ModelCriteria extends Criteria
      * @param string $name      The relation name or alias on which the join was created
      * @param mixed  $condition A Criterion object, or a condition name
      *
-     * @return ModelCriteria The current object, for fluid interface
+     * @return $this The current object, for fluid interface
      *
      * @throws PropelException
      */
@@ -784,7 +784,7 @@ class ModelCriteria extends Criteria
      * @param Join   $join A join object
      * @param string $name
      *
-     * @return ModelCriteria The current object, for fluid interface
+     * @return $this The current object, for fluid interface
      */
     public function addJoinObject(Join $join, $name = null)
     {
@@ -822,7 +822,7 @@ class ModelCriteria extends Criteria
      * @param string $relation Relation to use for the join
      * @param string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
      *
-     * @return ModelCriteria The current object, for fluid interface
+     * @return $this The current object, for fluid interface
      */
     public function joinWith($relation, $joinType = Criteria::INNER_JOIN)
     {
@@ -848,7 +848,7 @@ class ModelCriteria extends Criteria
      *
      * @param string $relation Relation to use for the join
      *
-     * @return ModelCriteria The current object, for fluid interface
+     * @return $this The current object, for fluid interface
      *
      * @throws PropelException
      */
@@ -896,7 +896,7 @@ class ModelCriteria extends Criteria
      *
      * @param    array
      *
-     * @return ModelCriteria The current object, for fluid interface
+     * @return $this The current object, for fluid interface
      */
     public function setWith($with)
     {
@@ -920,7 +920,7 @@ class ModelCriteria extends Criteria
      *                           If no alias is provided, the clause is used as a column alias
      *                           This alias is used for retrieving the column via BaseObject::getVirtualColumn($alias)
      *
-     * @return ModelCriteria The current object, for fluid interface
+     * @return $this The current object, for fluid interface
      */
     public function withColumn($clause, $name = null)
     {
@@ -997,7 +997,7 @@ class ModelCriteria extends Criteria
      * @param string   $operator The logical operator used to combine conditions
      *              Defaults to Criteria::LOGICAL_AND, also accepts Criteria::LOGICAL_OR
      *
-     * @return ModelCriteria The primary criteria object
+     * @return $this The primary criteria object
      */
     public function mergeWith(Criteria $criteria, $operator = null)
     {
@@ -1015,7 +1015,7 @@ class ModelCriteria extends Criteria
      * Clear the conditions to allow the reuse of the query object.
      * The ModelCriteria's Model and alias 'all the properties set by construct) will remain.
      *
-     * @return ModelCriteria The primary criteria object
+     * @return $this The primary criteria object
      */
     public function clear()
     {
@@ -1069,7 +1069,7 @@ class ModelCriteria extends Criteria
      * @param string   $alias                    alias for the subQuery
      * @param boolean  $addAliasAndSelectColumns Set to false if you want to manually add the aliased select columns
      *
-     * @return ModelCriteria The current object, for fluid interface
+     * @return $this The current object, for fluid interface
      */
     public function addSelectQuery(Criteria $subQueryCriteria, $alias = null, $addAliasAndSelectColumns = true)
     {
@@ -1095,7 +1095,7 @@ class ModelCriteria extends Criteria
     /**
      * Adds the select columns for a the current table
      *
-     * @return ModelCriteria The current object, for fluid interface
+     * @return $this The current object, for fluid interface
      */
     public function addSelfSelectColumns()
     {
@@ -1109,7 +1109,7 @@ class ModelCriteria extends Criteria
      *
      * @param string $relation The relation name or alias, as defined in join()
      *
-     * @return ModelCriteria The current object, for fluid interface
+     * @return $this The current object, for fluid interface
      */
     public function addRelationSelectColumns($relation)
     {
@@ -1170,7 +1170,7 @@ class ModelCriteria extends Criteria
      *
      * @param boolean $isKeepQuery
      *
-     * @return ModelCriteria The current object, for fluid interface
+     * @return $this The current object, for fluid interface
      */
     public function keepQuery($isKeepQuery = true)
     {
@@ -2178,7 +2178,7 @@ class ModelCriteria extends Criteria
      * @param mixed  $value
      * @param string $operator A String, like Criteria::EQUAL.
      *
-     * @return ModelCriteria A modified Criteria object.
+     * @return $this A modified Criteria object.
      */
     public function addUsingAlias($column, $value = null, $operator = null)
     {

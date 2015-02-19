@@ -374,7 +374,7 @@ class Propel
      *                   ($config['name.space.item'])
      *                 - PropelConfiguration::TYPE_OBJECT: return the configuration as a PropelConfiguration instance
      *
-     * @return mixed The Configuration (array or PropelConfiguration)
+     * @return array|PropelConfiguration The Configuration
      */
     public static function getConfiguration($type = PropelConfiguration::TYPE_ARRAY)
     {
@@ -544,7 +544,7 @@ class Propel
      * @param string $name The datasource name that is used to look up the DSN from the runtime configuration file.
      * @param string $mode The connection mode (this applies to replication systems).
      *
-     * @return PDO A database connection
+     * @return PDO|PropelPDO A database connection
      *
      * @throws PropelException - if connection cannot be configured or initialized.
      */
@@ -570,7 +570,7 @@ class Propel
      * @param string $name The datasource name that is used to look up the DSN
      *                          from the runtime configuation file. Empty name not allowed.
      *
-     * @return PDO A database connection
+     * @return PDO|PropelPDO A database connection
      *
      * @throws PropelException - if connection cannot be configured or initialized.
      */
@@ -596,7 +596,7 @@ class Propel
      * @param string $name The datasource name that is used to look up the DSN
      *                          from the runtime configuation file. Empty name not allowed.
      *
-     * @return PDO A database connection
+     * @return PDO|PropelPDO A database connection
      *
      * @throws PropelException - if connection cannot be configured or initialized.
      */
@@ -642,7 +642,7 @@ class Propel
      * @param string $defaultClass The PDO subclass to instantiate if there is no explicit classname
      *                             specified in the connection params (default is Propel::CLASS_PROPEL_PDO)
      *
-     * @return PDO A database connection of the given class (PDO, PropelPDO, SlavePDO or user-defined)
+     * @return PDO|PropelPDO A database connection of the given class (PDO, PropelPDO, SlavePDO or user-defined)
      *
      * @throws PropelException - if lower-level exception caught when trying to connect.
      */

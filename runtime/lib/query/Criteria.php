@@ -341,7 +341,7 @@ class Criteria implements IteratorAggregate
      *
      * If the name already exists, it is replaced by the new clause.
      *
-     * @return Criteria A modified Criteria object.
+     * @return $this A modified Criteria object.
      */
     public function addAsColumn($name, $clause)
     {
@@ -384,7 +384,7 @@ class Criteria implements IteratorAggregate
      * @param string $alias
      * @param string $table
      *
-     * @return Criteria A modified Criteria object.
+     * @return $this A modified Criteria object.
      */
     public function addAlias($alias, $table)
     {
@@ -398,7 +398,7 @@ class Criteria implements IteratorAggregate
      *
      * @param string $alias
      *
-     * @return Criteria A modified Criteria object.
+     * @return $this A modified Criteria object.
      */
     public function removeAlias($alias)
     {
@@ -742,7 +742,7 @@ class Criteria implements IteratorAggregate
      * @param string $key
      * @param mixed  $value
      *
-     * @return Criteria A modified Criteria object.
+     * @return $this A modified Criteria object.
      */
     public function put($key, $value)
     {
@@ -793,7 +793,7 @@ class Criteria implements IteratorAggregate
      * @param mixed  $value
      * @param string $comparison   A String.
      *
-     * @return Criteria A modified Criteria object.
+     * @return $this A modified Criteria object.
      */
     public function add($critOrColumn, $value = null, $comparison = null)
     {
@@ -828,7 +828,7 @@ class Criteria implements IteratorAggregate
      * @param mixed  $value
      * @param string $comparison A String.
      *
-     * @return Criteria A modified Criteria object.
+     * @return $this A modified Criteria object.
      */
     public function addCond($name, $p1, $value = null, $comparison = null)
     {
@@ -844,7 +844,7 @@ class Criteria implements IteratorAggregate
      * @param string $operator   logical operator, either Criteria::LOGICAL_AND, or Criteria::LOGICAL_OR
      * @param string $name       optional name to combine the criterion later
      *
-     * @return Criteria
+     * @return $this
      *
      * @throws PropelException
      */
@@ -887,7 +887,7 @@ class Criteria implements IteratorAggregate
      *                             among Criteria::INNER_JOIN, Criteria::LEFT_JOIN,
      *                             and Criteria::RIGHT_JOIN
      *
-     * @return Criteria A modified Criteria object.
+     * @return $this A modified Criteria object.
      */
     public function addJoin($left, $right, $joinType = null)
     {
@@ -945,7 +945,7 @@ class Criteria implements IteratorAggregate
      * @param array  $conditions An array of conditions, each condition being an array (left, right, operator)
      * @param string $joinType   A String with the join operator. Defaults to an implicit join.
      *
-     * @return Criteria A modified Criteria object.
+     * @return $this A modified Criteria object.
      */
     public function addMultipleJoin($conditions, $joinType = null)
     {
@@ -1003,7 +1003,7 @@ class Criteria implements IteratorAggregate
      *
      * @param Join $join A join object
      *
-     * @return Criteria A modified Criteria object
+     * @return $this A modified Criteria object
      */
     public function addJoinObject(Join $join)
     {
@@ -1038,7 +1038,7 @@ class Criteria implements IteratorAggregate
      * @param Criteria $subQueryCriteria Criteria to build the subquery from
      * @param string   $alias            alias for the subQuery
      *
-     * @return Criteria this modified Criteria object (Fluid API)
+     * @return $this this modified Criteria object (Fluid API)
      */
     public function addSelectQuery(Criteria $subQueryCriteria, $alias = null)
     {
@@ -1108,7 +1108,7 @@ class Criteria implements IteratorAggregate
     /**
      * Adds "ALL" modifier to the SQL statement.
      *
-     * @return Criteria Modified Criteria object (for fluent API)
+     * @return $this Modified Criteria object (for fluent API)
      */
     public function setAll()
     {
@@ -1121,7 +1121,7 @@ class Criteria implements IteratorAggregate
     /**
      * Adds "DISTINCT" modifier to the SQL statement.
      *
-     * @return Criteria Modified Criteria object (for fluent API)
+     * @return $this Modified Criteria object (for fluent API)
      */
     public function setDistinct()
     {
@@ -1137,7 +1137,7 @@ class Criteria implements IteratorAggregate
      *
      * @param string $modifier The modifier to add
      *
-     * @return Criteria Modified Criteria object (for fluent API)
+     * @return $this Modified Criteria object (for fluent API)
      */
     public function addSelectModifier($modifier)
     {
@@ -1155,7 +1155,7 @@ class Criteria implements IteratorAggregate
      *
      * @param string $modifier The modifier to add
      *
-     * @return Criteria Modified Criteria object (for fluent API)
+     * @return $this Modified Criteria object (for fluent API)
      */
     public function removeSelectModifier($modifier)
     {
@@ -1211,7 +1211,7 @@ class Criteria implements IteratorAggregate
      *
      * @param boolean $b Set to TRUE if you expect the query to select just one record.
      *
-     * @return Criteria Modified Criteria object (for fluent API)
+     * @return $this Modified Criteria object (for fluent API)
      */
     public function setSingleRecord($b)
     {
@@ -1235,7 +1235,7 @@ class Criteria implements IteratorAggregate
      *
      * @param int $limit An int with the value for limit.
      *
-     * @return Criteria Modified Criteria object (for fluent API)
+     * @return $this Modified Criteria object (for fluent API)
      */
     public function setLimit($limit)
     {
@@ -1261,7 +1261,7 @@ class Criteria implements IteratorAggregate
      * @param int $offset An int with the value for offset.  (Note this values is
      *                    cast to a 32bit integer and may result in truncation)
      *
-     * @return Criteria Modified Criteria object (for fluent API)
+     * @return $this Modified Criteria object (for fluent API)
      */
     public function setOffset($offset)
     {
@@ -1285,7 +1285,7 @@ class Criteria implements IteratorAggregate
      *
      * @param string $name Name of the select column.
      *
-     * @return Criteria Modified Criteria object (for fluent API)
+     * @return $this Modified Criteria object (for fluent API)
      */
     public function addSelectColumn($name)
     {
@@ -1299,7 +1299,7 @@ class Criteria implements IteratorAggregate
      *
      * @param string $comment The comment to add to the query, without comment sign
      *
-     * @return Criteria Modified Criteria object (for fluent API)
+     * @return $this Modified Criteria object (for fluent API)
      */
     public function setComment($comment = null)
     {
@@ -1345,7 +1345,7 @@ class Criteria implements IteratorAggregate
     /**
      * Clears current select columns.
      *
-     * @return Criteria Modified Criteria object (for fluent API)
+     * @return $this Modified Criteria object (for fluent API)
      */
     public function clearSelectColumns()
     {
@@ -1369,7 +1369,7 @@ class Criteria implements IteratorAggregate
      *
      * @param string $groupBy The name of the column to group by.
      *
-     * @return Criteria Modified Criteria object (for fluent API)
+     * @return $this Modified Criteria object (for fluent API)
      */
     public function addGroupByColumn($groupBy)
     {
@@ -1383,7 +1383,7 @@ class Criteria implements IteratorAggregate
      *
      * @param string $name The name of the column to order by.
      *
-     * @return Criteria Modified Criteria object (for fluent API)
+     * @return $this Modified Criteria object (for fluent API)
      */
     public function addAscendingOrderByColumn($name)
     {
@@ -1397,7 +1397,7 @@ class Criteria implements IteratorAggregate
      *
      * @param string $name The name of the column to order by.
      *
-     * @return Criteria Modified Criteria object (for fluent API)
+     * @return $this Modified Criteria object (for fluent API)
      */
     public function addDescendingOrderByColumn($name)
     {
@@ -1419,7 +1419,7 @@ class Criteria implements IteratorAggregate
     /**
      * Clear the order-by columns.
      *
-     * @return Criteria Modified Criteria object (for fluent API)
+     * @return $this Modified Criteria object (for fluent API)
      */
     public function clearOrderByColumns()
     {
@@ -1431,7 +1431,7 @@ class Criteria implements IteratorAggregate
     /**
      * Clear the group-by columns.
      *
-     * @return Criteria
+     * @return $this
      */
     public function clearGroupByColumns()
     {
@@ -1592,7 +1592,7 @@ class Criteria implements IteratorAggregate
      *            Defaults to Criteria::LOGICAL_AND, also accepts Criteria::LOGICAL_OR
      *            This parameter is deprecated, use _or() instead
      *
-     * @return Criteria The current criteria object
+     * @return $this The current criteria object
      *
      * @throws PropelException
      */
@@ -1689,7 +1689,7 @@ class Criteria implements IteratorAggregate
      * @param mixed $value      The value to bind in the condition
      * @param mixed $comparison A Criteria class constant, or a PDO::PARAM_ class constant
      *
-     * @return Criteria Modified Criteria object (for fluent API)
+     * @return $this Modified Criteria object (for fluent API)
      */
     public function addHaving($p1, $value = null, $comparison = null)
     {
@@ -1752,7 +1752,7 @@ class Criteria implements IteratorAggregate
      * @param mixed $comparison            A Criteria class constant, or a PDO::PARAM_ class constant
      * @param bool  $preferColumnCondition
      *
-     * @return Criteria A modified Criteria object.
+     * @return $this A modified Criteria object.
      */
     public function addAnd($p1, $value = null, $comparison = null, $preferColumnCondition = true)
     {
@@ -1788,7 +1788,7 @@ class Criteria implements IteratorAggregate
      * @param mixed $comparison            A Criteria class constant, or a PDO::PARAM_ class constant
      * @param bool  $preferColumnCondition
      *
-     * @return Criteria A modified Criteria object.
+     * @return $this A modified Criteria object.
      */
     public function addOr($p1, $value = null, $comparison = null, $preferColumnCondition = true)
     {
@@ -1827,7 +1827,7 @@ class Criteria implements IteratorAggregate
      *                                                (necessary for Propel 1.4 compatibility).
      *                                                If false, the condition is combined with the last existing condition.
      *
-     * @return Criteria A modified Criteria object.
+     * @return $this A modified Criteria object.
      */
     public function addUsingOperator($p1, $value = null, $operator = null, $preferColumnCondition = true)
     {
@@ -1843,7 +1843,7 @@ class Criteria implements IteratorAggregate
     // Fluid operators
 
     /**
-     * @return Criteria
+     * @return $this
      */
     public function _or()
     {
@@ -1853,7 +1853,7 @@ class Criteria implements IteratorAggregate
     }
 
     /**
-     * @return Criteria
+     * @return $this
      */
     public function _and()
     {
@@ -1920,7 +1920,7 @@ class Criteria implements IteratorAggregate
      * Returns the current object
      * Allows for conditional statements in a fluid interface.
      *
-     * @return Criteria
+     * @return $this
      *
      * @throws PropelException
      */
