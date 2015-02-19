@@ -704,7 +704,7 @@ echo $book->isColumnModified('book.TITLE'); // true
 print_r($book->getModifiedColumns());
 // array('book.TITLE')
 // To use column phpNames, just convert the parameter using translateFieldName()
-$colName = BookPeer::translateFieldName('Title', BasePeer::TYPE_PHPNAME, BasePeer::TYPE_COLNAME);
+$colName = BookPeer::translateFieldName('Title', BasePeer::TYPE_COLNAME, BasePeer::TYPE_PHPNAME);
 echo $book->isColumnModified($colname); // true
 ```
 
