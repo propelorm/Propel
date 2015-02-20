@@ -17,11 +17,11 @@
  *
  * magic methods:
  *
- * @method     ModelCriteria leftJoin($relation) Adds a LEFT JOIN clause to the query
- * @method     ModelCriteria rightJoin($relation) Adds a RIGHT JOIN clause to the query
- * @method     ModelCriteria innerJoin($relation) Adds a INNER JOIN clause to the query
- * @method     ModelCriteria getSelectQuery($alias) Get the Criteria for a specific subQuery
- * @method     ModelCriteria _or()
+ * @method     $this leftJoin($relation) Adds a LEFT JOIN clause to the query
+ * @method     $this rightJoin($relation) Adds a RIGHT JOIN clause to the query
+ * @method     $this innerJoin($relation) Adds a INNER JOIN clause to the query
+ * @method     $this getSelectQuery($alias) Get the Criteria for a specific subQuery
+ * @method     $this _or()
  *
  * @property   ModelJoin[] $joins
  *
