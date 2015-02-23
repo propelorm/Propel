@@ -14,6 +14,7 @@ The `versionable` behavior provides versioning capabilities to any ActiveRecord 
 ## Basic Usage ##
 
 In the `schema.xml`, use the `<behavior>` tag to add the `versionable` behavior to a table:
+
 ```xml
 <table name="book">
   <column name="id" required="true" primaryKey="true" autoIncrement="true" type="INTEGER" />
