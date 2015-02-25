@@ -147,7 +147,7 @@ class PropelOMTask extends AbstractPropelDataModelTask
                         // -----------------------------------------------------------------------------------------
 
                         // these files are always created / overwrite any existing files
-                        foreach (array('peer', 'object', 'tablemap', 'query') as $target) {
+                        foreach (array('peer', 'object', 'tablemap', 'query', 'typehint') as $target) {
                             $builder = $generatorConfig->getConfiguredBuilder($table, $target);
                             $nbWrittenFiles += $this->build($builder);
                         }

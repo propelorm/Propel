@@ -1216,7 +1216,27 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . "
         }
         $relationName = $this->getFKPhpNameAffix($fk);
         $joinType = $this->getJoinType($fk);
-        $this->addUseRelatedQuery($script, $fkTable, $queryClass, $relationName, $joinType);
+        $this->addUseRelatedQuery($script, $fkTable, $queryClass, $relationName, $joinType, $this->getTypehintingClassname($table, $fkTable));
+    }
+
+    /**
+     * @param Table $table
+     * @param Table $fkTable
+     * @return string
+     */
+    protected function getTypehintingClassname(Table $table, $fkTable)
+    {
+        return $table->getPhpName() .'Fk'. $fkTable->getPhpName() .'Hint';
+    }
+
+    /**
+     * @param Table $table
+     * @param Table $fkTable
+     * @return string
+     */
+    protected function getRefTypehintingClassname(Table $table, $fkTable)
+    {
+        return $fkTable->getPhpName() .'Fk'. $table->getPhpName() .'Hint';
     }
 
     /**
@@ -1235,7 +1255,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . "
         }
         $relationName = $this->getRefFKPhpNameAffix($fk);
         $joinType = $this->getJoinType($fk);
-        $this->addUseRelatedQuery($script, $fkTable, $queryClass, $relationName, $joinType);
+        $this->addUseRelatedQuery($script, $fkTable, $queryClass, $relationName, $joinType, $this->getRefTypehintingClassname($table, $fkTable));
     }
 
     /**
@@ -1245,6 +1265,8 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . "
      */
     protected function addUseRelatedQuery(&$script, $fkTable, $queryClass, $relationName, $joinType)
     {
+        $typehintingQueryClassname = '\\'. str_replace('\\om', '\\hint', $this->getNamespace()) .'\\'. $this->getTypehintingClassname($this->getTable(), $fkTable);
+
         $script .= "
     /**
      * Use the $relationName relation " . $fkTable->getPhpName() . " object
@@ -1255,7 +1277,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . "
      *                                   to be used as main alias in the secondary query
      * @param     string \$joinType Accepted values are null, 'left join', 'right join', 'inner join'
      *
-     * @return   $queryClass A secondary query class using the current class as primary query
+     * @return   $typehintingQueryClassname A secondary query class using the current class as primary query
      */
     public function use" . $relationName . "Query(\$relationAlias = null, \$joinType = " . $joinType . ")
     {
