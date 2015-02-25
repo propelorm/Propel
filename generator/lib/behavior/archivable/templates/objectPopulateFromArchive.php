@@ -1,4 +1,3 @@
-
 /**
  * Populates the the current object based on a $archiveTablePhpName archive object.
  *
@@ -11,7 +10,7 @@
  * @param      Boolean $populateAutoIncrementPrimaryKeys Not used! Defined to comply with php strict standards
  <?php endif; ?>
  *
- * @return     <?php echo $objectClassname ?> The current object (for fluent API support)
+ * @return     $this The current object (for fluent API support)
  */
 public function populateFromArchive($archive<?php if ($usesAutoIncrement || $fakeAutoIncrementParameter): ?>, $populateAutoIncrementPrimaryKeys = false<?php endif; ?>) {
 <?php if ($usesAutoIncrement && !$fakeAutoIncrementParameter): ?>

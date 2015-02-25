@@ -304,7 +304,7 @@ abstract class " . $this->getClassname() . " extends " . $this->getObjectBuilder
     /**
      * Sets node properties to make it a root node.
      *
-     * @return                 $objectClassName The current object (for fluent API support)
+     * @return                 \$this The current object (for fluent API support)
      * @throws PropelException
      */
     public function makeRoot()
@@ -345,7 +345,7 @@ abstract class " . $this->getClassname() . " extends " . $this->getObjectBuilder
      * Sets the level of the node in the tree
      *
      * @param      int \$v new value
-     * @return   $objectClassName The current object (for fluent API support)
+     * @return   \$this The current object (for fluent API support)
      */
     public function setLevel(\$level)
     {
@@ -364,7 +364,7 @@ abstract class " . $this->getClassname() . " extends " . $this->getObjectBuilder
      * Sets the children array of the node in the tree
      *
      * @param  array of $objectClassName \$children	array of Propel node object
-     * @return          $objectClassName The current object (for fluent API support)
+     * @return          \$this The current object (for fluent API support)
      */
     public function setChildren(array \$children)
     {
@@ -384,7 +384,7 @@ abstract class " . $this->getClassname() . " extends " . $this->getObjectBuilder
      * Sets the parentNode of the node in the tree
      *
      * @param    $objectClassName \$parent Propel node object
-     * @return   $objectClassName The current object (for fluent API support)
+     * @return   \$this The current object (for fluent API support)
      */
     public function setParentNode(NodeObject \$parent = null)
     {
@@ -404,7 +404,7 @@ abstract class " . $this->getClassname() . " extends " . $this->getObjectBuilder
      * Sets the previous sibling of the node in the tree
      *
      * @param    $objectClassName \$node Propel node object
-     * @return   $objectClassName The current object (for fluent API support)
+     * @return   \$this The current object (for fluent API support)
      */
     public function setPrevSibling(NodeObject \$node = null)
     {
@@ -425,7 +425,7 @@ abstract class " . $this->getClassname() . " extends " . $this->getObjectBuilder
      * Sets the next sibling of the node in the tree
      *
      * @param    $objectClassName \$node Propel node object
-     * @return   $objectClassName The current object (for fluent API support)
+     * @return   \$this The current object (for fluent API support)
      */
     public function setNextSibling(NodeObject \$node = null)
     {
@@ -782,7 +782,7 @@ abstract class " . $this->getClassname() . " extends " . $this->getObjectBuilder
      *
      * @param   $objectClassName \$parent	Propel object for destination node
      * @param      PropelPDO \$con Connection to use.
-     * @return                 $objectClassName The current object (for fluent API support)
+     * @return                 \$this The current object (for fluent API support)
      * @throws PropelException - if this object already exists
      */
     public function insertAsFirstChildOf(NodeObject \$parent, PropelPDO \$con = null)
@@ -807,7 +807,7 @@ abstract class " . $this->getClassname() . " extends " . $this->getObjectBuilder
      *
      * @param   $objectClassName \$parent	Propel object for destination node
      * @param      PropelPDO \$con Connection to use.
-     * @return                 $objectClassName The current object (for fluent API support)
+     * @return                 \$this The current object (for fluent API support)
      * @throws PropelException - if this object already exists
      */
     public function insertAsLastChildOf(NodeObject \$parent, PropelPDO \$con = null)
@@ -832,7 +832,7 @@ abstract class " . $this->getClassname() . " extends " . $this->getObjectBuilder
      *
      * @param   $objectClassName \$dest	Propel object for destination node
      * @param      PropelPDO \$con Connection to use.
-     * @return                 $objectClassName The current object (for fluent API support)
+     * @return                 \$this The current object (for fluent API support)
      * @throws PropelException - if this object already exists
      */
     public function insertAsPrevSiblingOf(NodeObject \$dest, PropelPDO \$con = null)
@@ -857,7 +857,7 @@ abstract class " . $this->getClassname() . " extends " . $this->getObjectBuilder
      *
      * @param   $objectClassName \$dest	Propel object for destination node
      * @param      PropelPDO \$con Connection to use.
-     * @return                 $objectClassName The current object (for fluent API support)
+     * @return                 \$this The current object (for fluent API support)
      * @throws PropelException - if this object already exists
      */
     public function insertAsNextSiblingOf(NodeObject \$dest, PropelPDO \$con = null)
@@ -882,7 +882,7 @@ abstract class " . $this->getClassname() . " extends " . $this->getObjectBuilder
      *
      * @param   $objectClassName \$parent	Propel object for destination node
      * @param      PropelPDO \$con Connection to use.
-     * @return   $objectClassName The current object (for fluent API support)
+     * @return   \$this The current object (for fluent API support)
      */
     public function moveToFirstChildOf(NodeObject \$parent, PropelPDO \$con = null)
     {
@@ -906,7 +906,7 @@ abstract class " . $this->getClassname() . " extends " . $this->getObjectBuilder
      *
      * @param   $objectClassName \$parent	Propel object for destination node
      * @param      PropelPDO \$con Connection to use.
-     * @return   $objectClassName The current object (for fluent API support)
+     * @return   \$this The current object (for fluent API support)
      */
     public function moveToLastChildOf(NodeObject \$parent, PropelPDO \$con = null)
     {
@@ -930,7 +930,7 @@ abstract class " . $this->getClassname() . " extends " . $this->getObjectBuilder
      *
      * @param   $objectClassName \$dest	Propel object for destination node
      * @param      PropelPDO \$con Connection to use.
-     * @return   $objectClassName The current object (for fluent API support)
+     * @return   \$this The current object (for fluent API support)
      */
     public function moveToPrevSiblingOf(NodeObject \$dest, PropelPDO \$con = null)
     {
@@ -954,7 +954,7 @@ abstract class " . $this->getClassname() . " extends " . $this->getObjectBuilder
      *
      * @param   $objectClassName \$dest	Propel object for destination node
      * @param      PropelPDO \$con Connection to use.
-     * @return   $objectClassName The current object (for fluent API support)
+     * @return   \$this The current object (for fluent API support)
      */
     public function moveToNextSiblingOf(NodeObject \$dest, PropelPDO \$con = null)
     {
@@ -978,7 +978,7 @@ abstract class " . $this->getClassname() . " extends " . $this->getObjectBuilder
      *
      * @param   $objectClassName \$node Propel object for destination node
      * @param      PropelPDO \$con	Connection to use.
-     * @return   $objectClassName The current object (for fluent API support)
+     * @return   \$this The current object (for fluent API support)
      */
     public function insertAsParentOf(NodeObject \$node, PropelPDO \$con = null)
     {
@@ -1088,7 +1088,7 @@ abstract class " . $this->getClassname() . " extends " . $this->getObjectBuilder
      * Set the value left column
      *
      * @param      int \$v new value
-     * @return   $objectClassName The current object (for fluent API support)
+     * @return   \$this The current object (for fluent API support)
      */
     public function setLeftValue(\$v)
     {
@@ -1116,7 +1116,7 @@ abstract class " . $this->getClassname() . " extends " . $this->getObjectBuilder
      * Set the value of right column
      *
      * @param      int \$v new value
-     * @return   $objectClassName The current object (for fluent API support)
+     * @return   \$this The current object (for fluent API support)
      */
     public function setRightValue(\$v)
     {
@@ -1145,7 +1145,7 @@ abstract class " . $this->getClassname() . " extends " . $this->getObjectBuilder
      * Set the value of scope column
      *
      * @param      int \$v new value
-     * @return   $objectClassName The current object (for fluent API support)
+     * @return   \$this The current object (for fluent API support)
      */
     public function setScopeIdValue(\$v)
     {";

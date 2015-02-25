@@ -390,7 +390,7 @@ public function addVersion(\$con = null)
  * @param   integer \$versionNumber The version number to read
  * @param   PropelPDO \$con the connection to use
  *
- * @return  {$ARclassName} The current object (for fluent API support)
+ * @return  \$this The current object (for fluent API support)
  * @throws  PropelException - if no object with the given version can be found.
  */
 public function toVersion(\$versionNumber, \$con = null)
@@ -423,7 +423,7 @@ public function toVersion(\$versionNumber, \$con = null)
  * @param   PropelPDO \$con the connection to use
  * @param   array \$loadedObjects objects thats been loaded in a chain of populateFromVersion calls on referrer or fk objects.
  *
- * @return  {$ARclassName} The current object (for fluent API support)
+ * @return  \$this The current object (for fluent API support)
  */
 public function populateFromVersion(\$version, \$con = null, &\$loadedObjects = array())
 {
