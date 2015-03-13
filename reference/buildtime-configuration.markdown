@@ -108,7 +108,7 @@ propel.database.password = {empty}|string
 # The database PDO connection settings at builtime for reverse engineer
 # or data dump. The default is to use the database connection defined by the
 # `propel.database.url` property.
-propel.database.buildUrl = {propel.database.url}/string
+propel.database.buildUrl = {propel.database.url}|string
 
 # The database PDO connection settings at builtime for creating a database.
 # The default is to use the database connection defined by the
@@ -116,7 +116,7 @@ propel.database.buildUrl = {propel.database.url}/string
 # Propel is unable to create databases for some vendors because they do not
 # provide a SQL method for creation; therefore, it is usually recommended that
 # you actually create your database by hand.
-propel.database.createUrl = {propel.database.url}/string
+propel.database.createUrl = {propel.database.url}|string
 
 # Optional schema name, for RDBMS supporting them.
 # Propel will use this schema is provided.
