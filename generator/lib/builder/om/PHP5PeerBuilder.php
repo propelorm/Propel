@@ -982,7 +982,11 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
 
         $php = array();
         foreach ($pks as $pk) {
-            $php[] = '$value->get' . $pk->getPhpName() . '()';
+            if ($pk->isTemporalType()) {
+                $php[] = '$value->get' . $pk->getPhpName() . "('U')";
+            } else {
+                $php[] = '$value->get' . $pk->getPhpName() . '()';
+            }
         }
         $script .= "
                 \$key = " . $this->getInstancePoolKeySnippet($php) . ";";
