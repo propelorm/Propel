@@ -373,7 +373,11 @@ DROP TABLE " . $this->quoteIdentifier($table->getName()) . ";
                 } elseif ($col->getType() == PropelTypes::BOOLEAN || $col->getType() == PropelTypes::BOOLEAN_EMU) {
                     $default .= $this->getBooleanString($defaultValue->getValue());
                 } elseif ($col->getType() == PropelTypes::ENUM) {
-                    $default .= array_search($defaultValue->getValue(), $col->getValueSet());
+                    $v =  array_search($defaultValue->getValue(), $col->getValueSet());
+                    if ($col->getPhpType() == 'string') {
+                        $v = "'$v'";
+                    }
+                    $default .=  $v;
                 } elseif ($col->isPhpArrayType()) {
                     $value = $this->getPhpArrayString($defaultValue->getValue());
 
@@ -1239,13 +1243,13 @@ if (is_resource($columnValueAccessor)) {
     rewind($columnValueAccessor);
 }";
         }
-
+/* @var $column Column */
         $script .= sprintf(
             "
 \$stmt->bindValue(%s, %s, %s);",
             $identifier,
             $columnValueAccessor ,
-            PropelTypes::getPdoTypeString($column->getType())
+            PropelTypes::getPdoTypeString($column->isEnumType() && $column->getPhpType() == 'string' ? PropelTypes::VARCHAR : $column->getType())
         );
 
         return preg_replace('/^(.+)/m', $tab . '$1', $script);

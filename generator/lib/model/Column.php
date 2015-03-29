@@ -246,6 +246,9 @@ class Column extends XMLElement
                     $valueSet = explode(',', $this->getAttribute("valueSet"));
                 }
                 $valueSet = array_map('trim', $valueSet);
+                if ($this->getPhpType() == 'string') {
+                    $valueSet = array_combine($valueSet, $valueSet);
+                }
                 $this->valueSet = $valueSet;
             } elseif (preg_match('/enum\((.*?)\)/i', $this->getAttribute('sqlType', ''), $matches)) {
                 if (version_compare(PHP_VERSION, '5.3.0', '>=')) {
@@ -256,6 +259,9 @@ class Column extends XMLElement
                     foreach (explode(',', $matches['1']) as $value) {
                         $valueSet[] = trim($value, " '");
                     }
+                }
+                if ($this->getPhpType() == 'string') {
+                    $valueSet = array_combine($valueSet, $valueSet);
                 }
                 $this->valueSet = $valueSet;
             }

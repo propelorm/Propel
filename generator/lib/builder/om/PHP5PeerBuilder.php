@@ -416,7 +416,11 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
         " . $this->getPeerClassname() . "::" . $this->getColumnName($col) . " => array(
 ";
                 foreach ($col->getValueSet() as $value) {
-                    $script .= "			" . $this->getStubPeerBuilder()->getClassname() . '::' . $this->getColumnName($col) . '_' . $this->getEnumValueConstant($value) . ",
+                    $script .= "			";
+                    if ($col->getPhpType() == 'string') {
+                        $script .= $this->getStubPeerBuilder()->getClassname() . '::' . $this->getColumnName($col) . '_' . $this->getEnumValueConstant($value) . " => ";
+                    }
+                    $script .= $this->getStubPeerBuilder()->getClassname() . '::' . $this->getColumnName($col) . '_' . $this->getEnumValueConstant($value) . ",
 ";
                 }
                 $script .= "		),";
