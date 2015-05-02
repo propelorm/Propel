@@ -5830,9 +5830,6 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
 
         foreach ($vars as $varName) {
             $script .= "
-        if (\$this->$varName instanceof PropelCollection) {
-            \$this->{$varName}->clearIterator();
-        }
         \$this->$varName = null;";
         }
 
