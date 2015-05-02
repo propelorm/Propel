@@ -140,7 +140,7 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
         $this->declareClassFromBuilder($this->getStubPeerBuilder());
         $this->declareClassFromBuilder($this->getStubObjectBuilder());
         parent::addClassBody($script);
-        $this->declareClasses('Propel', 'PropelException', 'PropelPDO', 'BasePeer', 'Criteria', 'PDO', 'PDOStatement');
+        $this->declareClasses('Propel', 'PropelException', 'PropelPDO', 'BasePeer', 'Criteria', 'PDO', 'PDOStatement', 'Exception');
     }
 
     /**
@@ -1494,16 +1494,7 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
         // Set the correct dbName
         \$criteria->setDbName(" . $this->getPeerClassname() . "::DATABASE_NAME);
 
-        try {
-            // use transaction because \$criteria could contain info
-            // for more than one table (I guess, conceivably)
-            \$con->beginTransaction();
-            \$pk = " . $this->basePeerClassname . "::doInsert(\$criteria, \$con);
-            \$con->commit();
-        } catch (Exception \$e) {
-            \$con->rollBack();
-            throw \$e;
-        }
+        \$pk = " . $this->basePeerClassname . "::doInsert(\$criteria, \$con);
 
         return \$pk;
     }
@@ -1589,32 +1580,25 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
             \$con = Propel::getConnection(" . $this->getPeerClassname() . "::DATABASE_NAME, Propel::CONNECTION_WRITE);
         }
         \$affectedRows = 0; // initialize var to track total num of affected rows
-        try {
-            // use transaction because \$criteria could contain info
-            // for more than one table or we could emulating ON DELETE CASCADE, etc.
-            \$con->beginTransaction();
-            ";
+
+        ";
+
         if ($this->isDeleteCascadeEmulationNeeded()) {
             $script .= "\$affectedRows += " . $this->getPeerClassname() . "::doOnDeleteCascade(new Criteria(" . $this->getPeerClassname() . "::DATABASE_NAME), \$con);
-            ";
+        ";
         }
         if ($this->isDeleteSetNullEmulationNeeded()) {
             $script .= $this->getPeerClassname() . "::doOnDeleteSetNull(new Criteria(" . $this->getPeerClassname() . "::DATABASE_NAME), \$con);
-            ";
+        ";
         }
         $script .= "\$affectedRows += {$this->basePeerClassname}::doDeleteAll(" . $this->getPeerClassname() . "::TABLE_NAME, \$con, " . $this->getPeerClassname() . "::DATABASE_NAME);
-            // Because this db requires some delete cascade/set null emulation, we have to
-            // clear the cached instance *after* the emulation has happened (since
-            // instances get re-added by the select statement contained therein).
-            " . $this->getPeerClassname() . "::clearInstancePool();
-            " . $this->getPeerClassname() . "::clearRelatedInstancePool();
-            \$con->commit();
+        // Because this db requires some delete cascade/set null emulation, we have to
+        // clear the cached instance *after* the emulation has happened (since
+        // instances get re-added by the select statement contained therein).
+        " . $this->getPeerClassname() . "::clearInstancePool();
+        " . $this->getPeerClassname() . "::clearRelatedInstancePool();
 
-            return \$affectedRows;
-        } catch (Exception \$e) {
-            \$con->rollBack();
-            throw \$e;
-        }
+        return \$affectedRows;
     }
 ";
     }
@@ -1728,55 +1712,45 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
         \$criteria->setDbName(" . $this->getPeerClassname() . "::DATABASE_NAME);
 
         \$affectedRows = 0; // initialize var to track total num of affected rows
-
-        try {
-            // use transaction because \$criteria could contain info
-            // for more than one table or we could emulating ON DELETE CASCADE, etc.
-            \$con->beginTransaction();
-            ";
+";
 
         if ($this->isDeleteCascadeEmulationNeeded()) {
             $script .= "
-            // cloning the Criteria in case it's modified by doSelect() or doSelectStmt()
-            \$c = clone \$criteria;
-            \$affectedRows += " . $this->getPeerClassname() . "::doOnDeleteCascade(\$c, \$con);
-            ";
+        // cloning the Criteria in case it's modified by doSelect() or doSelectStmt()
+        \$c = clone \$criteria;
+        \$affectedRows += " . $this->getPeerClassname() . "::doOnDeleteCascade(\$c, \$con);
+        ";
         }
         if ($this->isDeleteSetNullEmulationNeeded()) {
             $script .= "
-            // cloning the Criteria in case it's modified by doSelect() or doSelectStmt()
-            \$c = clone \$criteria;
-            " . $this->getPeerClassname() . "::doOnDeleteSetNull(\$c, \$con);
-            ";
+        // cloning the Criteria in case it's modified by doSelect() or doSelectStmt()
+        \$c = clone \$criteria;
+        " . $this->getPeerClassname() . "::doOnDeleteSetNull(\$c, \$con);
+        ";
         }
 
         if ($emulateCascade) {
             $script .= "
-            // Because this db requires some delete cascade/set null emulation, we have to
-            // clear the cached instance *after* the emulation has happened (since
-            // instances get re-added by the select statement contained therein).
-            if (\$values instanceof Criteria) {
-                " . $this->getPeerClassname() . "::clearInstancePool();
-            } elseif (\$values instanceof " . $this->getObjectClassname() . ") { // it's a model object
-                " . $this->getPeerClassname() . "::removeInstanceFromPool(\$values);
-            } else { // it's a primary key, or an array of pks
-                foreach ((array) \$values as \$singleval) {
-                    " . $this->getPeerClassname() . "::removeInstanceFromPool(\$singleval);
-                }
+        // Because this db requires some delete cascade/set null emulation, we have to
+        // clear the cached instance *after* the emulation has happened (since
+        // instances get re-added by the select statement contained therein).
+        if (\$values instanceof Criteria) {
+            " . $this->getPeerClassname() . "::clearInstancePool();
+        } elseif (\$values instanceof " . $this->getObjectClassname() . ") { // it's a model object
+            " . $this->getPeerClassname() . "::removeInstanceFromPool(\$values);
+        } else { // it's a primary key, or an array of pks
+            foreach ((array) \$values as \$singleval) {
+                " . $this->getPeerClassname() . "::removeInstanceFromPool(\$singleval);
             }
-            ";
+        }
+        ";
         }
 
         $script .= "
-            \$affectedRows += {$this->basePeerClassname}::doDelete(\$criteria, \$con);
-            " . $this->getPeerClassname() . "::clearRelatedInstancePool();
-            \$con->commit();
+        \$affectedRows += {$this->basePeerClassname}::doDelete(\$criteria, \$con);
+        " . $this->getPeerClassname() . "::clearRelatedInstancePool();
 
-            return \$affectedRows;
-        } catch (Exception \$e) {
-            \$con->rollBack();
-            throw \$e;
-        }
+        return \$affectedRows;
     }
 ";
     }
