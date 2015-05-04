@@ -25,7 +25,7 @@
  * @author     Francois Zaninotto
  * @package    propel.runtime.collection
  */
-class PropelCollection implements \ArrayAccess, \SeekableIterator, \Countable, \Serializable
+class PropelCollection implements \ArrayAccess, \Countable, \IteratorAggregate, \Serializable
 {
     /**
      * @var       string
@@ -45,6 +45,14 @@ class PropelCollection implements \ArrayAccess, \SeekableIterator, \Countable, \
     public function __construct($data = array())
     {
         $this->data = $data;
+    }
+
+    /**
+     * @return ArrayIterator
+     */
+    public function getIterator()
+    {
+        return new ArrayIterator($this->data);
     }
 
     /**
