@@ -48,7 +48,6 @@ class PropelOnDemandIterator implements Iterator
     {
         $this->formatter = $formatter;
         $this->stmt = $stmt;
-        $this->enableInstancePoolingOnFinish = Propel::disableInstancePooling();
     }
 
     public function closeCursor()
@@ -96,6 +95,9 @@ class PropelOnDemandIterator implements Iterator
      */
     public function next()
     {
+        if (null === $this->currentRow) {
+            $this->enableInstancePoolingOnFinish = Propel::disableInstancePooling();
+        }
         $this->currentRow = $this->stmt->fetch(PDO::FETCH_NUM);
         $this->currentKey++;
         $this->isValid = (boolean) $this->currentRow;
