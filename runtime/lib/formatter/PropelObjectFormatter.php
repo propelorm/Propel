@@ -39,16 +39,21 @@ class PropelObjectFormatter extends PropelFormatter
             $pks = array();
             $objectsByPks = array();
             while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-                $object = $this->getAllObjectsFromRow($row);
-                $pk = $object->getPrimaryKey();
 
                 if (false === Propel::isInstancePoolingEnabled()) {
+
+                    list($object, $col) = call_user_func(array($this->peer, 'populateObject'), $row);
+                    $pk = $object->getPrimaryKey();
+
                     if (isset($objectsByPks[$pk])) {
                         $this->mainObject = $objectsByPks[$pk];
-                        $object = $this->getAllObjectsFromRow($row);
                     }
+                    $object = $this->getAllObjectsFromRow($row);
 
                     $objectsByPks[$pk] = $object;
+                } else {
+                    $object = $this->getAllObjectsFromRow($row);
+                    $pk = $object->getPrimaryKey();
                 }
 
                 if (!in_array($pk, $pks)) {
