@@ -3497,7 +3497,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      * Get the associated $className object
      *
      * @param PropelPDO \$con Optional Connection object.
-     * @param \$doQuery Executes a query to get the object if required
+     * @param boolean \$doQuery Executes a query to get the object if required
      * @return $className The associated $className object.
      * @throws PropelException
      */
@@ -3807,8 +3807,9 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
 
         $script .= "
     /**
-     * reset is the $collName collection loaded partially
-     *
+     * Reset is the $collName collection loaded partially
+     * 
+     * @param boolean \$v
      * @return void
      */
     public function resetPartial{$relCol}(\$v = true)
@@ -4147,11 +4148,12 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      */
     public function remove{$relatedObjectClassName}(\${$lowerRelatedObjectClassName})
     {
-        if (\$this->get{$relatedName}()->contains(\${$lowerRelatedObjectClassName})) {
-            \$this->{$collName}->remove(\$this->{$collName}->search(\${$lowerRelatedObjectClassName}));
+        \${$lowerRelatedObjectClassName}Index = \$this->get{$relatedName}()->search(\${$lowerRelatedObjectClassName});
+        if (\${$lowerRelatedObjectClassName}Index !== false) {
+            \$this->{$collName}->remove(\${$lowerRelatedObjectClassName}Index);
             if (null === \$this->{$inputCollection}) {
-                \$this->{$inputCollection} = clone \$this->{$collName};
-                \$this->{$inputCollection}->clear();
+                \$this->{$inputCollection} = new PropelObjectCollection();
+                \$this->{$inputCollection}->setModel('{$relatedObjectClassName}');
             }";
 
         if (!$refFK->isComposite() && !$localColumn->isNotNull()) {
@@ -4646,9 +4648,6 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
         if (!\${$lowerRelatedObjectClassName}->get{$selfRelationNamePlural}()->contains(\$this)) { {$foreignObjectName} = new {$className}();
             {$foreignObjectName}->set{$relatedObjectClassName}(\${$lowerRelatedObjectClassName});
             \$this->add{$refKObjectClassName}({$foreignObjectName});
-
-            \$foreignCollection = \${$lowerRelatedObjectClassName}->get{$selfRelationNamePlural}();
-            \$foreignCollection[] = \$this;
         }
     }
 ";
@@ -4689,13 +4688,14 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      */
     public function remove{$relatedObjectClassName}($crossObjectClassName $crossObjectName)
     {
-        if (\$this->get{$relCol}()->contains({$crossObjectName})) {
-            \$this->{$collName}->remove(\$this->{$collName}->search({$crossObjectName}));
+        {$crossObjectName}Index = \$this->get{$relCol}()->search({$crossObjectName});
+        if ({$crossObjectName}Index !== false) {
+            \$this->{$collName}->remove({$crossObjectName}Index);
             if (null === \$this->{$M2MScheduledForDeletion}) {
-                \$this->{$M2MScheduledForDeletion} = clone \$this->{$collName};
-                \$this->{$M2MScheduledForDeletion}->clear();
+                \$this->{$M2MScheduledForDeletion} = new PropelObjectCollection();
+                \$this->{$M2MScheduledForDeletion}->setModel('{$crossObjectClassName}');
             }
-            \$this->{$M2MScheduledForDeletion}[]= {$crossObjectName};
+            \$this->{$M2MScheduledForDeletion}[] = {$crossObjectName};
         }
 
         return \$this;
