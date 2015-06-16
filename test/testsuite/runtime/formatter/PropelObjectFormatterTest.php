@@ -191,4 +191,38 @@ class PropelObjectFormatterTest extends BookstoreEmptyTestBase
 
         $this->assertEquals(1, $con->getQueryCount());
     }
+
+    public function testFormatWithRelatedObjectsAndDisabledPooling()
+    {
+        Propel::disableInstancePooling();
+        $con = Propel::getConnection(BookPeer::DATABASE_NAME);
+        $con->useDebug(false);
+        $con->useDebug(true);
+
+        $this->assertEquals(0, $con->getQueryCount());
+
+        $stmt = $con->query('SELECT * FROM author LEFT JOIN book ON (author.id = book.author_id)');
+        $formatter = new PropelObjectFormatter();
+
+        $criteria  = new ModelCriteria('bookstore', 'Author');
+        $criteria->joinWith('Book');
+
+        $formatter->init($criteria);
+        $authors = $formatter->format($stmt);
+
+        $this->assertEquals(1, $con->getQueryCount());
+        $this->assertTrue($authors instanceof PropelObjectCollection, 'PropelObjectFormatter::formatOne() returns a model object');
+
+        foreach ($authors as $author) {
+            $this->assertTrue($author->getBooks() instanceof PropelCollection);
+
+            if ('Grass' === $author->getLastName()) {
+                $this->assertEquals(2, $author->countBooks());
+            } else {
+                $this->assertEquals(1, $author->countBooks());
+            }
+        }
+
+        $this->assertEquals(1, $con->getQueryCount());
+    }
 }
