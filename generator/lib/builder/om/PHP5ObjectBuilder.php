@@ -4148,12 +4148,11 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      */
     public function remove{$relatedObjectClassName}(\${$lowerRelatedObjectClassName})
     {
-        \${$lowerRelatedObjectClassName}Index = \$this->get{$relatedName}()->search(\${$lowerRelatedObjectClassName});
-        if (\${$lowerRelatedObjectClassName}Index !== false) {
-            \$this->{$collName}->remove(\${$lowerRelatedObjectClassName}Index);
+        if (\$this->get{$relatedName}()->contains(\${$lowerRelatedObjectClassName})) {
+            \$this->{$collName}->remove(\$this->{$collName}->search(\${$lowerRelatedObjectClassName}));
             if (null === \$this->{$inputCollection}) {
-                \$this->{$inputCollection} = new PropelObjectCollection();
-                \$this->{$inputCollection}->setModel('{$relatedObjectClassName}');
+                \$this->{$inputCollection} = clone \$this->{$collName};
+                \$this->{$inputCollection}->clear();
             }";
 
         if (!$refFK->isComposite() && !$localColumn->isNotNull()) {
@@ -4648,6 +4647,9 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
         if (!\${$lowerRelatedObjectClassName}->get{$selfRelationNamePlural}()->contains(\$this)) { {$foreignObjectName} = new {$className}();
             {$foreignObjectName}->set{$relatedObjectClassName}(\${$lowerRelatedObjectClassName});
             \$this->add{$refKObjectClassName}({$foreignObjectName});
+
+            \$foreignCollection = \${$lowerRelatedObjectClassName}->get{$selfRelationNamePlural}();
+            \$foreignCollection[] = \$this;
         }
     }
 ";
