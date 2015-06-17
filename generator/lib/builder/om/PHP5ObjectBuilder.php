@@ -4148,8 +4148,9 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      */
     public function remove{$relatedObjectClassName}(\${$lowerRelatedObjectClassName})
     {
-        if (\$this->get{$relatedName}()->contains(\${$lowerRelatedObjectClassName})) {
-            \$this->{$collName}->remove(\$this->{$collName}->search(\${$lowerRelatedObjectClassName}));
+        \${$lowerRelatedObjectClassName}Index = \$this->get{$relatedName}()->search(\${$lowerRelatedObjectClassName});
+        if (\${$lowerRelatedObjectClassName}Index !== false) {
+            \$this->{$collName}->remove(\${$lowerRelatedObjectClassName}Index);
             if (null === \$this->{$inputCollection}) {
                 \$this->{$inputCollection} = clone \$this->{$collName};
                 \$this->{$inputCollection}->clear();
