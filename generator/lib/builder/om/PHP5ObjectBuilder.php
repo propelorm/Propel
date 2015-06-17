@@ -1987,10 +1987,10 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
         // checking in mutators.
         if ($col->isPhpPrimitiveType()) {
             if ($col->isTextType()) {
-              $script .= "
+                $script .= "
         if (\$v !== null) {";
             } else {
-              $script .= "
+                $script .= "
         if (\$v !== null && is_numeric(\$v)) {";
             }
 
@@ -4152,8 +4152,8 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
         if (\${$lowerRelatedObjectClassName}Index !== false) {
             \$this->{$collName}->remove(\${$lowerRelatedObjectClassName}Index);
             if (null === \$this->{$inputCollection}) {
-                \$this->{$inputCollection} = clone \$this->{$collName};
-                \$this->{$inputCollection}->clear();
+                \$this->{$inputCollection} = new PropelObjectCollection();
+                \$this->{$inputCollection}->setModel('{$relatedObjectClassName}');
             }";
 
         if (!$refFK->isComposite() && !$localColumn->isNotNull()) {
@@ -4648,6 +4648,9 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
         if (!\${$lowerRelatedObjectClassName}->get{$selfRelationNamePlural}()->contains(\$this)) { {$foreignObjectName} = new {$className}();
             {$foreignObjectName}->set{$relatedObjectClassName}(\${$lowerRelatedObjectClassName});
             \$this->add{$refKObjectClassName}({$foreignObjectName});
+
+            \$foreignCollection = \${$lowerRelatedObjectClassName}->get{$selfRelationNamePlural}();
+            \$foreignCollection[] = \$this;
         }
     }
 ";
