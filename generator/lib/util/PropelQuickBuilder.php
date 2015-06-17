@@ -8,8 +8,8 @@
  * @license    MIT License
  */
 
-require_once dirname(__FILE__) . '/../builder/util/XmlToAppData.php';
-require_once dirname(__FILE__) . '/PropelSQLParser.php';
+require_once __DIR__ . '/../builder/util/XmlToAppData.php';
+require_once __DIR__ . '/PropelSQLParser.php';
 
 class PropelQuickBuilder
 {
@@ -148,6 +148,8 @@ class PropelQuickBuilder
 
     public function buildClasses(array $classTargets = null)
     {
+        echo($this->getClasses($classTargets));
+        die();
         eval($this->getClasses($classTargets));
     }
 
