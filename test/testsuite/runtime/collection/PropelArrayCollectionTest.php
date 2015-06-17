@@ -28,8 +28,8 @@ class PropelArrayCollectionTest extends BookstoreEmptyTestBase
     public function testSave()
     {
         $books = PropelQuery::from('Book')->setFormatter(ModelCriteria::FORMAT_ARRAY)->find();
-        foreach ($books as &$book) {
-            $book['Title'] = 'foo';
+        foreach ($books as $k => $book) {
+            $books[$k]['Title'] = 'foo';
         }
         $books->save();
         // check that the modifications are persisted

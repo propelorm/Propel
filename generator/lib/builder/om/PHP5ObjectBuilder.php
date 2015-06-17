@@ -8,7 +8,7 @@
  * @license    MIT License
  */
 
-require_once dirname(__FILE__) . '/ObjectBuilder.php';
+require_once __DIR__ . '/ObjectBuilder.php';
 
 /**
  * Generates a PHP5 base Object class for user object model (OM).
@@ -29,7 +29,7 @@ class PHP5ObjectBuilder extends ObjectBuilder
      */
     public function getPackage()
     {
-        return parent::getPackage() . ".om";
+        return parent::getPackage() . '.om';
     }
 
     public function getNamespace()
@@ -1987,10 +1987,10 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
         // checking in mutators.
         if ($col->isPhpPrimitiveType()) {
             if ($col->isTextType()) {
-              $script .= "
+                $script .= "
         if (\$v !== null) {";
             } else {
-              $script .= "
+                $script .= "
         if (\$v !== null && is_numeric(\$v)) {";
             }
 
@@ -3497,7 +3497,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      * Get the associated $className object
      *
      * @param PropelPDO \$con Optional Connection object.
-     * @param \$doQuery Executes a query to get the object if required
+     * @param boolean \$doQuery Executes a query to get the object if required
      * @return $className The associated $className object.
      * @throws PropelException
      */
@@ -3807,8 +3807,9 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
 
         $script .= "
     /**
-     * reset is the $collName collection loaded partially
-     *
+     * Reset is the $collName collection loaded partially
+     * 
+     * @param boolean \$v
      * @return void
      */
     public function resetPartial{$relCol}(\$v = true)
@@ -4015,9 +4016,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
                       \$this->{$collName}Partial = true;
                     }
 
-                    \$$collName" . "->getInternalIterator()->rewind();
-
-                    return \$$collName;
+                    return reset(\$$collName" . ");
                 }
 
                 if (\$partial && \$this->$collName) {
@@ -4147,11 +4146,12 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      */
     public function remove{$relatedObjectClassName}(\${$lowerRelatedObjectClassName})
     {
-        if (\$this->get{$relatedName}()->contains(\${$lowerRelatedObjectClassName})) {
-            \$this->{$collName}->remove(\$this->{$collName}->search(\${$lowerRelatedObjectClassName}));
+        \${$lowerRelatedObjectClassName}Index = \$this->get{$relatedName}()->search(\${$lowerRelatedObjectClassName});
+        if (\${$lowerRelatedObjectClassName}Index !== false) {
+            \$this->{$collName}->remove(\${$lowerRelatedObjectClassName}Index);
             if (null === \$this->{$inputCollection}) {
-                \$this->{$inputCollection} = clone \$this->{$collName};
-                \$this->{$inputCollection}->clear();
+                \$this->{$inputCollection} = new PropelObjectCollection();
+                \$this->{$inputCollection}->setModel('{$relatedObjectClassName}');
             }";
 
         if (!$refFK->isComposite() && !$localColumn->isNotNull()) {
@@ -4689,13 +4689,14 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      */
     public function remove{$relatedObjectClassName}($crossObjectClassName $crossObjectName)
     {
-        if (\$this->get{$relCol}()->contains({$crossObjectName})) {
-            \$this->{$collName}->remove(\$this->{$collName}->search({$crossObjectName}));
+        {$crossObjectName}Index = \$this->get{$relCol}()->search({$crossObjectName});
+        if ({$crossObjectName}Index !== false) {
+            \$this->{$collName}->remove({$crossObjectName}Index);
             if (null === \$this->{$M2MScheduledForDeletion}) {
-                \$this->{$M2MScheduledForDeletion} = clone \$this->{$collName};
-                \$this->{$M2MScheduledForDeletion}->clear();
+                \$this->{$M2MScheduledForDeletion} = new PropelObjectCollection();
+                \$this->{$M2MScheduledForDeletion}->setModel('{$crossObjectClassName}');
             }
-            \$this->{$M2MScheduledForDeletion}[]= {$crossObjectName};
+            \$this->{$M2MScheduledForDeletion}[] = {$crossObjectName};
         }
 
         return \$this;
