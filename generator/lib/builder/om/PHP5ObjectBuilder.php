@@ -8,7 +8,7 @@
  * @license    MIT License
  */
 
-require_once dirname(__FILE__) . '/ObjectBuilder.php';
+require_once __DIR__ . '/ObjectBuilder.php';
 
 /**
  * Generates a PHP5 base Object class for user object model (OM).
@@ -29,7 +29,7 @@ class PHP5ObjectBuilder extends ObjectBuilder
      */
     public function getPackage()
     {
-        return parent::getPackage() . ".om";
+        return parent::getPackage() . '.om';
     }
 
     public function getNamespace()
@@ -4016,9 +4016,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
                       \$this->{$collName}Partial = true;
                     }
 
-                    \$$collName" . "->getInternalIterator()->rewind();
-
-                    return \$$collName;
+                    return reset(\$$collName" . ");
                 }
 
                 if (\$partial && \$this->$collName) {

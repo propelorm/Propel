@@ -19,6 +19,17 @@ require_once dirname(__FILE__) . '/../../../tools/helpers/bookstore/BookstoreTes
  */
 class PropelCollectionTest extends BookstoreTestBase
 {
+
+    public function testClone()
+    {
+        $col = new Collection(array('Bar1'));
+        $colCloned = clone $col;
+        $colCloned[] = 'Bar2';
+
+        $this->assertCount(1, $col);
+        $this->assertCount(2, $colCloned);
+    }
+
     public function testArrayAccess()
     {
         $data = array('bar1', 'bar2', 'bar3');
@@ -46,8 +57,8 @@ class PropelCollectionTest extends BookstoreTestBase
 
         $clone = clone $col;
 
-        $orgCount = $col->getIterator()->count();
-        $cloneCount = $clone->getIterator()->count();
+        $orgCount = $col->count();
+        $cloneCount = $clone->count();
 
         $this->assertEquals($orgCount, $cloneCount, 'all entries will be cloned');
     }
@@ -65,8 +76,8 @@ class PropelCollectionTest extends BookstoreTestBase
         $col = new PropelCollection(array($b, $b1));
         $clone = clone $col;
 
-        $orgCount = $col->getIterator()->count();
-        $cloneCount = $clone->getIterator()->count();
+        $orgCount = $col->count();
+        $cloneCount = $clone->count();
         $this->assertEquals($orgCount, $cloneCount, 'cloned collections have the same size');
 
         $this->assertEquals($b, $clone[0], 'cloned objects are equal');
@@ -330,26 +341,6 @@ class PropelCollectionTest extends BookstoreTestBase
 
         $col2 = unserialize($serializedCol);
         $this->assertEquals($col, $col2, 'PropelCollection is serializable');
-    }
-
-    public function testGetIterator()
-    {
-        $data = array('bar1', 'bar2', 'bar3');
-        $col = new PropelCollection($data);
-        $it1 = $col->getIterator();
-        $it2 = $col->getIterator();
-        $this->assertNotSame($it1, $it2, 'getIterator() returns always a new iterator');
-    }
-
-    public function testGetInternalIterator()
-    {
-        $data = array('bar1', 'bar2', 'bar3');
-        $col = new PropelCollection($data);
-        $it1 = $col->getInternalIterator();
-        $it2 = $col->getINternalIterator();
-        $this->assertSame($it1, $it2, 'getInternalIterator() returns always the same iterator');
-        $col->getInternalIterator()->next();
-        $this->assertEquals('bar2', $col->getInternalIterator()->current(), 'getInternalIterator() returns always the same iterator');
     }
 
     public function testGetPeerClass()

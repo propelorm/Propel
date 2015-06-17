@@ -84,7 +84,7 @@ class PropelObjectCollection extends PropelCollection
         $ret = array();
 
         /** @var $obj BaseObject */
-        foreach ($this as $key => $obj) {
+        foreach ($this->data as $key => $obj) {
             $key = $usePrefix ? ($this->getModel() . '_' . $key) : $key;
             $ret[$key] = $obj->getPrimaryKey();
         }
