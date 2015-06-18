@@ -4109,11 +4109,15 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
 
         $lowerRelatedObjectClassName = lcfirst($relatedObjectClassName);
 
+        $joinedTableObjectBuilder = $this->getNewObjectBuilder($refFK->getTable());
+
+        $className = $joinedTableObjectBuilder->getObjectClassname();
+
         $collName = $this->getRefFKCollVarName($refFK);
 
         $script .= "
     /**
-     * @param	{$relatedObjectClassName} \${$lowerRelatedObjectClassName} The $lowerRelatedObjectClassName object to add.
+     * @param {$className} \${$lowerRelatedObjectClassName} The $lowerRelatedObjectClassName object to add.
      */
     protected function doAdd{$relatedObjectClassName}(\${$lowerRelatedObjectClassName})
     {
@@ -4139,11 +4143,15 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
         $collName = $this->getRefFKCollVarName($refFK);
         $relCol = $this->getFKPhpNameAffix($refFK, $plural = false);
 
+        $joinedTableObjectBuilder = $this->getNewObjectBuilder($refFK->getTable());
+
+        $className = $joinedTableObjectBuilder->getObjectClassname();
+
         $localColumn = $refFK->getLocalColumn();
 
         $script .= "
     /**
-     * @param	{$relatedObjectClassName} \${$lowerRelatedObjectClassName} The $lowerRelatedObjectClassName object to remove.
+     * @param {$className} \${$lowerRelatedObjectClassName} The $lowerRelatedObjectClassName object to remove.
      * @return " . $this->getObjectClassname() . " The current object (for fluent API support)
      */
     public function remove{$relatedObjectClassName}(\${$lowerRelatedObjectClassName})
@@ -4153,7 +4161,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
             \$this->{$collName}->remove(\${$lowerRelatedObjectClassName}Index);
             if (null === \$this->{$inputCollection}) {
                 \$this->{$inputCollection} = new PropelObjectCollection();
-                \$this->{$inputCollection}->setModel('{$relatedObjectClassName}');
+                \$this->{$inputCollection}->setModel('{$className}');
             }";
 
         if (!$refFK->isComposite() && !$localColumn->isNotNull()) {
