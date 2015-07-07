@@ -94,6 +94,16 @@ abstract class BasePropelMigrationTask extends AbstractPropelTask
     }
 
     /**
+     * Decides whether to abort the migration on error or not
+     *
+     * @return bool
+     */
+    protected function abortMigrationOnError()
+    {
+        return (bool) $this->getGeneratorConfig()->getBuildProperty('migrationAbortOnError');
+    }
+
+    /**
      * Gets the GeneratorConfig object for this task or creates it on-demand.
      *
      * @return GeneratorConfig
