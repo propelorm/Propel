@@ -850,6 +850,10 @@ class BasePeer
             $db->applyLimit($sql, $criteria->getOffset(), $criteria->getLimit(), $criteria);
         }
 
+        if ($criteria->isForUpdate()) {
+            $sql .= ' FOR UPDATE';
+        }
+
         return $sql;
     }
 
