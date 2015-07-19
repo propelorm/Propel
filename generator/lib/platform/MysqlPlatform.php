@@ -289,7 +289,7 @@ CREATE TABLE %s
                 $parameterValue = $vi->getParameter($sqlName);
             }
 
-            if (!is_null($parameterValue)) {
+            if (null !== $parameterValue) {
                 $parameterValue = is_numeric($parameterValue) ? $parameterValue : $this->quote($parameterValue);
                 $tableOptions[] = sprintf('%s=%s', $sqlName, $parameterValue);
             }

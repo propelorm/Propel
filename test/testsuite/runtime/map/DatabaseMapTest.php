@@ -164,7 +164,7 @@ class TestDatabaseBuilder
   protected static $tmap = null;
   public static function getDmap()
   {
-    if (is_null(self::$dmap)) {
+    if (null === self::$dmap) {
         self::$dmap = new DatabaseMap('foodb');
     }
 

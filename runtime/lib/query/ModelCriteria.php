@@ -555,13 +555,13 @@ class ModelCriteria extends Criteria
 
     protected function configureSelectColumns()
     {
-        if (is_null($this->select)) {
+        if (null === $this->select) {
             // leave early
             return;
         }
 
         // select() needs the PropelSimpleArrayFormatter if no formatter given
-        if (is_null($this->formatter)) {
+        if (null === $this->formatter) {
             $this->setFormatter('PropelSimpleArrayFormatter');
         }
 

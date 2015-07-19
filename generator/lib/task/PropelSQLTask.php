@@ -230,7 +230,7 @@ class PropelSQLTask extends AbstractPropelDataModelTask
     {
         static $packagedDataModels;
 
-        if (is_null($packagedDataModels)) {
+        if (null === $packagedDataModels) {
 
             $dataModels = $this->getDataModels();
             $dataModel = array_shift($dataModels);

@@ -46,7 +46,7 @@ class PropelConditionalProxy
         $this->setConditionalState($cond);
         $this->parent = $proxy;
 
-        if (is_null($proxy)) {
+        if (null === $proxy) {
             $this->parentState = true;
         } else {
             $this->parentState = $proxy->getConditionalState();
