@@ -226,7 +226,7 @@ class sfYamlInline
   {
     $output = array();
     $len = strlen($sequence);
-    $i += 1;
+    ++$i;
 
     // [foo, bar, ...]
     while ($i < $len) {
@@ -280,7 +280,7 @@ class sfYamlInline
   {
     $output = array();
     $len = strlen($mapping);
-    $i += 1;
+    ++$i;
 
     // {foo: bar, bar:foo, ...}
     while ($i < $len) {
