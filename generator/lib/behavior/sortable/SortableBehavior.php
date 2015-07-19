@@ -189,7 +189,7 @@ class SortableBehavior extends Behavior
 
     public function getObjectBuilderModifier()
     {
-        if (is_null($this->objectBuilderModifier)) {
+        if (null === $this->objectBuilderModifier) {
             $this->objectBuilderModifier = new SortableBehaviorObjectBuilderModifier($this);
         }
 
@@ -198,7 +198,7 @@ class SortableBehavior extends Behavior
 
     public function getQueryBuilderModifier()
     {
-        if (is_null($this->queryBuilderModifier)) {
+        if (null === $this->queryBuilderModifier) {
             $this->queryBuilderModifier = new SortableBehaviorQueryBuilderModifier($this);
         }
 
@@ -207,7 +207,7 @@ class SortableBehavior extends Behavior
 
     public function getPeerBuilderModifier()
     {
-        if (is_null($this->peerBuilderModifier)) {
+        if (null === $this->peerBuilderModifier) {
             $this->peerBuilderModifier = new SortableBehaviorPeerBuilderModifier($this);
         }
 

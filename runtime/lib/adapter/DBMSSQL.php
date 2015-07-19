@@ -191,7 +191,8 @@ class DBMSSQL extends DBAdapter
             $order = str_ireplace('ORDER BY', '', $orderStatement);
             $orders = array_map('trim', explode(',', $order));
 
-            for ($i = 0; $i < count($orders); $i++) {
+            $ordersCount = count($orders);
+            for ($i = 0; $i < $ordersCount; $i++) {
                 $orderArr[trim(preg_replace('/\s+(ASC|DESC)$/i', '', $orders[$i]))] = array(
                     'sort' => (stripos($orders[$i], ' DESC') !== false) ? 'DESC' : 'ASC',
                     'key' => $i

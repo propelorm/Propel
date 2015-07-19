@@ -173,7 +173,7 @@ class PropelXMLParser extends PropelParser
                     $array[$name . $elementNames[$name]] = $array[$name];
                     unset($array[$name]);
                 }
-                $elementNames[$name] += 1;
+                ++$elementNames[$name];
                 $index = $name . $elementNames[$name];
             } else {
                 $index = $name;

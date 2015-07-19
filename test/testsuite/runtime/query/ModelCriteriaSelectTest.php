@@ -55,7 +55,7 @@ class ModelCriteriaSelectTest extends BookstoreTestBase
         $c->where('Book.Title = ?', 'kdjfhlkdsh');
         $c->select('Title');
         $title = $c->findOne();
-        $this->assertTrue(is_null($title), 'findOne() called after select(string) returns null when no record is found');
+        $this->assertTrue(null === $title, 'findOne() called after select(string) returns null when no record is found');
     }
 
     public function testSelectStringAcceptsColumnNames()

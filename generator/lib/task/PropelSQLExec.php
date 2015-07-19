@@ -270,7 +270,7 @@ class PropelSQLExec extends AbstractPropelTask
                 array_unshift($databases[$database], $sqlfile);
             } else {
                 // add to the end of the array
-                array_push($databases[$database], $sqlfile);
+                $databases[$database][] = $sqlfile;
             }
         }
 
