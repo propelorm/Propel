@@ -38,7 +38,7 @@ class MaxValueValidator implements BasicValidator
      */
     public function isValid(ValidatorMap $map, $value)
     {
-        if (is_null($value) == false && is_numeric($value) == true) {
+        if (null === $value == false && is_numeric($value) == true) {
             return intval($value) <= intval($map->getValue());
         }
 

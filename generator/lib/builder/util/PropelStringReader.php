@@ -41,7 +41,7 @@ class PropelStringReader extends Reader
 
     public function skip($n)
     {
-        $this->currPos = $this->currPos + $n;
+        $this->currPos += $n;
     }
 
     public function eof()

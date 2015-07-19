@@ -2241,7 +2241,7 @@ class ModelCriteria extends Criteria
             if (strpos($name, $method) === 0) {
                 $columns = substr($name, strlen($method));
                 if (in_array($method, array('findBy', 'findOneBy')) && strpos($columns, 'And') !== false) {
-                    $method = $method . 'Array';
+                    $method .= 'Array';
                     $columns = explode('And', $columns);
                     $conditions = array();
                     foreach ($columns as $column) {
@@ -2280,7 +2280,7 @@ class ModelCriteria extends Criteria
                 if (!isset($arguments[0])) {
                     $arguments[0] = null;
                 }
-                array_push($arguments, $joinType);
+                $arguments[] = $joinType;
                 $method = lcfirst(substr($name, $pos));
 
                 return call_user_func_array(array($this, $method), $arguments);

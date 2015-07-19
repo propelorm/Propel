@@ -618,7 +618,7 @@ abstract class OMBuilder extends DataModelBuilder
 
         // end of line
         if (strlen($content) && "\n" != substr($content, -1)) {
-            $content = $content . "\n";
+            $content .= "\n";
         }
 
         return $content;

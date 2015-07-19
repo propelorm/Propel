@@ -231,8 +231,7 @@ class PropelTableComparator
         foreach ($toTableIndices as $toTableIndexPos => $toTableIndex) {
             foreach ($fromTableIndices as $fromTableIndexPos => $fromTableIndex) {
                 if (PropelIndexComparator::computeDiff($fromTableIndex, $toTableIndex, $caseInsensitive) === false) {
-                    unset($fromTableIndices[$fromTableIndexPos]);
-                    unset($toTableIndices[$toTableIndexPos]);
+                    unset($fromTableIndices[$fromTableIndexPos], $toTableIndices[$toTableIndexPos]);
                 } else {
                     $test = $caseInsensitive ?
                         strtolower($fromTableIndex->getName()) == strtolower($toTableIndex->getName()) :
@@ -240,8 +239,7 @@ class PropelTableComparator
                     if ($test) {
                         // same name, but different columns
                         $this->tableDiff->addModifiedIndex($fromTableIndex->getName(), $fromTableIndex, $toTableIndex);
-                        unset($fromTableIndices[$fromTableIndexPos]);
-                        unset($toTableIndices[$toTableIndexPos]);
+                        unset($fromTableIndices[$fromTableIndexPos], $toTableIndices[$toTableIndexPos]);
                         $indexDifferences++;
                     }
                 }
@@ -280,8 +278,7 @@ class PropelTableComparator
         foreach ($fromTableFks as $fromTableFkPos => $fromTableFk) {
             foreach ($toTableFks as $toTableFkPos => $toTableFk) {
                 if (PropelForeignKeyComparator::computeDiff($fromTableFk, $toTableFk, $caseInsensitive) === false) {
-                    unset($fromTableFks[$fromTableFkPos]);
-                    unset($toTableFks[$toTableFkPos]);
+                    unset($fromTableFks[$fromTableFkPos], $toTableFks[$toTableFkPos]);
                 } else {
                     $test = $caseInsensitive ?
                         strtolower($fromTableFk->getName()) == strtolower($toTableFk->getName()) :
@@ -289,8 +286,7 @@ class PropelTableComparator
                     if ($test) {
                         // same name, but different columns
                         $this->tableDiff->addModifiedFk($fromTableFk->getName(), $fromTableFk, $toTableFk);
-                        unset($fromTableFks[$fromTableFkPos]);
-                        unset($toTableFks[$toTableFkPos]);
+                        unset($fromTableFks[$fromTableFkPos], $toTableFks[$toTableFkPos]);
                         $fkDifferences++;
                     }
                 }

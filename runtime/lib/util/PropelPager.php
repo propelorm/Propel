@@ -620,6 +620,6 @@ class PropelPager implements Countable, Iterator
             $this->doRs();
         }
 
-        return in_array($this->currentKey, array_keys($this->rs));
+        return array_key_exists($this->currentKey, $this->rs);
     }
 }
