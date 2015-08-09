@@ -122,7 +122,7 @@ class Book extends BaseBook
 {
   public function isVersioningNecessary($con = null)
   {
-    return $this->getISBN() !== null && parent::isVersioningNecessary();
+    return $this->getISBN() !== null && parent::isVersioningNecessary($con);
   }
 }
 
