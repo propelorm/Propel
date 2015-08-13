@@ -1282,12 +1282,12 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . "
      * Filter the query by a related $fkPhpName object
      * using the $crossTableName table as cross reference
      *
-     * @param   $fkPhpName $objectName the related object to use as filter
+     * @param   $fkPhpName|PropelObjectCollection $objectName the related object to use as filter
      * @param     string \$comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
      * @return   $queryClass The current query, for fluid interface
      */
-    public function filterBy{$relName}($objectName, \$comparison = Criteria::EQUAL)
+    public function filterBy{$relName}($objectName, \$comparison = null)
     {
         return \$this
             ->use{$relationName}Query()
