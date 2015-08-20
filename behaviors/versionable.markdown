@@ -259,6 +259,6 @@ The audit log abilities need to be enabled in the schema as well:
 
 ### Peer class ###
 
-* `void enableVersioning()`: Enables versionning for all instances of the related ActiveRecord class
-* `void disableVersioning()`: Disables versionning for all instances of the related ActiveRecord class
-* `boolean isVersioningEnabled()`: Checks whether the versionnig is enabled
+* `void enableVersioning()`: Enables versioning for all instances of the related ActiveRecord class
+* `void disableVersioning()`: Disables versioning for all instances of the related ActiveRecord class
+* `boolean isVersioningEnabled()`: Checks whether the versioning is enabled
