@@ -184,4 +184,128 @@ END
     {
         return 'Y-m-d H:i:s';
     }
+
+    /**
+     * Builds the DDL SQL to modify a column
+     *
+     * @return string
+     */
+    public function getModifyColumnDDL(PropelColumnDiff $columnDiff)
+    {
+        $toColumn = $columnDiff->getToColumn();
+        $pattern = "
+ALTER TABLE %s ALTER COLUMN %s;
+";
+
+        return sprintf($pattern,
+            $this->quoteIdentifier($toColumn->getTable()->getName()),
+            $this->getColumnDDL($toColumn)
+        );
+    }
+
+    /**
+     * Builds the DDL SQL to modify a list of columns
+     *
+     * @return string
+     */
+    public function getModifyColumnsDDL($columnDiffs)
+    {
+        $lines = array();
+        $tableName = null;
+        foreach ($columnDiffs as $columnDiff) {
+            $toColumn = $columnDiff->getToColumn();
+            if (null === $tableName) {
+                $tableName = $toColumn->getTable()->getName();
+            }
+            $lines[] = $this->getColumnDDL($toColumn);
+        }
+
+        $sep = ",
+    ";
+
+        $pattern = "
+ALTER TABLE %s ALTER COLUMN
+    %s
+;
+";
+
+        return sprintf($pattern,
+            $this->quoteIdentifier($tableName),
+            implode($sep, $lines)
+        );
+    }
+
+    /**
+     * Builds the DDL SQL to rename a column
+     *
+     * @return string
+     */
+    public function getRenameColumnDDL($fromColumn, $toColumn)
+    {
+        $pattern = "
+EXEC sp_RENAME '%s.%s', '%s', 'COLUMN';
+";
+
+        return sprintf($pattern,
+            $this->quoteIdentifier($fromColumn->getTable()->getName()),
+            $this->quoteIdentifier($fromColumn->getName()),
+            $this->quoteIdentifier($toColumn->getName())
+        );
+    }
+
+    /**
+     * Builds the DDL SQL to remove a list of columns
+     *
+     * @return string
+     */
+    public function getAddColumnsDDL($columns)
+    {
+        $lines = array();
+        $tableName = null;
+        foreach ($columns as $column) {
+            if (null === $tableName) {
+                $tableName = $column->getTable()->getName();
+            }
+            $lines[] = $this->getColumnDDL($column);
+        }
+
+        $sep = ",
+    ";
+
+        $pattern = "
+ALTER TABLE %s ADD
+    %s
+;
+";
+
+        return sprintf($pattern, $this->quoteIdentifier($tableName), implode($sep, $lines));
+    }
+
+    /**
+     * Builds the DDL SQL for a Column object.
+     *
+     * @return string
+     */
+    public function getColumnDDL(Column $col)
+    {
+        $domain = $col->getDomain();
+        $ddl = array($this->quoteIdentifier($col->getName()));
+        $sqlType = $domain->getSqlType();
+
+        if ($this->hasSize($sqlType) && $col->isDefaultSqlType($this)) {
+            $ddl[] = $sqlType . $domain->printSize();
+        } else {
+            $ddl[] = $sqlType;
+        }
+
+        if ($notNull = $this->getNullString($col->isNotNull())) {
+            $ddl[] = $notNull;
+        }
+
+        if ($autoIncrement = $col->getAutoIncrementString()) {
+            $ddl[] = $autoIncrement;
+        }
+
+        return implode(' ', $ddl);
+    }
 }

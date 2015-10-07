@@ -160,7 +160,7 @@ class MssqlSchemaParser extends BaseSchemaParser
     {
         $database = $table->getDatabase();
 
-        $stmt = $this->dbh->query("SELECT ccu1.TABLE_NAME, ccu1.COLUMN_NAME, ccu2.TABLE_NAME AS FK_TABLE_NAME, ccu2.COLUMN_NAME AS FK_COLUMN_NAME
+        $stmt = $this->dbh->query("SELECT ccu1.TABLE_NAME, ccu1.COLUMN_NAME, ccu2.TABLE_NAME AS FK_TABLE_NAME, ccu2.COLUMN_NAME AS FK_COLUMN_NAME, ccu1.CONSTRAINT_NAME AS FK_CONSTRAINT_NAME
                                     FROM INFORMATION_SCHEMA.CONSTRAINT_COLUMN_USAGE ccu1 INNER JOIN
                                             INFORMATION_SCHEMA.TABLE_CONSTRAINTS tc1 ON tc1.CONSTRAINT_NAME = ccu1.CONSTRAINT_NAME AND
                                             CONSTRAINT_TYPE = 'Foreign Key' INNER JOIN
@@ -174,6 +174,8 @@ class MssqlSchemaParser extends BaseSchemaParser
             $lcol = $this->cleanDelimitedIdentifiers($row['COLUMN_NAME']);
             $ftbl = $this->cleanDelimitedIdentifiers($row['FK_TABLE_NAME']);
             $fcol = $this->cleanDelimitedIdentifiers($row['FK_COLUMN_NAME']);
+
+            $name = $this->cleanDelimitedIdentifiers($row['FK_CONSTRAINT_NAME']);
 
             $foreignTable = $database->getTable($ftbl);
             $foreignColumn = $foreignTable->getColumn($fcol);
