@@ -212,7 +212,7 @@ public function getParentOrCreate(\$con = null)
 
             return \$parent;
         } else {
-            \$parent = " . $this->builder->getNewStubQueryBuilder($parentTable)->getClassname() . "::create()->findPk(\$this->getPrimaryKey(), \$con);
+            \$parent = \\" . $this->builder->getNewStubQueryBuilder($parentTable)->getFullyQualifiedClassname() . "::create()->findPk(\$this->getPrimaryKey(), \$con);
             if (null === \$parent || null !== \$parent->getDescendantClass()) {
                 \$parent = new " . $parentClass . "();
                 \$parent->setPrimaryKey(\$this->getPrimaryKey());
@@ -223,7 +223,7 @@ public function getParentOrCreate(\$con = null)
         }
     }
 
-    return " . $this->builder->getNewStubQueryBuilder($parentTable)->getClassname() . "::create()->findPk(\$this->getPrimaryKey(), \$con);
+    return \\" . $this->builder->getNewStubQueryBuilder($parentTable)->getFullyQualifiedClassname() . "::create()->findPk(\$this->getPrimaryKey(), \$con);
 }
 ";
     }
