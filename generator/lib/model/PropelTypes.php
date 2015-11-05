@@ -46,9 +46,10 @@ class PropelTypes
     const OBJECT = "OBJECT";
     const PHP_ARRAY = "ARRAY";
     const ENUM = "ENUM";
+    const UUID = "UUID";
 
     private static $TEXT_TYPES = array(
-        self::CHAR, self::VARCHAR, self::LONGVARCHAR, self::CLOB, self::DATE, self::TIME, self::TIMESTAMP, self::BU_DATE, self::BU_TIMESTAMP
+        self::CHAR, self::VARCHAR, self::LONGVARCHAR, self::CLOB, self::DATE, self::TIME, self::TIMESTAMP, self::BU_DATE, self::BU_TIMESTAMP, self::UUID,
     );
 
     private static $LOB_TYPES = array(
@@ -210,6 +211,7 @@ class PropelTypes
             // timestamps on Windows.
             self::BU_DATE => PDO::PARAM_STR,
             self::BU_TIMESTAMP => PDO::PARAM_STR,
+            self::UUID => PDO::PARAM_STR,
     );
 
     private static $pdoTypeNames = array(
@@ -395,5 +397,10 @@ class PropelTypes
     public static function isPhpArrayType($phpType)
     {
         return strtoupper($phpType) === self::PHP_ARRAY;
+    }
+
+    public static function isUuidType($phpType)
+    {
+        return strtoupper($phpType) == self::UUID;
     }
 }

@@ -1347,6 +1347,11 @@ class Column extends XMLElement
         return PropelTypes::isPhpObjectType($this->getPhpType());
     }
 
+    public function isUuidType()
+    {
+        return PropelTypes::isUuidType($this->getType());
+    }
+
     /**
      * Get the platform/adapter impl.
      *

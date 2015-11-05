@@ -48,6 +48,7 @@ class MysqlPlatform extends DefaultPlatform
         $this->setSchemaDomainMapping(new Domain(PropelTypes::OBJECT, "TEXT"));
         $this->setSchemaDomainMapping(new Domain(PropelTypes::PHP_ARRAY, "TEXT"));
         $this->setSchemaDomainMapping(new Domain(PropelTypes::ENUM, "TINYINT"));
+        $this->setSchemaDomainMapping(new Domain(PropelTypes::UUID, "BINARY"));
     }
 
     public function setGeneratorConfig(GeneratorConfigInterface $generatorConfig)
@@ -761,6 +762,16 @@ ALTER TABLE %s
 
     public function getColumnBindingPHP($column, $identifier, $columnValueAccessor, $tab = "			")
     {
+        if ($column->isUuidType()) {
+            return sprintf(
+                "
+%s\$stmt->bindValue(%s, %s->getBytes(), PDO::PARAM_STR);",
+                $tab,
+                $identifier,
+                $columnValueAccessor
+            );
+        }
+
         // FIXME - This is a temporary hack to get around apparent bugs w/ PDO+MYSQL
         // See http://pecl.php.net/bugs/bug.php?id=9919
         if ($column->getPDOType() == PDO::PARAM_BOOL) {

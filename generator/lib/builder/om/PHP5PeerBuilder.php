@@ -141,6 +141,7 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
         $this->declareClassFromBuilder($this->getStubObjectBuilder());
         parent::addClassBody($script);
         $this->declareClasses('Propel', 'PropelException', 'PropelPDO', 'BasePeer', 'Criteria', 'PDO', 'PDOStatement', 'Exception');
+        $this->declareClass('\\Ramsey\\Uuid\\Uuid');
     }
 
     /**
@@ -1189,9 +1190,13 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
         foreach ($table->getColumns() as $col) {
             if (!$col->isLazyLoad()) {
                 if ($col->isPrimaryKey()) {
-                    $pk = '(' . $col->getPhpType() . ') ' . ($n ? "\$row[\$startcol + $n]" : "\$row[\$startcol]");
-                    if ($table->hasCompositePrimaryKey()) {
-                        $pks[] = $pk;
+                    if ($col->isUuidType()) {
+                        $pk = 'Uuid::fromBytes(' . ($n ? "\$row[\$startcol + $n]" : "\$row[\$startcol]") . ')';
+                    } else {
+                        $pk = '(' . $col->getPhpType() . ') ' . ($n ? "\$row[\$startcol + $n]" : "\$row[\$startcol]");
+                        if ($table->hasCompositePrimaryKey()) {
+                            $pks[] = $pk;
+                        }
                     }
                 }
                 $n++;
