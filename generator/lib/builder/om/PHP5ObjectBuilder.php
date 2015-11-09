@@ -290,7 +290,22 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
             }
         }
 
-        if ($this->hasDefaultValues()) {
+        if ($table->hasUuidPrimaryKey()) {
+            $script .= "
+    public function __construct()
+    {";
+
+            foreach ($table->getPrimaryKey() as $pkColumn) {
+                $script .= "
+        \$this->set{$pkColumn->getName()}(Uuid::uuid4());";
+            }
+
+            $script .= "
+
+        parent::__construct();
+    }
+";
+        } elseif ($this->hasDefaultValues()) {
             $this->addApplyDefaultValues($script);
             $this->addConstructor($script);
         }
