@@ -245,7 +245,8 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
      * An identity map to hold any loaded instances of " . $this->getObjectClassname() . " objects.
      * This must be public so that other peer classes can access this when hydrating from JOIN
      * queries.
-     * @var        array " . $this->getObjectClassname() . "[]
+     *
+     * @var        " . $this->getObjectClassname() . "[]
      */
     public static \$instances = array();
 
@@ -488,6 +489,7 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
         $script .= "
     /**
      * Gets the list of values for all ENUM columns
+     *
      * @return array
      */
     public static function getValueSets()
@@ -510,8 +512,8 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
      * Gets the list of values for an ENUM column
      *
      * @param string \$colname The ENUM column name.
-     *
      * @return array list of possible values for the column
+     * @throws PropelException
      */
     public static function getValueSet(\$colname)
     {
@@ -540,8 +542,8 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
      *
      * @param string \$colname ENUM column name.
      * @param string \$enumVal ENUM value.
-     *
      * @return int SQL value
+     * @throws PropelException
      */
     public static function getSqlValueForEnum(\$colname, \$enumVal)
     {
@@ -665,6 +667,7 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
      *		\$c->addAlias(\"alias1\", TablePeer::TABLE_NAME);
      *		\$c->addJoin(TablePeer::alias(\"alias1\", TablePeer::PRIMARY_KEY_COLUMN), TablePeer::PRIMARY_KEY_COLUMN);
      * </code>
+     *
      * @param      string \$alias The alias for the current table.
      * @param      string \$column The column name for current table. (i.e. " . $this->getPeerClassname() . "::COLUMN_NAME).
      * @return string
@@ -849,9 +852,9 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
      *
      * @param      Criteria \$criteria The Criteria object used to build the SELECT statement.
      * @param      PropelPDO \$con The connection to use
+     * @return PDOStatement The executed PDOStatement object.
      * @throws PropelException Any exceptions caught during processing will be
      *		 rethrown wrapped into a PropelException.
-     * @return PDOStatement The executed PDOStatement object.
      * @see        " . $this->basePeerClassname . "::doSelect()
      */
     public static function doSelectStmt(Criteria \$criteria, PropelPDO \$con = null)
@@ -967,7 +970,6 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
      * from the cache in order to prevent returning objects that no longer exist.
      *
      * @param      mixed \$value A " . $this->getObjectClassname() . " object or a primary key value.
-     *
      * @return void
      * @throws PropelException - if the value is invalid.
      */
@@ -1024,6 +1026,7 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
     /**
      * Clear the instance pool.
      *
+     * @param bool \$and_clear_all_references
      * @return void
      */
     public static function clearInstancePool(\$and_clear_all_references = false)
@@ -1224,6 +1227,8 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
      * The returned array will contain objects of the default type or
      * objects that inherit from the default.
      *
+     * @param PDOStatement \$stmt
+     * @return array
      * @throws PropelException Any exceptions caught during processing will be
      *		 rethrown wrapped into a PropelException.
      */
@@ -1286,9 +1291,9 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
      *
      * @param      array \$row PropelPDO resultset row.
      * @param      int \$startcol The 0-based offset for reading from the resultset row.
+     * @return array (" . $this->getStubObjectBuilder()->getClassName() . " object, last column rank)
      * @throws PropelException Any exceptions caught during processing will be
      *		 rethrown wrapped into a PropelException.
-     * @return array (" . $this->getStubObjectBuilder()->getClassName() . " object, last column rank)
      */
     public static function populateObject(\$row, \$startcol = 0)
     {
@@ -1396,7 +1401,8 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
     /**
      * The class that the Peer will make instances of.
      *
-     *
+     * @param int \$row
+     * @param int \$colnum
      * @return string ClassName
      */
     public static function getOMClass(\$row = 0, \$colnum = 0)
@@ -1419,6 +1425,9 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
      *
      * This method must be overridden by the stub subclass, because
      * " . $this->getObjectClassname() . " is declared abstract in the schema.
+     *
+     * @param int \$row
+     * @param int \$colnum
      */";
 
         if (version_compare(PHP_VERSION, '5.3.0', '>=')) {
@@ -1450,6 +1459,7 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
      * @param      mixed \$values Criteria or " . $this->getObjectClassname() . " object containing data that is used to create the INSERT statement.
      * @param      PropelPDO \$con the PropelPDO connection to use
      * @return mixed           The new primary key.
+     * @throws Exception
      * @throws PropelException Any exceptions caught during processing will be
      *		 rethrown wrapped into a PropelException.
      */
@@ -1581,6 +1591,7 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
      *
      * @param      PropelPDO \$con the connection to use
      * @return int             The number of affected rows (if supported by underlying database driver).
+     * @throws Exception
      * @throws PropelException
      */
     public static function doDeleteAll(PropelPDO \$con = null)
@@ -1637,6 +1648,7 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
      * @param      PropelPDO \$con the connection to use
      * @return int The number of affected rows (if supported by underlying database driver).  This includes CASCADE-related rows
      *				if supported by native driver or if emulated using Propel.
+     * @throws Exception
      * @throws PropelException Any exceptions caught during processing will be
      *		 rethrown wrapped into a PropelException.
      */
@@ -1958,7 +1970,6 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
      *
      * @param " . $this->getObjectClassname() . " \$obj The object to validate.
      * @param      mixed \$cols Column name or array of column names.
-     *
      * @return mixed TRUE if all columns are valid or the error message of the first invalid column.
      */
     public static function doValidate(\$obj, \$cols = null)

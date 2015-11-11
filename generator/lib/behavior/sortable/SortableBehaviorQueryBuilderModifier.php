@@ -166,8 +166,8 @@ public function filterByRank(\$rank" . ($useScope ? ", $methodSignature" : "") .
  * Using the default \$order, returns the item with the lowest rank first
  *
  * @param     string \$order either Criteria::ASC (default) or Criteria::DESC
- *
  * @return    " . $this->queryClassname . " The current query, for fluid interface
+ * @throws PropelException
  */
 public function orderByRank(\$order = Criteria::ASC)
 {
@@ -287,8 +287,7 @@ $paramsDoc
 ";
         }
         $script .= "
- * @param     PropelPDO optional connection
- *
+ * @param     PropelPDO \$con optional connection
  * @return    integer highest position
  */
 public function getMaxRank(" . ($useScope ? "$methodSignature, " : "") . "PropelPDO \$con = null)
@@ -326,9 +325,8 @@ public function getMaxRank(" . ($useScope ? "$methodSignature, " : "") . "Propel
 ";
         }
         $script .= "
- * @param     PropelPDO optional connection
- *
- * @return    integer highest position
+ * @param     PropelPDO \$con optional connection
+ * @return    int highest position
  */
 public function getMaxRankArray(" . ($useScope ? "\$scope, " : "") . "PropelPDO \$con = null)
 {
@@ -363,8 +361,8 @@ public function getMaxRankArray(" . ($useScope ? "\$scope, " : "") . "PropelPDO 
  *
  * @param     array     \$order id => rank pairs
  * @param     PropelPDO \$con   optional connection
- *
  * @return    boolean true if the reordering took place, false if a database problem prevented it
+ * @throws Exception
  */
 public function reorder(array \$order, PropelPDO \$con = null)
 {

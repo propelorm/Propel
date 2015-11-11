@@ -194,9 +194,8 @@ public static function sortableApplyScopeCriteria(Criteria \$criteria, \$scope, 
  * @param      int \$scope		Scope to determine which suite to consider";
         }
         $script .= "
- * @param     PropelPDO optional connection
- *
- * @return    integer highest position
+ * @param     PropelPDO \$con optional connection
+ * @return    int highest position
  */
 public static function getMaxRank(" . ($useScope ? "\$scope = null, " : "") . "PropelPDO \$con = null)
 {
@@ -268,8 +267,8 @@ public static function retrieveByRank(\$rank, " . ($useScope ? "\$scope = null, 
  *
  * @param     array     \$order id => rank pairs
  * @param     PropelPDO \$con   optional connection
- *
  * @return    boolean true if the reordering took place, false if a database problem prevented it
+ * @throws Exception
  */
 public static function reorder(array \$order, PropelPDO \$con = null)
 {
