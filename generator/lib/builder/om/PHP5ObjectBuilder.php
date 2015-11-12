@@ -208,6 +208,8 @@ class PHP5ObjectBuilder extends ObjectBuilder
             } else {
                 $this->declareClass($parentClass);
             }
+
+            $this->declareClass('\\Ramsey\\Uuid\\Uuid');
         }
 
         if ($this->getBuildProperty('addClassLevelComment')) {
@@ -288,7 +290,22 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
             }
         }
 
-        if ($this->hasDefaultValues()) {
+        if ($table->hasUuidPrimaryKey()) {
+            $script .= "
+    public function __construct()
+    {";
+
+            foreach ($table->getPrimaryKey() as $pkColumn) {
+                $script .= "
+        \$this->set{$pkColumn->getName()}(Uuid::uuid4());";
+            }
+
+            $script .= "
+
+        parent::__construct();
+    }
+";
+        } elseif ($this->hasDefaultValues()) {
             $this->addApplyDefaultValues($script);
             $this->addConstructor($script);
         }
@@ -1511,9 +1528,15 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
         $cfc = $col->getPhpName();
         $visibility = $col->getMutatorVisibility();
 
+        if ($col->isUuidType()) {
+        $script .= "
+    " . $visibility . " function set$cfc(Uuid \$v)
+    {";
+        } else {
         $script .= "
     " . $visibility . " function set$cfc(\$v)
     {";
+        }
     }
 
     /**
@@ -2200,6 +2223,9 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
                     $script .= "
             \$this->$clo = \$row[\$startcol + $n];
             \$this->$cloUnserialized = null;";
+                } elseif ($col->isUuidType()) {
+                    $script .= "
+            \$this->$clo = (\$row[\$startcol + $n] !== null) ? Uuid::fromBytes(\$row[\$startcol + $n]) : null;";
                 } elseif ($col->isPhpObjectType()) {
                     $script .= "
             \$this->$clo = (\$row[\$startcol + $n] !== null) ? new " . $col->getPhpType() . "(\$row[\$startcol + $n]) : null;";

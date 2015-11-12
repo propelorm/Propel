@@ -79,7 +79,12 @@ class Criterion
      */
     public function __construct(Criteria $outer, $column, $value, $comparison = null, $type = null)
     {
-        $this->value = $value;
+        if ($value instanceof Ramsey\Uuid\Uuid) {
+            $this->value = $value->getBytes();
+        } else {
+            $this->value = $value;
+        }
+
         $dotPos = strrpos($column, '.');
         if ($dotPos === false || $comparison == Criteria::RAW) {
             // no dot => aliased column
