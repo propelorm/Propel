@@ -297,7 +297,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
 
             foreach ($table->getPrimaryKey() as $pkColumn) {
                 $script .= "
-        \$this->set{$pkColumn->getName()}(Uuid::uuid4());";
+        \$this->set{$pkColumn->getPhpName()}(Uuid::uuid4());";
             }
 
             $script .= "
