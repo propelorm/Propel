@@ -765,7 +765,7 @@ ALTER TABLE %s
         if ($column->isUuidType()) {
             return sprintf(
                 "
-%s\$stmt->bindValue(%s, %s->getBytes(), PDO::PARAM_STR);",
+%s\$stmt->bindValue(%s, %s !== null ? %s->getBytes() : null, PDO::PARAM_STR);",
                 $tab,
                 $identifier,
                 $columnValueAccessor

@@ -1530,7 +1530,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
 
         if ($col->isUuidType()) {
         $script .= "
-    " . $visibility . " function set$cfc(Uuid \$v)
+    " . $visibility . " function set$cfc(Uuid \$v = null)
     {";
         } else {
         $script .= "
