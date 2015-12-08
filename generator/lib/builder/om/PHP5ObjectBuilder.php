@@ -208,6 +208,8 @@ class PHP5ObjectBuilder extends ObjectBuilder
             } else {
                 $this->declareClass($parentClass);
             }
+
+            $this->declareClass('\\Ramsey\\Uuid\\Uuid');
         }
 
         if ($this->getBuildProperty('addClassLevelComment')) {
@@ -288,7 +290,22 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
             }
         }
 
-        if ($this->hasDefaultValues()) {
+        if ($table->hasUuidPrimaryKey()) {
+            $script .= "
+    public function __construct()
+    {";
+
+            foreach ($table->getPrimaryKey() as $pkColumn) {
+                $script .= "
+        \$this->set{$pkColumn->getPhpName()}(Uuid::uuid4());";
+            }
+
+            $script .= "
+
+        parent::__construct();
+    }
+";
+        } elseif ($this->hasDefaultValues()) {
             $this->addApplyDefaultValues($script);
             $this->addConstructor($script);
         }
@@ -1511,9 +1528,15 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
         $cfc = $col->getPhpName();
         $visibility = $col->getMutatorVisibility();
 
+        if ($col->isUuidType()) {
+        $script .= "
+    " . $visibility . " function set$cfc(Uuid \$v = null)
+    {";
+        } else {
         $script .= "
     " . $visibility . " function set$cfc(\$v)
     {";
+        }
     }
 
     /**
@@ -2199,6 +2222,9 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
                     $script .= "
             \$this->$clo = \$row[\$startcol + $n];
             \$this->$cloUnserialized = null;";
+                } elseif ($col->isUuidType()) {
+                    $script .= "
+            \$this->$clo = (\$row[\$startcol + $n] !== null) ? Uuid::fromBytes(\$row[\$startcol + $n]) : null;";
                 } elseif ($col->isPhpObjectType()) {
                     $script .= "
             \$this->$clo = (\$row[\$startcol + $n] !== null) ? new " . $col->getPhpType() . "(\$row[\$startcol + $n]) : null;";
@@ -4015,7 +4041,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
                       \$this->{$collName}Partial = true;
                     }
 
-                    \$$collName" . "->getInternalIterator()->rewind();
+                    reset(\$$collName" . ");
 
                     return \$$collName;
                 }
@@ -5828,9 +5854,6 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
 
         foreach ($vars as $varName) {
             $script .= "
-        if (\$this->$varName instanceof PropelCollection) {
-            \$this->{$varName}->clearIterator();
-        }
         \$this->$varName = null;";
         }
 

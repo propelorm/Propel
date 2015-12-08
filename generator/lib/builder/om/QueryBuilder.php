@@ -139,6 +139,10 @@ class QueryBuilder extends OMBuilder
  *";
         }
 
+        $script .= "
+ * @method     $queryClass forUpdate()
+ *";
+
         // override the signature of ModelCriteria::findOne() to specify the class of the returned object, for IDE completion
         $script .= "
  * @method $modelClass findOne(PropelPDO \$con = null) Return the first $modelClass matching the query

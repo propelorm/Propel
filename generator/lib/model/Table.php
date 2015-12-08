@@ -2023,6 +2023,20 @@ class Table extends ScopedElement implements IDMethod
     }
 
     /**
+     * @return bool
+     */
+    public function hasUuidPrimaryKey()
+    {
+        foreach ($this->getPrimaryKey() as $column) {
+            if ($column->isUuidType()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * Gets the crossRef status for this foreign key
      *
      * @return boolean

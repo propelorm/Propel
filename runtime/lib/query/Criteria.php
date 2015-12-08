@@ -240,6 +240,7 @@ class Criteria implements IteratorAggregate
     protected $aliases = array();
 
     protected $useTransaction = false;
+    protected $forUpdate = false;
 
     /**
      * Storage for Criterions expected to be combined
@@ -321,6 +322,7 @@ class Criteria implements IteratorAggregate
         $this->blobFlag = null;
         $this->aliases = array();
         $this->useTransaction = false;
+        $this->forUpdate = false;
         $this->conditionalProxy = null;
         $this->defaultCombineOperator = Criteria::LOGICAL_AND;
         $this->primaryTableName = null;
@@ -530,6 +532,26 @@ class Criteria implements IteratorAggregate
     public function isUseTransaction()
     {
         return $this->useTransaction;
+    }
+
+    /**
+     * Sets this query to lock the row using FOR UPDATE.
+     *
+     * @return Criteria
+     */
+    public function forUpdate()
+    {
+        $this->forUpdate = true;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isForUpdate()
+    {
+        return $this->forUpdate;
     }
 
     /**
@@ -1007,15 +1029,7 @@ class Criteria implements IteratorAggregate
      */
     public function addJoinObject(Join $join)
     {
-        $isAlreadyAdded = false;
-        foreach ($this->joins as $alreadyAddedJoin) {
-            if ($join->equals($alreadyAddedJoin)) {
-                $isAlreadyAdded = true;
-                break;
-            }
-        }
-
-        if (!$isAlreadyAdded) {
+        if (!in_array($join, $this->joins)) { // compare equality, NOT identity
             $this->joins[] = $join;
         }
 
