@@ -42,7 +42,7 @@ To continue with example from above:
 <?php
 
 $bdeep = $b->copy(true);
-var_export($bcopy->getId() == $b->getId()); // FALSE
-var_export($bcopy->getAuthorId() == $b->getAuthorId()); // FALSE
-var_export($bcopy->getAuthor() == $b->getAuthor()); // FALSE
+var_export($bdeep->getId() == $b->getId()); // FALSE
+var_export($bdeep->getAuthorId() == $b->getAuthorId()); // FALSE
+var_export($bdeep->getAuthor() == $b->getAuthor()); // FALSE
 ```
