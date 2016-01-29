@@ -667,6 +667,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . "
      * Filter the query by primary key
      *
      * @param     mixed \$key Primary key to use for the query
+     * @param     string \$comparison Default is Criteria::EQUAL
      *
      * @return " . $this->getStubQueryBuilder()->getClassname() . " The current query, for fluid interface
      */
