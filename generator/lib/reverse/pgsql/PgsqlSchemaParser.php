@@ -202,11 +202,6 @@ class PgsqlSchemaParser extends BaseSchemaParser
             $precision = null;
             $scale = null;
 
-            // Check to ensure that this column isn't an array data type
-            if (((int) $row['isarray']) === 1) {
-                throw new EngineException (sprintf("Array datatypes are not currently supported [%s.%s]", $this->name, $row['attname']));
-            } // if (((int) $row['isarray']) === 1)
-
             $name = $row['attname'];
 
             // If they type is a domain, Process it
