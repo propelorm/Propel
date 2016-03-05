@@ -38,7 +38,7 @@ if ($user->validate()) {
 } else {
   // Something went wrong.
   // Use the validationFailures to check what
-  foreach ($objUser->getValidationFailures() as $failure) {
+  foreach ($user->getValidationFailures() as $failure) {
     echo $failure->getMessage() . "\n";
   }
 }
