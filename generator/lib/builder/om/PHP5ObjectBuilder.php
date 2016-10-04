@@ -4646,9 +4646,6 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
         if (!\${$lowerRelatedObjectClassName}->get{$selfRelationNamePlural}()->contains(\$this)) { {$foreignObjectName} = new {$className}();
             {$foreignObjectName}->set{$relatedObjectClassName}(\${$lowerRelatedObjectClassName});
             \$this->add{$refKObjectClassName}({$foreignObjectName});
-
-            \$foreignCollection = \${$lowerRelatedObjectClassName}->get{$selfRelationNamePlural}();
-            \$foreignCollection[] = \$this;
         }
     }
 ";
