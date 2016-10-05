@@ -4643,7 +4643,8 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
     {
         // set the back reference to this object directly as using provided method either results
         // in endless loop or in multiple relations
-        if (!\${$lowerRelatedObjectClassName}->get{$selfRelationNamePlural}()->contains(\$this)) { {$foreignObjectName} = new {$className}();
+        if (\$this->isNew() || !\${$lowerRelatedObjectClassName}->get{$selfRelationNamePlural}()->contains(\$this)) { 
+            {$foreignObjectName} = new {$className}();
             {$foreignObjectName}->set{$relatedObjectClassName}(\${$lowerRelatedObjectClassName});
             \$this->add{$refKObjectClassName}({$foreignObjectName});
         }
