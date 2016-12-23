@@ -55,7 +55,7 @@ class ModelCriteria extends Criteria
     protected $primaryCriteria = null;
     protected $formatter = null;
     protected $defaultFormatterClass = ModelCriteria::FORMAT_OBJECT;
-    protected $with = array();
+    protected $modelWith = array();
     protected $isWithOneToMany = false;
     protected $previousJoin = null; // this is introduced to prevent useQuery->join from going wrong
     protected $isKeepQuery = true; // whether to clone the current object before termination methods
@@ -873,7 +873,7 @@ class ModelCriteria extends Criteria
         $this->addRelationSelectColumns($relation);
 
         // list the join for later hydration in the formatter
-        $this->with[$relation] = new ModelWith($join);
+        $this->modelWith[$relation] = new ModelWith($join);
 
         return $this;
     }
@@ -887,7 +887,7 @@ class ModelCriteria extends Criteria
      */
     public function getWith()
     {
-        return $this->with;
+        return $this->modelWith;
     }
 
     /**
@@ -900,7 +900,7 @@ class ModelCriteria extends Criteria
      */
     public function setWith($with)
     {
-        $this->with = $with;
+        $this->modelWith = $with;
 
         return $this;
     }
@@ -1005,7 +1005,7 @@ class ModelCriteria extends Criteria
 
         // merge with
         if ($criteria instanceof ModelCriteria) {
-            $this->with = array_merge($this->getWith(), $criteria->getWith());
+            $this->modelWith = array_merge($this->getWith(), $criteria->getWith());
         }
 
         return $this;
@@ -1021,7 +1021,7 @@ class ModelCriteria extends Criteria
     {
         parent::clear();
 
-        $this->with = array();
+        $this->modelWith = array();
         $this->primaryCriteria = null;
         $this->formatter = null;
         $this->select = null;
@@ -2296,8 +2296,8 @@ class ModelCriteria extends Criteria
     public function __clone()
     {
         parent::__clone();
-        foreach ($this->with as $key => $join) {
-            $this->with[$key] = clone $join;
+        foreach ($this->modelWith as $key => $join) {
+            $this->modelWith[$key] = clone $join;
         }
         if (null !== $this->formatter) {
             $this->formatter = clone $this->formatter;
