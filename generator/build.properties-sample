@@ -97,7 +97,7 @@ propel.home = .
 propel.targetPackage = ${propel.project}
 
 propel.addGenericAccessors = false
-propel.addGenericMutators = false
+propel.addGenericMutators = true
 propel.addSaveMethod = true
 propel.addTimeStamp = true
 propel.basePrefix = Base
