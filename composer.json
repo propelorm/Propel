@@ -31,5 +31,5 @@
       "url": "http://pear.php.net"
     }
   ],
-  "bin": ["generator/bin/propel-gen", "generator/bin/propel-gen.bat"]
+  "bin": ["generator/bin/propel-gen.bat", "generator/bin/propel-gen"]
 }
