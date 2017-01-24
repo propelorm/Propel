@@ -1,0 +1,5 @@
+DROP TABLE foo;
+
+CREATE TABLE IF NOT EXISTS `foo` (
+  `longitude` decimal(10,7) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
