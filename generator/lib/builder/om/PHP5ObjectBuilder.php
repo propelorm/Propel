@@ -987,19 +987,27 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
             return null;
         }
 
-        try {
-            \$dt = new $dateTimeClass(\$this->$clo);
-        } catch (Exception \$x) {
-            throw new PropelException(\"Internally stored date/time/timestamp value could not be converted to $dateTimeClass: \" . var_export(\$this->$clo, true), \$x);
+        if (\$this->$clo instanceof $dateTimeClass) {
+            \$dt = \$this->$clo;
+        } else {
+            try {
+                \$dt = new $dateTimeClass(\$this->$clo);
+            } catch (Exception \$x) {
+                throw new PropelException(\"Internally stored date/time/timestamp value could not be converted to $dateTimeClass: \" . var_export(\$this->$clo, true), \$x);
+            }
         }
 ";
         } else {
             $script .= "
 
-        try {
-            \$dt = new $dateTimeClass(\$this->$clo);
-        } catch (Exception \$x) {
-            throw new PropelException(\"Internally stored date/time/timestamp value could not be converted to $dateTimeClass: \" . var_export(\$this->$clo, true), \$x);
+        if (\$this->$clo instanceof $dateTimeClass) {
+            \$dt = \$this->$clo;
+        } else {
+            try {
+                \$dt = new $dateTimeClass(\$this->$clo);
+            } catch (Exception \$x) {
+                throw new PropelException(\"Internally stored date/time/timestamp value could not be converted to $dateTimeClass: \" . var_export(\$this->$clo, true), \$x);
+            }
         }
 ";
         } // if handleMyqlDate
@@ -1699,7 +1707,13 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
         $script .= "
         \$dt = PropelDateTime::newInstance(\$v, null, '$dateTimeClass');
         if (\$this->$clo !== null || \$dt !== null) {
-            \$currentDateAsString = (\$this->$clo !== null && \$tmpDt = new $dateTimeClass(\$this->$clo)) ? \$tmpDt->format($fmt) : null;
+            if (\$this->$clo instanceof $dateTimeClass) {
+                \$tmpDt = \$this->$clo;
+                \$currentDateAsString =\$tmpDt->format($fmt);
+            } else {
+                \$currentDateAsString = (\$this->$clo !== null && \$tmpDt = new $dateTimeClass(\$this->$clo)) ? \$tmpDt->format($fmt) : null;
+            }
+
             \$newDateAsString = \$dt ? \$dt->format($fmt) : null;";
 
         if (($def = $col->getDefaultValue()) !== null && !$def->isExpression()) {
