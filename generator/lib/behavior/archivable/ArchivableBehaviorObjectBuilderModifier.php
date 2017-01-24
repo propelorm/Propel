@@ -39,6 +39,7 @@ class ArchivableBehaviorObjectBuilderModifier
     public function objectAttributes(PHP5ObjectBuilder $builder)
     {
         if (!$this->behavior->hasArchiveClass()) {
+            $builder->declareClassFromBuilder($builder->getNewStubObjectBuilder($this->behavior->getArchiveTable()));
             $builder->declareClassFromBuilder($builder->getNewStubQueryBuilder($this->behavior->getArchiveTable()));
         }
 
