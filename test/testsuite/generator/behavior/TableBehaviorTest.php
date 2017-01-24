@@ -19,14 +19,35 @@ class TableBehaviorTest extends PHPUnit_Framework_TestCase
     protected function setUp()
     {
         parent::setUp();
+        
         set_include_path(get_include_path() . PATH_SEPARATOR . "fixtures/bookstore/build/classes");
         require_once 'behavior/alternative_coding_standards/map/Table3TableMap.php';
         require_once 'behavior/alternative_coding_standards/Table3Peer.php';
+        
+        if (!class_exists('TableColumnBooleanDefault')) {
+            $schema = <<<EOF
+<database name="table_column_test_0">
+
+  <table name="table_column_boolean_default">
+    <column name="id" primaryKey="true" type="INTEGER" autoIncrement="true" />
+    <column name="active" type="BOOLEAN" defaultValue="true" />
+  </table>
+</database>
+EOF;
+            PropelQuickBuilder::buildSchema($schema);
+        }        
     }
 
   public function testModifyTable()
   {
     $t = Table3Peer::getTableMap();
     $this->assertTrue($t->hasColumn('test'), 'modifyTable hook is called when building the model structure');
+  }
+  
+  public function testTableColumnBooleanDefault()
+  {
+    $obj = new TableColumnBooleanDefault();
+   
+    $this->assertTrue($obj->getActive());
   }
 }
