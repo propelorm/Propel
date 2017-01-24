@@ -51,7 +51,7 @@ class PropelObjectFormatter extends PropelFormatter
                     $objectsByPks[$pk] = $object;
                 }
 
-                if (!in_array($pk, $pks)) {
+                if (!in_array($pk, $pks, true)) {
                     $collection[] = $object;
                     $pks[] = $pk;
                 }
