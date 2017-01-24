@@ -236,6 +236,9 @@ class MysqlSchemaParser extends BaseSchemaParser
         $column = new Column($name);
         $column->setTable($table);
         $column->setDomainForType($propelType);
+        if ($desc) {
+            $column->setDescription(utf8_encode($desc));
+        }
         if ($sqlType) {
             $column->getDomain()->replaceSqlType($sqlType);
         }
