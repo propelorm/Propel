@@ -261,7 +261,7 @@ class PropelObjectCollection extends PropelCollection
             $relatedObjects->clearIterator();
         } elseif ($relationMap->getType() == RelationMap::MANY_TO_ONE) {
 	    $mainObj = current($this);
-            if (method_exists('initRelation', $mainObj)) {
+            if (method_exists($mainObj,'initRelation')) {
                 $relationName = $relationMap->getName();
                 $setMethod = 'set' . $relationName;
                 $mainObj->initRelation($relationName);
