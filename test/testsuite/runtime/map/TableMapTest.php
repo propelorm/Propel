@@ -14,6 +14,8 @@ require_once dirname(__FILE__) . '/../../../../runtime/lib/map/TableMap.php';
 require_once dirname(__FILE__) . '/../../../../runtime/lib/map/DatabaseMap.php';
 require_once dirname(__FILE__) . '/../../../../runtime/lib/exception/PropelException.php';
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * Test class for TableMap.
  *
@@ -21,7 +23,7 @@ require_once dirname(__FILE__) . '/../../../../runtime/lib/exception/PropelExcep
  * @version    $Id$
  * @package    runtime.map
  */
-class TableMapTest extends PHPUnit_Framework_TestCase
+class TableMapTest extends TestCase
 {
   protected $databaseMap;
 

@@ -13,6 +13,8 @@ require_once dirname(__FILE__) . '/../../../../../generator/lib/util/PropelQuick
 require_once dirname(__FILE__) . '/../../../../../generator/lib/behavior/i18n/I18nBehavior.php';
 require_once dirname(__FILE__) . '/../../../../../runtime/lib/Propel.php';
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * Tests for I18nBehavior class
  *
@@ -20,7 +22,7 @@ require_once dirname(__FILE__) . '/../../../../../runtime/lib/Propel.php';
  * @version    $Revision$
  * @package    generator.behavior.i18n
  */
-class I18nBehaviorTest extends PHPUnit_Framework_TestCase
+class I18nBehaviorTest extends TestCase
 {
     public function testModifyDatabaseOverridesDefaultLocale()
     {

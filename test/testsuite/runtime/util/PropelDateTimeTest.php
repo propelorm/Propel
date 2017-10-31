@@ -11,6 +11,8 @@
 require_once dirname(__FILE__) . '/../../../../runtime/lib/util/PropelDateTime.php';
 require_once dirname(__FILE__) . '/../../../../runtime/lib/exception/PropelException.php';
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * Test for DateTime subclass to support serialization.
  *
@@ -18,7 +20,7 @@ require_once dirname(__FILE__) . '/../../../../runtime/lib/exception/PropelExcep
  * @author		 Soenke Ruempler
  * @package		runtime.util
  */
-class PropelDateTimeTest extends PHPUnit_Framework_TestCase
+class PropelDateTimeTest extends TestCase
 {
 
     /**

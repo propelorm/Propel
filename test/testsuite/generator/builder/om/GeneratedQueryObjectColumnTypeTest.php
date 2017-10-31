@@ -11,13 +11,15 @@
 require_once dirname(__FILE__) . '/../../../../../generator/lib/util/PropelQuickBuilder.php';
 require_once dirname(__FILE__) . '/../../../../../runtime/lib/Propel.php';
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * Tests the generated queries for object column types filters
  *
  * @author     Francois Zaninotto
  * @package    generator.builder.om
  */
-class GeneratedQueryObjectColumnTest extends PHPUnit_Framework_TestCase
+class GeneratedQueryObjectColumnTest extends TestCase
 {
     protected $c1, $c2;
 

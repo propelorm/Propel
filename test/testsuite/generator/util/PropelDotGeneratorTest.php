@@ -11,11 +11,13 @@
 require_once dirname(__FILE__) . '/../../../../generator/lib/util/PropelDotGenerator.php';
 require_once dirname(__FILE__) . '/../../../../generator/lib/model/AppData.php';
 
+use PHPUnit\Framework\TestCase;
+
 /**
  *
  * @package    generator.util
  */
-class PropelDotGeneratorTest extends PHPUnit_Framework_TestCase
+class PropelDotGeneratorTest extends TestCase
 {
     public function testEmptyDatabase()
     {

@@ -14,6 +14,8 @@ require_once dirname(__FILE__) . '/../../../../../generator/lib/model/Table.php'
 require_once dirname(__FILE__) . '/../../../../../generator/lib/model/Column.php';
 require_once dirname(__FILE__) . '/../../../../../generator/lib/model/ColumnDefaultValue.php';
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * Test class for PHP5ObjectBuilder.
  *
@@ -21,7 +23,7 @@ require_once dirname(__FILE__) . '/../../../../../generator/lib/model/ColumnDefa
  * @version    $Id$
  * @package    generator.builder.om
  */
-class PHP5ObjectBuilderTest extends PHPUnit_Framework_TestCase
+class PHP5ObjectBuilderTest extends TestCase
 {
     protected $builder;
 

@@ -10,13 +10,15 @@
 
 require_once dirname(__FILE__) . '/../../../../../generator/lib/builder/util/StandardEnglishPluralizer.php';
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * Tests for the StandardEnglishPluralizer class
  *
  * @version    $Revision$
  * @package    generator.builder.util
  */
-class StandardEnglishPluralizerTest extends PHPUnit_Framework_TestCase
+class StandardEnglishPluralizerTest extends TestCase
 {
     public function getPluralFormDataProvider()
     {

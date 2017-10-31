@@ -13,6 +13,8 @@ require_once dirname(__FILE__) . '/../../../../../generator/lib/util/PropelQuick
 require_once dirname(__FILE__) . '/../../../../../generator/lib/behavior/versionable/VersionableBehavior.php';
 require_once dirname(__FILE__) . '/../../../../../runtime/lib/Propel.php';
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * Tests for VersionableBehavior class
  *
@@ -20,7 +22,7 @@ require_once dirname(__FILE__) . '/../../../../../runtime/lib/Propel.php';
  * @version    $Revision$
  * @package    generator.behavior.versionable
  */
-class VersionableBehaviorTest extends PHPUnit_Framework_TestCase
+class VersionableBehaviorTest extends TestCase
 {
     public function basicSchemaDataProvider()
     {

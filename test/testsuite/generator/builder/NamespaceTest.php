@@ -11,6 +11,8 @@
 require_once dirname(__FILE__) . '/../../../../runtime/lib/Propel.php';
 set_include_path(get_include_path() . PATH_SEPARATOR . realpath(dirname(__FILE__) . '/../../../fixtures/namespaced/build/classes'));
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * Tests for Namespaces in generated classes class
  * Requires a build of the 'namespaced' fixture
@@ -18,7 +20,7 @@ set_include_path(get_include_path() . PATH_SEPARATOR . realpath(dirname(__FILE__
  * @version    $Revision$
  * @package    generator.builder
  */
-class NamespaceTest extends PHPUnit_Framework_TestCase
+class NamespaceTest extends TestCase
 {
     protected function setUp()
     {

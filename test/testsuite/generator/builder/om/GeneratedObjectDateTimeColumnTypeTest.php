@@ -11,6 +11,8 @@
 require_once dirname(__FILE__) . '/../../../../../generator/lib/util/PropelQuickBuilder.php';
 require_once dirname(__FILE__) . '/../../../../../runtime/lib/Propel.php';
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * Tests the generated objects for temporal column types accessor & mutator.
  * This requires that the model was built with propel.useDateTimeClass=true
@@ -18,7 +20,7 @@ require_once dirname(__FILE__) . '/../../../../../runtime/lib/Propel.php';
  * @author     Francois Zaninotto
  * @package    generator.builder.om
  */
-class GeneratedObjectDateTimeColumnTypeTest extends PHPUnit_Framework_TestCase
+class GeneratedObjectDateTimeColumnTypeTest extends TestCase
 {
     public function setUp()
     {

@@ -14,12 +14,14 @@ require_once dirname(__FILE__) . '/../../../../../generator/lib/model/diff/Prope
 require_once dirname(__FILE__) . '/../../../../../generator/lib/platform/MysqlPlatform.php';
 require_once dirname(__FILE__) . '/../../../../../generator/lib/model/Database.php';
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * Tests for the Column methods of the PropelTableComparator service class.
  *
  * @package    generator.model.diff
  */
-class PropelTableForeignKeyComparatorTest extends PHPUnit_Framework_TestCase
+class PropelTableForeignKeyComparatorTest extends TestCase
 {
     public function setUp()
     {

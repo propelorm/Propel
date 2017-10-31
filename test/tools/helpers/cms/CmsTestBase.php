@@ -13,10 +13,12 @@ set_include_path(get_include_path() . PATH_SEPARATOR . realpath(dirname(__FILE__
 Propel::init(dirname(__FILE__) . '/../../../fixtures/bookstore/build/conf/bookstore-conf.php');
 include_once dirname(__FILE__) . '/CmsDataPopulator.php';
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * Base class contains some methods shared by subclass test cases.
  */
-abstract class CmsTestBase extends PHPUnit_Framework_TestCase
+abstract class CmsTestBase extends TestCase
 {
     protected $con;
 

@@ -8,13 +8,15 @@
  * @license    MIT License
  */
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * Tests the table structure behavior hooks.
  *
  * @author     Francois Zaninotto
  * @package    generator.behavior
  */
-class TableBehaviorTest extends PHPUnit_Framework_TestCase
+class TableBehaviorTest extends TestCase
 {
     protected function setUp()
     {

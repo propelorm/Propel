@@ -13,6 +13,8 @@ require_once dirname(__FILE__) . '/../../../../runtime/lib/map/RelationMap.php';
 require_once dirname(__FILE__) . '/../../../../runtime/lib/map/ColumnMap.php';
 require_once dirname(__FILE__) . '/../../../../runtime/lib/map/TableMap.php';
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * Test class for RelationMap.
  *
@@ -20,7 +22,7 @@ require_once dirname(__FILE__) . '/../../../../runtime/lib/map/TableMap.php';
  * @version    $Id$
  * @package    runtime.map
  */
-class RelationMapTest extends PHPUnit_Framework_TestCase
+class RelationMapTest extends TestCase
 {
   protected $databaseMap, $relationName, $rmap;
 

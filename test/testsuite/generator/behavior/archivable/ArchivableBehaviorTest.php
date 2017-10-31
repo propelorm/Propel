@@ -13,6 +13,8 @@ require_once dirname(__FILE__) . '/../../../../../generator/lib/util/PropelQuick
 require_once dirname(__FILE__) . '/../../../../../generator/lib/behavior/archivable/ArchivableBehavior.php';
 require_once dirname(__FILE__) . '/../../../../../runtime/lib/Propel.php';
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * Tests for ArchivableBehavior class
  *
@@ -20,7 +22,7 @@ require_once dirname(__FILE__) . '/../../../../../runtime/lib/Propel.php';
  * @version    $Revision$
  * @package    generator.behavior.archivable
  */
-class ArchivableBehaviorTest extends PHPUnit_Framework_TestCase
+class ArchivableBehaviorTest extends TestCase
 {
     protected static $generatedSQL;
 

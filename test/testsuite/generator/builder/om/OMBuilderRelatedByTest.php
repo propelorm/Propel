@@ -13,6 +13,8 @@ require_once dirname(__FILE__) . '/../../../../../generator/lib/builder/om/OMBui
 require_once dirname(__FILE__) . '/../../../../../generator/lib/builder/util/XmlToAppData.php';
 require_once dirname(__FILE__) . '/../../../../../generator/lib/platform/DefaultPlatform.php';
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * Test class for OMBuilder.
  *
@@ -20,7 +22,7 @@ require_once dirname(__FILE__) . '/../../../../../generator/lib/platform/Default
  * @version    $Id: OMBuilderBuilderTest.php 1347 2009-12-03 21:06:36Z francois $
  * @package    generator.builder.om
  */
-class OMBuilderRelatedByTest extends PHPUnit_Framework_TestCase
+class OMBuilderRelatedByTest extends TestCase
 {
     public static $database;
 

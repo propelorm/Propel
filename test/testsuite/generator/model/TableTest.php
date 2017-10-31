@@ -15,13 +15,15 @@ require_once dirname(__FILE__) . '/../../../../generator/lib/platform/DefaultPla
 require_once dirname(__FILE__) . '/../../../../generator/lib/platform/MysqlPlatform.php';
 require_once dirname(__FILE__) . '/../../../tools/helpers/DummyPlatforms.php';
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * Tests for Table model class
  *
  * @author     Martin Poeschl (mpoeschl@marmot.at)
  * @package    generator.model
  */
-class TableTest extends PHPUnit_Framework_TestCase
+class TableTest extends TestCase
 {
 
     /**

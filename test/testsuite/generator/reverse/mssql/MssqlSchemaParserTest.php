@@ -11,6 +11,8 @@
 require_once dirname(__FILE__) . '/../../../../../generator/lib/reverse/mssql/MssqlSchemaParser.php';
 require_once dirname(__FILE__) . '/../../../../../generator/lib/model/PropelTypes.php';
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * Tests for Mssql database schema parser.
  *
@@ -18,7 +20,7 @@ require_once dirname(__FILE__) . '/../../../../../generator/lib/model/PropelType
  * @version     $Revision$
  * @package     propel.generator.reverse.mssql
  */
-class MssqlSchemaParserTest extends PHPUnit_Framework_TestCase
+class MssqlSchemaParserTest extends TestCase
 {
   public function testCleanDelimitedIdentifiers()
   {

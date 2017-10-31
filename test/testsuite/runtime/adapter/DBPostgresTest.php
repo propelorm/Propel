@@ -11,6 +11,8 @@
 require_once dirname(__FILE__) . '/../../../../runtime/lib/adapter/DBAdapter.php';
 require_once dirname(__FILE__) . '/../../../../runtime/lib/adapter/DBPostgres.php';
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * Tests the DbPostgres adapter
  *
@@ -18,7 +20,7 @@ require_once dirname(__FILE__) . '/../../../../runtime/lib/adapter/DBPostgres.ph
  * @author     Kévin Gomez <contact@kevingomez.fr<
  * @package    runtime.adapter
  */
-class DBPostgresTest extends PHPUnit_Framework_TestCase
+class DBPostgresTest extends TestCase
 {
   public function testGetExplainPlanQuery()
   {

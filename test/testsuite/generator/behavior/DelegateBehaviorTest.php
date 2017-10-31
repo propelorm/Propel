@@ -13,6 +13,8 @@ require_once dirname(__FILE__) . '/../../../../generator/lib/util/PropelQuickBui
 require_once dirname(__FILE__) . '/../../../../generator/lib/behavior/DelegateBehavior.php';
 require_once dirname(__FILE__) . '/../../../../runtime/lib/Propel.php';
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * Tests for DelegateBehavior class
  *
@@ -20,7 +22,7 @@ require_once dirname(__FILE__) . '/../../../../runtime/lib/Propel.php';
  * @version    $Revision$
  * @package    generator.behavior
  */
-class DelegateBehaviorTest extends PHPUnit_Framework_TestCase
+class DelegateBehaviorTest extends TestCase
 {
 
     public function setUp()

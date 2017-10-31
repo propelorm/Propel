@@ -11,13 +11,15 @@
 require_once dirname(__FILE__) . '/../../../../../generator/lib/util/PropelQuickBuilder.php';
 require_once dirname(__FILE__) . '/../../../../../runtime/lib/Propel.php';
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * Tests the generated objects for object column types accessor & mutator
  *
  * @author     Francois Zaninotto
  * @package    generator.builder.om
  */
-class GeneratedObjectObjectColumnTypeTest extends PHPUnit_Framework_TestCase
+class GeneratedObjectObjectColumnTypeTest extends TestCase
 {
     public function setUp()
     {

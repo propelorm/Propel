@@ -12,13 +12,15 @@ require_once dirname(__FILE__) . '/../../../../runtime/lib/parser/PropelParser.p
 require_once dirname(__FILE__) . '/../../../../runtime/lib/parser/PropelXMLParser.php';
 require_once dirname(__FILE__) . '/../../../../runtime/lib/exception/PropelException.php';
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * Test for PropelJSONParser class
  *
  * @author     Francois Zaninotto
  * @package    runtime.parser
  */
-class PropelParserTest extends PHPUnit_Framework_TestCase
+class PropelParserTest extends TestCase
 {
     public function testGetParser()
     {

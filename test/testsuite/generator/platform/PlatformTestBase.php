@@ -10,11 +10,13 @@
 
 require_once dirname(__FILE__) . '/../../../../generator/lib/builder/util/XmlToAppData.php';
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * Base class for all Platform tests
  * @package    generator.platform
  */
-abstract class PlatformTestBase extends PHPUnit_Framework_TestCase
+abstract class PlatformTestBase extends TestCase
 {
 
     abstract protected function getPlatform();

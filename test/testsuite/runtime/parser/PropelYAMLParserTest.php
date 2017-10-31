@@ -11,13 +11,15 @@
 require_once dirname(__FILE__) . '/../../../../runtime/lib/parser/PropelParser.php';
 require_once dirname(__FILE__) . '/../../../../runtime/lib/parser/PropelYAMLParser.php';
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * Test for PropelYAMLParser class
  *
  * @author     Francois Zaninotto
  * @package    runtime.parser
  */
-class PropelYAMLParserTest extends PHPUnit_Framework_TestCase
+class PropelYAMLParserTest extends TestCase
 {
     public static function arrayYAMLConversionDataProvider()
     {

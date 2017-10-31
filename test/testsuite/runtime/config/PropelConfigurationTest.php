@@ -11,13 +11,15 @@
 require_once dirname(__FILE__) . '/../../../../runtime/lib/config/PropelConfiguration.php';
 require_once dirname(__FILE__) . '/../../../../runtime/lib/config/PropelConfigurationIterator.php';
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * Test for PropelConfiguration class
  *
  * @author     Francois Zaninotto
  * @package    runtime.config
  */
-class PropelConfigurationTest extends PHPUnit_Framework_TestCase
+class PropelConfigurationTest extends TestCase
 {
     public static function configurationProvider()
     {

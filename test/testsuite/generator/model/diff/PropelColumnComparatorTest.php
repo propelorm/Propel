@@ -12,12 +12,14 @@
 require_once dirname(__FILE__) . '/../../../../../generator/lib/model/diff/PropelColumnComparator.php';
 require_once dirname(__FILE__) . '/../../../../../generator/lib/platform/MysqlPlatform.php';
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * Tests for the PropelColumnComparator service class.
  *
  * @package    generator.model.diff
  */
-class PropelColumnComparatorTest extends PHPUnit_Framework_TestCase
+class PropelColumnComparatorTest extends TestCase
 {
     public function setUp()
     {

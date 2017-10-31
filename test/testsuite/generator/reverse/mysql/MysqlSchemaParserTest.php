@@ -19,6 +19,8 @@ require_once dirname(__FILE__) . '/../../../../../generator/lib/platform/Default
 set_include_path(get_include_path().PATH_SEPARATOR.dirname(__FILE__).'/../../../../../generator/lib');
 require_once dirname(__FILE__) . '/../../../../../generator/lib/task/PropelConvertConfTask.php';
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * Tests for Mysql database schema parser.
  *
@@ -26,7 +28,7 @@ require_once dirname(__FILE__) . '/../../../../../generator/lib/task/PropelConve
  * @version     $Revision$
  * @package     propel.generator.reverse.mysql
  */
-class MysqlSchemaParserTest extends PHPUnit_Framework_TestCase
+class MysqlSchemaParserTest extends TestCase
 {
     protected function setUp()
     {

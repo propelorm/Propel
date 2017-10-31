@@ -10,12 +10,14 @@
 
 require_once dirname(__FILE__) . '/../../../tools/helpers/bookstore/BookstoreTestBase.php';
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * Test for PropelPDO subclass.
  *
  * @package    runtime.connection
  */
-class PropelPDOTest extends PHPUnit_Framework_TestCase
+class PropelPDOTest extends TestCase
 {
 
     public function testSetAttribute()

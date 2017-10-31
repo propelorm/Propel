@@ -10,13 +10,15 @@
 
 require_once dirname(__FILE__) . '/../../../../generator/lib/model/ColumnDefaultValue.php';
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * Tests for ColumnDefaultValue class.
  *
  * @version    $Revision$
  * @package    generator.model
  */
-class ColumnDefaultValueTest extends PHPUnit_Framework_TestCase
+class ColumnDefaultValueTest extends TestCase
 {
     public function equalsProvider()
     {

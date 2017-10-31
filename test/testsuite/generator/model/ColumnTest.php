@@ -13,6 +13,8 @@ require_once dirname(__FILE__) . '/../../../../generator/lib/builder/util/XmlToA
 require_once dirname(__FILE__) . '/../../../../generator/lib/platform/DefaultPlatform.php';
 require_once dirname(__FILE__) . '/../../../../generator/lib/behavior/AutoAddPkBehavior.php';
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * Tests for package handling.
  *
@@ -20,7 +22,7 @@ require_once dirname(__FILE__) . '/../../../../generator/lib/behavior/AutoAddPkB
  * @version    $Revision$
  * @package    generator.model
  */
-class ColumnTest extends PHPUnit_Framework_TestCase
+class ColumnTest extends TestCase
 {
 
     /**

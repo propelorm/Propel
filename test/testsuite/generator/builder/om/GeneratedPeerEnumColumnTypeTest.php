@@ -11,13 +11,15 @@
 require_once dirname(__FILE__) . '/../../../../../generator/lib/util/PropelQuickBuilder.php';
 require_once dirname(__FILE__) . '/../../../../../runtime/lib/Propel.php';
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * Tests the generated Peer classes for enum column type constants
  *
  * @author     Francois Zaninotto
  * @package    generator.builder.om
  */
-class GeneratedPeerEnumColumnTypeTest extends PHPUnit_Framework_TestCase
+class GeneratedPeerEnumColumnTypeTest extends TestCase
 {
     public function setUp()
     {

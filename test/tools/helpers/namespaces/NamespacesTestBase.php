@@ -11,10 +11,12 @@
 require_once dirname(__FILE__) . '/../../../../runtime/lib/Propel.php';
 set_include_path(get_include_path() . PATH_SEPARATOR . realpath(dirname(__FILE__) . '/../../../fixtures/namespaced/build/classes'));
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * Bse class for tests on the schemas schema
  */
-abstract class NamespacesTestBase extends PHPUnit_Framework_TestCase
+abstract class NamespacesTestBase extends TestCase
 {
 
     protected function setUp()

@@ -8,6 +8,8 @@
  * @license    MIT License
  */
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * Tests some of the methods of generated Object classes. These are:
  *
@@ -27,7 +29,7 @@
  * @author     Sven Fuchs <svenfuchs@artweb-design.de>
  * @package    misc
  */
-class FieldnameRelatedTest extends PHPUnit_Framework_TestCase
+class FieldnameRelatedTest extends TestCase
 {
     protected function setUp()
     {

@@ -12,11 +12,13 @@ require_once dirname(__FILE__) . '/../../../../generator/lib/util/PropelSchemaVa
 require_once dirname(__FILE__) . '/../../../../generator/lib/util/PropelQuickBuilder.php';
 require_once dirname(__FILE__) . '/../../../../generator/lib/model/AppData.php';
 
+use PHPUnit\Framework\TestCase;
+
 /**
  *
  * @package    generator.util
  */
-class SchemaValidatorTest extends PHPUnit_Framework_TestCase
+class SchemaValidatorTest extends TestCase
 {
 
     private $xsdFile = 'generator/resources/xsd/database.xsd';

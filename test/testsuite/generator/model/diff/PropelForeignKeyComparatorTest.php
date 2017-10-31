@@ -11,12 +11,14 @@
 
 require_once dirname(__FILE__) . '/../../../../../generator/lib/model/diff/PropelForeignKeyComparator.php';
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * Tests for the PropelColumnComparator service class.
  *
  * @package    generator.model.diff
  */
-class PropelForeignComparatorTest extends PHPUnit_Framework_TestCase
+class PropelForeignComparatorTest extends TestCase
 {
     public function testCompareNoDifference()
     {

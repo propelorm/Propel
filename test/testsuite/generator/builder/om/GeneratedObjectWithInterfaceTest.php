@@ -10,7 +10,9 @@
 
 require_once dirname(__FILE__) . '/../../../../../generator/lib/util/PropelQuickBuilder.php';
 
-class GeneratedObjectWithInterfaceTest extends PHPUnit_Framework_TestCase
+use PHPUnit\Framework\TestCase;
+
+class GeneratedObjectWithInterfaceTest extends TestCase
 {
     public function setUp()
     {
