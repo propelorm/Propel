@@ -93,14 +93,9 @@ propel.database.password = p@ssw0rd
 
 ### Get PHPUnit ###
 
-You can get PHPUnit here: [https://github.com/sebastianbergmann/phpunit/](https://github.com/sebastianbergmann/phpunit/).
+PHPUnit is installed automatically when you install Composer dependencies via `php composer.phar install`. To run PHPUnit, use the executable in `vendor/bin`:
 
-The fastest way to get it is:
-
-    wget http://pear.phpunit.de/get/phpunit.phar
-    chmod +x phpunit.phar
-
-This manual is based on this `phpunit.phar`.
+    vendor/bin/phpunit
 
 ### Get Phing ###
 
@@ -186,17 +181,17 @@ class GeneratedObjectTest extends BookstoreTestBase
     {
         // Relies on a default value of 'Penguin' specified in schema
         // for publisher.name col.
-        
+
         $pub = new Publisher();
         $pub->setName('Penguin');
         // in the past this wouldn't have marked object as modified
         // since 'Penguin' is the value that's already set for that attrib
         $pub->save();
-        
+
         // if getId() returns the new ID, then we know save() worked.
         $this->assertNotNull($pub->getId(), "Expect Publisher->save() to work  with only default values.");
     }
-    
+
 [...]
 
 }
