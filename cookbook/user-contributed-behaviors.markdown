@@ -34,6 +34,8 @@ Here is a list of Propel behaviors contributed by users. Feel free to use them o
 
 * [VisibilityBehavior] (https://github.com/cedriclombardot/VisibilityBehavior) Add a visibility column for each column you specify and manage visibility of data depends a visibility hierarchy.
 
+* [RulableBehavior] (https://github.com/chocochaos/propel-rulable-behavior) Define centralised business rules and add them to your models and query classes.
+
 
 ## symfony 1.x Behaviors ##
 
