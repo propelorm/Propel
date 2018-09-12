@@ -468,7 +468,7 @@ public function populateFromVersion(\$version, \$con = null, &\$loadedObjects = 
             $foreignBehavior = $foreignTable->getBehavior($this->behavior->getName());
             $foreignVersionTable = $foreignBehavior->getVersionTable();
             $fkColumn = $foreignVersionTable->getFirstPrimaryKeyColumn();
-            $fkVersionColumn = $foreignVersionTable->getColumn($this->behavior->getParameter('version_column'));
+            $fkVersionColumn = $foreignVersionTable->getColumn(foreignBehavior->getParameter('version_column'));
 
             $relatedClassname = $this->builder->getNewStubObjectBuilder($foreignTable)->getClassname();
 
