@@ -15,6 +15,8 @@ Propel has some nice features you should know about:
  - It's very flexible: you can simply extend Propel;
  - It uses PDO (PHP Data Objects) so it allows you to use the RDBMS of your choice (MySQL, SQLite, PostgreSQL, Oracle and MSSQL are supported);
  - Propel is an open-source project which is [well documented](http://propelorm.org/Propel/documentation/).
+ - Added support for proper binding of Oracle CLOB data
+ - Added support for setting sequence cache sizes on Oracle
 
 ## Installation ##
 
