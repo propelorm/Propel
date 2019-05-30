@@ -4282,8 +4282,10 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
         $lowerRelatedName = lcfirst($relatedName);
         $lowerSingleRelatedName = lcfirst($this->getFKPhpNameAffix($crossFK, $plural = false));
 
-        $middelFks = $refFK->getTable()->getForeignKeys();
-        $isFirstPk = ($middelFks[0]->getForeignTableCommonName() == $this->getTable()->getCommonName());
+        /** @var \ForeignKey $refFK */
+        /** @var \Column[] $middlePks */
+        $middlePks = $refFK->getTable()->getPrimaryKey();
+        $isFirstPk = ($middlePks[0]->getName() === $refFK->getLocalColumnName());
 
         $script .= "
             if (\$this->{$lowerRelatedName}ScheduledForDeletion !== null) {

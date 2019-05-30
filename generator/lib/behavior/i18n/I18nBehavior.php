@@ -128,7 +128,7 @@ class I18nBehavior extends Behavior
             $this->i18nTable->addColumn(array(
                 'name'       => $localeColumnName,
                 'type'       => PropelTypes::VARCHAR,
-                'size'       => 5,
+                'size'       => 255,
                 'default'    => $this->getDefaultLocale(),
                 'primaryKey' => 'true',
             ));
