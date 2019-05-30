@@ -1,8 +1,11 @@
 # Changelog Of The Propel 1.x Branch #
 
-## ????-??-??: Version 1.7.2 ##
+## 2019-05-30: Version 1.8.0
 
-n/a
+- [#4](https://github.com/rock-symphony/propel-orm/pull/4) Improve Postgres support
+- [#3](https://github.com/rock-symphony/propel-orm/pull/3) Fix PHP 7.1 compatibility
+- [#2](https://github.com/rock-symphony/propel-orm/pull/2) Fix many-to-many self-referencing relations bug
+- [#1](https://github.com/rock-symphony/propel-orm/pull/1) Fix `locale` column size limit
 
 ## 2014-02-25: Version 1.7.1 ##
 
