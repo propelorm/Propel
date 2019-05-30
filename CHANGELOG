@@ -1,5 +1,9 @@
 # Changelog Of The Propel 1.x Branch #
 
+## 2019-05-30: Version 1.8.1
+
+- [#5](https://github.com/rock-symphony/propel-orm/pull/5) Fix PHP 7.3 compatibility
+
 ## 2019-05-30: Version 1.8.0
 
 - [#4](https://github.com/rock-symphony/propel-orm/pull/4) Improve Postgres support
