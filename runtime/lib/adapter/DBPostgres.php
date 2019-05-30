@@ -20,6 +20,10 @@
  */
 class DBPostgres extends DBAdapter
 {
+    public function useQuoteIdentifier()
+    {
+        return true; // always quote identifiers (where possible)
+    }
 
     /**
      * This method is used to ignore case.
