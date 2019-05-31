@@ -2,7 +2,11 @@
 
 ## 2019-05-30: Version 1.8.1
 
-- [#5](https://github.com/rock-symphony/propel-orm/pull/5) Fix PHP 7.3 compatibility
+- e9680864 Fix PHP 7.3 compatibility (count uncountable warning)
+
+## 2019-05-30: Version 1.8.1
+
+- [#5](https://github.com/rock-symphony/propel-orm/pull/5) Fix PHP 7.3 compatibility (switch/continue warning)
 
 ## 2019-05-30: Version 1.8.0
 
