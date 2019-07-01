@@ -47,7 +47,7 @@ class PropelMigrationTask extends BasePropelMigrationTask
             $migration = $manager->getMigrationObject($timestamp);
             if (false === $migration->preUp($manager)) {
                 $this->log(sprintf(
-                    '[%s] preUp() for returned false. Aborting migration.',
+                    '[%s] preUp() returned false. Aborting migration.',
                     $manager->getMigrationClassName($timestamp)
                 ), Project::MSG_ERR);
 

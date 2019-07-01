@@ -50,7 +50,7 @@ class PropelMigrationDownTask extends BasePropelMigrationTask
         $migration = $manager->getMigrationObject($nextMigrationTimestamp);
         if (false === $migration->preDown($manager)) {
             $this->log(sprintf(
-                '[%s] preDown() for returned false. Aborting migration.',
+                '[%s] preDown() returned false. Aborting migration.',
                 $manager->getMigrationClassName($nextMigrationTimestamp)
             ), Project::MSG_ERR);
 
