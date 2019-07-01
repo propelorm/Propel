@@ -303,31 +303,10 @@ class PropelMigrationManager
 /**
  * Data object containing the SQL and PHP code to migrate the database
  * up to version $timestamp.
- * Generated on $timeInWords $migrationAuthor
+ * Auto generated on $timeInWords $migrationAuthor
  */
-class $migrationClassName
+class $migrationClassName extends AbstractPropelMigration
 {
-
-    public function preUp(\$manager)
-    {
-        // add the pre-migration code here
-    }
-
-    public function postUp(\$manager)
-    {
-        // add the post-migration code here
-    }
-
-    public function preDown(\$manager)
-    {
-        // add the pre-migration code here
-    }
-
-    public function postDown(\$manager)
-    {
-        // add the post-migration code here
-    }
-
     /**
      * Get the SQL statements for the Up migration
      *
@@ -349,7 +328,6 @@ class $migrationClassName
     {
         return $migrationDownString;
     }
-
 }
 EOP;
 
