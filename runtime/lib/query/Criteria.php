@@ -550,7 +550,7 @@ class Criteria implements IteratorAggregate
     /**
      * Method to return the latest Criterion in a table.
      *
-     * @return Criterion A Criterion or null no Criterion is added.
+     * @return Criterion|null A Criterion or null no Criterion is added.
      */
     public function getLastCriterion()
     {

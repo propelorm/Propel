@@ -477,7 +477,7 @@ abstract class " . $this->getClassname() . " implements IteratorAggregate {
      * @param      boolean   \$prev    True if previous sibling should be returned.
      * @param      boolean   \$querydb True if sibling should be retrieved from database.
      * @param      PropelPDO \$con     Connection to use if retrieving from database.
-     * @return " . $this->getStubNodeBuilder()->getClassname() . "
+     * @return " . $this->getStubNodeBuilder()->getClassname() . "|null
      */
     public function getSiblingNode(\$prev = false, \$querydb = false, PropelPDO \$con = null)
     {

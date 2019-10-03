@@ -595,7 +595,7 @@ class BasePeer
      *
      * @param Criteria $criteria A Criteria.
      *
-     * @return ColumnMap       If the Criteria object contains a primary key, or null if it doesn't.
+     * @return ColumnMap|null       If the Criteria object contains a primary key, or null if it doesn't.
      * @throws PropelException
      */
     private static function getPrimaryKey(Criteria $criteria)

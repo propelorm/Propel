@@ -1053,7 +1053,7 @@ abstract class " . $this->getClassname() . " extends " . $this->getObjectBuilder
     /**
      * Wraps the getter for the scope value
      *
-     * @return int or null if scope is disabled
+     * @return int|null if scope is disabled
      */
     public function getScopeIdValue()
     {";

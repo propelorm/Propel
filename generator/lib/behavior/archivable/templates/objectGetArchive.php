@@ -4,7 +4,7 @@
  *
  * @param PropelPDO $con Optional connection object
  *
- * @return     <?php echo $archiveTablePhpName ?> An archive object, or null if the current object was never archived
+ * @return     <?php echo $archiveTablePhpName ?>|null An archive object, or null if the current object was never archived
  */
 public function getArchive(PropelPDO $con = null)
 {

@@ -371,7 +371,7 @@ class Database extends ScopedElement
      * @param string  $name            The name of the table (e.g. 'my_table')
      * @param boolean $caseInsensitive Whether the check is case insensitive. False by default.
      *
-     * @return Table a Table object or null if it doesn't exist
+     * @return Table|null a Table object or null if it doesn't exist
      */
     public function getTable($name, $caseInsensitive = false)
     {
@@ -403,7 +403,7 @@ class Database extends ScopedElement
      *
      * @param string $phpName the PHP Name of the table (e.g. 'MyTable')
      *
-     * @return Table a Table object or null if it doesn't exist
+     * @return Table|null a Table object or null if it doesn't exist
      */
     public function getTableByPhpName($phpName)
     {
