@@ -789,7 +789,7 @@ class Criteria implements IteratorAggregate
      * The name of the table must be used implicitly in the column name,
      * so the Column name must be something like 'TABLE.id'.
      *
-     * @param string $critOrColumn The column to run the comparison on, or a Criterion object.
+     * @param string|Criterion $critOrColumn The column to run the comparison on, or a Criterion object.
      * @param mixed  $value
      * @param string $comparison   A String.
      *
@@ -824,7 +824,7 @@ class Criteria implements IteratorAggregate
      * so the Column name must be something like 'TABLE.id'.
      *
      * @param string $name       name to combine the criterion later
-     * @param string $p1         The column to run the comparison on, or Criterion object.
+     * @param string|Criterion $p1         The column to run the comparison on, or Criterion object.
      * @param mixed  $value
      * @param string $comparison A String.
      *
