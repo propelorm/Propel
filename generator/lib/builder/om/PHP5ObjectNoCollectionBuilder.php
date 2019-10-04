@@ -537,7 +537,7 @@ class PHP5ObjectNoCollectionBuilder extends PHP5ObjectBuilder
      * Get the associated $className object
      *
      * @param      PropelPDO Optional Connection object.
-     * @return                 $className The associated $className object.
+     * @return     $className|null The associated $className object.
      * @throws PropelException
      */
     public function get" . $this->getFKPhpNameAffix($fk, $plural = false) . "(PropelPDO \$con = null)

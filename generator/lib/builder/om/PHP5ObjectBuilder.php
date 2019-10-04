@@ -851,14 +851,14 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
         }
         $script .= "
      *
-     * @param string \$format The date/time format string (either date()-style or strftime()-style).
+     * @param null|string \$format The date/time format string (either date()-style or strftime()-style).
      *				 If format is null, then the raw " . ($useDateTime ? 'DateTime object' : 'unix timestamp integer') . " will be returned.";
         if ($useDateTime) {
             $script .= "
-     * @return mixed Formatted date/time value as string or $dateTimeClass object (if format is null), null if column is null" . ($handleMysqlDate ? ', and 0 if column value is ' . $mysqlInvalidDateString : '');
+     * @return null|string|DateTime Formatted date/time value as string or $dateTimeClass object (if format is null), null if column is null" . ($handleMysqlDate ? ', and 0 if column value is ' . $mysqlInvalidDateString : '');
         } else {
             $script .= "
-     * @return mixed Formatted date/time value as string or (integer) unix timestamp (if format is null), null if column is null" . ($handleMysqlDate ? ', and 0 if column value is ' . $mysqlInvalidDateString : '');
+     * @return null|string|int mixed Formatted date/time value as string or (integer) unix timestamp (if format is null), null if column is null" . ($handleMysqlDate ? ', and 0 if column value is ' . $mysqlInvalidDateString : '');
         }
         $script .= "
      * @throws PropelException - if unable to parse/validate the date/time value.
@@ -1493,7 +1493,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
     /**
      * Set the value of [$clo] column.
      * " . $col->getDescription() . "
-     * @param  " . $col->getPhpType() . " \$v new value
+     * @param  " . $col->getPhpType() . "|null \$v new value
      * @return "   . $this->getObjectClassname() . " The current object (for fluent API support)
      */";
     }
@@ -1731,7 +1731,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
     /**
      * Sets the value of [$clo] column to a normalized version of the date/time value specified.
      * " . $col->getDescription() . "
-     * @param mixed \$v string, integer (timestamp), or DateTime value.
+     * @param null|string|int|DateTime \$v string, integer (timestamp), or DateTime value.
      *               Empty strings are treated as null.
      * @return " . $this->getObjectClassname() . " The current object (for fluent API support)
      */";
@@ -3390,7 +3390,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
     /**
      * Declares an association between this object and a $className object.
      *
-     * @param                  $className \$v
+     * @param                  null|$className \$v
      * @return "               . $this->getObjectClassname() . " The current object (for fluent API support)
      * @throws PropelException
      */
