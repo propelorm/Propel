@@ -85,6 +85,13 @@ const LEVEL_COL = '" . $tableName . '.' . $this->getColumnConstant('level_column
  */
 const SCOPE_COL = '" . $tableName . '.' . $this->getColumnConstant('scope_column') . "';
 ";
+        }else{
+            $script .= "
+            /**
+             * Scope column for the set
+             */
+            const SCOPE_COL = null;
+";
         }
 
         return $script;

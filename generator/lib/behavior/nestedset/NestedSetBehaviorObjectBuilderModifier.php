@@ -237,8 +237,10 @@ if (\$this->isInTree()) {
         $script .= "
 /**
  * Execute queries that were saved to be run inside the save transaction
+ *
+ * @param PropelPDO \$con
  */
-protected function processNestedSetQueries(\$con)
+protected function processNestedSetQueries(PropelPDO \$con)
 {
     foreach (\$this->nestedSetQueries as \$query) {
         \$query['arguments'][]= \$con;
@@ -457,7 +459,7 @@ public function isLeaf()
 /**
  * Tests if node is a descendant of another node
  *
- * @param      $objectClassname \$node Propel node object
+ * @param      $objectClassname \$parent Propel node object
  * @return     bool
  */
 public function isDescendantOf(\$parent)
@@ -482,7 +484,7 @@ public function isDescendantOf(\$parent)
 /**
  * Tests if node is a ancestor of another node
  *
- * @param      $objectClassname \$node Propel node object
+ * @param      $objectClassname \$child Propel node object
  * @return     bool
  */
 public function isAncestorOf(\$child)
@@ -996,8 +998,8 @@ public function getAncestors(\$query = null, PropelPDO \$con = null)
  * are not persisted until the child object is saved.
  *
  * @param      $objectClassname \$child	Propel object for child node
- *
  * @return     $objectClassname The current Propel object
+ * @throws PropelException
  */
 public function addChild($objectClassname \$child)
 {
@@ -1033,8 +1035,8 @@ public function addChild($objectClassname \$child)
  * are not persisted until the current object is saved.
  *
  * @param      $objectClassname \$parent	Propel object for parent node
- *
  * @return     $objectClassname The current Propel object
+ * @throws PropelException
  */
 public function insertAsFirstChildOf(\$parent)
 {
@@ -1078,8 +1080,8 @@ public function insertAsFirstChildOf(\$parent)
  * are not persisted until the current object is saved.
  *
  * @param      $objectClassname \$parent	Propel object for parent node
- *
  * @return     $objectClassname The current Propel object
+ * @throws PropelException
  */
 public function insertAsLastChildOf(\$parent)
 {
@@ -1123,8 +1125,8 @@ public function insertAsLastChildOf(\$parent)
  * are not persisted until the current object is saved.
  *
  * @param      $objectClassname \$sibling	Propel object for parent node
- *
  * @return     $objectClassname The current Propel object
+ * @throws PropelException
  */
 public function insertAsPrevSiblingOf(\$sibling)
 {
@@ -1165,8 +1167,8 @@ public function insertAsPrevSiblingOf(\$sibling)
  * are not persisted until the current object is saved.
  *
  * @param      $objectClassname \$sibling	Propel object for parent node
- *
  * @return     $objectClassname The current Propel object
+ * @throws PropelException
  */
 public function insertAsNextSiblingOf(\$sibling)
 {
@@ -1205,8 +1207,8 @@ public function insertAsNextSiblingOf(\$sibling)
  *
  * @param      $objectClassname \$parent	Propel object for parent node
  * @param      PropelPDO \$con	Connection to use.
- *
  * @return     $objectClassname The current Propel object
+ * @throws PropelException
  */
 public function moveToFirstChildOf(\$parent, PropelPDO \$con = null)
 {
@@ -1235,8 +1237,8 @@ public function moveToFirstChildOf(\$parent, PropelPDO \$con = null)
  *
  * @param      $objectClassname \$parent	Propel object for parent node
  * @param      PropelPDO \$con	Connection to use.
- *
  * @return     $objectClassname The current Propel object
+ * @throws PropelException
  */
 public function moveToLastChildOf(\$parent, PropelPDO \$con = null)
 {
@@ -1265,8 +1267,8 @@ public function moveToLastChildOf(\$parent, PropelPDO \$con = null)
  *
  * @param      $objectClassname \$sibling	Propel object for sibling node
  * @param      PropelPDO \$con	Connection to use.
- *
  * @return     $objectClassname The current Propel object
+ * @throws PropelException
  */
 public function moveToPrevSiblingOf(\$sibling, PropelPDO \$con = null)
 {
@@ -1298,8 +1300,8 @@ public function moveToPrevSiblingOf(\$sibling, PropelPDO \$con = null)
  *
  * @param      $objectClassname \$sibling	Propel object for sibling node
  * @param      PropelPDO \$con	Connection to use.
- *
  * @return     $objectClassname The current Propel object
+ * @throws PropelException
  */
 public function moveToNextSiblingOf(\$sibling, PropelPDO \$con = null)
 {
@@ -1333,6 +1335,7 @@ public function moveToNextSiblingOf(\$sibling, PropelPDO \$con = null)
  * @param      int	\$destLeft Destination left value
  * @param      int	\$levelDelta Delta to add to the levels
  * @param      PropelPDO \$con		Connection to use.
+ * @throws Exception
  */
 protected function moveSubtreeTo(\$destLeft, \$levelDelta" . ($this->behavior->useScope() ? ", \$targetScope = null" : "") . ", PropelPDO \$con = null)
 {
@@ -1439,14 +1442,14 @@ protected function moveSubtreeTo(\$destLeft, \$levelDelta" . ($this->behavior->u
  * so existing $objectClassname instances are probably invalid (except for the current one)
  *
  * @param      PropelPDO \$con Connection to use.
- *
  * @return     int 		number of deleted nodes
+ * @throws Exception
  */
 public function deleteDescendants(PropelPDO \$con = null)
 {
     if (\$this->isLeaf()) {
         // save one query
-        return;
+        return 0;
     }
     if (\$con === null) {
         \$con = Propel::getConnection($peerClassname::DATABASE_NAME, Propel::CONNECTION_READ);

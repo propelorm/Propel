@@ -1147,7 +1147,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      * @param PropelPDO \$con An optional PropelPDO connection to use for fetching this lazy-loaded column.";
         }
         $script .= "
-     * @return "               . $col->getPhpType() . "
+     * @return "               . (strlen($col->getPhpType()) > 0 ? $col->getPhpType() : 'StdClass') . "
      * @throws PropelException - if the stored enum key is unknown.
      */";
 
@@ -1260,7 +1260,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      * @param PropelPDO \$con An optional PropelPDO connection to use for fetching this lazy-loaded column.";
         }
         $script .= "
-     * @return " . $col->getPhpType() . "
+     * @return " . (strlen($col->getPhpType()) > 0 ? $col->getPhpType() : 'StdClass') . "
      */";
     }
 
@@ -1493,7 +1493,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
     /**
      * Set the value of [$clo] column.
      * " . $col->getDescription() . "
-     * @param  " . $col->getPhpType() . "|null \$v new value
+     * @param  " . (strlen($col->getPhpType()) == 0 ? 'StdClass' : $col->getPhpType()) . "|null \$v new value
      * @return "   . $this->getObjectClassname() . " The current object (for fluent API support)
      */";
     }
@@ -1892,7 +1892,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
     /**
      * Set the value of [$clo] column.
      * " . $col->getDescription() . "
-     * @param  " .             $col->getPhpType() . " \$v new value
+     * @param  " .             (strlen($col->getPhpType()) == 0 ? 'StdClass' : $col->getPhpType()) . " \$v new value
      * @return "               . $this->getObjectClassname() . " The current object (for fluent API support)
      * @throws PropelException - if the value is not accepted by this enum.
      */";
@@ -3497,7 +3497,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      * Get the associated $className object
      *
      * @param PropelPDO \$con Optional Connection object.
-     * @param \$doQuery Executes a query to get the object if required
+     * @param bool \$doQuery Executes a query to get the object if required
      * @return $className The associated $className object.
      * @throws PropelException
      */
@@ -3809,6 +3809,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
     /**
      * reset is the $collName collection loaded partially
      *
+     * @param bool \$v
      * @return void
      */
     public function resetPartial{$relCol}(\$v = true)
@@ -4105,6 +4106,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
     protected function addRefFKDoAdd(&$script, $refFK)
     {
         $relatedObjectClassName = $this->getRefFKPhpNameAffix($refFK, $plural = false);
+        $relatedObjectName = $this->getNewStubObjectBuilder($refFK->getTable())->getClassname();
 
         $lowerRelatedObjectClassName = lcfirst($relatedObjectClassName);
 
@@ -4112,7 +4114,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
 
         $script .= "
     /**
-     * @param	{$relatedObjectClassName} \${$lowerRelatedObjectClassName} The $lowerRelatedObjectClassName object to add.
+     * @param	{$relatedObjectName} \${$lowerRelatedObjectClassName} The $lowerRelatedObjectClassName object to add.
      */
     protected function doAdd{$relatedObjectClassName}(\${$lowerRelatedObjectClassName})
     {
@@ -4131,6 +4133,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
     {
         $relatedName = $this->getRefFKPhpNameAffix($refFK, $plural = true);
         $relatedObjectClassName = $this->getRefFKPhpNameAffix($refFK, $plural = false);
+        $relatedObjectName = $this->getNewStubObjectBuilder($refFK->getTable())->getClassname();
 
         $inputCollection = lcfirst($relatedName . 'ScheduledForDeletion');
         $lowerRelatedObjectClassName = lcfirst($relatedObjectClassName);
@@ -4142,7 +4145,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
 
         $script .= "
     /**
-     * @param	{$relatedObjectClassName} \${$lowerRelatedObjectClassName} The $lowerRelatedObjectClassName object to remove.
+     * @param	{$relatedObjectName} \${$lowerRelatedObjectClassName} The $lowerRelatedObjectClassName object to remove.
      * @return " . $this->getObjectClassname() . " The current object (for fluent API support)
      */
     public function remove{$relatedObjectClassName}(\${$lowerRelatedObjectClassName})
@@ -4637,7 +4640,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
 
         $script .= "
     /**
-     * @param	{$relatedObjectClassName} \${$lowerRelatedObjectClassName} The $lowerRelatedObjectClassName object to add.
+     * @param	{$relatedObjectName} \${$lowerRelatedObjectClassName} The $lowerRelatedObjectClassName object to add.
      */
     protected function doAdd{$relatedObjectClassName}({$relatedObjectName} \${$lowerRelatedObjectClassName})
     {
