@@ -7,7 +7,6 @@ branches:
     - gh-pages
 
 php:
-  - 5.3
   - 5.4
   - 5.5
   - hhvm
@@ -26,8 +25,11 @@ before_script:
 
   - ./test/reset_tests.sh
 
-script: phpunit
+script: vendor/bin/phpunit
 
 matrix:
+  include:
+    - php: 5.3
+      dist: precise
   allow_failures:
     - php: hhvm
