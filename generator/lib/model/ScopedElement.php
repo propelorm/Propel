@@ -68,7 +68,7 @@ abstract class ScopedElement extends XMLElement
     /**
      * Get the value of the namespace.
      *
-     * @return value of namespace.
+     * @return string
      */
     public function getNamespace()
     {
@@ -95,7 +95,7 @@ abstract class ScopedElement extends XMLElement
     /**
      * Get the value of package.
      *
-     * @return value of package.
+     * @return string
      */
     public function getPackage()
     {
@@ -119,7 +119,7 @@ abstract class ScopedElement extends XMLElement
     /**
      * Get the value of schema.
      *
-     * @return value of schema.
+     * @return string
      */
     public function getSchema()
     {
