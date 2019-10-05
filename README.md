@@ -1,10 +1,34 @@
 # Propel #
 
+# Changes in this fork ....
+
+ - Fix SQL injection in limit/offset ( https://github.com/propelorm/Propel/pull/1054 )
+ - Fix count() for PHP 7.2 ( https://github.com/propelorm/Propel/pull/1050 )
+ - Doc block fixes ( https://github.com/propelorm/Propel/pull/1011 )
+ - Doc block fixes ( https://github.com/propelorm/Propel/pull/992 )
+ - Doc block fixes ( https://github.com/propelorm/Propel/pull/998/ )
+ - Further Doc block fixes to allow psalm 3.5.x to pass on projects using Propel 1.7.x.
+
+## To use this fork
+
+Add something like this to your *composer.json*, to override the propelorm/propel package from packagist ...
+
+```
+   ...
+      "repositories": [
+        {
+          "type": "vcs",
+          "url": "git@github.com:DavidGoodwin/propel.git"
+        }
+      ],
+   ....
+```
+
+
+# About 
 Propel is an open-source Object-Relational Mapping (ORM) for PHP5.
 
-[![Build Status](https://secure.travis-ci.org/propelorm/Propel.png?branch=master)](http://travis-ci.org/propelorm/Propel)
-[![Total Downloads](https://poser.pugx.org/propel/propel1/downloads.png)](https://packagist.org/packages/propel/propel1)
-[![Latest Stable Version](https://poser.pugx.org/propel/propel1/v/stable.png)](https://packagist.org/packages/propel/propel1)
+[![Build Status](https://secure.travis-ci.org/DavidGoodwin/Propel.png?branch=master)](http://travis-ci.org/DavidGoodwin/Propel)
 
 ## A quick tour of the features ##
 
