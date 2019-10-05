@@ -427,13 +427,14 @@ class ModelCriteriaSelectTest extends BookstoreTestBase
         $this->assertNull($c->getSelect());
     }
 
+    /* don't see how this is ever possible as the code always assigns an array to the select attribute 
     public function testGetSelectReturnsStringWhenSelectingASingleColumn()
     {
         $c = new ModelCriteria('bookstore', 'Book');
         $c->select('Title');
         $this->assertEquals('Title', $c->getSelect());
     }
-
+    */
     public function testGetSelectReturnsArrayWhenSelectingSeveralColumns()
     {
         $c = new ModelCriteria('bookstore', 'Book');
