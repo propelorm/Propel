@@ -129,14 +129,16 @@ class ModelCriteriaSelectTest extends BookstoreTestBase
         $title = $c->findOne($this->con);
         $expectedSQL = 'SELECT book.title AS `Title` FROM `book` LIMIT 1';
         $this->assertEquals($expectedSQL, $this->con->getLastExecutedQuery(), 'findOne() called after select(string) selects a single column and requests a single row');
-        $this->assertTrue(is_string($title),'findOne() called after select(string) returns a string');
+        $this->assertTrue(is_string($title), 'findOne() called after select(string) returns a string');
         $this->assertEquals($title, 'Harry Potter and the Order of the Phoenix', 'findOne() called after select(string) returns the column value of the first row matching the query');
 
         $c = new ModelCriteria('bookstore', 'Author');
         $c->where('Author.FirstName = ?', 'Neal');
         $c->select('FirstName');
         $author = $c->findOne($this->con);
-        $this->assertEquals(count($author), 1, 'findOne() called after select(string) allows for where() statements');
+
+        $this->assertEquals('Neal', $author, 'findOne() called after select(string) allows for where() statements');
+
         $expectedSQL = "SELECT author.first_name AS `FirstName` FROM `author` WHERE author.first_name = 'Neal' LIMIT 1";
         $this->assertEquals($expectedSQL, $this->con->getLastExecutedQuery(), 'findOne() called after select(string) allows for where() statements');
     }
@@ -167,7 +169,8 @@ class ModelCriteriaSelectTest extends BookstoreTestBase
         $c->where('Author.FirstName = ?', 'Neal');
         $c->select('Title');
         $title = $c->findOne($this->con);
-        $this->assertEquals(count($title), 1, 'findOne() called after select(string) allows for join() statements');
+
+        $this->assertEquals("Quicksilver", $title, 'findOne() called after select(string) allows for join() statements');
         $expectedSQL = "SELECT book.title AS `Title` FROM `book` INNER JOIN `author` ON (book.author_id=author.id) WHERE author.first_name = 'Neal' LIMIT 1";
         $this->assertEquals($expectedSQL, $this->con->getLastExecutedQuery(), 'findOne() called after select(string) allows for where() statements');
 
