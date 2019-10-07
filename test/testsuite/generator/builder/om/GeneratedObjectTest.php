@@ -779,7 +779,7 @@ class GeneratedObjectTest extends BookstoreTestBase
         $this->assertEquals(1, BookOpinionQuery::create()->count(), 'Only 1 BookOpinion; the new one got inserted and the previously associated one got deleted');
 
         $this->assertEquals(1, count($b->getBookOpinions()), 'Book has 1 BookOpinion');
-        $this->assertEquals(1, count($op2->getBook()), 'BookOpinion2 has a relation to the Book');
+        $this->assertNotEmpty($op2->getBook(), 'BookOpinion2 has a relation to the Book');
         $this->assertEquals(1, count($br1->getBookOpinions()), 'BookReader1 has 1 BookOpinion (BookOpinion1)');
         $this->assertEquals(1, count($br2->getBookOpinions()), 'BookReader2 has 1 BookOpinion (BookOpinion2)');
 
