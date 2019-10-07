@@ -19,17 +19,8 @@
 
 ## To use this fork
 
-Add something like this to your *composer.json*, to override the propelorm/propel package from packagist ...
-
 ```
-   ...
-      "repositories": [
-        {
-          "type": "vcs",
-          "url": "git@github.com:DavidGoodwin/propel.git"
-        }
-      ],
-   ....
+composer require palepurle/propel1
 ```
 
 
