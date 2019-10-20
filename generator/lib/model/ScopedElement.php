@@ -105,7 +105,7 @@ abstract class ScopedElement extends XMLElement
     /**
      * Set the value of package.
      *
-     * @param   $v Value to assign to package.
+     * @param string $v Value to assign to package.
      */
     public function setPackage($v)
     {
@@ -129,7 +129,7 @@ abstract class ScopedElement extends XMLElement
     /**
      * Set the value of schema.
      *
-     * @param   $v Value to assign to schema.
+     * @param string $v Value to assign to schema.
      */
     public function setSchema($v)
     {
