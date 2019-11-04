@@ -153,6 +153,9 @@ class DBMySQL extends DBAdapter
      */
     public function applyLimit(&$sql, $offset, $limit)
     {
+        $offset = (int) $offset;
+        $limit = (int) $limit;
+
         if ($limit > 0) {
             $sql .= " LIMIT " . ($offset > 0 ? $offset . ", " : "") . $limit;
         } elseif ($offset > 0) {

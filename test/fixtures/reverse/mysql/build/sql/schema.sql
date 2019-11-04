@@ -1,3 +1,5 @@
+SET NAMES utf8;
+
 DROP TABLE IF EXISTS book;
 DROP VIEW IF EXISTS view_book_titles;
 
