@@ -570,7 +570,9 @@ class Join
                 && $join instanceof Join
                 && $this->getJoinType() == $join->getJoinType()
                 && $this->getConditions() == $join->getConditions()
-                && $this->getClause($parametersOfThisClauses) == $join->getClause($parametersOfJoinClauses);
+                && $this->getClause($parametersOfThisClauses) == $join->getClause($parametersOfJoinClauses)
+                && $this->getLeftTableAliasOrName() == $join->getLeftTableAliasOrName()
+		&& $this->getRightTableAliasOrName() == $join->getRightTableAliasOrName();
     }
 
     /**
