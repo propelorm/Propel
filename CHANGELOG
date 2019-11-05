@@ -1,5 +1,7 @@
 # Changelog Of The Propel 1.x Branch #
 
+## ????-??-??: Version 1.7.3 ##
+
 ## 2019-11-05: Version 1.7.2 ##
 
 SQL injection fix: Coerce offset and limit values to integers
