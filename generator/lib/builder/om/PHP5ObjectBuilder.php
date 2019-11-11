@@ -3892,7 +3892,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
         if (!in_array(\$l, \$this->{$collName}->getArrayCopy(), true)) { // only add it if the **same** object is not already associated
             \$this->doAdd" . $this->getRefFKPhpNameAffix($refFK, $plural = false) . "(\$l);
 
-            if (\$this->{$scheduledForDeletion} and \$this->{$scheduledForDeletion}->contains(\$l)) {
+            if (\$this->{$scheduledForDeletion} && \$this->{$scheduledForDeletion}->contains(\$l)) {
                 \$this->{$scheduledForDeletion}->remove(\$this->{$scheduledForDeletion}->search(\$l));
             }
         }
@@ -4604,7 +4604,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
             \$this->doAdd{$relatedObjectClassName}($crossObjectName);
             \$this->" . $collName . "[] = " . $crossObjectName . ";
 
-            if (\$this->" . $scheduledForDeletion . " and \$this->" . $scheduledForDeletion . "->contains(" . $crossObjectName . ")) {
+            if (\$this->" . $scheduledForDeletion . " && \$this->" . $scheduledForDeletion . "->contains(" . $crossObjectName . ")) {
                 \$this->" . $scheduledForDeletion . "->remove(\$this->" . $scheduledForDeletion . "->search(" . $crossObjectName . "));
             }
         }
