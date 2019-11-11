@@ -9,7 +9,7 @@
 
 - Token unit test fixes to stop Travis failing ( https://github.com/DavidGoodwin/Propel/commit/2d238acd530f4fcdb0bce59bb41e1c6596766ff6 )
  - Fix PropelArrayFormatter to work correctly within PHP 7.x ( https://github.com/DavidGoodwin/Propel/commit/dea4da1949534cd4ce6d79f774796dd55b4ff6dc ) 
- - Fix SQL injection in limit/offset ( https://github.com/propelorm/Propel/pull/1054 )
+ - Fix SQL injection in limit/offset ( https://github.com/propelorm/Propel/pull/1054 ) (also included in upstream version 1.7.2)
  - Fix count() for PHP 7.2 ( https://github.com/propelorm/Propel/pull/1050 )
  - Doc block fixes ( https://github.com/propelorm/Propel/pull/1011 )
  - Doc block fixes ( https://github.com/propelorm/Propel/pull/992 )
