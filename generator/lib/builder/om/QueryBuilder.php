@@ -667,10 +667,11 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . "
      * Filter the query by primary key
      *
      * @param     mixed \$key Primary key to use for the query
+     * @param     string \$comparison Default is Criteria::EQUAL
      *
      * @return " . $this->getStubQueryBuilder()->getClassname() . " The current query, for fluid interface
      */
-    public function filterByPrimaryKey(\$key)
+    public function filterByPrimaryKey(\$key, \$comparison = Criteria::EQUAL)
     {";
         $table = $this->getTable();
         $pks = $table->getPrimaryKey();
@@ -680,14 +681,14 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . "
             $const = $this->getColumnConstant($col);
             $script .= "
 
-        return \$this->addUsingAlias($const, \$key, Criteria::EQUAL);";
+        return \$this->addUsingAlias($const, \$key, \$comparison);";
         } else {
             // composite primary key
             $i = 0;
             foreach ($pks as $col) {
                 $const = $this->getColumnConstant($col);
                 $script .= "
-        \$this->addUsingAlias($const, \$key[$i], Criteria::EQUAL);";
+        \$this->addUsingAlias($const, \$key[$i], \$comparison);";
                 $i++;
             }
             $script .= "

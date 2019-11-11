@@ -306,7 +306,7 @@ $script .= "
 /**
  * Wrap the setter for scope value
  *
- * @param     mixed A array or a native type
+ * @param     mixed \$v A array or a native type
  * @return    {$this->objectClassname}
  */
 public function setScopeValue(\$v)
@@ -539,9 +539,8 @@ public function insertAtTop()
  *
  * @param     integer   \$newRank rank value
  * @param     PropelPDO \$con optional connection
- *
  * @return    {$this->objectClassname} the current object
- *
+ * @throws    Exception
  * @throws    PropelException
  */
 public function moveToRank(\$newRank, PropelPDO \$con = null)
@@ -636,8 +635,8 @@ $script .= "
  * Move the object higher in the list, i.e. exchanges its rank with the one of the previous object
  *
  * @param     PropelPDO \$con optional connection
- *
  * @return    {$this->objectClassname} the current object
+ * @throws Exception
  */
 public function moveUp(PropelPDO \$con = null)
 {
@@ -669,8 +668,8 @@ public function moveUp(PropelPDO \$con = null)
  * Move the object higher in the list, i.e. exchanges its rank with the one of the next object
  *
  * @param     PropelPDO \$con optional connection
- *
  * @return    {$this->objectClassname} the current object
+ * @throws Exception
  */
 public function moveDown(PropelPDO \$con = null)
 {
@@ -724,8 +723,8 @@ public function moveToTop(PropelPDO \$con = null)
  * Move the object to the bottom of the list
  *
  * @param     PropelPDO \$con optional connection
- *
  * @return integer the old object's rank
+ * @throws Exception
  */
 public function moveToBottom(PropelPDO \$con = null)
 {
@@ -759,8 +758,8 @@ public function moveToBottom(PropelPDO \$con = null)
  * The modifications are not persisted until the object is saved.
  *
  * @param     PropelPDO \$con optional connection
- *
  * @return    {$this->objectClassname} the current object
+ * @throws PropelException
  */
 public function removeFromList(PropelPDO \$con = null)
 {";
@@ -796,8 +795,10 @@ public function removeFromList(PropelPDO \$con = null)
         $script .= "
 /**
  * Execute queries that were saved to be run inside the save transaction
+ *
+ * @param PropelPDO \$con
  */
-protected function processSortableQueries(\$con)
+protected function processSortableQueries(PropelPDO \$con)
 {
     foreach (\$this->sortableQueries as \$query) {
         \$query['arguments'][]= \$con;
