@@ -140,7 +140,7 @@ CREATE SEQUENCE %s;
     {
         if ($table->getIdMethod() == IDMethod::NATIVE && $table->getIdMethodParameters() != null) {
             $pattern = "
-DROP SEQUENCE %s;
+DROP SEQUENCE IF EXISTS %s;
 ";
 
             return sprintf($pattern,
