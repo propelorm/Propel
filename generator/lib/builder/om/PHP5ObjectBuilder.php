@@ -4007,7 +4007,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
                       \$this->init" . $this->getRefFKPhpNameAffix($refFK, $plural = true) . "(false);
 
                       foreach (\$$collName as \$obj) {
-                        if (false == \$this->{$collName}->contains(\$obj)) {
+                        if (false === \$this->{$collName}->contains(\$obj)) {
                           \$this->{$collName}->append(\$obj);
                         }
                       }
