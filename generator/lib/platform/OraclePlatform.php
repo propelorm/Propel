@@ -149,11 +149,12 @@ ALTER SESSION SET NLS_TIMESTAMP_FORMAT='YYYY-MM-DD HH24:MI:SS';
         if ($table->getIdMethod() == "native") {
             $pattern = "
 CREATE SEQUENCE %s
-    INCREMENT BY 1 START WITH 1 NOMAXVALUE NOCYCLE NOCACHE ORDER;
+    INCREMENT BY 1 START WITH 1 NOMAXVALUE NOCYCLE NOCACHE %s ORDER;
 ";
 
             return sprintf($pattern,
-                $this->quoteIdentifier($this->getSequenceName($table))
+                $this->quoteIdentifier($this->getSequenceName($table)),
+				$this->getSequenceCache($table) ? $this->gwtSequenceCache($table) : 20
             );
         }
     }
@@ -347,10 +348,8 @@ CREATE %sINDEX %s ON %s (%s)%s;
      */
     public function getColumnBindingPHP($column, $identifier, $columnValueAccessor, $tab = "			")
     {
-        if ($column->getPDOType() == PropelTypes::CLOB_EMU) {
-            return sprintf(
-                "%s\$stmt->bindParam(%s, %s, %s, strlen(%s));
-",
+        if ($column->getPropelType() == PropelTypes::CLOB_EMU) {
+		    return sprintf("\n%s\$stmt->bindParam(%s, %s, %s, strlen(%s));",
                 $tab,
                 $identifier,
                 $columnValueAccessor,
