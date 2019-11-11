@@ -827,18 +827,4 @@ class TableMap
 
         return $out;
     }
-
-    /**
-     * Makes the first letter caps and the rest lowercase.
-     *
-     * @deprecated Not used anywhere in Propel.
-     *
-     * @param string $data A String.
-     *
-     * @return string A String with data processed.
-     */
-    private function firstLetterCaps($data)
-    {
-        return (ucfirst(strtolower($data)));
-    }
 }
