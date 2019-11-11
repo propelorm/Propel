@@ -606,7 +606,7 @@ class Propel
 
             $slaveconfigs = isset(self::$configuration['datasources'][$name]['slaves']) ? self::$configuration['datasources'][$name]['slaves'] : null;
 
-            if (empty($slaveconfigs)) {
+            if (empty($slaveconfigs) || empty($slaveconfigs['connection'])) {
                 // no slaves configured for this datasource
                 // fallback to the master connection
                 self::$connectionMap[$name]['slave'] = self::getMasterConnection($name);
@@ -625,9 +625,25 @@ class Propel
                     }
                 }
 
-                // initialize slave connection
-                $con = Propel::initConnection($conparams, $name);
-                self::$connectionMap[$name]['slave'] = $con;
+                try {
+                    // initialize slave connection
+                    $con = Propel::initConnection($conparams, $name);
+                    self::$connectionMap[$name]['slave'] = $con;
+                } catch (\PropelException $e) {
+                    if (strpos($e->getMessage(), "Unable to open PDO connection") !== 0) {
+                        throw $e;
+                    }
+                    // if the slave connection have a problem remove this slave from the list
+                    // connect to the next available slave or to the master
+                    if (isset($slaveconfigs['connection']['dsn'])) {
+                        self::$configuration->setParameter("datasources.$name.slaves", []);
+                    } else {
+                        unset($slaveconfigs['connection'][$randkey]);
+                        self::$configuration->setParameter("datasources.$name.slaves.connection", $slaveconfigs['connection']);
+                    }
+
+                    return self::getSlaveConnection($name);
+                }
             }
         } // if datasource slave not set
 
