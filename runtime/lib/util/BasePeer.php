@@ -319,8 +319,8 @@ class BasePeer
      * WHERE some_column = some value AND could_have_another_column =
      * another value AND so on.
      *
-     * @param           $selectCriteria A Criteria object containing values used in where clause.
-     * @param           $updateValues   A Criteria object containing values used in set clause.
+     * @param Criteria $selectCriteria A Criteria object containing values used in where clause.
+     * @param Criteria $updateValues   A Criteria object containing values used in set clause.
      * @param PropelPDO $con            The PropelPDO connection object to use.
      *
      * @return int The number of rows affected by last update statement.  For most
