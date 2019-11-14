@@ -103,7 +103,7 @@ class DBSQLite extends DBAdapter
      */
     public function quoteIdentifier($text)
     {
-        return '[' . $text . ']';
+        return '"' . $text . '"';
     }
 
     /**
