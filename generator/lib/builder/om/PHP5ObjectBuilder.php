@@ -90,7 +90,7 @@ class PHP5ObjectBuilder extends ObjectBuilder
         }
 
         foreach ($table->getForeignKeys() as $fk) {
-            $fkPhpNames[] = $this->getFKPhpNameAffix($fk, $plural = false);
+            $fkPhpNames[] = $this->getFKPhpNameAffix($fk, /* plural */ false);
         }
 
         $intersect = array_intersect($colPhpNames, $fkPhpNames);
@@ -272,7 +272,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
             foreach ($table->getCrossFks() as $fkList) {
                 /* @var $refFK ForeignKey */
                 list($refFK, $crossFK) = $fkList;
-                $fkName = $this->getFKPhpNameAffix($crossFK, $plural = true);
+                $fkName = $this->getFKPhpNameAffix($crossFK, /* plural */ true);
 
                 if (!$refFK->isLocalPrimaryKey()) {
                     $this->addScheduledForDeletionAttribute($script, $fkName);
@@ -281,7 +281,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
         }
 
         foreach ($table->getReferrers() as $refFK) {
-            $fkName = $this->getRefFKPhpNameAffix($refFK, $plural = true);
+            $fkName = $this->getRefFKPhpNameAffix($refFK, /* plural */ true);
 
             if (!$refFK->isLocalPrimaryKey()) {
                 $this->addScheduledForDeletionAttribute($script, $fkName);
@@ -2473,19 +2473,19 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
             foreach ($fks as $fk) {
                 $script .= "
             if (null !== \$this->" . $this->getFKVarName($fk) . ") {
-                \$result['" . $this->getFKPhpNameAffix($fk, $plural = false) . "'] = \$this->" . $this->getFKVarName($fk) . "->toArray(\$keyType, \$includeLazyLoadColumns,  \$alreadyDumpedObjects, true);
+                \$result['" . $this->getFKPhpNameAffix($fk, /* plural */ false) . "'] = \$this->" . $this->getFKVarName($fk) . "->toArray(\$keyType, \$includeLazyLoadColumns,  \$alreadyDumpedObjects, true);
             }";
             }
             foreach ($referrers as $fk) {
                 if ($fk->isLocalPrimaryKey()) {
                     $script .= "
             if (null !== \$this->" . $this->getPKRefFKVarName($fk) . ") {
-                \$result['" . $this->getRefFKPhpNameAffix($fk, $plural = false) . "'] = \$this->" . $this->getPKRefFKVarName($fk) . "->toArray(\$keyType, \$includeLazyLoadColumns, \$alreadyDumpedObjects, true);
+                \$result['" . $this->getRefFKPhpNameAffix($fk, /* plural */ false) . "'] = \$this->" . $this->getPKRefFKVarName($fk) . "->toArray(\$keyType, \$includeLazyLoadColumns, \$alreadyDumpedObjects, true);
             }";
                 } else {
                     $script .= "
             if (null !== \$this->" . $this->getRefFKCollVarName($fk) . ") {
-                \$result['" . $this->getRefFKPhpNameAffix($fk, $plural = true) . "'] = \$this->" . $this->getRefFKCollVarName($fk) . "->toArray(null, true, \$keyType, \$includeLazyLoadColumns, \$alreadyDumpedObjects);
+                \$result['" . $this->getRefFKPhpNameAffix($fk, /* plural */ true) . "'] = \$this->" . $this->getRefFKCollVarName($fk) . "->toArray(null, true, \$keyType, \$includeLazyLoadColumns, \$alreadyDumpedObjects);
             }";
                 }
             }
@@ -3304,7 +3304,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      */
     public function getFKVarName(ForeignKey $fk)
     {
-        return 'a' . $this->getFKPhpNameAffix($fk, $plural = false);
+        return 'a' . $this->getFKPhpNameAffix($fk, /* plural */ false);
     }
 
     /**
@@ -3316,7 +3316,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      */
     public function getRefFKCollVarName(ForeignKey $fk)
     {
-        return 'coll' . $this->getRefFKPhpNameAffix($fk, $plural = true);
+        return 'coll' . $this->getRefFKPhpNameAffix($fk, /* plural */ true);
     }
 
     /**
@@ -3329,7 +3329,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      */
     public function getPKRefFKVarName(ForeignKey $fk)
     {
-        return 'single' . $this->getRefFKPhpNameAffix($fk, $plural = false);
+        return 'single' . $this->getRefFKPhpNameAffix($fk, /* plural */ false);
     }
 
     // ----------------------------------------------------------------
@@ -3394,7 +3394,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      * @return "               . $this->getObjectClassname() . " The current object (for fluent API support)
      * @throws PropelException
      */
-    public function set" . $this->getFKPhpNameAffix($fk, $plural = false) . "($className \$v = null)
+    public function set" . $this->getFKPhpNameAffix($fk, /* plural */ false) . "($className \$v = null)
     {";
         foreach ($fk->getLocalColumns() as $columnName) {
             $column = $table->getColumn($columnName);
@@ -3421,7 +3421,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
             $script .= "
         // Add binding for other direction of this 1:1 relationship.
         if (\$v !== null) {
-            \$v->set" . $this->getRefFKPhpNameAffix($fk, $plural = false) . "(\$this);
+            \$v->set" . $this->getRefFKPhpNameAffix($fk, /* plural */ false) . "(\$this);
         }
 ";
         } else {
@@ -3429,7 +3429,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
         // Add binding for other direction of this n:n relationship.
         // If this object has already been added to the $className object, it will not be re-added.
         if (\$v !== null) {
-            \$v->add" . $this->getRefFKPhpNameAffix($fk, $plural = false) . "(\$this);
+            \$v->add" . $this->getRefFKPhpNameAffix($fk, /* plural */ false) . "(\$this);
         }
 ";
         }
@@ -3501,7 +3501,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      * @return $className The associated $className object.
      * @throws PropelException
      */
-    public function get" . $this->getFKPhpNameAffix($fk, $plural = false) . "(PropelPDO \$con = null, \$doQuery = true)
+    public function get" . $this->getFKPhpNameAffix($fk, /* plural */ false) . "(PropelPDO \$con = null, \$doQuery = true)
     {";
         $script .= "
         if (\$this->$varName === null && ($conditional) && \$doQuery) {";
@@ -3511,13 +3511,13 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
         } else {
             $script .= "
             \$this->$varName = " . $fkQueryBuilder->getClassname() . "::create()
-                ->filterBy" . $this->getRefFKPhpNameAffix($fk, $plural = false) . "(\$this) // here
+                ->filterBy" . $this->getRefFKPhpNameAffix($fk, /* plural */ false) . "(\$this) // here
                 ->findOne(\$con);";
         }
         if ($fk->isLocalPrimaryKey()) {
             $script .= "
             // Because this foreign key represents a one-to-one relationship, we will create a bi-directional association.
-            \$this->{$varName}->set" . $this->getRefFKPhpNameAffix($fk, $plural = false) . "(\$this);";
+            \$this->{$varName}->set" . $this->getRefFKPhpNameAffix($fk, /* plural */ false) . "(\$this);";
         } else {
             $script .= "
             /* The following can be used additionally to
@@ -3525,7 +3525,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
                 to this object.  This level of coupling may, however, be
                 undesirable since it could result in an only partially populated collection
                 in the referenced object.
-                \$this->{$varName}->add" . $this->getRefFKPhpNameAffix($fk, $plural = true) . "(\$this);
+                \$this->{$varName}->add" . $this->getRefFKPhpNameAffix($fk, /* plural */ true) . "(\$this);
              */";
         }
 
@@ -3612,7 +3612,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
 
         $peerClassname = $this->getStubPeerBuilder()->getClassname();
         $fkQueryClassname = $this->getNewStubQueryBuilder($refFK->getTable())->getClassname();
-        $relCol = $this->getRefFKPhpNameAffix($refFK, $plural = true);
+        $relCol = $this->getRefFKPhpNameAffix($refFK, /* plural */ true);
         $collName = $this->getRefFKCollVarName($refFK);
 
         $fkPeerBuilder = $this->getNewPeerBuilder($tblFK);
@@ -3630,7 +3630,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
                 $doJoinGet = false;
             }
 
-            $relCol2 = $this->getFKPhpNameAffix($fk2, $plural = false);
+            $relCol2 = $this->getFKPhpNameAffix($fk2, /* plural */ false);
 
             if ($this->getRelatedBySuffix($refFK) != "" && ($this->getRelatedBySuffix($refFK) == $this->getRelatedBySuffix($fk2))) {
                 $doJoinGet = false;
@@ -3659,7 +3659,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
     {";
                 $script .= "
         \$query = $fkQueryClassname::create(null, \$criteria);
-        \$query->joinWith('" . $this->getFKPhpNameAffix($fk2, $plural = false) . "', \$join_behavior);
+        \$query->joinWith('" . $this->getFKPhpNameAffix($fk2, /* plural */ false) . "', \$join_behavior);
 
         return \$this->get" . $relCol . "(\$query, \$con);
     }
@@ -3753,7 +3753,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
         foreach ($referrers as $refFK) {
             if (!$refFK->isLocalPrimaryKey()) {
                 $relationName = $this->getRefFKPhpNameAffix($refFK);
-                $relCol = $this->getRefFKPhpNameAffix($refFK, $plural = true);
+                $relCol = $this->getRefFKPhpNameAffix($refFK, /* plural */ true);
                 $script .= "
         if ('$relationName' == \$relationName) {
             \$this->init$relCol();
@@ -3772,7 +3772,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      */
     protected function addRefFKClear(&$script, ForeignKey $refFK)
     {
-        $relCol = $this->getRefFKPhpNameAffix($refFK, $plural = true);
+        $relCol = $this->getRefFKPhpNameAffix($refFK, /* plural */ true);
         $collName = $this->getRefFKCollVarName($refFK);
 
         $script .= "
@@ -3802,7 +3802,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      */
     protected function addRefFKPartial(&$script, ForeignKey $refFK)
     {
-        $relCol = $this->getRefFKPhpNameAffix($refFK, $plural = true);
+        $relCol = $this->getRefFKPhpNameAffix($refFK, /* plural */ true);
         $collName = $this->getRefFKCollVarName($refFK);
 
         $script .= "
@@ -3825,7 +3825,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      */
     protected function addRefFKInit(&$script, ForeignKey $refFK)
     {
-        $relCol = $this->getRefFKPhpNameAffix($refFK, $plural = true);
+        $relCol = $this->getRefFKPhpNameAffix($refFK, /* plural */ true);
         $collName = $this->getRefFKCollVarName($refFK);
 
         $script .= "
@@ -3872,7 +3872,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
 
         $collName = $this->getRefFKCollVarName($refFK);
 
-        $scheduledForDeletion = lcfirst($this->getRefFKPhpNameAffix($refFK, $plural = true)) . "ScheduledForDeletion";
+        $scheduledForDeletion = lcfirst($this->getRefFKPhpNameAffix($refFK, /* plural */ true)) . "ScheduledForDeletion";
 
         $script .= "
     /**
@@ -3882,15 +3882,15 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      * @param    $className \$l $className
      * @return " . $this->getObjectClassname() . " The current object (for fluent API support)
      */
-    public function add" . $this->getRefFKPhpNameAffix($refFK, $plural = false) . "($className \$l)
+    public function add" . $this->getRefFKPhpNameAffix($refFK, /* plural */ false) . "($className \$l)
     {
         if (\$this->$collName === null) {
-            \$this->init" . $this->getRefFKPhpNameAffix($refFK, $plural = true) . "();
+            \$this->init" . $this->getRefFKPhpNameAffix($refFK, /* plural */ true) . "();
             \$this->{$collName}Partial = true;
         }
 
         if (!in_array(\$l, \$this->{$collName}->getArrayCopy(), true)) { // only add it if the **same** object is not already associated
-            \$this->doAdd" . $this->getRefFKPhpNameAffix($refFK, $plural = false) . "(\$l);
+            \$this->doAdd" . $this->getRefFKPhpNameAffix($refFK, /* plural */ false) . "(\$l);
 
             if (\$this->{$scheduledForDeletion} and \$this->{$scheduledForDeletion}->contains(\$l)) {
                 \$this->{$scheduledForDeletion}->remove(\$this->{$scheduledForDeletion}->search(\$l));
@@ -3914,7 +3914,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
 
         $peerClassname = $this->getStubPeerBuilder()->getClassname();
         $fkQueryClassname = $this->getNewStubQueryBuilder($refFK->getTable())->getClassname();
-        $relCol = $this->getRefFKPhpNameAffix($refFK, $plural = true);
+        $relCol = $this->getRefFKPhpNameAffix($refFK, /* plural */ true);
 
         $collName = $this->getRefFKCollVarName($refFK);
 
@@ -3969,7 +3969,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
 
         $peerClassname = $this->getStubPeerBuilder()->getClassname();
         $fkQueryClassname = $this->getNewStubQueryBuilder($refFK->getTable())->getClassname();
-        $relCol = $this->getRefFKPhpNameAffix($refFK, $plural = true);
+        $relCol = $this->getRefFKPhpNameAffix($refFK, /* plural */ true);
 
         $collName = $this->getRefFKCollVarName($refFK);
 
@@ -3997,14 +3997,14 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
         if (null === \$this->$collName || null !== \$criteria  || \$partial) {
             if (\$this->isNew() && null === \$this->$collName) {
                 // return empty collection
-                \$this->init" . $this->getRefFKPhpNameAffix($refFK, $plural = true) . "();
+                \$this->init" . $this->getRefFKPhpNameAffix($refFK, /* plural */ true) . "();
             } else {
                 \$$collName = $fkQueryClassname::create(null, \$criteria)
                     ->filterBy" . $this->getFKPhpNameAffix($refFK) . "(\$this)
                     ->find(\$con);
                 if (null !== \$criteria) {
                     if (false !== \$this->{$collName}Partial && count(\$$collName)) {
-                      \$this->init" . $this->getRefFKPhpNameAffix($refFK, $plural = true) . "(false);
+                      \$this->init" . $this->getRefFKPhpNameAffix($refFK, /* plural */ true) . "(false);
 
                       foreach (\$$collName as \$obj) {
                         if (false == \$this->{$collName}->contains(\$obj)) {
@@ -4040,14 +4040,14 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
 
     protected function addRefFKSet(&$script, ForeignKey $refFK)
     {
-        $relatedName = $this->getRefFKPhpNameAffix($refFK, $plural = true);
-        $relatedObjectClassName = $this->getRefFKPhpNameAffix($refFK, $plural = false);
+        $relatedName = $this->getRefFKPhpNameAffix($refFK, /* plural */ true);
+        $relatedObjectClassName = $this->getRefFKPhpNameAffix($refFK, /* plural */ false);
 
         $inputCollection = lcfirst($relatedName);
-        $inputCollectionEntry = lcfirst($this->getRefFKPhpNameAffix($refFK, $plural = false));
+        $inputCollectionEntry = lcfirst($this->getRefFKPhpNameAffix($refFK, /* plural */ false));
 
         $collName = $this->getRefFKCollVarName($refFK);
-        $relCol = $this->getFKPhpNameAffix($refFK, $plural = false);
+        $relCol = $this->getFKPhpNameAffix($refFK, /* plural */ false);
 
         $script .= "
     /**
@@ -4104,7 +4104,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      */
     protected function addRefFKDoAdd(&$script, $refFK)
     {
-        $relatedObjectClassName = $this->getRefFKPhpNameAffix($refFK, $plural = false);
+        $relatedObjectClassName = $this->getRefFKPhpNameAffix($refFK, /* plural */ false);
 
         $lowerRelatedObjectClassName = lcfirst($relatedObjectClassName);
 
@@ -4117,7 +4117,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
     protected function doAdd{$relatedObjectClassName}(\${$lowerRelatedObjectClassName})
     {
         \$this->{$collName}[]= \${$lowerRelatedObjectClassName};
-        \${$lowerRelatedObjectClassName}->set" . $this->getFKPhpNameAffix($refFK, $plural = false) . "(\$this);
+        \${$lowerRelatedObjectClassName}->set" . $this->getFKPhpNameAffix($refFK, /* plural */ false) . "(\$this);
     }
 ";
     }
@@ -4129,14 +4129,14 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      */
     protected function addRefFKRemove(&$script, $refFK)
     {
-        $relatedName = $this->getRefFKPhpNameAffix($refFK, $plural = true);
-        $relatedObjectClassName = $this->getRefFKPhpNameAffix($refFK, $plural = false);
+        $relatedName = $this->getRefFKPhpNameAffix($refFK, /* plural */ true);
+        $relatedObjectClassName = $this->getRefFKPhpNameAffix($refFK, /* plural */ false);
 
         $inputCollection = lcfirst($relatedName . 'ScheduledForDeletion');
         $lowerRelatedObjectClassName = lcfirst($relatedObjectClassName);
 
         $collName = $this->getRefFKCollVarName($refFK);
-        $relCol = $this->getFKPhpNameAffix($refFK, $plural = false);
+        $relCol = $this->getFKPhpNameAffix($refFK, /* plural */ false);
 
         $localColumn = $refFK->getLocalColumn();
 
@@ -4197,7 +4197,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      * @return $className
      * @throws PropelException
      */
-    public function get" . $this->getRefFKPhpNameAffix($refFK, $plural = false) . "(PropelPDO \$con = null)
+    public function get" . $this->getRefFKPhpNameAffix($refFK, /* plural */ false) . "(PropelPDO \$con = null)
     {
 ";
         $script .= "
@@ -4234,13 +4234,13 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      * @return "               . $this->getObjectClassname() . " The current object (for fluent API support)
      * @throws PropelException
      */
-    public function set" . $this->getRefFKPhpNameAffix($refFK, $plural = false) . "($className \$v = null)
+    public function set" . $this->getRefFKPhpNameAffix($refFK, /* plural */ false) . "($className \$v = null)
     {
         \$this->$varName = \$v;
 
         // Make sure that that the passed-in $className isn't already associated with this object
-        if (\$v !== null && \$v->get" . $this->getFKPhpNameAffix($refFK, $plural = false) . "(null, false) === null) {
-            \$v->set" . $this->getFKPhpNameAffix($refFK, $plural = false) . "(\$this);
+        if (\$v !== null && \$v->get" . $this->getFKPhpNameAffix($refFK, /* plural */ false) . "(null, false) === null) {
+            \$v->set" . $this->getFKPhpNameAffix($refFK, /* plural */ false) . "(\$this);
         }
 
         return \$this;
@@ -4252,7 +4252,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
     {
         $joinedTableObjectBuilder = $this->getNewObjectBuilder($crossFK->getForeignTable());
         $className = $joinedTableObjectBuilder->getObjectClassname();
-        $relatedName = $this->getFKPhpNameAffix($crossFK, $plural = true);
+        $relatedName = $this->getFKPhpNameAffix($crossFK, /* plural */ true);
         $script .= "
     /**
      * @var        PropelObjectCollection|{$className}[] Collection to store aggregation of $className objects.
@@ -4277,10 +4277,10 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
     protected function addCrossFkScheduledForDeletion(&$script, $refFK, $crossFK)
     {
         $queryClassName = $this->getNewStubQueryBuilder($refFK->getTable())->getClassname();
-        $relatedName = $this->getFKPhpNameAffix($crossFK, $plural = true);
+        $relatedName = $this->getFKPhpNameAffix($crossFK, /* plural */ true);
 
         $lowerRelatedName = lcfirst($relatedName);
-        $lowerSingleRelatedName = lcfirst($this->getFKPhpNameAffix($crossFK, $plural = false));
+        $lowerSingleRelatedName = lcfirst($this->getFKPhpNameAffix($crossFK, /* plural */ false));
 
         $middelFks = $refFK->getTable()->getForeignKeys();
         $isFirstPk = ($middelFks[0]->getForeignTableCommonName() == $this->getTable()->getCommonName());
@@ -4323,10 +4323,10 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
 
     protected function addRefFkScheduledForDeletion(&$script, ForeignKey $refFK)
     {
-        $relatedName = $this->getRefFKPhpNameAffix($refFK, $plural = true);
+        $relatedName = $this->getRefFKPhpNameAffix($refFK, /* plural */ true);
 
         $lowerRelatedName = lcfirst($relatedName);
-        $lowerSingleRelatedName = lcfirst($this->getRefFKPhpNameAffix($refFK, $plural = false));
+        $lowerSingleRelatedName = lcfirst($this->getRefFKPhpNameAffix($refFK, /* plural */ false));
 
         $queryClassName = $this->getNewStubQueryBuilder($refFK->getTable())->getClassname();
 
@@ -4355,7 +4355,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
 
     protected function getCrossFKVarName(ForeignKey $crossFK)
     {
-        return 'coll' . $this->getFKPhpNameAffix($crossFK, $plural = true);
+        return 'coll' . $this->getFKPhpNameAffix($crossFK, /* plural */ true);
     }
 
     protected function addCrossFKMethods(&$script)
@@ -4383,7 +4383,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      */
     protected function addCrossFKClear(&$script, ForeignKey $crossFK)
     {
-        $relCol = $this->getFKPhpNameAffix($crossFK, $plural = true);
+        $relCol = $this->getFKPhpNameAffix($crossFK, /* plural */ true);
         $collName = $this->getCrossFKVarName($crossFK);
 
         $script .= "
@@ -4413,7 +4413,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      */
     protected function addCrossFKInit(&$script, ForeignKey $crossFK)
     {
-        $relCol = $this->getFKPhpNameAffix($crossFK, $plural = true);
+        $relCol = $this->getFKPhpNameAffix($crossFK, /* plural */ true);
         $collName = $this->getCrossFKVarName($crossFK);
         $relatedObjectClassName = $this->getNewStubObjectBuilder($crossFK->getForeignTable())->getClassname();
 
@@ -4437,9 +4437,9 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
 
     protected function addCrossFKGet(&$script, $refFK, $crossFK)
     {
-        $relatedName = $this->getFKPhpNameAffix($crossFK, $plural = true);
+        $relatedName = $this->getFKPhpNameAffix($crossFK, /* plural */ true);
         $relatedObjectClassName = $this->getNewStubObjectBuilder($crossFK->getForeignTable())->getClassname();
-        $selfRelationName = $this->getFKPhpNameAffix($refFK, $plural = false);
+        $selfRelationName = $this->getFKPhpNameAffix($refFK, /* plural */ false);
         $relatedQueryClassName = $this->getNewStubQueryBuilder($crossFK->getForeignTable())->getClassname();
         $crossRefTableName = $crossFK->getTableName();
         $collName = $this->getCrossFKVarName($crossFK);
@@ -4483,14 +4483,14 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
 
     protected function addCrossFKSet(&$script, $refFK, $crossFK)
     {
-        $relatedNamePlural = $this->getFKPhpNameAffix($crossFK, $plural = true);
-        $relatedName = $this->getFKPhpNameAffix($crossFK, $plural = false);
+        $relatedNamePlural = $this->getFKPhpNameAffix($crossFK, /* plural */ true);
+        $relatedName = $this->getFKPhpNameAffix($crossFK, /* plural */ false);
         $relatedObjectClassName = $this->getNewStubObjectBuilder($crossFK->getForeignTable())->getClassname();
         $crossRefTableName = $crossFK->getTableName();
         $collName = $this->getCrossFKVarName($crossFK);
 
         $inputCollection = lcfirst($relatedNamePlural);
-        $inputCollectionEntry = lcfirst($this->getFKPhpNameAffix($crossFK, $plural = false));
+        $inputCollectionEntry = lcfirst($this->getFKPhpNameAffix($crossFK, /* plural */ false));
 
         $script .= "
     /**
@@ -4525,9 +4525,9 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
 
     protected function addCrossFKCount(&$script, $refFK, $crossFK)
     {
-        $relatedName = $this->getFKPhpNameAffix($crossFK, $plural = true);
+        $relatedName = $this->getFKPhpNameAffix($crossFK, /* plural */ true);
         $relatedObjectClassName = $this->getNewStubObjectBuilder($crossFK->getForeignTable())->getClassname();
-        $selfRelationName = $this->getFKPhpNameAffix($refFK, $plural = false);
+        $selfRelationName = $this->getFKPhpNameAffix($refFK, /* plural */ false);
         $relatedQueryClassName = $this->getNewStubQueryBuilder($crossFK->getForeignTable())->getClassname();
         $crossRefTableName = $refFK->getTableName();
         $collName = $this->getCrossFKVarName($crossFK);
@@ -4571,7 +4571,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      */
     protected function addCrossFKAdd(&$script, ForeignKey $refFK, ForeignKey $crossFK)
     {
-        $relCol = $this->getFKPhpNameAffix($crossFK, $plural = true);
+        $relCol = $this->getFKPhpNameAffix($crossFK, /* plural */ true);
         $collName = $this->getCrossFKVarName($crossFK);
 
         $tblFK = $refFK->getTable();
@@ -4582,7 +4582,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
         $crossObjectName = '$' . $crossFK->getForeignTable()->getStudlyPhpName();
         $crossObjectClassName = $this->getNewObjectBuilder($crossFK->getForeignTable())->getObjectClassname();
 
-        $relatedObjectClassName = $this->getFKPhpNameAffix($crossFK, $plural = false);
+        $relatedObjectClassName = $this->getFKPhpNameAffix($crossFK, /* plural */ false);
 
         $scheduledForDeletion = lcfirst($relCol) . "ScheduledForDeletion";
 
@@ -4621,16 +4621,16 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      */
     protected function addCrossFKDoAdd(&$script, ForeignKey $refFK, ForeignKey $crossFK)
     {
-        $relatedObjectClassName = $this->getFKPhpNameAffix($crossFK, $plural = false);
+        $relatedObjectClassName = $this->getFKPhpNameAffix($crossFK, /* plural */ false);
         $relatedObjectName = $this->getNewStubObjectBuilder($crossFK->getForeignTable())->getClassname();
 
-        $selfRelationNamePlural = $this->getFKPhpNameAffix($refFK, $plural = true);
+        $selfRelationNamePlural = $this->getFKPhpNameAffix($refFK, /* plural */ true);
 
         $lowerRelatedObjectClassName = lcfirst($relatedObjectClassName);
 
         $joinedTableObjectBuilder = $this->getNewObjectBuilder($refFK->getTable());
         $className = $joinedTableObjectBuilder->getObjectClassname();
-        $refKObjectClassName = $this->getRefFKPhpNameAffix($refFK, $plural = false);
+        $refKObjectClassName = $this->getRefFKPhpNameAffix($refFK, /* plural */ false);
 
         $tblFK = $refFK->getTable();
         $foreignObjectName = '$' . $tblFK->getStudlyPhpName();
@@ -4661,7 +4661,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      */
     protected function addCrossFKRemove(&$script, ForeignKey $refFK, ForeignKey $crossFK)
     {
-        $relCol = $this->getFKPhpNameAffix($crossFK, $plural = true);
+        $relCol = $this->getFKPhpNameAffix($crossFK, /* plural */ true);
         $collName = 'coll' . $relCol;
 
         $tblFK = $refFK->getTable();
@@ -4677,7 +4677,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
         $crossObjectName = '$' . $crossFK->getForeignTable()->getStudlyPhpName();
         $crossObjectClassName = $this->getNewObjectBuilder($crossFK->getForeignTable())->getObjectClassname();
 
-        $relatedObjectClassName = $this->getFKPhpNameAffix($crossFK, $plural = false);
+        $relatedObjectClassName = $this->getFKPhpNameAffix($crossFK, /* plural */ false);
 
         $script .= "
     /**
@@ -4766,7 +4766,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
                 if (\$this->" . $aVarName . "->isModified() || \$this->" . $aVarName . "->isNew()) {
                     \$affectedRows += \$this->" . $aVarName . "->save(\$con);
                 }
-                \$this->set" . $this->getFKPhpNameAffix($fk, $plural = false) . "(\$this->$aVarName);
+                \$this->set" . $this->getFKPhpNameAffix($fk, /* plural */ false) . "(\$this->$aVarName);
             }
 ";
             } // foreach foreign k
@@ -5650,7 +5650,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
 
                 if ($fk->isLocalPrimaryKey()) {
 
-                    $afx = $this->getRefFKPhpNameAffix($fk, $plural = false);
+                    $afx = $this->getRefFKPhpNameAffix($fk, /* plural */ false);
                     $script .= "
             \$relObj = \$this->get$afx();
             if (\$relObj) {
@@ -5673,7 +5673,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
             // do deep copy for one to one relation
             foreach ($table->getForeignKeys() as $fk) {
                 if ($fk->isLocalPrimaryKey()) {
-                    $afx = $this->getFKPhpNameAffix($fk, $plural = false);
+                    $afx = $this->getFKPhpNameAffix($fk, /* plural */ false);
                     $script .= "
             \$relObj = \$this->get$afx();
             if (\$relObj) {

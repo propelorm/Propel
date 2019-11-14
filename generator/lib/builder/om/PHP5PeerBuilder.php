@@ -2286,7 +2286,7 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
      * @throws PropelException Any exceptions caught during processing will be
      *		 rethrown wrapped into a PropelException.
      */
-    public static function doSelectJoin" . $thisTableObjectBuilder->getFKPhpNameAffix($fk, $plural = false) . "(Criteria \$criteria, \$con = null, \$join_behavior = $join_behavior)
+    public static function doSelectJoin" . $thisTableObjectBuilder->getFKPhpNameAffix($fk, /* plural */ false) . "(Criteria \$criteria, \$con = null, \$join_behavior = $join_behavior)
     {
         \$criteria = clone \$criteria;
 
@@ -2362,7 +2362,7 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
                 \$obj1->set" . $joinedTablePeerBuilder->getObjectClassname() . "(\$obj2);";
                         } else {
                             $script .= "
-                \$obj2->add" . $joinedTableObjectBuilder->getRefFKPhpNameAffix($fk, $plural = false) . "(\$obj1);";
+                \$obj2->add" . $joinedTableObjectBuilder->getRefFKPhpNameAffix($fk, /* plural */ false) . "(\$obj1);";
                         }
                         $script .= "
 
@@ -2413,7 +2413,7 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
                         $script .= "
 
     /**
-     * Returns the number of rows matching criteria, joining the related " . $thisTableObjectBuilder->getFKPhpNameAffix($fk, $plural = false) . " table
+     * Returns the number of rows matching criteria, joining the related " . $thisTableObjectBuilder->getFKPhpNameAffix($fk, /* plural */ false) . " table
      *
      * @param      Criteria \$criteria
      * @param      boolean \$distinct Whether to select only distinct columns; deprecated: use Criteria->setDistinct() instead.
@@ -2421,7 +2421,7 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
      * @param      String    \$join_behavior the type of joins to use, defaults to $join_behavior
      * @return int Number of matching rows.
      */
-    public static function doCountJoin" . $thisTableObjectBuilder->getFKPhpNameAffix($fk, $plural = false) . "(Criteria \$criteria, \$distinct = false, PropelPDO \$con = null, \$join_behavior = $join_behavior)
+    public static function doCountJoin" . $thisTableObjectBuilder->getFKPhpNameAffix($fk, /* plural */ false) . "(Criteria \$criteria, \$distinct = false, PropelPDO \$con = null, \$join_behavior = $join_behavior)
     {
         // we're going to modify criteria, so copy it first
         \$criteria = clone \$criteria;
@@ -2622,7 +2622,7 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
                 \$obj1->set" . $joinedTablePeerBuilder->getObjectClassname() . "(\$obj" . $index . ");";
                 } else {
                     $script .= "
-                \$obj" . $index . "->add" . $joinedTableObjectBuilder->getRefFKPhpNameAffix($fk, $plural = false) . "(\$obj1);";
+                \$obj" . $index . "->add" . $joinedTableObjectBuilder->getRefFKPhpNameAffix($fk, /* plural */ false) . "(\$obj1);";
                 }
                 $script .= "
             } // if joined row not null
@@ -2761,7 +2761,7 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
      * @throws PropelException Any exceptions caught during processing will be
      *		 rethrown wrapped into a PropelException.
      */
-    public static function doSelectJoinAllExcept" . $thisTableObjectBuilder->getFKPhpNameAffix($fk, $plural = false) . "(Criteria \$criteria, \$con = null, \$join_behavior = $join_behavior)
+    public static function doSelectJoinAllExcept" . $thisTableObjectBuilder->getFKPhpNameAffix($fk, /* plural */ false) . "(Criteria \$criteria, \$con = null, \$join_behavior = $join_behavior)
     {
         \$criteria = clone \$criteria;
 
@@ -2893,7 +2893,7 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
                 \$obj1->set" . $joinedTablePeerBuilder->getObjectClassname() . "(\$obj" . $index . ");";
                         } else {
                             $script .= "
-                \$obj" . $index . "->add" . $joinedTableObjectBuilder->getRefFKPhpNameAffix($subfk, $plural = false) . "(\$obj1);";
+                \$obj" . $index . "->add" . $joinedTableObjectBuilder->getRefFKPhpNameAffix($subfk, /* plural */ false) . "(\$obj1);";
                         }
                         $script .= "
 
@@ -2941,7 +2941,7 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
             $script .= "
 
     /**
-     * Returns the number of rows matching criteria, joining the related " . $thisTableObjectBuilder->getFKPhpNameAffix($fk, $plural = false) . " table
+     * Returns the number of rows matching criteria, joining the related " . $thisTableObjectBuilder->getFKPhpNameAffix($fk, /* plural */ false) . " table
      *
      * @param      Criteria \$criteria
      * @param      boolean \$distinct Whether to select only distinct columns; deprecated: use Criteria->setDistinct() instead.
@@ -2949,7 +2949,7 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
      * @param      String    \$join_behavior the type of joins to use, defaults to $join_behavior
      * @return int Number of matching rows.
      */
-    public static function doCountJoinAllExcept" . $thisTableObjectBuilder->getFKPhpNameAffix($fk, $plural = false) . "(Criteria \$criteria, \$distinct = false, PropelPDO \$con = null, \$join_behavior = $join_behavior)
+    public static function doCountJoinAllExcept" . $thisTableObjectBuilder->getFKPhpNameAffix($fk, /* plural */ false) . "(Criteria \$criteria, \$distinct = false, PropelPDO \$con = null, \$join_behavior = $join_behavior)
     {
         // we're going to modify criteria, so copy it first
         \$criteria = clone \$criteria;
