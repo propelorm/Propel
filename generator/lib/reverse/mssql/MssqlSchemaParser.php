@@ -160,13 +160,30 @@ class MssqlSchemaParser extends BaseSchemaParser
     {
         $database = $table->getDatabase();
 
-        $stmt = $this->dbh->query("SELECT ccu1.TABLE_NAME, ccu1.COLUMN_NAME, ccu2.TABLE_NAME AS FK_TABLE_NAME, ccu2.COLUMN_NAME AS FK_COLUMN_NAME
-                                    FROM INFORMATION_SCHEMA.CONSTRAINT_COLUMN_USAGE ccu1 INNER JOIN
-                                            INFORMATION_SCHEMA.TABLE_CONSTRAINTS tc1 ON tc1.CONSTRAINT_NAME = ccu1.CONSTRAINT_NAME AND
-                                            CONSTRAINT_TYPE = 'Foreign Key' INNER JOIN
-                                            INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS rc1 ON rc1.CONSTRAINT_NAME = tc1.CONSTRAINT_NAME INNER JOIN
-                                            INFORMATION_SCHEMA.CONSTRAINT_COLUMN_USAGE ccu2 ON ccu2.CONSTRAINT_NAME = rc1.UNIQUE_CONSTRAINT_NAME
-                                    WHERE (ccu1.table_name = '" . $table->getName() . "')");
+        $stmt = $this->dbh->query(
+"SELECT DISTINCT
+        tc.TABLE_NAME,
+        kcu.COLUMN_NAME,
+        ccu.TABLE_NAME     AS FK_TABLE_NAME,
+        ccu.COLUMN_NAME    AS FK_COLUMN_NAME,
+        tc.CONSTRAINT_NAME AS FK_NAME
+   FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS tc
+   LEFT JOIN INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS rc
+     ON tc.constraint_catalog = rc.constraint_catalog
+    AND tc.constraint_schema  = rc.constraint_schema
+    AND tc.constraint_name    = rc.constraint_name
+   LEFT JOIN INFORMATION_SCHEMA.KEY_COLUMN_USAGE kcu
+     ON tc.constraint_catalog = kcu.constraint_catalog
+    AND tc.constraint_schema  = kcu.constraint_schema
+    AND tc.constraint_name    = kcu.constraint_name
+  INNER JOIN INFORMATION_SCHEMA.KEY_COLUMN_USAGE ccu
+     ON rc.unique_constraint_catalog = ccu.constraint_catalog
+    AND rc.unique_constraint_schema  = ccu.constraint_schema
+    AND rc.unique_constraint_name    = ccu.constraint_name
+    AND kcu.ordinal_position         = ccu.ordinal_position
+  WHERE tc.constraint_type           = 'FOREIGN KEY'
+    AND tc.table_name                = '" . $table->getName() . "'"
+);
 
         $foreignKeys = array(); // local store to avoid duplicates
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
@@ -174,6 +191,7 @@ class MssqlSchemaParser extends BaseSchemaParser
             $lcol = $this->cleanDelimitedIdentifiers($row['COLUMN_NAME']);
             $ftbl = $this->cleanDelimitedIdentifiers($row['FK_TABLE_NAME']);
             $fcol = $this->cleanDelimitedIdentifiers($row['FK_COLUMN_NAME']);
+            $name = $this->cleanDelimitedIdentifiers($row['FK_NAME']);
 
             $foreignTable = $database->getTable($ftbl);
             $foreignColumn = $foreignTable->getColumn($fcol);
