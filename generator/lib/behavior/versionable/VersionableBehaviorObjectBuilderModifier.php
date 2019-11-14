@@ -507,6 +507,8 @@ public function populateFromVersion(\$version, \$con = null, &\$loadedObjects = 
                 $fkColumnIds = $this->behavior->getReferrerIdsColumn($fk);
                 $fkColumnVersions = $this->behavior->getReferrerVersionsColumn($fk);
                 $this->builder->declareClassFromBuilder($relatedVersionPeerBuilder);
+                $fkColumnName = $fk->getLocalColumnName();
+                $fvtColumn = $foreignVersionTable->getColumn($fkColumnName);
 
                 $script .= "
     if (\$fkValues = \$version->get{$fkColumnIds->getPhpName()}()) {
@@ -519,6 +521,9 @@ public function populateFromVersion(\$version, \$con = null, &\$loadedObjects = 
             \$c1->addAnd(\$c2);
             \$query->addOr(\$c1);
         }
+        \$query->addAnd(
+            \$query->getNewCriterion({$this->builder->getColumnConstant($fvtColumn, $relatedVersionPeerClassname)}, \$this->getId())
+        );
         foreach (\$query->find(\$con) as \$relatedVersion) {
             if (isset(\$loadedObjects['{$relatedClassname}']) && isset(\$loadedObjects['{$relatedClassname}'][\$relatedVersion->get{$fkColumn->getPhpName()}()]) && isset(\$loadedObjects['{$relatedClassname}'][\$relatedVersion->get{$fkColumn->getPhpName()}()][\$relatedVersion->get{$fkVersionColumn->getPhpName()}()])) {
                 \$related = \$loadedObjects['{$relatedClassname}'][\$relatedVersion->get{$fkColumn->getPhpName()}()][\$relatedVersion->get{$fkVersionColumn->getPhpName()}()];
