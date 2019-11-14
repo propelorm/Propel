@@ -3847,7 +3847,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
             return;
         }
         \$this->$collName = new PropelObjectCollection();
-        \$this->{$collName}->setModel('" . $this->getNewStubObjectBuilder($refFK->getTable())->getClassname() . "');
+        \$this->{$collName}->setModel('" . $this->getNewStubObjectBuilder($refFK->getTable())->getFullyQualifiedClassname() . "');
     }
 ";
     } // addRefererInit()
@@ -4415,7 +4415,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
     {
         $relCol = $this->getFKPhpNameAffix($crossFK, $plural = true);
         $collName = $this->getCrossFKVarName($crossFK);
-        $relatedObjectClassName = $this->getNewStubObjectBuilder($crossFK->getForeignTable())->getClassname();
+        $relatedObjectClassName = $this->getNewStubObjectBuilder($crossFK->getForeignTable())->getFullyQualifiedClassname();
 
         $script .= "
     /**
