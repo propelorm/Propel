@@ -824,7 +824,7 @@ class BasePeer
 
         // add subQuery to From after adding quotes
         foreach ($criteria->getSelectQueries() as $subQueryAlias => $subQueryCriteria) {
-            $fromClause[] = '(' . BasePeer::createSelectSql($subQueryCriteria, $params) . ') AS ' . $subQueryAlias;
+            $fromClause[] = '(' . BasePeer::createSelectSql($subQueryCriteria, $params) . ') ' . $db::TABLE_ALIAS_KEYWORD . ' ' . $subQueryAlias;
         }
 
         // build from-clause

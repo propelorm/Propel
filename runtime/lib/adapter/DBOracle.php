@@ -23,6 +23,14 @@
 class DBOracle extends DBAdapter
 {
     /**
+     * Oracle specifi table alias keyword
+     * (AS keyword is not allowed by Oracle RDBMS)
+     * 
+     * @var string
+     */
+    const TABLE_ALIAS_KEYWORD = '';
+    
+    /**
      * This method is called after a connection was created to run necessary
      * post-initialization queries or code.
      * Removes the charset query and adds the date queries

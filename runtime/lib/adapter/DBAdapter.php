@@ -37,6 +37,12 @@ abstract class DBAdapter
     const ID_METHOD_SEQUENCE = 2;
 
     /**
+     * Generic table alias keyword
+     * @var string
+     */
+    const TABLE_ALIAS_KEYWORD = 'AS';
+    
+    /**
      * Propel driver to Propel adapter map.
      *
      * @var array
