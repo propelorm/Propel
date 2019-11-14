@@ -340,11 +340,11 @@ class PropelCollection extends ArrayObject implements Serializable
 
     /**
      * Returns an array of objects present in the collection that
-     * are not presents in the given collection.
+     * are not present in the given collection.
      *
      * @param PropelCollection $collection A Propel collection.
      *
-     * @return PropelCollection An array of Propel objects from the collection that are not presents in the given collection.
+     * @return PropelCollection An array of Propel objects from the collection that are not present in the given collection.
      */
     public function diff(PropelCollection $collection)
     {
