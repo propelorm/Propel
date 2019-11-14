@@ -165,6 +165,9 @@ class PHP5ObjectBuilder extends ObjectBuilder
                 throw new EngineException(sprintf('Default Value "%s" is not among the enumerated values', $val));
             }
             $defaultValue = array_search($val, $valueSet);
+            if ($col->getPhpType() == 'string') {
+                $defaultValue = "'$defaultValue'";
+            }
         } elseif ($col->isPhpPrimitiveType()) {
             settype($val, $col->getPhpType());
             $defaultValue = var_export($val, true);

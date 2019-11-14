@@ -220,7 +220,7 @@ EOF;
         $database->addTable($table);
         $database->setPlatform($platform);
 
-        $column->loadFromXML(array('valueSet' => 'Foo, Bar, "Foo, Bar"'));
+        $column->loadFromXML(array('type' => PropelTypes::ENUM, 'valueSet' => 'Foo, Bar, "Foo, Bar"'));
         $valueSet = $column->getValueSet();
 
         $this->assertCount(3, $valueSet);
