@@ -1,11 +1,10 @@
-
 /**
  * Remove the translation for a given locale
  *
  * @param     string $locale Locale to use for the translation, e.g. 'fr_FR'
  * @param     PropelPDO $con an optional connection object
  *
- * @return    <?php echo $objectClassname ?> The current object (for fluent API support)
+ * @return    $this The current object (for fluent API support)
  */
 public function removeTranslation($locale = '<?php echo $defaultLocale ?>', PropelPDO $con = null)
 {

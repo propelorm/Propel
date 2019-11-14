@@ -1,4 +1,3 @@
-
 /**
  * Revert the the current object to the state it had when it was last archived.
  * The object must be saved afterwards if the changes must persist.
@@ -7,7 +6,7 @@
  *
  * @throws PropelException If the object has no corresponding archive.
  *
- * @return <?php echo $objectClassname ?> The current object (for fluent API support)
+ * @return $this The current object (for fluent API support)
  */
 public function restoreFromArchive(PropelPDO $con = null)
 {

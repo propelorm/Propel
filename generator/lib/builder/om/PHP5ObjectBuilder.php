@@ -1494,7 +1494,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      * Set the value of [$clo] column.
      * " . $col->getDescription() . "
      * @param  " . $col->getPhpType() . " \$v new value
-     * @return "   . $this->getObjectClassname() . " The current object (for fluent API support)
+     * @return \$this The current object (for fluent API support)
      */";
     }
 
@@ -1733,7 +1733,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      * " . $col->getDescription() . "
      * @param mixed \$v string, integer (timestamp), or DateTime value.
      *               Empty strings are treated as null.
-     * @return " . $this->getObjectClassname() . " The current object (for fluent API support)
+     * @return \$this The current object (for fluent API support)
      */";
     }
 
@@ -1807,7 +1807,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      * @param PropelPDO \$con An optional PropelPDO connection to use for fetching this lazy-loaded column.";
         }
         $script .= "
-     * @return " . $this->getObjectClassname() . " The current object (for fluent API support)
+     * @return \$this The current object (for fluent API support)
      */
     $visibility function add$singularPhpName(\$value";
         if ($col->isLazyLoad()) {
@@ -1850,7 +1850,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      * @param PropelPDO \$con An optional PropelPDO connection to use for fetching this lazy-loaded column.";
         }
         $script .= "
-     * @return " . $this->getObjectClassname() . " The current object (for fluent API support)
+     * @return \$this The current object (for fluent API support)
      */
     $visibility function remove$singularPhpName(\$value";
         if ($col->isLazyLoad()) {
@@ -1893,7 +1893,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      * Set the value of [$clo] column.
      * " . $col->getDescription() . "
      * @param  " .             $col->getPhpType() . " \$v new value
-     * @return "               . $this->getObjectClassname() . " The current object (for fluent API support)
+     * @return \$this The current object (for fluent API support)
      * @throws PropelException - if the value is not accepted by this enum.
      */";
         $this->addMutatorOpenOpen($script, $col);
@@ -1965,7 +1965,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      * Check on string values is case insensitive (so 'FaLsE' is seen as 'false').
      * " . $col->getDescription() . "
      * @param boolean|integer|string \$v The new value
-     * @return " . $this->getObjectClassname() . " The current object (for fluent API support)
+     * @return \$this The current object (for fluent API support)
      */";
     }
 
@@ -3391,7 +3391,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      * Declares an association between this object and a $className object.
      *
      * @param                  $className \$v
-     * @return "               . $this->getObjectClassname() . " The current object (for fluent API support)
+     * @return \$this The current object (for fluent API support)
      * @throws PropelException
      */
     public function set" . $this->getFKPhpNameAffix($fk, $plural = false) . "($className \$v = null)
@@ -3567,7 +3567,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      * overridden in <code>" . $table->getPhpName() . "</code>.";
         }
         $script .= "
-     * @return "               . $this->getObjectClassname() . " The current object (for fluent API support)
+     * @return \$this The current object (for fluent API support)
      * @throws PropelException
      */
     public function set" . $methodAffix . "Key(\$key)
@@ -3782,7 +3782,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      * This does not modify the database; however, it will remove any associated objects, causing
      * them to be refetched by subsequent calls to accessor method.
      *
-     * @return " . $this->getObjectClassname() . " The current object (for fluent API support)
+     * @return \$this The current object (for fluent API support)
      * @see        add$relCol()
      */
     public function clear$relCol()
@@ -3880,7 +3880,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      * through the $className foreign key attribute.
      *
      * @param    $className \$l $className
-     * @return " . $this->getObjectClassname() . " The current object (for fluent API support)
+     * @return \$this The current object (for fluent API support)
      */
     public function add" . $this->getRefFKPhpNameAffix($refFK, $plural = false) . "($className \$l)
     {
@@ -4058,7 +4058,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      *
      * @param PropelCollection \${$inputCollection} A Propel collection.
      * @param PropelPDO \$con Optional connection object
-     * @return " . $this->getObjectClassname() . " The current object (for fluent API support)
+     * @return \$this The current object (for fluent API support)
      */
     public function set{$relatedName}(PropelCollection \${$inputCollection}, PropelPDO \$con = null)
     {
@@ -4143,7 +4143,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
         $script .= "
     /**
      * @param	{$relatedObjectClassName} \${$lowerRelatedObjectClassName} The $lowerRelatedObjectClassName object to remove.
-     * @return " . $this->getObjectClassname() . " The current object (for fluent API support)
+     * @return \$this The current object (for fluent API support)
      */
     public function remove{$relatedObjectClassName}(\${$lowerRelatedObjectClassName})
     {
@@ -4231,7 +4231,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      * Sets a single $className object as related to this object by a one-to-one relationship.
      *
      * @param                  $className \$v $className
-     * @return "               . $this->getObjectClassname() . " The current object (for fluent API support)
+     * @return \$this The current object (for fluent API support)
      * @throws PropelException
      */
     public function set" . $this->getRefFKPhpNameAffix($refFK, $plural = false) . "($className \$v = null)
@@ -4393,7 +4393,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      * This does not modify the database; however, it will remove any associated objects, causing
      * them to be refetched by subsequent calls to accessor method.
      *
-     * @return " . $this->getObjectClassname() . " The current object (for fluent API support)
+     * @return \$this The current object (for fluent API support)
      * @see        add$relCol()
      */
     public function clear$relCol()
@@ -4501,7 +4501,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      *
      * @param PropelCollection \${$inputCollection} A Propel collection.
      * @param PropelPDO \$con Optional connection object
-     * @return " . $this->getObjectClassname() . " The current object (for fluent API support)
+     * @return \$this The current object (for fluent API support)
      */
     public function set{$relatedNamePlural}(PropelCollection \${$inputCollection}, PropelPDO \$con = null)
     {
@@ -4592,7 +4592,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      * through the " . $tblFK->getName() . " cross reference table.
      *
      * @param  " . $crossObjectClassName . " " . $crossObjectName . " The $className object to relate
-     * @return "   . $this->getObjectClassname() . " The current object (for fluent API support)
+     * @return \$this The current object (for fluent API support)
      */
     public function add{$relatedObjectClassName}($crossObjectClassName $crossObjectName)
     {
@@ -4685,7 +4685,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      * through the {$tblFK->getName()} cross reference table.
      *
      * @param {$crossObjectClassName} {$crossObjectName} The $className object to relate
-     * @return " . $this->getObjectClassname() . " The current object (for fluent API support)
+     * @return \$this The current object (for fluent API support)
      */
     public function remove{$relatedObjectClassName}($crossObjectClassName $crossObjectName)
     {

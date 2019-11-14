@@ -321,7 +321,7 @@ public function getScopeValue()
  * It provides a generic way to set the value, whatever the actual column name is.
  *
  * @param      int \$v The nested set left value
- * @return     {$this->objectClassname} The current object (for fluent API support)
+ * @return     \$this The current object (for fluent API support)
  */
 public function setLeftValue(\$v)
 {
@@ -338,7 +338,7 @@ public function setLeftValue(\$v)
  * It provides a generic way to set the value, whatever the actual column name is.
  *
  * @param      int \$v The nested set right value
- * @return     {$this->objectClassname} The current object (for fluent API support)
+ * @return     \$this The current object (for fluent API support)
  */
 public function setRightValue(\$v)
 {
@@ -355,7 +355,7 @@ public function setRightValue(\$v)
  * It provides a generic way to set the value, whatever the actual column name is.
  *
  * @param      int \$v The nested set level value
- * @return     {$this->objectClassname} The current object (for fluent API support)
+ * @return     \$this The current object (for fluent API support)
  */
 public function setLevel(\$v)
 {
@@ -372,7 +372,7 @@ public function setLevel(\$v)
  * It provides a generic way to set the value, whatever the actual column name is.
  *
  * @param      int \$v The nested set scope value
- * @return     {$this->objectClassname} The current object (for fluent API support)
+ * @return     \$this The current object (for fluent API support)
  */
 public function setScopeValue(\$v)
 {
@@ -387,7 +387,7 @@ public function setScopeValue(\$v)
 /**
  * Creates the supplied node as the root node.
  *
- * @return     {$this->objectClassname} The current object (for fluent API support)
+ * @return     \$this The current object (for fluent API support)
  * @throws     PropelException
  */
 public function makeRoot()
