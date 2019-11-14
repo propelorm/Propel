@@ -4300,7 +4300,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
         }
         $script .= "
                     }
-                    $queryClassName::create()
+                    \$affectedRows += $queryClassName::create()
                         ->filterByPrimaryKeys(\$pks)
                         ->delete(\$con);
                     \$this->{$lowerRelatedName}ScheduledForDeletion = null;
@@ -4308,13 +4308,13 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
 
                 foreach (\$this->get{$relatedName}() as \${$lowerSingleRelatedName}) {
                     if (\${$lowerSingleRelatedName}->isModified()) {
-                        \${$lowerSingleRelatedName}->save(\$con);
+                        \$affectedRows += \${$lowerSingleRelatedName}->save(\$con);
                     }
                 }
             } elseif (\$this->coll{$relatedName}) {
                 foreach (\$this->coll{$relatedName} as \${$lowerSingleRelatedName}) {
                     if (\${$lowerSingleRelatedName}->isModified()) {
-                        \${$lowerSingleRelatedName}->save(\$con);
+                        \$affectedRows += \${$lowerSingleRelatedName}->save(\$con);
                     }
                 }
             }
@@ -4336,14 +4336,14 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
 
         if ($refFK->isLocalColumnsRequired() || ForeignKey::CASCADE === $refFK->getOnDelete()) {
             $script .= "
-                    $queryClassName::create()
+                    \$affectedRows += $queryClassName::create()
                         ->filterByPrimaryKeys(\$this->{$lowerRelatedName}ScheduledForDeletion->getPrimaryKeys(false))
                         ->delete(\$con);";
         } else {
             $script .= "
                     foreach (\$this->{$lowerRelatedName}ScheduledForDeletion as \${$lowerSingleRelatedName}) {
                         // need to save related object because we set the relation to null
-                        \${$lowerSingleRelatedName}->save(\$con);
+                        \$affectedRows += \${$lowerSingleRelatedName}->save(\$con);
                     }";
         }
         $script .= "
