@@ -101,7 +101,7 @@ class VersionableBehavior extends Behavior
     {
         $table = $this->getTable();
         $database = $table->getDatabase();
-        $versionTableName = $this->getParameter('version_table') ? $this->getParameter('version_table') : ($table->getName() . '_version');
+        $versionTableName = $this->getParameter('version_table') ? $this->getParameter('version_table') : ($table->getCommonName() . '_version');
         if (!$database->hasTable($versionTableName)) {
             // create the version table
             $versionTable = $database->addTable(array(
