@@ -110,9 +110,12 @@ class AggregateColumnBehavior extends Behavior
 
     public function postSave($builder)
     {
+        $refFK = $this->getForeignKey();
+        $columnRefk = $refFK->isLocalPrimaryKey() ? $builder->getPKRefFKVarName($refFK) : $builder->getRefFKCollVarName($refFK);
+
         return $this->renderTemplate('objectPostSave', array(
                 'column'     => $this->getColumn(),
-                'columnRefk' => $builder->getRefFKCollVarName($this->getForeignKey())
+                'columnRefk' => $columnRefk,
         ));
     }
 
