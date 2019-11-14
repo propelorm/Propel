@@ -3562,7 +3562,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
             $script .= "
      * Note: It is important that the xml schema used to create this class
      * maintains consistency in the order of related columns between
-     * " . $table->getName() . " and " . $tblFK->getName() . ".
+     * " . $table->getName() . " and " . $fk->getName() . ".
      * If for some reason this is impossible, this method should be
      * overridden in <code>" . $table->getPhpName() . "</code>.";
         }

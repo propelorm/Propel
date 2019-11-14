@@ -534,7 +534,7 @@ abstract class AbstractPropelDataModelTask extends AbstractPropelTask
      * @param DomDocument $dom
      * @param string      $srcDir
      *
-     * @return void (objects, DomDocument, are references by default in PHP 5, so returning it is useless)
+     * @return int The number of external schemas that have been included
      **/
     protected function includeExternalSchemas(DomDocument $dom, $srcDir)
     {
