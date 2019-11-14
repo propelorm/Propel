@@ -809,12 +809,12 @@ public function countChildren(\$criteria = null, PropelPDO \$con = null)
  *
  * @param      Criteria \$query Criteria to filter results.
  * @param      PropelPDO \$con Connection to use.
- * @return     array 		List of $objectClassname objects
+ * @return     $objectClassname
  */
 public function getFirstChild(\$query = null, PropelPDO \$con = null)
 {
     if (\$this->isLeaf()) {
-        return array();
+        return null;
     } else {
         return $queryClassname::create(null, \$query)
             ->childrenOf(\$this)
