@@ -29,7 +29,7 @@ class PHP5ObjectBuilder extends ObjectBuilder
      */
     public function getPackage()
     {
-        return parent::getPackage() . ".om";
+        return parent::getPackage() . '.om';
     }
 
     public function getNamespace()
@@ -1987,10 +1987,10 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
         // checking in mutators.
         if ($col->isPhpPrimitiveType()) {
             if ($col->isTextType()) {
-              $script .= "
+                $script .= "
         if (\$v !== null) {";
             } else {
-              $script .= "
+                $script .= "
         if (\$v !== null && is_numeric(\$v)) {";
             }
 
@@ -3497,7 +3497,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      * Get the associated $className object
      *
      * @param PropelPDO \$con Optional Connection object.
-     * @param \$doQuery Executes a query to get the object if required
+     * @param boolean \$doQuery Executes a query to get the object if required
      * @return $className The associated $className object.
      * @throws PropelException
      */
@@ -3807,8 +3807,9 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
 
         $script .= "
     /**
-     * reset is the $collName collection loaded partially
-     *
+     * Reset is the $collName collection loaded partially
+     * 
+     * @param boolean \$v
      * @return void
      */
     public function resetPartial{$relCol}(\$v = true)
@@ -4108,11 +4109,15 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
 
         $lowerRelatedObjectClassName = lcfirst($relatedObjectClassName);
 
+        $joinedTableObjectBuilder = $this->getNewObjectBuilder($refFK->getTable());
+
+        $className = $joinedTableObjectBuilder->getObjectClassname();
+
         $collName = $this->getRefFKCollVarName($refFK);
 
         $script .= "
     /**
-     * @param	{$relatedObjectClassName} \${$lowerRelatedObjectClassName} The $lowerRelatedObjectClassName object to add.
+     * @param {$className} \${$lowerRelatedObjectClassName} The $lowerRelatedObjectClassName object to add.
      */
     protected function doAdd{$relatedObjectClassName}(\${$lowerRelatedObjectClassName})
     {
@@ -4138,20 +4143,25 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
         $collName = $this->getRefFKCollVarName($refFK);
         $relCol = $this->getFKPhpNameAffix($refFK, $plural = false);
 
+        $joinedTableObjectBuilder = $this->getNewObjectBuilder($refFK->getTable());
+
+        $className = $joinedTableObjectBuilder->getObjectClassname();
+
         $localColumn = $refFK->getLocalColumn();
 
         $script .= "
     /**
-     * @param	{$relatedObjectClassName} \${$lowerRelatedObjectClassName} The $lowerRelatedObjectClassName object to remove.
+     * @param {$className} \${$lowerRelatedObjectClassName} The $lowerRelatedObjectClassName object to remove.
      * @return " . $this->getObjectClassname() . " The current object (for fluent API support)
      */
     public function remove{$relatedObjectClassName}(\${$lowerRelatedObjectClassName})
     {
-        if (\$this->get{$relatedName}()->contains(\${$lowerRelatedObjectClassName})) {
-            \$this->{$collName}->remove(\$this->{$collName}->search(\${$lowerRelatedObjectClassName}));
+        \${$lowerRelatedObjectClassName}Index = \$this->get{$relatedName}()->search(\${$lowerRelatedObjectClassName});
+        if (\${$lowerRelatedObjectClassName}Index !== false) {
+            \$this->{$collName}->remove(\${$lowerRelatedObjectClassName}Index);
             if (null === \$this->{$inputCollection}) {
-                \$this->{$inputCollection} = clone \$this->{$collName};
-                \$this->{$inputCollection}->clear();
+                \$this->{$inputCollection} = new PropelObjectCollection();
+                \$this->{$inputCollection}->setModel('{$className}');
             }";
 
         if (!$refFK->isComposite() && !$localColumn->isNotNull()) {
@@ -4689,13 +4699,14 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      */
     public function remove{$relatedObjectClassName}($crossObjectClassName $crossObjectName)
     {
-        if (\$this->get{$relCol}()->contains({$crossObjectName})) {
-            \$this->{$collName}->remove(\$this->{$collName}->search({$crossObjectName}));
+        {$crossObjectName}Index = \$this->get{$relCol}()->search({$crossObjectName});
+        if ({$crossObjectName}Index !== false) {
+            \$this->{$collName}->remove({$crossObjectName}Index);
             if (null === \$this->{$M2MScheduledForDeletion}) {
-                \$this->{$M2MScheduledForDeletion} = clone \$this->{$collName};
-                \$this->{$M2MScheduledForDeletion}->clear();
+                \$this->{$M2MScheduledForDeletion} = new PropelObjectCollection();
+                \$this->{$M2MScheduledForDeletion}->setModel('{$crossObjectClassName}');
             }
-            \$this->{$M2MScheduledForDeletion}[]= {$crossObjectName};
+            \$this->{$M2MScheduledForDeletion}[] = {$crossObjectName};
         }
 
         return \$this;
