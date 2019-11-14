@@ -25,6 +25,7 @@ class PropelMigrationStatusTask extends BasePropelMigrationTask
         $manager->setConnections($this->getGeneratorConfig()->getBuildConnections());
         $manager->setMigrationTable($this->getMigrationTable());
         $manager->setMigrationDir($this->getOutputDirectory());
+        $manager->setMigrationParallel($this->getGeneratorConfig()->getBuildProperty('migrationParallel'));
 
         // the following is a verbose version of PropelMigrationManager::getValidMigrationTimestamps()
         // mostly for explicit output
@@ -74,12 +75,17 @@ class PropelMigrationStatusTask extends BasePropelMigrationTask
                 }
             }
             foreach ($migrationTimestamps as $timestamp) {
+                if ($manager->getMigrationParallel()) {
+                    $executed = !in_array($timestamp, $validTimestamps);
+                } else {
+                    $executed = $timestamp <= $oldestMigrationTimestamp;
+                }
                 $this->log(sprintf(
                     ' %s %s %s',
                     $timestamp == $oldestMigrationTimestamp ? '>' : ' ',
                     $manager->getMigrationClassName($timestamp),
-                    $timestamp <= $oldestMigrationTimestamp ? '(executed)' : ''
-                ), $timestamp <= $oldestMigrationTimestamp ? Project::MSG_VERBOSE : Project::MSG_INFO);
+                    $executed ? '(executed)' : ''
+                ), $executed ? Project::MSG_VERBOSE : Project::MSG_INFO);
             }
         } else {
             $this->log(sprintf('No migration file found in "%s".', $dir));

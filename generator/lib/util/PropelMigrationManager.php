@@ -26,6 +26,7 @@ class PropelMigrationManager
     protected $pdoConnections = array();
     protected $migrationTable = 'propel_migration';
     protected $migrationDir;
+    protected $migrationParallel = false;
 
     /**
      * Set the database connection settings
@@ -121,6 +122,26 @@ class PropelMigrationManager
         return $this->migrationDir;
     }
 
+    /**
+     * Enable or disable parallel migration
+     *
+     * @param boolean $enabled
+     */
+    public function setMigrationParallel($enabled)
+    {
+        $this->migrationParallel = $enabled;
+    }
+
+    /**
+     * Check whether parallel migration is enabled
+     *
+     * @return boolean
+     */
+    public function getMigrationParallel()
+    {
+        return $this->migrationParallel;
+    }
+
     public function getOldestDatabaseVersion()
     {
         if (!$connections = $this->getConnections()) {
@@ -130,7 +151,7 @@ class PropelMigrationManager
         $migrationTimestamps = array();
         foreach ($connections as $name => $params) {
             $pdo = $this->getPdoConnection($name);
-            $sql = sprintf('SELECT version FROM %s', $this->getMigrationTable());
+            $sql = sprintf('SELECT version FROM %s ORDER BY version DESC', $this->getMigrationTable());
 
             try {
                 $stmt = $pdo->prepare($sql);
@@ -149,6 +170,32 @@ class PropelMigrationManager
         }
 
         return $oldestMigrationTimestamp;
+    }
+
+    public function getAllDatabaseVersions()
+    {
+        if (!$connections = $this->getConnections()) {
+            throw new Exception('You must define database connection settings in a buildtime-conf.xml file to use migrations');
+        }
+        $migrationTimestamps = array();
+        foreach ($connections as $name => $params) {
+            $pdo = $this->getPdoConnection($name);
+            $sql = sprintf('SELECT version FROM %s', $this->getMigrationTable());
+
+            try {
+                $stmt = $pdo->prepare($sql);
+                $stmt->execute();
+                while ($migrationTimestamp = $stmt->fetchColumn()) {
+                    $migrationTimestamps[] = $migrationTimestamp;
+                }
+            } catch (PDOException $e) {
+                $this->createMigrationTable($name);
+                $migrationTimestamps = array();
+            }
+        }
+        sort($migrationTimestamps);
+
+        return $migrationTimestamps;
     }
 
     public function migrationTableExists($datasource)
@@ -190,11 +237,27 @@ class PropelMigrationManager
     {
         $platform = $this->getPlatform($datasource);
         $pdo = $this->getPdoConnection($datasource);
-        $sql = sprintf('DELETE FROM %s', $this->getMigrationTable());
-        $pdo->beginTransaction();
-        $stmt = $pdo->prepare($sql);
-        $stmt->execute();
+        if (!$this->getMigrationParallel()) {
+            $sql = sprintf('DELETE FROM %s', $this->getMigrationTable());
+            $pdo->beginTransaction();
+            $stmt = $pdo->prepare($sql);
+            $stmt->execute();
+        }
         $sql = sprintf('INSERT INTO %s (%s) VALUES (?)',
+            $this->getMigrationTable(),
+            $platform->quoteIdentifier('version')
+        );
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(1, $timestamp, PDO::PARAM_INT);
+        $stmt->execute();
+        $pdo->commit();
+    }
+
+    public function removeMigrationTimestamp($datasource, $timestamp)
+    {
+        $platform = $this->getPlatform($datasource);
+        $pdo = $this->getPdoConnection($datasource);
+        $sql = sprintf('DELETE FROM %s WHERE %s = ?',
             $this->getMigrationTable(),
             $platform->quoteIdentifier('version')
         );
@@ -223,12 +286,16 @@ class PropelMigrationManager
 
     public function getValidMigrationTimestamps()
     {
-        $oldestMigrationTimestamp = $this->getOldestDatabaseVersion();
-        $migrationTimestamps = $this->getMigrationTimestamps();
-        // removing already executed migrations
-        foreach ($migrationTimestamps as $key => $timestamp) {
-            if ($timestamp <= $oldestMigrationTimestamp) {
-                unset($migrationTimestamps[$key]);
+        if ($this->getMigrationParallel()) {
+            $migrationTimestamps = array_diff($this->getMigrationTimestamps(), $this->getAllDatabaseVersions());
+        } else {
+            $oldestMigrationTimestamp = $this->getOldestDatabaseVersion();
+            $migrationTimestamps = $this->getMigrationTimestamps();
+            // removing already executed migrations
+            foreach ($migrationTimestamps as $key => $timestamp) {
+                if ($timestamp <= $oldestMigrationTimestamp) {
+                    unset($migrationTimestamps[$key]);
+                }
             }
         }
         sort($migrationTimestamps);
@@ -243,12 +310,16 @@ class PropelMigrationManager
 
     public function getAlreadyExecutedMigrationTimestamps()
     {
-        $oldestMigrationTimestamp = $this->getOldestDatabaseVersion();
-        $migrationTimestamps = $this->getMigrationTimestamps();
-        // removing already executed migrations
-        foreach ($migrationTimestamps as $key => $timestamp) {
-            if ($timestamp > $oldestMigrationTimestamp) {
-                unset($migrationTimestamps[$key]);
+        if ($this->getMigrationParallel()) {
+            $migrationTimestamps = array_intersect($this->getMigrationTimestamps(), $this->getAllDatabaseVersions());
+        } else {
+            $oldestMigrationTimestamp = $this->getOldestDatabaseVersion();
+            $migrationTimestamps = $this->getMigrationTimestamps();
+            // removing already executed migrations
+            foreach ($migrationTimestamps as $key => $timestamp) {
+                if ($timestamp > $oldestMigrationTimestamp) {
+                    unset($migrationTimestamps[$key]);
+                }
             }
         }
         sort($migrationTimestamps);
