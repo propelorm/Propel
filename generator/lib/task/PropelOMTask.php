@@ -159,7 +159,7 @@ class PropelOMTask extends AbstractPropelDataModelTask
                         // these classes are only generated if they don't already exist
                         foreach (array('peerstub', 'objectstub', 'querystub') as $target) {
                             $builder = $generatorConfig->getConfiguredBuilder($table, $target);
-                            $nbWrittenFiles += $this->build($builder, $overwrite = false);
+                            $nbWrittenFiles += $this->build($builder, /* $overwrite */ false);
                         }
 
                         // -----------------------------------------------------------------------------------------
@@ -176,12 +176,12 @@ class PropelOMTask extends AbstractPropelDataModelTask
                                         }
                                         $builder = $generatorConfig->getConfiguredBuilder($table, $target);
                                         $builder->setChild($child);
-                                        $nbWrittenFiles += $this->build($builder, $overwrite = true);
+                                        $nbWrittenFiles += $this->build($builder, /* $overwrite */ true);
                                     }
                                     foreach (array('objectmultiextend', 'queryinheritancestub') as $target) {
                                         $builder = $generatorConfig->getConfiguredBuilder($table, $target);
                                         $builder->setChild($child);
-                                        $nbWrittenFiles += $this->build($builder, $overwrite = false);
+                                        $nbWrittenFiles += $this->build($builder, /* $overwrite */ false);
                                     }
                                 } // foreach
                             } // if col->is enumerated
@@ -195,7 +195,7 @@ class PropelOMTask extends AbstractPropelDataModelTask
                         // Create [empty] interface if it does not already exist
                         if ($table->getInterface()) {
                             $builder = $generatorConfig->getConfiguredBuilder($table, 'interface');
-                            $nbWrittenFiles += $this->build($builder, $overwrite = false);
+                            $nbWrittenFiles += $this->build($builder, /* $overwrite */ false);
                         }
 
                         // -----------------------------------------------------------------------------------------
@@ -219,7 +219,7 @@ class PropelOMTask extends AbstractPropelDataModelTask
 
                                     foreach (array('nodepeerstub', 'nodestub') as $target) {
                                         $builder = $generatorConfig->getConfiguredBuilder($table, $target);
-                                        $nbWrittenFiles += $this->build($builder, $overwrite = false);
+                                        $nbWrittenFiles += $this->build($builder, /* $overwrite */ false);
                                     }
                                     break;
 
