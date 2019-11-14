@@ -346,4 +346,16 @@ class " . $this->getClassname() . " extends " . $baseClassname . " {
     }
 ";
     }
+
+    /**
+     * @param string $ignoredNamespace
+     * @return string
+     */
+    public function getUseStatements($ignoredNamespace = null)
+    {
+        // this is a fix for missing use statement (https://github.com/propelorm/Propel/issues/969)
+        $this->declareClassNamespace($this->getParentClassName(), $this->getStubQueryBuilder()->getNamespace());
+        return parent::getUseStatements($ignoredNamespace);
+    }
+
 } // MultiExtensionQueryBuilder
