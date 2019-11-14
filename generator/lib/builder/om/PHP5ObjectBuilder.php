@@ -5071,7 +5071,11 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
 
         // if auto-increment, get the id after
         if ($platform->isNativeIdMethodAutoIncrement() && $table->getIdMethod() == "native") {
-            $column = $table->getFirstPrimaryKeyColumn();
+            foreach($table->getPrimaryKey() as $column) {
+                if(!$column->isAutoIncrement()) {
+                    continue;
+                }
+            }
             $columnProperty = strtolower($column->getName());
             $script .= "
         try {";
