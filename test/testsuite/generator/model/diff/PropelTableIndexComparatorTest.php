@@ -193,4 +193,41 @@ class PropelTableIndexComparatorTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(array('Foo_Index' => array($i1, $i2)), $tableDiff->getModifiedIndices());
     }
 
+    public function testCompareRenamedIndices()
+    {
+        $t1 = new Table();
+        $c1 = new Column('Foo');
+        $c1->getDomain()->copy($this->platform->getDomainForType('VARCHAR'));
+        $c1->getDomain()->replaceSize(255);
+        $t1->addColumn($c1);
+        $i1 = new Index('Foo_Index_1');
+        $i1->addColumn($c1);
+        $t1->addIndex($i1);
+        $i2 = new Index('Foo_Index_2');
+        $i2->addColumn($c1);
+        $t1->addIndex($i2);
+
+        $t2 = new Table();
+        $c2 = new Column('Foo');
+        $c2->getDomain()->copy($this->platform->getDomainForType('VARCHAR'));
+        $c2->getDomain()->replaceSize(255);
+        $t2->addColumn($c2);
+        $i3 = new Index('Foo_Index_3');
+        $i3->addColumn($c2);
+        $t2->addIndex($i3);
+        $i4 = new Index('Foo_Index_4');
+        $i4->addColumn($c2);
+        $t2->addIndex($i4);
+
+        $tc = new PropelTableComparator();
+        $tc->setFromTable($t1);
+        $tc->setToTable($t2);
+        $nbDiffs = $tc->compareIndices();
+        $tableDiff = $tc->getTableDiff();
+        $this->assertEquals(4, $nbDiffs);
+        $this->assertEquals(2, count($tableDiff->getRemovedIndices()));
+        $this->assertEquals(2, count($tableDiff->getAddedIndices()));
+        $this->assertEquals(array('Foo_Index_1' => $i1, 'Foo_Index_2' => $i2), $tableDiff->getRemovedIndices());
+        $this->assertEquals(array('Foo_Index_3' => $i3, 'Foo_Index_4' => $i4), $tableDiff->getAddedIndices());
+    }
 }
