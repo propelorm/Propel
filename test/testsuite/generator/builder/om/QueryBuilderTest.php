@@ -1083,6 +1083,20 @@ class QueryBuilderTest extends BookstoreTestBase
         $nbBookListRel = BookListRelQuery::create()->prune($testBookListRel)->count();
         $this->assertEquals(1, $nbBookListRel, 'prune() removes an object from the result');
     }
+
+    public function testFindPkInstancePoolingBug()
+    {
+        $b = new Book();
+        $b->setTitle('foo');
+        $b->save($this->con);
+        BookQuery::create()->findPk($b->getId(), $this->con);
+        $book = BookQuery::create()->select(array('Id', 'Title'))->findPk($b->getId(), $this->con);
+        $this->assertEquals(array('Id' => $b->getId(), 'Title' => 'foo'), $book);
+
+        $book2 = BookQuery::create()->setFormatter('PropelSimpleArrayFormatter')->select(array('Id', 'Title'))->findPk($b->getId(), $this->con);
+        $this->assertEquals(array('Id' => $b->getId(), 'Title' => 'foo'), $book2);
+    }
+
 }
 
 class myCustomBookQuery extends BookQuery
