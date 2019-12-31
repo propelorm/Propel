@@ -4388,7 +4388,8 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
         $relCol = $this->getFKPhpNameAffix($crossFK, $plural = true);
         $collName = $this->getCrossFKVarName($crossFK);
 
-        $script .= "
+        if ($crossFK->isLocalPrimaryKey()) {
+            $script .= "
     /**
      * Clears out the $collName collection
      *
@@ -4402,6 +4403,26 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
     {
         \$this->$collName = null; // important to set this to null since that means it is uninitialized
         \$this->{$collName}Partial = null;
+
+        return \$this;
+    }
+";
+            return;
+        }
+
+        $script .= "
+    /**
+     * Clears out the $collName collection
+     *
+     * This does not modify the database; however, it will remove any associated objects, causing
+     * them to be refetched by subsequent calls to accessor method.
+     *
+     * @return " . $this->getObjectClassname() . " The current object (for fluent API support)
+     * @see        add$relCol()
+     */
+    public function clear$relCol()
+    {
+        \$this->$collName = null; // important to set this to null since that means it is uninitialized
 
         return \$this;
     }
