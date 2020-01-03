@@ -111,7 +111,7 @@ EOF;
     </table>
     <table name="i18n_behavior_test_0_i18n">
         <column name="id" primaryKey="true" type="INTEGER" />
-        <column name="locale" primaryKey="true" type="VARCHAR" size="5" default="en_US" />
+        <column name="locale" primaryKey="true" type="VARCHAR" size="255" default="en_US" />
         <column name="bar" type="VARCHAR" size="100" />
         <foreign-key foreignTable="i18n_behavior_test_0">
             <reference local="id" foreign="id" />
