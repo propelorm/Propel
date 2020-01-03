@@ -934,7 +934,7 @@ class GeneratedObjectRelTest extends BookstoreEmptyTestBase
 
         BookPeer::clearInstancePool();
 
-        $summary = $this->getMock('BookSummary');
+        $summary = $this->createMock('BookSummary');
         $summary
             ->expects($this->once())
             ->method('isDeleted')
