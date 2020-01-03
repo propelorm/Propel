@@ -28,11 +28,5 @@
       "dev-master": "1.8-dev"
     }
   },
-  "repositories": [
-    {
-      "type": "pear",
-      "url": "http://pear.php.net"
-    }
-  ],
   "bin": ["generator/bin/propel-gen", "generator/bin/propel-gen.bat"]
 }
