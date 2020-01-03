@@ -1,16 +1,29 @@
 language: php
 
-branches:
-  only:
-    - 1.6
-    - master
+dist: trusty
 
 php:
   - 5.6
-  - hhvm
+  - 7.0
+  - 7.1
+  - 7.2
+  - 7.3
+  - 7.4snapshot
+  - nightly
+
+services:
+  - mysql
 
 env:
   - DB=mysql DB_USER=root
+
+# cache vendor dirs
+cache:
+  directories:
+    - $HOME/.composer/cache
+
+install:
+  - composer self-update
 
 before_script:
   # MySQL
@@ -18,8 +31,7 @@ before_script:
   - sh -c "if [ '$DB' = 'mysql' ]; then mysql -e 'CREATE DATABASE test; CREATE SCHEMA bookstore_schemas; CREATE SCHEMA contest; CREATE SCHEMA second_hand_books; CREATE DATABASE reverse_bookstore;'; fi"
 
   # Composer
-  - wget http://getcomposer.org/composer.phar
-  - php composer.phar install --prefer-source
+  - composer install --prefer-source
 
   - ./test/reset_tests.sh
 
@@ -27,4 +39,4 @@ script: phpunit
 
 matrix:
   allow_failures:
-    - php: hhvm
+    - php: nightly
