@@ -95,8 +95,9 @@ class SortableBehavior extends Behavior
         if ($this->hasMultipleScopes()) {
 
             $methodSignature = array();
-            $buildScope      = array();
             $paramsDoc       = array();
+            $buildScope      = array();
+            $buildScopeVars  = array();
 
             foreach ($this->getScopes() as $idx => $scope) {
 
