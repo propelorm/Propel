@@ -47,7 +47,7 @@ DROP TABLE IF EXISTS [i18n_behavior_test_0_i18n];
 CREATE TABLE [i18n_behavior_test_0_i18n]
 (
     [id] INTEGER NOT NULL,
-    [locale] VARCHAR(5) DEFAULT 'fr_FR' NOT NULL,
+    [locale] VARCHAR(255) DEFAULT 'fr_FR' NOT NULL,
     PRIMARY KEY ([id],[locale])
 );
 EOF;
@@ -81,7 +81,7 @@ DROP TABLE IF EXISTS [i18n_behavior_test_0_i18n];
 CREATE TABLE [i18n_behavior_test_0_i18n]
 (
     [id] INTEGER NOT NULL,
-    [locale] VARCHAR(5) DEFAULT 'pt_PT' NOT NULL,
+    [locale] VARCHAR(255) DEFAULT 'pt_PT' NOT NULL,
     PRIMARY KEY ([id],[locale])
 );
 EOF;
@@ -166,7 +166,7 @@ EOF;
 CREATE TABLE [i18n_behavior_test_0_i18n]
 (
     [id] INTEGER NOT NULL,
-    [locale] VARCHAR(5) DEFAULT 'en_US' NOT NULL,
+    [locale] VARCHAR(255) DEFAULT 'en_US' NOT NULL,
 EOF;
         $this->assertContains($expected, $builder->getSQL());
     }
@@ -182,7 +182,7 @@ EOF;
 CREATE TABLE [i18n_behavior_test_0_i18n]
 (
     [id] INTEGER NOT NULL,
-    [locale] VARCHAR(5) DEFAULT 'en_US' NOT NULL,
+    [locale] VARCHAR(255) DEFAULT 'en_US' NOT NULL,
     [bar] VARCHAR(100),
     PRIMARY KEY ([id],[locale])
 );
@@ -281,7 +281,7 @@ DROP TABLE IF EXISTS [foo_table];
 CREATE TABLE [foo_table]
 (
     [id] INTEGER NOT NULL,
-    [locale] VARCHAR(5) DEFAULT 'en_US' NOT NULL,
+    [locale] VARCHAR(255) DEFAULT 'en_US' NOT NULL,
     PRIMARY KEY ([id],[locale])
 );
 EOF;
@@ -312,7 +312,7 @@ DROP TABLE IF EXISTS [i18n_behavior_test_0_i18n];
 CREATE TABLE [i18n_behavior_test_0_i18n]
 (
     [id] INTEGER NOT NULL,
-    [culture] VARCHAR(5) DEFAULT 'en_US' NOT NULL,
+    [culture] VARCHAR(255) DEFAULT 'en_US' NOT NULL,
     PRIMARY KEY ([id],[culture])
 );
 EOF;
@@ -343,7 +343,7 @@ DROP TABLE IF EXISTS [i18n_behavior_test_0_i18n];
 CREATE TABLE [i18n_behavior_test_0_i18n]
 (
     [id] INTEGER NOT NULL,
-    [locale] VARCHAR(5) DEFAULT 'fr_FR' NOT NULL,
+    [locale] VARCHAR(255) DEFAULT 'fr_FR' NOT NULL,
     PRIMARY KEY ([id],[locale])
 );
 EOF;
@@ -394,7 +394,7 @@ DROP TABLE IF EXISTS [i18n_behavior_test_0_i18n];
 CREATE TABLE [i18n_behavior_test_0_i18n]
 (
     [custom_id] INTEGER NOT NULL,
-    [locale] VARCHAR(5) DEFAULT 'fr_FR' NOT NULL,
+    [locale] VARCHAR(255) DEFAULT 'fr_FR' NOT NULL,
     PRIMARY KEY ([custom_id],[locale])
 );
 EOF;
