@@ -121,7 +121,7 @@ class GeneratorConfig implements GeneratorConfigInterface
         // Basically, we want to turn ?.?.?.sqliteDataSQLBuilder into ?.?.?.SqliteDataSQLBuilder
         $lastdotpos = strrpos($classpath, '.');
         if ($lastdotpos !== false) {
-            $classpath{$lastdotpos + 1} = strtoupper($classpath{$lastdotpos + 1});
+            $classpath[$lastdotpos + 1] = strtoupper($classpath[$lastdotpos + 1]);
         } else {
             // Allows to configure full classname instead of a dot-path notation
             if (class_exists($classpath)) {
