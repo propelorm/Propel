@@ -285,7 +285,7 @@ class ModelCriteria extends Criteria
      * @param mixed  $value       A value for the condition
      * @param string $bindingType
      *
-     * @return ModelCriteria The current object, for fluid interface
+     * @return $this
      */
     public function where($clause, $value = null, $bindingType = null)
     {
