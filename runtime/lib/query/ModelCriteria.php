@@ -460,7 +460,7 @@ class ModelCriteria extends Criteria
      * Adds a DISTINCT clause to the query
      * Alias for Criteria::setDistinct()
      *
-     * @return ModelCriteria The current object, for fluid interface
+     * @return $this
      */
     public function distinct()
     {
@@ -475,7 +475,7 @@ class ModelCriteria extends Criteria
      *
      * @param int $limit Maximum number of results to return by the query
      *
-     * @return ModelCriteria The current object, for fluid interface
+     * @return $this
      */
     public function limit($limit)
     {
@@ -490,7 +490,7 @@ class ModelCriteria extends Criteria
      *
      * @param int $offset Offset of the first result to return
      *
-     * @return ModelCriteria The current object, for fluid interface
+     * @return $this
      */
     public function offset($offset)
     {
