@@ -519,7 +519,7 @@ class ModelCriteria extends Criteria
      *
      * @param mixed $columnArray A list of column names (e.g. array('Title', 'Category.Name', 'c.Content')) or a single column name (e.g. 'Name')
      *
-     * @return ModelCriteria The current object, for fluid interface
+     * @return $this
      *
      * @throws PropelException
      */
