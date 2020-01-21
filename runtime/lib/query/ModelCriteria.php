@@ -652,7 +652,7 @@ class ModelCriteria extends Criteria
      * @param string $relation Relation to use for the join
      * @param string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
      *
-     * @return ModelCriteria The current object, for fluid interface
+     * @return $this
      *
      * @throws PropelException
      */
@@ -920,7 +920,7 @@ class ModelCriteria extends Criteria
      *                           If no alias is provided, the clause is used as a column alias
      *                           This alias is used for retrieving the column via BaseObject::getVirtualColumn($alias)
      *
-     * @return ModelCriteria The current object, for fluid interface
+     * @return $this
      */
     public function withColumn($clause, $name = null)
     {
