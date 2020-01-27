@@ -306,4 +306,21 @@ class DBOracle extends DBAdapter
 FROM PLAN_TABLE CONNECT BY PRIOR ID = PARENT_ID AND PRIOR STATEMENT_ID = STATEMENT_ID
 START WITH ID = 0 AND STATEMENT_ID = \'%s\' ORDER BY ID', $uniqueId);
     }
+
+    /**
+     * Quote identifier only when needed
+     *
+     *  We don't like to quote aliases on Oracle, so this is how we get around it, quoting only when a dot/space is there
+     *
+     * @return string
+     */
+    public function quoteIdentifier($text)
+    {
+        if (ctype_alnum($text)) {
+            return $text;
+        }
+
+        return parent::quoteIdentifier($text);
+    }
+
 }

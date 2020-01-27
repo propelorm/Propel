@@ -29,9 +29,13 @@ class DBPostgresTest extends DBAdapterTestAbstract
     $this->assertEquals('EXPLAIN SELECT B.* FROM (SELECT A.*, rownum AS PROPEL_ROWNUM FROM (SELECT book.ID AS ORA_COL_ALIAS_0, book.TITLE AS ORA_COL_ALIAS_1, book.ISBN AS ORA_COL_ALIAS_2, book.PRICE AS ORA_COL_ALIAS_3, book.PUBLISHER_ID AS ORA_COL_ALIAS_4, book.AUTHOR_ID AS ORA_COL_ALIAS_5, author.ID AS ORA_COL_ALIAS_6, author.FIRST_NAME AS ORA_COL_ALIAS_7, author.LAST_NAME AS ORA_COL_ALIAS_8, author.EMAIL AS ORA_COL_ALIAS_9, author.AGE AS ORA_COL_ALIAS_10, book.PRICE AS BOOK_PRICE FROM book, author) A ) B WHERE  B.PROPEL_ROWNUM <= 1', $db->getExplainPlanQuery($query), 'getExplainPlanQuery() returns a SQL Explain query');
   }
 
-  public function testQuotingIdentifiers()
-  {
-    $db = new DBPostgres();
-    $this->assertEquals('"Book ISBN"', $db->quoteIdentifier('Book ISBN'));
-  }
+    public function testQuotingIdentifiers()
+    {
+        $db = new DBPostgres();
+
+        $this->assertEquals('"Book ISBN"', $db->quoteIdentifier('Book ISBN'));
+        $this->assertEquals('"propel.book"', $db->quoteIdentifier('propel.book'));
+        $this->assertEquals('"some$string"', $db->quoteIdentifier('some$string'));
+        $this->assertEquals('foo1', $db->quoteIdentifier('foo1'), 'identifier with alphanum only should not be quoted');
+    }
 }

@@ -249,4 +249,21 @@ class DBPostgres extends DBAdapter
     {
         return 'EXPLAIN ' . $query;
     }
+
+    /**
+     * Quote identifier only when needed
+     *
+     *  We don't like to quote aliases on Postgres, so this is how we get around it, quoting only when a dot/space is there
+     *
+     * @return string
+     */
+    public function quoteIdentifier($text)
+    {
+        if (ctype_alnum($text)) {
+            return $text;
+        }
+
+        return parent::quoteIdentifier($text);
+    }
+
 }
