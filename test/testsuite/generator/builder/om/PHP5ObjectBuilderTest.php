@@ -66,6 +66,24 @@ class PHP5ObjectBuilderTest extends PHPUnit_Framework_TestCase
     {
         $this->assertEquals('TYPE_PHPNAME', $this->builder->getDefaultKeyType());
     }
+
+    public function testBaseClassWithNamespace()
+    {
+	    // we need a class we can inherit, and that class must extend \BaseObject
+	    eval('namespace Foo\Bar;class Baz extends \BaseObject {}');
+
+	    $schema = <<<EOF
+<database name="simple_database">
+    <table name="inheriting_table" baseClass='Foo.Bar.Baz'>
+        <column name="id" required="true" primaryKey="true" autoIncrement="true" type="INTEGER" />
+    </table>
+</database>
+EOF;
+
+	    $builder = new PropelQuickBuilder();
+	    $builder->setSchema($schema);
+	    $builder->build(); // this call fatals without the code implementing namespaces
+    }
 }
 
 class TestablePHP5ObjectBuilder extends PHP5ObjectBuilder
@@ -74,4 +92,9 @@ class TestablePHP5ObjectBuilder extends PHP5ObjectBuilder
     {
         return parent::getDefaultValueString($col);
     }
+
+	  public function addClassOpen(&$script)
+	  {
+		  parent::addClassOpen($script);
+	  }
 }
