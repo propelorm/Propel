@@ -6,8 +6,5 @@ branches:
 
 services: docker
 
-before_install:
-  bash docker/run.sh
-
 script:
-  vendor/bin/phpunit
+  bash docker/run.sh
