@@ -18,7 +18,7 @@ require_once dirname(__FILE__) . '/../../../tools/helpers/DummyPlatforms.php';
  * @version    $Revision$
  * @package    generator.model
  */
-class DatabaseTest extends PHPUnit_Framework_TestCase
+class DatabaseTest extends \PHPUnit\Framework\TestCase
 {
     public function providerForTestHasTable()
     {

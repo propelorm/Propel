@@ -13,7 +13,7 @@ require_once dirname(__FILE__) . '/../../../../generator/lib/model/XMLElement.ph
 /**
  * @author William Durand <william.durand1@gmail.com>
  */
-class XMLElementTest extends PHPUnit_Framework_TestCase
+class XMLElementTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @dataProvider providerForGetDefaultValueForArray

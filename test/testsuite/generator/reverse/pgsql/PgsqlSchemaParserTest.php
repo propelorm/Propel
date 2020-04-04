@@ -26,9 +26,9 @@ require_once dirname(__FILE__) . '/../../../../../generator/lib/task/PropelConve
  * @version     $Revision$
  * @package     propel.generator.reverse.pgsql
  */
-class PgsqlSchemaParserTest extends PHPUnit_Framework_TestCase
+class PgsqlSchemaParserTest extends \PHPUnit\Framework\TestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->markTestSkipped('PGSQL unit test');
 
@@ -46,7 +46,7 @@ class PgsqlSchemaParserTest extends PHPUnit_Framework_TestCase
         $this->con->beginTransaction();
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         if ($this->con) {
             $this->con->rollback();

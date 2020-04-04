@@ -33,6 +33,7 @@ class NestedSetBehaviorObjectBuilderModifierWithScopeTest extends BookstoreNeste
      */
     public function testSaveRootInTreeWithExistingRootWithSameScope()
     {
+        $this->expectException(PropelException::class);
         Table10Peer::doDeleteAll();
         $t1 = new Table10();
         $t1->setScopeValue(1);
