@@ -24,6 +24,7 @@ cache:
 
 install:
   - composer self-update
+  - wget https://phar.phpunit.de/phpunit-5.7.phar -O phpunit.phar
 
 before_script:
   # MySQL
@@ -35,7 +36,7 @@ before_script:
 
   - ./test/reset_tests.sh
 
-script: phpunit
+script: phpunit.phar
 
 matrix:
   allow_failures:
