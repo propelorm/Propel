@@ -1,6 +1,19 @@
 # Changelog Of The Propel 1.x Branch #
 
-## 2019-05-30: Version 1.8.1
+## 2020-03-01: Version 1.8.5
+
+- [#7](https://github.com/rock-symphony/propel-orm/pull/7) Fix PHP 7.3 compatibility
+- Drop PEAR-related functionality
+
+## 2019-12-31: Version 1.8.4
+
+- ee7aacc7 Fix composer.json error
+
+## 2019-12-31: Version 1.8.3
+
+- 18c70f40 Fix unneeded write to `collXxxPartial` for cross-ref relations [#6](https://github.com/rock-symphony/propel-orm/issues/6)
+
+## 2019-05-30: Version 1.8.2
 
 - e9680864 Fix PHP 7.3 compatibility (count uncountable warning)
 
