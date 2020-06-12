@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__.'/../../../fixtures/generator/behavior/Foobar.php';
 
-class NamespacedBehaviorTest extends PHPUnit_Framework_TestCase
+class NamespacedBehaviorTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * test if issue 425 is resolved

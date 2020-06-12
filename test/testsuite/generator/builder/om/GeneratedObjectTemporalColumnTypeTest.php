@@ -18,9 +18,9 @@ require_once dirname(__FILE__) . '/../../../../../runtime/lib/Propel.php';
  * @author     Francois Zaninotto
  * @package    generator.builder.om
  */
-class GeneratedObjectTemporalColumnTypeTest extends PHPUnit_Framework_TestCase
+class GeneratedObjectTemporalColumnTypeTest extends \PHPUnit\Framework\TestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         if (!class_exists('ComplexColumnTypeEntity5')) {
             $schema = <<<EOF
@@ -73,6 +73,7 @@ EOF;
      */
     public function testInvalidValueThrowsPropelException()
     {
+        $this->expectException(PropelException::class);
         $r = new ComplexColumnTypeEntity5();
         $r->setBar1("Invalid Date");
     }

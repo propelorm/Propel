@@ -16,7 +16,7 @@ require_once dirname(__FILE__) . '/../../../../../generator/lib/builder/util/Pro
  * @version    $Revision$
  * @package    generator.builder.util
  */
-class PropelTemplateTest extends PHPUnit_Framework_TestCase
+class PropelTemplateTest extends \PHPUnit\Framework\TestCase
 {
     public function testRenderStringNoParam()
     {
