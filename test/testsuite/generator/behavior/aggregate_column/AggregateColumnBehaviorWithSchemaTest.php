@@ -20,14 +20,14 @@ require_once dirname(__FILE__) . '/../../../../tools/helpers/schemas/SchemasTest
  */
 class AggregateColumnBehaviorWithSchemaTest extends SchemasTestBase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->con = Propel::getConnection(BookstoreSchemasBookstorePeer::DATABASE_NAME);
         $this->con->beginTransaction();
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         $this->con->commit();
         parent::tearDown();

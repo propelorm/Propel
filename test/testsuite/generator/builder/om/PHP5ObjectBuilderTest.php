@@ -21,11 +21,11 @@ require_once dirname(__FILE__) . '/../../../../../generator/lib/model/ColumnDefa
  * @version    $Id$
  * @package    generator.builder.om
  */
-class PHP5ObjectBuilderTest extends PHPUnit_Framework_TestCase
+class PHP5ObjectBuilderTest extends \PHPUnit\Framework\TestCase
 {
     protected $builder;
 
-    public function setUp()
+    public function setUp(): void
     {
         $builder = new TestablePHP5ObjectBuilder(new Table('Foo'));
         $builder->setPlatform(new MysqlPlatform());

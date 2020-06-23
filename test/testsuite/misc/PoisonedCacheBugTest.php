@@ -25,7 +25,7 @@ class PoisonedCacheBugTest extends BookstoreTestBase
      */
     private $books;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -54,7 +54,7 @@ class PoisonedCacheBugTest extends BookstoreTestBase
         AuthorPeer::clearInstancePool();
     }
 
-    public function testSetUp()
+    public function testsetUp(): void
     {
         $this->assertTrue(Propel::isInstancePoolingEnabled());
 

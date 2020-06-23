@@ -1,36 +1,10 @@
 language: php
-dist: trusty
 
 branches:
   only:
-    - 1.6
-    - master
-    - gh-pages
+    - php7.4
 
-php:
-  - 5.4
-  - 5.5
-  - hhvm
+services: docker
 
-env:
-  - DB=mysql DB_USER=root
-
-before_script:
-  # MySQL
-  - sh -c "if [ '$DB' = 'mysql' ]; then mysql -e 'SET FOREIGN_KEY_CHECKS = 0; DROP DATABASE IF EXISTS test; DROP SCHEMA IF EXISTS second_hand_books; DROP SCHEMA IF EXISTS contest; DROP DATABASE IF EXISTS reverse_bookstore; DROP SCHEMA IF EXISTS bookstore_schemas; SET FOREIGN_KEY_CHECKS = 1;'; fi"
-  - sh -c "if [ '$DB' = 'mysql' ]; then mysql -e 'CREATE DATABASE test; CREATE SCHEMA bookstore_schemas; CREATE SCHEMA contest; CREATE SCHEMA second_hand_books; CREATE DATABASE reverse_bookstore;'; fi"
-
-  # Composer
-  - wget http://getcomposer.org/composer.phar
-  - php composer.phar install --prefer-source
-
-  - ./test/reset_tests.sh
-
-script: vendor/bin/phpunit
-
-matrix:
-  include:
-    - php: 5.3
-      dist: precise
-  allow_failures:
-    - php: hhvm
+script:
+  bash docker/run.sh
