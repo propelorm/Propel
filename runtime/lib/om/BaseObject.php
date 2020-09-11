@@ -236,7 +236,9 @@ abstract class BaseObject
     /**
      * Code to be run after object hydration
      *
-     * @param PropelPDO $con
+     * @param array $row
+     * @param int $startcol
+     * @param bool $rehydrate
      */
     public function postHydrate($row, $startcol = 0, $rehydrate = false)
     {
