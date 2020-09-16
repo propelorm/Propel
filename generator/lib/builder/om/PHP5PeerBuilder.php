@@ -1203,7 +1203,7 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
         if ($table->hasCompositePrimaryKey()) {
             $script .= "
 
-        return array(" . implode($pks, ', ') . ");";
+        return array(" . implode(', ', $pks) . ");";
         } else {
             $script .= "
 
