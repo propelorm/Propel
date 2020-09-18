@@ -14,7 +14,7 @@ require_once dirname(__FILE__) . '/../../../../generator/lib/util/PropelPHPParse
  *
  * @package    generator.util
  */
-class PropelPHPParserTest extends PHPUnit_Framework_TestCase
+class PropelPHPParserTest extends \PHPUnit\Framework\TestCase
 {
     public function basicClassCodeProvider()
     {

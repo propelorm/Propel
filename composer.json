@@ -14,12 +14,15 @@
   },
   "include-path": ["runtime/lib", "generator/lib"],
   "require": {
-    "php": ">=5.2.4",
+    "php": "^7.1",
     "phing/phing": "~2.4"
+
   },
   "require-dev": {
     "pear-pear.php.net/pear_packagefilemanager2" : "@stable",
-    "phpunit/phpunit": "~4.0||~5.0"
+    "phpunit/phpunit": "~8|~9",
+    "phpcompatibility/php-compatibility": "^9.3",
+    "squizlabs/php_codesniffer": "^3.5"
   },
   "repositories": [
     {
@@ -27,5 +30,9 @@
       "url": "https://pear.php.net"
     }
   ],
-  "bin": ["generator/bin/propel-gen", "generator/bin/propel-gen.bat"]
+  "bin": ["generator/bin/propel-gen", "generator/bin/propel-gen.bat"],
+  "scripts": {
+    "post-install-cmd": "\"vendor/bin/phpcs\" --config-set installed_paths vendor/phpcompatibility/php-compatibility",
+    "post-update-cmd" : "\"vendor/bin/phpcs\" --config-set installed_paths vendor/phpcompatibility/php-compatibility"
+  }
 }

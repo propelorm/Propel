@@ -3,15 +3,17 @@ language: php
 services:
   - mysql
 
+#services: docker
+
 branches:
   only:
     - master
 
 php:
-  - 5.6
   - 7.0
   - 7.1
   - 7.2
+  - 7.4
 
 env:
   - DB=mysql DB_USER=root
@@ -29,3 +31,5 @@ before_script:
 
 script: vendor/bin/phpunit
 
+#script:
+#  bash docker/run.sh

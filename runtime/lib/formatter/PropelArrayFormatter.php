@@ -32,14 +32,21 @@ class PropelArrayFormatter extends PropelFormatter
         } else {
             $collection = array();
         }
+
+        /**
+         * @var $collection PropelArrayCollection
+         */
+
         if ($this->isWithOneToMany() && $this->hasLimit) {
             throw new PropelException('Cannot use limit() in conjunction with with() on a one-to-many relationship. Please remove the with() call, or the limit() call.');
         }
-        $items = [];
+
+        $data = [];
+
         while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
             $object = &$this->getStructuredArrayFromRow($row);
             if ($object) {
-                $items[] =& $object;
+                $data[] = &$object;
             }
         }
 
@@ -49,6 +56,8 @@ class PropelArrayFormatter extends PropelFormatter
         $this->currentObjects = array();
         $this->alreadyHydratedObjects = array();
         $stmt->closeCursor();
+
+        $collection->setData($data);
 
         return $collection;
     }

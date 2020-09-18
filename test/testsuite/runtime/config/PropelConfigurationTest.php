@@ -17,7 +17,7 @@ require_once dirname(__FILE__) . '/../../../../runtime/lib/config/PropelConfigur
  * @author     Francois Zaninotto
  * @package    runtime.config
  */
-class PropelConfigurationTest extends PHPUnit_Framework_TestCase
+class PropelConfigurationTest extends \PHPUnit\Framework\TestCase
 {
     public static function configurationProvider()
     {
