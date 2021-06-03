@@ -53,7 +53,7 @@ class RelationMap
     /**
      * Constructor.
      *
-     * @param      string $name Name of the relation.
+     * @param string $name Name of the relation.
      */
     public function __construct($name)
     {
@@ -63,7 +63,7 @@ class RelationMap
     /**
      * Get the name of this relation.
      *
-     * @return     string The name of the relation.
+     * @return string The name of the relation.
      */
     public function getName()
     {
@@ -78,7 +78,7 @@ class RelationMap
     /**
      * Get the plural name of this relation.
      *
-     * @return     string The plural name of the relation.
+     * @return string The plural name of the relation.
      */
     public function getPluralName()
     {
@@ -88,7 +88,7 @@ class RelationMap
     /**
      * Set the type
      *
-     * @param      integer $type The relation type (either self::MANY_TO_ONE, self::ONE_TO_MANY, or self::ONE_TO_ONE)
+     * @param integer $type The relation type (either self::MANY_TO_ONE, self::ONE_TO_MANY, or self::ONE_TO_ONE)
      */
     public function setType($type)
     {
@@ -98,7 +98,7 @@ class RelationMap
     /**
      * Get the type
      *
-     * @return      integer the relation type
+     * @return integer the relation type
      */
     public function getType()
     {
@@ -108,7 +108,7 @@ class RelationMap
     /**
      * Set the local table
      *
-     * @param      TableMap $table The local table for this relationship
+     * @param TableMap $table The local table for this relationship
      */
     public function setLocalTable($table)
     {
@@ -118,7 +118,7 @@ class RelationMap
     /**
      * Get the local table
      *
-     * @return      TableMap The local table for this relationship
+     * @return TableMap The local table for this relationship
      */
     public function getLocalTable()
     {
@@ -128,7 +128,7 @@ class RelationMap
     /**
      * Set the foreign table
      *
-     * @param      TableMap $table The foreign table for this relationship
+     * @param TableMap $table The foreign table for this relationship
      */
     public function setForeignTable($table)
     {
@@ -138,7 +138,7 @@ class RelationMap
     /**
      * Get the foreign table
      *
-     * @return    TableMap The foreign table for this relationship
+     * @return TableMap The foreign table for this relationship
      */
     public function getForeignTable()
     {
@@ -148,7 +148,7 @@ class RelationMap
     /**
      * Get the left table of the relation
      *
-     * @return    TableMap The left table for this relationship
+     * @return TableMap The left table for this relationship
      */
     public function getLeftTable()
     {
@@ -158,7 +158,7 @@ class RelationMap
     /**
      * Get the right table of the relation
      *
-     * @return    TableMap The right table for this relationship
+     * @return TableMap The right table for this relationship
      */
     public function getRightTable()
     {
@@ -168,8 +168,8 @@ class RelationMap
     /**
      * Add a column mapping
      *
-     * @param   ColumnMap $local The local column
-     * @param   ColumnMap $foreign The foreign column
+     * @param ColumnMap $local   The local column
+     * @param ColumnMap $foreign The foreign column
      */
     public function addColumnMapping(ColumnMap $local, ColumnMap $foreign)
     {
@@ -183,7 +183,7 @@ class RelationMap
      *  - If the value is RelationMap::LOCAL_TO_FOREIGN, then the returned array is local => foreign
      *  - If the value is RelationMap::LEFT_TO_RIGHT, then the returned array is left => right
      *
-     * @param  int   $direction How the associative array must return columns
+     * @param int $direction How the associative array must return columns
      *
      * @return Array Associative array (local => foreign) of fully qualified column names
      */
@@ -227,7 +227,7 @@ class RelationMap
     /**
      * Get the local columns
      *
-     * @return      Array list of ColumnMap objects
+     * @return Array list of ColumnMap objects
      */
     public function getLocalColumns()
     {
@@ -237,7 +237,7 @@ class RelationMap
     /**
      * Get the foreign columns
      *
-     * @return      Array list of ColumnMap objects
+     * @return Array list of ColumnMap objects
      */
     public function getForeignColumns()
     {
@@ -267,7 +267,7 @@ class RelationMap
     /**
      * Set the onUpdate behavior
      *
-     * @param      string $onUpdate
+     * @param string $onUpdate
      */
     public function setOnUpdate($onUpdate)
     {
@@ -277,7 +277,7 @@ class RelationMap
     /**
      * Get the onUpdate behavior
      *
-     * @return      integer the relation type
+     * @return integer the relation type
      */
     public function getOnUpdate()
     {
@@ -287,7 +287,7 @@ class RelationMap
     /**
      * Set the onDelete behavior
      *
-     * @param      string $onDelete
+     * @param string $onDelete
      */
     public function setOnDelete($onDelete)
     {
@@ -297,7 +297,7 @@ class RelationMap
     /**
      * Get the onDelete behavior
      *
-     * @return      integer the relation type
+     * @return integer the relation type
      */
     public function getOnDelete()
     {
@@ -307,7 +307,7 @@ class RelationMap
     /**
      * Gets the symmetrical relation
      *
-     * @return    RelationMap
+     * @return RelationMap
      *
      * @throws PropelException
      */

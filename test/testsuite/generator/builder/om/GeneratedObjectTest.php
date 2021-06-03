@@ -101,6 +101,48 @@ class GeneratedObjectTest extends BookstoreTestBase
         $this->assertTrue($acct->isModified());
     }
 
+
+    public function testTypeHintingValues()
+    {
+        $test_name = 'test name';
+        $a = new Author();
+        $a2 = new Author();
+        $a2->setFirstName($test_name);
+
+
+        $a->setAge(2);
+        $this->assertEquals(2, $a->getAge());
+        $this->assertTrue(is_int($a->getAge()));
+
+
+        $a->clear();
+        $a->setAge('2');
+        $this->assertEquals(2, $a->getAge());
+        $this->assertTrue(is_int($a->getAge()));
+
+
+        $a->clear();
+        $a->setAge('wrong integer');
+        $this->assertTrue(!is_int($a->getAge()));
+
+
+        $a->clear();
+        $a->setFirstName($test_name);
+        $this->assertEquals($test_name, $a->getFirstName());
+        $this->assertTrue(is_string($a->getFirstName()));
+
+
+        $a->clear();
+        $a->setFirstName($a2);
+        $this->assertTrue(is_string($a->getFirstName()));
+        $this->assertEquals($a->getFirstName(), (string) $a2);
+
+
+        $a->clear();
+        $a->setFirstName(true);
+        $this->assertTrue(is_string($a->getFirstName()));
+    }
+
     /**
      * Tests the use of default expressions and the reloadOnInsert and reloadOnUpdate attributes.
      *
@@ -870,6 +912,13 @@ class GeneratedObjectTest extends BookstoreTestBase
         );
         $this->assertEquals($expectedKeys, array_keys($arr1), 'toArray() returns an associative array with BasePeer::TYPE_PHPNAME keys by default');
         $this->assertEquals('Don Juan', $arr1['Title'], 'toArray() returns an associative array representation of the object');
+    }
+
+    public function testToArrayWithColumn()
+    {
+        $book = BookQuery::create()->withColumn('Title', 'TitleCopy')->findOne();
+        $bookArray = $book->toArray();
+        $this->assertEquals($book->getTitleCopy(), $bookArray['TitleCopy']);
     }
 
     public function testToArrayKeyType()

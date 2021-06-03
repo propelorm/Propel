@@ -61,14 +61,12 @@ class SoftDeleteBehavior extends Behavior
  */
 public function forceDelete(PropelPDO \$con = null)
 {
-    if (\$isSoftDeleteEnabled = {$peerClassName}::isSoftDeleteEnabled()) {
-        {$peerClassName}::disableSoftDelete();
+    if (\$isSoftDeleteEnabled = {$peerClassName}::isSoftDeleteEnabled()) { {$peerClassName}::disableSoftDelete();
     }
 
     \$this->delete(\$con);
 
-    if (\$isSoftDeleteEnabled) {
-        {$peerClassName}::enableSoftDelete();
+    if (\$isSoftDeleteEnabled) { {$peerClassName}::enableSoftDelete();
     }
 }
 ";
@@ -96,7 +94,7 @@ public function unDelete(PropelPDO \$con = null)
         $script = "if (!empty(\$ret) && {$builder->getStubQueryBuilder()->getClassname()}::isSoftDeleteEnabled()) {";
 
         // prevent updated_at from changing when using a timestampable behavior
-        if ($this->getTable()->hasBehavior('timestampable')) {
+        if ($this->getTable()->hasBehavior('timestampable') && ($this->getTable()->getBehavior('timestampable')->getParameter('disable_updated_at') === 'false')) {
             $script .= "
     \$this->keepUpdateDateUnchanged();";
         }

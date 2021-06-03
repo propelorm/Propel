@@ -142,7 +142,7 @@ DROP TABLE IF EXISTS " . $this->quoteIdentifier($table->getName()) . ";
     /**
      * Escape the string for RDBMS.
      *
-     * @param  string $text
+     * @param string $text
      *
      * @return string
      */

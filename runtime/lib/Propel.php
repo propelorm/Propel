@@ -22,7 +22,6 @@
  * @author     Martin Poeschl <mpoeschl@marmot.at> (Torque)
  * @author     Henning P. Schmiedehausen <hps@intermeta.de> (Torque)
  * @author     Kurt Schrader <kschrader@karmalab.org> (Torque)
- * @version    $Revision$
  * @package    propel.runtime
  */
 class Propel
@@ -30,7 +29,7 @@ class Propel
     /**
      * The Propel version.
      */
-    const VERSION = '1.7.0-dev';
+    const VERSION = '1.7.3-dev';
 
     /**
      * A constant for <code>default</code>.
@@ -649,7 +648,7 @@ class Propel
      */
     public static function initConnection($conparams, $name, $defaultClass = Propel::CLASS_PROPEL_PDO)
     {
-        $adapter = self::getDB($name);
+        $adapter = isset($conparams['adapter']) ? DBAdapter::factory($conparams['adapter']) : self::getDB($name);
 
         if (null === $conparams['dsn']) {
             throw new PropelException('No dsn specified in your connection parameters for datasource [' . $name . ']');
@@ -851,7 +850,7 @@ class Propel
      * classname of a validator in the schema.xml.  This method will attempt to include that
      * class via autoload and then relative to a location on the include_path.
      *
-     * @param  string $class dot-path to clas (e.g. path.to.my.ClassName).
+     * @param string $class dot-path to clas (e.g. path.to.my.ClassName).
      *
      * @return string unqualified classname
      *
@@ -944,5 +943,5 @@ Propel::initBaseDir();
 spl_autoload_register(array('Propel', 'autoload'));
 
 if (version_compare(PHP_VERSION, '5.3.0', '<')) {
-    require_once __DIR__ . '/../stubs/functions.php';
+    require_once dirname(__FILE__) . '/../stubs/functions.php';
 }

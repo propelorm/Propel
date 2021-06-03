@@ -265,6 +265,45 @@ class PropelDatabaseTableComparatorTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(array('Foo_Table' => $tableDiff), $databaseDiff->getModifiedTables());
     }
 
+    public function testCompareModifiedTableSkipSql()
+    {
+        $d1 = new Database();
+        $t1 = new Table('Foo_Table');
+        $c1 = new Column('Foo');
+        $c1->getDomain()->copy($this->platform->getDomainForType('DOUBLE'));
+        $c1->getDomain()->replaceScale(2);
+        $c1->getDomain()->replaceSize(3);
+        $c1->setNotNull(true);
+        $c1->getDomain()->setDefaultValue(new ColumnDefaultValue(123, ColumnDefaultValue::TYPE_VALUE));
+        $t1->addColumn($c1);
+        $c2 = new Column('Foo2');
+        $c2->getDomain()->copy($this->platform->getDomainForType('INTEGER'));
+        $t1->addColumn($c2);
+        $t1->setSkipSql(true);
+        $d1->addTable($t1);
+        $t2 = new Table('Bar');
+        $d1->addTable($t2);
+
+        $d2 = new Database();
+        $t3 = new Table('Foo_Table');
+        $c3 = new Column('Foo');
+        $c3->getDomain()->copy($this->platform->getDomainForType('DOUBLE'));
+        $c3->getDomain()->replaceScale(2);
+        $c3->getDomain()->replaceSize(3);
+        $c3->setNotNull(true);
+        $c3->getDomain()->setDefaultValue(new ColumnDefaultValue(123, ColumnDefaultValue::TYPE_VALUE));
+        $t3->addColumn($c3);
+        $d2->addTable($t3);
+        $t4 = new Table('Bar');
+        $d2->addTable($t4);
+
+        $dc = new PropelDatabaseComparator();
+        $dc->setFromDatabase($d1);
+        $dc->setToDatabase($d2);
+        $nbDiffs = $dc->compareTables();
+        $this->assertEquals(0, $nbDiffs);
+    }
+
     public function testCompareRenamedTable()
     {
         $d1 = new Database();
@@ -358,6 +397,54 @@ class PropelDatabaseTableComparatorTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(array('Baz' => $t11), $databaseDiff->getRemovedTables());
         $tableDiff = PropelTableComparator::computeDiff($t1, $t3);
         $this->assertEquals(array('Foo_Table' => $tableDiff), $databaseDiff->getModifiedTables());
+    }
+
+    public function testCompareSeveralRenamedSameTables()
+    {
+        $d1 = new Database();
+        $t1 = new Table('table1');
+        $c1 = new Column('col1');
+        $c1->getDomain()->copy($this->platform->getDomainForType('INTEGER'));
+        $t1->addColumn($c1);
+        $d1->addTable($t1);
+        $t2 = new Table('table2');
+        $c2 = new Column('col1');
+        $c2->getDomain()->copy($this->platform->getDomainForType('INTEGER'));
+        $t2->addColumn($c2);
+        $d1->addTable($t2);
+        $t3 = new Table('table3');
+        $c3 = new Column('col1');
+        $c3->getDomain()->copy($this->platform->getDomainForType('INTEGER'));
+        $t3->addColumn($c3);
+        $d1->addTable($t3);
+
+        $d2 = new Database();
+        $t4 = new Table('table4');
+        $c4 = new Column('col1');
+        $c4->getDomain()->copy($this->platform->getDomainForType('INTEGER'));
+        $t4->addColumn($c4);
+        $d2->addTable($t4);
+        $t5 = new Table('table5');
+        $c5 = new Column('col1');
+        $c5->getDomain()->copy($this->platform->getDomainForType('INTEGER'));
+        $t5->addColumn($c5);
+        $d2->addTable($t5);
+        $t6 = new Table('table3');
+        $c6 = new Column('col1');
+        $c6->getDomain()->copy($this->platform->getDomainForType('INTEGER'));
+        $t6->addColumn($c6);
+        $d2->addTable($t6);
+
+        $dc = new PropelDatabaseComparator();
+        $dc->setFromDatabase($d1);
+        $dc->setToDatabase($d2);
+        $nbDiffs = $dc->compareTables();
+        $databaseDiff = $dc->getDatabaseDiff();
+        $this->assertEquals(2, $nbDiffs);
+        $this->assertEquals(2, count($databaseDiff->getRenamedTables()));
+        $this->assertEquals(array('table1' => 'table4', 'table2' => 'table5'), $databaseDiff->getRenamedTables());
+        $this->assertEquals(array(), $databaseDiff->getAddedTables());
+        $this->assertEquals(array(), $databaseDiff->getRemovedTables());
     }
 
 }

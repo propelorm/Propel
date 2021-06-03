@@ -43,7 +43,7 @@ class PropelConfiguration implements ArrayAccess
     /**
      * @see       http://www.php.net/ArrayAccess
      *
-     * @param  integer $offset
+     * @param integer $offset
      *
      * @return boolean
      */
@@ -67,7 +67,7 @@ class PropelConfiguration implements ArrayAccess
     /**
      * @see       http://www.php.net/ArrayAccess
      *
-     * @param  integer $offset
+     * @param integer $offset
      *
      * @return array
      */
@@ -147,7 +147,7 @@ class PropelConfiguration implements ArrayAccess
     /**
      * @throws PropelException
      *
-     * @param  integer $type
+     * @param integer $type
      *
      * @return mixed
      */

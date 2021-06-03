@@ -316,7 +316,7 @@ USING INDEX
     /**
      * Builds the DDL SQL to add an Index.
      *
-     * @param  Index  $index
+     * @param Index $index
      *
      * @return string
      */
@@ -383,5 +383,15 @@ CREATE %sINDEX %s ON %s (%s)%s;
         );
 
         return preg_replace('/^/m', $tab, $script);
+    }
+
+    public function getDefaultFKOnDeleteBehavior()
+    {
+        return ForeignKey::NOACTION;
+    }
+
+    public function getDefaultFKOnUpdateBehavior()
+    {
+        return ForeignKey::NOACTION;
     }
 }

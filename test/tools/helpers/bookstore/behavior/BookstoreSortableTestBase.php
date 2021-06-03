@@ -165,7 +165,7 @@ abstract class BookstoreSortableTestBase extends BookstoreTestBase
     protected function getFixturesArrayWithScope($scope = null)
     {
         $c = new Criteria();
-        $c->add(Table12Peer::SCOPE_COL, $scope);
+        Table12Peer::sortableApplyScopeCriteria($c, $scope);
         $c->addAscendingOrderByColumn(Table12Peer::RANK_COL);
         $ts = Table12Peer::doSelect($c);
         $ret = array();
@@ -179,7 +179,7 @@ abstract class BookstoreSortableTestBase extends BookstoreTestBase
     protected function getFixturesArrayWithFkScope($scope = null)
     {
         $c = new Criteria();
-        $c->add(FkScopeTablePeer::SCOPE_COL, $scope);
+        FkScopeTablePeer::sortableApplyScopeCriteria($c, $scope);
         $c->addAscendingOrderByColumn(FkScopeTablePeer::RANK_COL);
         $ts = FkScopeTablePeer::doSelect($c);
         $ret = array();

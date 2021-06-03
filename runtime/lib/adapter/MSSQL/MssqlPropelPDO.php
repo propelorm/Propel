@@ -128,7 +128,7 @@ class MssqlPropelPDO extends PropelPDO
     }
 
     /**
-     * @param  string  $seqname
+     * @param string $seqname
      *
      * @return integer
      */
@@ -140,7 +140,7 @@ class MssqlPropelPDO extends PropelPDO
     }
 
     /**
-     * @param  string $text
+     * @param string $text
      *
      * @return string
      */

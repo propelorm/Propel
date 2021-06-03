@@ -106,8 +106,8 @@ class XmlToDataSQL extends AbstractHandler
     /**
      * Transform the data dump input file into SQL and writes it to the output stream.
      *
-     * @param  PhingFile      $xmlFile
-     * @param  Writer         $out
+     * @param PhingFile $xmlFile
+     * @param Writer    $out
      *
      * @throws BuildException
      */

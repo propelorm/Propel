@@ -1418,7 +1418,7 @@ protected function moveSubtreeTo(\$destLeft, \$levelDelta" . ($this->behavior->u
         $peerClassname::updateLoadedNodes(null, \$con);
 
         \$con->commit();
-    } catch (PropelException \$e) {
+    } catch (Exception \$e) {
         \$con->rollback();
         throw \$e;
     }
@@ -1484,6 +1484,7 @@ public function deleteDescendants(PropelPDO \$con = null)
 
     protected function addGetIterator(&$script)
     {
+        $this->builder->declareClassNamespace('NestedSetRecursiveIterator');
         $script .= "
 /**
  * Returns a pre-order iterator for this node and its children.

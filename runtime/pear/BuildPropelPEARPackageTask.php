@@ -162,7 +162,7 @@ class BuildPropelPEARPackageTask extends MatchingTask
     /**
      * Set the version we are building.
      *
-     * @param  string $v
+     * @param string $v
      *
      * @return void
      */
@@ -174,7 +174,7 @@ class BuildPropelPEARPackageTask extends MatchingTask
     /**
      * Set the state we are building.
      *
-     * @param  string $v
+     * @param string $v
      *
      * @return void
      */
@@ -186,7 +186,7 @@ class BuildPropelPEARPackageTask extends MatchingTask
     /**
      * Sets release notes field.
      *
-     * @param  string $v
+     * @param string $v
      *
      * @return void
      */
@@ -198,7 +198,7 @@ class BuildPropelPEARPackageTask extends MatchingTask
     /**
      * Sets "dir" property from XML.
      *
-     * @param  PhingFile $f
+     * @param PhingFile $f
      *
      * @return void
      */

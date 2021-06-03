@@ -66,10 +66,10 @@ abstract class XMLElement
      * Gets a particular attribute by [case-insensitive] name.
      * If attribute is not set then the $defaultValue is returned.
      *
-     * @param  string $name         The [case-insensitive] name of the attribute to lookup.
-     * @param  mixed  $defaultValue The default value to use in case the attribute is not set.
+     * @param string $name         The [case-insensitive] name of the attribute to lookup.
+     * @param mixed  $defaultValue The default value to use in case the attribute is not set.
      *
-     * @return mixed  The value of the attribute or $defaultValue if not set.
+     * @return mixed The value of the attribute or $defaultValue if not set.
      */
     public function getAttribute($name, $defaultValue = null)
     {
@@ -127,7 +127,7 @@ abstract class XMLElement
     /**
      * Sets an associated VendorInfo object.
      *
-     * @param  mixed      $data VendorInfo object or XML attrib data (array)
+     * @param mixed $data VendorInfo object or XML attrib data (array)
      *
      * @return VendorInfo
      */
@@ -167,9 +167,9 @@ abstract class XMLElement
      * If not found, tries to autoload [Bname]Behavior
      * If no success, returns 'Behavior'
      *
-     * @param  string $bname behavior name, e.g. 'timestampable'
+     * @param string $bname behavior name, e.g. 'timestampable'
      *
-     * @return string        behavior class name, e.g. 'TimestampableBehavior'
+     * @return string behavior class name, e.g. 'TimestampableBehavior'
      *
      * @throws InvalidArgumentException
      */

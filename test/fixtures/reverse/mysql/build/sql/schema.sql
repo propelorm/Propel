@@ -1,10 +1,12 @@
+SET NAMES utf8;
+
 DROP TABLE IF EXISTS book;
 DROP VIEW IF EXISTS view_book_titles;
 
 CREATE TABLE book
 (
     id INTEGER NOT NULL AUTO_INCREMENT COMMENT 'Book Id',
-    title VARCHAR(255) NOT NULL COMMENT 'Book Title',
+    title VARCHAR(255) NOT NULL COMMENT 'Book Title with accent éài',
     isbn VARCHAR(24) NOT NULL COMMENT 'ISBN Number',
     price FLOAT COMMENT 'Price of the book.',
     PRIMARY KEY (id)

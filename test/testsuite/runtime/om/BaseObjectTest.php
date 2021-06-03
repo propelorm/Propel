@@ -60,6 +60,26 @@ class BaseObjectTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('baz', $b->getVirtualColumn('foo'), 'setVirtualColumn() can modify the value of an existing virtual column');
         $this->assertEquals($b, $b->setVirtualColumn('foo', 'bar'), 'setVirtualColumn() returns the current object');
     }
+
+    public function testSetNewReturnsSelf()
+    {
+        $b = new TestableBaseObject();
+        $this->assertInstanceOf('TestableBaseObject', $b->setNew(false));
+        $this->assertInstanceOf('TestableBaseObject', $b->setNew(true));
+    }
+
+    public function testSetDeletedReturnsSelf()
+    {
+        $b = new TestableBaseObject();
+        $this->assertInstanceOf('TestableBaseObject', $b->setDeleted(false));
+        $this->assertInstanceOf('TestableBaseObject', $b->setDeleted(true));
+    }
+
+    public function testResetModifiedReturnsSelf()
+    {
+        $b = new TestableBaseObject();
+        $this->assertInstanceOf('TestableBaseObject', $b->resetModified());
+    }
 }
 
 class TestableBaseObject extends BaseObject

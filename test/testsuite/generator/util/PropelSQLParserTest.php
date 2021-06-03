@@ -99,18 +99,22 @@ class PropelSQLParserTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(array(), $parser->explodeIntoStatements());
     }
 
-    /**
-     * @expectedException PropelException
-     */
     public function testDelimiterMultipleCharacters()
     {
-        // multiple characters are not supported for now
         $parser = new PropelSQLParser();
         $parser->setSQL('DELIMITER ||');
-        $parser->explodeIntoStatements();
+        $this->assertEquals(array(), $parser->explodeIntoStatements());
+
+        $parser = new PropelSQLParser();
+        $parser->setSQL('DELIMITER |||');
+        $this->assertEquals(array(), $parser->explodeIntoStatements());
+
+        $parser = new PropelSQLParser();
+        $parser->setSQL('DELIMITER ////');
+        $this->assertEquals(array(), $parser->explodeIntoStatements());
     }
 
-    public function delimiterExplodeIntoStatementsDataProvider()
+    public function singleDelimiterExplodeIntoStatementsDataProvider()
     {
         return array(
             array("delimiter |", array()),
@@ -127,10 +131,95 @@ class PropelSQLParserTest extends PHPUnit_Framework_TestCase
             array("DELIMITER |\n".'foo"\"|"bar;'."\nDELIMITER ;\nbaz", array('foo"\"|"bar;', 'baz')),
         );
     }
+
     /**
-     * @dataProvider delimiterExplodeIntoStatementsDataProvider
+     * @dataProvider singleDelimiterExplodeIntoStatementsDataProvider
      */
-    public function testDelimiterExplodeIntoStatements($input, $output)
+    public function testSingleDelimiterExplodeIntoStatements($input, $output)
+    {
+        $parser = new PropelSQLParser();
+        $parser->setSQL($input);
+        $this->assertEquals($output, $parser->explodeIntoStatements());
+    }
+
+    public function twoCharDelimiterExplodeIntoStatementsDataProvider()
+    {
+        return array(
+            array("delimiter ||", array()),
+            array("DELIMITER ||", array()),
+            array("foo;\nDELIMITER ||", array('foo')),
+            array("foo;\nDELIMITER ||\nbar", array('foo', 'bar')),
+            array("foo;\nDELIMITER ||\nbar;", array('foo', 'bar;')),
+            array("foo;\nDELIMITER ||\nbar;\nbaz;", array('foo', "bar;\nbaz;")),
+            array("foo;\nDELIMITER ||\nbar;\nbaz;\nDELIMITER ;", array('foo', "bar;\nbaz;")),
+            array("foo;\nDELIMITER ||\nbar;\nbaz;\nDELIMITER ;\nqux", array('foo', "bar;\nbaz;", 'qux')),
+            array("foo;\nDELIMITER ||\nbar;\nbaz;\nDELIMITER ;\nqux;", array('foo', "bar;\nbaz;", 'qux')),
+            array("DELIMITER ||\n".'foo"||"bar;'."\nDELIMITER ;\nbaz", array('foo"||"bar;', 'baz')),
+            array("DELIMITER ||\n".'foo\'||\'bar;'."\nDELIMITER ;\nbaz", array('foo\'||\'bar;', 'baz')),
+            array("DELIMITER ||\n".'foo"\"||"bar;'."\nDELIMITER ;\nbaz", array('foo"\"||"bar;', 'baz')),
+        );
+    }
+
+    /**
+     * @dataProvider twoCharDelimiterExplodeIntoStatementsDataProvider
+     */
+    public function testTwoCharDelimiterExplodeIntoStatements($input, $output)
+    {
+        $parser = new PropelSQLParser();
+        $parser->setSQL($input);
+        $this->assertEquals($output, $parser->explodeIntoStatements());
+    }
+
+    public function threeCharDelimiterExplodeIntoStatementsDataProvider()
+    {
+        return array(
+            array("delimiter |||", array()),
+            array("DELIMITER |||", array()),
+            array("foo;\nDELIMITER |||", array('foo')),
+            array("foo;\nDELIMITER |||\nbar", array('foo', 'bar')),
+            array("foo;\nDELIMITER |||\nbar;", array('foo', 'bar;')),
+            array("foo;\nDELIMITER |||\nbar;\nbaz;", array('foo', "bar;\nbaz;")),
+            array("foo;\nDELIMITER |||\nbar;\nbaz;\nDELIMITER ;", array('foo', "bar;\nbaz;")),
+            array("foo;\nDELIMITER |||\nbar;\nbaz;\nDELIMITER ;\nqux", array('foo', "bar;\nbaz;", 'qux')),
+            array("foo;\nDELIMITER |||\nbar;\nbaz;\nDELIMITER ;\nqux;", array('foo', "bar;\nbaz;", 'qux')),
+            array("DELIMITER |||\n".'foo"|||"bar;'."\nDELIMITER ;\nbaz", array('foo"|||"bar;', 'baz')),
+            array("DELIMITER |||\n".'foo\'|||\'bar;'."\nDELIMITER ;\nbaz", array('foo\'|||\'bar;', 'baz')),
+            array("DELIMITER |||\n".'foo"\"|||"bar;'."\nDELIMITER ;\nbaz", array('foo"\"|||"bar;', 'baz')),
+        );
+    }
+
+    /**
+     * @dataProvider threeCharDelimiterExplodeIntoStatementsDataProvider
+     */
+    public function testThreeCharDelimiterExplodeIntoStatements($input, $output)
+    {
+        $parser = new PropelSQLParser();
+        $parser->setSQL($input);
+        $this->assertEquals($output, $parser->explodeIntoStatements());
+    }
+
+    public function fourCharDelimiterExplodeIntoStatementsDataProvider()
+    {
+        return array(
+            array("delimiter ////", array()),
+            array("DELIMITER ////", array()),
+            array("foo;\nDELIMITER ////", array('foo')),
+            array("foo;\nDELIMITER ////\nbar", array('foo', 'bar')),
+            array("foo;\nDELIMITER ////\nbar;", array('foo', 'bar;')),
+            array("foo;\nDELIMITER ////\nbar;\nbaz;", array('foo', "bar;\nbaz;")),
+            array("foo;\nDELIMITER ////\nbar;\nbaz;\nDELIMITER ;", array('foo', "bar;\nbaz;")),
+            array("foo;\nDELIMITER ////\nbar;\nbaz;\nDELIMITER ;\nqux", array('foo', "bar;\nbaz;", 'qux')),
+            array("foo;\nDELIMITER ////\nbar;\nbaz;\nDELIMITER ;\nqux;", array('foo', "bar;\nbaz;", 'qux')),
+            array("DELIMITER ////\n".'foo"////"bar;'."\nDELIMITER ;\nbaz", array('foo"////"bar;', 'baz')),
+            array("DELIMITER ////\n".'foo\'////\'bar;'."\nDELIMITER ;\nbaz", array('foo\'////\'bar;', 'baz')),
+            array("DELIMITER ////\n".'foo"\"////"bar;'."\nDELIMITER ;\nbaz", array('foo"\"////"bar;', 'baz')),
+        );
+    }
+
+    /**
+     * @dataProvider fourCharDelimiterExplodeIntoStatementsDataProvider
+     */
+    public function testFourCharDelimiterExplodeIntoStatements($input, $output)
     {
         $parser = new PropelSQLParser();
         $parser->setSQL($input);

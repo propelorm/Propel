@@ -43,7 +43,7 @@ class PropelArrayCollection extends PropelCollection
                 $obj->save($con);
             }
             $con->commit();
-        } catch (PropelException $e) {
+        } catch (Exception $e) {
             $con->rollback();
         }
     }
@@ -72,7 +72,7 @@ class PropelArrayCollection extends PropelCollection
                 $obj->delete($con);
             }
             $con->commit();
-        } catch (PropelException $e) {
+        } catch (Exception $e) {
             $con->rollback();
             throw $e;
         }
@@ -81,9 +81,9 @@ class PropelArrayCollection extends PropelCollection
     /**
      * Get an array of the primary keys of all the objects in the collection
      *
-     * @param  boolean $usePrefix
+     * @param boolean $usePrefix
      *
-     * @return array   The list of the primary keys of the collection
+     * @return array The list of the primary keys of the collection
      */
     public function getPrimaryKeys($usePrefix = true)
     {

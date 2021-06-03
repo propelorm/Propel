@@ -389,7 +389,7 @@ class Database extends ScopedElement
     /**
      * Check whether the database has a table.
      *
-     * @param  string  $phpName the PHP Name of the table (e.g. 'MyTable')
+     * @param string $phpName the PHP Name of the table (e.g. 'MyTable')
      *
      * @return boolean
      */
@@ -401,9 +401,9 @@ class Database extends ScopedElement
     /**
      * Return the table with the specified phpName.
      *
-     * @param  string $phpName the PHP Name of the table (e.g. 'MyTable')
+     * @param string $phpName the PHP Name of the table (e.g. 'MyTable')
      *
-     * @return Table  a Table object or null if it doesn't exist
+     * @return Table a Table object or null if it doesn't exist
      */
     public function getTableByPhpName($phpName)
     {
@@ -565,7 +565,7 @@ class Database extends ScopedElement
     /**
      * check if the database has a behavior by name
      *
-     * @param  string  $name the behavior name
+     * @param string $name the behavior name
      *
      * @return boolean True if the behavior exists
      */

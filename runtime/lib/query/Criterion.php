@@ -97,7 +97,7 @@ class Criterion
     /**
      * Init some properties with the help of outer class
      *
-     * @param      Criteria $criteria The outer class
+     * @param Criteria $criteria The outer class
      */
     public function init(Criteria $criteria)
     {
@@ -129,7 +129,7 @@ class Criterion
     /**
      * Set the table name.
      *
-     * @param  string $name A String with the table name.
+     * @param string $name A String with the table name.
      *
      * @return void
      */
@@ -184,7 +184,7 @@ class Criterion
      * Set the value of db.
      * The DBAdapter might be used to get db specific variations of sql.
      *
-     * @param  DBAdapter $v Value to assign to db.
+     * @param DBAdapter $v Value to assign to db.
      *
      * @return void
      */
@@ -199,7 +199,7 @@ class Criterion
     /**
      * Sets ignore case.
      *
-     * @param  boolean   $b True if case should be ignored.
+     * @param boolean $b True if case should be ignored.
      *
      * @return Criterion A modified Criterion object.
      */
@@ -254,7 +254,7 @@ class Criterion
     /**
      * Append an OR Criterion onto this Criterion's list.
      *
-     * @param  Criterion $criterion
+     * @param Criterion $criterion
      *
      * @return Criterion
      */
@@ -270,8 +270,8 @@ class Criterion
      * Appends a Prepared Statement representation of the Criterion
      * onto the buffer.
      *
-     * @param      string &$sb The string that will receive the Prepared Statement
-     * @param  array           $params A list to which Prepared Statement parameters will be appended
+     * @param string &$sb    The string that will receive the Prepared Statement
+     * @param array  $params A list to which Prepared Statement parameters will be appended
      *
      * @return void
      * @throws PropelException - if the expression builder cannot figure out how to turn a specified
@@ -295,8 +295,8 @@ class Criterion
      * to build the prepared statement and parameters using to the Criterion comparison
      * and call it to append the prepared statement and the parameters of the current clause
      *
-     * @param      string &$sb The string that will receive the Prepared Statement
-     * @param array $params A list to which Prepared Statement parameters will be appended
+     * @param string &$sb    The string that will receive the Prepared Statement
+     * @param array  $params A list to which Prepared Statement parameters will be appended
      */
     protected function dispatchPsHandling(&$sb, array &$params)
     {
@@ -331,8 +331,8 @@ class Criterion
      * Appends a Prepared Statement representation of the Criterion onto the buffer
      * For custom expressions with no binding, e.g. 'NOW() = 1'
      *
-     * @param      string &$sb The string that will receive the Prepared Statement
-     * @param array $params A list to which Prepared Statement parameters will be appended
+     * @param string &$sb    The string that will receive the Prepared Statement
+     * @param array  $params A list to which Prepared Statement parameters will be appended
      */
     protected function appendCustomToPs(&$sb, array &$params)
     {
@@ -345,8 +345,8 @@ class Criterion
      * Appends a Prepared Statement representation of the Criterion onto the buffer
      * For custom expressions with a typed binding, e.g. 'foobar = ?'
      *
-     * @param      string &$sb The string that will receive the Prepared Statement
-     * @param array $params A list to which Prepared Statement parameters will be appended
+     * @param string &$sb    The string that will receive the Prepared Statement
+     * @param array  $params A list to which Prepared Statement parameters will be appended
      *
      * @throws PropelException
      */
@@ -363,8 +363,8 @@ class Criterion
      * Appends a Prepared Statement representation of the Criterion onto the buffer
      * For IN expressions, e.g. table.column IN (?, ?) or table.column NOT IN (?, ?)
      *
-     * @param      string &$sb The string that will receive the Prepared Statement
-     * @param array $params A list to which Prepared Statement parameters will be appended
+     * @param string &$sb    The string that will receive the Prepared Statement
+     * @param array  $params A list to which Prepared Statement parameters will be appended
      */
     protected function appendInToPs(&$sb, array &$params)
     {
@@ -389,8 +389,8 @@ class Criterion
      * Appends a Prepared Statement representation of the Criterion onto the buffer
      * For LIKE expressions, e.g. table.column LIKE ? or table.column NOT LIKE ?  (or ILIKE for Postgres)
      *
-     * @param      string &$sb The string that will receive the Prepared Statement
-     * @param array $params A list to which Prepared Statement parameters will be appended
+     * @param string &$sb    The string that will receive the Prepared Statement
+     * @param array  $params A list to which Prepared Statement parameters will be appended
      */
     protected function appendLikeToPs(&$sb, array &$params)
     {
@@ -427,8 +427,8 @@ class Criterion
      * Appends a Prepared Statement representation of the Criterion onto the buffer
      * For traditional expressions, e.g. table.column = ? or table.column >= ? etc.
      *
-     * @param      string &$sb The string that will receive the Prepared Statement
-     * @param array $params A list to which Prepared Statement parameters will be appended
+     * @param string &$sb    The string that will receive the Prepared Statement
+     * @param array  $params A list to which Prepared Statement parameters will be appended
      *
      * @throws PropelException
      */
@@ -473,7 +473,7 @@ class Criterion
      * This method checks another Criteria to see if they contain
      * the same attributes and hashtable entries.
      *
-     * @param  Criterion|null $obj
+     * @param Criterion|null $obj
      *
      * @return boolean
      */
@@ -562,7 +562,7 @@ class Criterion
      * us a string array of tables from each criterion
      *
      * @param Criterion $c
-     * @param array &$s
+     * @param array     &$s
      *
      * @return void
      */

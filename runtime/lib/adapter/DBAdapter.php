@@ -78,7 +78,7 @@ abstract class DBAdapter
     /**
      * Prepare connection parameters.
      *
-     * @param  array $settings
+     * @param array $settings
      *
      * @return array
      */
@@ -134,7 +134,7 @@ abstract class DBAdapter
     /**
      * This method is used to ignore case.
      *
-     * @param  string $in The string to transform to upper case.
+     * @param string $in The string to transform to upper case.
      *
      * @return string The upper case string.
      */
@@ -155,7 +155,7 @@ abstract class DBAdapter
     /**
      * This method is used to ignore case.
      *
-     * @param  string $in The string whose case to ignore.
+     * @param string $in The string whose case to ignore.
      *
      * @return string The string in a case that can be ignored.
      */
@@ -167,7 +167,7 @@ abstract class DBAdapter
      * (Interbase for example) does not use the same SQL in ORDER BY
      * and other clauses.
      *
-     * @param  string $in The string whose case to ignore.
+     * @param string $in The string whose case to ignore.
      *
      * @return string The string in a case that can be ignored.
      */
@@ -200,7 +200,7 @@ abstract class DBAdapter
     /**
      * Returns SQL which calculates the length (in chars) of a string.
      *
-     * @param  string $s String to calculate length of.
+     * @param string $s String to calculate length of.
      *
      * @return string
      */
@@ -209,7 +209,7 @@ abstract class DBAdapter
     /**
      * Quotes database objec identifiers (table names, col names, sequences, etc.).
      *
-     * @param  string $text The identifier to quote.
+     * @param string $text The identifier to quote.
      *
      * @return string The quoted identifier.
      */
@@ -223,7 +223,7 @@ abstract class DBAdapter
      * This doesn't take care of dots which separate schema names from table names. Adapters for RDBMs which support
      * schemas have to implement that in the platform-specific way.
      *
-     * @param  string $table The table name to quo
+     * @param string $table The table name to quo
      *
      * @return string The quoted table name
      **/
@@ -492,7 +492,7 @@ abstract class DBAdapter
      *
      * @see http://propel.phpdb.org/trac/ticket/795
      *
-     * @param  Criteria $criteria
+     * @param Criteria $criteria
      *
      * @return Criteria The input, with Select columns replaced by aliases
      */
@@ -598,11 +598,11 @@ abstract class DBAdapter
     /**
      * Do Explain Plan for query object or query string
      *
-     * @param  PropelPDO            $con   propel connection
-     * @param  ModelCriteria|string $query query the criteria or the query string
+     * @param PropelPDO            $con   propel connection
+     * @param ModelCriteria|string $query query the criteria or the query string
      *
-     * @throws PropelException      if explain plan is not implemented for adapter
-     * @return PDOStatement         A PDO statement executed using the connection, ready to be fetched
+     * @throws PropelException if explain plan is not implemented for adapter
+     * @return PDOStatement    A PDO statement executed using the connection, ready to be fetched
      */
     public function doExplainPlan(PropelPDO $con, $query)
     {

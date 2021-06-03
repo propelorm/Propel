@@ -457,6 +457,203 @@ class PropelPDOTest extends PHPUnit_Framework_TestCase
         $con->setLogger($logger);
         $config->setParameter("debugpdo.logging.methods", array('PropelPDO::exec', 'PropelPDO::query', 'DebugPDOStatement::execute'));
     }
+
+    /**
+     * Testing if string values will be quoted correctly by DebugPDOStatement::getExecutedQueryString
+     */
+    public function testDebugExecutedQueryStringValue()
+    {
+
+        /**
+         * @var DebugPDO $con
+         */
+        $con = Propel::getConnection(BookPeer::DATABASE_NAME);
+
+        // different method must all result in this given querystring, using a string value
+        $bindParamStringValue = "%Harry%";
+        $expectedQuery = "SELECT book.id FROM `book` WHERE book.title LIKE '{$bindParamStringValue}'";
+
+        // simple statement without params
+        $prepStmt = $con->prepare($expectedQuery);
+        $prepStmt->execute();
+        $this->assertEquals($expectedQuery, $con->getLastExecutedQuery(), 'DebugPDO failed to quote prepared statement on execute properly');
+
+        // statement with named placeholder
+        $prepStmt = $con->prepare("SELECT book.id FROM `book` WHERE book.title LIKE :p1");
+        $prepStmt->bindValue(':p1', '%Harry%'); // bind value variant
+        $prepStmt->execute();
+        $this->assertEquals($expectedQuery, $con->getLastExecutedQuery(), 'DebugPDO failed to quote prepared statement on execute properly');
+
+        $prepStmt->bindParam(':p1', $bindParamStringValue); // bind param variant
+        $prepStmt->execute();
+        $this->assertEquals($expectedQuery, $con->getLastExecutedQuery(), 'DebugPDO failed to quote prepared statement on execute properly');
+
+        // passing params directly
+        $prepStmt->execute(array(':p1' => '%Harry%'));
+        $this->assertEquals($expectedQuery, $con->getLastExecutedQuery(), 'DebugPDO failed to quote prepared statement on execute properly');
+
+        // statement with named placeholder, this one won't get substituted
+        $expectedNotSubstitutedQuery = "SELECT book.id FROM `book` WHERE book.title LIKE :name";
+        $prepStmt = $con->prepare($expectedNotSubstitutedQuery);
+        $prepStmt->bindValue(':name', '%Harry%'); // bind value variant
+        $prepStmt->execute();
+        $this->assertEquals($expectedNotSubstitutedQuery, $con->getLastExecutedQuery(), 'DebugPDO failed to quote prepared statement on execute properly');
+
+        $prepStmt->bindParam(':name', $bindParamStringValue); // bind param variant
+        $prepStmt->execute();
+        $this->assertEquals($expectedNotSubstitutedQuery, $con->getLastExecutedQuery(), 'DebugPDO failed to quote prepared statement on execute properly');
+
+        // passing params directly
+        $prepStmt->execute(array(':name' => '%Harry%'));
+        $this->assertEquals($expectedNotSubstitutedQuery, $con->getLastExecutedQuery(), 'DebugPDO failed to quote prepared statement on execute properly');
+
+
+        // statement with positional placeholder, this one won't get substituted either
+        $expectedNotSubstitutedQuery = "SELECT book.id FROM `book` WHERE book.title LIKE ?";
+        $prepStmt = $con->prepare($expectedNotSubstitutedQuery);
+        $prepStmt->bindValue(1, '%Harry%');
+        $prepStmt->execute();
+        $this->assertEquals($expectedNotSubstitutedQuery, $con->getLastExecutedQuery(), 'DebugPDO failed to quote prepared statement on execute properly');
+
+        $prepStmt->bindParam(1, $bindParamStringValue);
+        $prepStmt->execute();
+        $this->assertEquals($expectedNotSubstitutedQuery, $con->getLastExecutedQuery(), 'DebugPDO failed to quote prepared statement on execute properly');
+
+        // passing params directly
+        $prepStmt->execute(array('%Harry%'));
+        $this->assertEquals($expectedNotSubstitutedQuery, $con->getLastExecutedQuery(), 'DebugPDO failed to quote prepared statement on execute properly');
+    }
+
+    /**
+     * Testing if integer values will be quoted correctly by DebugPDOStatement::getExecutedQueryString
+     */
+    public function testDebugExecutedQueryIntegerValue()
+    {
+        /**
+         * @var DebugPDO $con
+         */
+        $con = Propel::getConnection(BookPeer::DATABASE_NAME);
+
+        // different method must all result in this given querystring, using an integer value
+        $bindParamIntegerValue = 123;
+        $expectedQuery = "SELECT book.title FROM `book` WHERE book.id = {$bindParamIntegerValue}";
+
+        // simple statement without params
+        $prepStmt = $con->prepare($expectedQuery);
+        $prepStmt->execute();
+        $this->assertEquals($expectedQuery, $con->getLastExecutedQuery(), 'DebugPDO failed to quote prepared statement on execute properly');
+
+        // statement with named placeholder
+        $prepStmt = $con->prepare("SELECT book.title FROM `book` WHERE book.id = :p1");
+        $prepStmt->bindValue(':p1', 123); // bind value variant
+        $prepStmt->execute();
+        $this->assertEquals($expectedQuery, $con->getLastExecutedQuery(), 'DebugPDO failed to quote prepared statement on execute properly');
+
+        $prepStmt->bindParam(':p1', $bindParamIntegerValue); // bind param variant
+        $prepStmt->execute();
+        $this->assertEquals($expectedQuery, $con->getLastExecutedQuery(), 'DebugPDO failed to quote prepared statement on execute properly');
+
+        // passing params directly
+        $prepStmt->execute(array(':p1' => 123));
+        $this->assertEquals($expectedQuery, $con->getLastExecutedQuery(), 'DebugPDO failed to quote prepared statement on execute properly');
+
+        // statement with named placeholder, this one won't get substituted
+        $expectedNotSubstitutedQuery = "SELECT book.title FROM `book` WHERE book.id = :name";
+        $prepStmt = $con->prepare($expectedNotSubstitutedQuery);
+        $prepStmt->bindValue(':name', 123); // bind value variant
+        $prepStmt->execute();
+        $this->assertEquals($expectedNotSubstitutedQuery, $con->getLastExecutedQuery(), 'DebugPDO failed to quote prepared statement on execute properly');
+
+        $prepStmt->bindParam(':name', $bindParamIntegerValue); // bind param variant
+        $prepStmt->execute();
+        $this->assertEquals($expectedNotSubstitutedQuery, $con->getLastExecutedQuery(), 'DebugPDO failed to quote prepared statement on execute properly');
+
+        // passing params directly
+        $prepStmt->execute(array(':name' => 123));
+        $this->assertEquals($expectedNotSubstitutedQuery, $con->getLastExecutedQuery(), 'DebugPDO failed to quote prepared statement on execute properly');
+
+
+        // statement with positional placeholder, this one won't get substituted either
+        $expectedNotSubstitutedQuery = "SELECT book.title FROM `book` WHERE book.id = ?";
+        $prepStmt = $con->prepare($expectedNotSubstitutedQuery);
+        $prepStmt->bindValue(1, 123);
+        $prepStmt->execute();
+        $this->assertEquals($expectedNotSubstitutedQuery, $con->getLastExecutedQuery(), 'DebugPDO failed to quote prepared statement on execute properly');
+
+        $prepStmt->bindParam(1, $bindParamIntegerValue);
+        $prepStmt->execute();
+        $this->assertEquals($expectedNotSubstitutedQuery, $con->getLastExecutedQuery(), 'DebugPDO failed to quote prepared statement on execute properly');
+
+        // passing params directly
+        $prepStmt->execute(array(123));
+        $this->assertEquals($expectedNotSubstitutedQuery, $con->getLastExecutedQuery(), 'DebugPDO failed to quote prepared statement on execute properly');
+    }
+
+    /**
+     * Testing if numeric values will be quoted correctly by DebugPDOStatement::getExecutedQueryString
+     * Numeric values sometimes will get handled differently, since there are numeric values which are non-integer
+     */
+    public function testDebugExecutedQueryNumericValue()
+    {
+        /**
+         * @var DebugPDO $con
+         */
+        $con = Propel::getConnection(BookPeer::DATABASE_NAME);
+
+        // different method must all result in this given querystring, using an integer value
+        $bindParamNumericValue = 0002000;
+        $expectedQuery = "SELECT book.title FROM `book` WHERE book.id = {$bindParamNumericValue}";
+
+        // simple statement without params
+        $prepStmt = $con->prepare($expectedQuery);
+        $prepStmt->execute();
+        $this->assertEquals($expectedQuery, $con->getLastExecutedQuery(), 'DebugPDO failed to quote prepared statement on execute properly');
+
+        // statement with named placeholder
+        $prepStmt = $con->prepare("SELECT book.title FROM `book` WHERE book.id = :p1");
+        $prepStmt->bindValue(':p1', 0002000); // bind value variant
+        $prepStmt->execute();
+        $this->assertEquals($expectedQuery, $con->getLastExecutedQuery(), 'DebugPDO failed to quote prepared statement on execute properly');
+
+        $prepStmt->bindParam(':p1', $bindParamNumericValue); // bind param variant
+        $prepStmt->execute();
+        $this->assertEquals($expectedQuery, $con->getLastExecutedQuery(), 'DebugPDO failed to quote prepared statement on execute properly');
+
+        // passing params directly
+        $prepStmt->execute(array(':p1' => 0002000));
+        $this->assertEquals($expectedQuery, $con->getLastExecutedQuery(), 'DebugPDO failed to quote prepared statement on execute properly');
+
+        // statement with named placeholder, this one won't get substituted
+        $expectedNotSubstitutedQuery = "SELECT book.title FROM `book` WHERE book.id = :name";
+        $prepStmt = $con->prepare($expectedNotSubstitutedQuery);
+        $prepStmt->bindValue(':name', 0002000); // bind value variant
+        $prepStmt->execute();
+        $this->assertEquals($expectedNotSubstitutedQuery, $con->getLastExecutedQuery(), 'DebugPDO failed to quote prepared statement on execute properly');
+
+        $prepStmt->bindParam(':name', $bindParamNumericValue); // bind param variant
+        $prepStmt->execute();
+        $this->assertEquals($expectedNotSubstitutedQuery, $con->getLastExecutedQuery(), 'DebugPDO failed to quote prepared statement on execute properly');
+
+        // passing params directly
+        $prepStmt->execute(array(':name' => 0002000));
+        $this->assertEquals($expectedNotSubstitutedQuery, $con->getLastExecutedQuery(), 'DebugPDO failed to quote prepared statement on execute properly');
+
+
+        // statement with positional placeholder, this one won't get substituted either
+        $expectedNotSubstitutedQuery = "SELECT book.title FROM `book` WHERE book.id = ?";
+        $prepStmt = $con->prepare($expectedNotSubstitutedQuery);
+        $prepStmt->bindValue(1, 0002000);
+        $prepStmt->execute();
+        $this->assertEquals($expectedNotSubstitutedQuery, $con->getLastExecutedQuery(), 'DebugPDO failed to quote prepared statement on execute properly');
+
+        $prepStmt->bindParam(1, $bindParamNumericValue);
+        $prepStmt->execute();
+        $this->assertEquals($expectedNotSubstitutedQuery, $con->getLastExecutedQuery(), 'DebugPDO failed to quote prepared statement on execute properly');
+
+        // passing params directly
+        $prepStmt->execute(array(0002000));
+        $this->assertEquals($expectedNotSubstitutedQuery, $con->getLastExecutedQuery(), 'DebugPDO failed to quote prepared statement on execute properly');
+    }
 }
 
 class myLogger

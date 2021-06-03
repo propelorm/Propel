@@ -68,7 +68,7 @@ class PropelCSVParser extends PropelParser
     /**
      * Accepts a row of data and returns it formatted
      *
-     * @param  array $row An array of data to be formatted for output to the file
+     * @param array $row An array of data to be formatted for output to the file
      *
      * @return array The formatted array
      */
@@ -105,9 +105,9 @@ class PropelCSVParser extends PropelParser
     /**
      * Escapes a column (escapes quotechar with escapechar)
      *
-     * @param string $input    A single value to be escaped for output
+     * @param string $input A single value to be escaped for output
      *
-     * @return string    Escaped input value
+     * @return string Escaped input value
      */
     protected function escape($input)
     {
@@ -121,7 +121,7 @@ class PropelCSVParser extends PropelParser
     /**
      * Quotes a column with quotechar
      *
-     * @param  string $input A single value to be quoted for output
+     * @param string $input A single value to be quoted for output
      *
      * @return string Quoted input value
      */
@@ -133,7 +133,7 @@ class PropelCSVParser extends PropelParser
     /**
      * Returns true if input contains quotechar, delimiter or any of the characters in lineTerminator
      *
-     * @param  string  $input A single value to be checked for special characters
+     * @param string $input A single value to be checked for special characters
      *
      * @return boolean True if contains any special characters
      */
@@ -154,7 +154,7 @@ class PropelCSVParser extends PropelParser
     /**
      * Serializes a value to place it into a CSV output
      *
-     * @param  mixed  $input
+     * @param mixed $input
      *
      * @return string
      */
@@ -289,7 +289,7 @@ class PropelCSVParser extends PropelParser
     /**
      * Unserializes a value from CSV output
      *
-     * @param  string $input
+     * @param string $input
      *
      * @return mixed
      */

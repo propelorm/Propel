@@ -34,7 +34,8 @@ class Inheritance extends XMLElement
      */
     protected function setupObject()
     {
-        $this->key = $this->getAttribute("key");
+        // Clean key from special characters not allowed in constant names
+        $this->key = rtrim(preg_replace('/(\W|_)+/', '_', $this->getAttribute("key")), '_');
         $this->className = $this->getAttribute("class");
         $this->pkg = $this->getAttribute("package");
         $this->ancestor = $this->getAttribute("extends");

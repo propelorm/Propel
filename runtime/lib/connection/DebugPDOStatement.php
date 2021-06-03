@@ -51,7 +51,7 @@ class DebugPDOStatement extends PDOStatement
      * Construct a new statement class with reference to main DebugPDO object from
      * which this instance was created.
      *
-     * @param  PropelPDO         $pdo Reference to the parent PDO instance.
+     * @param PropelPDO $pdo Reference to the parent PDO instance.
      *
      * @return DebugPDOStatement
      */
@@ -61,17 +61,27 @@ class DebugPDOStatement extends PDOStatement
     }
 
     /**
+     * @param array $values Parameters which were passed to execute(), if any. Default: bound parameters.
+     *
      * @return string
      */
-    public function getExecutedQueryString()
+    public function getExecutedQueryString(array $values = array())
     {
         $sql = $this->queryString;
+        $boundValues = empty($values) ? $this->boundValues : $values;
         $matches = array();
         if (preg_match_all('/(:p[0-9]+\b)/', $sql, $matches)) {
             $size = count($matches[1]);
             for ($i = $size - 1; $i >= 0; $i--) {
                 $pos = $matches[1][$i];
-                $sql = str_replace($pos, $this->boundValues[$pos], $sql);
+
+                // trimming extra quotes, making sure value is properly quoted afterwards
+                $boundValue = $boundValues[$pos];
+                if (is_string($boundValue)) { // quoting only needed for string values
+                    $boundValue = trim($boundValue, "'");
+                    $boundValue = $this->pdo->quote($boundValue);
+                }
+                $sql = str_replace($pos, $boundValue, $sql);
             }
         }
 
@@ -82,7 +92,7 @@ class DebugPDOStatement extends PDOStatement
      * Executes a prepared statement.  Returns a boolean value indicating success.
      * Overridden for query counting and logging.
      *
-     * @param  string  $input_parameters
+     * @param string $input_parameters
      *
      * @return boolean
      */
@@ -91,7 +101,7 @@ class DebugPDOStatement extends PDOStatement
         $debug = $this->pdo->getDebugSnapshot();
         $return = parent::execute($input_parameters);
 
-        $sql = $this->getExecutedQueryString();
+        $sql = $this->getExecutedQueryString($input_parameters?$input_parameters:array());
         $this->pdo->log($sql, null, __METHOD__, $debug);
         $this->pdo->setLastExecutedQuery($sql);
         $this->pdo->incrementQueryCount();
@@ -117,7 +127,7 @@ class DebugPDOStatement extends PDOStatement
         $valuestr = $type == PDO::PARAM_LOB ? '[LOB value]' : var_export($value, true);
         $msg = sprintf('Binding %s at position %s w/ PDO type %s', $valuestr, $pos, $typestr);
 
-        $this->boundValues[$pos] = $valuestr;
+        $this->boundValues[$pos] = $value;
 
         $this->pdo->log($msg, null, __METHOD__, $debug);
 
@@ -140,13 +150,14 @@ class DebugPDOStatement extends PDOStatement
      */
     public function bindParam($pos, &$value, $type = PDO::PARAM_STR, $length = 0, $driver_options = null)
     {
+        $originalValue = $value;
         $debug = $this->pdo->getDebugSnapshot();
         $typestr = isset(self::$typeMap[$type]) ? self::$typeMap[$type] : '(default)';
         $return = parent::bindParam($pos, $value, $type, $length, $driver_options);
         $valuestr = $length > 100 ? '[Large value]' : var_export($value, true);
         $msg = sprintf('Binding %s at position %s w/ PDO type %s', $valuestr, $pos, $typestr);
 
-        $this->boundValues[$pos] = $valuestr;
+        $this->boundValues[$pos] = $originalValue;
 
         $this->pdo->log($msg, null, __METHOD__, $debug);
 

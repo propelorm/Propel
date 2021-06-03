@@ -326,7 +326,7 @@ class ModelCriteriaTest extends BookstoreTestBase
         );
         $this->assertCriteriaTranslation($c, $sql, $params, 'where() accepts a complex calculation');
         $c->find($this->con);
-        $expected = "SELECT book.id, book.title, book.isbn, book.price, book.publisher_id, book.author_id FROM `book` WHERE LOCATE('foo', book.title) = true";
+        $expected = "SELECT book.id, book.title, book.isbn, book.price, book.publisher_id, book.author_id FROM `book` WHERE LOCATE('foo', book.title) = 1";
         $this->assertEquals($expected, $this->con->getLastExecutedQuery());
     }
 

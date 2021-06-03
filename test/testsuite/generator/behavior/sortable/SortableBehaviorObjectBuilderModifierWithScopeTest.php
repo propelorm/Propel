@@ -423,4 +423,189 @@ class SortableBehaviorObjectBuilderModifierWithScopeTest extends BookstoreSortab
         $t2->removeFromList();
     }
 
+    /**
+     * @return SortableMultiScopes[]
+     */
+    private function generateMultipleScopeEntries()
+    {
+        SortableMultiScopesPeer::doDeleteAll();
+
+        $items = array(
+            //    cat scat title
+            array(  1,  1,  'item 1'),  //1
+            array(  2,  1,  'item 2'),  //1
+            array(  3,  1,  'item 3'),  //1
+            array(  3,  1,  'item 3.1'),//2
+            array(  1,  1,  'item 1.1'),//2
+            array(  1,  1,  'item 1.2'),//3
+            array(  1,  2,  'item 1.3'),//1
+            array(  1,  2,  'item 1.4'),//2
+        );
+
+        $result = array();
+        foreach ($items as $value) {
+            $item = new SortableMultiScopes();
+            $item->setCategoryId($value[0]);
+            $item->setSubCategoryId($value[1]);
+            $item->setTitle($value[2]);
+            $item->save();
+            $result[] = $item;
+        }
+
+        return $result;
+    }
+    /**
+     * @return SortableMultiCommaScopes[]
+     */
+    private function generateMultipleCommaScopeEntries()
+    {
+        SortableMultiCommaScopesPeer::doDeleteAll();
+
+        $items = array(
+            //    cat scat title
+            array(  1,  1,  'item 1'),  //1
+            array(  2,  1,  'item 2'),  //1
+            array(  3,  1,  'item 3'),  //1
+            array(  3,  1,  'item 3.1'),//2
+            array(  1,  1,  'item 1.1'),//2
+            array(  1,  1,  'item 1.2'),//3
+            array(  1,  2,  'item 1.3'),//1
+            array(  1,  2,  'item 1.4'),//2
+        );
+
+        $result = array();
+        foreach ($items as $value) {
+            $item = new SortableMultiCommaScopes();
+            $item->setCategoryId($value[0]);
+            $item->setSubCategoryId($value[1]);
+            $item->setTitle($value[2]);
+            $item->save();
+            $result[] = $item;
+        }
+
+        return $result;
+    }
+
+    public function testMultipleScopes()
+    {
+        list($t1, $t2, $t3, $t3_1, $t1_1, $t1_2, $t1_3, $t1_4) = $this->generateMultipleScopeEntries();
+
+        $this->assertEquals($t1->getRank(), 1);
+        $this->assertEquals($t2->getRank(), 1);
+
+        $this->assertEquals($t3->getRank(), 1);
+        $this->assertEquals($t3_1->getRank(), 2);
+
+        $this->assertEquals($t1_1->getRank(), 2);
+        $this->assertEquals($t1_2->getRank(), 3);
+        $this->assertEquals($t1_3->getRank(), 1);
+        $this->assertEquals($t1_4->getRank(), 2);
+
+    }
+
+    public function testMoveMultipleScopes()
+    {
+        list($t1, $t2, $t3, $t3_1, $t1_1, $t1_2, $t1_3, $t1_4) = $this->generateMultipleScopeEntries();
+
+        $this->assertEquals($t1->getRank(), 1);
+        $this->assertEquals($t1_1->getRank(), 2);
+        $this->assertEquals($t1_2->getRank(), 3);
+
+        $t1->moveDown();
+        $this->assertEquals($t1->getRank(), 2);
+        $this->assertEquals($t1_1->getRank(), 1);
+        $this->assertEquals($t1_2->getRank(), 3);
+
+        $t1->moveDown();
+        $this->assertEquals($t1->getRank(), 3);
+        $this->assertEquals($t1_1->getRank(), 1);
+        $this->assertEquals($t1_2->getRank(), 2);
+
+        $t1_1->moveUp(); //no changes
+        $this->assertEquals($t1->getRank(), 3);
+        $this->assertEquals($t1_1->getRank(), 1);
+        $this->assertEquals($t1_2->getRank(), 2);
+
+        $t1_2->moveUp(); //no changes
+        $this->assertEquals($t1->getRank(), 3);
+        $this->assertEquals($t1_1->getRank(), 2);
+        $this->assertEquals($t1_2->getRank(), 1);
+    }
+
+    public function testDeleteMultipleScopes()
+    {
+        list($t1, $t2, $t3, $t3_1, $t1_1, $t1_2, $t1_3, $t1_4) = $this->generateMultipleScopeEntries();
+
+        $this->assertEquals($t1->getRank(), 1);
+        $this->assertEquals($t1_1->getRank(), 2);
+        $this->assertEquals($t1_2->getRank(), 3);
+
+        $t1->delete();
+
+        $t1_1->reload();
+        $t1_2->reload();
+        $this->assertEquals($t1_1->getRank(), 1);
+        $this->assertEquals($t1_2->getRank(), 2);
+    }
+
+    public function testMultipleCommaScopes()
+    {
+        list($t1, $t2, $t3, $t3_1, $t1_1, $t1_2, $t1_3, $t1_4) = $this->generateMultipleCommaScopeEntries();
+
+        $this->assertEquals($t1->getRank(), 1);
+        $this->assertEquals($t2->getRank(), 1);
+
+        $this->assertEquals($t3->getRank(), 1);
+        $this->assertEquals($t3_1->getRank(), 2);
+
+        $this->assertEquals($t1_1->getRank(), 2);
+        $this->assertEquals($t1_2->getRank(), 3);
+        $this->assertEquals($t1_3->getRank(), 1);
+        $this->assertEquals($t1_4->getRank(), 2);
+    }
+
+    public function testMoveMultipleCommaScopes()
+    {
+        list($t1, $t2, $t3, $t3_1, $t1_1, $t1_2, $t1_3, $t1_4) = $this->generateMultipleCommaScopeEntries();
+
+        $this->assertEquals($t1->getRank(), 1);
+        $this->assertEquals($t1_1->getRank(), 2);
+        $this->assertEquals($t1_2->getRank(), 3);
+
+        $t1->moveDown();
+        $this->assertEquals($t1->getRank(), 2);
+        $this->assertEquals($t1_1->getRank(), 1);
+        $this->assertEquals($t1_2->getRank(), 3);
+
+        $t1->moveDown();
+        $this->assertEquals($t1->getRank(), 3);
+        $this->assertEquals($t1_1->getRank(), 1);
+        $this->assertEquals($t1_2->getRank(), 2);
+
+        $t1_1->moveUp(); //no changes
+        $this->assertEquals($t1->getRank(), 3);
+        $this->assertEquals($t1_1->getRank(), 1);
+        $this->assertEquals($t1_2->getRank(), 2);
+
+        $t1_2->moveUp(); //no changes
+        $this->assertEquals($t1->getRank(), 3);
+        $this->assertEquals($t1_1->getRank(), 2);
+        $this->assertEquals($t1_2->getRank(), 1);
+    }
+
+    public function testDeleteMultipleCommaScopes()
+    {
+        list($t1, $t2, $t3, $t3_1, $t1_1, $t1_2, $t1_3, $t1_4) = $this->generateMultipleCommaScopeEntries();
+
+        $this->assertEquals($t1->getRank(), 1);
+        $this->assertEquals($t1_1->getRank(), 2);
+        $this->assertEquals($t1_2->getRank(), 3);
+
+        $t1->delete();
+
+        $t1_1->reload();
+        $t1_2->reload();
+        $this->assertEquals($t1_1->getRank(), 1);
+        $this->assertEquals($t1_2->getRank(), 2);
+    }
 }

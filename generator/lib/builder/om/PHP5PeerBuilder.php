@@ -86,7 +86,7 @@ class PHP5PeerBuilder extends PeerBuilder
     /**
      * Adds the include() statements for files that this class depends on or utilizes.
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      */
     protected function addIncludes(&$script)
     {
@@ -95,7 +95,7 @@ class PHP5PeerBuilder extends PeerBuilder
     /**
      * Adds class phpdoc comment and opening of class.
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      */
     protected function addClassOpen(&$script)
     {
@@ -147,7 +147,7 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
      * Closes class.
      * Adds closing brace at end of class and the static map builder registration code.
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      *
      * @see        addStaticTableMapRegistration()
      */
@@ -165,7 +165,7 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
     /**
      * Adds the static map builder registration code.
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      */
     protected function addStaticTableMapRegistration(&$script)
     {
@@ -182,7 +182,14 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
 
     public function getTableMapClass()
     {
-        return $this->getStubObjectBuilder()->getClassname() . 'TableMap';
+        // Trim first backslash for php 5.3.{0,1,2} compatibility
+        $fullyQualifiedClassname = ltrim($this->getStubObjectBuilder()->getFullyQualifiedClassname(), '\\');
+
+        if (($pos = strrpos($fullyQualifiedClassname, '\\')) !== false) {
+            return substr_replace($fullyQualifiedClassname, '\\map\\', $pos, 1) . 'TableMap';
+        } else {
+            return $fullyQualifiedClassname . 'TableMap';
+        }
     }
 
     public function getTablePhpName()
@@ -193,7 +200,7 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
     /**
      * Adds constant and variable declarations that go at the top of the class.
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      *
      * @see        addColumnNameConstants()
      */
@@ -213,7 +220,7 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
     const OM_CLASS = '$tablePhpName';
 
     /** the related TableMap class for this table */
-    const TM_CLASS = '" . $this->getTableMapClass() . "';
+    const TM_CLASS = '" . addslashes($this->getTableMapClass()) . "';
 
     /** The total number of columns. */
     const NUM_COLUMNS = " . $this->getTable()->getNumColumns() . ";
@@ -259,7 +266,7 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
     /**
      * Adds the COLUMN_NAME constants to the class definition.
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      */
     protected function addColumnNameConstants(&$script)
     {
@@ -274,7 +281,7 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
     /**
      * Adds the valueSet constants for ENUM columns.
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      */
     protected function addEnumColumnConstants(&$script)
     {
@@ -396,7 +403,7 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
     /**
      * Adds the valueSet attributes for ENUM columns.
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      */
     protected function addEnumColumnAttributes(&$script)
     {
@@ -472,7 +479,7 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
     /**
      * Adds the getValueSets() method.
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      */
     protected function addGetValueSets(&$script)
     {
@@ -493,7 +500,7 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
     /**
      * Adds the getValueSet() method.
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      */
     protected function addGetValueSet(&$script)
     {
@@ -522,7 +529,7 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
     /**
      * Adds the getSqlValueForEnum() method.
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      */
     protected function addGetSqlValueForEnum(&$script)
     {
@@ -551,7 +558,7 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
     /**
      * Adds methods for ENUM columns.
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      */
     protected function addEnumMethods(&$script)
     {
@@ -577,7 +584,7 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
     /**
      * Adds the buildTableMap() method.
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      */
     protected function addBuildTableMap(&$script)
     {
@@ -590,7 +597,7 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
     {
       \$dbMap = Propel::getDatabaseMap(" . $this->getClassname() . "::DATABASE_NAME);
       if (!\$dbMap->hasTable(" . $this->getClassname() . "::TABLE_NAME)) {
-        \$dbMap->addTableObject(new " . $this->getTableMapClass() . "());
+        \$dbMap->addTableObject(new \\" . $this->getTableMapClass() . "());
       }
     }
 ";
@@ -599,7 +606,7 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
     /**
      * Adds the CLASSKEY_* and CLASSNAME_* constants used for inheritance.
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      */
     public function addInheritanceColumnConstants(&$script)
     {
@@ -645,7 +652,7 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
     /**
      * Adds the alias() utility method.
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      */
     protected function addAlias(&$script)
     {
@@ -672,7 +679,7 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
     /**
      * Adds the addSelectColumns() method.
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      */
     protected function addAddSelectColumns(&$script)
     {
@@ -716,7 +723,7 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
     /**
      * Adds the doCount() method.
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      */
     protected function addDoCount(&$script)
     {
@@ -775,7 +782,7 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
     /**
      * Adds the doSelectOne() method.
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      */
     protected function addDoSelectOne(&$script)
     {
@@ -785,7 +792,7 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
      *
      * @param      Criteria \$criteria object used to create the SELECT statement.
      * @param      PropelPDO \$con
-     * @return                 " . $this->getObjectClassname() . "
+     * @return "               . $this->getObjectClassname() . "
      * @throws PropelException Any exceptions caught during processing will be
      *		 rethrown wrapped into a PropelException.
      */
@@ -805,7 +812,7 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
     /**
      * Adds the doSelect() method.
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      */
     protected function addDoSelect(&$script)
     {
@@ -828,7 +835,7 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
     /**
      * Adds the doSelectStmt() method.
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      */
     protected function addDoSelectStmt(&$script)
     {
@@ -899,7 +906,7 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
     /**
      * Creates a convenience method to add objects to an instance pool.
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      */
     protected function addAddInstanceToPool(&$script)
     {
@@ -914,7 +921,7 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
      * to the cache in order to ensure that the same objects are always returned by doSelect*()
      * and retrieveByPK*() calls.
      *
-     * @param      " . $this->getObjectClassname() . " \$obj A " . $this->getObjectClassname() . " object.
+     * @param " . $this->getObjectClassname() . " \$obj A " . $this->getObjectClassname() . " object.
      * @param      string \$key (optional) key to use for instance map (for performance boost if key was already calculated externally).
      */
     public static function addInstanceToPool(\$obj, \$key = null)
@@ -945,7 +952,7 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
     /**
      *  Creates a convenience method to remove objects form an instance pool.
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      */
     protected function addRemoveInstanceFromPool(&$script)
     {
@@ -1009,7 +1016,7 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
     /**
      * Adds method to clear the instance pool.
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      */
     protected function addClearInstancePool(&$script)
     {
@@ -1034,7 +1041,7 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
     /**
      * Adds method to clear the instance pool of related tables.
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      */
     protected function addClearRelatedInstancePool(&$script)
     {
@@ -1078,7 +1085,7 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
     /**
      * Adds method to get an the instance from the pool, given a key.
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      */
     protected function addGetInstanceFromPool(&$script)
     {
@@ -1090,7 +1097,7 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
      * a multi-column primary key, a serialize()d version of the primary key will be returned.
      *
      * @param      string \$key The key (@see getPrimaryKeyHash()) for this instance.
-     * @return   " . $this->getObjectClassname() . " Found object or null if 1) no instance exists for specified key or 2) instance pooling has been disabled.
+     * @return " . $this->getObjectClassname() . " Found object or null if 1) no instance exists for specified key or 2) instance pooling has been disabled.
      * @see        getPrimaryKeyHash()
      */
     public static function getInstanceFromPool(\$key)
@@ -1109,7 +1116,7 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
     /**
      * Adds method to get a version of the primary key that can be used as a unique key for identifier map.
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      */
     protected function addGetPrimaryKeyHash(&$script)
     {
@@ -1157,7 +1164,7 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
     /**
      * Adds method to get the primary key from a row
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      */
     protected function addGetPrimaryKeyFromRow(&$script)
     {
@@ -1207,7 +1214,7 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
     /**
      * Adds the populateObjects() method.
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      */
     protected function addPopulateObjects(&$script)
     {
@@ -1268,7 +1275,7 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
     /**
      * Adds the populateObject() method.
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      */
     protected function addPopulateObject(&$script)
     {
@@ -1322,7 +1329,7 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
     /**
      * Adds a getOMClass() for non-abstract tables that have inheritance.
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      */
     protected function addGetOMClass_Inheritance(&$script)
     {
@@ -1381,7 +1388,7 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
     /**
      * Adds a getOMClass() for non-abstract tables that do note use inheritance.
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      */
     protected function addGetOMClass_NoInheritance(&$script)
     {
@@ -1402,7 +1409,7 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
     /**
      * Adds a getOMClass() signature for abstract tables that do not have inheritance.
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      */
     protected function addGetOMClass_NoInheritance_Abstract(&$script)
     {
@@ -1431,7 +1438,7 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
     /**
      * Adds the doInsert() method.
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      */
     protected function addDoInsert(&$script)
     {
@@ -1493,7 +1500,7 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
             \$con->beginTransaction();
             \$pk = " . $this->basePeerClassname . "::doInsert(\$criteria, \$con);
             \$con->commit();
-        } catch (PropelException \$e) {
+        } catch (Exception \$e) {
             \$con->rollBack();
             throw \$e;
         }
@@ -1506,7 +1513,7 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
     /**
      * Adds the doUpdate() method.
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      */
     protected function addDoUpdate(&$script)
     {
@@ -1563,7 +1570,7 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
     /**
      * Adds the doDeleteAll() method.
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      */
     protected function addDoDeleteAll(&$script)
     {
@@ -1604,7 +1611,7 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
             \$con->commit();
 
             return \$affectedRows;
-        } catch (PropelException \$e) {
+        } catch (Exception \$e) {
             \$con->rollBack();
             throw \$e;
         }
@@ -1615,7 +1622,7 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
     /**
      * Adds the doDelete() method.
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      */
     protected function addDoDelete(&$script)
     {
@@ -1766,7 +1773,7 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
             \$con->commit();
 
             return \$affectedRows;
-        } catch (PropelException \$e) {
+        } catch (Exception \$e) {
             \$con->rollBack();
             throw \$e;
         }
@@ -1777,7 +1784,7 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
     /**
      * Adds the doOnDeleteCascade() method, which provides ON DELETE CASCADE emulation.
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      */
     protected function addDoOnDeleteCascade(&$script)
     {
@@ -1857,7 +1864,7 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
     /**
      * Adds the doOnDeleteSetNull() method, which provides ON DELETE SET NULL emulation.
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      */
     protected function addDoOnDeleteSetNull(&$script)
     {
@@ -1936,7 +1943,7 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
     /**
      * Adds the doValidate() method.
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      */
     protected function addDoValidate(&$script)
     {
@@ -1949,7 +1956,7 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
      *
      * NOTICE: This does not apply to primary or foreign keys for now.
      *
-     * @param      " . $this->getObjectClassname() . " \$obj The object to validate.
+     * @param " . $this->getObjectClassname() . " \$obj The object to validate.
      * @param      mixed \$cols Column name or array of column names.
      *
      * @return mixed TRUE if all columns are valid or the error message of the first invalid column.
@@ -1995,7 +2002,7 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
     /**
      * Adds the retrieveByPK method for tables with single-column primary key.
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      */
     protected function addRetrieveByPK_SinglePK(&$script)
     {
@@ -2007,7 +2014,7 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
     /**
      * Retrieve a single object by pkey.
      *
-     * @param      " . $col->getPhpType() . " \$pk the primary key.
+     * @param " . $col->getPhpType() . " \$pk the primary key.
      * @param      PropelPDO \$con the connection to use
      * @return " . $this->getObjectClassname() . "
      */
@@ -2035,7 +2042,7 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
     /**
      * Adds the retrieveByPKs method for tables with single-column primary key.
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      */
     protected function addRetrieveByPKs_SinglePK(&$script)
     {
@@ -2046,7 +2053,7 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
      *
      * @param      array \$pks List of primary keys
      * @param      PropelPDO \$con the connection to use
-     * @return " . $this->getObjectClassname() . "[]
+     * @return "               . $this->getObjectClassname() . "[]
      * @throws PropelException Any exceptions caught during processing will be
      *		 rethrown wrapped into a PropelException.
      */
@@ -2076,7 +2083,7 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
     /**
      * Adds the retrieveByPK method for tables with multi-column primary key.
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      */
     protected function addRetrieveByPK_MultiPK(&$script)
     {
@@ -2092,7 +2099,7 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
         }
         $script .= "
      * @param      PropelPDO \$con
-     * @return   " . $this->getObjectClassname() . "
+     * @return " . $this->getObjectClassname() . "
      */
     public static function " . $this->getRetrieveMethodName() . "(";
 
@@ -2130,7 +2137,7 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
     /**
      * Adds the getTableMap() method which is a convenience method for apps to get DB metadata.
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      */
     protected function addGetTableMap(&$script)
     {
@@ -2152,7 +2159,7 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
     /**
      * Adds the complex OM methods to the base addSelectMethods() function.
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      *
      * @see        PeerBuilder::addSelectMethods()
      */
@@ -2193,7 +2200,7 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
     /**
      * Get the column offsets of the primary key(s) for specified table.
      *
-     * @param  Table $tbl
+     * @param Table $tbl
      *
      * @return array int[] The column offsets of the primary key(s).
      */
@@ -2241,7 +2248,7 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
     /**
      * Adds the doSelectJoin*() methods.
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      */
     protected function addDoSelectJoin(&$script)
     {
@@ -2378,7 +2385,7 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
     /**
      * Adds the doCountJoin*() methods.
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      */
     protected function addDoCountJoin(&$script)
     {
@@ -2469,7 +2476,7 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
     /**
      * Adds the doSelectJoinAll() method.
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      */
     protected function addDoSelectJoinAll(&$script)
     {
@@ -2637,7 +2644,7 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
     /**
      * Adds the doCountJoinAll() method.
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      */
     protected function addDoCountJoinAll(&$script)
     {
@@ -2713,7 +2720,7 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
     /**
      * Adds the doSelectJoinAllExcept*() methods.
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      */
     protected function addDoSelectJoinAllExcept(&$script)
     {
@@ -2910,7 +2917,7 @@ abstract class " . $this->getClassname() . $extendingPeerClass . "
     /**
      * Adds the doCountJoinAllExcept*() methods.
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      */
     protected function addDoCountJoinAllExcept(&$script)
     {

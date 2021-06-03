@@ -48,7 +48,7 @@ class DBOracle extends DBAdapter
     /**
      * This method is used to ignore case.
      *
-     * @param  string $in The string to transform to upper case.
+     * @param string $in The string to transform to upper case.
      *
      * @return string The upper case string.
      */
@@ -60,7 +60,7 @@ class DBOracle extends DBAdapter
     /**
      * This method is used to ignore case.
      *
-     * @param  string $in The string whose case to ignore.
+     * @param string $in The string whose case to ignore.
      *
      * @return string The string in a case that can be ignored.
      */
@@ -99,7 +99,7 @@ class DBOracle extends DBAdapter
     /**
      * Returns SQL which calculates the length (in chars) of a string.
      *
-     * @param  string $s String to calculate length of.
+     * @param string $s String to calculate length of.
      *
      * @return string
      */
@@ -165,7 +165,7 @@ class DBOracle extends DBAdapter
     }
 
     /**
-     * @param  string $seed
+     * @param string $seed
      *
      * @return string
      */
@@ -180,7 +180,7 @@ class DBOracle extends DBAdapter
      *
      * @see http://propel.phpdb.org/trac/ticket/795
      *
-     * @param  Criteria $criteria
+     * @param Criteria $criteria
      *
      * @return Criteria The input, with Select columns replaced by aliases
      */
@@ -245,11 +245,11 @@ class DBOracle extends DBAdapter
     /**
      * Do Explain Plan for query object or query string
      *
-     * @param  PropelPDO            $con   propel connection
-     * @param  ModelCriteria|string $query query the criteria or the query string
+     * @param PropelPDO            $con   propel connection
+     * @param ModelCriteria|string $query query the criteria or the query string
      *
      * @throws PropelException
-     * @return PDOStatement         A PDO statement executed using the connection, ready to be fetched
+     * @return PDOStatement    A PDO statement executed using the connection, ready to be fetched
      */
     public function doExplainPlan(PropelPDO $con, $query)
     {
@@ -296,7 +296,7 @@ class DBOracle extends DBAdapter
     /**
      * Explain Plan read query
      *
-     * @param  string $uniqueId
+     * @param string $uniqueId
      *
      * @return string query unique id
      */

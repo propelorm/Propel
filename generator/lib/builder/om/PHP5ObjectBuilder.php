@@ -113,7 +113,7 @@ class PHP5ObjectBuilder extends ObjectBuilder
     /**
      * Returns the appropriate formatter (from platform) for a date/time column.
      *
-     * @param  Column $col
+     * @param Column $col
      *
      * @return string
      */
@@ -270,15 +270,22 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
 
         if ($table->hasCrossForeignKeys()) {
             foreach ($table->getCrossFks() as $fkList) {
+                /* @var $refFK ForeignKey */
                 list($refFK, $crossFK) = $fkList;
                 $fkName = $this->getFKPhpNameAffix($crossFK, $plural = true);
-                $this->addScheduledForDeletionAttribute($script, $fkName);
+
+                if (!$refFK->isLocalPrimaryKey()) {
+                    $this->addScheduledForDeletionAttribute($script, $fkName);
+                }
             }
         }
 
         foreach ($table->getReferrers() as $refFK) {
             $fkName = $this->getRefFKPhpNameAffix($refFK, $plural = true);
-            $this->addScheduledForDeletionAttribute($script, $fkName);
+
+            if (!$refFK->isLocalPrimaryKey()) {
+                $this->addScheduledForDeletionAttribute($script, $fkName);
+            }
         }
 
         if ($this->hasDefaultValues()) {
@@ -790,7 +797,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      * Adds a date/time/timestamp getter method.
      *
      * @param string &$script The script will be modified in this method.
-     * @param Column $col The current column.
+     * @param Column $col     The current column.
      *
      * @see        parent::addColumnAccessors()
      */
@@ -807,7 +814,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      * Adds the comment for a temporal accessor
      *
      * @param string &$script The script will be modified in this method.
-     * @param Column $col The current column.
+     * @param Column $col     The current column.
      *
      * @see        addTemporalAccessor
      **/
@@ -863,7 +870,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      * Adds the function declaration for a temporal accessor
      *
      * @param string &$script The script will be modified in this method.
-     * @param Column $col The current column.
+     * @param Column $col     The current column.
      *
      * @see        addTemporalAccessor
      **/
@@ -920,7 +927,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      * Adds the body of the temporal accessor
      *
      * @param string &$script The script will be modified in this method.
-     * @param Column $col The current column.
+     * @param Column $col     The current column.
      *
      * @see        addTemporalAccessor
      **/
@@ -1023,7 +1030,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      * Adds the body of the temporal accessor
      *
      * @param string &$script The script will be modified in this method.
-     * @param Column $col The current column.
+     * @param Column $col     The current column.
      *
      * @see        addTemporalAccessorClose
      **/
@@ -1038,7 +1045,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      * Adds an object getter method.
      *
      * @param string &$script The script will be modified in this method.
-     * @param Column $col The current column.
+     * @param Column $col     The current column.
      *
      * @see        parent::addColumnAccessors()
      */
@@ -1054,7 +1061,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      * Adds the function body for an object accessor method
      *
      * @param string &$script The script will be modified in this method.
-     * @param Column $col The current column.
+     * @param Column $col     The current column.
      *
      * @see        addDefaultAccessor()
      **/
@@ -1079,7 +1086,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      * Adds an array getter method.
      *
      * @param string &$script The script will be modified in this method.
-     * @param Column $col The current column.
+     * @param Column $col     The current column.
      *
      * @see        parent::addColumnAccessors()
      */
@@ -1095,7 +1102,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      * Adds the function body for an array accessor method
      *
      * @param string &$script The script will be modified in this method.
-     * @param Column $col The current column.
+     * @param Column $col     The current column.
      *
      * @see        addDefaultAccessor()
      **/
@@ -1124,7 +1131,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      * Adds an enum getter method.
      *
      * @param string &$script The script will be modified in this method.
-     * @param Column $col The current column.
+     * @param Column $col     The current column.
      *
      * @see        parent::addColumnAccessors()
      */
@@ -1140,7 +1147,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      * @param PropelPDO \$con An optional PropelPDO connection to use for fetching this lazy-loaded column.";
         }
         $script .= "
-     * @return " . $col->getPhpType() . "
+     * @return "               . $col->getPhpType() . "
      * @throws PropelException - if the stored enum key is unknown.
      */";
 
@@ -1153,7 +1160,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      * Adds the function body for an enum accessor method
      *
      * @param string &$script The script will be modified in this method.
-     * @param Column $col The current column.
+     * @param Column $col     The current column.
      *
      * @see        addDefaultAccessor()
      **/
@@ -1181,7 +1188,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      * Adds a tester method for an array column.
      *
      * @param string &$script The script will be modified in this method.
-     * @param Column $col The current column.
+     * @param Column $col     The current column.
      */
     protected function addHasArrayElement(&$script, Column $col)
     {
@@ -1220,7 +1227,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      * Adds a normal (non-temporal) getter method.
      *
      * @param string &$script The script will be modified in this method.
-     * @param Column $col The current column.
+     * @param Column $col     The current column.
      *
      * @see        parent::addColumnAccessors()
      */
@@ -1236,7 +1243,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      * Add the comment for a default accessor method (a getter)
      *
      * @param string &$script The script will be modified in this method.
-     * @param Column $col The current column.
+     * @param Column $col     The current column.
      *
      * @see        addDefaultAccessor()
      **/
@@ -1261,7 +1268,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      * Adds the function declaration for a default accessor
      *
      * @param string &$script The script will be modified in this method.
-     * @param Column $col The current column.
+     * @param Column $col     The current column.
      *
      * @see        addDefaultAccessor()
      **/
@@ -1283,7 +1290,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      * Adds the function body for a default accessor method
      *
      * @param string &$script The script will be modified in this method.
-     * @param Column $col The current column.
+     * @param Column $col     The current column.
      *
      * @see        addDefaultAccessor()
      **/
@@ -1304,7 +1311,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      * Adds the function close for a default accessor method
      *
      * @param string &$script The script will be modified in this method.
-     * @param Column $col The current column.
+     * @param Column $col     The current column.
      *
      * @see        addDefaultAccessor()
      **/
@@ -1319,7 +1326,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      * Adds the lazy loader method.
      *
      * @param string &$script The script will be modified in this method.
-     * @param Column $col The current column.
+     * @param Column $col     The current column.
      *
      * @see        parent::addColumnAccessors()
      */
@@ -1335,7 +1342,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      * Adds the comment for the lazy loader method
      *
      * @param string &$script The script will be modified in this method.
-     * @param Column $col The current column.
+     * @param Column $col     The current column.
      *
      * @see        addLazyLoader()
      **/
@@ -1361,7 +1368,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      * Adds the function declaration for the lazy loader method
      *
      * @param string &$script The script will be modified in this method.
-     * @param Column $col The current column.
+     * @param Column $col     The current column.
      *
      * @see        addLazyLoader()
      **/
@@ -1377,7 +1384,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      * Adds the function body for the lazy loader method
      *
      * @param string &$script The script will be modified in this method.
-     * @param Column $col The current column.
+     * @param Column $col     The current column.
      *
      * @see        addLazyLoader()
      **/
@@ -1442,7 +1449,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      * Adds the function close for the lazy loader
      *
      * @param string &$script The script will be modified in this method.
-     * @param Column $col The current column.
+     * @param Column $col     The current column.
      *
      * @see        addLazyLoader()
      **/
@@ -1462,7 +1469,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      * Adds the open of the mutator (setter) method for a column.
      *
      * @param string &$script The script will be modified in this method.
-     * @param Column $col The current column.
+     * @param Column $col     The current column.
      */
     protected function addMutatorOpen(&$script, Column $col)
     {
@@ -1475,7 +1482,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      * Adds the comment for a mutator
      *
      * @param string &$script The script will be modified in this method.
-     * @param Column $col The current column.
+     * @param Column $col     The current column.
      *
      * @see        addMutatorOpen()
      **/
@@ -1486,8 +1493,8 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
     /**
      * Set the value of [$clo] column.
      * " . $col->getDescription() . "
-     * @param " . $col->getPhpType() . " \$v new value
-     * @return " . $this->getObjectClassname() . " The current object (for fluent API support)
+     * @param  " . $col->getPhpType() . " \$v new value
+     * @return "   . $this->getObjectClassname() . " The current object (for fluent API support)
      */";
     }
 
@@ -1495,7 +1502,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      * Adds the mutator function declaration
      *
      * @param string &$script The script will be modified in this method.
-     * @param Column $col The current column.
+     * @param Column $col     The current column.
      *
      * @see        addMutatorOpen()
      **/
@@ -1513,7 +1520,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      * Adds the mutator open body part
      *
      * @param string &$script The script will be modified in this method.
-     * @param Column $col The current column.
+     * @param Column $col     The current column.
      *
      * @see        addMutatorOpen()
      **/
@@ -1541,7 +1548,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      * Adds the close of the mutator (setter) method for a column.
      *
      * @param string &$script The script will be modified in this method.
-     * @param Column $col The current column.
+     * @param Column $col     The current column.
      */
     protected function addMutatorClose(&$script, Column $col)
     {
@@ -1553,7 +1560,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      * Adds the body of the close part of a mutator
      *
      * @param string &$script The script will be modified in this method.
-     * @param Column $col The current column.
+     * @param Column $col     The current column.
      *
      * @see        addMutatorClose()
      **/
@@ -1621,7 +1628,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      * Adds the close for the mutator close
      *
      * @param string &$script The script will be modified in this method.
-     * @param Column $col The current column.
+     * @param Column $col     The current column.
      *
      * @see        addMutatorClose()
      **/
@@ -1639,7 +1646,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      * Adds a setter for BLOB columns.
      *
      * @param string &$script The script will be modified in this method.
-     * @param Column $col The current column.
+     * @param Column $col     The current column.
      *
      * @see        parent::addColumnMutators()
      */
@@ -1667,7 +1674,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      * Adds a setter method for date/time/timestamp columns.
      *
      * @param string &$script The script will be modified in this method.
-     * @param Column $col The current column.
+     * @param Column $col     The current column.
      *
      * @see        parent::addColumnMutators()
      */
@@ -1734,7 +1741,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      * Adds a setter for Object columns.
      *
      * @param string &$script The script will be modified in this method.
-     * @param Column $col The current column.
+     * @param Column $col     The current column.
      *
      * @see        parent::addColumnMutators()
      */
@@ -1758,7 +1765,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      * Adds a setter for Array columns.
      *
      * @param string &$script The script will be modified in this method.
-     * @param Column $col The current column.
+     * @param Column $col     The current column.
      *
      * @see        parent::addColumnMutators()
      */
@@ -1771,7 +1778,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
         $script .= "
         if (\$this->$cloUnserialized !== \$v) {
             \$this->$cloUnserialized = \$v;
-            \$this->$clo = '| ' . implode(' | ', \$v) . ' |';
+            \$this->$clo = '| ' . implode(' | ', (array) \$v) . ' |';
             \$this->modifiedColumns[] = " . $this->getColumnConstant($col) . ";
         }
 ";
@@ -1782,7 +1789,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      * Adds a push method for an array column.
      *
      * @param string &$script The script will be modified in this method.
-     * @param Column $col The current column.
+     * @param Column $col     The current column.
      */
     protected function addAddArrayElement(&$script, Column $col)
     {
@@ -1825,7 +1832,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      * Adds a remove method for an array column.
      *
      * @param string &$script The script will be modified in this method.
-     * @param Column $col The current column.
+     * @param Column $col     The current column.
      */
     protected function addRemoveArrayElement(&$script, Column $col)
     {
@@ -1873,7 +1880,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      * Adds a setter for Enum columns.
      *
      * @param string &$script The script will be modified in this method.
-     * @param Column $col The current column.
+     * @param Column $col     The current column.
      *
      * @see        parent::addColumnMutators()
      */
@@ -1885,8 +1892,8 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
     /**
      * Set the value of [$clo] column.
      * " . $col->getDescription() . "
-     * @param " . $col->getPhpType() . " \$v new value
-     * @return " . $this->getObjectClassname() . " The current object (for fluent API support)
+     * @param  " .             $col->getPhpType() . " \$v new value
+     * @return "               . $this->getObjectClassname() . " The current object (for fluent API support)
      * @throws PropelException - if the value is not accepted by this enum.
      */";
         $this->addMutatorOpenOpen($script, $col);
@@ -1913,7 +1920,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      * Adds setter method for boolean columns.
      *
      * @param string &$script The script will be modified in this method.
-     * @param Column $col The current column.
+     * @param Column $col     The current column.
      *
      * @see        parent::addColumnMutators()
      */
@@ -1966,7 +1973,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      * Adds setter method for "normal" columns.
      *
      * @param string &$script The script will be modified in this method.
-     * @param Column $col The current column.
+     * @param Column $col     The current column.
      *
      * @see        parent::addColumnMutators()
      */
@@ -1979,8 +1986,15 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
         // Perform type-casting to ensure that we can use type-sensitive
         // checking in mutators.
         if ($col->isPhpPrimitiveType()) {
+            if ($col->isTextType()) {
+              $script .= "
+        if (\$v !== null) {";
+            } else {
+              $script .= "
+        if (\$v !== null && is_numeric(\$v)) {";
+            }
+
             $script .= "
-        if (\$v !== null && is_numeric(\$v)) {
             \$v = (" . $col->getPhpType() . ") \$v;
         }
 ";
@@ -2447,6 +2461,12 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
         }
         $script .= "
         );";
+        $script .= "
+        \$virtualColumns = \$this->virtualColumns;
+        foreach (\$virtualColumns as \$key => \$virtualColumn) {
+            \$result[\$key] = \$virtualColumn;
+        }
+        ";
         if ($hasFks) {
             $script .= "
         if (\$includeForeignObjects) {";
@@ -3278,7 +3298,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
     /**
      * Constructs variable name for fkey-related objects.
      *
-     * @param  ForeignKey $fk
+     * @param ForeignKey $fk
      *
      * @return string
      */
@@ -3290,7 +3310,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
     /**
      * Constructs variable name for objects which referencing current table by specified foreign key.
      *
-     * @param  ForeignKey $fk
+     * @param ForeignKey $fk
      *
      * @return string
      */
@@ -3303,7 +3323,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      * Constructs variable name for single object which references current table by specified foreign key
      * which is ALSO a primary key (hence one-to-one relationship).
      *
-     * @param  ForeignKey $fk
+     * @param ForeignKey $fk
      *
      * @return string
      */
@@ -3370,8 +3390,8 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
     /**
      * Declares an association between this object and a $className object.
      *
-     * @param   $className \$v
-     * @return " . $this->getObjectClassname() . " The current object (for fluent API support)
+     * @param                  $className \$v
+     * @return "               . $this->getObjectClassname() . " The current object (for fluent API support)
      * @throws PropelException
      */
     public function set" . $this->getFKPhpNameAffix($fk, $plural = false) . "($className \$v = null)
@@ -3547,7 +3567,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      * overridden in <code>" . $table->getPhpName() . "</code>.";
         }
         $script .= "
-     * @return " . $this->getObjectClassname() . " The current object (for fluent API support)
+     * @return "               . $this->getObjectClassname() . " The current object (for fluent API support)
      * @throws PropelException
      */
     public function set" . $methodAffix . "Key(\$key)
@@ -3852,12 +3872,14 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
 
         $collName = $this->getRefFKCollVarName($refFK);
 
+        $scheduledForDeletion = lcfirst($this->getRefFKPhpNameAffix($refFK, $plural = true)) . "ScheduledForDeletion";
+
         $script .= "
     /**
      * Method called to associate a $className object to this object
      * through the $className foreign key attribute.
      *
-     * @param   $className \$l $className
+     * @param    $className \$l $className
      * @return " . $this->getObjectClassname() . " The current object (for fluent API support)
      */
     public function add" . $this->getRefFKPhpNameAffix($refFK, $plural = false) . "($className \$l)
@@ -3866,8 +3888,13 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
             \$this->init" . $this->getRefFKPhpNameAffix($refFK, $plural = true) . "();
             \$this->{$collName}Partial = true;
         }
+
         if (!in_array(\$l, \$this->{$collName}->getArrayCopy(), true)) { // only add it if the **same** object is not already associated
             \$this->doAdd" . $this->getRefFKPhpNameAffix($refFK, $plural = false) . "(\$l);
+
+            if (\$this->{$scheduledForDeletion} and \$this->{$scheduledForDeletion}->contains(\$l)) {
+                \$this->{$scheduledForDeletion}->remove(\$this->{$scheduledForDeletion}->search(\$l));
+            }
         }
 
         return \$this;
@@ -4071,7 +4098,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
     }
 
     /**
-     * @param        string &$script The script will be modified in this method.
+     * @param string     &$script The script will be modified in this method.
      * @param ForeignKey $refFK
      * @param ForeignKey $crossFK
      */
@@ -4096,7 +4123,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
     }
 
     /**
-     * @param        string &$script The script will be modified in this method.
+     * @param string     &$script The script will be modified in this method.
      * @param ForeignKey $refFK
      * @param ForeignKey $crossFK
      */
@@ -4187,8 +4214,8 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      * Adds the method that sets a one-to-one related referrer fkey.
      * This is for one-to-one relationships special case.
      *
-     * @param string &$script The script will be modified in this method.
-     * @param ForeignKey $refFK The referencing foreign key.
+     * @param string     &$script The script will be modified in this method.
+     * @param ForeignKey $refFK   The referencing foreign key.
      */
     protected function addPKRefFKSet(&$script, ForeignKey $refFK)
     {
@@ -4203,8 +4230,8 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
     /**
      * Sets a single $className object as related to this object by a one-to-one relationship.
      *
-     * @param   $className \$v $className
-     * @return " . $this->getObjectClassname() . " The current object (for fluent API support)
+     * @param                  $className \$v $className
+     * @return "               . $this->getObjectClassname() . " The current object (for fluent API support)
      * @throws PropelException
      */
     public function set" . $this->getRefFKPhpNameAffix($refFK, $plural = false) . "($className \$v = null)
@@ -4249,7 +4276,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
 
     protected function addCrossFkScheduledForDeletion(&$script, $refFK, $crossFK)
     {
-        $queryClassName = $this->getRefFKPhpNameAffix($refFK, $plural = false) . 'Query';
+        $queryClassName = $this->getNewStubQueryBuilder($refFK->getTable())->getClassname();
         $relatedName = $this->getFKPhpNameAffix($crossFK, $plural = true);
 
         $lowerRelatedName = lcfirst($relatedName);
@@ -4307,9 +4334,8 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
             if (\$this->{$lowerRelatedName}ScheduledForDeletion !== null) {
                 if (!\$this->{$lowerRelatedName}ScheduledForDeletion->isEmpty()) {";
 
-        if ($refFK->getOnDelete() == ForeignKey::CASCADE) {
+        if ($refFK->isLocalColumnsRequired() || ForeignKey::CASCADE === $refFK->getOnDelete()) {
             $script .= "
-                    //the foreign key is flagged as `CASCADE`, so we delete the items
                     $queryClassName::create()
                         ->filterByPrimaryKeys(\$this->{$lowerRelatedName}ScheduledForDeletion->getPrimaryKeys(false))
                         ->delete(\$con);";
@@ -4480,7 +4506,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
     public function set{$relatedNamePlural}(PropelCollection \${$inputCollection}, PropelPDO \$con = null)
     {
         \$this->clear{$relatedNamePlural}();
-        \$current{$relatedNamePlural} = \$this->get{$relatedNamePlural}();
+        \$current{$relatedNamePlural} = \$this->get{$relatedNamePlural}(null, \$con);
 
         \$this->{$inputCollection}ScheduledForDeletion = \$current{$relatedNamePlural}->diff(\${$inputCollection});
 
@@ -4558,23 +4584,29 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
 
         $relatedObjectClassName = $this->getFKPhpNameAffix($crossFK, $plural = false);
 
+        $scheduledForDeletion = lcfirst($relCol) . "ScheduledForDeletion";
+
         $script .= "
     /**
      * Associate a " . $crossObjectClassName . " object to this object
      * through the " . $tblFK->getName() . " cross reference table.
      *
-     * @param " . $crossObjectClassName . " " . $crossObjectName . " The $className object to relate
-     * @return " . $this->getObjectClassname() . " The current object (for fluent API support)
+     * @param  " . $crossObjectClassName . " " . $crossObjectName . " The $className object to relate
+     * @return "   . $this->getObjectClassname() . " The current object (for fluent API support)
      */
     public function add{$relatedObjectClassName}($crossObjectClassName $crossObjectName)
     {
         if (\$this->" . $collName . " === null) {
             \$this->init" . $relCol . "();
         }
+
         if (!\$this->" . $collName . "->contains(" . $crossObjectName . ")) { // only add it if the **same** object is not already associated
             \$this->doAdd{$relatedObjectClassName}($crossObjectName);
+            \$this->" . $collName . "[] = " . $crossObjectName . ";
 
-            \$this->" . $collName . "[]= " . $crossObjectName . ";
+            if (\$this->" . $scheduledForDeletion . " and \$this->" . $scheduledForDeletion . "->contains(" . $crossObjectName . ")) {
+                \$this->" . $scheduledForDeletion . "->remove(\$this->" . $scheduledForDeletion . "->search(" . $crossObjectName . "));
+            }
         }
 
         return \$this;
@@ -4583,13 +4615,16 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
     }
 
     /**
-     * @param        string &$script The script will be modified in this method.
+     * @param string     &$script The script will be modified in this method.
      * @param ForeignKey $refFK
      * @param ForeignKey $crossFK
      */
     protected function addCrossFKDoAdd(&$script, ForeignKey $refFK, ForeignKey $crossFK)
     {
         $relatedObjectClassName = $this->getFKPhpNameAffix($crossFK, $plural = false);
+        $relatedObjectName = $this->getNewStubObjectBuilder($crossFK->getForeignTable())->getClassname();
+
+        $selfRelationNamePlural = $this->getFKPhpNameAffix($refFK, $plural = true);
 
         $lowerRelatedObjectClassName = lcfirst($relatedObjectClassName);
 
@@ -4604,11 +4639,17 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
     /**
      * @param	{$relatedObjectClassName} \${$lowerRelatedObjectClassName} The $lowerRelatedObjectClassName object to add.
      */
-    protected function doAdd{$relatedObjectClassName}(\${$lowerRelatedObjectClassName})
+    protected function doAdd{$relatedObjectClassName}({$relatedObjectName} \${$lowerRelatedObjectClassName})
     {
-        {$foreignObjectName} = new {$className}();
-        {$foreignObjectName}->set{$relatedObjectClassName}(\${$lowerRelatedObjectClassName});
-        \$this->add{$refKObjectClassName}({$foreignObjectName});
+        // set the back reference to this object directly as using provided method either results
+        // in endless loop or in multiple relations
+        if (!\${$lowerRelatedObjectClassName}->get{$selfRelationNamePlural}()->contains(\$this)) { {$foreignObjectName} = new {$className}();
+            {$foreignObjectName}->set{$relatedObjectClassName}(\${$lowerRelatedObjectClassName});
+            \$this->add{$refKObjectClassName}({$foreignObjectName});
+
+            \$foreignCollection = \${$lowerRelatedObjectClassName}->get{$selfRelationNamePlural}();
+            \$foreignCollection[] = \$this;
+        }
     }
 ";
     }
@@ -4781,8 +4822,6 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
         }
 
         foreach ($table->getReferrers() as $refFK) {
-            $this->addRefFkScheduledForDeletion($script, $refFK);
-
             if ($refFK->isLocalPrimaryKey()) {
                 $varName = $this->getPKRefFKVarName($refFK);
                 $script .= "
@@ -4793,6 +4832,8 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
             }
 ";
             } else {
+                $this->addRefFkScheduledForDeletion($script, $refFK);
+
                 $collName = $this->getRefFKCollVarName($refFK);
                 $script .= "
             if (\$this->$collName !== null) {
@@ -5080,7 +5121,6 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
     }
 ";
     }
-
 
     /**
      * Adds the $alreadyInSave attribute, which prevents attempting to re-save the same object.
@@ -5532,7 +5572,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
      * objects.
      *
      * @param boolean \$deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
-     * @return " . $this->getObjectClassname() . " Clone of current object.
+     * @return "               . $this->getObjectClassname() . " Clone of current object.
      * @throws PropelException
      */
     public function copy(\$deepCopy = false)

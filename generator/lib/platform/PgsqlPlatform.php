@@ -64,7 +64,7 @@ class PgsqlPlatform extends DefaultPlatform
     /**
      * Escape the string for RDBMS.
      *
-     * @param  string $text
+     * @param string $text
      *
      * @return string
      */

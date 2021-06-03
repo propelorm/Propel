@@ -50,7 +50,7 @@ class PropelOnDemandFormatter extends PropelObjectFormatter
      * The first object to hydrate is the model of the Criteria
      * The following objects (the ones added by way of ModelCriteria::with()) are linked to the first one
      *
-     * @param    array  $row associative array indexed by column number,
+     * @param array $row associative array indexed by column number,
      *                   as returned by PDOStatement::fetch(PDO::FETCH_NUM)
      *
      * @return BaseObject

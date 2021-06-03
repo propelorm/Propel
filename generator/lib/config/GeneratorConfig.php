@@ -82,7 +82,7 @@ class GeneratorConfig implements GeneratorConfigInterface
     /**
      * Gets a specific propel (renamed) property from the build.
      *
-     * @param  string $name
+     * @param string $name
      *
      * @return mixed
      */
@@ -105,7 +105,7 @@ class GeneratorConfig implements GeneratorConfigInterface
     /**
      * Resolves and returns the class name based on the specified property value.
      *
-     * @param  string         $propname The name of the property that holds the class path (dot-path notation).
+     * @param string $propname The name of the property that holds the class path (dot-path notation).
      *
      * @return string         The class name.
      * @throws BuildException If the classname cannot be determined or class cannot be loaded.
@@ -142,7 +142,7 @@ class GeneratorConfig implements GeneratorConfigInterface
     /**
      * Resolves and returns the builder class name.
      *
-     * @param  string $type
+     * @param string $type
      *
      * @return string The class name.
      */
@@ -156,7 +156,7 @@ class GeneratorConfig implements GeneratorConfigInterface
     /**
      * Creates and configures a new Platform class.
      *
-     * @param  PDO            $con
+     * @param PDO $con
      *
      * @return Platform
      * @throws BuildException
@@ -164,11 +164,12 @@ class GeneratorConfig implements GeneratorConfigInterface
     public function getConfiguredPlatform(PDO $con = null, $database = null)
     {
         $buildConnection = $this->getBuildConnection($database);
-        if (null !== $buildConnection['adapter']) {
-            $clazz = Phing::import('platform.' . ucfirst($buildConnection['adapter']) . 'Platform');
-        } elseif ($this->getBuildProperty('platformClass')) {
+        //First try to load platform from the user provided build properties
+        if ($this->getBuildProperty('platformClass')) {
             // propel.platform.class = platform.${propel.database}Platform by default
             $clazz = $this->getClassname('platformClass');
+        } elseif (null !== $buildConnection['adapter']) {
+            $clazz = Phing::import('platform.' . ucfirst($buildConnection['adapter']) . 'Platform');
         } else {
             return null;
         }
@@ -192,7 +193,7 @@ class GeneratorConfig implements GeneratorConfigInterface
     /**
      * Creates and configures a new SchemaParser class for specified platform.
      *
-     * @param  PDO            $con
+     * @param PDO $con
      *
      * @return SchemaParser
      * @throws BuildException
@@ -214,8 +215,8 @@ class GeneratorConfig implements GeneratorConfigInterface
     /**
      * Gets a configured data model builder class for specified table and based on type.
      *
-     * @param  Table            $table
-     * @param  string           $type  The type of builder ('ddl', 'sql', etc.)
+     * @param Table  $table
+     * @param string $type  The type of builder ('ddl', 'sql', etc.)
      *
      * @return DataModelBuilder
      */
@@ -244,7 +245,7 @@ class GeneratorConfig implements GeneratorConfigInterface
     /**
      * Gets a configured behavior class
      *
-     * @param  string $name a behavior name
+     * @param string $name a behavior name
      *
      * @return string a behavior class name
      */

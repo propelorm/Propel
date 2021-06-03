@@ -137,7 +137,7 @@ class PropelPager implements Countable, Iterator
     /**
      * Set the criteria for this pager.
      *
-     * @param  Criteria $c
+     * @param Criteria $c
      *
      * @return void
      */
@@ -159,7 +159,7 @@ class PropelPager implements Countable, Iterator
     /**
      * Set the Peer Classname
      *
-     * @param  string $class
+     * @param string $class
      *
      * @return void
      */
@@ -182,7 +182,7 @@ class PropelPager implements Countable, Iterator
      * Set the Peer select method.
      * This exists for legacy support, please use setPeerSelectMethod().
      *
-     * @param  string $method The name of the static method to call on the Peer class.
+     * @param string $method The name of the static method to call on the Peer class.
      *
      * @return void
      * @see        setPeerSelectMethod()
@@ -209,7 +209,7 @@ class PropelPager implements Countable, Iterator
     /**
      * Set the Peer select method.
      *
-     * @param  string $method The name of the static method to call on the Peer class.
+     * @param string $method The name of the static method to call on the Peer class.
      *
      * @return void
      */
@@ -365,7 +365,7 @@ class PropelPager implements Countable, Iterator
     /**
      * get an array of previous id's
      *
-     * @param  int   $range
+     * @param int $range
      *
      * @return array $links
      */
@@ -389,7 +389,7 @@ class PropelPager implements Countable, Iterator
     /**
      * get an array of next id's
      *
-     * @param  int   $range
+     * @param int $range
      *
      * @return array $links
      */
@@ -455,7 +455,7 @@ class PropelPager implements Countable, Iterator
     /**
      * Set the current page number (First page is 1).
      *
-     * @param  int  $page
+     * @param int $page
      *
      * @return void
      */
@@ -546,7 +546,7 @@ class PropelPager implements Countable, Iterator
     /**
      * Sets max rows (limit).
      *
-     * @param  int  $v
+     * @param int $v
      *
      * @return void
      */

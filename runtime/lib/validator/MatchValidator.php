@@ -43,7 +43,7 @@ class MatchValidator implements BasicValidator
      * Prepares the regular expression entered in the XML
      * for use with preg_match().
      *
-     * @param  string $exp
+     * @param string $exp
      *
      * @return string Prepared regular expression.
      */

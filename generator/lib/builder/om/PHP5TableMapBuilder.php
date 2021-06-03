@@ -53,7 +53,7 @@ class PHP5TableMapBuilder extends OMBuilder
     /**
      * Adds the include() statements for files that this class depends on or utilizes.
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      */
     protected function addIncludes(&$script)
     {
@@ -62,7 +62,7 @@ class PHP5TableMapBuilder extends OMBuilder
     /**
      * Adds class phpdoc comment and opening of class.
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      */
     protected function addClassOpen(&$script)
     {
@@ -114,7 +114,7 @@ class " . $this->getClassname() . " extends TableMap
     /**
      * Adds any constants needed for this TableMap class.
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      */
     protected function addConstants(&$script)
     {
@@ -129,7 +129,7 @@ class " . $this->getClassname() . " extends TableMap
     /**
      * Adds any attributes needed for this TableMap class.
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      */
     protected function addAttributes(&$script)
     {
@@ -138,7 +138,7 @@ class " . $this->getClassname() . " extends TableMap
     /**
      * Closes class.
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      */
     protected function addClassClose(&$script)
     {
@@ -151,7 +151,7 @@ class " . $this->getClassname() . " extends TableMap
     /**
      * Adds the addInitialize() method to the  table map class.
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      */
     protected function addInitialize(&$script)
     {
@@ -270,7 +270,7 @@ class " . $this->getClassname() . " extends TableMap
     /**
      * Adds the method that build the RelationMap objects
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      */
     protected function addBuildRelations(&$script)
     {
@@ -325,7 +325,7 @@ class " . $this->getClassname() . " extends TableMap
     /**
      * Adds the behaviors getter
      *
-     * @param      string &$script The script will be modified in this method.
+     * @param string &$script The script will be modified in this method.
      */
     protected function addGetBehaviors(&$script)
     {
@@ -354,7 +354,7 @@ class " . $this->getClassname() . " extends TableMap
     /**
      * Checks whether any registered behavior on that table has a modifier for a hook
      *
-     * @param  string  $hookName The name of the hook as called from one of this class methods, e.g. "preSave"
+     * @param string $hookName The name of the hook as called from one of this class methods, e.g. "preSave"
      *
      * @return boolean
      */
@@ -367,7 +367,7 @@ class " . $this->getClassname() . " extends TableMap
      * Checks whether any registered behavior on that table has a modifier for a hook
      *
      * @param string $hookName The name of the hook as called from one of this class methods, e.g. "preSave"
-     * @param string &$script The script will be modified in this method.
+     * @param string &$script  The script will be modified in this method.
      */
     public function applyBehaviorModifier($hookName, &$script, $tab = "		")
     {

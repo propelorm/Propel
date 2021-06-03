@@ -169,8 +169,8 @@ class AppData
     /**
      * Return the database with the specified name.
      *
-     * @param string $name database name
-     * @param bool $doFinalInit
+     * @param string $name        database name
+     * @param bool   $doFinalInit
      *
      * @return Database|null
      */

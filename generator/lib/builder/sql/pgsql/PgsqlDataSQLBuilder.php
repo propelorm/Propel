@@ -39,7 +39,7 @@ class PgsqlDataSQLBuilder extends DataSQLBuilder
     /**
      * The main method in this class, returns the SQL for INSERTing data into a row.
      *
-     * @param  DataRow $row The row to process.
+     * @param DataRow $row The row to process.
      *
      * @return string
      */
@@ -78,9 +78,9 @@ class PgsqlDataSQLBuilder extends DataSQLBuilder
     /**
      * Get SQL value to insert for Postgres BOOLEAN column.
      *
-     * @param  boolean $value
+     * @param boolean $value
      *
-     * @return string  The representation of boolean for Postgres ('t' or 'f').
+     * @return string The representation of boolean for Postgres ('t' or 'f').
      */
     protected function getBooleanSql($value)
     {
@@ -93,7 +93,7 @@ class PgsqlDataSQLBuilder extends DataSQLBuilder
 
     /**
      *
-     * @param  mixed  $blob Blob object or string containing data.
+     * @param mixed $blob Blob object or string containing data.
      *
      * @return string
      */

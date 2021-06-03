@@ -109,9 +109,9 @@ class PropelSQLExec extends AbstractPropelTask
     /**
      * Get the buildtime connection settings for a given database name.
      *
-     * @param  string $database
+     * @param string $database
      *
-     * @return array  $buildConnections
+     * @return array $buildConnections
      */
     public function getBuildConnection($database)
     {
@@ -340,7 +340,7 @@ class PropelSQLExec extends AbstractPropelTask
     /**
      * Execute a SQL statement using the current connection property.
      *
-     * @param  string       $sql SQL statement to execute
+     * @param string $sql SQL statement to execute
      *
      * @throws PDOException
      */

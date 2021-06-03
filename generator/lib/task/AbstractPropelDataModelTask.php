@@ -273,7 +273,7 @@ abstract class AbstractPropelDataModelTask extends AbstractPropelTask
      * [REQUIRED] Set the output directory. It will be
      * created if it doesn't exist.
      *
-     * @param  PhingFile      $outputDirectory
+     * @param PhingFile $outputDirectory
      *
      * @return void
      * @throws BuildException
@@ -362,7 +362,7 @@ abstract class AbstractPropelDataModelTask extends AbstractPropelTask
     /**
      * Maps the passed in name to a new filename & returns resolved File object.
      *
-     * @param  string         $from
+     * @param string $from
      *
      * @return PhingFile      Resolved File object.
      * @throws BuildException - if no Mapper element se
@@ -531,10 +531,10 @@ abstract class AbstractPropelDataModelTask extends AbstractPropelTask
      * Note: this function very much assumes at least a reasonable XML schema, maybe it'll proof
      * users don't have those and adding some more informative exceptions would be better
      *
-     * @param  DomDocument $dom
-     * @param  string      $srcDir
+     * @param DomDocument $dom
+     * @param string      $srcDir
      *
-     * @return void        (objects, DomDocument, are references by default in PHP 5, so returning it is useless)
+     * @return void (objects, DomDocument, are references by default in PHP 5, so returning it is useless)
      **/
     protected function includeExternalSchemas(DomDocument $dom, $srcDir)
     {
@@ -569,9 +569,9 @@ abstract class AbstractPropelDataModelTask extends AbstractPropelTask
      *  We need to join the datamodels in this case to allow for foreign keys
      * that point to tables in different packages.
      *
-     * @param  array[AppData] $ads The datamodels to join
+     * @param array[AppData] $ads The datamodels to join
      *
-     * @return AppData        The single datamodel with all other datamodels joined in
+     * @return AppData The single datamodel with all other datamodels joined in
      */
     protected function joinDataModels($ads)
     {

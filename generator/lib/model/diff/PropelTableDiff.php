@@ -534,7 +534,7 @@ class PropelTableDiff
      */
     public function removeRemovedFk($fkName)
     {
-        unset($this->removedFks[$columnName]);
+        unset($this->removedFks[$fkName]);
     }
 
     /**

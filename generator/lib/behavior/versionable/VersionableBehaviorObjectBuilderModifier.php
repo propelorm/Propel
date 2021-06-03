@@ -170,7 +170,7 @@ protected \$enforceVersion = false;
     {
         $this->setBuilder($builder);
         $script = '';
-        if ($this->getParameter('version_column') != 'version') {
+        if (strcasecmp($this->getParameter('version_column'), 'version') != 0) {
             $this->addVersionSetter($script);
             $this->addVersionGetter($script);
         }
@@ -397,7 +397,7 @@ public function toVersion(\$versionNumber, \$con = null)
 {
     \$version = \$this->getOneVersion(\$versionNumber, \$con);
     if (!\$version) {
-        throw new PropelException(sprintf('No {$ARclassName} object found with version %d', \$version));
+        throw new PropelException(sprintf('No {$ARclassName} object found with version %d', \$versionNumber));
     }
     \$this->populateFromVersion(\$version, \$con);
 

@@ -91,8 +91,12 @@ if (\$this->isColumnModified($const) && \$this->{$this->getColumnGetter()}()) {
             $count = preg_match_all('/{([a-zA-Z]+)}/', $pattern, $matches, PREG_PATTERN_ORDER);
 
             foreach ($matches[1] as $key => $match) {
-
-                $column = $this->getTable()->getColumn($this->underscore(ucfirst($match)));
+                $columnName = $this->underscore(ucfirst($match));
+                $column = $this->getTable()->getColumn($columnName);
+                if ((null == $column) && $this->getTable()->hasBehavior('symfony_i18n')) {
+                    $i18n = $this->getTable()->getBehavior('symfony_i18n');
+                    $column = $i18n->getI18nTable()->getColumn($columnName);
+                }
                 if (null == $column) {
                     throw new \InvalidArgumentException(sprintf('The pattern %s is invalid  the column %s is not found', $pattern, $match));
                 }
@@ -317,14 +321,25 @@ protected function makeSlugUnique(\$slug, \$separator = '" . $this->getParameter
         $script .= "
     }
 
-    \$query = " . $this->builder->getStubQueryBuilder()->getClassname() . "::create('q')
-        ->where('q." . $this->getColumnForParameter('slug_column')->getPhpName() . " ' . (\$alreadyExists ? 'REGEXP' : '=') . ' ?', \$alreadyExists ? '^' . \$slug2 . '[0-9]+$' : \$slug2)
-        ->prune(\$this)";
+     \$query = " . $this->builder->getStubQueryBuilder()->getClassname() . "::create('q')
+    ";
+        $platform = $this->getTable()->getDatabase()->getPlatform();
+        if ($platform instanceof PgsqlPlatform) {
+            $script .= "->where('q." . $this->getColumnForParameter('slug_column')->getPhpName() . " ' . (\$alreadyExists ? '~*' : '=') . ' ?', \$alreadyExists ? '^' . \$slug2 . '[0-9]+$' : \$slug2)";
+        } elseif ($platform instanceof MssqlPlatform) {
+            $script .= "->where('q." . $this->getColumnForParameter('slug_column')->getPhpName() . " ' . (\$alreadyExists ? 'like' : '=') . ' ?', \$alreadyExists ? '^' . \$slug2 . '[0-9]+$' : \$slug2)";
+        } elseif ($platform instanceof OraclePlatform) {
+            $script .= "->where((\$alreadyExists ? 'REGEXP_LIKE(' : '') . 'q." . $this->getColumnForParameter('slug_column')->getPhpName() . " ' . (\$alreadyExists ? ',' : '=') . ' ?' . (\$alreadyExists ? ')' : ''), \$alreadyExists ? '^' . \$slug2 . '[0-9]+$' : \$slug2)";
+        } else {
+            $script .= "->where('q." . $this->getColumnForParameter('slug_column')->getPhpName() . " ' . (\$alreadyExists ? 'REGEXP' : '=') . ' ?', \$alreadyExists ? '^' . \$slug2 . '[0-9]+$' : \$slug2)";
+        }
+
+        $script .="->prune(\$this)";
 
         if ($this->getParameter('scope_column')) {
-            $getter = 'get' . $this->getColumnForParameter('scope_column')->getPhpName();
+            $scopeGetter = 'get' . $this->getColumnForParameter('scope_column')->getPhpName();
             $script .= "
-            ->filterBy('{$this->getColumnForParameter('scope_column')->getPhpName()}', \$this->{$getter}())";
+            ->filterBy('{$this->getColumnForParameter('scope_column')->getPhpName()}', \$this->{$scopeGetter}())";
         }
         // watch out: some of the columns may be hidden by the soft_delete behavior
         if ($this->table->hasBehavior('soft_delete')) {
@@ -355,7 +370,7 @@ protected function makeSlugUnique(\$slug, \$separator = '" . $this->getParameter
     }
 
     \$slugNum = substr(\$object->" . $getter . "(), strlen(\$slug) + 1);
-    if (0 == \$slugNum[0]) {
+    if ('0' === \$slugNum[0]) {
         \$slugNum[0] = 1;
     }
 
@@ -368,10 +383,11 @@ protected function makeSlugUnique(\$slug, \$separator = '" . $this->getParameter
     {
         $this->builder = $builder;
         $script = '';
+
         if ($this->getParameter('slug_column') != 'slug') {
             $this->addFilterBySlug($script);
+            $this->addFindOneBySlug($script);
         }
-        $this->addFindOneBySlug($script);
 
         return $script;
     }

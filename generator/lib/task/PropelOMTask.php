@@ -51,7 +51,7 @@ class PropelOMTask extends AbstractPropelDataModelTask
     /**
      * Utility method to create directory for package if it doesn't already exist.
      *
-     * @param  string         $path The [relative] package path.
+     * @param string $path The [relative] package path.
      *
      * @throws BuildException - if there is an error creating directories
      */

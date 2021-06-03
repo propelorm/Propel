@@ -160,9 +160,9 @@ class PgsqlSchemaParser extends BaseSchemaParser
     /**
      * Adds Columns to the specified table.
      *
-     * @param  Table           $table   The Table model class to add columns to.
-     * @param  int             $oid     The table OID
-     * @param  string          $version The database version.
+     * @param Table  $table   The Table model class to add columns to.
+     * @param int    $oid     The table OID
+     * @param string $version The database version.
      *
      * @throws EngineException
      */
@@ -284,8 +284,8 @@ class PgsqlSchemaParser extends BaseSchemaParser
             return $arrRetVal;
         } // if ($intTypmod == -1)
 
-        // Numeric Datatype?
-        if ($strName == $this->getMappedNativeType(PropelTypes::NUMERIC)) {
+        // Decimal Datatype?
+        if ($strName == $this->getMappedNativeType(PropelTypes::DECIMAL)) {
             $intLen = ($intTypmod - 4) >> 16;
             $intPrec = ($intTypmod - 4) & 0xffff;
             $intLen = sprintf("%ld", $intLen);

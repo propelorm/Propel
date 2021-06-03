@@ -22,7 +22,7 @@ class SqliteDataSQLBuilder extends DataSQLBuilder
     /**
      * Returns string processed by sqlite_udf_encode_binary() to ensure that binary contents will be handled correctly by sqlite.
      *
-     * @param  mixed  $blob Blob or string
+     * @param mixed $blob Blob or string
      *
      * @return string encoded text
      */

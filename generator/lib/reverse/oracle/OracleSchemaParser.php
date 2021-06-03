@@ -69,8 +69,8 @@ class OracleSchemaParser extends BaseSchemaParser
     /**
      * Searches for tables in the database. Maybe we want to search also the views.
      *
-     * @param  Database $database The Database model class to add tables to.
-     * @param  Task     $task
+     * @param Database $database The Database model class to add tables to.
+     * @param Task     $task
      *
      * @return int
      */
@@ -106,7 +106,7 @@ class OracleSchemaParser extends BaseSchemaParser
 
             $pkColumns = $table->getPrimaryKey();
             if (count($pkColumns) == 1 && $seqPattern) {
-                $seqName = str_replace('${table}', $tableName, $seqPattern);
+                $seqName = str_replace('${table}', $table->getName(), $seqPattern);
                 $seqName = strtoupper($seqName);
 
                 $stmt2 = $this->dbh->query("SELECT * FROM USER_SEQUENCES WHERE SEQUENCE_NAME = '" . $seqName . "'");
@@ -254,9 +254,8 @@ class OracleSchemaParser extends BaseSchemaParser
             if (!isset($foreignKeys[$row["CONSTRAINT_NAME"]])) {
                 $fk = new ForeignKey($row["CONSTRAINT_NAME"]);
                 $fk->setForeignTableCommonName($foreignReferenceInfo['TABLE_NAME']);
-                $onDelete = ($row["DELETE_RULE"] == 'NO ACTION') ? 'NONE' : $row["DELETE_RULE"];
-                $fk->setOnDelete($onDelete);
-                $fk->setOnUpdate($onDelete);
+                $fk->setOnDelete($row["DELETE_RULE"]);
+                $fk->setOnUpdate($row["DELETE_RULE"]);
                 $fk->addReference(array("local" => $localReferenceInfo['COLUMN_NAME'], "foreign" => $foreignReferenceInfo['COLUMN_NAME']));
                 $table->addForeignKey($fk);
                 $foreignKeys[$row["CONSTRAINT_NAME"]] = $fk;

@@ -49,7 +49,7 @@ class GeneratedObjectMoreRelationTest extends PHPUnit_Framework_TestCase
         <column name="user_id" required="true" primaryKey="true" type="INTEGER" />
         <column name="page_id" required="true" primaryKey="true" type="INTEGER" />
         <column name="comment" type="VARCHAR" size="100" />
-        <foreign-key foreignTable="more_relation_test_page" onDelete="cascade">
+        <foreign-key foreignTable="more_relation_test_page" onDelete="restrict">
           <reference local="page_id" foreign="id"/>
         </foreign-key>
     </table>
@@ -212,4 +212,25 @@ EOF;
 
     }
 
+    public function testOnDeleteCascadeNotRequired()
+    {
+        \MoreRelationTest\PagePeer::doDeleteAll();
+        \MoreRelationTest\ContentPeer::doDeleteAll();
+
+        $page = new \MoreRelationTest\Page();
+        $page->setTitle('Some important Page');
+
+        $content = new \MoreRelationTest\Content();
+        $content->setTitle('Content');
+
+        $page->addContent($content);
+        $page->save();
+
+        $this->assertEquals(1, \MoreRelationTest\ContentQuery::create()->count());
+
+        $page->removeContent($content);
+        $page->save();
+
+        $this->assertEquals(0, \MoreRelationTest\ContentQuery::create()->count());
+    }
 }

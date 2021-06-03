@@ -149,7 +149,7 @@ class Join
      * @param string $rightTableAlias
      * @param string $operator        The comparison operator of the join condition, default Join::EQUAL
      */
-    public function addExplicitCondition($leftTableName, $leftColumnName, $leftTableAlias = null, $rightTableName, $rightColumnName, $rightTableAlias = null, $operator = self::EQUAL)
+    public function addExplicitCondition($leftTableName, $leftColumnName, $leftTableAlias, $rightTableName, $rightColumnName, $rightTableAlias = null, $operator = self::EQUAL)
     {
         $this->leftTableName = $leftTableName;
         $this->leftTableAlias = $leftTableAlias;
@@ -191,7 +191,7 @@ class Join
     }
 
     /**
-     * @param     string $operator the comparison operator for the join condition
+     * @param string $operator the comparison operator for the join condition
      */
     public function addOperator($operator = null)
     {
@@ -201,7 +201,7 @@ class Join
     /**
      * @param int $index
      *
-     * @return string    the comparison operator for the join condition
+     * @return string the comparison operator for the join condition
      */
     public function getOperator($index = 0)
     {
@@ -260,7 +260,7 @@ class Join
      * echo $join->getLeftColumn(); // 'book.AUTHOR_ID'
      * </code>
      *
-     * @param  integer $index The number of the condition to use
+     * @param integer $index The number of the condition to use
      *
      * @return string
      */
@@ -280,7 +280,7 @@ class Join
      * echo $join->getLeftColumnName(); // 'AUTHOR_ID'
      * </code>
      *
-     * @param  integer $index The number of the condition to use
+     * @param integer $index The number of the condition to use
      *
      * @return string
      */
@@ -368,7 +368,7 @@ class Join
      * echo $join->getLeftColumn(); // 'author.ID'
      * </code>
      *
-     * @param  integer $index The number of the condition to use
+     * @param integer $index The number of the condition to use
      *
      * @return string
      */
@@ -388,7 +388,7 @@ class Join
      * echo $join->getLeftColumn(); // 'ID'
      * </code>
      *
-     * @param  integer $index The number of the condition to use
+     * @param integer $index The number of the condition to use
      *
      * @return string
      */
@@ -465,7 +465,7 @@ class Join
      * Set the value of db.
      * The DBAdapter might be used to get db specific variations of sql.
      *
-     * @param  DBAdapter $db Value to assign to db.
+     * @param DBAdapter $db Value to assign to db.
      *
      * @return void
      */
@@ -557,16 +557,20 @@ class Join
     }
 
     /**
-     * @param  Join $join
+     * @param Join $join
      *
      * @return bool
      */
     public function equals($join)
     {
+        $parametersOfThisClauses = array();
+        $parametersOfJoinClauses = array();
+
         return $join !== null
                 && $join instanceof Join
                 && $this->getJoinType() == $join->getJoinType()
-                && $this->getConditions() == $join->getConditions();
+                && $this->getConditions() == $join->getConditions()
+                && $this->getClause($parametersOfThisClauses) == $join->getClause($parametersOfJoinClauses);
     }
 
     /**
