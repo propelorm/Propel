@@ -49,7 +49,10 @@ class PropelMigrationDownTask extends BasePropelMigrationTask
 
         $migration = $manager->getMigrationObject($nextMigrationTimestamp);
         if (false === $migration->preDown($manager)) {
-            $this->log('preDown() returned false. Aborting migration.', Project::MSG_ERR);
+            $this->log(sprintf(
+                '[%s] preDown() returned false. Aborting migration.',
+                $manager->getMigrationClassName($nextMigrationTimestamp)
+            ), Project::MSG_ERR);
 
             return false;
         }
@@ -71,16 +74,20 @@ class PropelMigrationDownTask extends BasePropelMigrationTask
                     $stmt->execute();
                     $res++;
                 } catch (PDOException $e) {
-                    $this->log(sprintf('Failed to execute SQL "%s"', $statement), Project::MSG_ERR);
+                    $this->log(sprintf(
+                        '[%s] Failed to execute SQL "%s"',
+                        $manager->getMigrationClassName($nextMigrationTimestamp),
+                        $statement
+                    ), Project::MSG_ERR);
                     // continue
                 }
             }
             if (!$res) {
-                $this->log('No statement was executed. The version was not updated.');
+                $this->log('No statement was executed. The version was not updated.', Project::MSG_ERR);
                 $this->log(sprintf(
                     'Please review the code in "%s"',
                     $manager->getMigrationDir() . DIRECTORY_SEPARATOR . $manager->getMigrationClassName($nextMigrationTimestamp)
-                ));
+                ), Project::MSG_ERR);
                 $this->log('Migration aborted', Project::MSG_ERR);
 
                 return false;
