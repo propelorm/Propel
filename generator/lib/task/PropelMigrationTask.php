@@ -49,7 +49,7 @@ class PropelMigrationTask extends BasePropelMigrationTask
                 $this->log(sprintf(
                     '[%s] preUp() returned false. Aborting migration.',
                     $manager->getMigrationClassName($timestamp)
-                ), Project::MSG_ERR);
+                ));
 
                 return false;
             }
@@ -74,17 +74,17 @@ class PropelMigrationTask extends BasePropelMigrationTask
                             '[%s] Failed to execute SQL "%s"',
                             $manager->getMigrationClassName($timestamp),
                             $statement
-                        ), Project::MSG_ERR);
+                        ));
                         // continue
                     }
                 }
                 if (!$res) {
-                    $this->log('No statement was executed. The version was not updated.', Project::MSG_ERR);
+                    $this->log('No statement was executed. The version was not updated.');
                     $this->log(sprintf(
                         'Please review the code in "%s"',
                         $manager->getMigrationDir() . DIRECTORY_SEPARATOR . $manager->getMigrationClassName($timestamp)
-                    ), Project::MSG_ERR);
-                    $this->log('Migration aborted', Project::MSG_ERR);
+                    ));
+                    $this->log('Migration aborted');
 
                     return false;
                 }
