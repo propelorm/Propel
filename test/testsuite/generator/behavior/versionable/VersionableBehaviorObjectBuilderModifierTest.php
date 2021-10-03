@@ -1012,10 +1012,10 @@ XML;
 
         // there should be two versions of this getter in the source.  one for the main
         // class and one for the version class
-        $this->assertEquals(2, sizeof($getterMatches[0]));
+        $this->assertEquals(2, count($getterMatches[0]));
 
         // there should be two versions of the filter.  one for the main query class
         // and one for the version query class
-        $this->assertEquals(2, sizeof($filterMatches[0]));
+        $this->assertEquals(2, count($filterMatches[0]));
     }
 }
