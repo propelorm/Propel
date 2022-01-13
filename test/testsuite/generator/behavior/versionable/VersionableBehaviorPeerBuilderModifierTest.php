@@ -20,10 +20,10 @@ require_once dirname(__FILE__) . '/../../../../../runtime/lib/Propel.php';
  * @version    $Revision$
  * @package    generator.behavior.versionable
  */
-class VersionableBehaviorPeerBuilderModifierTest extends PHPUnit_Framework_TestCase
+class VersionableBehaviorPeerBuilderModifierTest extends \PHPUnit\Framework\TestCase
 {
 
-    public function setUp()
+    public function setUp(): void
     {
         if (!class_exists('VersionableBehaviorTest10')) {
             $schema = <<<EOF

@@ -20,9 +20,9 @@ require_once dirname(__FILE__) . '/../../../../../runtime/lib/Propel.php';
  * @version    $Revision$
  * @package    generator.behavior.versionable
  */
-class VersionableBehaviorObjectBuilderModifierTest extends PHPUnit_Framework_TestCase
+class VersionableBehaviorObjectBuilderModifierTest extends \PHPUnit\Framework\TestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         if (!class_exists('VersionableBehaviorTest1')) {
             $schema = <<<XML
@@ -450,6 +450,7 @@ XML;
      */
     public function testToVersionThrowsExceptionOnIncorrectVersion()
     {
+        $this->expectException(PropelException::class);
         $o = new VersionableBehaviorTest1();
         $o->setBar(123); // version 1
         $o->save();

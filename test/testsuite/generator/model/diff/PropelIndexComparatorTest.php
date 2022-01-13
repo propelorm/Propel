@@ -16,7 +16,7 @@ require_once dirname(__FILE__) . '/../../../../../generator/lib/model/diff/Prope
  *
  * @package    generator.model.diff
  */
-class PropelIndexComparatorTest extends PHPUnit_Framework_TestCase
+class PropelIndexComparatorTest extends \PHPUnit\Framework\TestCase
 {
     public function testCompareNoDifference()
     {

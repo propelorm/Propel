@@ -20,9 +20,9 @@ require_once dirname(__FILE__) . '/../../../../../runtime/lib/Propel.php';
  * @version    $Revision$
  * @package    generator.behavior.archivable
  */
-class ArchivableBehaviorQueryBuilderModifierTest extends PHPUnit_Framework_TestCase
+class ArchivableBehaviorQueryBuilderModifierTest extends \PHPUnit\Framework\TestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         if (!class_exists('ArchivableTest100')) {
             $schema = <<<EOF

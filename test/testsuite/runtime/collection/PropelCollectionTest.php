@@ -226,6 +226,7 @@ class PropelCollectionTest extends BookstoreTestBase
      */
     public function testGetUnknownOffset()
     {
+        $this->expectException(PropelException::class);
         $col = new PropelCollection();
         $bar = $col->get('foo');
     }
@@ -286,6 +287,7 @@ class PropelCollectionTest extends BookstoreTestBase
      */
     public function testRemoveUnknownOffset()
     {
+        $this->expectException(PropelException::class);
         $col = new PropelCollection();
         $col->remove(2);
     }
@@ -364,6 +366,7 @@ class PropelCollectionTest extends BookstoreTestBase
      */
     public function testGetPeerClassNoModel()
     {
+        $this->expectException(PropelException::class);
         $col = new PropelCollection();
         $col->getPeerClass();
     }
@@ -383,6 +386,7 @@ class PropelCollectionTest extends BookstoreTestBase
      */
     public function testGetConnectionNoModel()
     {
+        $this->expectException(PropelException::class);
         $col = new PropelCollection();
         $col->getConnection();
     }
