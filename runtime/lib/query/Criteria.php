@@ -887,7 +887,7 @@ class Criteria implements IteratorAggregate
      *                             among Criteria::INNER_JOIN, Criteria::LEFT_JOIN,
      *                             and Criteria::RIGHT_JOIN
      *
-     * @return Criteria A modified Criteria object.
+     * @return self
      */
     public function addJoin($left, $right, $joinType = null)
     {
