@@ -23,8 +23,10 @@ public function getTranslation($locale = '<?php echo $defaultLocale ?>', PropelP
             $translation = new <?php echo $i18nTablePhpName ?>();
             $translation->set<?php echo $localeColumnName ?>($locale);
         } else {
+            $pk = is_array($this->getPrimaryKey()) ? $this->getPrimaryKey() : array($this->getPrimaryKey());
+            $pk[] = $locale;
             $translation = <?php echo $i18nQueryName ?>::create()
-                ->filterByPrimaryKey(array($this->getPrimaryKey(), $locale))
+                ->filterByPrimaryKey($pk)
                 ->findOneOrCreate($con);
             $this->currentTranslations[$locale] = $translation;
         }
