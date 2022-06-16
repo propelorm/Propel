@@ -89,9 +89,6 @@ class I18nBehavior extends Behavior
         $table = $this->getTable();
         $i18nTable = $this->i18nTable;
         $pks = $this->getTable()->getPrimaryKey();
-        if (count($pks) > 1) {
-            throw new EngineException('The i18n behavior does not support tables with composite primary keys');
-        }
         $i18nPkName = $this->getParameter('i18n_pk_name');
         foreach ($pks as $column) {
             if (!$i18nTable->hasColumn($column->getName())) {
