@@ -14,7 +14,7 @@
   },
   "include-path": ["runtime/lib", "generator/lib"],
   "require": {
-    "php": "^7.2",
+    "php": "^7.2|^8.0",
     "phing/phing": "~2.4"
 
   },
