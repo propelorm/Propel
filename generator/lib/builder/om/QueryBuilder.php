@@ -415,10 +415,10 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . "
             }
             $pkType = 'array';
             $pkDescription = "
-                         A Primary key composition: " . '[' . join($colNames, ', ') . ']';
+                         A Primary key composition: " . '[' . implode(', ', $colNames) . ']';
             $script .= "
      * <code>
-     * \$obj = \$c->findPk(array(" . join($examplePk, ', ') . "), \$con);";
+     * \$obj = \$c->findPk(array(" . implode(', ', $examplePk) . "), \$con);";
         } else {
             $pkType = 'mixed';
             $script .= "

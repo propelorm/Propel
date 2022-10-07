@@ -17,7 +17,7 @@ require_once dirname(__FILE__) . '/../../../../runtime/lib/parser/PropelJSONPars
  * @author     Francois Zaninotto
  * @package    runtime.parser
  */
-class PropelJSONParserTest extends PHPUnit_Framework_TestCase
+class PropelJSONParserTest extends \PHPUnit\Framework\TestCase
 {
     public static function arrayJsonConversionDataProvider()
     {
