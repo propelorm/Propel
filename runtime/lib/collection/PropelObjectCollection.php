@@ -138,6 +138,7 @@ class PropelObjectCollection extends PropelCollection
      *
      * @return array
      */
+    #[ReturnTypeWillChange]
     public function getArrayCopy($keyColumn = null, $usePrefix = false)
     {
         if (null === $keyColumn && false === $usePrefix) {

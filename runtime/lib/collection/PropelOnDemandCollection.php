@@ -118,6 +118,7 @@ class PropelOnDemandCollection extends PropelCollection
      *
      * @return void
      */
+
     public function unserialize($data)
     {
         throw new PropelException('The On Demand Collection cannot be serialized');
