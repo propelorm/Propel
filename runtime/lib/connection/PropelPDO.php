@@ -365,6 +365,7 @@ class PropelPDO extends PDO
      *
      * @return mixed
      */
+    #[ReturnTypeWillChange]
     public function getAttribute(int $attribute)
     {
         switch ($attribute) {
