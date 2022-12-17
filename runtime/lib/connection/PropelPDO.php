@@ -229,7 +229,7 @@ class PropelPDO extends PDO
      *
      * @return boolean
      */
-    public function beginTransaction()
+    public function beginTransaction(): bool
     {
         $return = true;
         if (!$this->nestedTransactionCount) {
@@ -252,7 +252,7 @@ class PropelPDO extends PDO
      *
      * @throws PropelException
      */
-    public function commit()
+    public function commit(): bool
     {
         $return = true;
         $opcount = $this->nestedTransactionCount;
@@ -279,9 +279,9 @@ class PropelPDO extends PDO
      * Overrides PDO::rollBack() to only rollback the transaction if we are in the outermost
      * transaction nesting level
      *
-     * @return boolean Whether operation was successful.
+     * @return bool Whether operation was successful.
      */
-    public function rollBack()
+    public function rollBack():bool
     {
         $return = true;
         $opcount = $this->nestedTransactionCount;
@@ -339,17 +339,20 @@ class PropelPDO extends PDO
      *
      * @return void
      */
-    public function setAttribute($attribute, $value)
+    #[ReturnTypeWillChange]
+    public function setAttribute(int $attribute, $value): bool
     {
         switch ($attribute) {
             case self::PROPEL_ATTR_CACHE_PREPARES:
                 $this->cachePreparedStatements = $value;
+                return true;
                 break;
             case self::PROPEL_ATTR_CONNECTION_NAME:
                 $this->connectionName = $value;
+                return true;
                 break;
             default:
-                parent::setAttribute($attribute, $value);
+                return parent::setAttribute($attribute, $value);
         }
     }
 
@@ -362,7 +365,7 @@ class PropelPDO extends PDO
      *
      * @return mixed
      */
-    public function getAttribute($attribute)
+    public function getAttribute(int $attribute)
     {
         switch ($attribute) {
             case self::PROPEL_ATTR_CACHE_PREPARES:
@@ -387,10 +390,12 @@ class PropelPDO extends PDO
      * @param array  $driver_options One $array or more key => value pairs to set attribute values
      *                                      for the PDOStatement object that this method returns.
      *
-     * @return PDOStatement
+     * @return PDOStatement|false
      */
-    public function prepare($sql, $driver_options = array())
+    #[ReturnTypeWillChange]
+    public function prepare(string $sql, array $options = [])
     {
+        $driver_options = $options;
         if ($this->useDebug) {
             $debug = $this->getDebugSnapshot();
         }
@@ -419,8 +424,9 @@ class PropelPDO extends PDO
      *
      * @param string $sql
      *
-     * @return integer
+     * @return int|false
      */
+    #[ReturnTypeWillChange]
     public function exec($sql)
     {
         if ($this->useDebug) {
@@ -446,8 +452,9 @@ class PropelPDO extends PDO
      *
      * @see       http://php.net/manual/en/pdo.query.php for a description of the possible parameters.
      *
-     * @return PDOStatement
+     * @return PDOStatement|false
      */
+    #[ReturnTypeWillChange]
     public function query(string $query, ?int $fetchMode = null, ...$fetchModeArgs)
     {
         if ($this->useDebug) {
