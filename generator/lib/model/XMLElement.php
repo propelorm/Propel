@@ -92,6 +92,10 @@ abstract class XMLElement
      */
     protected function booleanValue($val)
     {
+        if ($val === null) {
+            return false;
+        }
+
         if (is_numeric($val)) {
             return (bool) $val;
         } else {
