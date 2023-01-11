@@ -10,9 +10,6 @@
 
 require_once dirname(__FILE__) . '/VendorInfo.php';
 
-if (class_exists('XMLElement')) {
-    return; // really shouldn't have to do this.
-}
 /**
  * An abstract class for elements represented by XML tags (e.g. Column, Table).
  *
