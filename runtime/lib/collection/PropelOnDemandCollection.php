@@ -149,7 +149,7 @@ class PropelOnDemandCollection extends PropelCollection
         throw new PropelException('The On Demand Collection is read only');
     }
 
-    public function asort()
+    public function asort(int $flags = SORT_REGULAR):bool
     {
         throw new PropelException('The On Demand Collection is read only');
     }
