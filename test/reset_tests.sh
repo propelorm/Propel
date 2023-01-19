@@ -32,11 +32,6 @@ else
     exit 1
 fi
 
-DIRS=`ls $FIXTURES_DIR`
-
-for dir in $DIRS ; do
-    rebuild $dir
-done
 
 # Special case for reverse fixtures
 
