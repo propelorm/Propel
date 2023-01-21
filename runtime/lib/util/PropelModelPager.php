@@ -392,6 +392,7 @@ class PropelModelPager implements IteratorAggregate, Countable
         return $this->getResults()->isEven();
     }
 
+    #[\ReturnTypeWillChange]
     public function getIterator()
     {
         return $this->getResults()->getIterator();
@@ -403,6 +404,7 @@ class PropelModelPager implements IteratorAggregate, Countable
      * @see        Countable
      * @return int
      */
+    #[\ReturnTypeWillChange]
     public function count()
     {
         return $this->getNbResults();
