@@ -169,7 +169,7 @@ class PropelOnDemandCollection extends PropelCollection
         throw new PropelException('The On Demand Collection does not allow access by offset');
     }
 
-    public function ksort()
+    public function ksort(int $flags = SORT_REGULAR): bool
     {
         throw new PropelException('The On Demand Collection is read only');
     }
