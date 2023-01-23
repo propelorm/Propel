@@ -49,7 +49,7 @@ class PropelOnDemandCollection extends PropelCollection
     /**
      * @return PropelOnDemandIterator
      */
-    public function getIterator() : PropelOnDemandIterator
+    public function getIterator(): ArrayIterator
     {
         return $this->iterator;
     }
