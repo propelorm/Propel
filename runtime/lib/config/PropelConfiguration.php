@@ -45,7 +45,7 @@ class PropelConfiguration implements ArrayAccess
      *
      * @param integer $offset
      *
-     * @return boolean
+     * @return bool
      */
 
     #[ReturnTypeWillChange]
@@ -131,7 +131,7 @@ class PropelConfiguration implements ArrayAccess
      *
      * @param string  $name              Configuration item name (name.space.name)
      * @param mixed   $value             Value to be stored
-     * @param Boolean $autoFlattenArrays
+     * @param bool $autoFlattenArrays
      */
     public function setParameter($name, $value, $autoFlattenArrays = true)
     {
