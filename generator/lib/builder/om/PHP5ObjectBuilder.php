@@ -2647,13 +2647,12 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
             $script .= "
             case $i:
                 return \$this->get$cfc();
-                break;";
+                ";
             $i++;
         } /* foreach */
         $script .= "
             default:
                 return null;
-                break;
         } // switch()";
     }
 
