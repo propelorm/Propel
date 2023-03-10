@@ -1485,7 +1485,7 @@ class ModelCriteria extends Criteria
      *
      * @param PropelPDO $con an optional connection object
      *
-     * @return integer the number of results
+     * @return int the number of results
      */
     public function count($con = null)
     {
@@ -1632,7 +1632,7 @@ class ModelCriteria extends Criteria
      *
      * @param PropelPDO $con an optional connection object
      *
-     * @return integer the number of deleted rows
+     * @return int the number of deleted rows
      *
      * @throws PropelException
      */
@@ -1670,7 +1670,7 @@ class ModelCriteria extends Criteria
      *
      * @param PropelPDO $con a connection object
      *
-     * @return integer the number of deleted rows
+     * @return int the number of deleted rows
      */
     public function doDelete($con)
     {
@@ -1685,7 +1685,7 @@ class ModelCriteria extends Criteria
      *
      * @param PropelPDO $con an optional connection object
      *
-     * @return integer the number of deleted rows
+     * @return int the number of deleted rows
      *
      * @throws Exception|PropelException
      */
@@ -1715,7 +1715,7 @@ class ModelCriteria extends Criteria
      *
      * @param PropelPDO $con a connection object
      *
-     * @return integer the number of deleted rows
+     * @return int the number of deleted rows
      */
     public function doDeleteAll($con)
     {
@@ -1765,7 +1765,7 @@ class ModelCriteria extends Criteria
      * @param PropelPDO $con                  an optional connection object
      * @param boolean   $forceIndividualSaves If false (default), the resulting call is a BasePeer::doUpdate(), otherwise it is a series of save() calls on all the found objects
      *
-     * @return Integer Number of updated rows
+     * @return int Number of updated rows
      *
      * @throws PropelException
      */
@@ -1811,7 +1811,7 @@ class ModelCriteria extends Criteria
      * @param PropelPDO $con                  a connection object
      * @param boolean   $forceIndividualSaves If false (default), the resulting call is a BasePeer::doUpdate(), otherwise it is a series of save() calls on all the found objects
      *
-     * @return Integer Number of updated rows
+     * @return int Number of updated rows
      */
     public function doUpdate($values, $con, $forceIndividualSaves = false)
     {

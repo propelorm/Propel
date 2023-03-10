@@ -21,7 +21,7 @@ class MssqlPropelPDO extends PropelPDO
      * It is necessary to override the abstract PDO transaction functions here, as
      * the PDO driver for MSSQL does not support transactions.
      *
-     * @return integer
+     * @return bool
      */
     public function beginTransaction()
     {
@@ -45,7 +45,7 @@ class MssqlPropelPDO extends PropelPDO
      * It is necessary to override the abstract PDO transaction functions here, as
      * the PDO driver for MSSQL does not support transactions.
      *
-     * @return integer
+     * @return bool
      *
      * @throws PropelException
      */

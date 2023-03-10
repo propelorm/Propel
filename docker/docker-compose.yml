@@ -5,13 +5,11 @@ services:
       context: .
       dockerfile: Dockerfile
     working_dir: /usr/src/app
-    command: phpunit
+    command: /bin/bash docker/run.sh 
     volumes:
       - ../:/usr/src/app
-    environment:
-      - PHP_EXTENSIONS=intl pdo_sqlite sqlite3
-      - STARTUP_COMMAND_1=composer install
-      - STARTUP_COMMAND_2=bash test/reset_tests.sh
+    depends_on:
+      - db
 
   db:
     image: percona

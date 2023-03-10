@@ -398,7 +398,7 @@ class Join
     }
 
     /**
-     * @return all right columns of the join condition
+     * @return array all right columns of the join condition
      */
     public function getRightColumns()
     {

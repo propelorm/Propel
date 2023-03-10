@@ -365,6 +365,7 @@ class PropelCollection extends ArrayObject implements Serializable
     /**
      * @return string
      */
+    #[ReturnTypeWillChange]
     public function serialize()
     {
         $repr = array(
@@ -380,6 +381,7 @@ class PropelCollection extends ArrayObject implements Serializable
      *
      * @return void
      */
+    #[ReturnTypeWillChange]
     public function unserialize($data)
     {
         $repr = unserialize($data);
@@ -395,6 +397,7 @@ class PropelCollection extends ArrayObject implements Serializable
      *
      * @return ArrayIterator
      */
+    #[ReturnTypeWillChange]
     public function getIterator()
     {
         $this->iterator = new ArrayIterator($this);

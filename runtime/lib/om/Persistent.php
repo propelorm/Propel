@@ -33,7 +33,7 @@ interface Persistent
      * @param mixed $primaryKey The new PrimaryKey object or string (result of PrimaryKey.toString()).
      *
      * @return void
-     * @throws Exception, This method might throw an exceptions
+     * @throws Exception This method might throw an exceptions
      */
     public function setPrimaryKey($primaryKey);
 
