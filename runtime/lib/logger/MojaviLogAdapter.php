@@ -15,6 +15,7 @@
  * @version    $Revision$
  * @package    propel.runtime.logger
  */
+
 class MojaviLogAdapter implements BasicLogger
 {
     /**
@@ -25,7 +26,7 @@ class MojaviLogAdapter implements BasicLogger
     /**
      * constructor for setting up Mojavi log adapter
      *
-     * @param ErrorLog $logger Instance of Mojavi error log obtained by
+     * @param null|ErrorLog $logger Instance of Mojavi error log obtained by
      *                               calling LogManager::getLogger();
      */
     public function __construct($logger = null)
