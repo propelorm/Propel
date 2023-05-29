@@ -34,7 +34,6 @@ jobs:
       - run: composer install -n
       - run: composer validate 
       - run: composer lint
-      - run: apt-get install -y default-mysql-client 
 
       - name: start up docker
         run: docker compose up -d 
