@@ -1,0 +1,49 @@
+on: 
+  push:
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+
+    strategy:
+       fail-fast: true
+       matrix:
+          php-versions: ['8.1']
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-versions }}
+          tools: composer
+          extensions: curl, mysql, mbstring
+        env:
+          runner: self-hosted
+
+      - name: Get composer cache directory
+        id: composer-cache
+        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-
+
+      - run: composer install -n
+      - run: composer validate 
+      - run: composer lint
+      - run: apt-get install -y default-mysql-client 
+
+      - name: start up docker
+        run: docker compose up -d 
+
+            #- run: cd docker ; docker compose run -ti php test/reset_tests.sh
+
+      - name: Run MySQL test suite
+        run: docker compose run -ti php sh -c "vendor/bin/phpunit -c phpunit.xml.dist --debug test/testsuite"
+
+      - name: Tidy up
+        if: always()
+        run: docker compose down 
