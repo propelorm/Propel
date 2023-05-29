@@ -23,7 +23,7 @@ interface Persistent
     /**
      * getter for the object primaryKey.
      *
-     * @return ObjectKey the object primaryKey as an Object
+     * @return mixed ObjectKey the object primaryKey as an Object
      */
     public function getPrimaryKey();
 

@@ -116,7 +116,7 @@ class DBOracle extends DBAdapter
      * @param integer       $limit
      * @param null|Criteria $criteria
      */
-    public function applyLimit(&$sql, $offset, $limit, $criteria = null)
+    public function applyLimit(string &$sql, $offset, $limit, $criteria = null)
     {
         if (BasePeer::needsSelectAliases($criteria)) {
             $crit = clone $criteria;

@@ -23,7 +23,7 @@ class MssqlPropelPDO extends PropelPDO
      *
      * @return bool
      */
-    public function beginTransaction()
+    public function beginTransaction():bool
     {
         $return = true;
         $opcount = $this->getNestedTransactionCount();
@@ -49,7 +49,7 @@ class MssqlPropelPDO extends PropelPDO
      *
      * @throws PropelException
      */
-    public function commit()
+    public function commit():bool
     {
         $return = true;
         $opcount = $this->getNestedTransactionCount();
@@ -76,9 +76,9 @@ class MssqlPropelPDO extends PropelPDO
      * It is necessary to override the abstract PDO transaction functions here, as
      * the PDO driver for MSSQL does not support transactions.
      *
-     * @return integer
+     * @return bool
      */
-    public function rollBack()
+    public function rollBack():bool
     {
         $return = true;
         $opcount = $this->getNestedTransactionCount();

@@ -371,11 +371,11 @@ abstract class DBAdapter
     /**
      * Modifies the passed-in SQL to add LIMIT and/or OFFSET.
      *
-     * @param string  $sql
+     * @param string $sql
      * @param integer $offset
      * @param integer $limit
      */
-    abstract public function applyLimit(&$sql, $offset, $limit);
+    abstract public function applyLimit(string &$sql, $offset, $limit);
 
     /**
      * Gets the SQL string that this adapter uses for getting a random number.
