@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<files psalm-version="4.x-dev@">
+  <file src="runtime/lib/adapter/DBOracle.php">
+    <NullReference occurrences="1">
+      <code>$params</code>
+    </NullReference>
+  </file>
+  <file src="runtime/lib/adapter/DBSQLSRV.php">
+    <UndefinedConstant occurrences="5">
+      <code>PDO::SQLSRV_ATTR_ENCODING</code>
+      <code>PDO::SQLSRV_ATTR_ENCODING</code>
+      <code>PDO::SQLSRV_ENCODING_BINARY</code>
+      <code>PDO::SQLSRV_ENCODING_SYSTEM</code>
+      <code>PDO::SQLSRV_ENCODING_UTF8</code>
+    </UndefinedConstant>
+  </file>
+  <file src="runtime/lib/om/NodeObject.php">
+    <UndefinedDocblockClass occurrences="4">
+      <code>Node</code>
+      <code>Node</code>
+      <code>Node</code>
+      <code>Node[]</code>
+    </UndefinedDocblockClass>
+  </file>
+  <file src="runtime/lib/util/BasePeer.php">
+    <EmptyArrayAccess occurrences="1">
+      <code>$joinClause</code>
+    </EmptyArrayAccess>
+  </file>
+</files>

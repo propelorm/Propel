@@ -32,6 +32,6 @@
   "bin": ["generator/bin/propel-gen", "generator/bin/propel-gen.bat"],
   "scripts": {
     "lint": "@php vendor/bin/parallel-lint generator runtime test",
-    "psalm": "@php vendor/bin/psalm.phar"
+    "psalm": "@php vendor/bin/psalm.phar --output-format=github --use-baseline=psalm.baseline --threads=$(nproc --all)"
   }
 }
