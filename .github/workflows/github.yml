@@ -41,7 +41,7 @@ jobs:
             #- run: cd docker ; docker compose run -ti php test/reset_tests.sh
 
       - name: Run MySQL test suite
-        run: docker compose run -ti php sh -c "vendor/bin/phpunit -c phpunit.xml.dist --debug test/testsuite"
+        run: docker compose run php sh -c "vendor/bin/phpunit -c phpunit.xml.dist --debug test/testsuite"
 
       - name: Tidy up
         if: always()
