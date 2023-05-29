@@ -40,6 +40,8 @@ fi
 
 REVERSE_DIRS=`ls $FIXTURES_DIR/reverse`
 
+rebuild $FIXTURES_DIR/bookstore
+
 for dir in $REVERSE_DIRS ; do
     if [ -f "$FIXTURES_DIR/reverse/$dir/build.properties" ] ; then
         echo "Building reverse for: $dir "
