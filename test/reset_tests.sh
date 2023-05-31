@@ -5,11 +5,11 @@
 
 cd "$(dirname "$0")"
 
-CURRENT=`pwd`
 
 function rebuild
 {
     local dir=$1
+    local project=$2
 
     echo "[ $dir ]"
 
@@ -17,35 +17,30 @@ function rebuild
         rm -rf "$dir/build"
     fi
 
-    $ROOT/generator/bin/propel-gen $FIXTURES_DIR/$dir main > /dev/null
-    $ROOT/generator/bin/propel-gen $FIXTURES_DIR/$dir insert-sql > /dev/null
+    echo "Building : $dir "
+
+    cd $dir
+    $ROOT/generator/bin/propel-gen -Dproject=$project -Dproject.dir=. main 
+    $ROOT/generator/bin/propel-gen -Dproject=$project -Dproject.dir=. insert-sql
 }
 
-ROOT_DIR=""
-FIXTURES_DIR=""
+ROOT="$(pwd)/../"
+FIXTURES_DIR="$(pwd)/fixtures"
 
-if [ -d "$CURRENT/fixtures" ] ; then
-    ROOT=".."
-    FIXTURES_DIR="$CURRENT/fixtures"
-elif [ -d "$CURRENT/test/fixtures" ] ; then
-    ROOT="."
-    FIXTURES_DIR="$CURRENT/test/fixtures"
-else
-    echo "ERROR: No 'test/fixtures/' directory found !"
-    exit 1
-fi
+mysql -u root -h mysql -e 'SET FOREIGN_KEY_CHECKS = 0; DROP DATABASE IF EXISTS test; DROP SCHEMA IF EXISTS second_hand_books; DROP SCHEMA IF EXISTS contest; DROP DATABASE IF EXISTS reverse_bookstore; DROP SCHEMA IF EXISTS bookstore_schemas; SET FOREIGN_KEY_CHECKS = 1;'
+mysql -u root -h mysql -e 'CREATE DATABASE test; CREATE SCHEMA bookstore_schemas; CREATE SCHEMA contest; CREATE SCHEMA second_hand_books; CREATE DATABASE reverse_bookstore; CREATE DATABASE bookstore_schemas;'
 
+rebuild $FIXTURES_DIR/bookstore bookstore
+rebuild $FIXTURES_DIR/bookstore-packaged bookstore
+rebuild $FIXTURES_DIR/nestedset nestedset
+rebuild $FIXTURES_DIR/treetest treetest
+rebuild $FIXTURES_DIR/namespaced bookstore_namespaced
 
-# Special case for reverse fixtures
+echo "Building reverse thingys..."
 
-REVERSE_DIRS=`ls $FIXTURES_DIR/reverse`
+cd $ROOT/test/fixtures/reverse/mysql
+$ROOT/generator/bin/propel-gen -Dproject=reverse_bookstore -Dproject.dir=. insert-sql
+cd $ROOT
 
-rebuild $FIXTURES_DIR/bookstore
-
-for dir in $REVERSE_DIRS ; do
-    if [ -f "$FIXTURES_DIR/reverse/$dir/build.properties" ] ; then
-        echo "Building reverse for: $dir "
-        $ROOT/generator/bin/propel-gen $FIXTURES_DIR/reverse/$dir insert-sql > /dev/null
-    fi
-done
+echo "Reset complete."
 
