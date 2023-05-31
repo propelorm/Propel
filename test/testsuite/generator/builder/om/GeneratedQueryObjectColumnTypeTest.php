@@ -17,7 +17,7 @@ require_once dirname(__FILE__) . '/../../../../../runtime/lib/Propel.php';
  * @author     Francois Zaninotto
  * @package    generator.builder.om
  */
-class GeneratedQueryObjectColumnTest extends \PHPUnit\Framework\TestCase
+class GeneratedQueryObjectColumnTypeTest extends \PHPUnit\Framework\TestCase
 {
     protected $c1, $c2;
 
