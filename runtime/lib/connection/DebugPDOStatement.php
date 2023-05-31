@@ -77,6 +77,11 @@ class DebugPDOStatement extends PDOStatement
 
                 // trimming extra quotes, making sure value is properly quoted afterwards
                 $boundValue = $boundValues[$pos];
+                if (is_resource($boundValue)) {
+                    // do nothing.... can't str_replace with a resource.
+                    continue;
+                }
+
                 if (is_string($boundValue)) { // quoting only needed for string values
                     $boundValue = trim($boundValue, "'");
                     $boundValue = $this->pdo->quote($boundValue);
@@ -101,7 +106,7 @@ class DebugPDOStatement extends PDOStatement
         $debug = $this->pdo->getDebugSnapshot();
         $return = parent::execute($input_parameters);
 
-        $sql = $this->getExecutedQueryString($input_parameters?$input_parameters:array());
+        $sql = $this->getExecutedQueryString($input_parameters ? $input_parameters : array());
         $this->pdo->log($sql, null, __METHOD__, $debug);
         $this->pdo->setLastExecutedQuery($sql);
         $this->pdo->incrementQueryCount();
