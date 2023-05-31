@@ -16,7 +16,7 @@ require_once dirname(__FILE__) . '/../../../../../generator/lib/model/PropelType
 require_once dirname(__FILE__) . '/../../../../../generator/lib/model/Database.php';
 require_once dirname(__FILE__) . '/../../../../../generator/lib/platform/DefaultPlatform.php';
 
-set_include_path(get_include_path().PATH_SEPARATOR.dirname(__FILE__).'/../../../../../generator/lib');
+set_include_path(get_include_path() . PATH_SEPARATOR . dirname(__FILE__) . '/../../../../../generator/lib');
 require_once dirname(__FILE__) . '/../../../../../generator/lib/task/PropelConvertConfTask.php';
 
 /**
@@ -33,10 +33,13 @@ class MysqlSchemaParserTest extends \PHPUnit\Framework\TestCase
         parent::setUp();
 
         $xmlDom = new DOMDocument();
-        $xmlDom->load(dirname(__FILE__) . '/../../../../fixtures/reverse/mysql/runtime-conf.xml');
+        $ret = $xmlDom->load(dirname(__FILE__) . '/../../../../fixtures/reverse/mysql/runtime-conf.xml');
+
+        $this->assertTrue($ret, "should load runtime-conf.xml");
+
         $xml = simplexml_load_string($xmlDom->saveXML());
         $phpconf = OpenedPropelConvertConfTask::simpleXmlToArray($xml);
-
+        $this->assertIsArray($phpconf);
         Propel::setConfiguration($phpconf);
         Propel::initialize();
     }
@@ -49,11 +52,14 @@ class MysqlSchemaParserTest extends \PHPUnit\Framework\TestCase
 
     public function testParse()
     {
-        $parser = new MysqlSchemaParser(Propel::getConnection('reverse-bookstore'));
+        $c = Propel::getConnection('reverse-bookstore');
+
+        $parser = new MysqlSchemaParser($c);
         $parser->setGeneratorConfig(new QuickGeneratorConfig());
 
         $database = new Database();
         $database->setPlatform(new DefaultPlatform());
+
 
         $this->assertEquals(2, $parser->parse($database), 'two tables and one view defined should return two as we exclude views');
 
@@ -76,6 +82,8 @@ class MysqlSchemaParserTest extends \PHPUnit\Framework\TestCase
         $table = $database->getTable('foo');
         $c1 = $table->getColumn('longitude');
 
+        $this->assertNotNull($c1);
+
         $parser = new MysqlSchemaParser(Propel::getConnection('reverse-bookstore'));
         $parser->setGeneratorConfig(new QuickGeneratorConfig());
 
@@ -84,6 +92,10 @@ class MysqlSchemaParserTest extends \PHPUnit\Framework\TestCase
         $parser->parse($database);
 
         $table = $database->getTable('foo');
+
+
+
+        $this->assertNotNull($table);
 
         $c2 = $table->getColumn('longitude');
         $this->assertEquals($c1->getSize(), $c2->getSize());
@@ -105,6 +117,8 @@ class MysqlSchemaParserTest extends \PHPUnit\Framework\TestCase
         $database = new Database();
         $database->setPlatform(new DefaultPlatform());
         $parser->parse($database);
+
+        $this->assertNotEmpty($database->getTables(), "We should have tables defined.");
 
         $c2 = $database->getTable('book')->getColumn('title');
 
