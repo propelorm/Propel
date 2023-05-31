@@ -36,7 +36,7 @@ jobs:
       - run: composer lint
 
       - name: start up docker
-        run: docker compose up -d 
+        run: docker compose up -d  --quiet-pull
 
       - name: Run MySQL test suite
         run: docker compose run php sh -c "vendor/bin/phpunit -c phpunit.xml.dist --debug test/testsuite"
