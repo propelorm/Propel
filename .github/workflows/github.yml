@@ -38,8 +38,6 @@ jobs:
       - name: start up docker
         run: docker compose up -d 
 
-            #- run: cd docker ; docker compose run -ti php test/reset_tests.sh
-
       - name: Run MySQL test suite
         run: docker compose run php sh -c "vendor/bin/phpunit -c phpunit.xml.dist --debug test/testsuite"
 
