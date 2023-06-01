@@ -38,6 +38,9 @@ jobs:
       - name: start up docker
         run: docker compose up -d --wait --quiet-pull
 
+      - name: initialise database and generate propel files etc
+        run: docker compose run php sh -c "test/reset_tests.sh"
+
       - name: Run MySQL test suite
         run: docker compose run php sh -c "vendor/bin/phpunit -c phpunit.xml.dist --debug test/testsuite"
 
