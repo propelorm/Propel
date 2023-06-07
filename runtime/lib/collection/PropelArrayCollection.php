@@ -163,7 +163,7 @@ class PropelArrayCollection extends PropelCollection
      *
      * @return array
      */
-    public function getArrayCopy($keyColumn = null, $usePrefix = false)
+    public function getArrayCopy($keyColumn = null, $usePrefix = false): array
     {
         if (null === $keyColumn && false === $usePrefix) {
             return parent::getArrayCopy();

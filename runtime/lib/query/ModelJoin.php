@@ -161,7 +161,7 @@ class ModelJoin extends Join
             && $this->rightTableAlias == $join->getRightTableAlias();
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return parent::toString()
             . ' tableMap: ' . ($this->tableMap ? get_class($this->tableMap) : 'null')

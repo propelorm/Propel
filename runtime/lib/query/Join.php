@@ -585,7 +585,7 @@ class Join
         return $this->getClause($params);
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return $this->toString();
     }

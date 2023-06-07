@@ -119,7 +119,7 @@ class PropelDateTime extends DateTime
      * PHP "magic" function called when object is restored from serialized state.
      * Calls DateTime constructor with previously stored string value of date.
      */
-    public function __wakeup()
+    public function __wakeup(): void
     {
         parent::__construct($this->dateString, new DateTimeZone($this->tzString));
     }
