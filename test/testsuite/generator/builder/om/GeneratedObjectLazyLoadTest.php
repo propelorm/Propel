@@ -16,9 +16,9 @@ require_once dirname(__FILE__) . '/../../../../../runtime/lib/Propel.php';
  *
  * @package    generator.builder.om
  */
-class GeneratedObjectLazyLoadTest extends PHPUnit_Framework_TestCase
+class GeneratedObjectLazyLoadTest extends \PHPUnit\Framework\TestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         if (!class_exists('LazyLoadActiveRecord')) {
             $schema = <<<EOF

@@ -34,7 +34,7 @@ class CriteriaTest extends BookstoreTestBase
      */
     private $savedAdapter;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         $this->c = new Criteria();
@@ -42,7 +42,7 @@ class CriteriaTest extends BookstoreTestBase
         Propel::setDB(null, new DBSQLite());
     }
 
-    protected function tearDown()
+    protected function tearDown(): void
     {
         Propel::setDB(null, $this->savedAdapter);
         parent::tearDown();
@@ -1323,6 +1323,76 @@ class CriteriaTest extends BookstoreTestBase
         $result = BasePeer::createSelectSql($c, $params);
 
         $this->assertEquals('SELECT DISTINCT * FROM TABLE WHERE TABLE.string=:p1 AND TABLE.id=:p2', $result);
+    }
+    
+    /**
+     * Propel 1.5 compatibility test
+     * SQL generation problems found in Propel 1.6 which already worked in version 1.5 
+     * joins with tables in wrong order
+     */
+    
+    public function testAddJoinsWithWrongTableOrder()
+    {
+        $c = new Criteria();
+        
+        $c->addJoin(AuthorPeer::ID, BookPeer::AUTHOR_ID);
+        $c->addJoin(PublisherPeer::ID, BookPeer::PUBLISHER_ID);
+        
+        try {
+            AuthorPeer::doCount($c);
+        } catch (Exception $e) {
+            print $e->getTraceAsString();
+            $this->fail("Exception thrown in AuthorPeer::doCount(): ". $e->getMessage());
+        }
+        
+        $this->assertTrue(true);
+    }
+    
+    /**
+     * Propel 1.5 compatibility test
+     * SQL generation problems found in Propel 1.6 which already worked in version 1.5 
+     * several joins in wrong order
+     */
+    
+    public function testAddSeveralJoinsInWrongOrder()
+    {
+        $c = new Criteria();
+    
+        $c->addJoin(PublisherPeer::ID, BookstoreSalePeer::PUBLISHER_ID);
+        $c->addJoin(BookPeer::PUBLISHER_ID, PublisherPeer::ID);
+        $c->addJoin(AuthorPeer::ID, BookPeer::AUTHOR_ID);
+    
+        try {
+            AuthorPeer::doCount($c);
+        } catch (Exception $e) {
+            print $e->getTraceAsString();
+            $this->fail("Exception thrown in AuthorPeer::doCount(): ". $e->getMessage());
+        }
+    
+        $this->assertTrue(true);
+    }
+    
+    /**
+     * Propel 1.5 compatibility test
+     * SQL generation problems found in Propel 1.6 which already worked in version 1.5 
+     * doubled joins with different JoinTypes
+     */
+    
+    public function testAddDoubledJoinsWithDifferentJoinTypes()
+    {
+        $c = new Criteria();
+    
+        $c->addJoin(AuthorPeer::ID, BookPeer::AUTHOR_ID);
+        $c->addJoin(AuthorPeer::ID, BookPeer::AUTHOR_ID, Criteria::LEFT_JOIN);
+
+        try {
+            AuthorPeer::doCount($c);
+        } catch (Exception $e) {
+            print $e->getTraceAsString();
+            $this->fail("Exception thrown in AuthorPeer::doCount(): ". $e->getMessage());
+        }
+    
+        $this->assertTrue(true);
     }
 }
 

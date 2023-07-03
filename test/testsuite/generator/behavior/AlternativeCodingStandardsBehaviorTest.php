@@ -19,7 +19,7 @@ require_once dirname(__FILE__) . '/../../../../generator/lib/behavior/Alternativ
  * @version    $Revision$
  * @package    generator.behavior
  */
-class AlternativeCodingStandardsBehaviorTest extends PHPUnit_Framework_TestCase
+class AlternativeCodingStandardsBehaviorTest extends \PHPUnit\Framework\TestCase
 {
     public function convertBracketsNewlineDataProvider()
     {

@@ -229,7 +229,7 @@ class PropelPDO extends PDO
      *
      * @return boolean
      */
-    public function beginTransaction()
+    public function beginTransaction(): bool
     {
         $return = true;
         if (!$this->nestedTransactionCount) {
@@ -252,7 +252,7 @@ class PropelPDO extends PDO
      *
      * @throws PropelException
      */
-    public function commit()
+    public function commit(): bool
     {
         $return = true;
         $opcount = $this->nestedTransactionCount;
@@ -281,7 +281,7 @@ class PropelPDO extends PDO
      *
      * @return boolean Whether operation was successful.
      */
-    public function rollBack()
+    public function rollBack(): bool
     {
         $return = true;
         $opcount = $this->nestedTransactionCount;
@@ -339,7 +339,8 @@ class PropelPDO extends PDO
      *
      * @return void
      */
-    public function setAttribute($attribute, $value)
+    #[\ReturnTypeWillChange]
+    public function setAttribute($attribute, $value): void
     {
         switch ($attribute) {
             case self::PROPEL_ATTR_CACHE_PREPARES:
@@ -362,7 +363,7 @@ class PropelPDO extends PDO
      *
      * @return mixed
      */
-    public function getAttribute($attribute)
+    public function getAttribute($attribute):mixed
     {
         switch ($attribute) {
             case self::PROPEL_ATTR_CACHE_PREPARES:
@@ -389,7 +390,7 @@ class PropelPDO extends PDO
      *
      * @return PDOStatement
      */
-    public function prepare($sql, $driver_options = array())
+    public function prepare($sql, $driver_options = array()): PDOStatement|false
     {
         if ($this->useDebug) {
             $debug = $this->getDebugSnapshot();
@@ -421,7 +422,7 @@ class PropelPDO extends PDO
      *
      * @return integer
      */
-    public function exec($sql)
+    public function exec($sql): int|false
     {
         if ($this->useDebug) {
             $debug = $this->getDebugSnapshot();
@@ -448,18 +449,14 @@ class PropelPDO extends PDO
      *
      * @return PDOStatement
      */
-    public function query()
+    public function query($query, $fetchMode = null, ...$fetchModeArgs): PDOStatement|false
     {
         if ($this->useDebug) {
             $debug = $this->getDebugSnapshot();
         }
 
         $args = func_get_args();
-        if (version_compare(PHP_VERSION, '5.3', '<')) {
-            $return = call_user_func_array(array($this, 'parent::query'), $args);
-        } else {
-            $return = call_user_func_array('parent::query', $args);
-        }
+	$return = call_user_func_array('parent::query', $args);
 
         if ($this->useDebug) {
             $sql = $args[0];

@@ -50,7 +50,7 @@ class MatchValidator implements BasicValidator
     private function prepareRegexp($exp)
     {
         // remove surrounding '/' marks so that they don't get escaped in next step
-        if ($exp{0} !== '/' || $exp{strlen($exp) - 1} !== '/') {
+        if ($exp[0] !== '/' || $exp[strlen($exp) - 1] !== '/') {
             $exp = '/' . $exp . '/';
         }
 
