@@ -27,7 +27,7 @@ class VersionableBehaviorObjectBuilderModifier
     protected $table;
 
     /**
-     * @var PHP5ObjectBuilder
+     * @var ObjectBuilder
      */
     protected $builder;
 
@@ -67,7 +67,7 @@ class VersionableBehaviorObjectBuilderModifier
         return $this->builder->getStubObjectBuilder()->getClassname();
     }
 
-    protected function setBuilder(PHP5ObjectBuilder $builder)
+    protected function setBuilder(ObjectBuilder $builder)
     {
         $this->builder = $builder;
         $this->objectClassname = $builder->getStubObjectBuilder()->getClassname();
@@ -99,7 +99,7 @@ class VersionableBehaviorObjectBuilderModifier
         return 'set' . $this->getColumnPhpName($name);
     }
 
-    public function preSave(PHP5ObjectBuilder $builder)
+    public function preSave(ObjectBuilder $builder)
     {
         $script = "if (\$this->isVersioningNecessary()) {
     \$this->set{$this->getColumnPhpName()}(\$this->isNew() ? 1 : \$this->getLastVersionNumber(\$con) + 1);";
@@ -126,14 +126,14 @@ class VersionableBehaviorObjectBuilderModifier
         return $script;
     }
 
-    public function postSave(PHP5ObjectBuilder $builder)
+    public function postSave(ObjectBuilder $builder)
     {
         return "if (isset(\$createVersion)) {
     \$this->addVersion(\$con);
 }";
     }
 
-    public function postDelete(PHP5ObjectBuilder $builder)
+    public function postDelete(ObjectBuilder $builder)
     {
         $this->builder = $builder;
         if (!$builder->getPlatform()->supportsNativeDeleteTrigger() && !$builder->getBuildProperty('emulateForeignKeyConstraints')) {
@@ -146,7 +146,7 @@ class VersionableBehaviorObjectBuilderModifier
         }
     }
 
-    public function objectAttributes(PHP5ObjectBuilder $builder)
+    public function objectAttributes(ObjectBuilder $builder)
     {
         $script = '';
 
@@ -166,7 +166,7 @@ protected \$enforceVersion = false;
         ";
     }
 
-    public function objectMethods(PHP5ObjectBuilder $builder)
+    public function objectMethods(ObjectBuilder $builder)
     {
         $this->setBuilder($builder);
         $script = '';

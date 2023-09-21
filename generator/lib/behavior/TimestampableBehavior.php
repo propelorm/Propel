@@ -75,11 +75,11 @@ class TimestampableBehavior extends Behavior
     /**
      * Add code in ObjectBuilder::preUpdate
      *
-     * @param PHP5ObjectBuilder $builder
+     * @param ObjectBuilder $builder
      *
      * @return string The code to put at the hook
      */
-    public function preUpdate(PHP5ObjectBuilder $builder)
+    public function preUpdate(ObjectBuilder $builder)
     {
         if ($this->withUpdatedAt()) {
             return "if (\$this->isModified() && !\$this->isColumnModified(" . $this->getColumnConstant('update_column', $builder) . ")) {
@@ -93,11 +93,11 @@ class TimestampableBehavior extends Behavior
     /**
      * Add code in ObjectBuilder::preInsert
      *
-     * @param PHP5ObjectBuilder $builder
+     * @param ObjectBuilder $builder
      *
      * @return string The code to put at the hook
      */
-    public function preInsert(PHP5ObjectBuilder $builder)
+    public function preInsert(ObjectBuilder $builder)
     {
         $script = "if (!\$this->isColumnModified(" . $this->getColumnConstant('create_column', $builder) . ")) {
     \$this->" . $this->getColumnSetter('create_column') . "(time());
@@ -113,7 +113,7 @@ if (!\$this->isColumnModified(" . $this->getColumnConstant('update_column', $bui
         return $script;
     }
 
-    public function objectMethods(PHP5ObjectBuilder $builder)
+    public function objectMethods(ObjectBuilder $builder)
     {
         if ($this->withUpdatedAt()) {
             return "
