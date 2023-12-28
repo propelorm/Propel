@@ -1,5 +1,5 @@
 {
-  "name": "palepurple/propel1",
+  "name": "propel/propel1",
   "description": "Fork of Propel ORM (v1.7.x) with minor patches (phpdoc, PHP 7.x compatability etc)",
   "keywords": ["orm", "active record", "mapping", "database", "persistence", "legacy"],
   "homepage": "http://www.propelorm.org/",
