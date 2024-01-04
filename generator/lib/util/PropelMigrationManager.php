@@ -251,7 +251,7 @@ class PropelMigrationManager
 		$pdo = $this->getPdoConnection($datasource);
 		$res = PropelSQLParser::executeString($statements, $pdo);
 		if (!$res) {
-			throw new Exception(sprintf('Unable to create migration table in datasource "%s"', $datasource));
+			throw new Exception(sprintf('Unable to create migration log table in datasource "%s"', $datasource));
 		}
 	}
 
