@@ -233,17 +233,20 @@ class PropelMigrationManager
 		$column = new Column('name');
 		$column->getDomain()->copy($platform->getDomainForType('VARCHAR'));
 		$column->setSize(255);
+		$column->setNotNull(true);
 		$table->addColumn($column);
 
 		// action
 		$column = new Column('action');
 		$column->getDomain()->copy($platform->getDomainForType('VARCHAR'));
 		$column->setSize(255);
+		$column->setNotNull(true);
 		$table->addColumn($column);
 
 		// executed_at
 		$column = new Column('executed_at');
-		$column->getDomain()->copy($platform->getDomainForType('TIMESTAMP'));
+		$column->getDomain()->copy($platform->getDomainForType('DATETIME'));
+		$column->setSize(6);
 		$table->addColumn($column);
 
 		// insert the table into the database
@@ -285,7 +288,7 @@ class PropelMigrationManager
 				$platform->quoteIdentifier('executed_at')
 		);
 		//get current date/time as string with milliseconds
-		$now = date('Y-m-d H:i:s') . substr((string)microtime(), 1, 8);
+		$now = date('Y-m-d H:i:s') . substr((string)microtime(), 1, 7);
 		$stmt = $pdo->prepare($sql);
 		$stmt->bindParam(1, $scriptName, PDO::PARAM_STR);
 		$stmt->bindParam(2, $action, PDO::PARAM_STR);
