@@ -14,11 +14,11 @@ require_once dirname(__FILE__) . '/../../../../generator/lib/config/GeneratorCon
  * @author	William Durand <william.durand1@gmail.com>
  * @package	propel.generator.config
  */
-class GeneratorConfigTest extends PHPUnit_Framework_TestCase
+class GeneratorConfigTest extends \PHPUnit\Framework\TestCase
 {
     protected $pathToFixtureFiles;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->pathToFixtureFiles = dirname(__FILE__) . '/../../../fixtures/generator/config';
     }
@@ -62,6 +62,7 @@ class GeneratorConfigTest extends PHPUnit_Framework_TestCase
       */
     public function testGetClassnameOnInexistantProperty()
     {
+        $this->expectException(BuildException::class);
         $generator = new GeneratorConfig();
         $generator->getClassname('propel.foo.bar');
     }

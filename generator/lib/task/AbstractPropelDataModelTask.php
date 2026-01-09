@@ -516,7 +516,7 @@ abstract class AbstractPropelDataModelTask extends AbstractPropelTask
             foreach ($this->dataModels as $dataModel) {
                 $validator = new PropelSchemaValidator($dataModel);
                 if (!$validator->validate()) {
-                    throw new EngineException(sprintf("The database schema contains errors:\n - %s", join("\n - ", $validator->getErrors())));
+                    throw new EngineException(sprintf("The database schema contains errors:\n - %s", implode("\n - ", $validator->getErrors())));
                 }
             }
         }

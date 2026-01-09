@@ -16,7 +16,7 @@ require_once dirname(__FILE__) . '/../../../../generator/lib/model/ColumnDefault
  * @version    $Revision$
  * @package    generator.model
  */
-class ColumnDefaultValueTest extends PHPUnit_Framework_TestCase
+class ColumnDefaultValueTest extends \PHPUnit\Framework\TestCase
 {
     public function equalsProvider()
     {

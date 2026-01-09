@@ -14,7 +14,7 @@ require_once dirname(__FILE__) . '/../../../../generator/lib/util/PropelSQLParse
  *
  * @package    generator.util
  */
-class PropelSQLParserTest extends PHPUnit_Framework_TestCase
+class PropelSQLParserTest extends \PHPUnit\Framework\TestCase
 {
     public function stripSqlCommentsDataProvider()
     {

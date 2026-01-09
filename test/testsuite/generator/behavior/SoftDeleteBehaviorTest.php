@@ -21,7 +21,7 @@ require_once dirname(__FILE__) . '/../../../tools/helpers/bookstore/BookstoreTes
 class SoftDeleteBehaviorTest extends BookstoreTestBase
 {
 
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         Table4Peer::disableSoftDelete();

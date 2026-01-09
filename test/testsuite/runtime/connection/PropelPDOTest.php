@@ -15,7 +15,7 @@ require_once dirname(__FILE__) . '/../../../tools/helpers/bookstore/BookstoreTes
  *
  * @package    runtime.connection
  */
-class PropelPDOTest extends PHPUnit_Framework_TestCase
+class PropelPDOTest extends \PHPUnit\Framework\TestCase
 {
 
     public function testSetAttribute()

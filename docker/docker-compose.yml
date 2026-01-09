@@ -1,0 +1,26 @@
+version: '3'
+services:
+  php:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    working_dir: /usr/src/app
+    command: phpunit
+    volumes:
+      - ../:/usr/src/app
+    environment:
+      - PHP_EXTENSIONS=intl pdo_sqlite sqlite3
+      - STARTUP_COMMAND_1=composer install
+      - STARTUP_COMMAND_2=bash test/reset_tests.sh
+
+  db:
+    image: percona
+    command: >
+      mysqld
+      --sql-mode="NO_ENGINE_SUBSTITUTION"
+      --character-set-server="utf8"
+      --collation-server="utf8_unicode_ci"
+      --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'

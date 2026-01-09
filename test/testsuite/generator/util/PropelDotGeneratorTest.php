@@ -15,7 +15,7 @@ require_once dirname(__FILE__) . '/../../../../generator/lib/model/AppData.php';
  *
  * @package    generator.util
  */
-class PropelDotGeneratorTest extends PHPUnit_Framework_TestCase
+class PropelDotGeneratorTest extends \PHPUnit\Framework\TestCase
 {
     public function testEmptyDatabase()
     {

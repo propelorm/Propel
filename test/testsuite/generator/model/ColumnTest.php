@@ -20,7 +20,7 @@ require_once dirname(__FILE__) . '/../../../../generator/lib/behavior/AutoAddPkB
  * @version    $Revision$
  * @package    generator.model
  */
-class ColumnTest extends PHPUnit_Framework_TestCase
+class ColumnTest extends \PHPUnit\Framework\TestCase
 {
 
     /**

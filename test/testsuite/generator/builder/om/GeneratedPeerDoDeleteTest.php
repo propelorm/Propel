@@ -27,7 +27,7 @@ require_once dirname(__FILE__) . '/../../../../tools/helpers/bookstore/Bookstore
  */
 class GeneratedPeerDoDeleteTest extends BookstoreEmptyTestBase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         BookstoreDataPopulator::populate();
@@ -412,9 +412,9 @@ class GeneratedPeerDoDeleteTest extends BookstoreEmptyTestBase
     public function testDoCountType()
     {
         $c = new Criteria();
-        $this->assertInternalType('integer', BookPeer::doCount($c), "Expected doCount() to return an integer.");
-        $this->assertInternalType('integer', BookPeer::doCountJoinAll($c), "Expected doCountJoinAll() to return an integer.");
-        $this->assertInternalType('integer', BookPeer::doCountJoinAuthor($c), "Expected doCountJoinAuthor() to return an integer.");
+        $this->assertIsInt(BookPeer::doCount($c), "Expected doCount() to return an integer.");
+        $this->assertIsInt(BookPeer::doCountJoinAll($c), "Expected doCountJoinAll() to return an integer.");
+        $this->assertIsInt(BookPeer::doCountJoinAuthor($c), "Expected doCountJoinAuthor() to return an integer.");
     }
 
     /**

@@ -32,17 +32,28 @@ class PropelArrayFormatter extends PropelFormatter
         } else {
             $collection = array();
         }
+
+        /**
+         * @var $collection PropelArrayCollection
+         */
+
         if ($this->isWithOneToMany() && $this->hasLimit) {
             throw new PropelException('Cannot use limit() in conjunction with with() on a one-to-many relationship. Please remove the with() call, or the limit() call.');
         }
+
+        $data = [];
+
         while ($row = $stmt->fetch(PDO::FETCH_NUM)) {
-            if ($object = &$this->getStructuredArrayFromRow($row)) {
-                $collection[] = $object;
+            $object = &$this->getStructuredArrayFromRow($row);
+            if ($object) {
+                $data[] = &$object;
             }
         }
         $this->currentObjects = array();
         $this->alreadyHydratedObjects = array();
         $stmt->closeCursor();
+
+        $collection->setData($data);
 
         return $collection;
     }
@@ -163,7 +174,7 @@ class PropelArrayFormatter extends PropelFormatter
             return $this->alreadyHydratedObjects[$this->class][$mainKey];
         } else {
             // we still need to return a reference to something to avoid a warning
-            return $emptyVariable;
+            return $this->emptyVariable;
         }
     }
 }

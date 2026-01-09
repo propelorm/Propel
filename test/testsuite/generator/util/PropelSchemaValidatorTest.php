@@ -16,7 +16,7 @@ require_once dirname(__FILE__) . '/../../../../generator/lib/model/AppData.php';
  *
  * @package    generator.util
  */
-class SchemaValidatorTest extends PHPUnit_Framework_TestCase
+class SchemaValidatorTest extends \PHPUnit\Framework\TestCase
 {
 
     private $xsdFile = 'generator/resources/xsd/database.xsd';

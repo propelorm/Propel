@@ -16,7 +16,7 @@ require_once dirname(__FILE__) . '/../../../../runtime/lib/exception/PropelExcep
  * @author     Francois Zaninotto
  * @package    runtime.exception
  */
-class PropelExceptionTest extends PHPUnit_Framework_TestCase
+class PropelExceptionTest extends \PHPUnit\Framework\TestCase
 {
     public function testSimpleConstructor()
     {
@@ -44,6 +44,7 @@ class PropelExceptionTest extends PHPUnit_Framework_TestCase
      */
     public function testIsThrowable()
     {
+        $this->expectException(PropelException::class);
         $e = new PropelException('this is an error');
         throw $e;
     }

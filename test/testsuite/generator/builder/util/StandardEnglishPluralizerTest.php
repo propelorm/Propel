@@ -16,7 +16,7 @@ require_once dirname(__FILE__) . '/../../../../../generator/lib/builder/util/Sta
  * @version    $Revision$
  * @package    generator.builder.util
  */
-class StandardEnglishPluralizerTest extends PHPUnit_Framework_TestCase
+class StandardEnglishPluralizerTest extends \PHPUnit\Framework\TestCase
 {
     public function getPluralFormDataProvider()
     {

@@ -15,7 +15,7 @@ require_once dirname(__FILE__) . '/../../../../runtime/lib/Propel.php';
  *
  * @package    generator.util
  */
-class PropelQuickBuilderTest extends PHPUnit_Framework_TestCase
+class PropelQuickBuilderTest extends \PHPUnit\Framework\TestCase
 {
     public function testGetPlatform()
     {
@@ -83,12 +83,12 @@ EOF;
     public function testGetClasses($builder)
     {
         $script = $builder->getClasses();
-        $this->assertContains('class QuickBuildFoo1 extends BaseQuickBuildFoo1', $script);
-        $this->assertContains('class QuickBuildFoo1Peer extends BaseQuickBuildFoo1Peer', $script);
-        $this->assertContains('class QuickBuildFoo1Query extends BaseQuickBuildFoo1Query', $script);
-        $this->assertContains('class BaseQuickBuildFoo1 extends BaseObject', $script);
-        $this->assertContains('class BaseQuickBuildFoo1Peer', $script);
-        $this->assertContains('class BaseQuickBuildFoo1Query extends ModelCriteria', $script);
+        $this->assertStringContainsString('class QuickBuildFoo1 extends BaseQuickBuildFoo1', $script);
+        $this->assertStringContainsString('class QuickBuildFoo1Peer extends BaseQuickBuildFoo1Peer', $script);
+        $this->assertStringContainsString('class QuickBuildFoo1Query extends BaseQuickBuildFoo1Query', $script);
+        $this->assertStringContainsString('class BaseQuickBuildFoo1 extends BaseObject', $script);
+        $this->assertStringContainsString('class BaseQuickBuildFoo1Peer', $script);
+        $this->assertStringContainsString('class BaseQuickBuildFoo1Query extends ModelCriteria', $script);
     }
 
     /**
@@ -108,12 +108,12 @@ EOF;
     public function testGetClassesLimitedClassTargets($builder)
     {
         $script = $builder->getClasses(array('tablemap', 'peer', 'object', 'query'));
-        $this->assertNotContains('class QuickBuildFoo1 extends BaseQuickBuildFoo1', $script);
-        $this->assertNotContains('class QuickBuildFoo1Peer extends BaseQuickBuildFoo1Peer', $script);
-        $this->assertNotContains('class QuickBuildFoo1Query extends BaseQuickBuildFoo1Query', $script);
-        $this->assertContains('class BaseQuickBuildFoo1 extends BaseObject', $script);
-        $this->assertContains('class BaseQuickBuildFoo1Peer', $script);
-        $this->assertContains('class BaseQuickBuildFoo1Query extends ModelCriteria', $script);
+        $this->assertStringNotContainsString('class QuickBuildFoo1 extends BaseQuickBuildFoo1', $script);
+        $this->assertStringNotContainsString('class QuickBuildFoo1Peer extends BaseQuickBuildFoo1Peer', $script);
+        $this->assertStringNotContainsString('class QuickBuildFoo1Query extends BaseQuickBuildFoo1Query', $script);
+        $this->assertStringContainsString('class BaseQuickBuildFoo1 extends BaseObject', $script);
+        $this->assertStringContainsString('class BaseQuickBuildFoo1Peer', $script);
+        $this->assertStringContainsString('class BaseQuickBuildFoo1Query extends ModelCriteria', $script);
     }
 
     public function testBuild()

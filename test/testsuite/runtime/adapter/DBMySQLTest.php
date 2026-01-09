@@ -41,6 +41,7 @@ class DBMySQLTest extends DBAdapterTestAbstract
      */
     public function testPrepareParamsThrowsException($conparams)
     {
+        $this->expectException(PropelException::class);
         if (version_compare(PHP_VERSION, '5.3.6', '>=')) {
             $this->markTestSkipped('PHP_VERSION >= 5.3.6, no need to throw an exception.');
         }

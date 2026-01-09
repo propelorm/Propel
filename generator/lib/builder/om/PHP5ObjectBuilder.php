@@ -1411,6 +1411,9 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
         try {
             \$stmt = " . $this->getPeerClassname() . "::doSelectStmt(\$c, \$con);
             \$row = \$stmt->fetch(PDO::FETCH_NUM);
+            if (\$row === false) {
+                \$row = [null]; // for backward compatibility
+            }
             \$stmt->closeCursor();";
         }
 
@@ -3284,7 +3287,7 @@ abstract class " . $this->getClassname() . " extends " . $parentClass . " ";
             }
             $script .= "
 
-        return " . join(' && ', $tests) . ";";
+        return " . implode(' && ', $tests) . ";";
         }
         $script .= "
     }

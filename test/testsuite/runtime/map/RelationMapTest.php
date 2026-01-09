@@ -20,11 +20,11 @@ require_once dirname(__FILE__) . '/../../../../runtime/lib/map/TableMap.php';
  * @version    $Id$
  * @package    runtime.map
  */
-class RelationMapTest extends PHPUnit_Framework_TestCase
+class RelationMapTest extends \PHPUnit\Framework\TestCase
 {
   protected $databaseMap, $relationName, $rmap;
 
-  protected function setUp()
+  protected function setUp(): void
   {
     parent::setUp();
     $this->databaseMap = new DatabaseMap('foodb');

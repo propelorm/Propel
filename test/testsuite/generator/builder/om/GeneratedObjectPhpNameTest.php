@@ -14,9 +14,9 @@
  * @author Toni Uebernickel <tuebernickel@gmail.com>
  * @package generator.builder.om
  */
-class GeneratedObjectPhpNameTest extends PHPUnit_Framework_TestCase
+class GeneratedObjectPhpNameTest extends \PHPUnit\Framework\TestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 

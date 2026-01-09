@@ -1,193 +1,170 @@
 <?php
-
-/**
- * This file is part of the Propel package.
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+/*
+ *  $Id: PropelConfiguration.php 1262 2009-10-26 20:54:39Z francois $
  *
- * @license    MIT License
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+ * OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+ * This software consists of voluntary contributions made by many individuals
+ * and is licensed under the LGPL. For more information please see
+ * <http://propel.phpdb.org>.
  */
 
 /**
- * PropelConfiguration is a container for all Propel's runtime configuration data.
+ * PropelConfiguration is a container for all Propel's configuration data.
  *
  * PropelConfiguration implements ArrayAccess interface so the configuration
  * can be accessed as an array or using a simple getter and setter. The whole
  * configuration can also be retrieved as a nested arrays, flat array or as a
  * PropelConfiguration instance.
  *
- * @author     Veikko Mï¿½kinen <veikko@veikko.fi>
- * @version    $Revision$
- * @package    propel.runtime.config
+ * @author     Veikko Mäkinen <veikko@veikko.fi>
+ * @version    $Revision: 1262 $
+ * @package    propel
  */
 class PropelConfiguration implements ArrayAccess
 {
-    const TYPE_ARRAY = 1;
-    const TYPE_ARRAY_FLAT = 2;
-    const TYPE_OBJECT = 3;
+	const TYPE_ARRAY = 1;
 
-    protected $parameters = array();
-    protected $flattenedParameters = array();
-    protected $isFlattened = false;
+	const TYPE_ARRAY_FLAT = 2;
 
-    /**
-     * Construct a new configuration container
-     *
-     * @param array $parameters
-     */
-    public function __construct(array $parameters = array())
-    {
-        $this->parameters = $parameters;
-    }
+	const TYPE_OBJECT = 3;
 
-    /**
-     * @see       http://www.php.net/ArrayAccess
-     *
-     * @param integer $offset
-     *
-     * @return boolean
-     */
-    public function offsetExists($offset)
-    {
-        return array_key_exists($offset, $this->parameters);
-    }
+	/**
+	* @var        array An array of parameters
+	*/
+	protected $parameters = array();
 
-    /**
-     * @see       http://www.php.net/ArrayAccess
-     *
-     * @param integer $offset
-     * @param mixed   $value
-     */
-    public function offsetSet($offset, $value)
-    {
-        $this->parameters[$offset] = $value;
-        $this->isFlattened = false;
-    }
+	/**
+	 * Construct a new configuration container
+	 *
+	 * @param      array $parameters
+	 */
+	public function __construct(array $parameters = array())
+	{
+		$this->parameters = $parameters;
+	}
 
-    /**
-     * @see       http://www.php.net/ArrayAccess
-     *
-     * @param integer $offset
-     *
-     * @return array
-     */
-    public function offsetGet($offset)
-    {
-        return $this->parameters[$offset];
-    }
+	/**
+	 * @see        http://www.php.net/ArrayAccess
+	 */
+	public function offsetExists($offset): bool
+	{
+		return isset($this->parameter[$offset]) || array_key_exists($offset, $this->parameters);
+	}
 
-    /**
-     * @see       http://www.php.net/ArrayAccess
-     *
-     * @param integer $offset
-     */
-    public function offsetUnset($offset)
-    {
-        unset($this->parameters[$offset]);
-        $this->isFlattened = false;
-    }
+	/**
+	 * @see        http://www.php.net/ArrayAccess
+	 */
+	public function offsetSet($offset, $value): void
+	{
+		$this->parameter[$offset] = $value;
+	}
 
-    /**
-     * Get a value from the container, using a namespaced key.
-     * If the specified value is supposed to be an array, the actual return value will be null.
-     * Examples:
-     * <code>
-     *   $c['foo'] = 'bar';
-     *   echo $c->getParameter('foo'); => 'bar'
-     *   $c['foo1'] = array('foo2' => 'bar');
-     *   echo $c->getParameter('foo1'); => null
-     *   echo $c->getParameter('foo1.foo2'); => 'bar'
-     * </code>
-     *
-     * @param string $name    Parameter name
-     * @param mixed  $default Default value to be used if the requested value is not found
-     *
-     * @return mixed Parameter value or the default
-     */
-    public function getParameter($name, $default = null)
-    {
-        $flattenedParameters = $this->getFlattenedParameters();
-        if (isset($flattenedParameters[$name])) {
-            return $flattenedParameters[$name];
-        }
+	/**
+	 * @see        http://www.php.net/ArrayAccess
+	 */
+	public function offsetGet($offset): mixed
+	{
+		return $this->parameters[$offset];
+	}
 
-        return $default;
-    }
+	/**
+	 * @see        http://www.php.net/ArrayAccess
+	 */
+	public function offsetUnset($offset): void
+	{
+		unset($this->parameters[$offset]);
+	}
 
-    /**
-     * Store a value to the container. Accept scalar and array values.
-     * Examples:
-     * <code>
-     *   $c->setParameter('foo', 'bar');
-     *   echo $c['foo']; => 'bar'
-     *   $c->setParameter('foo1.foo2', 'bar');
-     *   print_r($c['foo1']); => array('foo2' => 'bar')
-     * </code>
-     *
-     * @param string  $name              Configuration item name (name.space.name)
-     * @param mixed   $value             Value to be stored
-     * @param Boolean $autoFlattenArrays
-     */
-    public function setParameter($name, $value, $autoFlattenArrays = true)
-    {
-        $param = &$this->parameters;
-        $parts = explode('.', $name); //name.space.name
-        foreach ($parts as $part) {
-            $param = &$param[$part];
-        }
-        $param = $value;
-        if (is_array($value) && $autoFlattenArrays) {
-            // The list will need to be re-flattened.
-            $this->isFlattened = false;
-        } else {
-            $this->flattenedParameters[$name] = $value;
-        }
-    }
+	/**
+	 * Get parameter value from the container
+	 *
+	 * @param      string $name    Parameter name
+	 * @param      mixed  $default Default value to be used if the
+	 *                             requested value is not found
+	 * @return     mixed           Parameter value or the default
+	 */
+	public function getParameter($name, $default = null)
+	{
+		$ret = $this->parameters;
+		$parts = explode('.', $name); //name.space.name
+		while ($part = array_shift($parts)) {
+			if (array_key_exists($part, $ret)) {
+				$ret = $ret[$part];
+			} else {
+				return $default;
+			}
+		}
+		return $ret;
+	}
 
-    /**
-     * @throws PropelException
-     *
-     * @param integer $type
-     *
-     * @return mixed
-     */
-    public function getParameters($type = PropelConfiguration::TYPE_ARRAY)
-    {
-        switch ($type) {
-            case PropelConfiguration::TYPE_ARRAY:
-                return $this->parameters;
-            case PropelConfiguration::TYPE_ARRAY_FLAT:
-                return $this->getFlattenedParameters();
-            case PropelConfiguration::TYPE_OBJECT:
-                return $this;
-            default:
-                throw new PropelException('Unknown configuration type: ' . var_export($type, true));
-        }
-    }
+	/**
+	 * Store a value to the container
+	 *
+	 * @param      string $name Configuration item name (name.space.name)
+	 * @param      mixed $value Value to be stored
+	 */
+	public function setParameter($name, $value)
+	{
+		$param = &$this->parameters;
+		$parts = explode('.', $name); //name.space.name
+		while ($part = array_shift($parts)) {
+			$param = &$param[$part];
+		}
+		$param = $value;
+	}
 
-    /**
-     * @return array
-     */
-    public function getFlattenedParameters()
-    {
-        if (!$this->isFlattened) {
-            $this->flattenParameters();
-            $this->isFlattened = true;
-        }
+	/**
+	 *
+	 *
+	 * @param      int $type
+	 * @return     mixed
+	 */
+	public function getParameters($type = PropelConfiguration::TYPE_ARRAY)
+	{
+		switch ($type) {
+			case PropelConfiguration::TYPE_ARRAY:
+				return $this->parameters;
+			case PropelConfiguration::TYPE_ARRAY_FLAT:
+				return $this->toFlatArray();
+			case PropelConfiguration::TYPE_OBJECT:
+				return $this;
+			default:
+				throw new PropelException('Unknown configuration type: '. var_export($type, true));
+		}
 
-        return $this->flattenedParameters;
-    }
+	}
 
-    protected function flattenParameters()
-    {
-        $result = array();
-        $it = new PropelConfigurationIterator(new RecursiveArrayIterator($this->parameters), RecursiveIteratorIterator::SELF_FIRST);
-        foreach ($it as $key => $value) {
-            $ns = $it->getDepth() ? $it->getNamespace() . '.' . $key : $key;
-            if ($it->getNodeType() == PropelConfigurationIterator::NODE_ITEM) {
-                $result[$ns] = $value;
-            }
-        }
-        $this->flattenedParameters = array_merge($this->flattenedParameters, $result);
-    }
+
+	/**
+	 * Get the configuration as a flat array. ($array['name.space.item'] = 'value')
+	 *
+	 * @return     array
+	 */
+	protected function toFlatArray()
+	{
+		$result = array();
+		$it = new PropelConfigurationIterator(new RecursiveArrayIterator($this->parameters), RecursiveIteratorIterator::SELF_FIRST);
+		foreach($it as $key => $value) {
+			$ns = $it->getDepth() ? $it->getNamespace() . '.'. $key : $key;
+			if ($it->getNodeType() == PropelConfigurationIterator::NODE_ITEM) {
+				$result[$ns] = $value;
+			}
+		}
+
+		return $result;
+	}
+
 }
+
+?>

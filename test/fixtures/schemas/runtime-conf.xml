@@ -14,7 +14,7 @@
 				<adapter>mysql</adapter>
 				<connection>
 					<classname>DebugPDO</classname>
-					<dsn>mysql:dbname=test</dsn>
+					<dsn>mysql:host=db;dbname=test</dsn>
 					<!--
 					For MySQL and Oracle you must specify username + password separate from DSN:
 					-->

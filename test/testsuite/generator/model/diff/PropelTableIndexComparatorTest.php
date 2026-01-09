@@ -18,9 +18,9 @@ require_once dirname(__FILE__) . '/../../../../../generator/lib/platform/MysqlPl
  *
  * @package    generator.model.diff
  */
-class PropelTableIndexComparatorTest extends PHPUnit_Framework_TestCase
+class PropelTableIndexComparatorTest extends \PHPUnit\Framework\TestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         $this->platform = new MysqlPlatform();
     }

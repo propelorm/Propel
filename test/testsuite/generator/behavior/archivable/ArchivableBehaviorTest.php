@@ -20,11 +20,11 @@ require_once dirname(__FILE__) . '/../../../../../runtime/lib/Propel.php';
  * @version    $Revision$
  * @package    generator.behavior.archivable
  */
-class ArchivableBehaviorTest extends PHPUnit_Framework_TestCase
+class ArchivableBehaviorTest extends \PHPUnit\Framework\TestCase
 {
     protected static $generatedSQL;
 
-    public function setUp()
+    public function setUp(): void
     {
         if (!class_exists('ArchivableTest1')) {
             $schema = <<<EOF
@@ -136,7 +136,7 @@ EOF;
     {
         $table = ArchivableTest1ArchivePeer::getTableMap();
         $this->assertTrue($table->hasColumn('id'));
-        $this->assertContains('[id] INTEGER NOT NULL,', self::$generatedSQL, 'copied columns are not autoincremented');
+        $this->assertStringContainsString('[id] INTEGER NOT NULL,', self::$generatedSQL, 'copied columns are not autoincremented');
         $this->assertTrue($table->hasColumn('title'));
         $this->assertTrue($table->hasColumn('age'));
         $this->assertTrue($table->hasColumn('foo_id'));
@@ -153,7 +153,7 @@ EOF;
         $table = ArchivableTest1ArchivePeer::getTableMap();
 
         $expected = "CREATE INDEX [archivable_test_1_archive_I_1] ON [archivable_test_1_archive] ([title],[age]);";
-        $this->assertContains($expected, self::$generatedSQL);
+        $this->assertStringContainsString($expected, self::$generatedSQL);
     }
 
     public function testCopiesUniquesToIndices()
@@ -161,7 +161,7 @@ EOF;
         $table = ArchivableTest2ArchivePeer::getTableMap();
 
         $expected = "CREATE INDEX [my_old_archivable_test_3_I_1] ON [my_old_archivable_test_3] ([title]);";
-        $this->assertContains($expected, self::$generatedSQL);
+        $this->assertStringContainsString($expected, self::$generatedSQL);
     }
 
     public function testAddsArchivedAtColumnToArchiveTableByDefault()

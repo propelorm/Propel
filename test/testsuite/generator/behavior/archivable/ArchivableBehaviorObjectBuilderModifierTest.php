@@ -20,9 +20,9 @@ require_once dirname(__FILE__) . '/../../../../../runtime/lib/Propel.php';
  * @version    $Revision$
  * @package    generator.behavior.archivable
  */
-class ArchivableBehaviorObjectBuilderModifierTest extends PHPUnit_Framework_TestCase
+class ArchivableBehaviorObjectBuilderModifierTest extends \PHPUnit\Framework\TestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         if (!class_exists('ArchivableTest10')) {
             $schema = <<<EOF
@@ -182,6 +182,8 @@ EOF;
      */
     public function testArchiveThrowsExceptionOnNewObjects()
     {
+        $this->expectException(PropelException::class);
+        $this->expectException(PropelException::class);
         $a = new ArchivableTest10();
         $a->archive();
     }
@@ -196,6 +198,7 @@ EOF;
      */
     public function testRestoreFromArchiveThrowsExceptionOnUnarchivedObjects()
     {
+        $this->expectException(PropelException::class);
         $a = new ArchivableTest10();
         $a->setTitle('foo');
         $a->setAge(12);

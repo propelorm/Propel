@@ -537,7 +537,7 @@ class Join
             for ($i = 0; $i < $this->count; $i++) {
                 $conditions [] = $this->getLeftColumn($i) . $this->getOperator($i) . $this->getRightColumn($i);
             }
-            $joinCondition = sprintf('(%s)', implode($conditions, ' AND '));
+            $joinCondition = sprintf('(%s)', implode(' AND ', $conditions));
         } else {
             $joinCondition = '';
             $this->getJoinCondition()->appendPsTo($joinCondition, $params);
@@ -585,7 +585,7 @@ class Join
         return $this->getClause($params);
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return $this->toString();
     }

@@ -151,6 +151,7 @@ class CriteriaMergeTest extends BookstoreTestBase
      */
     public function testMergeWithAsColumnsThrowsException()
     {
+        $this->expectException(PropelException::class);
         $c1 = new Criteria();
         $c1->addAsColumn('foo', BookPeer::TITLE);
         $c2 = new Criteria();
@@ -390,6 +391,7 @@ class CriteriaMergeTest extends BookstoreTestBase
      */
     public function testMergeWithAliasesThrowsException()
     {
+        $this->expectException(PropelException::class);
         $c1 = new Criteria();
         $c1->addAlias('b', BookPeer::TABLE_NAME);
         $c2 = new Criteria();

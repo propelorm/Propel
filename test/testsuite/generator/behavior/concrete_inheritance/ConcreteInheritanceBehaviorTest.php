@@ -23,7 +23,7 @@ require_once dirname(__FILE__) . '/../../../../../generator/lib/behavior/concret
  */
 class ConcreteInheritanceBehaviorTest extends BookstoreTestBase
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -125,6 +125,7 @@ EOF;
      */
     public function testModifyTableNoCopyDataKeepsAutoIncrement()
     {
+        $this->expectException(PropelException::class);
         $content = new ConcreteContent();
         $content->save();
         $c = new Criteria;

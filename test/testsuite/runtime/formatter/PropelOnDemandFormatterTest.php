@@ -56,6 +56,7 @@ class PropelOnDemandFormatterTest extends BookstoreEmptyTestBase
      */
     public function testFormatManyResultsIteratedTwice()
     {
+        $this->expectException(PropelException::class);
         $con = Propel::getConnection(BookPeer::DATABASE_NAME);
         BookstoreDataPopulator::populate($con);
 

@@ -20,9 +20,9 @@ require_once dirname(__FILE__) . '/../../../../../runtime/lib/Propel.php';
  * @version    $Revision$
  * @package    generator.behavior.i18n
  */
-class I18nBehaviorQueryBuilderModifierTest extends PHPUnit_Framework_TestCase
+class I18nBehaviorQueryBuilderModifierTest extends \PHPUnit\Framework\TestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         if (!class_exists('I18nBehaviorTest11')) {
             $schema = <<<EOF

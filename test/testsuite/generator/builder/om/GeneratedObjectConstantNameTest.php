@@ -18,7 +18,7 @@ require_once dirname(__FILE__) . '/../../../../../runtime/lib/Propel.php';
  * @author Boban Acimovic <boban.acimovic@gmail.com>
  * @package generator.builder.om
  */
-class GeneratedObjectConstantNameTest extends PHPUnit_Framework_TestCase
+class GeneratedObjectConstantNameTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * Test normal string as single inheritance key

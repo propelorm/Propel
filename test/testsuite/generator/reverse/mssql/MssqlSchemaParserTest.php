@@ -18,7 +18,7 @@ require_once dirname(__FILE__) . '/../../../../../generator/lib/model/PropelType
  * @version     $Revision$
  * @package     propel.generator.reverse.mssql
  */
-class MssqlSchemaParserTest extends PHPUnit_Framework_TestCase
+class MssqlSchemaParserTest extends \PHPUnit\Framework\TestCase
 {
   public function testCleanDelimitedIdentifiers()
   {

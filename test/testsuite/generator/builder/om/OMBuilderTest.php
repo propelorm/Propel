@@ -18,7 +18,7 @@ require_once dirname(__FILE__) . '/../../../../../generator/lib/builder/om/OMBui
  * @version    $Id: OMBuilderBuilderTest.php 1347 2009-12-03 21:06:36Z francois $
  * @package    generator.builder.om
  */
-class OMBuilderTest extends PHPUnit_Framework_TestCase
+class OMBuilderTest extends \PHPUnit\Framework\TestCase
 {
 
     public function testClear()

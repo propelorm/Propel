@@ -393,7 +393,7 @@ ALTER TABLE %s ALTER COLUMN %s;
         foreach ($changedProperties as $key => $property) {
             switch ($key) {
                 case 'defaultValueType':
-                    continue;
+                    continue 2;
                 case 'size':
                 case 'type':
                 case 'scale':

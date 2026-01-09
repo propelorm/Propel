@@ -19,7 +19,7 @@ require_once dirname(__FILE__) . '/../../../tools/helpers/bookstore/BookstoreEmp
  */
 class PropelArrayCollectionTest extends BookstoreEmptyTestBase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
         BookstoreDataPopulator::populate($this->con);
@@ -45,6 +45,7 @@ class PropelArrayCollectionTest extends BookstoreEmptyTestBase
      */
     public function testSaveOnReadOnlyEntityThrowsException()
     {
+        $this->expectException(PropelException::class);
         $col = new PropelArrayCollection();
         $col->setModel('ContestView');
         $cv = new ContestView();
@@ -67,6 +68,7 @@ class PropelArrayCollectionTest extends BookstoreEmptyTestBase
      */
     public function testDeleteOnReadOnlyEntityThrowsException()
     {
+        $this->expectException(PropelException::class);
         $col = new PropelArrayCollection();
         $col->setModel('ContestView');
         $cv = new ContestView();
@@ -199,6 +201,7 @@ class PropelArrayCollectionTest extends BookstoreEmptyTestBase
      */
     public function testGetWorkerObjectNoModel()
     {
+        $this->expectException(PropelException::class);
         $col = new TestablePropelArrayCollection();
         $col->getWorkerObject();
     }

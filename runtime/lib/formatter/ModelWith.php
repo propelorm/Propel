@@ -185,7 +185,7 @@ class ModelWith
         return null === $this->leftPhpName;
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return sprintf("modelName: %s, relationName: %s, relationMethod: %s, leftPhpName: %s, rightPhpName: %s", $this->modelName, $this->relationName, $this->relationMethod, $this->leftPhpName, $this->rightPhpName);
     }

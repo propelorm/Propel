@@ -20,7 +20,7 @@ require_once dirname(__FILE__) . '/../../../../../runtime/lib/Propel.php';
  * @version    $Revision$
  * @package    generator.behavior.i18n
  */
-class I18nBehaviorPeerBuilderModifierTest extends PHPUnit_Framework_TestCase
+class I18nBehaviorPeerBuilderModifierTest extends \PHPUnit\Framework\TestCase
 {
     public function testDefaultLocaleConstant()
     {

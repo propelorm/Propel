@@ -34,7 +34,7 @@ class ExplainPlanTest extends BookstoreTestBase
         $explain = $c->explain($this->con);
 
         if ($db instanceof DBMySQL) {
-            $this->assertEquals(sizeof($explain), 2, 'Explain plan return two lines');
+            $this->assertEquals(count($explain), 2, 'Explain plan return two lines');
 
             // explain can change sometime, test can't be strict
             $this->assertArrayHasKey('select_type',$explain[0], 'Line 1, select_type key exist');
@@ -47,7 +47,7 @@ class ExplainPlanTest extends BookstoreTestBase
             $this->assertArrayHasKey('type',$explain[1], 'Line 2, type key exist');
             $this->assertArrayHasKey('possible_keys',$explain[1], 'Line 2, possible_keys key exist');
         } elseif ($db instanceof DBOracle) {
-            $this->assertTrue(sizeof($explain) > 2, 'Explain plan return more than 2 lines');
+            $this->assertTrue(count($explain) > 2, 'Explain plan return more than 2 lines');
         } else {
             $this->markTestSkipped('Cannot test explain plan on adapter ' . get_class($db));
         }
@@ -65,7 +65,7 @@ class ExplainPlanTest extends BookstoreTestBase
         $explain = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         if ($db instanceof DBMySQL) {
-            $this->assertEquals(sizeof($explain), 2, 'Explain plan return two lines');
+            $this->assertEquals(count($explain), 2, 'Explain plan return two lines');
 
             // explain can change sometime, test can't be strict
             $this->assertArrayHasKey('select_type',$explain[0], 'Line 1, select_type key exist');
@@ -78,7 +78,7 @@ class ExplainPlanTest extends BookstoreTestBase
             $this->assertArrayHasKey('type',$explain[1], 'Line 2, type key exist');
             $this->assertArrayHasKey('possible_keys',$explain[1], 'Line 2, possible_keys key exist');
         } elseif ($db instanceof DBOracle) {
-            $this->assertTrue(sizeof($explain) > 2, 'Explain plan return more than 2 lines');
+            $this->assertTrue(count($explain) > 2, 'Explain plan return more than 2 lines');
         } else {
             $this->markTestSkipped('Cannot test explain plan on adapter ' . get_class($db));
         }

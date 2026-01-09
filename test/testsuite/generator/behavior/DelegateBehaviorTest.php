@@ -20,10 +20,10 @@ require_once dirname(__FILE__) . '/../../../../runtime/lib/Propel.php';
  * @version    $Revision$
  * @package    generator.behavior
  */
-class DelegateBehaviorTest extends PHPUnit_Framework_TestCase
+class DelegateBehaviorTest extends \PHPUnit\Framework\TestCase
 {
 
-    public function setUp()
+    protected function setUp(): void
     {
         if (!class_exists('DelegateDelegate')) {
             $schema = <<<EOF
@@ -175,6 +175,7 @@ EOF;
      */
     public function testAModelCannotHaveCascadingDelegates()
     {
+        $this->expectException(PropelException::class);
         $main = new DelegateMain();
         $main->setSummary('bar');
         $main->setBody('baz');

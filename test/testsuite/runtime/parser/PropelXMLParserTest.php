@@ -17,7 +17,7 @@ require_once dirname(__FILE__) . '/../../../../runtime/lib/parser/PropelXMLParse
  * @author     Francois Zaninotto
  * @package    runtime.parser
  */
-class PropelXMLParserTest extends PHPUnit_Framework_TestCase
+class PropelXMLParserTest extends \PHPUnit\Framework\TestCase
 {
     public static function arrayXmlConversionDataProvider()
     {

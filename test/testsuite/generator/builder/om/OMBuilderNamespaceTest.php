@@ -20,7 +20,7 @@ require_once dirname(__FILE__) . '/../../../../../generator/lib/platform/MysqlPl
  * @version    $Id: OMBuilderBuilderTest.php 1347 2009-12-03 21:06:36Z francois $
  * @package    generator.builder.om
  */
-class OMBuilderNamespaceTest extends PHPUnit_Framework_TestCase
+class OMBuilderNamespaceTest extends \PHPUnit\Framework\TestCase
 {
     public function testNoNamespace()
     {

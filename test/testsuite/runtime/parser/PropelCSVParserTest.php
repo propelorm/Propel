@@ -17,7 +17,7 @@ require_once dirname(__FILE__) . '/../../../../runtime/lib/parser/PropelCSVParse
  * @author     Francois Zaninotto
  * @package    runtime.parser
  */
-class PropelCSVParserTest extends PHPUnit_Framework_TestCase
+class PropelCSVParserTest extends \PHPUnit\Framework\TestCase
 {
     public static function arrayCsvConversionDataProvider()
     {
